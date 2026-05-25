@@ -105,7 +105,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
 
 <div class="hero">
   <p class="hero-label">Video Analysis · Guide 14</p>
@@ -173,6 +173,40 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="info-box elite">
     <span class="ico">🎯</span>
     <p><strong>The self-coaching limit:</strong> Video self-coaching is powerful — but it has a ceiling. It is best used to monitor the specific changes your coach has prescribed, detect drift and regression, and prepare intelligent questions for your next session. It should not be used to diagnose and self-prescribe new swing changes without coach guidance. The risk of misdiagnosis is high and the cost is wasted practice time.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">P-Position System — The Universal Language of Swing Analysis</span>
+    <h3>Reference Table: P1 Through P10</h3>
+    <p style="margin-bottom:12px;">Every PGA Tour coach and TPI-certified instructor uses the P-position system to communicate precisely about swing positions. When reviewing your footage or communicating with your coach, always reference positions by their P-number — it eliminates ambiguity and makes remote coaching far more efficient.</p>
+    <table class="tbl">
+      <tr><th>Position</th><th>Name</th><th>Description</th><th>Best Angle</th></tr>
+      <tr><td class="good">P1</td><td>Address</td><td>Setup — grip, posture, alignment, ball position, weight distribution</td><td>Both DTL and FO</td></tr>
+      <tr><td>P2</td><td>Takeaway</td><td>Club shaft parallel to ground on the way back — first checkpoint for path and face</td><td>DTL</td></tr>
+      <tr><td>P3</td><td>Lead arm parallel</td><td>Lead arm parallel to ground — wrist hinge, club elevation, shoulder turn beginning</td><td>DTL</td></tr>
+      <tr><td class="good">P4</td><td>Top of backswing</td><td>Completion of backswing — the most analysed position; face angle, club plane, wrist angles, shoulder turn</td><td>DTL + FO</td></tr>
+      <tr><td>P5</td><td>Early downswing</td><td>Lead arm parallel on the way down — transition, slot position, lag angle</td><td>DTL</td></tr>
+      <tr><td>P6</td><td>Parallel shaft (down)</td><td>Club shaft parallel to ground on downswing — delivery position, path, face</td><td>DTL</td></tr>
+      <tr><td class="good">P7</td><td>Impact</td><td>Ball contact — the moment of truth; shaft lean, hip position, head position, face angle</td><td>DTL + FO</td></tr>
+      <tr><td>P8</td><td>Follow-through shaft parallel</td><td>Club shaft parallel on follow-through — release quality, extension, rotation</td><td>DTL</td></tr>
+      <tr><td>P9</td><td>Arms parallel (finish)</td><td>Arms parallel to ground in follow-through — rotation completion, balance</td><td>FO</td></tr>
+      <tr><td>P10</td><td>Full finish</td><td>Complete finish position — balance, weight transfer, spine angle maintenance</td><td>FO</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">For self-coaching focus: P1 (setup), P4 (top), and P7 (impact) are the three highest-diagnostic positions. Always review these three before looking at any other position.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">What 2D Video Cannot Show — The Limitations</span>
+    <h3>Where Video Analysis Has a Hard Ceiling</h3>
+    <p style="margin-bottom:12px;">Video is the most accessible and effective self-coaching tool available — but understanding its limitations prevents misdiagnosis and helps you know when you need something beyond it.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>True spatial position:</strong> DTL video creates the visual impression of swing plane but cannot show the club's true 3D path through space. Two swings that look identical on DTL video can have different attack angles and path directions — only 3D systems (Trackman, GCQuad, K-Vest, AMM) measure these accurately. This is why Mevo data is essential alongside video — it shows what the camera cannot.</div></li>
+      <li><span class="step-n">2</span><div><strong>Forces and timing:</strong> Video shows position but not the force generating those positions. A player who appears to have good hip turn on video may be achieving it late (after the optimal timing window). Force plate systems (Swing Catalyst) and motion capture measure this; video cannot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Wrist angles under speed:</strong> At impact, the wrist moves through its position in approximately 0.5 milliseconds. Even 240fps slow motion (available on iPhone) produces only 8–12 frames through impact — insufficient to capture wrist angle precisely. This is exactly why HackMotion exists: it measures what the camera frame rate cannot resolve.</div></li>
+      <li><span class="step-n">4</span><div><strong>Camera angle creates optical illusions:</strong> A camera placed even 2 feet off the ideal target line produces apparent swing plane errors that do not exist. A face-on camera placed even slightly behind or ahead of the ball creates false impressions of head movement. Always verify camera position before analysis — a setup error produces false data.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>The three-system diagnostic chain:</strong> Arccos/manual stats identify the SG gap → Mevo measures the impact variables causing it → HackMotion measures the wrist cause → Video confirms the body position. Each system answers questions the others cannot. They are complementary, not redundant.</p>
+    </div>
   </div>
 </div>
 
