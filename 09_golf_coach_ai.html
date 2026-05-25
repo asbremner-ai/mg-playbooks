@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Golf Coach AI — Launch Monitor Analyser</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+<style>
+/* ── Golf Coach AI extra styles (preserve original app appearance) ── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
+.coach-wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
+.ctx-bar { display: flex; gap: 16px; flex-wrap: wrap; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; }
+.ctx-item { display: flex; flex-direction: column; gap: 2px; }
+.ctx-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--lime); opacity: 0.7; }
+.ctx-val { font-size: 14px; font-weight: 600; color: var(--white); }
+.mode-tabs { display: flex; gap: 0; margin-bottom: 22px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.mode-tab { flex: 1; background: var(--surface); border: none; color: var(--muted); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; padding: 13px 8px; cursor: pointer; transition: all .2s; text-align: center; border-right: 1px solid var(--border); }
+.mode-tab:last-child { border-right: none; }
+.mode-tab.active { background: var(--surface3); color: var(--lime-hi); }
+.mode-tab:hover:not(.active) { background: var(--surface2); color: var(--white); }
+.csv-panel { display: none; }
+.csv-panel.visible { display: block; }
+.manual-panel { display: none; }
+.manual-panel.visible { display: block; }
+.drop-zone { border: 2px dashed var(--border-hi); border-radius: 10px; padding: 36px 20px; text-align: center; cursor: pointer; transition: all .25s; background: var(--surface); margin-bottom: 18px; position: relative; }
+.drop-zone:hover, .drop-zone.drag-over { border-color: var(--lime); background: var(--lime-dim); }
+.drop-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.drop-icon { font-size: 32px; margin-bottom: 10px; }
+.drop-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 5px; }
+.drop-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.drop-sub strong { color: var(--gold-hi); }
+.csv-how { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; font-size: 12px; color: var(--muted); line-height: 1.8; }
+.csv-how strong.label { color: var(--lime-hi); display: block; margin-bottom: 5px; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+.shot-table-wrap { overflow-x: auto; margin-bottom: 14px; border-radius: 8px; border: 1px solid var(--border); max-height: 380px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.shot-table { width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
+.shot-table thead { position: sticky; top: 0; z-index: 2; }
+.shot-table th { background: var(--surface); color: var(--lime); font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; padding: 9px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--border); }
+.shot-table th:first-child, .shot-table th:nth-child(2) { text-align: left; }
+.shot-table td { padding: 8px 10px; text-align: right; color: var(--muted); border-bottom: 1px solid var(--faint); white-space: nowrap; }
+.shot-table td:first-child { text-align: left; color: var(--faint); font-size: 10px; }
+.shot-table td:nth-child(2) { text-align: left; color: var(--white); font-weight: 500; }
+.shot-table tr:last-child td { border-bottom: none; }
+.shot-table tr:hover td { background: var(--lime-dim); cursor: pointer; }
+.shot-table tr.selected td { background: rgba(160,200,80,0.14); }
+.shot-table tr.selected td:first-child { color: var(--lime); }
+.club-filter-row { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 10px; align-items: center; }
+.club-filter { background: var(--surface2); border: 1px solid var(--border); color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 4px 10px; border-radius: 4px; cursor: pointer; transition: all .2s; }
+.club-filter.active { background: var(--lime-dim); border-color: var(--lime); color: var(--lime-hi); }
+.club-filter-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--faint); letter-spacing: 1px; text-transform: uppercase; }
+.selection-info { font-size: 12px; color: var(--muted); margin-bottom: 10px; min-height: 18px; }
+.selection-info strong { color: var(--lime); }
+.select-all-row { display: flex; gap: 8px; margin-bottom: 8px; }
+.sel-btn { background: none; border: 1px solid var(--border); color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 10px; border-radius: 4px; cursor: pointer; transition: all .2s; }
+.sel-btn:hover { background: var(--lime-dim); color: var(--white); }
+.analyse-selection-btn { width: 100%; background: linear-gradient(135deg, #3a8050, var(--lime)); border: none; border-radius: 8px; color: #0a160a; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; padding: 16px; cursor: pointer; letter-spacing: .4px; transition: all .3s; margin-bottom: 6px; }
+.analyse-selection-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(160,200,80,.3); }
+.analyse-selection-btn:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+.avg-pill { display: inline-block; background: var(--gold-dim); border: 1px solid rgba(224,184,64,.3); color: var(--gold-hi); font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 1px 7px; border-radius: 3px; margin-left: 5px; vertical-align: middle; }
+.section-lbl { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+.section-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.club-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 7px; margin-bottom: 22px; }
+.club-btn { background: var(--surface2); border: 1px solid var(--border); color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 500; padding: 10px 6px; border-radius: 6px; cursor: pointer; transition: all .2s; text-align: center; }
+.club-btn:hover { background: var(--lime-dim); border-color: var(--lime); }
+.club-btn.active { background: var(--lime-dim); border-color: var(--lime); color: var(--lime-hi); }
+.input-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.input-group { display: flex; flex-direction: column; gap: 5px; }
+.input-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+.input-label .unit { color: var(--gold); font-size: 8px; }
+.data-input { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; color: var(--white); font-family: 'JetBrains Mono', monospace; font-size: 17px; padding: 11px 13px; width: 100%; transition: all .2s; outline: none; -webkit-appearance: none; }
+.data-input:focus { border-color: var(--lime); background: var(--surface2); box-shadow: 0 0 0 3px var(--lime-dim); }
+.data-input::placeholder { color: var(--faint); font-size: 13px; }
+.notes-input { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; color: var(--muted); font-family: 'Inter', sans-serif; font-size: 13px; padding: 12px 14px; width: 100%; resize: vertical; min-height: 72px; outline: none; transition: all .2s; line-height: 1.5; }
+.notes-input:focus { border-color: var(--lime); background: var(--surface2); box-shadow: 0 0 0 3px var(--lime-dim); }
+.notes-input::placeholder { color: var(--faint); }
+.analyse-btn { width: 100%; background: linear-gradient(135deg, #3a8050, var(--lime)); border: none; border-radius: 8px; color: #0a160a; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 700; padding: 16px; cursor: pointer; letter-spacing: .4px; transition: all .3s; }
+.analyse-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(160,200,80,.3); }
+.analyse-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.loading { display: none; text-align: center; padding: 40px 0; }
+.loading.visible { display: block; }
+.spinner { width: 36px; height: 36px; border: 2px solid var(--border); border-top-color: var(--lime); border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 14px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--lime); text-transform: uppercase; }
+.analysis-output { display: none; margin-top: 28px; animation: fadeUp .5s ease forwards; }
+.analysis-output.visible { display: block; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.metrics-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-bottom: 22px; }
+.metric-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+.metric-card.good { border-color: rgba(112,200,112,.4); background: rgba(112,200,112,.07); }
+.metric-card.warn { border-color: rgba(224,184,64,.4); background: rgba(224,184,64,.07); }
+.metric-card.bad { border-color: rgba(224,112,96,.4); background: rgba(224,112,96,.07); }
+.metric-name { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 3px; }
+.metric-val { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 500; color: var(--white); line-height: 1; }
+.metric-card.good .metric-val { color: var(--good); }
+.metric-card.warn .metric-val { color: var(--warn); }
+.metric-card.bad .metric-val { color: var(--bad); }
+.metric-sub { font-size: 9px; color: var(--faint); margin-top: 2px; }
+.coach-panel { background: var(--surface2); border: 1px solid var(--border); border-left: 3px solid var(--gold); border-radius: 8px; padding: 22px 20px; margin-bottom: 22px; }
+.coach-panel h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--gold-hi); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.coach-panel h3::before { content: '◆'; font-size: 9px; color: var(--gold); }
+.coach-text { font-size: 13px; line-height: 1.8; color: rgba(232,240,216,.8); white-space: pre-wrap; }
+.history-section { margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--border); }
+.history-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all .2s; }
+.history-item:hover { background: var(--surface3); border-color: var(--border-hi); }
+.history-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--faint); margin-top: 2px; }
+.history-club { font-size: 14px; font-weight: 600; color: var(--white); }
+.history-carry { font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--lime); }
+.history-source { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); opacity: .7; margin-top: 2px; }
+.clear-btn { background: none; border: 1px solid rgba(224,112,96,.3); color: rgba(224,112,96,.6); font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; padding: 6px 12px; border-radius: 4px; cursor: pointer; transition: all .2s; margin-top: 14px; }
+.clear-btn:hover { background: rgba(224,112,96,.1); color: var(--bad); }
+.no-history { font-size: 12px; color: var(--faint); text-align: center; padding: 20px; font-family: 'JetBrains Mono', monospace; }
+@media(max-width:480px){ .input-grid { grid-template-columns: 1fr 1fr; } .ctx-bar { gap: 12px; } .coach-panel { padding: 16px; } .mode-tab { font-size: 11px; padding: 11px 6px; } }
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">Golf Coach AI · Mevo Gen2 Pro</p>
+  <h1>Your Personal<br><em>Golf Coach</em></h1>
+  <p class="hero-sub">Import your Mevo CSV or enter data manually. Claude analyses every number using your full Strokes Gained playbook and provides specific, actionable coaching.</p>
+  <div class="hero-tags">
+    <span class="htag">📂 CSV Import</span><span class="htag">✏️ Manual Entry</span>
+    <span class="htag">📊 SG Framework</span><span class="htag">🎯 Personalised Coaching</span>
+  </div>
+</div>
+
+<div class="coach-wrap">
+
+  <div class="ctx-bar">
+    <div class="ctx-item"><span class="ctx-lbl">Current HCP</span><span class="ctx-val">10</span></div>
+    <div class="ctx-item"><span class="ctx-lbl">Target</span><span class="ctx-val">Single Figures</span></div>
+    <div class="ctx-item"><span class="ctx-lbl">Device</span><span class="ctx-val">Mevo Gen2 Pro</span></div>
+    <div class="ctx-item"><span class="ctx-lbl">Framework</span><span class="ctx-val">SG-Based</span></div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="switchMode('csv')">📂 Import Mevo CSV</button>
+    <button class="mode-tab" onclick="switchMode('manual')">✏️ Enter Manually</button>
+  </div>
+
+  <!-- CSV PANEL -->
+  <div class="csv-panel visible" id="csvPanel">
+    <div class="csv-how">
+      <strong class="label">How to export from your Mevo Gen2</strong>
+      1. Go to <strong style="color:var(--white)">myflightscope.com</strong> and sign in &nbsp;→&nbsp;
+      2. Click <strong style="color:var(--white)">Data → FS Mevo Golf</strong> &nbsp;→&nbsp;
+      3. Select your session &nbsp;→&nbsp;
+      4. Click <strong style="color:var(--white)">"Export To CSV"</strong> in the top-right corner &nbsp;→&nbsp;
+      5. Drop the downloaded file below
+    </div>
+
+    <div class="drop-zone" id="dropZone">
+      <input type="file" accept=".csv" id="csvFile" onchange="handleFileSelect(this.files[0])">
+      <div class="drop-icon">⛳</div>
+      <div class="drop-title">Drop your Mevo CSV here</div>
+      <div class="drop-sub">or tap to browse &nbsp;·&nbsp; <strong>stats.csv</strong> from myflightscope.com<br>All Mevo Gen2 columns supported including Pro Package</div>
+    </div>
+
+    <div id="csvLoaded" style="display:none">
+      <div class="section-lbl">Session Shots</div>
+      <div class="club-filter-row" id="clubFilters"></div>
+      <div class="select-all-row">
+        <button class="sel-btn" onclick="selectAll()">Select All Visible</button>
+        <button class="sel-btn" onclick="clearSelection()">Clear Selection</button>
+      </div>
+      <div class="selection-info" id="selectionInfo">Tap any shot row to select it for analysis.</div>
+      <div class="shot-table-wrap">
+        <table class="shot-table" id="shotTable">
+          <thead id="shotTableHead"></thead>
+          <tbody id="shotTableBody"></tbody>
+        </table>
+      </div>
+      <div style="margin: 14px 0 5px">
+        <label class="input-label" style="margin-bottom:7px;display:block">Notes / ball flight observations</label>
+        <textarea class="notes-input" id="csvNotes" placeholder="e.g. Felt steep today, working on shallowing out, slight fade tendency…"></textarea>
+      </div>
+      <button class="analyse-selection-btn" id="csvAnalyseBtn" onclick="analyseCSVSelection()" disabled>⛳ Analyse Selected Shots</button>
+      <div style="text-align:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);margin-top:5px">1 shot = single-shot analysis &nbsp;·&nbsp; Multiple shots = session average + consistency analysis</div>
+    </div>
+  </div>
+
+  <!-- MANUAL PANEL -->
+  <div class="manual-panel" id="manualPanel">
+    <div class="section-lbl">Select Club</div>
+    <div class="club-grid" id="clubGrid">
+      <button class="club-btn" data-club="Driver">DR</button>
+      <button class="club-btn" data-club="3 Wood">3W</button>
+      <button class="club-btn" data-club="5 Wood">5W</button>
+      <button class="club-btn" data-club="3 Hybrid">3H</button>
+      <button class="club-btn" data-club="4 Hybrid">4H</button>
+      <button class="club-btn" data-club="4 Iron">4i</button>
+      <button class="club-btn" data-club="5 Iron">5i</button>
+      <button class="club-btn" data-club="6 Iron">6i</button>
+      <button class="club-btn" data-club="7 Iron">7i</button>
+      <button class="club-btn" data-club="8 Iron">8i</button>
+      <button class="club-btn" data-club="9 Iron">9i</button>
+      <button class="club-btn" data-club="PW">PW</button>
+      <button class="club-btn" data-club="Gap Wedge">GW</button>
+      <button class="club-btn" data-club="Sand Wedge">SW</button>
+      <button class="club-btn" data-club="Lob Wedge">LW</button>
+    </div>
+
+    <div class="section-lbl">Launch Monitor Data</div>
+    <div class="input-grid">
+      <div class="input-group"><label class="input-label">Ball Speed <span class="unit">MPH</span></label><input class="data-input" type="number" id="ballSpeed" placeholder="e.g. 148" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Club Speed <span class="unit">MPH</span></label><input class="data-input" type="number" id="clubSpeed" placeholder="e.g. 100" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Carry Distance <span class="unit">YDS</span></label><input class="data-input" type="number" id="carryDist" placeholder="e.g. 245" step="1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Total Distance <span class="unit">YDS</span></label><input class="data-input" type="number" id="totalDist" placeholder="e.g. 268" step="1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Launch Angle <span class="unit">DEG</span></label><input class="data-input" type="number" id="launchAngle" placeholder="e.g. 14.2" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Spin Rate <span class="unit">RPM</span></label><input class="data-input" type="number" id="spinRate" placeholder="e.g. 2800" step="10" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Smash Factor</label><input class="data-input" type="number" id="smashFactor" placeholder="e.g. 1.46" step="0.01" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Attack Angle <span class="unit">DEG</span></label><input class="data-input" type="number" id="attackAngle" placeholder="e.g. +3.5" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Club Path <span class="unit">DEG</span></label><input class="data-input" type="number" id="clubPath" placeholder="e.g. -2.1" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Face Angle <span class="unit">DEG</span></label><input class="data-input" type="number" id="faceAngle" placeholder="e.g. -0.8" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Face to Path <span class="unit">DEG</span></label><input class="data-input" type="number" id="facePath" placeholder="e.g. 1.3" step="0.1" inputmode="decimal"></div>
+      <div class="input-group"><label class="input-label">Apex Height <span class="unit">FT</span></label><input class="data-input" type="number" id="apexHeight" placeholder="e.g. 92" step="1" inputmode="decimal"></div>
+    </div>
+    <div style="margin-bottom:18px">
+      <label class="input-label" style="margin-bottom:7px;display:block">Notes / Ball Flight Observations</label>
+      <textarea class="notes-input" id="notes" placeholder="e.g. Slight fade, felt thin, mishit toe side, pulled left…"></textarea>
+    </div>
+    <button class="analyse-btn" id="analyseBtn" onclick="analyseManual()">⛳ Analyse My Data</button>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Coach is reviewing your data...</div>
+  </div>
+
+  <div class="analysis-output" id="analysisOutput">
+    <div class="section-lbl">Coach Analysis</div>
+    <div class="metrics-strip" id="metricsStrip"></div>
+    <div class="coach-panel">
+      <h3>Coaching Report</h3>
+      <div class="coach-text" id="coachText"></div>
+    </div>
+  </div>
+
+  <div class="history-section">
+    <div class="section-lbl">Session History</div>
+    <div id="historyList"></div>
+  </div>
+
+</div>
+
+<div class="footer">GOLF COACH AI · POWERED BY CLAUDE · STROKES GAINED COACHING ENGINE</div>
+
+<script>
+
+// ── State ──────────────────────────────────────────────────
+let selectedClub = '';
+let sessionHistory = JSON.parse(localStorage.getItem('golfCoachHistory') || '[]');
+let csvShots = [];
+let selectedRows = new Set();
+let activeClubFilter = 'ALL';
+let visibleShots = [];
+
+// ── FlightScope CSV column aliases ────────────────────────
+const COL = {
+  club:         ['club','club name','club_name','name'],
+  ballSpeed:    ['ball speed','ballspeed','ball_speed'],
+  clubSpeed:    ['club speed','clubspeed','club_speed','head speed','headspeed'],
+  carry:        ['carry','carry distance','carry_distance','carry (yds)','carry (yd)','carry distance (yds)'],
+  total:        ['total','total distance','total_distance','total (yds)','total (yd)'],
+  launchAngle:  ['launch angle','launchangle','launch_angle','vert. launch angle','vertical launch angle','launch angle (deg)'],
+  launchDir:    ['launch direction','launch_direction','side','lateral','horiz. launch angle','horizontal launch angle','launch direction (deg)'],
+  spinRate:     ['spin rate','spinrate','spin_rate','back spin','backspin','total spin','spin (rpm)'],
+  smashFactor:  ['smash factor','smashfactor','smash_factor'],
+  attackAngle:  ['angle of attack','attack angle','attackangle','aoa','angle of attack (deg)'],
+  clubPath:     ['club path','clubpath','club_path','club path (deg)'],
+  faceAngle:    ['face angle','faceangle','face_angle','face to target','face to target (deg)'],
+  facePath:     ['face to path','face-to-path','facepath','face_to_path','face to path (deg)'],
+  dynamicLoft:  ['dynamic loft','dynamicloft','dynamic_loft','dynamic loft (deg)'],
+  spinLoft:     ['spin loft','spinloft','spin_loft','spin loft (deg)'],
+  apexHeight:   ['apex height','apexheight','apex_height','max height','peak height','apex (ft)'],
+  curve:        ['curve','shot shape','curve (yds)'],
+  lowPoint:     ['low point','lowpoint','low_point','low point (in)'],
+  vertSwingPlane: ['vertical swing plane','vert. swing plane'],
+  horizSwingPlane: ['horizontal swing plane','horiz. swing plane'],
+};
+
+function findCol(headers, aliases) {
+  const lc = headers.map(h => h.toLowerCase().trim());
+  for (const a of aliases) { const i = lc.indexOf(a); if (i !== -1) return i; }
+  return -1;
+}
+function parseNum(v) {
+  if (v === undefined || v === null || v === '') return null;
+  const n = parseFloat(String(v).replace(/[^\d.\-]/g, ''));
+  return isNaN(n) ? null : n;
+}
+function avg(arr) {
+  const v = arr.filter(x => x !== null && !isNaN(x));
+  return v.length ? v.reduce((a,b) => a+b, 0) / v.length : null;
+}
+function stdDev(arr) {
+  const v = arr.filter(x => x !== null && !isNaN(x));
+  if (v.length < 2) return null;
+  const m = avg(v);
+  return Math.sqrt(v.reduce((s,x) => s + (x-m)**2, 0) / v.length);
+}
+
+// ── Mode switching ─────────────────────────────────────────
+function switchMode(mode) {
+  document.querySelectorAll('.mode-tab').forEach((t,i) => t.classList.toggle('active', mode==='csv'?i===0:i===1));
+  document.getElementById('csvPanel').classList.toggle('visible', mode==='csv');
+  document.getElementById('manualPanel').classList.toggle('visible', mode==='manual');
+  document.getElementById('analysisOutput').classList.remove('visible');
+}
+
+// ── Drag and drop ──────────────────────────────────────────
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag-over'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag-over'));
+dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag-over'); if (e.dataTransfer.files[0]) handleFileSelect(e.dataTransfer.files[0]); });
+
+function handleFileSelect(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => parseCSV(e.target.result);
+  reader.readAsText(file);
+}
+
+// ── CSV parsing ────────────────────────────────────────────
+function parseCSVLine(line) {
+  const res = []; let cur = '', inQ = false;
+  for (const c of line) {
+    if (c === '"') inQ = !inQ;
+    else if (c === ',' && !inQ) { res.push(cur.trim()); cur = ''; }
+    else cur += c;
+  }
+  res.push(cur.trim()); return res;
+}
+
+function parseCSV(text) {
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) { alert('CSV appears empty or invalid.'); return; }
+
+  // Find header row
+  let headerIdx = 0;
+  for (let i = 0; i < Math.min(10, lines.length); i++) {
+    const lower = lines[i].toLowerCase();
+    if (lower.includes('ball speed') || lower.includes('ballspeed') || lower.includes('carry') || lower.includes('spin rate')) {
+      headerIdx = i; break;
+    }
+  }
+
+  const headers = parseCSVLine(lines[headerIdx]);
+  const colIdx = {};
+  for (const [key, aliases] of Object.entries(COL)) colIdx[key] = findCol(headers, aliases);
+
+  const shots = [];
+  for (let i = headerIdx + 1; i < lines.length; i++) {
+    const cells = parseCSVLine(lines[i]);
+    if (cells.length < 2) continue;
+    const row = {};
+    for (const [key, idx] of Object.entries(colIdx)) row[key] = idx !== -1 ? cells[idx] : null;
+    if (!row.ballSpeed && !row.carry && !row.clubSpeed) continue;
+    row._idx = shots.length;
+    shots.push(row);
+  }
+
+  if (!shots.length) { alert('No shot data found. Please check this is a valid Mevo CSV export from myflightscope.com.'); return; }
+
+  csvShots = shots;
+  selectedRows.clear();
+  activeClubFilter = 'ALL';
+  buildClubFilters();
+  renderTable();
+  updateSelectionInfo();
+  document.getElementById('csvLoaded').style.display = 'block';
+  document.getElementById('dropZone').style.display = 'none';
+}
+
+// ── Club filters ───────────────────────────────────────────
+function buildClubFilters() {
+  const clubs = [...new Set(csvShots.map(s => (s.club || '').trim()).filter(Boolean))];
+  const row = document.getElementById('clubFilters');
+  row.innerHTML = '<span class="club-filter-label">Filter by club:</span>';
+  const all = Object.assign(document.createElement('button'), { className: 'club-filter active', textContent: 'All' });
+  all.onclick = () => setFilter('ALL');
+  row.appendChild(all);
+  clubs.forEach(c => {
+    const btn = Object.assign(document.createElement('button'), { className: 'club-filter', textContent: c });
+    btn.onclick = () => setFilter(c);
+    row.appendChild(btn);
+  });
+}
+
+function setFilter(club) {
+  activeClubFilter = club;
+  selectedRows.clear();
+  document.querySelectorAll('.club-filter').forEach(b => b.classList.toggle('active', b.textContent === (club === 'ALL' ? 'All' : club)));
+  renderTable();
+  updateSelectionInfo();
+}
+
+// ── Table rendering ────────────────────────────────────────
+const COL_LABELS = { ballSpeed:'Ball Spd', clubSpeed:'Club Spd', carry:'Carry', total:'Total', launchAngle:'Lnch°', launchDir:'Dir°', spinRate:'Spin', smashFactor:'SF', attackAngle:'AoA', clubPath:'Path', faceAngle:'Face', facePath:'F2P', dynamicLoft:'Dyn Lft', spinLoft:'Spn Lft', apexHeight:'Apex', curve:'Curve', lowPoint:'Low Pt', vertSwingPlane:'VSP', horizSwingPlane:'HSP' };
+
+function renderTable() {
+  visibleShots = activeClubFilter === 'ALL' ? csvShots : csvShots.filter(s => (s.club||'').trim() === activeClubFilter);
+  const showCols = Object.keys(COL).filter(k => k !== 'club' && visibleShots.some(s => s[k] !== null && s[k] !== ''));
+
+  document.getElementById('shotTableHead').innerHTML = `<tr>
+    <th style="text-align:left">#</th>
+    <th style="text-align:left">Club</th>
+    ${showCols.map(k => `<th>${COL_LABELS[k]||k}</th>`).join('')}
+  </tr>`;
+
+  document.getElementById('shotTableBody').innerHTML = visibleShots.map(shot => `
+    <tr onclick="toggleRow(${shot._idx})" class="${selectedRows.has(shot._idx)?'selected':''}">
+      <td>${shot._idx+1}</td>
+      <td>${(shot.club||'—').trim()}</td>
+      ${showCols.map(k => `<td>${fmtCell(k, shot[k])}</td>`).join('')}
+    </tr>`).join('');
+}
+
+function fmtCell(k, v) {
+  if (v === null || v === '') return '<span style="opacity:.25">—</span>';
+  if (k === 'smashFactor') return parseFloat(v).toFixed(2);
+  if (k === 'spinRate') return Math.round(parseFloat(v)).toLocaleString();
+  const n = parseFloat(v);
+  if (!isNaN(n)) return n % 1 === 0 ? n : n.toFixed(1);
+  return v;
+}
+
+function toggleRow(idx) {
+  selectedRows.has(idx) ? selectedRows.delete(idx) : selectedRows.add(idx);
+  renderTable();
+  updateSelectionInfo();
+}
+
+function selectAll() {
+  visibleShots.forEach(s => selectedRows.add(s._idx));
+  renderTable(); updateSelectionInfo();
+}
+function clearSelection() {
+  selectedRows.clear();
+  renderTable(); updateSelectionInfo();
+}
+
+function updateSelectionInfo() {
+  const info = document.getElementById('selectionInfo');
+  const btn = document.getElementById('csvAnalyseBtn');
+  const n = selectedRows.size;
+  if (!n) {
+    info.innerHTML = 'Click any shot row to select it for analysis.';
+    btn.disabled = true; btn.textContent = '⛳ Analyse Selected Shots'; return;
+  }
+  const sel = Array.from(selectedRows).map(i => csvShots[i]);
+  const avgCarry = avg(sel.map(s => parseNum(s.carry)));
+  const avgSF = avg(sel.map(s => parseNum(s.smashFactor)));
+  info.innerHTML = n === 1
+    ? `<strong>1 shot selected</strong> — ${(sel[0].club||'').trim()||'Unknown club'} · Carry: ${sel[0].carry||'?'} yds`
+    : `<strong>${n} shots selected</strong> — avg carry: <strong>${avgCarry?avgCarry.toFixed(0)+' yds':'?'}</strong>${avgSF?' &nbsp;·&nbsp; avg SF: <strong>'+avgSF.toFixed(2)+'</strong>':''}`;
+  btn.disabled = false;
+  btn.textContent = n === 1 ? '⛳ Analyse This Shot' : `⛳ Analyse ${n}-Shot Session`;
+}
+
+// ── Build aggregated data object ───────────────────────────
+function buildDataFromSelection() {
+  const sel = Array.from(selectedRows).map(i => csvShots[i]);
+  const clubs = [...new Set(sel.map(s => (s.club||'').trim()).filter(Boolean))];
+  const isSingle = sel.length === 1;
+  function getVal(k) {
+    const vals = sel.map(s => parseNum(s[k])).filter(v => v !== null);
+    return vals.length ? (isSingle ? vals[0] : avg(vals)) : null;
+  }
+  return {
+    club: clubs.join(' / ') || 'Unknown',
+    shotCount: sel.length, isSingle,
+    ballSpeed: getVal('ballSpeed'), clubSpeed: getVal('clubSpeed'),
+    carryDist: getVal('carry'), totalDist: getVal('total'),
+    launchAngle: getVal('launchAngle'), launchDir: getVal('launchDir'),
+    spinRate: getVal('spinRate'), smashFactor: getVal('smashFactor'),
+    attackAngle: getVal('attackAngle'), clubPath: getVal('clubPath'),
+    faceAngle: getVal('faceAngle'), facePath: getVal('facePath'),
+    dynamicLoft: getVal('dynamicLoft'), spinLoft: getVal('spinLoft'),
+    apexHeight: getVal('apexHeight'), curve: getVal('curve'), lowPoint: getVal('lowPoint'),
+    notes: document.getElementById('csvNotes').value,
+    carryStdDev: isSingle ? null : stdDev(sel.map(s => parseNum(s.carry))),
+    lateralStdDev: isSingle ? null : stdDev(sel.map(s => parseNum(s.launchDir))),
+    smashStdDev: isSingle ? null : stdDev(sel.map(s => parseNum(s.smashFactor))),
+  };
+}
+
+// ── Analyse CSV ────────────────────────────────────────────
+async function analyseCSVSelection() {
+  const data = buildDataFromSelection();
+  document.getElementById('csvAnalyseBtn').disabled = true;
+  document.getElementById('loading').classList.add('visible');
+  document.getElementById('analysisOutput').classList.remove('visible');
+  await runAnalysis(data, 'csv');
+  document.getElementById('csvAnalyseBtn').disabled = false;
+}
+
+// ── Manual entry ───────────────────────────────────────────
+async function analyseManual() {
+  if (!selectedClub) { alert('Please select a club first.'); return; }
+  const data = {
+    club: selectedClub, shotCount: 1, isSingle: true,
+    ballSpeed: parseNum(document.getElementById('ballSpeed').value),
+    clubSpeed: parseNum(document.getElementById('clubSpeed').value),
+    carryDist: parseNum(document.getElementById('carryDist').value),
+    totalDist: parseNum(document.getElementById('totalDist').value),
+    launchAngle: parseNum(document.getElementById('launchAngle').value),
+    spinRate: parseNum(document.getElementById('spinRate').value),
+    smashFactor: parseNum(document.getElementById('smashFactor').value),
+    attackAngle: parseNum(document.getElementById('attackAngle').value),
+    clubPath: parseNum(document.getElementById('clubPath').value),
+    faceAngle: parseNum(document.getElementById('faceAngle').value),
+    facePath: parseNum(document.getElementById('facePath').value),
+    apexHeight: parseNum(document.getElementById('apexHeight').value),
+    notes: document.getElementById('notes').value,
+  };
+  if (!Object.entries(data).some(([k,v]) => !['club','shotCount','isSingle','notes'].includes(k) && v !== null)) {
+    alert('Please enter at least some data.'); return;
+  }
+  document.getElementById('analyseBtn').disabled = true;
+  document.getElementById('loading').classList.add('visible');
+  document.getElementById('analysisOutput').classList.remove('visible');
+  await runAnalysis(data, 'manual');
+  document.getElementById('analyseBtn').disabled = false;
+}
+
+// ── Core analysis engine ───────────────────────────────────
+async function runAnalysis(data, source) {
+  renderMetrics(data);
+  const lines = [];
+  const f = (label, val, unit='') => val !== null && val !== undefined && lines.push(`${label}: ${typeof val === 'number' ? (Math.abs(val) < 10 ? val.toFixed(2) : val.toFixed(1)) : val}${unit}`);
+
+  lines.push(`Club: ${data.club}`);
+  lines.push(`Analysis: ${data.isSingle ? 'Single shot' : data.shotCount + '-shot session average'}`);
+  f('Ball Speed', data.ballSpeed, ' mph');
+  f('Club Speed', data.clubSpeed, ' mph');
+  f('Smash Factor', data.smashFactor);
+  f('Carry Distance', data.carryDist, ' yds');
+  f('Total Distance', data.totalDist, ' yds');
+  f('Launch Angle', data.launchAngle, '°');
+  f('Launch Direction', data.launchDir, '° (negative = left)');
+  f('Spin Rate', data.spinRate ? Math.round(data.spinRate) : null, ' rpm');
+  f('Attack Angle', data.attackAngle, '°');
+  f('Club Path', data.clubPath, '° (negative = out-to-in)');
+  f('Face Angle', data.faceAngle, '°');
+  f('Face to Path', data.facePath, '°');
+  f('Dynamic Loft', data.dynamicLoft, '°');
+  f('Spin Loft', data.spinLoft, '°');
+  f('Apex Height', data.apexHeight, ' ft');
+  f('Curve', data.curve, ' yds');
+  f('Low Point', data.lowPoint, ' in (positive = ahead of ball)');
+  if (data.carryStdDev !== null) f('Carry Std Dev (strike consistency)', data.carryStdDev, ' yds');
+  if (data.lateralStdDev !== null) f('Lateral Direction Std Dev (dispersion)', data.lateralStdDev, '°');
+  if (data.smashStdDev !== null) f('Smash Factor Std Dev (contact consistency)', data.smashStdDev);
+  if (data.notes) lines.push(`Player observations: ${data.notes}`);
+
+  const prompt = `You are an expert PGA-level golf coach specialising in launch monitor data analysis and strokes gained methodology. You are coaching a player with this profile:
+
+PLAYER PROFILE:
+- Handicap: 10 (has been lower, understands pro-level concepts)
+- Goal: Single figures and beyond
+- Device: FlightScope Mevo Gen2 with Pro Package
+- Improvement framework: Strokes Gained
+
+KEY BENCHMARKS:
+- Smash Factor: Tour 1.48–1.49 / 10 HCP typical 1.42–1.45. Below 1.43 = contact quality issue.
+- Driver attack angle: optimal +3° to +5° (ascending). Descending = -1° to -2° for most amateurs. Costs 15–30 yds.
+- D-Plane: Face angle = 83% of initial ball direction. Path = curve. Face-to-path = shot shape magnitude.
+- Spin Rate (driver): optimal 2,200–2,700 rpm. Over 3,000 = too much, balloons and loses distance.
+- Spin Rate (irons 7i): optimal 6,500–7,500 rpm. Steep attack = over-spin, ballooning.
+- Iron low point: Tour ±0.5 in ahead of ball / Amateur ±2 in. Low point behind ball = thin or heavy.
+- Dynamic Loft (driver): optimal 12–15°. Over 18° = too much spin. Under 10° = knuckleball.
+- Spin Loft: lower = more efficient energy transfer. High spin loft = glancing blow.
+- Under-clubbing: 10 HCP overestimates carry by 10–15 yds per club.
+- Dispersion (150 yds): Tour ±8 yds L/R / 10 HCP ±25 yds L/R.
+- SG losses typical for 10 HCP: -2.0 to -3.0 SG Approach / -1.4 to -2.0 SG Off-Tee per round vs tour.
+- Consistency: carry std dev under 8 yds = good / 8–15 yds = acceptable / over 15 yds = significant issue.
+
+DATA:
+${lines.join('\n')}
+
+Provide a detailed, specific coaching analysis:
+
+1. **Data Assessment** — what these exact numbers reveal about strike quality, efficiency, trajectory, and ball flight. Reference the actual values. Be precise.
+2. **Priority Fault(s)** — identify the 1–2 most impactful issues ranked by strokes gained consequence. Explain cause and effect clearly. Don't be vague.
+3. **Drills & Fixes** — 2–3 specific, actionable drills with precise instructions (distances, reps, pass/fail criteria, what feedback to look for on the launch monitor).
+4. **Performance Gains** — realistic distance or accuracy gains if faults are corrected.
+5. **Session Focus Cue** — one clear thought or feel for the next session.
+
+Be direct, data-driven, and specific to this exact data. Don't be generic.`;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: "claude-sonnet-4-20250514", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
+    });
+    const result = await res.json();
+    const text = result.content?.map(c => c.text||'').join('') || 'Unable to generate analysis. Please try again.';
+    document.getElementById('coachText').textContent = text;
+    document.getElementById('loading').classList.remove('visible');
+    document.getElementById('analysisOutput').classList.add('visible');
+    document.getElementById('analysisOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const entry = {
+      id: Date.now(),
+      date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }),
+      club: data.club, carry: data.carryDist ? data.carryDist.toFixed(0) : null,
+      smash: data.smashFactor ? data.smashFactor.toFixed(2) : null,
+      shotCount: data.shotCount, source, analysis: text, data
+    };
+    sessionHistory.unshift(entry);
+    if (sessionHistory.length > 20) sessionHistory.pop();
+    localStorage.setItem('golfCoachHistory', JSON.stringify(sessionHistory));
+    renderHistory();
+  } catch(err) {
+    document.getElementById('loading').classList.remove('visible');
+    document.getElementById('coachText').textContent = 'Error connecting to coaching engine. Please try again.';
+    document.getElementById('analysisOutput').classList.add('visible');
+  }
+}
+
+// ── Metrics strip ──────────────────────────────────────────
+function renderMetrics(data) {
+  const cards = [];
+  const add = (name, val, unit, rating, sub) => val !== null && val !== undefined && cards.push({ name, val: val+unit, rating: rating||'', sub: sub||'' });
+  const sfR = sf => sf >= 1.47 ? 'good' : sf >= 1.43 ? 'warn' : 'bad';
+  const aaR = aa => aa > 1 ? 'good' : aa > -1 ? 'warn' : 'bad';
+  const fpR = fp => Math.abs(fp) < 2 ? 'good' : Math.abs(fp) < 4 ? 'warn' : 'bad';
+  const sdR = sd => sd < 8 ? 'good' : sd < 15 ? 'warn' : 'bad';
+
+  if (data.ballSpeed) add('Ball Speed', data.ballSpeed.toFixed(1), ' mph', 'good');
+  if (data.clubSpeed) add('Club Speed', data.clubSpeed.toFixed(1), ' mph', 'good');
+  if (data.carryDist) add('Carry', data.carryDist.toFixed(0), ' yds', 'good', data.shotCount > 1 ? `avg of ${data.shotCount}` : '');
+  if (data.smashFactor) add('Smash Factor', data.smashFactor.toFixed(2), '', sfR(data.smashFactor));
+  if (data.launchAngle !== null) add('Launch Angle', data.launchAngle.toFixed(1), '°', 'good');
+  if (data.spinRate !== null) add('Spin', Math.round(data.spinRate).toLocaleString(), ' rpm', 'good');
+  if (data.attackAngle !== null) add('Attack Angle', (data.attackAngle>=0?'+':'')+data.attackAngle.toFixed(1), '°', aaR(data.attackAngle));
+  if (data.facePath !== null) add('Face to Path', (data.facePath>=0?'+':'')+data.facePath.toFixed(1), '°', fpR(data.facePath));
+  if (data.carryStdDev !== null) add('Carry StdDev', data.carryStdDev.toFixed(1), ' yds', sdR(data.carryStdDev), 'consistency');
+
+  document.getElementById('metricsStrip').innerHTML = cards.map(c => `
+    <div class="metric-card ${c.rating}">
+      <div class="metric-name">${c.name}</div>
+      <div class="metric-val">${c.val}</div>
+      ${c.sub ? `<div class="metric-sub">${c.sub}</div>` : ''}
+    </div>`).join('');
+}
+
+// ── History ────────────────────────────────────────────────
+function renderHistory() {
+  const list = document.getElementById('historyList');
+  if (!sessionHistory.length) { list.innerHTML = '<div class="no-history">No sessions recorded yet</div>'; return; }
+  list.innerHTML = sessionHistory.map(e => `
+    <div class="history-item" onclick="loadHistory(${e.id})">
+      <div>
+        <div class="history-club">${e.club}${e.shotCount>1?` <span class="avg-pill">${e.shotCount} shots</span>`:''}</div>
+        <div class="history-meta">${e.date}${e.smash?' · SF: '+e.smash:''}</div>
+        <div class="history-source">${e.source==='csv'?'📂 CSV Import':'✏️ Manual'}</div>
+      </div>
+      <div class="history-carry">${e.carry?e.carry+' yds':'—'}</div>
+    </div>`).join('') + `<button class="clear-btn" onclick="clearHistory()">Clear History</button>`;
+}
+
+function loadHistory(id) {
+  const e = sessionHistory.find(x => x.id === id);
+  if (!e) return;
+  renderMetrics(e.data);
+  document.getElementById('coachText').textContent = e.analysis;
+  document.getElementById('analysisOutput').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function clearHistory() {
+  if (!confirm('Clear all session history?')) return;
+  sessionHistory = []; localStorage.removeItem('golfCoachHistory'); renderHistory();
+}
+
+// ── Manual club select ─────────────────────────────────────
+document.querySelectorAll('.club-btn').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.club-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); selectedClub = btn.dataset.club;
+}));
+
+renderHistory();
+
+</script>
+</body>
+</html>

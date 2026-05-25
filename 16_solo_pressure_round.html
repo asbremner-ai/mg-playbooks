@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Solo Pressure Round Protocol — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:500px){.two-col{grid-template-columns:1fr;}}
+.game-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px;position:relative;}
+.game-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:var(--r) var(--r) 0 0;}
+.game-card.gold-g::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.game-card.teal-g::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+.game-card.lime-g::before{background:linear-gradient(90deg,transparent,var(--lime),transparent);}
+.game-card.rust-g::before{background:linear-gradient(90deg,transparent,var(--rust),transparent);}
+.game-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+.game-type{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.game-body{font-size:12.5px;color:var(--muted);line-height:1.8;}
+.game-body strong{color:var(--white);}
+.game-meta{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.game-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;border:1px solid var(--border);color:var(--muted);}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">Solo Pressure Round · Guide 16</p>
+  <h1>Play Alone.<br><em>Perform</em> Under Pressure.</h1>
+  <p class="hero-sub">A structured protocol for solo rounds that simultaneously collects data, simulates competitive pressure, and builds the mental resilience your game needs to perform when it genuinely matters.</p>
+  <div class="hero-tags">
+    <span class="htag">🎯 Pressure Simulation</span>
+    <span class="htag">📊 Data Collection</span>
+    <span class="htag">🧠 Mental Training</span>
+    <span class="htag">🏆 Scoring Formats</span>
+    <span class="htag">📋 Post-Round Review</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Solo Rounds</button>
+  <button class="tab" onclick="show('setup',this)">Setup & Rules</button>
+  <button class="tab" onclick="show('formats',this)">Scoring Formats</button>
+  <button class="tab" onclick="show('pressure',this)">Pressure Protocols</button>
+  <button class="tab" onclick="show('data',this)">Data Collection</button>
+  <button class="tab" onclick="show('mental',this)">Mental Framework</button>
+  <button class="tab" onclick="show('review',this)">Post-Round Review</button>
+</div>
+
+<!-- WHY SOLO -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">The Most Underused Training Tool in Golf</h2>
+  <p class="sec-desc">A solo round played with structure, consequence, and discipline is one of the most powerful training modalities available to an amateur golfer. Done correctly, it simultaneously develops pressure tolerance, collects precise performance data, and tests your game in real conditions — none of which a practice session can replicate.</p>
+
+  <div class="pull-quote">
+    <p>"The only way to learn to perform under pressure is to practise under pressure. A Saturday four-ball with your friends is social golf. A solo round with a scoring consequence is competitive golf training."</p>
+    <span>— Dr. Bob Rotella, sports psychologist</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">What a Solo Round Develops That Nothing Else Can</span>
+    <h3>The Four Unique Benefits</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Self-generated pressure:</strong> Without playing partners, social anxiety is removed — but internal pressure (the scorecard, the scoring standard you have set) remains. This trains the specific mental skill required in stroke play competition: performing for yourself, not in reaction to others.</div></li>
+      <li><span class="step-n">2</span><div><strong>Full pre-shot routine compliance:</strong> In a social fourball, slow play pressure often shortens your routine on difficult shots. Alone, you have the freedom to execute the full routine on every shot, every hole — which is the only way to make the routine automatic.</div></li>
+      <li><span class="step-n">3</span><div><strong>Uncontaminated data:</strong> A social round produces data distorted by pace of play pressure, social distraction, and gimmes. A solo round produces clean data that accurately reflects your current game — useful for practice planning.</div></li>
+      <li><span class="step-n">4</span><div><strong>Adaptable format:</strong> You can play two balls on specific holes, replay shots you want to practise, or apply game formats that generate targeted pressure. A solo round is the most flexible training environment available on a golf course.</div></li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <span class="card-tag">Frequency Target</span>
+      <h3>How Often to Solo Round</h3>
+      <p style="font-size:12px;">One of your two weekly rounds should be a designated solo pressure round with a scoring consequence. The other can be a social fourball. This ratio is the standard for serious low-handicap amateur training.</p>
+    </div>
+    <div class="card card-gold">
+      <span class="card-tag">Etiquette Note</span>
+      <h3>Sharing the Course</h3>
+      <p style="font-size:12px;">Solo players have no priority over groups. Play in the gaps between groups. Be prepared to wave through any group behind you. If playing two balls, pick up the second ball if you are slowing play at any point.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SETUP & RULES -->
+<div class="sec" id="setup">
+  <h2 class="sec-title">Setup & Non-Negotiable Rules</h2>
+  <p class="sec-desc">A solo pressure round only produces its intended benefits if you commit to these rules completely before you start. Half-measures destroy the training effect. Decide in advance — and enforce the rules on yourself without exceptions.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">The Core Rules — No Exceptions</span>
+    <h3>Commit Before You Tee Off</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>No mulligans. Ever.</strong> Every shot counts. The first tee shot, shanked or perfect, is the shot you play from. The consequences are what generate the pressure that makes the session valuable. A mulligan destroys the entire training effect of the hole.</div></li>
+      <li><span class="step-n">2</span><div><strong>No gimmes.</strong> Hole every putt. The most common source of putting degradation in competitive rounds is that players have not putted out consistently in practice. If you cannot make a 2-foot putt under social pressure in practice, you will not make it when your handicap certificate depends on it.</div></li>
+      <li><span class="step-n">3</span><div><strong>Full pre-shot routine on every shot.</strong> The same routine you use in competition. On every shot. Including tap-ins, punch outs, and short pitch shots. Routine consistency is built by never shortcutting it — not even when you are alone.</div></li>
+      <li><span class="step-n">4</span><div><strong>Full Rules of Golf apply.</strong> Take correct relief, apply all penalties, and score accurately. A solo round played without rules rigour builds the habits that produce rules errors in competition.</div></li>
+      <li><span class="step-n">5</span><div><strong>Score card in hand.</strong> Carry a physical score card. Record every shot including penalty strokes. The act of recording keeps you honest and forces your brain to process the score — which is precisely the pressure mechanism you are training to handle.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Two-Ball Protocol (Optional Enhancement)</span>
+    <h3>When and How to Play Two Balls</h3>
+    <p>Playing two balls simultaneously in a solo round is a powerful tool when used correctly. It provides doubled data volume and allows direct comparison between two approaches, two ball positions, or two club selections. Rules for two-ball solo rounds:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Use sparingly:</strong> Only on holes 1–9. By the back nine, fatigue and data complexity compromise both scoring and data quality. Nine holes of two-ball play produces more useful information than eighteen holes of distracted two-ball play.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Always designate one ball as the "primary":</strong> Your primary ball is played exactly as it lies, no exceptions. Your secondary ball is the comparison or experiment. Track both scores separately.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Use for specific testing:</strong> Test a course management decision (attack pin vs. play centre on your primary vs. secondary ball). Test a new shot shape. Test a different club selection. Two balls played casually produce no useful information.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">📊</span>
+    <p><strong>Pre-round setup:</strong> Before teeing off, open Arccos or Shot Scope, set your scoring goal for the round, and write both the scoring goal and your process intention ("Full routine on every shot") on the top of your score card. These two items — the outcome goal and the process anchor — bracket every solo round.</p>
+  </div>
+</div>
+
+<!-- SCORING FORMATS -->
+<div class="sec" id="formats">
+  <h2 class="sec-title">Scoring Formats</h2>
+  <p class="sec-desc">Different formats generate different types of pressure and develop different skills. Rotate through these across your weekly solo rounds — each targets a specific area of competitive readiness.</p>
+
+  <div class="game-card gold-g">
+    <div class="game-name">The Scratch Qualifier</div>
+    <div class="game-type">Stroke Play · Primary Format</div>
+    <div class="game-body">
+      Play 18 holes of pure stroke play. Record every shot. Calculate your score relative to your current personal par (not course par — your own target based on current handicap). The goal is to beat your personal benchmark score, set before each round based on recent averages.<br><br>
+      <strong>Scoring standard:</strong> Set your target as your handicap-adjusted course par. As you improve, tighten the target. Once your target is scratch-level par (course par), you are ready to enter competitions with real confidence.<br><br>
+      <strong>Pressure mechanism:</strong> The scorecard. Write the running total after every three holes. Seeing the number — knowing whether you are ahead or behind your target — creates real internal pressure without social stakes.
+    </div>
+    <div class="game-meta">
+      <span class="game-tag">18 Holes</span>
+      <span class="game-tag">Weekly Primary</span>
+      <span class="game-tag">Full SG Data</span>
+    </div>
+  </div>
+
+  <div class="game-card teal-g">
+    <div class="game-name">Worst Ball</div>
+    <div class="game-type">Difficulty Amplifier · Tee-to-Green Resilience</div>
+    <div class="game-body">
+      Play two balls on every hole. After each shot, play your next shot from the worse of the two outcomes. Score the hole with the worst of the two balls.<br><br>
+      <strong>What it develops:</strong> Decision-making under consistent adverse conditions. The ability to recover from poor positions. Mental resilience — because you will face genuinely difficult shots that you rarely encounter in normal play. Worst ball makes your scoring range appear catastrophic initially — and then produces dramatic improvement in recovery shot quality.<br><br>
+      <strong>Scoring standard:</strong> A scratch golfer should be able to break 85 in worst ball. At 10 HCP, target 90–95 initially. As this becomes achievable, tighten the target.
+    </div>
+    <div class="game-meta">
+      <span class="game-tag">18 or 9 Holes</span>
+      <span class="game-tag">Monthly</span>
+      <span class="game-tag">Recovery Skills</span>
+    </div>
+  </div>
+
+  <div class="game-card lime-g">
+    <div class="game-name">The Back Nine Chase</div>
+    <div class="game-type">Pressure Simulation · Competitive Closing</div>
+    <div class="game-body">
+      Play a full 18 holes of stroke play. After 9 holes, calculate your score versus your handicap target. If you are ahead of target, your back nine goal is to <em>protect and extend</em> the lead — same course management decisions as a competitive round with a good score going. If you are behind target, the back nine is a chase — can you make up the deficit?<br><br>
+      <strong>What it develops:</strong> Managing a score — the specific mental skill of protecting a good round (not becoming conservative to the point of passivity) and recovering from a poor front nine without losing composure. Both are distinct skills from pure stroke play.<br><br>
+      <strong>Consequence layer:</strong> Before the round, write down what happens if you succeed or fail to meet your back nine target. A consequence you can enforce on yourself — a longer practice session, a specific drill set, or a nominal financial penalty — amplifies the pressure effect significantly.
+    </div>
+    <div class="game-meta">
+      <span class="game-tag">18 Holes</span>
+      <span class="game-tag">Fortnightly</span>
+      <span class="game-tag">Scoring Management</span>
+    </div>
+  </div>
+
+  <div class="game-card rust-g">
+    <div class="game-name">The Danger Hole Audit</div>
+    <div class="game-type">Targeted Weakness · Specific Hole Pressure</div>
+    <div class="game-body">
+      Identify your 4–5 most consistently poorly played holes from your SG data. Play 9 holes focusing exclusively on these, interspersed with other holes for rhythm. On each danger hole, you play two balls — one with your normal strategy and one with the most conservative possible strategy. Record both scores.<br><br>
+      <strong>What it develops:</strong> Data-driven strategy refinement for specific holes. Most amateurs lose 1.5–2 strokes per round on 3–4 consistently problematic holes. Targeting these specifically in a solo round produces faster improvement than general stroke play practice.<br><br>
+      <strong>Analysis output:</strong> After the round, compare the two strategies on each danger hole across 4+ sessions. The data will confirm whether your normal strategy or the conservative strategy produces better expected scores. Use this to update your strategy card.
+    </div>
+    <div class="game-meta">
+      <span class="game-tag">9 Holes Targeted</span>
+      <span class="game-tag">Monthly</span>
+      <span class="game-tag">Strategy Data</span>
+    </div>
+  </div>
+
+  <div class="game-card gold-g">
+    <div class="game-name">The Par-36 Challenge</div>
+    <div class="game-type">Stretch Goal · Scratch Level Simulation</div>
+    <div class="game-body">
+      Play any 9 holes treating them as a standalone scratch-level event. Your target: 36 (even par on a par-36 nine) or better. No handicap allowance. Every hole counts.<br><br>
+      <strong>When to use:</strong> Once you reach 3–4 handicap and are targeting scratch. Until then, the target is too demanding to be motivationally useful — use the Scratch Qualifier format instead. At 3–4 HCP, this format is exactly the competitive challenge you need to close the final gap.<br><br>
+      <strong>Consequence:</strong> Every shot above par on the nine costs a defined consequence (a set number of extra practice putts from 5 feet, a financial penalty, or an additional range session). Every birdie earns a defined reward. Pre-commit to both before teeing off.
+    </div>
+    <div class="game-meta">
+      <span class="game-tag">9 Holes</span>
+      <span class="game-tag">3 HCP and Below</span>
+      <span class="game-tag">Scratch Simulation</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRESSURE PROTOCOLS -->
+<div class="sec" id="pressure">
+  <h2 class="sec-title">In-Round Pressure Protocols</h2>
+  <p class="sec-desc">Scoring formats create macro pressure — hole-by-hole and round-level consequences. These protocols create micro-pressure — shot-level and putt-level consequences that replicate the intensity of genuine competition at the individual shot level.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Consequence Layer</span>
+    <h3>Why Consequence Changes Everything</h3>
+    <p>Pressure is physiological. It requires elevated stakes to generate — and elevated stakes require real consequences. The consequences you choose for your solo rounds do not need to be large. Research in sports psychology shows that even nominal consequences (£1 per missed putt, 10 extra press-ups for a double bogey) activate the cortisol and adrenaline response that constitutes real pressure. The response — not the magnitude of the consequence — is what you are training.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Consequence Type</th><th>Application</th><th>Pressure Level</th></tr>
+      <tr><td>Financial (£1–5 per unit)</td><td class="good">Missed putts inside 6 ft, double bogeys, rules mistakes</td><td class="good">Moderate — very effective</td></tr>
+      <tr><td>Physical (press-ups, sprints)</td><td class="warn">Double bogeys, missed scoring zone</td><td class="warn">Moderate — can compromise rest of round if overdone</td></tr>
+      <tr><td>Practice penalty (extra reps)</td><td class="good">Specific shot failures — e.g., missed fairway on designated hole</td><td class="good">Low-moderate — links course outcome to practice</td></tr>
+      <tr><td>Round extension</td><td class="good">Missing overall scoring target → mandatory extra 9 holes or practice session same day</td><td class="good">High — time is a real consequence</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Putting Consequence Protocol</span>
+    <h3>The Most Impactful Micro-Pressure Tool</h3>
+    <p>The majority of the mental pressure in competition manifests on putts — particularly short putts (3–6 feet) that are expected to be made. This protocol replicates that pressure in every solo round.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Every putt inside 6 feet must be holed.</strong> No picking up. No conceding to yourself. Hole it or it counts as a missed putt in your log. This is the single rule that most quickly closes the gap between practice putting performance and competitive putting performance.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Any putt inside 3 feet that is missed = defined consequence.</strong> Pre-set this before the round. £1 per miss into an end-of-month fund, or 10 extra minutes of clock drill at your next practice session. The consequence must be real and enforceable.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Track every putt on the score card.</strong> Total putts, 3-putt count, and missed makeable count (inside 6 ft). These three numbers, tracked across solo rounds, tell you more about your putting under pressure than any amount of practice green work.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Fairway Consequence Protocol</span>
+    <h3>Tee Shot Accountability</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Designate 3–4 "must-hit" fairways per round</strong> — the holes where missing costs you the most based on your strategy card. Pre-identify them before you tee off. Write them on the card. Missing a must-hit fairway activates a consequence.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Club commitment must be made before stepping on the tee:</strong> Driver or iron — decide before you walk to the tee, not at the ball. On the course, on-the-tee changes are almost always driven by ego, not strategy. The solo round is where you build the habit of pre-committing.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The pressure escalation rule:</strong> Start with mild consequences in your first 4 solo pressure rounds. As these become routine and no longer generate any anxiety, escalate the consequence. The goal is to stay at the edge of your pressure comfort zone — not to play in a state of panic. Sustained mid-level pressure, not occasional extreme pressure, is what builds competitive resilience.</p>
+  </div>
+</div>
+
+<!-- DATA COLLECTION -->
+<div class="sec" id="data">
+  <h2 class="sec-title">In-Round Data Collection</h2>
+  <p class="sec-desc">A solo round is uniquely suited to detailed data collection — you have no social obligations between shots and can log information that is impractical to capture in a fourball. This data, accumulated over months, becomes your most valuable self-coaching resource.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">What to Track Every Solo Round</span>
+    <h3>The Core Data Set</h3>
+    <table class="tbl">
+      <tr><th>Data Point</th><th>How to Capture</th><th>Why It Matters</th></tr>
+      <tr><td>Fairways hit (Y/N + miss direction)</td><td class="good">Scorecard tick + L/R note</td><td>Identifies driver bias pattern for targeting offset</td></tr>
+      <tr><td>Approach shot club + distance</td><td class="good">Arccos auto or scorecard note</td><td>Reveals under/over-clubbing patterns</td></tr>
+      <tr><td>Approach landing zone (short/long/left/right of flag)</td><td class="good">Pace off and note distance + direction</td><td>Direct input for dispersion mapping</td></tr>
+      <tr><td>GIR (Y/N)</td><td class="good">Scorecard</td><td>Primary approach quality metric</td></tr>
+      <tr><td>Putts per hole + distance of first putt</td><td class="good">Scorecard</td><td>Lag putting vs. short putt diagnostic</td></tr>
+      <tr><td>Up-and-down attempt + outcome</td><td class="good">Scorecard Y/N</td><td>Short game effectiveness tracking</td></tr>
+      <tr><td>Decision quality (1–5) per hole</td><td class="good">Scorecard number</td><td>Separates execution errors from decision errors</td></tr>
+      <tr><td>Routine compliance (Y/N) per hole</td><td class="good">Scorecard tick</td><td>Confirms pre-shot routine is being executed under pressure</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Decision Quality Rating</span>
+    <h3>Separating Decision Errors from Execution Errors</h3>
+    <p>After each hole, rate the quality of your strategic decisions on that hole from 1–5. This is the most analytically powerful data point you can collect — because it allows you to separate shots you executed poorly from shots you decided poorly.</p>
+    <div class="card" style="margin-top:12px;margin-bottom:0;">
+      <table class="tbl">
+        <tr><th>Rating</th><th>Definition</th><th>Example</th></tr>
+        <tr><td class="good">5 — Perfect</td><td>Correct strategic decision, correct club, correct target</td><td>Aimed at centre green, hit it to 18 feet, two-putted</td></tr>
+        <tr><td class="good">4 — Good</td><td>Correct decision, minor execution variance</td><td>Correct club, aimed correctly, hit it 12 feet offline — acceptable outcome</td></tr>
+        <tr><td class="warn">3 — Adequate</td><td>Reasonable decision, could have been better</td><td>Went for accessible flag, should have aimed centre — got away with it</td></tr>
+        <tr><td class="warn">2 — Poor</td><td>Wrong decision regardless of outcome</td><td>Went for sucker pin over bunker, happened to make birdie — still a poor decision</td></tr>
+        <tr><td class="bad">1 — Mistake</td><td>Clear strategic or club selection error</td><td>Used wrong club, aimed at danger, ignored wind</td></tr>
+      </table>
+    </div>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">🏆</span>
+      <p><strong>The target:</strong> A scratch golfer should average 4.0+ in decision quality rating across all holes. Averaging below 3.5 means decision errors are contributing to scoring variance as much as execution errors — which is solvable through strategy work, not swing work.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MENTAL FRAMEWORK -->
+<div class="sec" id="mental">
+  <h2 class="sec-title">Mental Framework for Solo Rounds</h2>
+  <p class="sec-desc">A solo round is a different mental environment from a social round. Without external social anchors, it is easier for internal narrative to dominate — both positively and negatively. Manage this environment deliberately.</p>
+
+  <div class="card card-teal">
+    <span class="card-tag">Before the Round</span>
+    <h3>Set the Mental Frame</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Set one outcome goal:</strong> Your scoring target for the round. Write it on the card. This is your only outcome aspiration for the entire round — not hole-by-hole targets, not birdie expectations. One number, set before you tee off.</div></li>
+      <li><span class="step-n">2</span><div><strong>Set one process intention:</strong> The single mental skill you are specifically practising today. "Full routine on every shot." "10-second rule after every bad shot." "Process goal only between the decision phase and trigger." One intention, not a list.</div></li>
+      <li><span class="step-n">3</span><div><strong>Acknowledge the loneliness factor:</strong> Sole rounds are mentally harder than social rounds for most people — not easier. Without a playing partner's conversation and energy, the internal monologue is louder. Prepare for this. The mental discipline required to manage a solo round is exactly the discipline required in stroke play competition.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">During the Round — Between Shot Protocol</span>
+    <h3>Managing the Silence</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Walk at a deliberate pace.</strong> Solo rounds have a natural tendency to accelerate — no one is waiting, so the unconscious urge is to move faster. Deliberately slow your walk between shots. This controls breathing and physiological arousal, and maintains the tempo that produces your best swing.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Observe between shots.</strong> The solo round is the best opportunity to observe the course — green slopes, wind direction changes, grain on fairways — that a social round's conversation masks. Use the silence as information, not as a void to fill with anxiety.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Enter the routine at your normal trigger point.</strong> Not earlier. The purpose of the routine is to switch from observation mode to execution mode. Entering it early — walking to the ball already in "swing mode" — generates excessive tension before you even arrive at the ball.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Managing a Good Score and a Bad Score</span>
+    <h3>The Two Hardest Mental Situations</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>The Trap</th><th>The Correct Response</th></tr>
+      <tr><td class="good">Ahead of target at turn</td><td class="warn">Becoming protective — taking half-swings, playing too short of dangers</td><td class="good">Continue same process. Trust the strategy. Protecting becomes passive — and passive golf scores badly. Play your game.</td></tr>
+      <tr><td class="bad">Behind target at turn</td><td class="warn">Becoming aggressive — going for sucker pins, taking hero shots to recover strokes</td><td class="good">Steady par golf on the back nine nearly always recovers more of a deficit than two birdies and two doubles. Trust the process.</td></tr>
+      <tr><td class="bad">Double bogey mid-round</td><td class="warn">Carrying the hole into the next tee shot — rumination</td><td class="good">10-second rule. Physical close-out cue. The hole is scored. The next hole is a clean slate. Apply this rule without exception.</td></tr>
+      <tr><td class="good">Birdie run (2–3 in a row)</td><td class="warn">Expecting birdies — becoming impatient with pars</td><td class="good">A birdie run is exceptional performance. Treat the next hole as a neutral hole. Par is excellent. Nothing is owed.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- POST-ROUND REVIEW -->
+<div class="sec" id="review">
+  <h2 class="sec-title">Post-Round Review Protocol</h2>
+  <p class="sec-desc">The post-round review transforms a solo round from a scoring exercise into a structured learning experience. Done within 30 minutes of finishing, while memory is fresh, it produces actionable practice direction and pattern identification that accumulates compound value over months.</p>
+
+  <div class="card card-teal">
+    <span class="card-tag">The 15-Minute Post-Round Protocol</span>
+    <h3>Execute This Before You Leave the Car Park</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Minutes 0–3 — Score review:</strong> Confirm total score vs. target. Record in your progress journal. Note whether the consequence applies. Enforce it today, not later.</div></li>
+      <li><span class="step-n">2</span><div><strong>Minutes 3–7 — SG review (if using Arccos/Shot Scope):</strong> Open the app. Identify the single category with the largest SG deficit from today's round. Note the specific holes where strokes were lost in that category — note the pattern (e.g., "Lost 1.8 SG Putting — 3-putted 4 times, all from outside 35 feet. Lag putting").</div></li>
+      <li><span class="step-n">3</span><div><strong>Minutes 7–10 — Decision quality review:</strong> Average your decision quality ratings. Identify the two holes rated 1–2. Write one sentence per hole: what decision error was made and what the correct decision would have been. This is the most underused self-coaching practice available.</div></li>
+      <li><span class="step-n">4</span><div><strong>Minutes 10–13 — Process intention review:</strong> Did you execute your process intention (the single mental skill you set before the round)? Where did it break down? What was the trigger? Write one sentence. This data accumulates into a pattern map of your mental game under pressure.</div></li>
+      <li><span class="step-n">5</span><div><strong>Minutes 13–15 — Next practice priority:</strong> Based on today's SG data and decision quality review, write the primary focus of your next practice session. One sentence. This converts post-round data directly into practice direction — the mechanism by which data-driven improvement actually works.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Monthly Pattern Review</span>
+    <h3>Looking Across Solo Rounds — The Bigger Picture</h3>
+    <p>Once per month, review the post-round notes from all solo rounds that month. Look for:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Consistent SG deficit category:</strong> If the same SG category appears as the primary leak in 3 of 4 rounds, it is not a one-round anomaly — it is a structural weakness. The practice plan for the following month should weight this category accordingly.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Decision error patterns:</strong> If the same hole category (danger holes, tucked pins, narrow tee shots) produces low decision quality ratings repeatedly, the strategy card needs updating — and possibly the strategic thinking around that type of hole needs a coaching conversation.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Process intention performance:</strong> If your process intention breaks down consistently at a particular point in the round (typically holes 13–15 as fatigue sets in, or immediately after a bad shot), this is specific mental training data that can be directly addressed in your next practice sessions.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Scoring trend:</strong> Plot your solo round scores vs. your target across the month. This is the truest indicator of genuine progress — more reliable than competition scores which vary with playing partner effects.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The compounding effect:</strong> A golfer who completes one disciplined solo pressure round per week and reviews it correctly accumulates 50+ data-rich sessions per year. Each session's post-round review feeds into practice planning. Each month's pattern review feeds into coaching conversations. Within 12 months, this discipline produces a level of self-knowledge that shortens the scratch journey by 6–12 months compared to unstructured play.</p>
+  </div>
+</div>
+
+<div class="footer">
+  SOLO PRESSURE ROUND PROTOCOL · GUIDE 16 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Play with discipline · Enforce the consequences · Let the data lead</span>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

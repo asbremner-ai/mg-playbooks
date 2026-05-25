@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wedge Distances & Gap Analysis — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.matrix-table{width:100%;border-collapse:collapse;font-size:12px;margin:14px 0;}
+.matrix-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:9px 12px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);}
+.matrix-table td{padding:8px 12px;color:var(--muted);border-bottom:1px solid var(--faint);border-right:1px solid var(--faint);text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;}
+.matrix-table td:first-child{color:var(--white);text-align:left;font-family:'Inter',sans-serif;font-size:12px;}
+.matrix-table tr:last-child td{border-bottom:none;}
+.matrix-table td.highlight{color:var(--gold);background:var(--gold-dim);}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}.matrix-table{font-size:10px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 22</p>
+  <h1>Wedge Distances<br><em>& Gap Analysis</em></h1>
+  <p class="hero-sub">Build, verify, and deploy your personal wedge matrix — exact carry distances for all 4 clubs across 4 swing lengths, gap analysis, bounce and grind selection, and groove maintenance.</p>
+  <div class="hero-tags">
+    <span class="htag">📐 Wedge Matrix</span><span class="htag">🎯 Carry Verification</span>
+    <span class="htag">🔧 Bounce & Grind</span><span class="htag">📊 Gap Analysis</span>
+    <span class="htag">🔄 Groove Maintenance</span><span class="htag">⚡ LM Session</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('matrix',this)">Matrix Build</button>
+  <button class="tab" onclick="show('gaps',this)">Gap Analysis</button>
+  <button class="tab" onclick="show('bounce',this)">Bounce & Grind</button>
+  <button class="tab" onclick="show('grooves',this)">Grooves</button>
+  <button class="tab" onclick="show('lm',this)">LM Session</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Wedge Matrix System</h2>
+  <p class="sec-desc">The wedge matrix converts the 30–115 yard scoring zone from a guessing game into a precise, repeatable system. Four clubs, four swing lengths, sixteen known distances — every yardage covered by a rehearsed, calibrated shot.</p>
+  <span class="badge badge-gold">📐 The 4×4 Scoring System</span>
+  <div class="card">
+    <span class="card-tag">Why the Matrix Exists</span>
+    <h3>The Scoring Zone Gap Problem</h3>
+    <p style="margin-bottom:12px;">Most 10 HCP players can execute a full wedge reasonably well. The scoring breakdown occurs at 30–90 yards — distances that require a partial swing with a known outcome. Without a calibrated matrix, every partial wedge shot is a guess. The matrix eliminates guessing from your strongest scoring zone.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Matrix Framework</div>
+      <div class="formula-main">4 clubs: PW · GW (50°) · SW (54–56°) · LW (58–60°)<br>4 swing lengths: Full · ¾ · ½ · ¼<br>= 16 precise, calibrated distances<br><br>Covers: ~30 yards to full PW distance<br>Target gap between distances: 8–12 yards maximum</div>
+      <div class="formula-note">The matrix is personal — your numbers, not averages. Two 10 HCP players with the same swing speed can have 20-yard differences in wedge distances due to loft, shaft, and technique. Build your own matrix on a launch monitor. Do not use published averages.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Reference Matrix — Starting Template</span>
+    <h3>Typical 10 HCP Distances (Verify Yours on LM)</h3>
+    <table class="matrix-table">
+      <tr><th>Swing</th><th>PW (46°)</th><th>GW (50°)</th><th>SW (54°)</th><th>LW (58°)</th></tr>
+      <tr><td>Full (100%)</td><td class="highlight">~115 yds</td><td>~103 yds</td><td>~90 yds</td><td>~78 yds</td></tr>
+      <tr><td>¾ (9 o'clock back)</td><td>~95 yds</td><td>~83 yds</td><td>~73 yds</td><td>~63 yds</td></tr>
+      <tr><td>½ (8 o'clock back)</td><td>~75 yds</td><td>~65 yds</td><td>~56 yds</td><td>~48 yds</td></tr>
+      <tr><td>¼ (7 o'clock back)</td><td>~55 yds</td><td>~47 yds</td><td>~40 yds</td><td>~34 yds</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>These are reference numbers only.</strong> Research shows 10 HCP players vary by up to ±25 yards from published averages for the same club. Your matrix must be verified on a launch monitor using carry distance — not total distance. See the LM Session tab for the exact protocol.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Clock Face Swing Reference</span>
+    <h3>Defining the Four Swing Lengths Precisely</h3>
+    <table class="tbl">
+      <tr><th>Swing Name</th><th>Lead Arm Position (Back)</th><th>Follow Through</th><th>Visual Check</th></tr>
+      <tr><td>Full</td><td>Left arm parallel to ground or beyond</td><td>Full finish, balanced</td><td>Club near ear at top</td></tr>
+      <tr><td>¾</td><td>Lead arm at 9 o'clock (parallel to ground)</td><td>Lead arm to 3 o'clock</td><td>Shaft horizontal</td></tr>
+      <tr><td>½</td><td>Lead arm at 8 o'clock (45° to ground)</td><td>Lead arm to 2 o'clock</td><td>Hands at hip height</td></tr>
+      <tr><td>¼</td><td>Lead arm at 7 o'clock (hands below hip)</td><td>Lead arm to 1 o'clock</td><td>Small controlled chip-swing</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Consistency is the goal:</strong> The exact position matters less than replicability. Use a mirror or video to establish what your 8 o'clock position looks like, then practise until that position is automatic. The distance only becomes reliable once the swing length is repeatable.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MATRIX BUILD -->
+<div class="sec" id="matrix">
+  <h2 class="sec-title">Building Your Matrix</h2>
+  <p class="sec-desc">Your personal wedge matrix must be built from verified carry distances on a launch monitor, not from estimated or range-feel distances. The process takes approximately 90 minutes and requires verification every 6 months.</p>
+  <span class="badge badge-lime">⚡ Build Protocol</span>
+  <div class="card">
+    <span class="card-tag">LM Build Session — Step by Step</span>
+    <h3>The 90-Minute Matrix Calibration Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Warm up properly:</strong> 15 minutes of full warm-up — stretching, then easy full swings before any data collection. Cold muscles produce shorter, inconsistent distances. The matrix is only as good as the physical state it was built in.</div></li>
+      <li><span class="step-n">2</span><div><strong>Start with full swings — PW first:</strong> Hit 10 full PW shots. Record carry distance (not total) for each. Discard the longest and shortest. Average the remaining 8. This is your full PW carry number. Repeat for GW, SW, LW.</div></li>
+      <li><span class="step-n">3</span><div><strong>Work down to ¾ swings:</strong> Consciously swing to the 9 o'clock back position. The most common error is unconsciously swinging past ¾. Video check or physical feel confirmation is essential. Hit 8 shots per club, average the middle 6.</div></li>
+      <li><span class="step-n">4</span><div><strong>Record carry — never total distance:</strong> Total distance includes roll, which varies by surface, slope, and conditions. Your matrix must be in carry yards — the distance the ball flies through the air before landing. Only a launch monitor gives you this reliably.</div></li>
+      <li><span class="step-n">5</span><div><strong>Write it down immediately and photograph it:</strong> Save your matrix in a format you can access on the course — Notes app, screenshot, or a laminated card in the bag. A matrix you cannot reference is worthless.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Your Personal Matrix — Fill This In</span>
+    <h3>Record Your Verified Carry Distances</h3>
+    <table class="matrix-table">
+      <tr><th>Swing</th><th>PW</th><th>GW (50°)</th><th>SW (54–56°)</th><th>LW (58–60°)</th></tr>
+      <tr><td>Full (100%)</td><td>__ yds</td><td>__ yds</td><td>__ yds</td><td>__ yds</td></tr>
+      <tr><td>¾ swing</td><td>__ yds</td><td>__ yds</td><td>__ yds</td><td>__ yds</td></tr>
+      <tr><td>½ swing</td><td>__ yds</td><td>__ yds</td><td>__ yds</td><td>__ yds</td></tr>
+      <tr><td>¼ swing</td><td>__ yds</td><td>__ yds</td><td>__ yds</td><td>__ yds</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;">Last verified: ____________ · Conditions: ____________ · LM used: ____________</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Using the Matrix On-Course</span>
+    <h3>Converting Yardage to Shot Selection in Under 10 Seconds</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Get exact carry yardage:</strong> Use a rangefinder to the flag, then subtract any slope adjustment. This is the carry distance required — not total distance. Confirm the landing zone with the carry number.</div></li>
+      <li><span class="step-n">2</span><div><strong>Find the nearest matrix distance:</strong> Locate the matrix entry closest to your required yardage. If you need 73 yards and your SW ¾ is 73 yards — that is the shot. No guessing required.</div></li>
+      <li><span class="step-n">3</span><div><strong>Handle in-between yardages:</strong> If your required distance falls between two matrix entries, choose the shorter matrix distance and move your ball position forward, or choose the longer matrix distance and grip down one inch. Never try to guess a new partial swing length on-course.</div></li>
+      <li><span class="step-n">4</span><div><strong>Account for conditions:</strong> Wind, temperature, and elevation all affect carry. Apply condition adjustments to the required yardage before consulting the matrix — find the correct shot for the adjusted distance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- GAP ANALYSIS -->
+<div class="sec" id="gaps">
+  <h2 class="sec-title">Gap Analysis</h2>
+  <p class="sec-desc">A gap in your distance coverage is any yardage band wider than 12 yards between consecutive matrix entries. Gaps are either covered by technique adjustments, additional loft options, or equipment changes. Identifying and closing gaps is direct scoring improvement.</p>
+  <span class="badge badge-rust">📊 Closing the Distance Gaps</span>
+  <div class="card">
+    <span class="card-tag">Identifying Your Gaps</span>
+    <h3>The Gap Audit Process</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>List all 16 matrix distances in ascending order:</strong> Write out every verified carry distance from shortest (¼ LW) to longest (full PW), sorted numerically.</div></li>
+      <li><span class="step-n">2</span><div><strong>Mark every gap exceeding 12 yards:</strong> Any consecutive pair with more than 12 yards between them is a coverage gap. For example: 48 yards (¼ LW) → 63 yards (¾ LW) = 15-yard gap. This means any approach between 49 and 62 yards has no calibrated shot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Count the gap frequency on-course:</strong> For 5 rounds, record every approach shot yardage. How often do you arrive at yardages that fall in your identified gaps? This tells you the actual scoring cost of each gap.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Common Gap Locations</span>
+    <h3>Where Gaps Typically Appear</h3>
+    <table class="tbl">
+      <tr><th>Gap Zone</th><th>Typical Cause</th><th>Solution</th></tr>
+      <tr><td>90–100 yards</td><td>Space between full SW and ¾ PW</td><td>Add 90% PW or develop a knock-down GW</td></tr>
+      <tr><td>60–70 yards</td><td>Space between full LW and ¾ SW</td><td>Refine ¾ LW or add a 60° LW if not in bag</td></tr>
+      <tr><td>40–50 yards</td><td>Space between ½ SW and ¼ GW</td><td>Develop ½ LW as a consistent option</td></tr>
+      <tr><td>Under 30 yards</td><td>Below ¼ swing range</td><td>Chip-putt hybrid; putter from fringe; short bump</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The 4-Wedge Setup</span>
+    <h3>Why Four Wedges Is Non-Negotiable from 10 HCP Downward</h3>
+    <p style="margin-bottom:12px;">Many 10 HCP players carry only 3 wedges (PW, SW, LW or PW, GW, SW), leaving a significant coverage gap at either the 50° or 58° range. Research shows that adding a 4th wedge to create a PW/GW/SW/LW setup reduces scoring average by 0.7–1.2 strokes per round through gap closure alone.</p>
+    <table class="tbl">
+      <tr><th>Setup</th><th>Coverage</th><th>Typical Gap</th><th>Recommendation</th></tr>
+      <tr><td>PW / SW / LW (3 wedges)</td><td class="bad">Sparse — 20+ yd gaps</td><td>65–90 yard zone</td><td class="bad">Not recommended for serious play</td></tr>
+      <tr><td>PW / GW / SW (3 wedges)</td><td class="warn">Moderate — 15 yd gaps</td><td>Under 60 yards</td><td class="warn">Acceptable but limited</td></tr>
+      <tr><td>PW / GW / SW / LW (4 wedges)</td><td class="good">Good — 10–12 yd gaps</td><td>Minimal if calibrated</td><td class="good">Recommended for 10 HCP and below</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>Optimal gapping:</strong> Aim for 4° of loft between each wedge for even distance coverage. PW at 46° + GW at 50° + SW at 54° + LW at 58° = 4° gaps = approximately 10–12 yards between clubs at each matrix level.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BOUNCE & GRIND -->
+<div class="sec" id="bounce">
+  <h2 class="sec-title">Bounce & Grind Selection</h2>
+  <p class="sec-desc">Bounce angle and grind type are the most misunderstood variables in wedge equipment. The wrong bounce for your conditions or technique produces fat shots, skulls, and inconsistent distance control regardless of how well you swing.</p>
+  <span class="badge badge-teal">🔧 Equipment Science</span>
+  <div class="card">
+    <span class="card-tag">What Bounce Does</span>
+    <h3>The Physics of Wedge Interaction with the Turf</h3>
+    <p style="margin-bottom:12px;">Bounce is the angle between the leading edge and the lowest point of the sole (the trailing edge). Bounce prevents the leading edge from digging too deeply into the turf. Too little bounce on soft turf = the club digs fat. Too much bounce on hard turf = the club skips off the surface into a thin shot.</p>
+    <table class="tbl">
+      <tr><th>Bounce Category</th><th>Angle</th><th>Best For</th><th>Avoid When</th></tr>
+      <tr><td>Low bounce</td><td>4–6°</td><td>Firm turf, tight lies, links conditions, shallow attack angle</td><td>Soft turf, deep rough, steep attack angle</td></tr>
+      <tr><td>Mid bounce</td><td>7–10°</td><td>Neutral conditions, most courses, versatile player</td><td>Extreme conditions either way</td></tr>
+      <tr><td>High bounce</td><td>11–14°</td><td>Soft turf, fluffy rough, steep attack angle, bunkers</td><td>Tight lies, firm fairways, links play</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Matching Bounce to Your Swing</span>
+    <h3>Attack Angle is the Dominant Variable</h3>
+    <table class="tbl">
+      <tr><th>Attack Angle</th><th>Divot Depth</th><th>Recommended Bounce</th><th>Reasoning</th></tr>
+      <tr><td>Steep (−6° or more)</td><td>Deep, long divots</td><td>High bounce (11–14°)</td><td>Steep attack needs bounce to prevent digging</td></tr>
+      <tr><td>Neutral (−3° to −5°)</td><td>Moderate divots</td><td>Mid bounce (8–10°)</td><td>Standard — most versatile option</td></tr>
+      <tr><td>Shallow (−1° to −2°)</td><td>Shallow divots or none</td><td>Low-mid bounce (6–8°)</td><td>Shallow attack doesn't need high bounce; too much skips</td></tr>
+      <tr><td>Sweeper (near 0°)</td><td>Brush marks only</td><td>Low bounce (4–6°)</td><td>Must pick ball cleanly; bounce would deflect club</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Grind Options</span>
+    <h3>How the Sole Shape Affects Shot Versatility</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Full sole (standard):</strong> Maximum bounce effect across the full sole width. Most forgiving for consistent neutral conditions. Recommended for players still developing wedge technique.</div></li>
+      <li><span class="step-n">2</span><div><strong>C-grind (relief front and back):</strong> Relief on the heel and toe allows the face to be opened aggressively for lob shots without adding excess bounce. Ideal for high-spin lob shots from soft conditions. Requires clean technique.</div></li>
+      <li><span class="step-n">3</span><div><strong>S-grind (relief on heel):</strong> Heel relief allows the face to be opened while reducing effective bounce. Versatile — good for shots from tight lies with an open face. Tour favourite for the SW and LW.</div></li>
+      <li><span class="step-n">4</span><div><strong>W-grind (wide sole):</strong> Maximum bounce and forgiveness in soft sand and thick rough. Designed for bunker specialists. Too much sole for tight lies and firm conditions.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Recommended setup for UK/Irish courses:</strong> Conditions range from firm summer to soft winter. SW with mid-high bounce (10–12°) for year-round versatility. LW with C or S grind, mid bounce (8–10°) for open-face capability. Review and potentially swap in winter vs. summer if playing both regularly.</p>
+    </div>
+  </div>
+</div>
+
+<!-- GROOVES -->
+<div class="sec" id="grooves">
+  <h2 class="sec-title">Groove Maintenance</h2>
+  <p class="sec-desc">Groove wear is the silent distance control killer. Worn grooves reduce spin by 30–40%, converting a stopping wedge shot into a running approach and eliminating the shot-stopping ability that the scoring zone demands.</p>
+  <span class="badge badge-rust">🔄 Groove Science</span>
+  <div class="card">
+    <span class="card-tag">The Physics of Grooves</span>
+    <h3>Why Grooves Matter More Than You Think</h3>
+    <p style="margin-bottom:12px;">Grooves on a wedge face serve two functions: channelling moisture and debris away from the ball-face contact zone, and creating the friction that generates backspin. As grooves wear smooth, both functions degrade. A new wedge generates 9,000–11,000 rpm of spin from 50 yards. A worn wedge from the same shot: 5,500–7,000 rpm. That is the difference between a ball that stops on the green and one that runs 20 feet past.</p>
+    <div class="formula">
+      <div class="formula-lbl">Groove Wear Rate</div>
+      <div class="formula-main">Average groove life: 70–100 rounds of regular play<br>Full bag players hitting wedges 8–12 times/round:<br>→ Grooves worn to 70% effectiveness by round 75<br>→ Grooves worn to 50% effectiveness by round 100<br><br>From wet grass or rough (higher friction): faster wear<br>From fairway only: slightly slower wear</div>
+      <div class="formula-note">Most recreational golfers play wedges well past the point where groove performance has significantly degraded. If your wedge is over 3 years old and used regularly, assume groove effectiveness is compromised.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Groove Maintenance Between Replacements</span>
+    <h3>Extending Groove Life and Maximising Performance</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Clean grooves between every shot:</strong> Debris in grooves reduces contact area and spin generation. A groove cleaning brush on the bag and a quick clean between shots maintains groove effectiveness. Takes 3 seconds. Worth 200–400 rpm of spin retention.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use a groove sharpener selectively:</strong> Groove sharpeners restore edge sharpness on moderately worn grooves. Not a permanent solution — once the groove floor is worn beyond a certain depth, sharpening restores nothing. Effective for lightly worn grooves only.</div></li>
+      <li><span class="step-n">3</span><div><strong>Track shots per wedge:</strong> Keep a rough tally of rounds played with each wedge. At round 75, start a new wedge evaluation. At round 100, replace regardless of visual appearance. Feel and spin cannot be assessed by eye.</div></li>
+      <li><span class="step-n">4</span><div><strong>Prioritise SW and LW replacement:</strong> The short irons in your bag (7–9 iron) wear more slowly because the approach angle is shallower and contact is cleaner. Your SW and LW take the most aggressive, soil-contacting strikes — they wear fastest and should be replaced most frequently.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">New Wedge Break-In</span>
+    <h3>Recalibrating After a Wedge Change</h3>
+    <div class="info-box warn-box">
+      <span class="ico">⚠️</span>
+      <p><strong>Critical note:</strong> A new wedge will generate more spin and higher trajectory than a worn wedge. This means your existing matrix distances will be wrong after a replacement. New grooves on a wedge with the same loft will carry 3–8 yards shorter due to higher spin and steeper descent. Recalibrate your matrix within 2–3 range sessions of the new wedge going into play. Never use old matrix numbers with new equipment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LM SESSION -->
+<div class="sec" id="lm">
+  <h2 class="sec-title">Launch Monitor Session</h2>
+  <p class="sec-desc">A structured launch monitor session is the only reliable method for building and verifying your wedge matrix. This tab provides the exact protocol — what to measure, how many shots, what to record, and how to interpret the data.</p>
+  <span class="badge badge-lime">📊 The Full LM Protocol</span>
+  <div class="card">
+    <span class="card-tag">Session Setup</span>
+    <h3>Before You Hit a Shot</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Book 90 minutes minimum:</strong> Rushing a matrix calibration produces inaccurate data. 90 minutes allows a proper warm-up plus 16 data sets of 8–10 shots each with rest between sets.</div></li>
+      <li><span class="step-n">2</span><div><strong>Confirm carry distance measurement:</strong> Verify the LM is displaying carry distance, not total distance. On Trackman and FlightScope, this is a specific setting. On Mevo+, ensure "carry" is the displayed metric. Using total distance will overestimate your matrix by 5–15 yards.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the same ball you play on-course:</strong> Urethane-cover balls generate significantly more spin than surlyn balls. Your matrix must be built with your actual competition ball. Mixing ball types during the session produces meaningless data.</div></li>
+      <li><span class="step-n">4</span><div><strong>Warm up 15–20 minutes:</strong> Do not start data collection until you have hit at least 20 shots and are physically warm. Cold muscle data is systematically short and must be discarded.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Data Collection Protocol</span>
+    <h3>What to Measure and How</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Record</th><th>Why It Matters</th></tr>
+      <tr><td>Carry distance</td><td class="good">Essential — primary matrix number</td><td>The distance the ball lands — what the matrix uses</td></tr>
+      <tr><td>Ball speed</td><td>Useful — consistency check</td><td>Variable ball speed reveals inconsistent strike quality</td></tr>
+      <tr><td>Spin rate</td><td>Useful — shot quality indicator</td><td>Low spin on full shots confirms worn grooves or poor strike</td></tr>
+      <tr><td>Launch angle</td><td>Optional — troubleshooting</td><td>Too low/high can indicate technique or equipment issue</td></tr>
+      <tr><td>Total distance</td><td class="bad">Do not use for matrix</td><td>Varies by surface; inconsistent; not repeatable on-course</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Averaging Protocol</span>
+    <h3>How to Calculate Your Matrix Number for Each Slot</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Hit 10 shots per club/swing combination:</strong> This provides enough data to statistically meaningful average while accounting for occasional mis-hits.</div></li>
+      <li><span class="step-n">2</span><div><strong>Discard the top 15% and bottom 15%:</strong> Remove the longest and shortest shots from each set of 10 (discard the top 1–2 and bottom 1–2). These represent lucky strikes and mis-hits that are not representative of repeatable performance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Average the middle 6–7:</strong> This trimmed mean is your matrix number. It represents a realistic, repeatable carry from that club and swing length. Record to the nearest whole yard.</div></li>
+      <li><span class="step-n">4</span><div><strong>Verify with a second set:</strong> If time allows, hit a second set of 10 for each club. If the second set average differs from the first by more than 4 yards, investigate the cause before finalising the number.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Frequency and Recalibration</span>
+    <h3>When to Rebuild the Matrix</h3>
+    <table class="tbl">
+      <tr><th>Trigger</th><th>Action</th><th>Priority</th></tr>
+      <tr><td>Every 6 months (standard)</td><td>Full matrix recalibration session</td><td class="good">High</td></tr>
+      <tr><td>New wedge purchased</td><td>Recalibrate affected club + adjacent clubs</td><td class="good">Immediate</td></tr>
+      <tr><td>Swing change (significant)</td><td>Full recalibration after change is grooved</td><td class="good">High</td></tr>
+      <tr><td>5+ handicap improvement</td><td>Recalibrate — better technique changes distances</td><td class="warn">Medium</td></tr>
+      <tr><td>Playing in different climate</td><td>Apply temperature adjustment formula — no recalibration needed</td><td class="warn">Apply formula</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>ROI of a matrix session:</strong> A 90-minute launch monitor session that produces an accurate personal wedge matrix is worth an estimated 1.5–2.5 strokes per round in the scoring zone. It is the single highest return-on-investment use of practice time available to a 10 HCP player.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">WEDGE DISTANCES & GAP ANALYSIS — PRO EDITION · 4×4 MATRIX · BOUNCE SCIENCE · GROOVE MAINTENANCE</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

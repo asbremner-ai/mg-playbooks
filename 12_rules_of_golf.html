@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Rules of Golf — Competitive Readiness Guide</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}
+.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+
+.rule-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:12px;}
+.rule-num{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+.rule-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:8px;}
+.rule-body{font-size:12.5px;color:var(--muted);line-height:1.8;}
+.rule-body strong{color:var(--white);}
+.rule-penalty{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:4px;margin-top:8px;}
+.pen-1{background:var(--gold-dim);border:1px solid rgba(224,184,64,.3);color:var(--gold-hi);}
+.pen-2{background:var(--rust-dim);border:1px solid rgba(216,96,48,.3);color:var(--rust-hi);}
+.pen-dq{background:rgba(180,40,40,.12);border:1px solid rgba(180,40,40,.3);color:#f07070;}
+.pen-0{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+.scenario{background:var(--surface3);border-radius:var(--r-sm);padding:12px 14px;margin:10px 0;font-size:12.5px;color:var(--muted);line-height:1.75;border-left:3px solid var(--teal);}
+.scenario strong{color:var(--white);}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">Rules of Golf · Guide 12</p>
+  <h1>Know the<br><em>Rules</em></h1>
+  <p class="hero-sub">Rules knowledge is competitive advantage. Every correctly invoked rule is a stroke saved or protected. Every mistake is a stroke gifted to the field. Master the rules before you compete.</p>
+  <div class="hero-tags">
+    <span class="htag">📋 Relief Procedures</span>
+    <span class="htag">⚠️ Penalty Strokes</span>
+    <span class="htag">🚩 Common Situations</span>
+    <span class="htag">🏆 Competitive Edge</span>
+    <span class="htag">🔖 Quick Reference</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Rules Matter</button>
+  <button class="tab" onclick="show('relief',this)">Relief Procedures</button>
+  <button class="tab" onclick="show('hazards',this)">Penalty Areas</button>
+  <button class="tab" onclick="show('ob',this)">OB & Lost Ball</button>
+  <button class="tab" onclick="show('ongreen',this)">On the Green</button>
+  <button class="tab" onclick="show('situations',this)">Common Situations</button>
+  <button class="tab" onclick="show('etiquette',this)">Etiquette & Pace</button>
+  <button class="tab" onclick="show('reference',this)">Quick Reference</button>
+</div>
+
+<!-- WHY RULES MATTER -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">Rules as Competitive Advantage</h2>
+  <p class="sec-desc">Most amateur golfers misapply the Rules of Golf in ways that cost them strokes or expose them to disqualification. At scratch level, rules fluency is a non-negotiable part of competitive readiness.</p>
+
+  <div class="pull-quote">
+    <p>"I learned the rules of golf not because I had to, but because I realised they protected me more often than they punished me."</p>
+    <span>— Nick Faldo, six-time major champion</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Competitive Stakes</span>
+    <h3>What Rules Ignorance Actually Costs</h3>
+    <p>A survey of amateur club competitions found that approximately 35% of players inadvertently break a rule at least once per round — most commonly around relief procedures, loose impediments, and abnormal course conditions. At club level, these often go unchallenged. In stroke play competition, they are penalties you cannot retrieve.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Rules Mistake Type</th><th>Frequency (Amateur)</th><th>Cost</th></tr>
+      <tr><td>Incorrect relief procedure</td><td class="bad">Most common</td><td class="bad">2 strokes or DQ</td></tr>
+      <tr><td>Moving ball in search</td><td class="warn">Very common</td><td class="warn">1 stroke penalty</td></tr>
+      <tr><td>Wrong drop height / area</td><td class="warn">Very common</td><td class="warn">1 stroke penalty</td></tr>
+      <tr><td>Ball touching hazard line</td><td class="warn">Common</td><td class="warn">Often misunderstood</td></tr>
+      <tr><td>Grounding club in penalty area</td><td class="bad">Pre-2019 hangover</td><td class="good">Now legal (2019 Rules)</td></tr>
+      <tr><td>Putting out of turn (stroke play)</td><td class="good">No penalty</td><td class="good">Legal in stroke play</td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card card-gold">
+      <span class="card-tag">Stroke Play Format</span>
+      <h3>Every Hole Is Independent</h3>
+      <p style="font-size:12px;">In stroke play, a rules error typically adds penalty strokes to your score. Signing for the wrong score is more serious — it can mean disqualification. When in doubt, always play a second ball and declare it to the Committee.</p>
+    </div>
+    <div class="card card-teal">
+      <span class="card-tag">Match Play Format</span>
+      <h3>Hole-by-Hole Consequences</h3>
+      <p style="font-size:12px;">In match play, most rules infractions result in loss of hole rather than stroke penalties. Rules knowledge lets you invoke both your own rights and — when appropriate — hold opponents accountable correctly and without awkwardness.</p>
+    </div>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">📱</span>
+    <p><strong>Essential resource:</strong> Download the R&A Rules of Golf app. It contains the full official rules, an interactive "What's My Situation?" decision tool, and short video explanations of every common scenario. Use it during practice rounds, never during competitive play where you should already know the answer.</p>
+  </div>
+</div>
+
+<!-- RELIEF PROCEDURES -->
+<div class="sec" id="relief">
+  <h2 class="sec-title">Relief Procedures</h2>
+  <p class="sec-desc">Relief is the most frequently misapplied area of the rules. The 2019 Rules update changed drop height, changed several procedures, and removed several historic complications. This is the modern standard.</p>
+
+  <span class="badge badge-teal">📐 The Fundamentals of Taking Relief</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Drop Procedure — 2019 Rules</span>
+    <h3>How to Drop Correctly Every Time</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Determine your relief area:</strong> Relief is always taken within a specific area — one club length, two club lengths, or the nearest point of complete relief depending on the rule being applied. Define this area before dropping.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use your longest club (excluding putter):</strong> Typically your driver. Lay it on the ground to measure the relief area. The reference point (nearest point of relief, or where you last played from) anchors the measurement.</div></li>
+      <li><span class="step-n">3</span><div><strong>Drop from knee height:</strong> Since 2019, the drop is from knee height — not shoulder height. Hold the ball at knee height and release it. It must fall straight down without being thrown or spun.</div></li>
+      <li><span class="step-n">4</span><div><strong>Ball must come to rest in the relief area:</strong> If it rolls out of the relief area, re-drop once. If it rolls out again, place it where it first hit the ground on the second drop.</div></li>
+      <li><span class="step-n">5</span><div><strong>Ball must not come to rest in a worse condition:</strong> After dropping, confirm the ball has not come to rest closer to the hole, in a penalty area, or on a putting green (for some relief types).</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">🔵 Free Relief (No Penalty)</span>
+
+  <div class="rule-block">
+    <div class="rule-num">Rule 16 · Abnormal Course Conditions</div>
+    <div class="rule-title">Casual Water, Ground Under Repair, Animal Holes</div>
+    <div class="rule-body">
+      <strong>What qualifies:</strong> Temporary accumulations of water visible before or after you take your stance (casual water), areas marked GUR by the Committee, or holes and damage made by burrowing animals (rabbits, foxes, moles). Does NOT include dew, frost, or wet sand unless accumulation is visible.<br><br>
+      <strong>The procedure:</strong> Find the <em>nearest point of complete relief</em> — the single closest point where (a) interference no longer exists, (b) you are not closer to the hole, and (c) you are on the same area of course (fairway, rough, etc.). Drop within one club length of that point, no nearer the hole.
+    </div>
+    <span class="rule-penalty pen-0">✓ No Penalty</span>
+    <div class="scenario"><strong>Scenario:</strong> Your ball lies in casual water in the rough right of the fairway. The nearest point of complete relief is 2 yards further right into deeper rough — that is where you must take relief, even though the fairway is closer to the hole. You cannot choose a more favourable point merely because it is more convenient.</div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Rule 16.1 · Immovable Obstructions</div>
+    <div class="rule-title">Sprinkler Heads, Cart Paths, Drainage Covers</div>
+    <div class="rule-body">
+      <strong>Interference exists when:</strong> The obstruction interferes with your stance OR your area of intended swing — not just where the ball lies. A sprinkler head 3 feet from the ball but directly in your stance qualifies for relief.<br><br>
+      <strong>Line of sight is NOT relief:</strong> A sprinkler head on your line to the flag but not interfering with stance or swing gives you NO free relief. This is one of the most commonly misunderstood rules in amateur golf.<br><br>
+      <strong>The procedure:</strong> Same as GUR — nearest point of complete relief, one club length, no nearer the hole.
+    </div>
+    <span class="rule-penalty pen-0">✓ No Penalty</span>
+    <div class="scenario"><strong>Scenario:</strong> Your ball is on the fairway. A sprinkler head sits 2 feet to the right of your ball, in the path of your normal stance. Relief is permitted. However, if the sprinkler is 10 yards ahead on your target line but nowhere near your feet or swing — no free relief exists.</div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Rule 15.1 · Loose Impediments</div>
+    <div class="rule-title">Natural Objects — Leaves, Stones, Twigs, Animal Waste</div>
+    <div class="rule-body">
+      <strong>You may always remove:</strong> Loose impediments anywhere on the course — including in penalty areas and bunkers (since 2019). Remove them without penalty, provided you do not cause the ball to move.<br><br>
+      <strong>If the ball moves during removal:</strong> Since 2019, if the ball moves while you are removing a loose impediment, there is a one-stroke penalty and you must replace the ball to its original position.<br><br>
+      <strong>Stones in bunkers:</strong> Now fully permitted to remove. The old rule prohibiting this was eliminated in 2019.
+    </div>
+    <span class="rule-penalty pen-0">✓ No Penalty (for removal)</span>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Rule 15.2 · Movable Obstructions</div>
+    <div class="rule-title">Rakes, Bottles, Artificial Objects</div>
+    <div class="rule-body">
+      <strong>Remove freely:</strong> Any movable artificial object — rakes, bottles, stakes (unless defining penalty area boundaries), distance markers — may be removed without penalty anywhere on the course.<br><br>
+      <strong>If the ball moves:</strong> Replace the ball to its original position — no penalty applies, unlike with loose impediments.
+    </div>
+    <span class="rule-penalty pen-0">✓ No Penalty</span>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>Embedded ball:</strong> Since 2019, a ball embedded in the general area (fairway AND rough) qualifies for free relief — not just in closely mown areas as the old rule required. Drop within one club length of the spot directly behind the pitch mark, no nearer the hole. This is a significant rule many players are still unaware of.</p>
+  </div>
+</div>
+
+<!-- PENALTY AREAS -->
+<div class="sec" id="hazards">
+  <h2 class="sec-title">Penalty Areas</h2>
+  <p class="sec-desc">What were formerly "water hazards" and "lateral water hazards" are now collectively "penalty areas" under the 2019 Rules. The terminology changed; the strategic options largely remain, with some important additions.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">Yellow Penalty Areas</span>
+    <h3>Two Options — Both Cost One Stroke</h3>
+    <p>Yellow stakes or yellow lines mark penalty areas where you have two relief options, both with one penalty stroke:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Stroke and distance:</strong> Return to where you played your previous shot and play again from there, adding one penalty stroke. This is always available from any penalty area, regardless of colour.</div></li>
+      <li><span class="step-n">2</span><div><strong>Back-on-the-line relief:</strong> Keep the point where your ball entered the penalty area between you and the hole. Go back on that line as far as you wish, then drop within one club length of that chosen point. One penalty stroke.</div></li>
+    </ul>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke Penalty</span>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Red Penalty Areas</span>
+    <h3>Three Options — The Additional Lateral Relief</h3>
+    <p>Red stakes or red lines give you all of the yellow penalty area options, plus one additional option:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">3</span><div><strong>Lateral relief:</strong> Find the point where your ball last crossed the edge of the red penalty area. Drop within two club lengths of that point, no nearer the hole. This is the most commonly used option for balls in water hazards alongside fairways.</div></li>
+    </ul>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke Penalty</span>
+    <div class="scenario"><strong>Scenario:</strong> Your approach shot splashes into a red-staked water hazard alongside the green. The point where the ball crossed the margin is identified. You have three options: replay from the fairway (stroke and distance), go back on the line from the crossing point, or drop within two club lengths of the crossing point (lateral relief). Lateral relief is almost always optimal here.</div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Important 2019 Changes — Penalty Areas</span>
+    <h3>What Changed and What It Means</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Before 2019</th><th>After 2019</th></tr>
+      <tr><td>Grounding club in hazard</td><td class="bad">2-stroke penalty</td><td class="good">Now permitted — no penalty</td></tr>
+      <tr><td>Moving loose impediments in hazard</td><td class="bad">2-stroke penalty</td><td class="good">Now permitted — no penalty</td></tr>
+      <tr><td>Ball moving in hazard (not addressed)</td><td class="warn">Replace, no penalty</td><td class="good">Same — no penalty</td></tr>
+      <tr><td>Boundary definition</td><td class="warn">Edge of water</td><td class="warn">Defined margin (stakes/lines)</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p>You may now ground your club and move loose impediments inside a penalty area before playing. Many experienced golfers are still playing the old rule out of habit — knowing the current rule is a direct competitive advantage.</p>
+    </div>
+  </div>
+</div>
+
+<!-- OB & LOST BALL -->
+<div class="sec" id="ob">
+  <h2 class="sec-title">Out of Bounds & Lost Ball</h2>
+  <p class="sec-desc">OB and lost ball situations are where the Rules most often cause confusion, slow play, and incorrect decisions under pressure. Know every option available to you before you reach the tee.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">Out of Bounds — Rule 18.2</span>
+    <h3>The Standard Rule</h3>
+    <div class="rule-body" style="font-size:13px;color:var(--muted);line-height:1.8;">
+      <strong style="color:var(--white);">The standard procedure:</strong> Stroke and distance. Return to the spot of the previous stroke and play again, adding one penalty stroke. There is no free relief from OB — the ball is out of play and must be abandoned.<br><br>
+      <strong style="color:var(--white);">Identifying OB:</strong> White stakes or white lines define OB boundaries. A ball is OB only when the entire ball lies out of bounds. If any part of the ball is inside the boundary line, it is in bounds and in play.<br><br>
+      <strong style="color:var(--white);">Provisional ball:</strong> If you believe your ball may be OB or lost, you <em>should</em> play a provisional before going forward. Declare it as provisional to your playing partners. If the original ball is found in bounds and in play, the provisional is abandoned. If not found, the provisional becomes the ball in play under stroke-and-distance penalty.
+    </div>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke + Distance Penalty</span>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Local Rule Option — OB Alternative (Rule E-5)</span>
+    <h3>The Two-Stroke Alternative Relief (Where Permitted)</h3>
+    <p>Many clubs have adopted the Model Local Rule allowing a two-stroke penalty alternative to stroke-and-distance for OB and lost ball. <strong>Confirm before each competition whether this local rule is in effect — it is not universally applied.</strong></p>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">E-5 Alternative Relief Procedure (Where Adopted)</div>
+      <div class="formula-main">
+        1. Identify where the ball crossed the OB boundary (or was lost)<br>
+        2. Find the nearest fairway edge point to that crossing point<br>
+        3. Drop anywhere in the "relief zone" — between the boundary crossing point and the fairway edge, and no nearer the hole than the fairway reference point<br>
+        4. Add TWO penalty strokes (not one)
+      </div>
+      <div class="formula-note">This option sacrifices one additional penalty stroke to avoid the walk back to the tee. It is nearly always the correct decision for pace of play, but confirm local rules before use.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Lost Ball — Rule 18.2</span>
+    <h3>Search Time and Procedures</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Search time: 3 minutes.</strong> Since 2019, the search time was reduced from 5 minutes to 3 minutes. After 3 minutes, the ball is lost and stroke-and-distance applies. Start your mental timer the moment you and your group begin searching.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Provisional ball:</strong> If there is any doubt about whether your ball is lost, play a provisional. Announce it clearly. You cannot play a provisional after you have gone forward to search — you must play it from the original spot before crossing the point where the ball came to rest.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Ball in play vs lost:</strong> A ball found within 3 minutes is in play, even if in a difficult lie. You cannot deem a ball unplayable and then declare it lost — if you find the ball within the time limit, it is the ball in play.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Unplayable ball — the third option:</strong> If a found ball is in a position where you cannot or choose not to play it, you may declare it unplayable — adding one penalty stroke and taking one of three relief options (stroke and distance, two club lengths, or back-on-the-line).</div></li>
+    </ul>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke + Distance (Lost / OB)</span>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>Provisional ball discipline:</strong> Playing a provisional ball when in doubt is one of the single best pace-of-play habits you can develop. It also protects you psychologically — rather than the anxiety of searching without an alternative, you walk forward knowing you have a ball in play regardless. Always carry an extra ball in your pocket for this purpose.</p>
+  </div>
+</div>
+
+<!-- ON THE GREEN -->
+<div class="sec" id="ongreen">
+  <h2 class="sec-title">On the Green</h2>
+  <p class="sec-desc">The putting green has specific rules distinct from the rest of the course. Many common actions prohibited elsewhere are specifically permitted on the green — and several actions that seem innocuous can carry penalties.</p>
+
+  <div class="card card-teal">
+    <span class="card-tag">Permitted on the Green</span>
+    <h3>What You May Do (Often Unknown)</h3>
+    <table class="tbl">
+      <tr><th>Action</th><th>Permitted?</th><th>Notes</th></tr>
+      <tr><td>Repair spike marks, ball marks, scrapes</td><td class="good">Yes</td><td>Since 2019 — all damage may be repaired</td></tr>
+      <tr><td>Remove sand and loose soil</td><td class="good">Yes</td><td>Only permitted on greens, not fairway</td></tr>
+      <tr><td>Touch the line of your putt</td><td class="good">Yes</td><td>When removing impediments or pointing</td></tr>
+      <tr><td>Place your putter on the line of putt</td><td class="good">Yes</td><td>To test break is not permitted, but placing to align is fine</td></tr>
+      <tr><td>Leave the flagstick in while putting</td><td class="good">Yes</td><td>Since 2019 — no penalty if ball hits flag in hole</td></tr>
+      <tr><td>Mark and lift ball for cleaning</td><td class="good">Yes</td><td>Always permitted on the putting green</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Prohibited on the Green</span>
+    <h3>Penalties You Must Avoid</h3>
+    <table class="tbl">
+      <tr><th>Action</th><th>Penalty</th></tr>
+      <tr><td>Testing the surface by scraping or rolling a ball</td><td class="bad">2 strokes / Loss of hole</td></tr>
+      <tr><td>Deliberately deflecting your moving ball</td><td class="bad">2 strokes / Loss of hole</td></tr>
+      <tr><td>Standing astride the line of putt</td><td class="bad">2 strokes / Loss of hole</td></tr>
+      <tr><td>Anchoring the putter to the body</td><td class="bad">2 strokes / Loss of hole</td></tr>
+    </table>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Rule 13.2 · Flagstick</div>
+    <div class="rule-title">The 2019 Flagstick Change — Know It Fully</div>
+    <div class="rule-body">
+      <strong>The new rule:</strong> You may leave the flagstick in the hole while putting from anywhere on the course — including the green. If the ball hits the flagstick, there is no penalty. This is a significant change from the previous rules.<br><br>
+      <strong>The statistical argument:</strong> Research from MyGolfSpy and Dr. Dave Pelz suggests that leaving the flag in improves probability of holing out from beyond approximately 15 feet — particularly on downhill putts — because the stick stops the ball if it approaches the hole at a shallow angle.<br><br>
+      <strong>You cannot:</strong> Ask someone to tend the flagstick and then deliberately have it positioned to stop your ball from passing the hole. The flagstick must be centred in the hole.
+    </div>
+    <span class="rule-penalty pen-0">✓ No Penalty — Ball Hitting Flagstick</span>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Ball Mark Repair — Rule 13.1c</span>
+    <h3>Your Right and Responsibility</h3>
+    <p>Since 2019 you may repair <em>any</em> damage on the green caused by a ball, spike, equipment, or natural causes — including old pitch marks, spike damage, and animal damage. You may use a tee, a divot tool, or your finger. You may NOT raise or rough up the surface to create a slower or faster surface.</p>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Protocol:</strong> Repair your own pitch mark immediately upon reaching the green — before marking your ball. Then repair one additional mark nearby. If every player does this, greens improve for all. It also takes you 10 seconds and costs zero strokes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COMMON SITUATIONS -->
+<div class="sec" id="situations">
+  <h2 class="sec-title">High-Frequency Situations</h2>
+  <p class="sec-desc">These are the situations that arise most often in competitive rounds. Know your exact response before they happen — not while standing over the ball under pressure.</p>
+
+  <div class="rule-block">
+    <div class="rule-num">Unplayable Ball — Rule 19</div>
+    <div class="rule-title">Buried in Rough, Against a Tree, in a Divot</div>
+    <div class="rule-body">
+      You may declare any ball anywhere (except a penalty area) unplayable. This is your call alone — you do not need anyone else's agreement. You then have THREE options, each adding one penalty stroke:<br><br>
+      <strong>Option A — Stroke and distance:</strong> Return to where you played the previous shot and replay.<br>
+      <strong>Option B — Two club lengths:</strong> Drop within two club lengths of the unplayable ball spot, no nearer the hole. Must remain in the same area of the course (e.g., rough stays in rough).<br>
+      <strong>Option C — Back on the line:</strong> Keep the unplayable spot between you and the hole; go back as far as you wish along that line and drop within one club length.
+    </div>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke Penalty (All Options)</span>
+    <div class="scenario"><strong>Strategic tip:</strong> Option C (back on the line) is frequently underused. If your ball is against a wall, fence, or tree trunk and two club lengths keeps you in trouble, going back on the line can put you on the fairway with a clear shot — at the same penalty cost as taking a poor drop nearby.</div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Wrong Ball — Rule 6.3c</div>
+    <div class="rule-title">Playing Another Player's Ball</div>
+    <div class="rule-body">
+      <strong>Stroke play:</strong> Playing a wrong ball incurs a two-stroke penalty. You must then find and play your correct ball. Strokes played with the wrong ball do not count. If you cannot correct the mistake before returning a scorecard, you are disqualified.<br><br>
+      <strong>Match play:</strong> Loss of the hole.<br><br>
+      <strong>Prevention:</strong> Always mark your ball with a distinctive personal mark — a dot, a line, your initials — in addition to the manufacturer's markings. Identify your ball by brand, number, AND personal mark before playing.
+    </div>
+    <span class="rule-penalty pen-2">✘ 2 Strokes (Stroke Play)</span>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Ball Moved at Address — Rule 9.4</div>
+    <div class="rule-title">Ball Moves Before You Swing</div>
+    <div class="rule-body">
+      <strong>The modern rule (2019):</strong> There is only a one-stroke penalty if YOU cause the ball to move. If the ball moves due to natural causes (wind, gravity on a slope), there is no penalty — replace the ball.<br><br>
+      <strong>How to determine cause:</strong> If it is known or virtually certain that you caused the ball to move (e.g., you took your stance and the ball moved), one-stroke penalty applies and the ball must be replaced. If the cause is uncertain and natural causes cannot be ruled out, no penalty is applied — you benefit of the doubt.
+    </div>
+    <span class="rule-penalty pen-1">⚠ 1 Stroke (If You Caused It)</span>
+    <span class="rule-penalty pen-0" style="margin-left:8px;">✓ No Penalty (Natural Causes)</span>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Advice — Rule 10.2</div>
+    <div class="rule-title">What You Can and Cannot Ask or Tell</div>
+    <div class="rule-body">
+      <strong>You may NOT give or receive advice about club selection, play strategy, or how to make a stroke</strong> from anyone other than your caddie during a round.<br><br>
+      <strong>You MAY ask:</strong> Public information — distances (other players may share yardages freely), the rules of the competition, the location of hazards visible on the course, the location of the hole when you cannot see it.<br><br>
+      <strong>Watch out for:</strong> Asking a playing partner "what did you hit there?" when you are about to play the same shot from a similar distance. This constitutes seeking advice and carries a two-stroke penalty.
+    </div>
+    <span class="rule-penalty pen-2">✘ 2 Strokes (Advice Violation)</span>
+    <div class="scenario"><strong>Permitted:</strong> "How far is the front of the green?" or "What is the local rule on that area?" <br><strong>Not permitted:</strong> "What club did you just hit?" or "What line did you use for that putt?"</div>
+  </div>
+
+  <div class="rule-block">
+    <div class="rule-num">Second Ball Procedure — Rule 20.1c</div>
+    <div class="rule-title">When Genuinely Unsure of the Correct Procedure</div>
+    <div class="rule-body">
+      <strong>If you are uncertain which procedure applies in stroke play:</strong> Announce your intention to play a second ball before playing either ball. Declare which ball you want to count if the rules permit it. Play out the hole with both balls. Report the facts to the Committee before returning your scorecard. The Committee will determine which score counts.<br><br>
+      This procedure protects you from disqualification when you genuinely do not know the correct rule. It is available in stroke play only.
+    </div>
+    <span class="rule-penalty pen-0">✓ Protects Against DQ</span>
+  </div>
+</div>
+
+<!-- ETIQUETTE & PACE -->
+<div class="sec" id="etiquette">
+  <h2 class="sec-title">Etiquette & Pace of Play</h2>
+  <p class="sec-desc">Etiquette is not separate from the rules — some etiquette violations can be penalised. Beyond penalties, how you conduct yourself in competition reflects on your playing standard and your club.</p>
+
+  <div class="card">
+    <span class="card-tag">Pace of Play — The Professional Standard</span>
+    <h3>What Slow Play Actually Costs You</h3>
+    <p>Research shows that amateur golfers who play slowly also tend to score worse — the correlation is significant. Playing with rhythm, decisiveness, and preparation keeps you in a better mental state and avoids the anxiety spiral of falling behind pace.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Action</th><th>Time Allowed (Tour)</th><th>Amateur Target</th></tr>
+      <tr><td>Pre-shot routine (full shot)</td><td class="good">Under 45 sec from ready</td><td class="good">Under 30 sec</td></tr>
+      <tr><td>Pre-putt routine</td><td class="good">Under 40 sec</td><td class="good">Under 25 sec</td></tr>
+      <tr><td>Ball search time</td><td class="warn">3 minutes (Rules limit)</td><td class="warn">Search actively, play provisional</td></tr>
+      <tr><td>Ready golf — when used</td><td class="good">Play when ready (out of turn)</td><td class="good">Always acceptable in stroke play</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Ready Golf</span>
+    <h3>The Pace Standard in Stroke Play</h3>
+    <p>In stroke play (not match play), playing out of order — "ready golf" — carries no penalty. If you are ready to play and it is safe to do so, play. The tradition of strict "honour" (furthest from hole plays first) is not a rules requirement in stroke play and slows every round unnecessarily. The exception: never play ready golf if it might distract or endanger another player.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Non-Negotiable Etiquette Standards</span>
+    <h3>Behaviour That Reflects Your Level</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Rake every bunker:</strong> Leave it better than you found it. Place the rake outside the bunker, handle pointing toward the fairway.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Repair pitch marks:</strong> Your own, immediately. One additional mark as a courtesy.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Stay still and silent:</strong> When a player is addressing or executing a shot, zero movement or noise within their sightline or peripheral vision.</div></li>
+      <li><span class="step-n">▸</span><div><strong>No phone use during competitive play:</strong> Beyond GPS yardage apps, phones should not be visible during a competitive round. Check messages between holes only if genuinely necessary.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Concede graciously in match play:</strong> A conceded putt cannot be recalled. Never concede then question whether the player would have made it. Gamesmanship is noted by every player you compete against.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Scorecard accuracy:</strong> In stroke play, check every hole's score with your marker before signing. Signing for a score lower than you actually made results in disqualification. Signing for higher than you made results in that higher score standing — it cannot be corrected once submitted.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- QUICK REFERENCE -->
+<div class="sec" id="reference">
+  <h2 class="sec-title">Quick Reference Card</h2>
+  <p class="sec-desc">A compact reference for the most common rules situations you will encounter in competition. Study this until it is instinctive — not something you have to look up mid-round.</p>
+
+  <div class="card">
+    <span class="card-tag">Penalty Summary</span>
+    <h3>At-a-Glance Penalty Reference</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Penalty (Stroke Play)</th><th>Penalty (Match Play)</th></tr>
+      <tr><td>Ball OB or lost</td><td class="warn">1 stroke + distance</td><td class="warn">1 stroke + distance</td></tr>
+      <tr><td>Ball in penalty area (any colour)</td><td class="warn">1 stroke</td><td class="warn">1 stroke</td></tr>
+      <tr><td>Unplayable ball</td><td class="warn">1 stroke</td><td class="warn">1 stroke</td></tr>
+      <tr><td>Wrong ball played</td><td class="bad">2 strokes</td><td class="bad">Loss of hole</td></tr>
+      <tr><td>Advice given or received</td><td class="bad">2 strokes</td><td class="bad">Loss of hole</td></tr>
+      <tr><td>Ball moved at address (you caused it)</td><td class="warn">1 stroke</td><td class="warn">1 stroke</td></tr>
+      <tr><td>Playing from wrong place</td><td class="bad">2 strokes</td><td class="bad">Loss of hole</td></tr>
+      <tr><td>Testing the green surface</td><td class="bad">2 strokes</td><td class="bad">Loss of hole</td></tr>
+      <tr><td>Anchoring the putter</td><td class="bad">2 strokes</td><td class="bad">Loss of hole</td></tr>
+      <tr><td>Ball moved by natural causes</td><td class="good">No penalty</td><td class="good">No penalty</td></tr>
+      <tr><td>Ball hitting unattended flagstick</td><td class="good">No penalty</td><td class="good">No penalty</td></tr>
+      <tr><td>Grounding club in penalty area</td><td class="good">No penalty</td><td class="good">No penalty</td></tr>
+      <tr><td>Removing loose impediments anywhere</td><td class="good">No penalty</td><td class="good">No penalty</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Relief Areas — Quick Reference</span>
+    <h3>Drop Size and Distance</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Relief Area</th><th>Nearest Point?</th></tr>
+      <tr><td>Abnormal course condition (GUR, casual water)</td><td class="good">1 club length</td><td class="good">Yes</td></tr>
+      <tr><td>Immovable obstruction</td><td class="good">1 club length</td><td class="good">Yes</td></tr>
+      <tr><td>Embedded ball</td><td class="good">1 club length</td><td class="good">Behind pitch mark</td></tr>
+      <tr><td>Unplayable (Option B)</td><td class="warn">2 club lengths</td><td class="warn">From ball spot</td></tr>
+      <tr><td>Lateral relief — red penalty area</td><td class="warn">2 club lengths</td><td class="warn">From crossing point</td></tr>
+      <tr><td>Back-on-line (penalty area / unplayable)</td><td class="good">1 club length</td><td class="good">From chosen point on line</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Key 2019 Rules Changes — Summary</span>
+    <h3>Changes Still Catching Amateur Players Off Guard</h3>
+    <ul class="steps">
+      <li><span class="step-n">✓</span><div><strong>Drop height:</strong> Knee height, not shoulder height.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Search time:</strong> 3 minutes, not 5 minutes.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Flagstick:</strong> May be left in; no penalty if ball hits it.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Grounding in penalty areas:</strong> Now permitted.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Loose impediments in bunkers:</strong> Now permitted.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Embedded ball:</strong> Free relief anywhere in general area (not just mown areas).</div></li>
+      <li><span class="step-n">✓</span><div><strong>Damaged green:</strong> All damage (including spike marks) may be repaired.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Ball moved in search:</strong> No penalty if accidentally moved while searching (replace it).</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">📚</span>
+    <p><strong>Study recommendation:</strong> Purchase or download the R&A "Rules of Golf" (available free at randa.org). Focus your reading on Rules 9 (ball moved), 13 (putting green), 14 (procedures for relief), 15 (relief from abnormal conditions), 17 (penalty areas), 18 (stroke and distance), and 19 (unplayable ball). These cover 95% of situations you will face in competition. Re-read annually — the rules do update.</p>
+  </div>
+</div>
+
+<div class="footer">
+  RULES OF GOLF · GUIDE 12 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Know the rules before you compete · Protect every stroke you earn</span>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: document.querySelector('.nav').offsetTop, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>

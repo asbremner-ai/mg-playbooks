@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 to Scratch — The 24-Month Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:#f5efe4;
+    --paper-dark:#ede5d4;
+    --ink:#1a1208;
+    --ink-mid:#3d2e1a;
+    --ink-light:#6b5540;
+    --rust:#b54a22;
+    --rust-light:#d4724a;
+    --rust-pale:#f0c8b0;
+    --teal:#1e6464;
+    --teal-light:#3a9090;
+    --teal-pale:#b0d8d8;
+    --gold:#c8921a;
+    --gold-light:#e8b84a;
+    --gold-pale:#f8e8b8;
+    --muted:rgba(26,18,8,0.5);
+    --faint:rgba(26,18,8,0.2);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  body {
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Libre Baskerville',Georgia,serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  body::before {
+    content:'';
+    position:fixed;inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events:none;z-index:0;opacity:0.6;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position:relative;z-index:2;
+    background:var(--ink);
+    color:var(--paper);
+    padding:72px 30px 56px;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .hero::after {
+    content:'';
+    position:absolute;bottom:0;left:0;right:0;height:4px;
+    background:linear-gradient(90deg,var(--rust),var(--gold),var(--teal),var(--gold),var(--rust));
+  }
+
+  .hero-lines {
+    position:absolute;inset:0;overflow:hidden;pointer-events:none;
+  }
+  .hero-lines::before {
+    content:'';position:absolute;
+    width:200%;height:200%;
+    top:-50%;left:-50%;
+    background-image:repeating-linear-gradient(
+      -45deg,
+      transparent,transparent 38px,
+      rgba(245,239,228,0.02) 38px,rgba(245,239,228,0.02) 40px
+    );
+  }
+
+  .hero-overline {
+    font-family:'Courier Prime',monospace;
+    font-size:0.65rem;letter-spacing:0.3em;
+    color:var(--rust-light);text-transform:uppercase;
+    margin-bottom:22px;position:relative;
+    display:inline-flex;align-items:center;gap:12px;
+  }
+  .hero-overline::before,.hero-overline::after {
+    content:'';width:32px;height:1px;background:var(--rust-light);opacity:0.6;
+  }
+
+  .hero h1 {
+    font-family:'Archivo',sans-serif;
+    font-size:clamp(2.4rem,8vw,5.5rem);
+    font-weight:900;line-height:0.95;
+    color:var(--paper);
+    letter-spacing:-0.02em;
+    position:relative;margin-bottom:16px;
+  }
+
+  .hero h1 .ruled {
+    display:block;
+    font-family:'Libre Baskerville',serif;
+    font-style:italic;font-weight:400;
+    font-size:0.42em;
+    color:var(--gold-light);
+    letter-spacing:0.05em;
+    margin-top:8px;
+  }
+
+  .hero-deck {
+    font-family:'Archivo',sans-serif;
+    font-size:0.95rem;font-weight:300;
+    color:rgba(245,239,228,0.6);
+    max-width:520px;margin:0 auto 28px;
+    line-height:1.7;position:relative;
+  }
+
+  .hero-topics {
+    display:flex;justify-content:center;
+    gap:0;flex-wrap:wrap;position:relative;
+  }
+
+  .hero-topic {
+    font-family:'Courier Prime',monospace;
+    font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;
+    color:rgba(245,239,228,0.45);
+    padding:4px 14px;
+    border-right:1px solid rgba(245,239,228,0.15);
+  }
+  .hero-topic:last-child{border-right:none;}
+
+  /* ─── NAV ─── */
+  .nav-tabs {
+    display:flex;overflow-x:auto;
+    background:var(--ink-mid);
+    border-bottom:3px solid var(--rust);
+    padding:0 16px;scrollbar-width:none;
+    position:sticky;top:0;z-index:100;
+  }
+  .nav-tabs::-webkit-scrollbar{display:none;}
+
+  .tab-btn {
+    font-family:'Courier Prime',monospace;
+    font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(245,239,228,0.4);
+    background:none;border:none;
+    border-bottom:3px solid transparent;
+    margin-bottom:-3px;
+    padding:13px 15px;cursor:pointer;white-space:nowrap;
+    transition:all 0.2s;
+  }
+  .tab-btn:hover{color:rgba(245,239,228,0.8);}
+  .tab-btn.active{color:var(--gold-light);border-bottom-color:var(--gold);}
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display:none;padding:44px 22px 70px;
+    max-width:760px;margin:0 auto;
+    position:relative;z-index:1;
+    animation:appear 0.3s ease;
+  }
+  .section.active{display:block;}
+  @keyframes appear{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .section-label {
+    font-family:'Courier Prime',monospace;
+    font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;
+    color:var(--rust);margin-bottom:8px;display:block;
+  }
+
+  .section-title {
+    font-family:'Archivo',sans-serif;
+    font-size:2.4rem;font-weight:900;
+    color:var(--ink);margin-bottom:8px;
+    line-height:1;letter-spacing:-0.02em;
+  }
+
+  .section-desc {
+    font-family:'Libre Baskerville',serif;
+    font-size:0.97rem;color:var(--ink-light);
+    margin-bottom:32px;line-height:1.8;
+    padding-left:16px;
+    border-left:3px solid var(--rust);
+    font-style:italic;
+  }
+
+  /* ─── CARDS ─── */
+  .card {
+    background:var(--paper-dark);
+    border:1px solid var(--faint);
+    border-radius:4px;
+    padding:26px 24px;
+    margin-bottom:18px;
+    position:relative;overflow:hidden;
+    transition:box-shadow 0.2s;
+  }
+  .card:hover{box-shadow:0 4px 20px rgba(26,18,8,0.1);}
+  .card::before {
+    content:'';
+    position:absolute;top:0;left:0;bottom:0;
+    width:3px;background:var(--rust);
+  }
+  .card.teal-card::before{background:var(--teal);}
+  .card.gold-card::before{background:var(--gold);}
+
+  .card-kicker {
+    font-family:'Courier Prime',monospace;
+    font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--rust);margin-bottom:8px;display:block;
+  }
+  .card.teal-card .card-kicker{color:var(--teal);}
+  .card.gold-card .card-kicker{color:var(--gold);}
+
+  .card h3 {
+    font-family:'Archivo',sans-serif;
+    font-size:1.25rem;font-weight:700;
+    color:var(--ink);margin-bottom:10px;line-height:1.2;
+  }
+  .card p {
+    font-family:'Libre Baskerville',serif;
+    font-size:0.92rem;color:var(--ink-mid);line-height:1.85;
+  }
+
+  /* ─── PHASE TIMELINE ─── */
+  .phase-block {
+    position:relative;
+    padding-left:52px;
+    margin-bottom:32px;
+  }
+  .phase-block::before {
+    content:'';
+    position:absolute;left:18px;top:38px;bottom:-20px;
+    width:2px;background:var(--faint);
+  }
+  .phase-block:last-child::before{display:none;}
+
+  .phase-num {
+    position:absolute;left:0;top:0;
+    width:38px;height:38px;
+    background:var(--ink);
+    color:var(--gold-light);
+    font-family:'Courier Prime',monospace;
+    font-size:0.65rem;font-weight:700;
+    letter-spacing:0.05em;
+    border-radius:2px;
+    display:flex;align-items:center;justify-content:center;
+    flex-direction:column;
+    line-height:1.1;
+  }
+  .phase-num .ph-label{font-size:0.42rem;color:var(--rust-light);letter-spacing:0.2em;text-transform:uppercase;}
+
+  .phase-title {
+    font-family:'Archivo',sans-serif;
+    font-size:1.1rem;font-weight:700;
+    color:var(--ink);margin-bottom:4px;
+  }
+  .phase-sub {
+    font-family:'Courier Prime',monospace;
+    font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--rust-light);margin-bottom:14px;
+    display:block;
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist {
+    list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:14px;
+  }
+  .checklist li {
+    display:flex;gap:12px;align-items:flex-start;
+    font-family:'Libre Baskerville',serif;
+    font-size:0.9rem;color:var(--ink-mid);line-height:1.7;
+  }
+  .check {
+    font-family:'Courier Prime',monospace;font-size:0.6rem;
+    min-width:20px;height:20px;border-radius:2px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;margin-top:3px;font-weight:700;
+  }
+  .check.rust{color:var(--rust);background:var(--rust-pale);}
+  .check.teal{color:var(--teal);background:var(--teal-pale);}
+  .check.gold{color:var(--gold);background:var(--gold-pale);}
+
+  /* ─── DATA PANEL ─── */
+  .data-panel {
+    background:var(--ink);
+    border-radius:4px;padding:18px 20px;margin:14px 0;
+  }
+  .dp-title {
+    font-family:'Courier Prime',monospace;
+    font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;
+    color:var(--rust-light);margin-bottom:12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .dp-title::after{content:'';flex:1;height:1px;background:rgba(245,239,228,0.1);}
+
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .bar-lbl{font-family:'Courier Prime',monospace;font-size:0.6rem;color:rgba(245,239,228,0.6);min-width:120px;}
+  .bar-wrap{flex:1;height:5px;background:rgba(245,239,228,0.08);border-radius:2px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--rust),var(--rust-light));}
+  .bar-fill.tl{background:linear-gradient(90deg,var(--teal),var(--teal-light));}
+  .bar-fill.gd{background:linear-gradient(90deg,var(--gold),var(--gold-light));}
+  .bar-val{font-family:'Courier Prime',monospace;font-size:0.6rem;color:rgba(245,239,228,0.45);min-width:54px;text-align:right;}
+
+  /* ─── STEPS ─── */
+  .steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+  .steps li{display:flex;gap:14px;align-items:flex-start;font-family:'Libre Baskerville',serif;font-size:0.92rem;color:var(--ink-mid);line-height:1.75;}
+  .sn{
+    font-family:'Courier Prime',monospace;font-size:0.6rem;
+    color:var(--rust);background:var(--rust-pale);
+    border-radius:2px;min-width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;margin-top:3px;font-weight:700;
+  }
+  .sn.tl{color:var(--teal);background:var(--teal-pale);}
+  .sn.gd{color:var(--gold);background:var(--gold-pale);}
+
+  /* ─── CALLOUT BOXES ─── */
+  .callout,.insight,.warning {
+    border-radius:4px;padding:16px 20px;
+    margin:18px 0;display:flex;gap:12px;align-items:flex-start;
+  }
+  .callout{background:var(--rust-pale);border-left:3px solid var(--rust);}
+  .callout p{font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.7;}
+  .callout strong{color:var(--rust);}
+  .insight{background:var(--teal-pale);border-left:3px solid var(--teal);}
+  .insight p{font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.7;}
+  .insight strong{color:var(--teal);}
+  .warning{background:var(--gold-pale);border-left:3px solid var(--gold);}
+  .warning p{font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.7;}
+  .warning strong{color:var(--gold);}
+  .cicon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+
+  /* ─── DATA TABLE ─── */
+  .dtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.85rem;}
+  .dtable th{
+    font-family:'Courier Prime',monospace;font-size:0.56rem;
+    letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--ink-light);padding:9px 12px;text-align:left;
+    border-bottom:2px solid var(--faint);
+    background:var(--paper-dark);
+  }
+  .dtable td{
+    padding:8px 12px;color:var(--ink-mid);
+    border-bottom:1px solid var(--faint);
+    line-height:1.5;vertical-align:top;
+    font-family:'Libre Baskerville',serif;font-size:0.88rem;
+  }
+  .dtable tr:last-child td{border-bottom:none;}
+  .dtable td:first-child{font-family:'Courier Prime',monospace;color:var(--ink);font-weight:700;font-size:0.82rem;}
+  .good{color:#2a6e2a;} .warn{color:#8a5a0a;} .bad{color:#8a2a1a;}
+
+  /* ─── TWO COL ─── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;}
+  .mini-card{background:var(--paper-dark);border:1px solid var(--faint);border-radius:4px;padding:18px 16px;}
+  .mini-kicker{font-family:'Courier Prime',monospace;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;display:block;}
+  .mini-card.teal .mini-kicker{color:var(--teal);}
+  .mini-card.gold .mini-kicker{color:var(--gold);}
+  .mini-card h4{font-family:'Archivo',sans-serif;font-size:1.0rem;font-weight:700;color:var(--ink);margin-bottom:7px;}
+  .mini-card p{font-family:'Libre Baskerville',serif;font-size:0.85rem;color:var(--ink-mid);line-height:1.65;}
+
+  hr{border:none;border-top:1px solid var(--faint);margin:28px 0;}
+
+  /* ─── PULL QUOTE ─── */
+  .pull-quote {
+    border-top:3px solid var(--ink);
+    border-bottom:1px solid var(--faint);
+    padding:20px 0;margin:28px 0;
+    font-family:'Libre Baskerville',serif;
+    font-style:italic;font-size:1.25rem;
+    color:var(--ink);line-height:1.5;
+    text-align:center;
+  }
+  .pull-quote span{
+    display:block;font-family:'Courier Prime',monospace;
+    font-style:normal;font-size:0.58rem;
+    letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--rust);margin-top:10px;
+  }
+
+  /* ─── BADGE ─── */
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Courier Prime',monospace;font-size:0.58rem;
+    letter-spacing:0.12em;text-transform:uppercase;
+    padding:4px 11px;border-radius:2px;margin-bottom:16px;
+  }
+  .b-rust{background:var(--rust-pale);color:var(--rust);border:1px solid rgba(181,74,34,0.3);}
+  .b-teal{background:var(--teal-pale);color:var(--teal);border:1px solid rgba(30,100,100,0.3);}
+  .b-gold{background:var(--gold-pale);color:var(--gold);border:1px solid rgba(200,146,26,0.3);}
+
+  /* ─── PROJECTION TIMELINE ─── */
+  .timeline-track {
+    background:var(--ink);
+    border-radius:4px;
+    padding:22px 24px;
+    margin:18px 0;
+  }
+  .tl-row {
+    display:grid;
+    grid-template-columns:80px 1fr 80px;
+    align-items:center;
+    gap:14px;
+    margin-bottom:12px;
+  }
+  .tl-row:last-child{margin-bottom:0;}
+  .tl-month {
+    font-family:'Courier Prime',monospace;
+    font-size:0.58rem;letter-spacing:0.12em;
+    color:rgba(245,239,228,0.45);
+    text-transform:uppercase;
+  }
+  .tl-bar-wrap {
+    height:6px;background:rgba(245,239,228,0.08);
+    border-radius:3px;overflow:hidden;position:relative;
+  }
+  .tl-bar-fill {
+    height:100%;border-radius:3px;
+    transition:width 0.6s ease;
+  }
+  .tl-hcp {
+    font-family:'Courier Prime',monospace;
+    font-size:0.7rem;font-weight:700;
+    text-align:right;
+  }
+
+  /* ─── WEEKLY SCHEDULE ─── */
+  .week-grid {
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:4px;margin:14px 0;
+  }
+  .day-cell {
+    border-radius:3px;
+    padding:10px 4px;
+    text-align:center;
+  }
+  .day-cell .day-name {
+    font-family:'Courier Prime',monospace;
+    font-size:0.48rem;letter-spacing:0.1em;
+    text-transform:uppercase;margin-bottom:6px;display:block;
+  }
+  .day-cell .day-icon{font-size:1.1rem;display:block;margin-bottom:4px;}
+  .day-cell .day-label {
+    font-family:'Courier Prime',monospace;
+    font-size:0.42rem;letter-spacing:0.08em;
+    text-transform:uppercase;
+    display:block;line-height:1.3;
+  }
+  .day-cell.play{background:rgba(181,74,34,0.12);border:1px solid rgba(181,74,34,0.3);}
+  .day-cell.play .day-name{color:var(--rust-light);}
+  .day-cell.play .day-label{color:var(--rust);}
+  .day-cell.practice{background:rgba(30,100,100,0.12);border:1px solid rgba(30,100,100,0.3);}
+  .day-cell.practice .day-name{color:var(--teal-light);}
+  .day-cell.practice .day-label{color:var(--teal);}
+  .day-cell.gym{background:rgba(200,146,26,0.12);border:1px solid rgba(200,146,26,0.3);}
+  .day-cell.gym .day-name{color:var(--gold-light);}
+  .day-cell.gym .day-label{color:var(--gold);}
+  .day-cell.rest{background:rgba(26,18,8,0.05);border:1px solid var(--faint);}
+  .day-cell.rest .day-name{color:var(--muted);}
+  .day-cell.rest .day-label{color:var(--muted);}
+
+  /* ─── SG GAP TABLE ─── */
+  .gap-row {
+    display:flex;align-items:center;gap:12px;
+    padding:10px 0;border-bottom:1px solid var(--faint);
+  }
+  .gap-row:last-child{border-bottom:none;}
+  .gap-cat {
+    font-family:'Courier Prime',monospace;
+    font-size:0.6rem;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--ink-mid);
+    min-width:130px;
+  }
+  .gap-bar-wrap{flex:1;height:7px;background:rgba(26,18,8,0.08);border-radius:3px;overflow:hidden;}
+  .gap-bar{height:100%;border-radius:3px;}
+  .gap-val{
+    font-family:'Courier Prime',monospace;
+    font-size:0.65rem;font-weight:700;min-width:48px;text-align:right;
+  }
+
+  .footer{
+    text-align:center;padding:28px 20px;
+    font-family:'Courier Prime',monospace;font-size:0.58rem;
+    color:var(--muted);letter-spacing:0.18em;
+    border-top:1px solid var(--faint);
+    position:relative;z-index:1;
+    background:var(--paper-dark);
+  }
+
+  @media(max-width:480px){
+    .two-col{grid-template-columns:1fr;}
+    .hero h1{font-size:2.4rem;}
+    .week-grid{grid-template-columns:repeat(4,1fr);}
+    .tl-row{grid-template-columns:64px 1fr 54px;}
+    .gap-cat{min-width:90px;}
+  }
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-lines"></div>
+  <p class="hero-overline">The Scratch Project</p>
+  <h1>10 TO SCRATCH<span class="ruled">The formal 24-month plan — with your commitment, the data says yes</span></h1>
+  <p class="hero-deck">You have committed to 2 rounds and 2 structured practice sessions per week. This plan closes every remaining SG gap in sequence. Execute the phases in order and the handicap follows.</p>
+  <div class="hero-topics">
+    <span class="hero-topic">📅 Phase 1–3: Months 1–12</span>
+    <span class="hero-topic">🎯 Phase 4: Months 13–24</span>
+    <span class="hero-topic">💪 Fitness Protocol</span>
+    <span class="hero-topic">🍎 Nutrition</span>
+    <span class="hero-topic">📊 SG Targets</span>
+    <span class="hero-topic">🏆 Competitive Play</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('verdict')">Assessment</button>
+  <button class="tab-btn" onclick="showTab('schedule')">Weekly Schedule</button>
+  <button class="tab-btn" onclick="showTab('phases')">The 4 Phases</button>
+  <button class="tab-btn" onclick="showTab('sgtargets')">SG Targets</button>
+  <button class="tab-btn" onclick="showTab('fitness')">Fitness</button>
+  <button class="tab-btn" onclick="showTab('nutrition')">Nutrition</button>
+  <button class="tab-btn" onclick="showTab('competition')">Competition</button>
+  <button class="tab-btn" onclick="showTab('tracker')">Milestone Tracker</button>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 1 — ASSESSMENT
+════════════════════════════════════════ -->
+<div class="section active" id="verdict">
+  <span class="section-label">The Verdict</span>
+  <h2 class="section-title">CAN YOU DO IT?</h2>
+  <p class="section-desc">Yes — but the existing plan takes you to roughly +1–2 by Month 12. This document extends it with a formal Phase 4 and the additional pillars required to close the final margin to scratch.</p>
+
+  <div class="pull-quote">
+    "The path from 10 to scratch is not a matter of talent. It is a matter of structure, discipline, and willingness to compete under pressure."
+    <span>— Composite from R&A Golf Development Research, 2019</span>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">The Honest Assessment</span>
+    <h3>What the Current Plan Gets You</h3>
+    <p>Your existing 3-phase programme was designed to reach low single figures. With 2 rounds and 2 structured practice sessions per week — the volume a serious low-handicapper trains on — the existing projections hold. Scratch by Month 24 requires extending the framework with a fourth phase and closing the hardest remaining SG gaps.</p>
+    <div class="timeline-track" style="margin-top:16px;">
+      <div class="dp-title">📈 Projected Handicap Trajectory</div>
+      <div class="tl-row">
+        <span class="tl-month">Month 2</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:20%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--rust-light);">~8</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 4</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--rust-light);">~7</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 6</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:45%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--gold-light);">~5–6</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 9</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:65%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--gold-light);">~3–4</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 12</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:82%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--teal-light);">~1–2</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 18</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:93%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--teal-light);">~+1</span>
+      </div>
+      <div class="tl-row">
+        <span class="tl-month">Month 24</span>
+        <div class="tl-bar-wrap"><div class="tl-bar-fill" style="width:100%;background:linear-gradient(90deg,var(--gold-light),#fff5a0,var(--gold-light));"></div></div>
+        <span class="tl-hcp" style="color:var(--gold-light);font-size:0.9rem;">Scratch</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">The Critical Insight</span>
+    <h3>The Final 2 Strokes Are the Hardest</h3>
+    <p>Going from 10 to 5 is primarily a process improvement. Going from 5 to 2 is a precision improvement. Going from 2 to scratch requires you to eliminate the remaining leaks across all three SG categories simultaneously — and to perform under competitive pressure on a consistent basis. There is no single fix at this level. It is a compound of marginal gains that must all hold at once.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <span class="mini-kicker">What the R&A Data Says</span>
+      <h4>Structured vs. Unstructured</h4>
+      <p>Golfers using structured improvement programmes reach their target in 8–14 months on average. Those relying on lessons and range time alone average 24–36 months for the same improvement. Structure — not volume — is the multiplier.</p>
+    </div>
+    <div class="mini-card teal">
+      <span class="mini-kicker">Your Volume Commitment</span>
+      <h4>2+2 Is Sufficient</h4>
+      <p>2 rounds and 2 deliberate practice sessions per week is the exact volume of a scratch-calibre amateur in training. The quantity is right. The quality of every session must be intentional, tracked, and structured.</p>
+    </div>
+    <div class="mini-card gold">
+      <span class="mini-kicker">The Three Killers</span>
+      <h4>Why People Stall at 3</h4>
+      <p>Inconsistent practice quality, insufficient competitive play, and an unaddressed physical limiter. Players who stall at 2–3 handicap almost always have at least one of these. The plan below is designed to eliminate all three.</p>
+    </div>
+    <div class="mini-card">
+      <span class="mini-kicker">Timeline Reality</span>
+      <h4>Month 12 → Scratch</h4>
+      <p>Months 1–12 follow the existing plan. Months 13–24 introduce Phase 4: elite execution, competitive exposure, and the precision-level SG standards a scratch golfer must hold across all categories.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 2 — WEEKLY SCHEDULE
+════════════════════════════════════════ -->
+<div class="section" id="schedule">
+  <span class="section-label">Commitment Framework</span>
+  <h2 class="section-title">YOUR WEEK IN GOLF</h2>
+  <p class="section-desc">2 rounds + 2 practice sessions + 2 gym sessions per week. Every session has a defined purpose. Nothing is optional — recovery and nutrition are as non-negotiable as the practice itself.</p>
+
+  <span class="badge b-rust">🗓️ Recommended Weekly Template</span>
+
+  <div class="card">
+    <span class="card-kicker">The Model Week — Year 1</span>
+    <h3>Structure Beats Volume Every Time</h3>
+    <div class="week-grid" style="margin-top:16px;">
+      <div class="day-cell rest">
+        <span class="day-name">Mon</span>
+        <span class="day-icon">😴</span>
+        <span class="day-label">Rest / Mobility</span>
+      </div>
+      <div class="day-cell practice">
+        <span class="day-name">Tue</span>
+        <span class="day-icon">🎯</span>
+        <span class="day-label">Practice Session 1</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Wed</span>
+        <span class="day-icon">🏋️</span>
+        <span class="day-label">Strength + Cardio</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Thu</span>
+        <span class="day-icon">⛳</span>
+        <span class="day-label">Round 1</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Fri</span>
+        <span class="day-icon">🏋️</span>
+        <span class="day-label">Strength + Cardio</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Sat</span>
+        <span class="day-icon">⛳</span>
+        <span class="day-label">Round 2 (Comp)</span>
+      </div>
+      <div class="day-cell practice">
+        <span class="day-name">Sun</span>
+        <span class="day-icon">🎯</span>
+        <span class="day-label">Practice Session 2</span>
+      </div>
+    </div>
+    <p style="margin-top:16px;">Saturday is designated as your <strong>competitive or pressure round</strong> — medal, stableford, or a money match. Sunday practice sessions address what the data from the week's rounds revealed. Never practise mechanics on the day you play.</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Practice Session Design</span>
+    <h3>How Each Session Must Be Structured</h3>
+    <p>Every practice session follows the 30/35/20/10/5 split from the existing plan — but must include pass/fail criteria on every drill. Random practice over block practice for 78% vs. 42% skill retention at 72 hours. Maximum deliberate practice: 60–90 minutes. Beyond that, skill acquisition drops to near zero.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn tl">30%</span><strong>Putting</strong> — Speed gates, Clock Drill, Make 100 at 4 ft, AimPoint green reading. Track make rate and 3-putt rate.</li>
+      <li><span class="sn tl">35%</span><strong>Short Game</strong> — Proximity tracking from standard chips, full wedge matrix, bunker saves. Pass/fail: chip to 8-ft circle.</li>
+      <li><span class="sn tl">20%</span><strong>Irons</strong> — Low Point Drill, dispersion pattern work on launch monitor. Target: <30 ft from 150 yds.</li>
+      <li><span class="sn tl">10%</span><strong>Driver</strong> — SuperSpeed if speed is a limiter, course simulation off tee. Track fairways hit %.</li>
+      <li><span class="sn tl">5%</span><strong>Mental</strong> — Pressure reps, pre-shot routine under consequence, post-session data review.</li>
+    </ul>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Post-Round Protocol</span>
+    <h3>10 Minutes That Compound Over Time</h3>
+    <ul class="steps">
+      <li><span class="sn gd">1</span>Open Arccos or Shot Scope. Review your SG in all four categories for the round.</li>
+      <li><span class="sn gd">2</span>Identify the single biggest leak. Record it in your game log.</li>
+      <li><span class="sn gd">3</span>Set the focus for your next practice session based on what the data shows — not what feels bad emotionally.</li>
+      <li><span class="sn gd">4</span>Apply the 10-second rule: close the round completely. The next round gets a clean slate.</li>
+    </ul>
+  </div>
+
+  <div class="warning">
+    <span class="cicon">⚠️</span>
+    <p><strong>Critical rule:</strong> Never practise swing mechanics on the day of a round. Pre-round putting protocol (20-min tour warm-up) is the only permitted practice. Mechanical thinking on the course destroys automatic motor programmes and is the primary cause of performance regression under pressure.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 3 — THE 4 PHASES
+════════════════════════════════════════ -->
+<div class="section" id="phases">
+  <span class="section-label">The Roadmap</span>
+  <h2 class="section-title">FOUR PHASES TO SCRATCH</h2>
+  <p class="section-desc">Phases 1–3 from the existing programme take you to +1–2 by Month 12. Phase 4 is new — it closes the final margin through elite execution, precision standards, and competitive exposure.</p>
+
+  <!-- PHASE 1 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>1</div>
+    <p class="phase-title">Stop the Bleeding</p>
+    <span class="phase-sub">Months 1–2 · Target: Handicap ~8 · Focus: Eliminate double bogeys</span>
+    <ul class="checklist">
+      <li><span class="check rust">✓</span>Install and use pre-shot routine on every single shot — no exceptions.</li>
+      <li><span class="check rust">✓</span>Begin tracking 5 stats per round via Arccos or Shot Scope from Round 1.</li>
+      <li><span class="check rust">✓</span>Apply shot selection hierarchy: no hero plays from trouble. Chip out, take your medicine.</li>
+      <li><span class="check rust">✓</span>Aim for the fat part of the green on all pins that are not clearly accessible.</li>
+      <li><span class="check rust">✓</span>Begin 6-minute daily mobility routine: thoracic, hip 90/90, hip flexor, wrist.</li>
+    </ul>
+    <div class="callout">
+      <span class="cicon">📊</span>
+      <p><strong>Expected result:</strong> −2 to −3 strokes in scoring average within 6–8 rounds. Most of this gain comes from decision-making, not ball-striking.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>2</div>
+    <p class="phase-title">Build the Foundation</p>
+    <span class="phase-sub">Months 3–4 · Target: Handicap ~7 · Focus: Short game + putting confidence</span>
+    <ul class="checklist">
+      <li><span class="check teal">✓</span>Structured short game practice every session — track proximity, not feel.</li>
+      <li><span class="check teal">✓</span>Build the full wedge distance matrix: all 4 clubs × 4 clock positions (8 o'clock to 12 o'clock).</li>
+      <li><span class="check teal">✓</span>Make 100 Drill weekly at 4 feet — build neurological confidence under pressure.</li>
+      <li><span class="check teal">✓</span>Get a professional putter fitting — highest ROI equipment investment available (+0.3–0.8 SG).</li>
+      <li><span class="check teal">✓</span>Begin strength training 2× per week: hip hinge focus (deadlifts, hip thrusts, goblet squats).</li>
+    </ul>
+    <div class="insight">
+      <span class="cicon">🎯</span>
+      <p><strong>Expected result:</strong> Up-and-down rate improving toward 35%+. 3-putt rate below 10%. Handicap approaching 7–8.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>3</div>
+    <p class="phase-title">Build the Attack</p>
+    <span class="phase-sub">Months 5–12 · Target: Handicap ~1–2 · Focus: Approach play + GIR</span>
+    <ul class="checklist">
+      <li><span class="check gold">✓</span>Launch monitor session: establish verified carry distances for every club. End under-clubbing permanently.</li>
+      <li><span class="check gold">✓</span>Add Alignment Stick Low Point Drill to every iron practice session. Target consistent ball-first contact.</li>
+      <li><span class="check gold">✓</span>Apply wind percentage system on every approach where wind exceeds 10 mph. Automate it until it is unconscious.</li>
+      <li><span class="check gold">✓</span>Begin SuperSpeed training if driver speed is a limiter: 3× per week, 10 minutes per session.</li>
+      <li><span class="check gold">✓</span>Apply dispersion-based targeting on all approach shots — aim based on your shot pattern, not the flag.</li>
+      <li><span class="check gold">✓</span>Enter at least 1 competitive round per month (club medal, stableford, or equivalent).</li>
+    </ul>
+    <div class="warning">
+      <span class="cicon">📈</span>
+      <p><strong>Expected result:</strong> GIR% improving toward 40–45%. Approach proximity under 30 ft from 150 yards. Handicap reaching +1–2 by Month 12.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-block">
+    <div class="phase-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Phase</span>4</div>
+    <p class="phase-title">Elite Execution — The Scratch Standard</p>
+    <span class="phase-sub">Months 13–24 · Target: Scratch · Focus: Precision, competition, closing the margin</span>
+    <ul class="checklist">
+      <li><span class="check gold">✓</span><strong>Approach proximity target: &lt;25 ft from 150 yards.</strong> GIR% target: 55–60%. These are scratch-calibre standards — tighten from Phase 3 targets.</li>
+      <li><span class="check gold">✓</span>Eliminate bogeys from miscalculation, not poor ball-striking. Every decision on course must be the statistically correct one, not the emotionally compelling one.</li>
+      <li><span class="check gold">✓</span><strong>Quarterly swing audits with a TPI-certified coach.</strong> Your SG data tells you what is leaking; a coach tells you why and how to fix it efficiently. Self-directed improvement has a ceiling around +2–3.</li>
+      <li><span class="check gold">✓</span>Up-and-down rate target: 40%+. Bunker save rate: 35%+. 3-putt rate: &lt;5%. 5-ft make rate: 85%+. These are the scratch benchmarks — not aspirational, but required.</li>
+      <li><span class="check gold">✓</span><strong>Minimum 2 competitive rounds per month.</strong> Club championship, open competitions, county events. Pressure exposure is non-negotiable at scratch level. Your handicap will not reflect your capability until you perform under real stakes consistently.</li>
+      <li><span class="check gold">✓</span>Weekly pressure practice — putting for consequence, chipping to tight targets with a financial penalty for misses. Simulate the emotional conditions of competition in every practice session.</li>
+      <li><span class="check gold">✓</span>Full physical protocol sustained: strength 2×/week, cardio 2–3×/week, daily mobility, sleep discipline, on-course nutrition. At scratch level, physical precision across 18 holes under competitive pressure is a primary differentiator.</li>
+    </ul>
+    <div class="callout" style="background:var(--gold-pale);border-left:3px solid var(--gold);">
+      <span class="cicon">🏆</span>
+      <p><strong>Expected result:</strong> Scratch handicap confirmed across multiple competitive rounds. All four SG categories within scratch benchmarks simultaneously. This is the standard — not aspirational, but achievable with the commitment you have made.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 4 — SG TARGETS
+════════════════════════════════════════ -->
+<div class="section" id="sgtargets">
+  <span class="section-label">Strokes Gained</span>
+  <h2 class="section-title">THE NUMBERS TO HIT</h2>
+  <p class="section-desc">Scratch is defined by closing four SG gaps simultaneously. Each category has a current deficit and a target. Track these in Arccos or Shot Scope every round — the data, not your feel, drives every practice decision.</p>
+
+  <span class="badge b-rust">📊 SG Gap vs. Scratch Baseline</span>
+
+  <div class="card">
+    <span class="card-kicker">Current 10 HCP Deficits</span>
+    <h3>Where Every Stroke Is Leaking Right Now</h3>
+    <div style="margin-top:14px;">
+      <div class="gap-row">
+        <span class="gap-cat">SG: Approach</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:60%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−1.8/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Around-Green</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:83%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−2.5/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Putting</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:80%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−2.4/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Off-Tee</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:30%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val warn">−0.9/rd</span>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:0.88rem;color:var(--ink-light);font-style:italic;">Total deficit vs. scratch: approximately −7.6 strokes per round. That is your full journey. The plan closes these gaps in sequence, with the largest gaps targeted first.</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Scratch Benchmarks — Your Targets</span>
+    <h3>What Every Category Must Look Like to Register Scratch</h3>
+    <table class="dtable">
+      <tr>
+        <th>Category</th>
+        <th>10 HCP Current</th>
+        <th>Phase 3 Target</th>
+        <th>Scratch Target</th>
+      </tr>
+      <tr>
+        <td>GIR %</td>
+        <td class="bad">28–35%</td>
+        <td class="warn">40–45%</td>
+        <td class="good">55–60%</td>
+      </tr>
+      <tr>
+        <td>Approach Prox (150 yds)</td>
+        <td class="bad">50–60 ft</td>
+        <td class="warn">&lt;30 ft</td>
+        <td class="good">&lt;25 ft</td>
+      </tr>
+      <tr>
+        <td>Up-and-Down %</td>
+        <td class="bad">22–30%</td>
+        <td class="warn">35%</td>
+        <td class="good">40%+</td>
+      </tr>
+      <tr>
+        <td>Bunker Save %</td>
+        <td class="bad">14–18%</td>
+        <td class="warn">25%+</td>
+        <td class="good">35%+</td>
+      </tr>
+      <tr>
+        <td>3-Putt Rate</td>
+        <td class="bad">12–16%</td>
+        <td class="warn">&lt;8%</td>
+        <td class="good">&lt;5%</td>
+      </tr>
+      <tr>
+        <td>5-ft Make Rate</td>
+        <td class="bad">~60%</td>
+        <td class="warn">75%+</td>
+        <td class="good">85%+</td>
+      </tr>
+      <tr>
+        <td>Fairways Hit %</td>
+        <td class="bad">45–55%</td>
+        <td class="warn">55%</td>
+        <td class="good">60%+</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">The Most Important Number</span>
+    <h3>SG: Approach Is the Biggest Lever</h3>
+    <p>SG: Approach is the single largest differentiator between a 10 handicap and scratch — larger than putting. A 10 HCP loses 1.8 strokes per round to scratch on approach shots alone. The primary cause is not swing quality — it is target selection, club selection, and failure to account for conditions. Improving approach decision-making alone is worth more than any other single change in your game.</p>
+    <div class="data-panel" style="margin-top:14px;">
+      <div class="dp-title">📊 SG: Approach by Handicap</div>
+      <div class="bar-row"><span class="bar-lbl">10 HCP</span><div class="bar-wrap"><div class="bar-fill" style="width:25%;"></div></div><span class="bar-val bad">−1.8/rd</span></div>
+      <div class="bar-row"><span class="bar-lbl">5 HCP</span><div class="bar-wrap"><div class="bar-fill gd" style="width:55%;"></div></div><span class="bar-val warn">−0.9/rd</span></div>
+      <div class="bar-row"><span class="bar-lbl">Scratch</span><div class="bar-wrap"><div class="bar-fill tl" style="width:82%;"></div></div><span class="bar-val good">0.0 baseline</span></div>
+      <div class="bar-row"><span class="bar-lbl">Tour Pro</span><div class="bar-wrap"><div class="bar-fill gd" style="width:100%;"></div></div><span class="bar-val" style="color:var(--gold-light);">+1.4/rd</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 5 — FITNESS
+════════════════════════════════════════ -->
+<div class="section" id="fitness">
+  <span class="section-label">Physical Development</span>
+  <h2 class="section-title">THE ATHLETIC FOUNDATION</h2>
+  <p class="section-desc">Scratch requires sustaining physical precision and mental focus across 18 holes under competitive pressure. The fitness protocol below is not supplementary — it is a core pillar of the plan. Golfers who train structured physical programmes improve their handicap 35% faster and sustain it longer.</p>
+
+  <span class="badge b-teal">🏋️ The Formal Fitness Protocol</span>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Strength Training — 2× Per Week</span>
+    <h3>Hip Hinge, Rotation, Anti-Rotation Core</h3>
+    <p>TPI research shows that 80% of swing faults have a direct physical cause. These three movement patterns directly translate to swing efficiency, clubhead speed, and consistency under fatigue.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn tl">A1</span><strong>Hip hinge (deadlifts / Romanian deadlifts):</strong> 3 sets × 6–8 reps. Develops the posterior chain power that drives sequencing and clubhead speed. Most important single exercise for golfers.</li>
+      <li><span class="sn tl">A2</span><strong>Hip thrusts / glute bridges:</strong> 3 sets × 10–12 reps. Glute strength directly predicts lateral stability in the swing. Weak glutes = early extension = fat shots.</li>
+      <li><span class="sn tl">B1</span><strong>Cable wood chops (rotational):</strong> 3 sets × 10 each side. Trains the rotational power delivery pattern at golf-specific speeds.</li>
+      <li><span class="sn tl">B2</span><strong>Pallof press (anti-rotation):</strong> 3 sets × 10 each side. Builds the core stiffness that maintains posture through impact. Prevents the lateral slide that costs proximity.</li>
+      <li><span class="sn tl">C1</span><strong>Goblet squats:</strong> 3 sets × 10 reps. Hip mobility under load. Directly improves hip flexion depth and stance stability.</li>
+      <li><span class="sn tl">C2</span><strong>Single-leg deadlifts:</strong> 2 sets × 8 each side. Balance and glute recruitment under unilateral load — the conditions your body is in at impact.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Cardiovascular Training — 2–3× Per Week</span>
+    <h3>Back-Nine Fitness: The Overlooked Killer</h3>
+    <p>Amateur scores rise an average of 0.4 strokes per hole on holes 14–18 due to fatigue-driven cognitive decline. Scratch golfers sustain decision quality and physical precision for the full 18. A basic aerobic base eliminates this entirely.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn">▸</span><strong>Protocol:</strong> 30–40 minutes at moderate intensity (zone 2 — conversational pace). Run, cycle, row, or brisk walk. Frequency: 2–3× per week, never the day before a competitive round.</li>
+      <li><span class="sn">▸</span><strong>Target:</strong> Resting heart rate below 60 bpm within 3 months. This correlates directly with sustained cognitive performance across a 4-hour round.</li>
+      <li><span class="sn">▸</span><strong>Walk the course:</strong> Whenever conditions permit, walk rather than ride. 18 holes walking = approximately 8km of zone 2 cardio. Two walks per week is your entire cardio requirement.</li>
+    </ul>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Daily Mobility — 6 Minutes</span>
+    <h3>The Four Non-Negotiable Movements</h3>
+    <p>These four movements directly address the physical causes of the most common swing faults. Six minutes, every morning, before any other activity.</p>
+    <table class="dtable" style="margin-top:12px;">
+      <tr><th>Movement</th><th>Duration</th><th>Swing Fault It Prevents</th><th>SG Impact</th></tr>
+      <tr><td>Thoracic rotation</td><td>90 sec</td><td>Early extension, reverse pivot</td><td class="good">+0.3/rd</td></tr>
+      <tr><td>Hip 90/90 stretch</td><td>90 sec</td><td>Early extension, loss of posture</td><td class="good">+0.4/rd</td></tr>
+      <tr><td>Hip flexor lunge</td><td>60 sec</td><td>Lateral slide, early extension</td><td class="good">+0.3/rd</td></tr>
+      <tr><td>Wrist mobility</td><td>60 sec</td><td>Inconsistent face angle at impact</td><td class="good">+0.2/rd</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Speed Development — SuperSpeed Protocol</span>
+    <h3>Every 1 mph Adds 2.5 Yards of Carry</h3>
+    <p>For a 10 HCP with a typical 90–95 mph driver speed, adding 5 mph through overspeed training adds 12–15 yards — often the difference between a 6-iron and an 8-iron approach on a long par-4. Speed is trainable at any age.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="sn">▸</span><strong>Protocol:</strong> SuperSpeed Golf system, 3× per week, 10 minutes per session. Produces 4–8% speed gains in 4–6 weeks through overspeed neurological adaptation.</li>
+      <li><span class="sn">▸</span><strong>Timing:</strong> Begin in Phase 3, once the short game and putting foundations are in place. Speed training without directional control first is counterproductive.</li>
+      <li><span class="sn">▸</span><strong>Do not neglect:</strong> Sleep deprivation reduces fine motor precision 20–30% and decision quality 25%. Eight hours is not optional at this level of precision training.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 6 — NUTRITION
+════════════════════════════════════════ -->
+<div class="section" id="nutrition">
+  <span class="section-label">Fuel the Performance</span>
+  <h2 class="section-title">NUTRITION FOR SCRATCH</h2>
+  <p class="section-desc">Cognitive performance — the quality of your decisions on holes 14–18 — is almost entirely determined by blood glucose stability and hydration. Scratch golfers maintain both across 4+ hours. Most amateurs do not eat or drink enough to sustain decision quality beyond the 12th hole.</p>
+
+  <span class="badge b-gold">🍎 The On-Course Nutrition Protocol</span>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Pre-Round — 2 Hours Before Tee</span>
+    <h3>The Foundation Meal</h3>
+    <p>Low-glycaemic index meal, 2 hours before the round. The goal is stable blood glucose from the first tee to the 18th green — not a spike and crash. Avoid high-sugar or high-simple-carb meals within 90 minutes of play.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="sn gd">✓</span><strong>Ideal:</strong> Oats with berries and eggs / wholegrain toast with eggs and avocado / chicken and rice. Protein + complex carb + healthy fat. Medium portion — never play heavy.</li>
+      <li><span class="sn gd">✓</span><strong>Hydration:</strong> 500ml water in the hour before the round. Mild dehydration (1–2%) measurably impairs fine motor precision and concentration.</li>
+      <li><span class="sn gd">✓</span><strong>Caffeine protocol:</strong> 100–200mg caffeine, 45 minutes before the round. One strong espresso or a caffeine capsule. More than 300mg causes tremor — directly impairs putting. No caffeine after the 12th hole (sleep disruption).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">On-Course — Every 5–6 Holes</span>
+    <h3>Maintaining Decision Quality to the 18th</h3>
+    <p>The back-nine collapse is a nutrition problem as much as a fitness problem. 20–30g of carbohydrate every 5–6 holes prevents the cognitive decline that turns strategic errors into bogeys on 14–18.</p>
+    <table class="dtable" style="margin-top:12px;">
+      <tr><th>Hole</th><th>What to Eat</th><th>Why</th></tr>
+      <tr><td>Tee / 1</td><td>Water — sip throughout</td><td>Maintain hydration baseline</td></tr>
+      <tr><td>5–6</td><td>Banana or energy bar (25g carb)</td><td>First glucose replenishment</td></tr>
+      <tr><td>10–12</td><td>Sandwich / bar / fruit (25–30g carb)</td><td>Sustain cognitive performance to 18</td></tr>
+      <tr><td>16–17</td><td>Small snack + water if needed</td><td>Maintain precision on closing holes</td></tr>
+    </table>
+    <p style="margin-top:12px;">Avoid: alcohol during the round (impairs judgment, motor precision, and recovery). Avoid: high-sugar drinks (spike and crash pattern directly causes decision errors on back nine).</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Recovery Nutrition</span>
+    <h3>What You Eat After Affects How You Train Tomorrow</h3>
+    <ul class="steps">
+      <li><span class="sn tl">▸</span><strong>Within 30 minutes post-round or practice:</strong> 20–30g protein + 40–60g carbohydrate. Initiates muscle repair and glycogen replenishment. A protein shake with a banana is sufficient.</li>
+      <li><span class="sn tl">▸</span><strong>Evening before a competition round:</strong> Higher-carbohydrate dinner (pasta, rice, potato) with lean protein. Avoid alcohol — even one unit impairs next-day fine motor precision by a measurable margin.</li>
+      <li><span class="sn tl">▸</span><strong>Sleep:</strong> 8 hours is the target. Sleep deprivation below 6 hours reduces fine motor precision 20–30% and decision quality 25% — equivalent to playing mildly drunk. Every sleep deficit is a practice session partially wasted.</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <span class="cicon">💧</span>
+    <p><strong>The simplest win in this entire plan:</strong> Drink 500ml of water before every round and eat something on the 6th and 12th holes. Most amateur golfers play 18 holes in a mild dehydrated state with falling blood glucose from the 14th onwards. Fixing this alone is worth 0.5–1.0 strokes per round in scoring average.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 7 — COMPETITION
+════════════════════════════════════════ -->
+<div class="section" id="competition">
+  <span class="section-label">Competitive Exposure</span>
+  <h2 class="section-title">YOU MUST COMPETE</h2>
+  <p class="section-desc">This is the most commonly missed element in a self-directed improvement programme. Your handicap will not accurately reflect your ability until you perform consistently under real competitive pressure. Pressure is a skill — and it must be trained like any other.</p>
+
+  <div class="pull-quote">
+    "Practice puts your brain in a state of controlled comfort. Competition puts it in a state of controlled discomfort. You need both — but scratch golfers have learned to perform in the second state."
+    <span>— Dr. Gio Valiante, sports psychologist to Dustin Johnson</span>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Why Competitive Play Is Non-Negotiable</span>
+    <h3>The Pressure Gap at +2 to Scratch</h3>
+    <p>The single most common reason golfers stall at +2–3 handicap is that they have never regularly played under the conditions that produce pressure. A Saturday fourball is not competitive pressure. A club medal where your handicap certificate hangs on the result is. The neuroscience is clear: motor programmes that work in practice will fail under novel stress unless they have been repeatedly tested under pressure and reinforced.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn">▸</span><strong>Year 1 minimum:</strong> 1 competitive round per month — club medal, open stableford, or equivalent counted competition.</li>
+      <li><span class="sn">▸</span><strong>Year 2 minimum:</strong> 2 competitive rounds per month. Enter the club championship. Enter at least one open amateur event. Enter a county qualifier if accessible.</li>
+      <li><span class="sn">▸</span><strong>Practice pressure simulation:</strong> Every session must include one block of pressure reps — putting for £1 per miss, chipping to tight targets with a consequence for failure, playing a simulated back-nine in practice with a scoring standard to hit.</li>
+    </ul>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Mental Game Under Pressure</span>
+    <h3>The Three Routines That Must Hold</h3>
+    <p>Three mental habits separate a +2 golfer from a scratch golfer under pressure. These must be trained until they are completely automatic — not aspirational behaviours that fall apart when the stakes rise.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn tl">1</span><strong>Pre-shot routine without deviation:</strong> Same sequence, same duration (20–28 seconds), same trigger, every shot. Tour research shows pre-shot routine consistency is the #1 predictor of performance under pressure. If your routine changes when nervous, it is not yet a routine.</li>
+      <li><span class="sn tl">2</span><strong>10-second bad shot rule:</strong> Allow 10 seconds of honest reaction to a bad shot. After that, the door closes. Any longer than 15 seconds of rumination measurably impairs the next shot. Build the habit in practice so it is automatic in competition.</li>
+      <li><span class="sn tl">3</span><strong>Process goals only on the course:</strong> Set scoring aspirations before the round, then forget them entirely on the course. Outcome goals ("I need to birdie this hole") trigger anxiety that disrupts automatic execution. Process goals ("I'm going to commit fully to this routine") keep attention where performance lives.</li>
+    </ul>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Competitive Mindset — Self-Talk</span>
+    <h3>The Language You Use Changes What You Do</h3>
+    <p>Research by Dr. Antonis Hatzigeorgiadis shows that instructional self-talk ("smooth tempo," "stay down") improves execution of skilled motor tasks by 12–18% compared to silence. Negative self-talk ("don't hit it in the water") impairs performance by 15–22% — because your brain processes the image of the feared outcome. Build a vocabulary of positive, process-focused cue words for each shot type. Use them deliberately in competition — they are not affirmations, they are performance tools.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <span class="mini-kicker">Recommended Competition Schedule</span>
+      <h4>Year 1</h4>
+      <p>Monthly club medal or stableford. Club championship (full entry). 1–2 open amateur competitions. Saturday round designated as pressure simulation — play alone, score card, no gimmes.</p>
+    </div>
+    <div class="mini-card teal">
+      <span class="mini-kicker">Recommended Competition Schedule</span>
+      <h4>Year 2</h4>
+      <p>2× monthly competitive rounds minimum. Club championship. County qualifying events. Open stroke play events. Matchplay if available — different pressure dynamic, valuable for exposure.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 8 — MILESTONE TRACKER
+════════════════════════════════════════ -->
+<div class="section" id="tracker">
+  <span class="section-label">Progress Framework</span>
+  <h2 class="section-title">MILESTONE TRACKER</h2>
+  <p class="section-desc">These are the checkpoints that confirm you are on track. Review quarterly. If a milestone is not met, do not advance — address the specific SG gap the data reveals before moving forward.</p>
+
+  <span class="badge b-rust">🏁 24-Month Checkpoint System</span>
+
+  <div class="card">
+    <span class="card-kicker">Month 2 Checkpoint — HCP ~8</span>
+    <h3>Stop the Bleeding Confirmed</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target</th><th>My Number</th></tr>
+      <tr><td>Scoring average</td><td class="warn">&lt;84</td><td></td></tr>
+      <tr><td>Pre-shot routine</td><td class="good">Every shot ✓</td><td></td></tr>
+      <tr><td>Stats tracked</td><td class="good">5 categories ✓</td><td></td></tr>
+      <tr><td>Double bogeys/round</td><td class="warn">&lt;2</td><td></td></tr>
+      <tr><td>Daily mobility</td><td class="good">Active ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Month 6 Checkpoint — HCP ~5–6</span>
+    <h3>Foundation Built</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target</th><th>My Number</th></tr>
+      <tr><td>U&amp;D %</td><td class="warn">35%+</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="warn">&lt;10%</td><td></td></tr>
+      <tr><td>5-ft make rate</td><td class="warn">75%+</td><td></td></tr>
+      <tr><td>Putter fitted</td><td class="good">Done ✓</td><td></td></tr>
+      <tr><td>Strength training</td><td class="good">2×/wk active ✓</td><td></td></tr>
+      <tr><td>Wedge matrix</td><td class="good">Built ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Month 12 Checkpoint — HCP ~1–2</span>
+    <h3>Attack Built</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target</th><th>My Number</th></tr>
+      <tr><td>GIR %</td><td class="warn">40–45%</td><td></td></tr>
+      <tr><td>Approach prox (150 yds)</td><td class="warn">&lt;30 ft</td><td></td></tr>
+      <tr><td>Fairways hit %</td><td class="warn">55%+</td><td></td></tr>
+      <tr><td>U&amp;D %</td><td class="warn">38%+</td><td></td></tr>
+      <tr><td>Competitive rounds</td><td class="good">12+ played ✓</td><td></td></tr>
+      <tr><td>Launch monitor session</td><td class="good">Done ✓</td><td></td></tr>
+      <tr><td>Coach audit</td><td class="good">1× completed ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Month 24 Checkpoint — Scratch</span>
+    <h3>The Standard</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Scratch Target</th><th>My Number</th></tr>
+      <tr><td>Handicap (official)</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>GIR %</td><td class="good">55–60%</td><td></td></tr>
+      <tr><td>Approach prox (150 yds)</td><td class="good">&lt;25 ft</td><td></td></tr>
+      <tr><td>U&amp;D %</td><td class="good">40%+</td><td></td></tr>
+      <tr><td>Bunker save %</td><td class="good">35%+</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="good">&lt;5%</td><td></td></tr>
+      <tr><td>5-ft make rate</td><td class="good">85%+</td><td></td></tr>
+      <tr><td>Competitive rounds</td><td class="good">24+ played</td><td></td></tr>
+      <tr><td>Coach audits</td><td class="good">4× (quarterly)</td><td></td></tr>
+      <tr><td>Strength training</td><td class="good">Sustained 24 months</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="pull-quote">
+    "The golfers who reach scratch are not the most talented. They are the ones who tracked their data honestly, practised with structure, competed with courage, and did not quit when the improvement plateaued."
+    <span>— The Scratch Project</span>
+  </div>
+
+  <div class="insight">
+    <span class="cicon">🎯</span>
+    <p><strong>If a checkpoint is missed:</strong> Do not force progress to the next phase. Use the SG data from Arccos or Shot Scope to identify the specific category that is below target. Design the next 4 weeks of practice exclusively around that category. Return to the checkpoint. Only advance when the data confirms it.</p>
+  </div>
+</div>
+
+<div class="footer">
+  THE SCRATCH PROJECT · 10 TO SCRATCH IN 24 MONTHS · 2 ROUNDS + 2 PRACTICE SESSIONS PER WEEK<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Review this plan quarterly · Update your numbers · Trust the data, not the feeling</span>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({top: document.querySelector('.nav-tabs').offsetTop - 2, behavior: 'smooth'});
+  }
+</script>
+</body>
+</html>

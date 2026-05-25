@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Equipment Fitting Roadmap — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:500px){.two-col{grid-template-columns:1fr;}}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:100px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">Equipment Fitting · Guide 15</p>
+  <h1>Dial In Your<br><em>Arsenal</em></h1>
+  <p class="hero-sub">A comprehensive fitting roadmap — what each fitting session involves, how to interpret the data, which clubs to prioritise at each stage of your journey, and when to revisit as your swing evolves toward scratch.</p>
+  <div class="hero-tags">
+    <span class="htag">🏌️ Fitting Priority</span>
+    <span class="htag">📊 Data Interpretation</span>
+    <span class="htag">🔧 Putter · Driver · Irons</span>
+    <span class="htag">🎯 Wedge Setup</span>
+    <span class="htag">🗓️ Review Cadence</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Fitting</button>
+  <button class="tab" onclick="show('priority',this)">Fitting Order</button>
+  <button class="tab" onclick="show('putter',this)">Putter</button>
+  <button class="tab" onclick="show('driver',this)">Driver</button>
+  <button class="tab" onclick="show('irons',this)">Irons & Wedges</button>
+  <button class="tab" onclick="show('data',this)">Reading the Data</button>
+  <button class="tab" onclick="show('ball',this)">Ball Fitting</button>
+  <button class="tab" onclick="show('cadence',this)">Review Cadence</button>
+</div>
+
+<!-- WHY FITTING -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">Why Fitting Is Non-Negotiable at Your Level</h2>
+  <p class="sec-desc">Off-the-shelf clubs are built for the statistical average amateur — not for you. At 10 handicap targeting scratch, your swing has specific characteristics that off-the-shelf equipment will either fight or amplify in the wrong direction. A proper fitting eliminates that friction entirely.</p>
+
+  <div class="pull-quote">
+    <p>"Every player on Tour is fitted. Not because they are better — because fitting removes variables. Amateurs play with more variables than Tour players, not fewer."</p>
+    <span>— Tom Wishon, veteran golf equipment designer</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Strokes Gained Value of Fitting</span>
+    <h3>What the Research Shows</h3>
+    <div class="bar-group">
+      <div class="bar-title">Average SG Improvement from Professional Fitting (10 HCP Population)</div>
+      <div class="bar-row"><span class="bar-lbl">Putter</span><div class="bar-track"><div class="bar-fill gold" style="width:85%"></div></div><span class="bar-val">+0.3–0.8 SG</span></div>
+      <div class="bar-row"><span class="bar-lbl">Driver</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-val">+0.3–0.6 SG</span></div>
+      <div class="bar-row"><span class="bar-lbl">Wedges</span><div class="bar-track"><div class="bar-fill teal" style="width:45%"></div></div><span class="bar-val">+0.2–0.4 SG</span></div>
+      <div class="bar-row"><span class="bar-lbl">Irons</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-val">+0.2–0.4 SG</span></div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.75;">These numbers represent equipment change alone — not swing changes. A putter fitting can produce the equivalent SG improvement of months of putting practice, immediately. The ROI on fitting exceeds almost any other golf investment.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Evolution Problem</span>
+    <h3>Why Your Fitting Needs to Evolve With You</h3>
+    <p>A fitting done at 10 handicap may not be appropriate at scratch. As your swing improves toward scratch, specific characteristics change that directly affect optimal equipment specifications:</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>What Changes as You Improve</th><th>Equipment Impact</th></tr>
+      <tr><td>Club head speed increases (5–12 mph typical)</td><td class="warn">Shaft flex becomes too soft → timing disrupted</td></tr>
+      <tr><td>Attack angle improves (more negative for irons)</td><td class="warn">Loft specification may need adjustment</td></tr>
+      <tr><td>Strike location improves (more centred)</td><td class="good">Can move to smaller blade/cavity back iron</td></tr>
+      <tr><td>Swing path becomes more consistent</td><td class="good">Driver loft/face angle re-optimisation beneficial</td></tr>
+      <tr><td>Tempo changes with physical training</td><td class="warn">Shaft weight and kick point may need review</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The single biggest fitting mistake:</strong> Getting fitted once and assuming those specifications are permanent. Plan for a full re-fit at the major handicap milestones: initial (10 HCP), mid-journey (~5 HCP), and pre-scratch (~2 HCP). The equipment that gets you from 10 to 5 is not necessarily the equipment that gets you from 5 to 0.</p>
+  </div>
+</div>
+
+<!-- PRIORITY ORDER -->
+<div class="sec" id="priority">
+  <h2 class="sec-title">The Fitting Priority Order</h2>
+  <p class="sec-desc">Not all fittings are equal in strokes gained return. Budget, time, and energy should be allocated in this sequence — especially early in your journey.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">Priority 1 — Putter Fitting</span>
+    <h3>The Highest-Return Fitting Available</h3>
+    <p>Putter fitting produces the highest SG return per fitting session of any club category. The reasons are clear: a putter that does not fit your stroke forces compensations that are almost impossible to eliminate through technique alone — particularly in face angle at impact, which controls 83% of start direction.</p>
+    <p style="margin-top:10px;"><strong style="color:var(--white);">Do this first. Do this immediately if you have not done it.</strong> A putter fitting typically costs £50–150 and the return is measurable within 2–3 rounds. See the Putter tab for the full fitting protocol.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Priority 2 — Driver Fitting</span>
+    <h3>The Second-Highest Return — Especially for Distance</h3>
+    <p>Driver fitting directly affects SG: Off-the-Tee — your second-largest SG gap. Optimising launch conditions (angle, spin rate) for your club speed can add 15–30 yards of carry distance with no change to technique. At your current ball speed, that is often the difference between being in the fairway short of a bunker and being in the bunker.</p>
+    <p style="margin-top:10px;">Driver fittings are most effective on a launch monitor (Trackman, GCQuad, or Foresight GC3). Insist on this — a fitting without launch data is guesswork.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Priority 3 — Wedge Fitting</span>
+    <h3>Often Skipped — Never Should Be</h3>
+    <p>Most amateur golfers play with incorrect wedge loft gaps, wrong bounce angles for their typical turf conditions, and grind configurations that are inappropriate for their attack angle. The result: inconsistent contact, unpredictable spin, and inability to predict trajectory on partial shots. A wedge fitting is often faster than other fittings (45–60 minutes) and produces immediately actionable specifications.</p>
+    <p style="margin-top:10px;">The wedge section covers the four-wedge setup recommended for scratch-level play. Your current loft gaps are the first thing to confirm.</p>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Priority 4 — Iron Fitting</span>
+    <h3>The Largest Investment — Time It Carefully</h3>
+    <p>Iron fitting is the most expensive fitting and should be timed strategically. The ideal timing is when your swing has stabilised at a new level — not mid-change. If you are currently working on a major swing change with your coach, wait until that pattern has settled (typically 3–4 months of consistent practice) before investing in a full iron fitting. Fitting to a transitional swing produces specifications that become incorrect as the swing develops.</p>
+  </div>
+
+  <div class="formula">
+    <div class="formula-lbl">Recommended Fitting Timeline — 10 HCP to Scratch</div>
+    <div class="formula-main">
+      NOW (10 HCP) → Putter + Driver fitting immediately<br>
+      Month 3–4   → Wedge fitting once swing pattern is established<br>
+      Month 6     → Iron fitting once coach confirms swing stability<br>
+      Month 12    → Driver re-fit (speed gains from strength training)<br>
+      Month 18    → Full re-fit review as you approach scratch
+    </div>
+    <div class="formula-note">Do not delay the putter fitting for any reason. It is the highest-return action available to you right now.</div>
+  </div>
+</div>
+
+<!-- PUTTER FITTING -->
+<div class="sec" id="putter">
+  <h2 class="sec-title">Putter Fitting — The Complete Protocol</h2>
+  <p class="sec-desc">A putter fitting is not about preference — it is about matching the physical specifications of the club to your natural stroke characteristics. Three fitters looking at the same stroke with the same data will recommend the same specifications.</p>
+
+  <span class="badge badge-gold">🏌️ The Five Putter Fitting Variables</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Variable 1 — Putter Length</span>
+    <h3>The Most Commonly Wrong Specification</h3>
+    <p>Standard putter length is 34–35 inches. Research shows that 65–70% of amateur golfers play a putter that is too long for their natural address position. A putter that is too long forces the player to stand upright, sets the eyes behind the ball (increasing aim error), and disrupts the pendulum geometry of the stroke.</p>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Length Measurement Method</div>
+      <div class="formula-main">
+        1. Take your natural putting address position — eyes over the ball, arms hanging comfortably<br>
+        2. Have someone measure from the ground to the top of your lead hand grip<br>
+        3. This measurement is your correct putter length<br>
+        4. Most players fitting for the first time find their correct length is 32.5–33.5 inches
+      </div>
+      <div class="formula-note">A putter cut to your correct length feels short at first — because you are used to compensating for a long putter. Trust the measurement, not the feel, for the first 2 weeks.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Variable 2 — Head Style (Arc vs. Straight)</span>
+    <h3>Matching Head Shape to Stroke Arc</h3>
+    <p>Every stroke has a natural arc — the amount the face opens and closes relative to the target line during the stroke. Matching head style to stroke arc is one of the most impactful fitting decisions.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Stroke Arc</th><th>Correct Head Style</th><th>Why</th></tr>
+      <tr><td>Straight back-straight through</td><td class="good">Face-balanced mallet (Odyssey 2-Ball type)</td><td>Face stays square throughout; face-balanced head stays square naturally</td></tr>
+      <tr><td>Moderate arc (most common)</td><td class="good">Mid-toe-hang blade or mallet</td><td>Some toe hang complements the natural rotation of a moderate arc</td></tr>
+      <tr><td>Strong arc</td><td class="good">High toe-hang blade</td><td>Strong toe hang complements the opening and closing of a strong arc stroke</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Simple arc test:</strong> Hold your putter loosely between two fingers at the balance point of the shaft. If the face rotates toward the ground (toe drops), the putter has toe hang — appropriate for a moderate-to-strong arc. If the face stays horizontal, the putter is face-balanced — appropriate for a straight stroke.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Variable 3 — Loft and Lie</span>
+    <h3>The Specifications Nobody Checks</h3>
+    <p>Standard putter loft is 3–4°. If your forward press at address de-lofts the putter, you may need 4–5° loft to launch the ball correctly. Incorrect loft produces skid (too much loft) or backspin on contact (too little), both destroying pace control. Lie angle affects the direction the ball starts — a flat lie produces a push; upright produces a pull.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Loft:</strong> Confirm your natural address position with a fitter. If you de-loft significantly at address, consider a higher-lofted putter head to compensate and ensure the ball rolls cleanly from the first inch.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Lie:</strong> The sole of the putter should sit flat on the ground at address without the heel or toe raised. If the heel is raised, the lie is too flat — results in pulled putts. Toe raised = too upright = pushed putts. Easily adjusted by a clubmaker for £10–15.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Variable 4 — Grip Size</span>
+    <h3>How Grip Size Affects Face Rotation</h3>
+    <p>Grip size is one of the most underappreciated putter fitting variables. A thicker grip reduces wrist and forearm rotation through the stroke — which is beneficial for players who over-rotate and produce inconsistent face angles. A standard or thin grip allows more rotation — beneficial for players whose strokes are too passive.</p>
+    <table class="tbl" style="margin-top:10px;">
+      <tr><th>Grip Size</th><th>Best For</th><th>Effect</th></tr>
+      <tr><td>Oversized (SuperStroke 3.0+)</td><td class="good">Over-rotators, wristy strokes</td><td>Reduces forearm rotation, stabilises face angle</td></tr>
+      <tr><td>Mid-size (SuperStroke 2.0)</td><td class="good">Moderate strokes — most common correct spec</td><td>Balanced rotation and feel</td></tr>
+      <tr><td>Standard</td><td class="warn">Passive strokes, strong arc players</td><td>Allows natural rotation, maximises feedback</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Variable 5 — Total Weight and Balance</span>
+    <h3>Matching Weight to Green Speed</h3>
+    <p>Heavier putters (360–380g) suit faster greens and players who struggle with distance control — the added weight smooths out stroke tempo and reduces over-acceleration. Lighter putters (320–340g) suit slower greens and players whose stroke is already pendulum-smooth. Ask your fitter to test two weight configurations on the putting mat — the correct weight will produce noticeably more consistent pace.</p>
+  </div>
+</div>
+
+<!-- DRIVER FITTING -->
+<div class="sec" id="driver">
+  <h2 class="sec-title">Driver Fitting — Launch Optimisation</h2>
+  <p class="sec-desc">Driver fitting is fundamentally a launch condition optimisation exercise. The goal is to find the combination of loft, shaft, and head that produces maximum carry distance with acceptable dispersion — at your current swing speed and attack angle.</p>
+
+  <span class="badge badge-teal">📊 The Launch Condition Targets</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">Optimal Launch Conditions by Club Speed</span>
+    <h3>What the Numbers Should Look Like After Fitting</h3>
+    <table class="tbl">
+      <tr><th>Club Speed</th><th>Optimal Launch Angle</th><th>Optimal Spin Rate</th><th>Expected Carry</th></tr>
+      <tr><td>85–90 mph</td><td class="good">14–16°</td><td class="good">2,600–3,000 rpm</td><td class="good">215–235 yds</td></tr>
+      <tr><td>90–95 mph</td><td class="good">13–15°</td><td class="good">2,400–2,800 rpm</td><td class="good">235–255 yds</td></tr>
+      <tr><td>95–100 mph</td><td class="good">12–14°</td><td class="good">2,200–2,600 rpm</td><td class="good">255–275 yds</td></tr>
+      <tr><td>100–105 mph</td><td class="good">11–13°</td><td class="good">2,000–2,400 rpm</td><td class="good">270–290 yds</td></tr>
+      <tr><td>105+ mph</td><td class="good">10–12°</td><td class="good">1,800–2,200 rpm</td><td class="good">285–310+ yds</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Key Fitting Variables</span>
+    <h3>What Changes in a Driver Fitting</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Loft:</strong> The primary lever for launch angle and spin rate. Most players benefit from more loft than they think. If your spin rate is below 2,000 rpm, you likely need more loft — the ball cannot hold altitude and drops steeply (the "knuckleball" flight). If above 3,200 rpm, too much loft — ball balloons and loses distance into any headwind.</div></li>
+      <li><span class="step-n">2</span><div><strong>Shaft flex and weight:</strong> Shaft selection is the most nuanced fitting variable. Too stiff a shaft = lower launch, lower spin, potential pushes late in the round when fatigue causes slower speed. Too flexible = too high launch, too much spin, excessive hooks. Weight affects tempo — heavier shafts suit smooth tempos; lighter shafts suit faster tempos.</div></li>
+      <li><span class="step-n">3</span><div><strong>Shaft kick point:</strong> High kick point = lower launch and spin (suits high-speed players with high natural spin). Low kick point = higher launch and spin (suits moderate-speed players who struggle to get the ball airborne). This is where a launch monitor is non-negotiable — kick point effects are invisible to the naked eye.</div></li>
+      <li><span class="step-n">4</span><div><strong>Head configuration (face angle, CG position):</strong> Offset face angles (open, square, closed) address shot shape. Draw-biased heads move the CG to promote a right-to-left flight. Fade-biased heads do the opposite. The correct configuration depends on your natural path — not your preferred shot shape.</div></li>
+      <li><span class="step-n">5</span><div><strong>Attack angle optimisation:</strong> If your attack angle is negative (hitting down on the driver — very common in amateur players), the fitter may recommend a higher tee height and ball position further forward to promote an ascending strike. This alone can add 15–20 yards without touching the club specifications.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The fitting environment problem:</strong> Driver fittings done in a bay with a short net produce unreliable data — you cannot see real ball flight, and many fitters only measure launch conditions, not actual carry. Insist on an outdoor fitting or an indoor bay with Trackman or GCQuad where carry distance is calculated from actual ball data — not estimated from spin rate alone.</p>
+  </div>
+</div>
+
+<!-- IRONS & WEDGES -->
+<div class="sec" id="irons">
+  <h2 class="sec-title">Irons & Wedge Fitting</h2>
+  <p class="sec-desc">Iron fitting is the most technically comprehensive fitting and should be done after your swing has stabilised. Wedge fitting is separate from iron fitting and should be treated as a precision scoring tool exercise rather than a pure equipment purchase.</p>
+
+  <span class="badge badge-lime">🔧 Iron Fitting Variables</span>
+
+  <div class="card">
+    <span class="card-tag">The Four Iron Fitting Variables</span>
+    <h3>What the Fitter is Measuring</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Shaft flex and weight:</strong> Iron shaft selection is more important than head selection for most amateurs. The shaft drives tempo, feel, and timing. A fitting that produces a tight dispersion with a specific shaft weight and flex is the most important outcome to optimise. Do not prioritise brand or appearance over the data.</div></li>
+      <li><span class="step-n">2</span><div><strong>Lie angle:</strong> Lie angle has a direct and measurable effect on shot direction. A lie that is too upright produces left-pull shots; too flat produces right pushes. Measured precisely by hitting shots off a lie board — the mark on the sole tells the fitter exactly what adjustment is needed. This is one of the most common sources of unexplained directional bias in amateur golfers.</div></li>
+      <li><span class="step-n">3</span><div><strong>Loft:</strong> Modern irons are often delofted by manufacturers to produce impressive carry distance numbers. The consequence is that your 7-iron may be launching at a 5-iron loft — creating loft gaps that produce inconsistent distance coverage. Confirm actual loft measurements across your set and check for gaps larger than 4°.</div></li>
+      <li><span class="step-n">4</span><div><strong>Head type — cavity back vs. muscle back:</strong> As your handicap drops toward scratch, you will develop the contact consistency to benefit from a less forgiving head with better feedback and workability. The standard recommendation: cavity back until 3–5 HCP; consider player's cavity or muscle back at scratch level after consultation with your coach.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Four-Wedge Setup — Scratch Standard</span>
+    <h3>Loft Gapping for Consistent Distance Coverage</h3>
+    <p>The optimal wedge setup for a scratch golfer covers the 60–130 yard range with consistent 10–15 yard gaps and the appropriate bounce for typical playing conditions.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Wedge</th><th>Loft</th><th>Bounce</th><th>Grind</th><th>Role</th></tr>
+      <tr><td>Pitching Wedge (PW)</td><td class="good">44–46°</td><td class="good">4–6°</td><td>Standard</td><td>100–125 yards · stock full shot</td></tr>
+      <tr><td>Gap Wedge (GW)</td><td class="good">50–52°</td><td class="good">8–10°</td><td>Standard / S-grind</td><td>85–105 yards · full and 3/4 shots</td></tr>
+      <tr><td>Sand Wedge (SW)</td><td class="good">54–56°</td><td class="good">10–14°</td><td>W or M-grind</td><td>70–90 yards · bunkers · medium chips</td></tr>
+      <tr><td>Lob Wedge (LW)</td><td class="good">58–60°</td><td class="good">6–10°</td><td>L or S-grind</td><td>50–70 yards · flop shots · tight lies</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Bounce and Grind — The Most Under-Understood Variables</span>
+    <h3>Matching Wedge Bounce to Your Conditions</h3>
+    <p>Bounce angle is the angle between the leading edge and the sole. It determines how much the wedge interacts with the turf. Grind is the shaping of the sole that affects how the wedge can be manipulated for different shots.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Playing Conditions</th><th>Correct Bounce</th><th>Why</th></tr>
+      <tr><td>Firm, dry turf (links, summer)</td><td class="good">Low bounce (4–8°)</td><td>High bounce digs and bounces off firm ground → bladed shots</td></tr>
+      <tr><td>Soft, lush turf (parkland, winter)</td><td class="good">High bounce (10–14°)</td><td>High bounce prevents digging → consistent contact</td></tr>
+      <tr><td>Mixed conditions (typical UK)</td><td class="warn">Mid bounce (8–10°) + versatile grind</td><td>Balances both conditions; S or M grind gives shot flexibility</td></tr>
+      <tr><td>Bunkers with firm/raked sand</td><td class="warn">Mid bounce SW (10–12°)</td><td>Too high = bounces off sand; too low = digs → inconsistent exits</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Grind recommendation for UK parkland golf:</strong> A Vokey SM9 or Cleveland RTX in 56° with M-grind (versatile), or a 54° with W-grind (maximum sole width for soft turf) combined with a 58° S-grind (narrow sole for firm shots and tight lies) is a highly effective two-wedge combination below the gap wedge.</p>
+    </div>
+  </div>
+</div>
+
+<!-- READING THE DATA -->
+<div class="sec" id="data">
+  <h2 class="sec-title">Reading Fitting Data</h2>
+  <p class="sec-desc">A quality fitting produces a data report alongside the recommended specifications. Understanding what the numbers mean allows you to evaluate the fitter's recommendations critically — and catch errors before you spend money on the wrong clubs.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Key Launch Monitor Metrics — What They Mean</span>
+    <h3>Driver and Iron Fitting Data Glossary</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>What It Tells You</th><th>Action if Wrong</th></tr>
+      <tr><td>Ball Speed</td><td>Energy transfer from club to ball</td><td>Low = smash factor issue; check contact quality and shaft timing</td></tr>
+      <tr><td>Smash Factor</td><td>Ball speed ÷ club speed (target: 1.47–1.49 driver)</td><td>Below 1.44 = poor contact — fitting cannot fully compensate; technique priority</td></tr>
+      <tr><td>Launch Angle</td><td>Initial vertical angle of the ball's flight</td><td>Too low = add loft, lower tee; too high = reduce loft, check attack angle</td></tr>
+      <tr><td>Spin Rate</td><td>Backspin in rpm — the primary distance and control variable</td><td>High spin = shaft too soft, loft too high, attack angle too steep; reverse for low spin</td></tr>
+      <tr><td>Attack Angle</td><td>Angle of club head relative to ground at impact (negative = hitting down)</td><td>Very negative for driver = significant distance loss; adjust ball position and tee height first</td></tr>
+      <tr><td>Carry Distance</td><td>Where the ball lands — not total distance</td><td>The primary distance metric for fitting decisions; total distance includes bounce and roll that varies by course</td></tr>
+      <tr><td>Lateral Dispersion</td><td>Left/right spread across the fitting session</td><td>High dispersion = shaft timing or head weight issue; may need consistency testing across multiple options</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Evaluating the Fitting Report</span>
+    <h3>Questions to Ask Before You Buy</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>"How many shots did you measure for each option?"</strong> Fewer than 6 shots per option is statistically unreliable. Insist on a minimum of 8–10 comparable shots for each shortlisted configuration.</div></li>
+      <li><span class="step-n">2</span><div><strong>"Can I see the shot-by-shot data, not just the averages?"</strong> Averages can conceal high variance. A shaft that averages 260 yards but ranges from 230–285 is worse than one that averages 255 with a range of 245–265.</div></li>
+      <li><span class="step-n">3</span><div><strong>"Is the recommended loft my static loft or my dynamic loft?"</strong> Static loft (the loft stamped on the club) differs from dynamic loft (the loft at impact). The fitting should be specifying the combination that produces the correct dynamic loft for your swing.</div></li>
+      <li><span class="step-n">4</span><div><strong>"What happens to these specifications if my swing speed increases 5 mph?"</strong> A good fitter will consider trajectory. If you are actively training for speed, this is a relevant question that affects shaft choice.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The independent fitting principle:</strong> Ideally, your fitter is not also the retailer selling you the clubs. Independent fitters (no commission on sales) produce more objective recommendations. If your fitter only recommends one brand and has that brand's logo on every surface in the facility, treat the recommendations with appropriate scepticism.</p>
+  </div>
+</div>
+
+<!-- BALL FITTING -->
+<div class="sec" id="ball">
+  <h2 class="sec-title">Ball Fitting</h2>
+  <p class="sec-desc">Ball selection is the only equipment decision made on every single shot. At your level — targeting scratch — the correct ball construction directly affects spin rates, greenside control, and distance. This is not a brand preference decision; it is a performance specification decision.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Ball Construction Hierarchy</span>
+    <h3>What Changes With Ball Construction</h3>
+    <table class="tbl">
+      <tr><th>Ball Type</th><th>Club Speed Fit</th><th>Short Game Spin</th><th>Driver Distance</th></tr>
+      <tr><td>Urethane cover, 3–4 piece</td><td class="good">85+ mph (all serious amateurs)</td><td class="good">High — essential for short game control</td><td class="good">Optimal for all speeds 85+ mph</td></tr>
+      <tr><td>Ionomer cover, 2-piece</td><td class="warn">Below 85 mph club speed</td><td class="bad">Low — significantly less greenside spin</td><td class="good">Slightly more distance at low speeds</td></tr>
+      <tr><td>Tour ball (soft urethane)</td><td class="good">90+ mph optimal</td><td class="good">Maximum spin available</td><td class="warn">Slightly less distance than mid-range tour balls for some speeds</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">🏆</span>
+      <p><strong>The recommendation at your level:</strong> Play a urethane-cover tour ball (ProV1, TP5, Chrome Soft, or equivalent) consistently. The short game control difference between a urethane and ionomer ball is the equivalent of 1–2 SG: Around-Green strokes per round at your level. Never play a different ball in competition than the one you practise with — feel and spin rate both need calibrating.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Compression — The Most Misunderstood Variable</span>
+    <h3>What Compression Actually Does (and Doesn't Do)</h3>
+    <p>Compression affects feel and, to a small degree, launch characteristics. It does not significantly affect distance for golfers with club speeds above 80 mph. The primary consideration for ball selection at your level should be the cover construction and spin characteristics — not the compression number.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>High compression (90+):</strong> Firmer feel. Slightly higher ball speed at high swing speeds. Associated with tour balls (ProV1x, TP5x). Best for club speeds above 95 mph.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Mid compression (70–89):</strong> Softer feel. ProV1, TP5, Chrome Soft. Suitable for 85–100 mph and the most widely used category among low handicappers.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Low compression (below 70):</strong> Maximum softness. Best for speeds below 80 mph. At your speed, these balls underperform in spin rate and short game control compared to tour options.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Consistency Rule</span>
+    <h3>One Ball, Every Round, Every Season</h3>
+    <p>Choose one tour ball and play it exclusively for a minimum of one full season before evaluating whether to change. Every change requires recalibration of distance perception, spin feel, and putting roll characteristics. The golfers who score consistently are those whose equipment is constant — changes introduce variability that shows up in scorecards before it shows up in your awareness.</p>
+  </div>
+</div>
+
+<!-- REVIEW CADENCE -->
+<div class="sec" id="cadence">
+  <h2 class="sec-title">Equipment Review Cadence</h2>
+  <p class="sec-desc">A structured equipment review schedule prevents you from playing with specifications that no longer match your swing — and stops you from making unnecessary changes before your swing has genuinely evolved.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Review Schedule</span>
+    <h3>When to Review Each Category</h3>
+    <table class="tbl">
+      <tr><th>Equipment</th><th>Review Trigger</th><th>Action</th></tr>
+      <tr><td>Putter</td><td class="warn">Every 18 months or after major stroke change</td><td>Full re-fit — stroke arc and timing can change significantly as technique improves</td></tr>
+      <tr><td>Driver</td><td class="warn">Every 12 months or after 5+ mph speed gain</td><td>Launch monitor session; confirm loft and shaft still optimal for new speed</td></tr>
+      <tr><td>Wedges</td><td class="good">Every 2 years or 80–100 rounds (whichever first)</td><td>Grooves wear significantly after ~100 rounds; spin rate on partial shots decreases measurably</td></tr>
+      <tr><td>Irons</td><td class="good">Every 3–4 years or major swing change</td><td>Full re-fit if handicap has dropped 4+ strokes since last fitting; lie angle check annually</td></tr>
+      <tr><td>Ball</td><td class="good">Annual review only</td><td>Re-evaluate if club speed has changed significantly or a new model produces demonstrably better data</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Grip Replacement Rule</span>
+    <h3>The Most Neglected Equipment Maintenance</h3>
+    <p>Grips are the only contact point between you and the golf club. A worn grip increases grip pressure — which tightens the forearms and reduces club head speed, feel, and consistency. The industry standard is to replace grips every 40 rounds or once a year — whichever comes first.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Test for worn grips:</strong> Hold a club in your lead hand only. Rotate the club. If the club rotates more than 15–20° before your fingers feel resistance, the grip is worn and should be replaced.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Grip size and your putting:</strong> If your putter grip was fitted correctly (see Putter section), ensure your iron and wedge grips match the same size specification. A mismatch between putter grip size and iron grip size creates a feel inconsistency that affects tempo.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Cost:</strong> A full set regrip (14 clubs) costs £60–100 at most clubmakers. At 2 rounds per week, regrip every 6–8 months. This is one of the lowest-cost, highest-return equipment maintenance actions available.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The scratch player's equipment philosophy:</strong> Equipment should be invisible during play — you should never be thinking about your clubs. When equipment is correctly fitted and well-maintained, it becomes transparent. When it is wrong, it creates conscious or unconscious compensation that corrupts both technique and decision-making. Invest in fitting once per milestone, maintain between milestones, and never change equipment within 8 weeks of an important competition.</p>
+  </div>
+</div>
+
+<div class="footer">
+  EQUIPMENT FITTING ROADMAP · GUIDE 15 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Fit your equipment to your game · Review as you evolve · Let the data decide</span>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

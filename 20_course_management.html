@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Course Management — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:140px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 20</p>
+  <h1>Course<br><em>Management</em></h1>
+  <p class="hero-sub">Strategic decision-making on every hole — tee shot planning, miss direction, layup vs. attack, scoring zone management, and playing to your dispersion data.</p>
+  <div class="hero-tags">
+    <span class="htag">🗺️ Tee Strategy</span><span class="htag">🎯 Miss Direction</span>
+    <span class="htag">📐 Dispersion</span><span class="htag">⚖️ Layup vs Attack</span>
+    <span class="htag">🌬️ Wind + Elevation</span><span class="htag">🏆 Scoring Zones</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('tee',this)">Tee Strategy</button>
+  <button class="tab" onclick="show('approach',this)">Approach</button>
+  <button class="tab" onclick="show('layup',this)">Layup vs Attack</button>
+  <button class="tab" onclick="show('scoring',this)">Scoring Zones</button>
+  <button class="tab" onclick="show('conditions',this)">Conditions</button>
+  <button class="tab" onclick="show('holes',this)">Hole Types</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Management Framework</h2>
+  <p class="sec-desc">Course management is the application of probability and expected value to every shot decision. At the 10 HCP level, poor decision-making costs an estimated 3–5 strokes per round — more than most technical deficiencies. You cannot out-swing bad decisions.</p>
+  <span class="badge badge-gold">📊 Expected Value Thinking</span>
+  <div class="card">
+    <span class="card-tag">The Core Principle</span>
+    <h3>Aim Where You Can Afford to Miss</h3>
+    <p>Every shot has a dispersion cone — a realistic spread of outcomes around your intended target. Course management is not about where you want the ball to go. It is about where your worst acceptable outcome lands, and whether that outcome is recoverable.</p>
+    <div class="formula" style="margin-top:14px;">
+      <div class="formula-lbl">The Decision Framework</div>
+      <div class="formula-main">Best case outcome: where does a perfect shot finish?<br>Worst case outcome: where does a miss finish?<br>Expected value: weighted average across both<br><br>→ If worst case = double bogey or worse, reconsider the target.</div>
+      <div class="formula-note">Tour caddies think about worst-case outcomes first. Amateurs think about best-case outcomes first. This single mental shift is worth 2–3 strokes per round.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Strokes Gained Decision Model</span>
+    <h3>Every Decision Has a Measurable Expected Value</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Conservative Play</th><th>Aggressive Play</th><th>Verdict</th></tr>
+      <tr><td>160 yds, water left, bunker right</td><td>Centre green: avg 2.4 putts</td><td>Flag hunt: 30% water = +0.6 strokes</td><td class="good">Conservative +0.4 SG</td></tr>
+      <tr><td>Par 5, 240 yds to carry bunker</td><td>Layup to 100 yds: avg score 4.8</td><td>Carry attempt: 40% in bunker = avg 5.1</td><td class="good">Layup +0.3 SG</td></tr>
+      <tr><td>Par 4, tight tee, OOB right</td><td>3-wood: 88% fairway</td><td>Driver: 55% fairway, 12% OOB</td><td class="good">3-wood +0.5 SG</td></tr>
+      <tr><td>150 yds, open flag, firm green</td><td>Centre green</td><td>Attack flag: 65% green, 35% short-side</td><td class="warn">Marginal — depends on short game confidence</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Double Bogey Elimination Rule</span>
+    <h3>The Single Biggest Score Saver at 10 HCP</h3>
+    <p style="margin-bottom:12px;">At the 10 HCP level, the average round contains 3.2 double bogeys or worse. Eliminating just 2 of these per round reduces your score by 2 strokes — without improving a single technical skill.</p>
+    <div class="bar-group">
+      <div class="bar-title">Score Distribution — 10 HCP Typical Round</div>
+      <div class="bar-row"><span class="bar-lbl">Eagles</span><div class="bar-track"><div class="bar-fill gold" style="width:2%"></div></div><span class="bar-val">~0.05/round</span></div>
+      <div class="bar-row"><span class="bar-lbl">Birdies</span><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><span class="bar-val">~1.2/round</span></div>
+      <div class="bar-row"><span class="bar-lbl">Pars</span><div class="bar-track"><div class="bar-fill teal" style="width:52%"></div></div><span class="bar-val">~8–9/round</span></div>
+      <div class="bar-row"><span class="bar-lbl">Bogeys</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><span class="bar-val">~6–7/round</span></div>
+      <div class="bar-row"><span class="bar-lbl">Doubles+</span><div class="bar-track"><div class="bar-fill red" style="width:42%"></div></div><span class="bar-val">~3.2/round</span></div>
+    </div>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The rule:</strong> Before every shot, ask — "Can this decision result in a double bogey or worse?" If yes, reconsider. A bogey is almost always recoverable. A double bogey or worse derails scoring momentum and frequently triggers further drops.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Your Dispersion Cone — Know It, Use It</span>
+    <h3>The Foundation of Every Target Decision</h3>
+    <table class="tbl">
+      <tr><th>Club</th><th>10 HCP Dispersion (L/R)</th><th>Tour Dispersion</th><th>Practical Implication</th></tr>
+      <tr><td>Driver</td><td class="bad">±35–50 yds</td><td class="good">±15–20 yds</td><td>Need 70–100 yds of fairway to aim centre</td></tr>
+      <tr><td>5-iron / hybrid</td><td class="bad">±25–35 yds</td><td class="good">±12 yds</td><td>Centre green minimum from 180+ yds</td></tr>
+      <tr><td>8-iron</td><td class="warn">±18–25 yds</td><td class="good">±8 yds</td><td>Can attack accessible pins from 140 yds</td></tr>
+      <tr><td>PW</td><td class="warn">±12–18 yds</td><td class="good">±5 yds</td><td>Can attack most pins from 120 yds and in</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>The fundamental error:</strong> Aiming at a pin that requires Tour-level precision from a 10 HCP dispersion cone. Your target must be sized to your actual dispersion — not to where you hope the ball goes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TEE STRATEGY -->
+<div class="sec" id="tee">
+  <h2 class="sec-title">Tee Shot Strategy</h2>
+  <p class="sec-desc">The tee shot sets up the entire hole. A poor tee shot forces a recovery decision before you have even attempted to score. Every tee strategy decision must account for hazard positions, landing zone width, miss direction, and approach angle preference.</p>
+  <span class="badge badge-lime">🏌️ Tee Box Decision System</span>
+  <div class="card">
+    <span class="card-tag">The Five Tee Shot Questions</span>
+    <h3>Answer These Before Every Drive</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>What is the dominant miss?</strong> Your natural shot shape determines which side of the fairway is safe. If you miss left, stand on the left side of the tee box and aim down the right — your miss brings you back to centre. Never aim toward your miss.</div></li>
+      <li><span class="step-n">2</span><div><strong>Where is OOB or the penalty hazard?</strong> OOB costs stroke + distance — the most expensive outcome in golf. Any hole with OOB on one side demands your tee shot plays away from it, even at the cost of a worse angle in.</div></li>
+      <li><span class="step-n">3</span><div><strong>What landing zone width is available?</strong> Measure the effective fairway width against your dispersion cone. If the fairway at your carry distance is narrower than your realistic spread, use less club to land in a wider zone.</div></li>
+      <li><span class="step-n">4</span><div><strong>What is the ideal approach angle?</strong> Pin positions and green shapes dictate the best angle into the green. On doglegs, the correct side of the fairway can give 15–20 yards of distance advantage and a better angle. Think backward from the flag to the tee.</div></li>
+      <li><span class="step-n">5</span><div><strong>What club gives the best risk/reward?</strong> Driver is not always the correct play. A 3-wood to the ideal position in the fairway is worth more expected value than a driver into the rough or a hazard.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Tee Box Positioning</span>
+    <h3>Use the Full Tee Box Width</h3>
+    <p style="margin-bottom:12px;">Most amateurs tee up in the centre of the tee box by default. Tour players use the full width strategically — a 44-yard wide tee box effectively widens the fairway by up to 22 yards when used correctly.</p>
+    <table class="tbl">
+      <tr><th>Hazard Position</th><th>Tee Position</th><th>Aim</th><th>Outcome</th></tr>
+      <tr><td>Trouble right (OOB, water)</td><td>Right side of tee box</td><td>Down the left centre</td><td>Miss left = rough. Miss right = pulls back toward centre</td></tr>
+      <tr><td>Trouble left (OOB, water)</td><td>Left side of tee box</td><td>Down the right centre</td><td>Miss right = rough. Miss left = pulls back toward centre</td></tr>
+      <tr><td>Trouble both sides (tight par 4)</td><td>Centre, slightly toward stronger miss side</td><td>Widest part of fairway</td><td>Maximise landing zone; accept shorter club</td></tr>
+      <tr><td>Dogleg right</td><td>Right side of tee box</td><td>Left edge of dogleg</td><td>Opens the hole; avoids cutting the corner trees</td></tr>
+      <tr><td>Dogleg left</td><td>Left side of tee box</td><td>Right edge of dogleg</td><td>Opens the hole; avoids cutting the corner trees</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Club Selection off the Tee</span>
+    <h3>When Driver Is the Wrong Club</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Fairway width under 30 yards at carry:</strong> A 3-wood or hybrid with its tighter dispersion is the mathematically correct play. 20 extra yards of driver distance is worthless from the rough at 200+ yards.</div></li>
+      <li><span class="step-n">2</span><div><strong>OOB present on either side:</strong> Stroke + distance is a 2-shot penalty. Any tee shot with OOB present demands conservative club selection unless the fairway is wide enough to comfortably contain your full dispersion cone.</div></li>
+      <li><span class="step-n">3</span><div><strong>Short par 4s under 320 yards:</strong> Driver can carry through the fairway or leave an awkward partial wedge. A hybrid or long iron to a full wedge distance is frequently the better scoring play.</div></li>
+      <li><span class="step-n">4</span><div><strong>After a bogey or worse:</strong> Research shows error rates increase 18% on the hole immediately following a double bogey. Take one club less and aim at the widest part of the fairway. Reset, don't press.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Miss Direction Planning</span>
+    <h3>Pre-selecting Your Miss Before Every Shot</h3>
+    <p style="margin-bottom:12px;">Tour caddies pre-select a miss direction on every shot — not as an acceptance of failure, but as a risk management decision. A planned miss to the right rough is better than an unplanned miss into the water.</p>
+    <table class="tbl">
+      <tr><th>Hole Characteristic</th><th>Preferred Miss Direction</th><th>Reason</th></tr>
+      <tr><td>Water left, rough right</td><td>Right (rough)</td><td>Rough = recoverable; water = penalty</td></tr>
+      <tr><td>Bunker left, run-off right</td><td>Right (run-off)</td><td>Bunker costs a shot; run-off = chip</td></tr>
+      <tr><td>Green slopes left to right</td><td>Left of flag</td><td>Putt downhill right-to-left = easier pace</td></tr>
+      <tr><td>Tight pin, back of green open</td><td>Long (back)</td><td>Short-sided chip = hardest shot; long = easy chip</td></tr>
+      <tr><td>Par 3, no bail-out</td><td>Short of green</td><td>Short chip = easier than long chip over flag</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- APPROACH -->
+<div class="sec" id="approach">
+  <h2 class="sec-title">Approach Shot Management</h2>
+  <p class="sec-desc">The approach shot is where scoring is built or destroyed. Pin position, green slope, miss direction, and realistic carry distance must all be integrated into a single target decision before every iron shot.</p>
+  <span class="badge badge-teal">🎯 Approach Decision System</span>
+  <div class="card">
+    <span class="card-tag">The Four Pin Categories</span>
+    <h3>Not All Pins Are Equal — Target Selection by Risk</h3>
+    <table class="tbl">
+      <tr><th>Pin Category</th><th>Definition</th><th>10 HCP Target</th><th>Tour Target</th></tr>
+      <tr><td class="good">Open</td><td>15+ ft from all edges, no short-side danger</td><td>Attack flag</td><td>Attack flag</td></tr>
+      <tr><td class="warn">Neutral</td><td>10–15 ft from edge, mild short-side</td><td>Fat side of flag</td><td>Attack flag</td></tr>
+      <tr><td class="warn">Tucked</td><td>5–10 ft from edge, hazard or rough short-side</td><td>Centre green</td><td>Fat side of flag</td></tr>
+      <tr><td class="bad">Sucker</td><td>Under 5 ft from edge, severe penalty short-side</td><td>Opposite side of green</td><td>Centre green</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>Tour data:</strong> The best approach players in the world aim away from tucked and sucker pins on approximately 40% of approach shots. They have better technique and dispersion than you — if they're aiming away, so should you.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Club Selection — The Under-Clubbing Epidemic</span>
+    <h3>The Most Expensive Habitual Error</h3>
+    <p style="margin-bottom:12px;">Statistical data across 100,000+ tracked rounds shows that 10 HCP players leave approach shots short of the flag 65% of the time. The primary cause is using maximum carry distances rather than average carry distances.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Use average carry, not best carry:</strong> Your best 7-iron might go 165 yards. Your average carry is likely 152–158 yards. Always club to your average — the course plays averages, not bests.</div></li>
+      <li><span class="step-n">2</span><div><strong>Add one club as default:</strong> Until you have verified your real carry distances on a launch monitor, add one club to whatever feels right. The vast majority of approach errors are short, not long.</div></li>
+      <li><span class="step-n">3</span><div><strong>Account for conditions:</strong> Into wind (+10–30%), cold temperatures (−5–10%), uphill (+1 yd/ft elevation), wet rough (−15–20% carry). Every factor reduces carry; factors rarely increase it beyond altitude.</div></li>
+      <li><span class="step-n">4</span><div><strong>Know your land angle:</strong> A high-lofted approach stops within 2–5 feet of landing. A low, running approach stops 20–40 feet past landing. Your target zone must account for where the ball will finish, not just where it lands.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Green Zone Targeting</span>
+    <h3>The Scoring Zone System</h3>
+    <p style="margin-bottom:12px;">Divide every green into three concentric zones. Your target zone is determined by your distance from the green and the pin position — not by ambition.</p>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Target Zone</th><th>Expected Proximity</th><th>Reasoning</th></tr>
+      <tr><td>Under 100 yds</td><td>15-ft radius of flag</td><td>18–25 ft</td><td>Wedge distances — attack accessible pins</td></tr>
+      <tr><td>100–130 yds</td><td>20-ft radius of flag</td><td>25–35 ft</td><td>Short iron range — attack open/neutral pins only</td></tr>
+      <tr><td>130–160 yds</td><td>Fat half of green toward flag</td><td>35–50 ft</td><td>Mid-iron — avoid tucked/sucker pins entirely</td></tr>
+      <tr><td>160–190 yds</td><td>Centre of green</td><td>50–65 ft</td><td>Long iron / hybrid — anywhere on putting surface is a win</td></tr>
+      <tr><td>190+ yds</td><td>Largest part of green</td><td>65+ ft</td><td>Anywhere on green = par opportunity; short-side = bogey minimum</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Miss Direction — Approach Shots</span>
+    <h3>Pre-selecting the Safe Side of Every Green</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Short is almost always safer than long:</strong> The chip from just short of a green is simpler than from over the back. From 150+ yards, always favour landing at the front of your target zone, not the back.</div></li>
+      <li><span class="step-n">2</span><div><strong>Read the run-off:</strong> Identify which side of the green falls away most steeply. Missing to a severe run-off creates a near-impossible chip. Identify this before selecting your target.</div></li>
+      <li><span class="step-n">3</span><div><strong>Bunker vs. rough:</strong> A miss into greenside rough is usually preferable to a bunker miss. Factor this into your left/right target bias. Aim the centre of your dispersion cone away from bunkers.</div></li>
+      <li><span class="step-n">4</span><div><strong>Slope of putt:</strong> If you must miss the green, miss to the side that leaves a straight or uphill putt after the recovery chip. Downhill breaking putts after a chip are the most 3-putt-prone situation in golf.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- LAYUP vs ATTACK -->
+<div class="sec" id="layup">
+  <h2 class="sec-title">Layup vs. Attack</h2>
+  <p class="sec-desc">The layup vs. attack decision is the highest-leverage strategic choice in golf. It is never answered by ego, always answered by expected value. The correct answer depends on your carry distance reliability, the nature of the hazard, and the scoring opportunity created by each option.</p>
+  <span class="badge badge-rust">⚖️ Expected Value Decisions</span>
+  <div class="card">
+    <span class="card-tag">The Decision Model</span>
+    <h3>Four Questions That Determine the Answer</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>What is your carry reliability?</strong> Can you carry the required distance 90%+ of the time? Under 90% reliability, the penalty strokes from failures almost always outweigh the scoring gain from success. Use 90% as your minimum threshold.</div></li>
+      <li><span class="step-n">2</span><div><strong>What does the penalty cost?</strong> Water with a drop = 1 stroke. OOB = stroke + distance (2 shots effectively). Greenside bunker = fraction of a stroke. A carry attempt over water requires significantly more success probability than a carry attempt over a bunker.</div></li>
+      <li><span class="step-n">3</span><div><strong>What does the layup leave?</strong> A layup to a good position can leave a full wedge — your highest-percentage scoring shot. A layup to a poor position (awkward yardage, downhill lie, deep rough) can be worse than an aggressive play.</div></li>
+      <li><span class="step-n">4</span><div><strong>What is your short game confidence today?</strong> The scoring benefit of an aggressive play is only realised if you can capitalise on it. If your short game is off today, lay up more often — the birdie opportunity from 80 yards requires functioning short game to convert.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Par 5 Strategy</span>
+    <h3>The Most Mismanaged Holes at 10 HCP</h3>
+    <p style="margin-bottom:12px;">Par 5s are the best birdie opportunities — but only when managed correctly. The most common error is attempting a carry that the player cannot execute reliably, turning a birdie hole into a bogey or worse.</p>
+    <table class="tbl">
+      <tr><th>Scenario</th><th>Aggressive</th><th>Conservative</th><th>Correct Play</th></tr>
+      <tr><td>240 yds to carry water, carry confidence 70%</td><td>30% penalty = avg 5.4</td><td>Layup to 80 yds: avg 4.7</td><td class="good">Layup — saves 0.7 strokes</td></tr>
+      <tr><td>220 yds to carry bunker, confidence 85%</td><td>15% bunker = avg 4.9</td><td>Layup to 100 yds: avg 4.8</td><td class="warn">Marginal — both similar</td></tr>
+      <tr><td>180 yds to green, no hazard, uphill</td><td>Attack green: avg 4.4</td><td>Layup to 80 yds: avg 4.6</td><td class="good">Attack — green in two is correct</td></tr>
+      <tr><td>260 yds to carry water, any confidence</td><td>High penalty risk</td><td>Layup to full wedge: avg 4.7</td><td class="good">Layup — no debate</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The layup zone:</strong> When laying up on a par 5, your target is a specific yardage — your best full wedge distance. Laying up to 87 yards when your best wedge is at 100 yards is a poor layup. Commit to a precise yardage target, not just "short of the hazard."</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The 90% Carry Rule</span>
+    <h3>The Most Important Number in Golf Strategy</h3>
+    <div class="formula">
+      <div class="formula-lbl">90% Carry Threshold</div>
+      <div class="formula-main">If you cannot carry the required distance 9 times out of 10,<br>the expected value of the aggressive play is almost always negative.<br><br>Example: 85% success rate over water (1-stroke penalty)<br>Expected penalty cost = 0.15 × 1 stroke = 0.15 strokes per attempt<br>Over 18 holes with 3 such opportunities = 0.45 strokes lost<br><br>At 75% success rate = 0.75 strokes lost over 3 attempts<br>At 65% success rate = 1.4 strokes lost — almost 1.5 shots surrendered</div>
+      <div class="formula-note">Most amateurs dramatically overestimate their carry reliability, especially under pressure, from rough, into wind, or on the second nine. The 90% rule accounts for this by demanding a high confidence threshold before committing to the aggressive line.</div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Recovery Shot Management</span>
+    <h3>After a Poor Shot — The Decision Tree</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Assess the lie first, not the distance:</strong> From deep rough, trees, or a steep slope, the lie — not the yardage — determines the available options. A ball in heavy rough 150 yards from the flag has fewer options than a ball in the fairway at 200 yards.</div></li>
+      <li><span class="step-n">2</span><div><strong>Get back in play above all else:</strong> The primary objective of any recovery shot is returning the ball to a position from which a normal shot is possible. A sideways punch out to the fairway is more valuable than an ambitious recovery that stays in trouble.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never compound a poor shot:</strong> The second most damaging management error (after the original poor decision) is attempting a hero recovery. An aggressive recovery from trees that fails turns a bogey into a double or triple. Bogeys are manageable; doubles derail rounds.</div></li>
+      <li><span class="step-n">4</span><div><strong>Identify the next best scoring position:</strong> After getting back in play, your recovery is complete. Now play the next shot from the new position as if the poor shot never happened. Reset your expectations to the new reality of the hole.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SCORING ZONES -->
+<div class="sec" id="scoring">
+  <h2 class="sec-title">Scoring Zone Management</h2>
+  <p class="sec-desc">The scoring zone is the area within 100 yards of the flag where rounds are won or lost. Managing distance control, shot selection, and target zones within the scoring zone is worth more SG than almost any other area of the game at the 10 HCP level.</p>
+  <span class="badge badge-gold">🏆 Wedge Zone Strategy</span>
+  <div class="card">
+    <span class="card-tag">The 100-Yard Decision System</span>
+    <h3>Target Selection by Yardage and Situation</h3>
+    <table class="tbl">
+      <tr><th>Yardage</th><th>Green Type</th><th>Pin</th><th>Target</th><th>Acceptable Result</th></tr>
+      <tr><td>90–100 yds</td><td>Firm, fast</td><td>Any</td><td>Land 10 yds short, run to flag</td><td>Within 20 ft</td></tr>
+      <tr><td>70–90 yds</td><td>Soft</td><td>Open</td><td>Land at flag, stop near</td><td>Within 15 ft</td></tr>
+      <tr><td>70–90 yds</td><td>Any</td><td>Tucked</td><td>Fat side of green, 15 ft from flag</td><td>Within 20 ft</td></tr>
+      <tr><td>50–70 yds</td><td>Any</td><td>Open</td><td>Carry to within 10 ft, spin controls</td><td>Within 12 ft</td></tr>
+      <tr><td>30–50 yds</td><td>Firm</td><td>Any</td><td>Land short, run up — bump and run</td><td>Within 10 ft</td></tr>
+      <tr><td>Under 30 yds</td><td>Soft</td><td>Any</td><td>High lob landing softly</td><td>Within 8 ft</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Awkward Yardage Problem</span>
+    <h3>Managing In-Between Distances</h3>
+    <p style="margin-bottom:12px;">Awkward yardages — distances that fall between your standard club distances — are among the most common sources of poor approach shots. The correct response is always a known distance, not a guessed mid-swing adjustment.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Club down and move forward:</strong> If you're between a 9-iron (140) and PW (130) at 135 yards, take the 9-iron and grip down. A smooth 9-iron from 135 is more reliable than a forced PW.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use your wedge matrix:</strong> Your 4-club wedge matrix gives you 16 precise distances. Any yardage under 115 should have a known answer from your wedge matrix. If it doesn't, build it during your next range session.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never force a swing adjustment on-course:</strong> Attempting to take 8 yards off a full swing shot mid-round is a technique task, not a management decision. Use a known distance shot from a known setup every time.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Par 3 Strategy</span>
+    <h3>The Simplest Holes Are the Most Mismanaged</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Take enough club — always:</strong> Par 3s are the most under-clubbed holes on the course. Over 80% of amateur par 3 misses are short of the green. A long miss from a par 3 is almost always a simpler chip than a short-sided miss.</div></li>
+      <li><span class="step-n">2</span><div><strong>Aim for the fat of the green:</strong> The flag is only the correct target on open pin positions. Tucked par 3 pins demand a centre green target — the consequence of missing short-side on a par 3 is frequently a bogey.</div></li>
+      <li><span class="step-n">3</span><div><strong>Account for adrenaline:</strong> Par 3s — especially long ones — produce more tension than any other hole. Tension tightens the grip and shortens the swing, reducing distance by 5–15 yards. Take one extra club on par 3s over 150 yards.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Green Reading for Course Management</span>
+    <h3>Using Slope to Dictate Approach Target</h3>
+    <p style="margin-bottom:12px;">The slope and tier structure of the green should determine your approach target — not just the pin position. A 20-foot putt from the correct tier is worth 0.3 strokes less than a 10-foot putt from the wrong tier.</p>
+    <table class="tbl">
+      <tr><th>Green Feature</th><th>Approach Adjustment</th><th>Reason</th></tr>
+      <tr><td>Tiered green — pin on upper tier</td><td>Must land on upper tier</td><td>Putt from lower tier over ridge = 3-putt risk</td></tr>
+      <tr><td>Severe back-to-front slope</td><td>Land short of flag, let ball feed down</td><td>Overshoot = severe downhill putt</td></tr>
+      <tr><td>Left-to-right slope, pin right</td><td>Aim left of flag</td><td>Ball feeds right; avoids long putt from wrong side</td></tr>
+      <tr><td>False front</td><td>Carry fully onto green</td><td>Landing on false front = ball rolls back off green</td></tr>
+      <tr><td>Back bunker, firm green</td><td>Aim front half of green</td><td>Firm green will run; avoid back bunker at all cost</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CONDITIONS -->
+<div class="sec" id="conditions">
+  <h2 class="sec-title">Playing the Conditions</h2>
+  <p class="sec-desc">Conditions change the game entirely. Wind, rain, cold, and firm or soft turf each demand specific adjustments to club selection, target selection, and shot shape. The player who adapts fastest gains the most.</p>
+  <span class="badge badge-teal">🌬️ Conditions Adjustments</span>
+  <div class="card">
+    <span class="card-tag">Wind — The Tour Caddie Formula</span>
+    <h3>Precise Adjustments for Every Wind Speed</h3>
+    <table class="tbl">
+      <tr><th>Wind Speed</th><th>Into Wind</th><th>Downwind</th><th>Crosswind</th><th>150 yd example</th></tr>
+      <tr><td>5–10 mph</td><td>+10%</td><td>−5%</td><td>+5% (full value)</td><td>+15 / −8 / +8 yds</td></tr>
+      <tr><td>10–15 mph</td><td>+15%</td><td>−7%</td><td>+8%</td><td>+23 / −11 / +12 yds</td></tr>
+      <tr><td>15–20 mph</td><td>+20%</td><td>−10%</td><td>+10%</td><td>+30 / −15 / +15 yds</td></tr>
+      <tr><td>20–25 mph</td><td>+25%</td><td>−12%</td><td>+12%</td><td>+38 / −18 / +18 yds</td></tr>
+      <tr><td>25–30 mph</td><td>+30%</td><td>−15%</td><td>+15%</td><td>+45 / −23 / +23 yds</td></tr>
+    </table>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Crosswind Carry Calculation</div>
+      <div class="formula-main">Direct crosswind = full value (same effect as headwind on distance)<br>45° crosswind = approximately half value<br>Wind behind at 45° = half the downwind deduction<br><br>Aim adjustment: every 10 mph crosswind pushes ball ~10 yds at 150 yds<br>Aim into the wind by the calculated drift amount</div>
+      <div class="formula-note">Always check wind at the flag height (using grass throw or cloud movement), not at ground level where you're standing. Wind at 30 feet is often 30–50% stronger than at ground level.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Rain & Wet Conditions</span>
+    <h3>Adjustments That Protect Your Score</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Distance loss — 5–15%:</strong> Wet grip and wet ball reduce smash factor. Add at least one club on every approach. Wet rough reduces distance 15–25%. Take two clubs in heavy rough conditions.</div></li>
+      <li><span class="step-n">2</span><div><strong>Greens hold more — attack more flags:</strong> Soft greens stop the ball faster. You can attack tucked pins you would normally avoid. Short iron approach shots can be aimed at flags you'd aim away from in summer conditions.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putting pace is slower — hit it harder:</strong> Wet greens are significantly slower. Adjust pace expectations — the ball will not break as much. Putts that normally die at the hole will finish 2–3 feet short on wet greens if struck with normal pace.</div></li>
+      <li><span class="step-n">4</span><div><strong>Grip pressure — the silent killer:</strong> Wet grips tighten unconsciously. Consciously reduce grip pressure on every shot in rain. Carry multiple gloves and rotate them every 3–4 holes.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Cold Weather Adjustments</span>
+    <h3>The Physics of Cold</h3>
+    <table class="tbl">
+      <tr><th>Temperature</th><th>Distance Effect</th><th>Ball Selection</th><th>Club Adjustment</th></tr>
+      <tr><td>20°C (68°F) — baseline</td><td>None</td><td>Standard compression</td><td>None</td></tr>
+      <tr><td>10°C (50°F)</td><td>−4 to −6%</td><td>Lower compression</td><td>+½ to +1 club</td></tr>
+      <tr><td>5°C (41°F)</td><td>−8 to −10%</td><td>Low compression (70–80)</td><td>+1 to +2 clubs</td></tr>
+      <tr><td>0°C (32°F)</td><td>−12 to −15%</td><td>Softest available</td><td>+2 clubs minimum</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Muscle stiffness:</strong> Cold also reduces muscle activation, shortening the backswing and reducing club speed by 3–8 mph. Add this to the ball flight effect. In cold conditions, always take more club than feels necessary — the tendency to under-club is amplified dramatically.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Firm & Fast Conditions</span>
+    <h3>Links and Summer Management</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Land short, use the ground:</strong> On firm ground, approach shots that land on the green will run 15–40+ feet further than normal. Land on the front third of the green and use the run. Alternatively, land short of the green and bump the ball in.</div></li>
+      <li><span class="step-n">2</span><div><strong>Driver runs further — adjust targets:</strong> Tee shots on firm fairways run 20–40 yards beyond carry. Account for this in hazard carry calculations — you may overshoot intended landing zones.</div></li>
+      <li><span class="step-n">3</span><div><strong>Avoid short-siding at all cost:</strong> On firm greens, chips from the short side run quickly past the hole. The penalty for a short-side miss is amplified significantly in firm conditions — aim further from tucked pins than normal.</div></li>
+      <li><span class="step-n">4</span><div><strong>Putting — faster pace, less break:</strong> Firm greens are faster. Strike putts more softly. Counterintuitively, faster greens show more break on side-slope putts — read break more aggressively and strike more softly.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HOLE TYPES -->
+<div class="sec" id="holes">
+  <h2 class="sec-title">Hole Type Strategies</h2>
+  <p class="sec-desc">Different hole designs reward different strategies. Recognising the type of hole you're playing and applying the correct strategic template is a skill developed through deliberate thought — not trial and error.</p>
+  <span class="badge badge-lime">🗺️ Hole-by-Hole Templates</span>
+  <div class="card">
+    <span class="card-tag">Tight Par 4s (Under 380 yards)</span>
+    <h3>Precision Over Power</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify the ideal approach angle:</strong> Where is the easiest approach into this green? Work backward from the flag to find the ideal fairway position — not the maximum drive position.</div></li>
+      <li><span class="step-n">2</span><div><strong>Select club for landing zone, not distance:</strong> A tight par 4 is not about hitting driver. It is about placing the ball in a specific 20-yard landing zone that gives the best approach angle. 3-wood, hybrid, or long iron may be the correct play.</div></li>
+      <li><span class="step-n">3</span><div><strong>Bogey is acceptable, double is not:</strong> Tight par 4s are designed to be difficult. A bogey from a conservative play is a fine result. A double from an aggressive tee shot into a penalty area is not.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Long Par 4s (Over 400 yards)</span>
+    <h3>Length Management</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Maximise distance off the tee within control:</strong> Long par 4s reward length — but only when in play. Take the most distance you can reliably deliver to the fairway, not the most distance available in your bag.</div></li>
+      <li><span class="step-n">2</span><div><strong>Accept the long approach:</strong> From 190–210 yards with a fairway wood or hybrid, the target is the centre of the green. GIR from this distance at 10 HCP is around 15%. A centre green approach leaves a manageable par putt. Any GIR at this distance is a bonus.</div></li>
+      <li><span class="step-n">3</span><div><strong>Chip and one putt is the goal:</strong> If you miss the green from 190+ yards, a good chip and one putt is the scoring plan. Accept the bogey as a good result on genuinely long holes when conditions are difficult.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Doglegs</span>
+    <h3>Angle Management</h3>
+    <table class="tbl">
+      <tr><th>Dogleg Type</th><th>Correct Play</th><th>Common Error</th><th>Consequence</th></tr>
+      <tr><td>Dogleg right (gentle)</td><td>Aim centre-left; natural fade brings to centre</td><td>Cutting corner with driver</td><td>Ball in trees/rough right; closed approach angle</td></tr>
+      <tr><td>Dogleg left (gentle)</td><td>Aim centre-right; natural draw brings to centre</td><td>Overdrawing into left rough</td><td>Blocked approach; hazard risk</td></tr>
+      <tr><td>Sharp dogleg right</td><td>Lay up short of corner; full approach in</td><td>Attempting to cut the corner</td><td>Ball blocked by trees; recovery needed</td></tr>
+      <tr><td>Sharp dogleg left</td><td>Lay up right of corner; open approach in</td><td>Hero drive trying to shorten hole</td><td>OOB or blocked; double bogey</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Par 5 Strategy Templates</span>
+    <h3>Three-Shot Planning</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Reachable par 5 (under 520 yards):</strong> Only attempt in two if you can carry the second shot hazard 90%+ of the time. If yes — attack. If not — lay up to your best wedge distance (not just "short of the hazard").</div></li>
+      <li><span class="step-n">2</span><div><strong>Unreachable par 5 (over 520 yards):</strong> Three shots is the plan. Shot 1: maximum controlled distance into the fairway. Shot 2: advance to your ideal wedge yardage. Shot 3: wedge attack. The second shot yardage is the key strategic decision.</div></li>
+      <li><span class="step-n">3</span><div><strong>The second shot on a three-shot par 5:</strong> The most under-strategised shot in golf. Aim for your best wedge distance (typically 80–110 yards). A half-yard perfect lie at 95 yards is worth more than 20 extra yards into rough or an awkward partial wedge yardage.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Tour data on par 5 scoring:</strong> The scoring advantage on par 5s comes almost entirely from GIR percentage — not from being short or long. A player who hits 70% of par 5 greens in regulation scores 0.4 strokes per hole better than one who hits 40%, regardless of driving distance. Get on the green.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">COURSE MANAGEMENT PLAYBOOK — PRO EDITION · EXPECTED VALUE · DISPERSION TARGETING · SCORING STRATEGY</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

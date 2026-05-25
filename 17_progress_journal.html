@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Progress Journal System — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:500px){.two-col{grid-template-columns:1fr;}}
+
+/* Journal entry mockup */
+.journal-entry{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;font-size:12.5px;}
+.j-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.j-date{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);}
+.j-type{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.j-field{margin-bottom:10px;}
+.j-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.j-value{color:var(--white);line-height:1.65;}
+.j-divider{border:none;border-top:1px solid var(--faint);margin:10px 0;}
+.j-ratings{display:flex;gap:12px;flex-wrap:wrap;}
+.j-rating{text-align:center;}
+.j-rating-val{font-family:'JetBrains Mono',monospace;font-size:1.2rem;font-weight:700;}
+.j-rating-label{font-size:9px;color:var(--muted);letter-spacing:.08em;display:block;}
+.val-good{color:var(--good);}
+.val-warn{color:var(--warn);}
+.val-bad{color:var(--bad);}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">Progress Journal · Guide 17</p>
+  <h1>Record the<br><em>Journey</em></h1>
+  <p class="hero-sub">A structured journalling system that captures the qualitative intelligence your SG data cannot — decision quality, mental game patterns, physical readiness, and lessons learned — and turns it into a compound improvement asset over 24 months.</p>
+  <div class="hero-tags">
+    <span class="htag">📓 Journal Structure</span>
+    <span class="htag">📊 Round Entry Template</span>
+    <span class="htag">🏋️ Practice Log</span>
+    <span class="htag">🧠 Mental Game Tracking</span>
+    <span class="htag">📅 Monthly Review</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Journal</button>
+  <button class="tab" onclick="show('structure',this)">System Structure</button>
+  <button class="tab" onclick="show('round',this)">Round Entry</button>
+  <button class="tab" onclick="show('practice',this)">Practice Log</button>
+  <button class="tab" onclick="show('mental',this)">Mental Tracking</button>
+  <button class="tab" onclick="show('monthly',this)">Monthly Review</button>
+  <button class="tab" onclick="show('quarterly',this)">Quarterly Review</button>
+  <button class="tab" onclick="show('tools',this)">Tools & Setup</button>
+</div>
+
+<!-- WHY JOURNAL -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">The Gap That SG Data Cannot Fill</h2>
+  <p class="sec-desc">SG data tells you what happened — which categories you lost or gained strokes in, and by how much. It cannot tell you why, or what the pattern means, or how your mental state contributed, or what you decided that led to the outcome. The journal fills that gap.</p>
+
+  <div class="pull-quote">
+    <p>"Data tells you what. Reflection tells you why. Without both, you are navigating with half a map."</p>
+    <span>— Dr. Gio Valiante, Performance Coach</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">What the Journal Captures That Data Cannot</span>
+    <h3>The Qualitative Dimension of Improvement</h3>
+    <table class="tbl">
+      <tr><th>Question</th><th>SG Data</th><th>Journal</th></tr>
+      <tr><td>Did I lose strokes approaching?</td><td class="good">Yes — quantified</td><td class="good">Yes — and why: wrong club, wrong target, rushed routine</td></tr>
+      <tr><td>Was my mental game intact?</td><td class="bad">No data</td><td class="good">Rated 1–10 with specific examples</td></tr>
+      <tr><td>What decisions cost me strokes?</td><td class="bad">No data</td><td class="good">Hole-by-hole decision quality with retrospective analysis</td></tr>
+      <tr><td>Did my physical state affect performance?</td><td class="bad">No data</td><td class="good">Energy, sleep, and physical readiness tracked pre-round</td></tr>
+      <tr><td>What pattern is emerging across 8 weeks?</td><td class="warn">Averages only</td><td class="good">Narrative pattern across conditions, courses, mental states</td></tr>
+      <tr><td>What am I learning?</td><td class="bad">No data</td><td class="good">Explicit lesson per session; accumulates into wisdom</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Compound Value of Consistent Journalling</span>
+    <h3>Why This Matters More at Month 18 Than Month 1</h3>
+    <p>A journal entry written in Month 2 is mildly useful. A pattern identified across Month 2 through Month 14 — "I consistently lose mental game quality in holes 13–15, particularly when I am within 2 shots of my scoring target" — is an extraordinarily specific piece of self-knowledge that no coach, app, or data system can produce. This pattern only emerges through honest, consistent journalling across time.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">The journal is not immediately valuable. It becomes invaluable at 6 months, transformative at 12 months, and a unique coaching resource at 24 months — which is exactly the timeline of your scratch project.</p>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The commitment level required:</strong> A round journal entry takes 10–15 minutes. A practice log entry takes 5 minutes. A monthly review takes 30–45 minutes. The quarterly review takes 60–90 minutes. Total time investment: approximately 90 minutes per week. This is not optional for a serious scratch programme — it is the difference between structured improvement and indefinite repetition of the same patterns.</p>
+  </div>
+</div>
+
+<!-- STRUCTURE -->
+<div class="sec" id="structure">
+  <h2 class="sec-title">The Journal System Structure</h2>
+  <p class="sec-desc">The system has four distinct components, each serving a different time horizon. Together they form a complete picture of your development from month to month and year to year.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Four Components</span>
+    <h3>What Goes Where</h3>
+    <table class="tbl">
+      <tr><th>Component</th><th>Frequency</th><th>Time Required</th><th>Primary Value</th></tr>
+      <tr><td>Round Entry</td><td class="good">After every round</td><td class="good">10–15 min</td><td>Immediate insight; practice direction; mental patterns</td></tr>
+      <tr><td>Practice Log</td><td class="good">After every session</td><td class="good">5 min</td><td>Session tracking; progress on drills; coach alignment</td></tr>
+      <tr><td>Monthly Review</td><td class="warn">First day of each month</td><td class="warn">30–45 min</td><td>Pattern identification; phase progress; practice rebalancing</td></tr>
+      <tr><td>Quarterly Review</td><td class="warn">Every 3 months</td><td class="warn">60–90 min</td><td>Milestone checkpoint; coach prep; strategic programme review</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Quantitative vs. Qualitative Balance</span>
+    <h3>Numbers and Narrative — Both Required</h3>
+    <p>The journal captures both hard numbers (SG data, scores, distances) and qualitative narrative (how decisions felt, what the mental environment was like, what you learned). Neither alone is sufficient:</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div class="card" style="margin-bottom:0;">
+        <span class="card-tag">Numbers Only</span>
+        <h3 style="font-size:1rem;">What You Miss</h3>
+        <p style="font-size:12px;">You know you 3-putted 4 times but not whether it was lag putting, nerves, or a green reading system breakdown. The cause is invisible — which means the fix is guesswork.</p>
+      </div>
+      <div class="card card-gold" style="margin-bottom:0;">
+        <span class="card-tag">Numbers + Narrative</span>
+        <h3 style="font-size:1rem;">What You Gain</h3>
+        <p style="font-size:12px;">You 3-putted 4 times, all from outside 30 feet, all on holes where you were nervous about the score. The cause is identified — lag putting under pressure — and the fix is targeted.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Single Most Important Habit</span>
+    <h3>Write Within 30 Minutes of Finishing</h3>
+    <p>Memory of qualitative experience — how decisions felt, what mental patterns emerged, what you learned — degrades dramatically within 2–3 hours of an event. A round entry written 30 minutes after finishing is 3–4x more valuable than one written the next morning. Build the habit of sitting in your car for 10 minutes before leaving the car park and writing the entry there.</p>
+  </div>
+</div>
+
+<!-- ROUND ENTRY -->
+<div class="sec" id="round">
+  <h2 class="sec-title">Round Entry Template</h2>
+  <p class="sec-desc">Every round — competitive or practice — receives a structured entry. The template takes 10–15 minutes to complete and captures all the information required for monthly pattern analysis.</p>
+
+  <div class="journal-entry">
+    <div class="j-header">
+      <div>
+        <div class="j-date">Round Entry · Example · 10 May 2026</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-top:4px;">Wentworth West · Stroke Play</div>
+      </div>
+      <span class="j-type">Competitive</span>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Score / Target / Conditions</div>
+      <div class="j-value">78 vs. target 76 · Wind SW 15 mph · Soft fairways · Fast greens</div>
+    </div>
+
+    <hr class="j-divider">
+
+    <div class="j-ratings">
+      <div class="j-rating"><div class="j-rating-val val-warn">3</div><span class="j-rating-label">Mental Game</span></div>
+      <div class="j-rating"><div class="j-rating-val val-good">7</div><span class="j-rating-label">Ball Striking</span></div>
+      <div class="j-rating"><div class="j-rating-val val-warn">4</div><span class="j-rating-label">Short Game</span></div>
+      <div class="j-rating"><div class="j-rating-val val-bad">3</div><span class="j-rating-label">Putting</span></div>
+      <div class="j-rating"><div class="j-rating-val val-good">8</div><span class="j-rating-label">Decisions</span></div>
+      <div class="j-rating"><div class="j-rating-val val-good">9</div><span class="j-rating-label">Routine</span></div>
+    </div>
+
+    <hr class="j-divider">
+
+    <div class="j-field">
+      <div class="j-label">SG Summary (from Arccos / Shot Scope)</div>
+      <div class="j-value">OTT: −0.4 · Approach: −0.9 · ATG: −0.6 · Putting: −1.1 · Total: −3.0</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Primary Leak (one sentence)</div>
+      <div class="j-value">Three-putted from outside 35 feet three times — lag putting clearly collapsed on back nine under pressure of being close to target score.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Best Decision of the Round</div>
+      <div class="j-value">Hole 14 — took 5-iron instead of driver on 465-yard par 4 into wind, left 165 yards, hit green. Made par. Strategic pre-commitment holding under pressure.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Worst Decision / What I Would Change</div>
+      <div class="j-value">Hole 11 — went at tucked left pin with water left. Result: bogey. Should have aimed centre. Ego involved — wanted birdie to get back to target.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Mental Game Note</div>
+      <div class="j-value">Routine held until hole 15 when I became aware of the score. Rushed the read on 15 and 16 — both three-putts. Pattern: score-awareness disrupts putting routine specifically, not full-swing routine.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Lesson (one sentence)</div>
+      <div class="j-value">When score-awareness enters the putting routine, the corrective is to slow down deliberately at the green read step — not to try to suppress the awareness.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Practice Priority → Next Session</div>
+      <div class="j-value">Lag putting from 30–40 feet under consequence (clock drill with penalty for missing 6-ft circle). Minimum 30 minutes.</div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Six Ratings Explained</span>
+    <h3>How to Score Each Category Honestly</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>What 1 Looks Like</th><th>What 10 Looks Like</th></tr>
+      <tr><td>Mental Game (1–10)</td><td class="bad">Catastrophising, ruminating, loss of focus after bad shots</td><td class="good">Process-focused throughout, 10-sec rule applied, no outcome anxiety on course</td></tr>
+      <tr><td>Ball Striking (1–10)</td><td class="bad">Multiple shanks/thins/fats, major miss patterns</td><td class="good">Consistent contact, predictable shape, hitting greens in regulation with good clubs</td></tr>
+      <tr><td>Short Game (1–10)</td><td class="bad">Multiple chips left more than 15 ft, poor bunker performance</td><td class="good">Consistent proximity inside 10 ft from standard chips, saving pars regularly</td></tr>
+      <tr><td>Putting (1–10)</td><td class="bad">Multiple 3-putts, missing inside 4 ft, poor pace</td><td class="good">Lag putting to tap-in range, making inside 6 ft at 80%+, no 3-putts</td></tr>
+      <tr><td>Decisions (1–10)</td><td class="bad">Multiple club selection errors, targeting sucker pins, emotional choices</td><td class="good">Pre-committed to strategy, correct club every time, aimed at pattern not flag</td></tr>
+      <tr><td>Routine Compliance (1–10)</td><td class="bad">Routine frequently abbreviated or skipped under pressure</td><td class="good">Full routine on every shot, consistent duration, triggered by same cue</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PRACTICE LOG -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">Practice Session Log</h2>
+  <p class="sec-desc">Every practice session is logged. A 5-minute entry after each session creates an accountability record, tracks drill progression, and ensures your coach can see exactly what you have been working on between sessions.</p>
+
+  <div class="journal-entry">
+    <div class="j-header">
+      <div>
+        <div class="j-date">Practice Log · Example · 8 May 2026</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-top:4px;">Range + Short Game · 75 minutes</div>
+      </div>
+      <span class="j-type">Practice</span>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Coach Priority (from last session)</div>
+      <div class="j-value">Forward shaft lean at impact — low point drill (alignment stick 4 inches behind ball)</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Session Structure & Volume</div>
+      <div class="j-value">Putting: 25 min (Clock Drill × 3 sets, Speed Gates × 2) · Short Game: 30 min (chipping proximity, 3 lies) · Irons: 20 min (Low Point Drill, 7-iron × 40 shots)</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Drill Results — Pass/Fail</div>
+      <div class="j-value">Clock Drill: 18/24 (target 22) — below benchmark · Low Point Drill: Hit stick 4/40 times · Speed Gates: 32/40 through gates</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Coach Priority — Progress?</div>
+      <div class="j-value">Forward lean improving — fewer fats this session (2 vs. 7 last week). Still losing it on longer clubs. Appears more consistent with 7-iron than 5-iron.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">One Thing That Worked</div>
+      <div class="j-value">Feeling of "leading with the handle" cue — when I said this internally before each shot, contact improved noticeably. Worth using as my session cue next time.</div>
+    </div>
+
+    <div class="j-field">
+      <div class="j-label">Focus for Next Practice</div>
+      <div class="j-value">Continue Low Point Drill but with 5-iron specifically. Clock Drill benchmark: reach 20/24 before moving to next drill. Check alignment stick is exactly 4 inches — measure it.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Pass/Fail Principle</span>
+    <h3>Why Drill Results Must Be Recorded</h3>
+    <p>Every drill in your programme has a pass/fail criterion — a specific number or outcome that defines whether the session was productive. Recording these results does three things: it prevents the cognitive distortion of remembering sessions as "good" or "bad" based on feel rather than data; it provides honest progress tracking across weeks; and it feeds directly into coach conversations with objective evidence rather than subjective impression.</p>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>If you don't have pass/fail criteria for your drills:</strong> Ask your coach to specify them for each drill they prescribe. "Hit 20 out of 24 from the clock drill" is more useful than "practise the clock drill." Specific criteria are the difference between practising and training.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MENTAL TRACKING -->
+<div class="sec" id="mental">
+  <h2 class="sec-title">Mental Game Tracking</h2>
+  <p class="sec-desc">The mental game dimension of the journal is the most underused and highest-value component. Most players track scores and statistics obsessively but have no systematic record of their mental game patterns — which means they repeat the same mental errors indefinitely without recognising the pattern.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Mental Game Metrics to Track</span>
+    <h3>What to Record for Every Round</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>How to Record</th><th>What Pattern to Look For</th></tr>
+      <tr><td>Routine compliance rating (1–10)</td><td class="good">Post-round score from memory</td><td>Does routine hold in competitive rounds vs. practice rounds?</td></tr>
+      <tr><td>10-second rule adherence</td><td class="good">Y/N note for any notable failures</td><td>Which holes or situations trigger rumination?</td></tr>
+      <tr><td>Score-awareness moment</td><td class="good">Note which hole score entered consciousness</td><td>Pattern of where in the round mental focus shifts to outcome</td></tr>
+      <tr><td>Pre-shot thought content</td><td class="good">Target / feel / mechanical / negative — majority category</td><td>Mechanical thinking on course is a performance red flag</td></tr>
+      <tr><td>Body language observation</td><td class="good">Was it confident and deliberate, or tentative?</td><td>Correlates with scoring — body language affects shot execution</td></tr>
+      <tr><td>Tipping point hole</td><td class="good">Note any hole where mental state visibly changed</td><td>Identifies specific triggers — important coaching input</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Pressure Index</span>
+    <h3>Quantifying Your Mental Game Under Competitive Stakes</h3>
+    <p>After every competitive round, calculate your Pressure Index — a simple ratio that reveals whether your mental game is holding under stakes or deteriorating.</p>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Pressure Index Calculation</div>
+      <div class="formula-main">
+        Pressure Index = Competitive Round Score − Solo Practice Round Average<br><br>
+        Example: Solo round average = 76 · Competitive round = 79<br>
+        Pressure Index = +3 (you concede 3 strokes to pressure)<br><br>
+        Target: Pressure Index below +1.5 = competition-ready mental game<br>
+        Scratch level: Pressure Index below +1.0
+      </div>
+      <div class="formula-note">Track this across all competitive rounds. A reducing Pressure Index over time is direct evidence of mental game improvement under competitive conditions — something no swing metric can measure.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Self-Talk Log</span>
+    <h3>What You Are Saying to Yourself on the Course</h3>
+    <p>At the end of each round, spend 2 minutes recalling the internal language that dominated on the most difficult holes. Record 1–3 examples. These fall into categories that, over time, reveal your dominant mental patterns:</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Self-Talk Category</th><th>Example</th><th>Impact</th></tr>
+      <tr><td class="good">Instructional positive</td><td>"Smooth tempo through the ball"</td><td class="good">+12–18% performance — use intentionally</td></tr>
+      <tr><td class="good">Target-focused</td><td>"See the shape, trust the swing"</td><td class="good">+8–12% performance</td></tr>
+      <tr><td class="warn">Neutral observation</td><td>"It's just a 7-iron to the middle"</td><td class="warn">Neutral — no harm</td></tr>
+      <tr><td class="bad">Outcome-focused negative</td><td>"Don't three-putt this"</td><td class="bad">−15–22% performance</td></tr>
+      <tr><td class="bad">Technical mechanical</td><td>"Keep the elbow in at impact"</td><td class="bad">−10–18% performance</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>If your self-talk log consistently shows negative or mechanical categories:</strong> This is a coaching priority, not a technique priority. Build your 3–5 positive instructional cue words (one per club type) and practise using them deliberately in solo rounds before competition.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MONTHLY REVIEW -->
+<div class="sec" id="monthly">
+  <h2 class="sec-title">Monthly Review Protocol</h2>
+  <p class="sec-desc">The monthly review is the engine of pattern identification. Done on the first day of each new month, it synthesises all round entries and practice logs from the previous month into specific, actionable insights for the month ahead.</p>
+
+  <div class="card card-teal">
+    <span class="card-tag">The 45-Minute Monthly Review Process</span>
+    <h3>Exactly What to Do — Step by Step</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Minutes 0–5 — Scoring summary:</strong> Calculate average score across all rounds. Compare to previous month's average. Note trend (improving, flat, declining). Record official handicap if updated.</div></li>
+      <li><span class="step-n">2</span><div><strong>Minutes 5–15 — SG pattern analysis:</strong> Average your SG in all four categories across all rounds. Which category showed the largest deficit? Which improved most? Has the dominant leak category changed from last month? Plot the four-category average on your running SG tracker.</div></li>
+      <li><span class="step-n">3</span><div><strong>Minutes 15–25 — Qualitative pattern identification:</strong> Read through all round entry mental game notes, decision quality notes, and lessons. Look for sentences that recur. If "score-awareness disrupts putting routine" appears in three round entries, this is your primary mental game pattern for the month — not a one-off observation.</div></li>
+      <li><span class="step-n">4</span><div><strong>Minutes 25–35 — Practice log review:</strong> Review drill pass/fail results across all practice sessions. Are the benchmarks improving? Are the same drills being failed consistently? If the Clock Drill benchmark has not improved in 4 weeks, the drill design or the practice approach needs to change.</div></li>
+      <li><span class="step-n">5</span><div><strong>Minutes 35–45 — Plan the next month:</strong> Based on the SG pattern (what to target), the qualitative patterns (mental game priority), and the drill results (what is and is not working), write three specific priorities for the coming month — one per SG category, one mental game intention, and one physical/fitness priority.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Monthly Output</span>
+    <h3>Three Priorities for the Month Ahead</h3>
+    <p>Every monthly review produces a written output of exactly three priorities for the coming month. Not five. Not ten. Three — because three priorities can be held in working memory; ten cannot, and the result is that none are effectively implemented.</p>
+    <div class="journal-entry" style="margin-top:12px;">
+      <div class="j-date">Monthly Review Output — Example — June 2026</div>
+      <div class="j-field" style="margin-top:10px;">
+        <div class="j-label">Priority 1 — SG Focus</div>
+        <div class="j-value">SG: Putting was −1.4 average (biggest leak). Pattern: lag putting from 30–40 feet. Practice allocation: increase putting to 40% of session time. Specific drill: Random Distance Lag, 30–40 ft zone, 4 sessions per week minimum.</div>
+      </div>
+      <div class="j-field">
+        <div class="j-label">Priority 2 — Mental Game</div>
+        <div class="j-value">Score-awareness pattern confirmed in 3 of 4 round entries. Intervention: when score enters awareness, deliberately slow the green read by adding one extra walk around the hole. Pre-commit to this as a specific trigger response.</div>
+      </div>
+      <div class="j-field">
+        <div class="j-label">Priority 3 — Physical / Injury Prevention</div>
+        <div class="j-value">Lead wrist sensitivity in Week 3 and 4. Reduce range session volume by 20%. Add daily eccentric wrist flexion exercise (3 × 15). Book physio check-in before end of month.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- QUARTERLY REVIEW -->
+<div class="sec" id="quarterly">
+  <h2 class="sec-title">Quarterly Review Protocol</h2>
+  <p class="sec-desc">The quarterly review is the strategic planning session of your scratch project. It aligns your self-coaching programme with your coaching sessions, assesses phase progress, and determines whether the overall programme direction needs adjustment.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">Timing</span>
+    <h3>Align With Your Coaching Sessions</h3>
+    <p>Schedule quarterly reviews to coincide with — or ideally precede by 48 hours — your coaching session. The quarterly review prepares the most valuable possible input for your coach: 3 months of structured data, pattern analysis, and specific questions. A coach who receives this arrives ready to advise at a depth that a cold session cannot match.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Quarterly Review Structure</span>
+    <h3>90 Minutes — Done Thoroughly</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Handicap trajectory (10 min):</strong> Plot your handicap across all 12–13 weeks. Is the trajectory matching the phase projection in the scratch plan? If not, by how many strokes are you ahead or behind? A flat 6-week period is not a plateau — it is a signal that something in the programme needs adjustment.</div></li>
+      <li><span class="step-n">2</span><div><strong>SG 3-month trend (15 min):</strong> Plot the monthly average SG for each category across the 3 months. Which category has improved most? Which is stubbornly flat? A category that has not moved in 3 months despite being a practice priority requires a coaching intervention — not more of the same practice.</div></li>
+      <li><span class="step-n">3</span><div><strong>Qualitative patterns — 3 months (20 min):</strong> Read the monthly review outputs from all three months. Which patterns are systemic (appear in all three)? These are structural patterns — not situational ones. They require direct coach attention, not just self-monitoring.</div></li>
+      <li><span class="step-n">4</span><div><strong>Milestone checkpoint (15 min):</strong> Open the scratch plan milestone tracker. Honestly assess each metric. Which milestones are met? Which are not? The programme explicitly states: do not advance to the next phase without meeting the checkpoint. Apply this honestly, not aspirationally.</div></li>
+      <li><span class="step-n">5</span><div><strong>Video review — 3-month swing comparison (20 min):</strong> Open Hudl Technique. Compare your current DTL and FO footage with footage from 12 weeks ago. Is the change your coach prescribed still in place? Has it improved further? Has a new pattern emerged? Document your observations for the coaching session.</div></li>
+      <li><span class="step-n">6</span><div><strong>Quarter plan — write the output (10 min):</strong> Based on everything above, write three strategic priorities for the next quarter. These operate at a higher level than monthly priorities — they address phase direction, coaching focus, and programme balance.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>Send the quarterly review to your coach before your session.</strong> A 1-page summary of your SG trend, your qualitative patterns, and your 3 specific coaching questions turns a 60-minute coaching session into the most productive conversation of the quarter. Coaches work better with prepared players. The quality of your coaching improves in direct proportion to the quality of the information you bring.</p>
+  </div>
+</div>
+
+<!-- TOOLS & SETUP -->
+<div class="sec" id="tools">
+  <h2 class="sec-title">Tools & Setup</h2>
+  <p class="sec-desc">The journal system works with almost any tool — physical or digital. The most important decision is choosing a format you will sustain for 24 months, not the most sophisticated option available.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">Digital Options — Recommended</span>
+    <h3>Best Digital Tools for Golf Journalling</h3>
+    <table class="tbl">
+      <tr><th>Tool</th><th>Best For</th><th>Integration</th></tr>
+      <tr><td>Notion</td><td class="good">Comprehensive — templates, databases, linked views</td><td class="good">Can embed Arccos data, video links, drill benchmarks</td></tr>
+      <tr><td>Apple Notes / Google Keep</td><td class="good">Speed — voice-to-text in the car park immediately after round</td><td class="warn">Manual integration only</td></tr>
+      <tr><td>Day One (journalling app)</td><td class="good">Structured diary format — excellent for narrative entries</td><td class="warn">Manual data entry</td></tr>
+      <tr><td>Obsidian</td><td class="good">Long-term knowledge management — links between entries over months</td><td class="warn">Steep setup; powerful for pattern identification at 12+ months</td></tr>
+      <tr><td>Google Sheets + Google Docs</td><td class="good">Quantitative tracking (Sheets) + narrative (Docs)</td><td class="good">Free, accessible everywhere, easy to share with coach</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Physical Journal — Also Highly Effective</span>
+    <h3>The Case for Paper</h3>
+    <p>Research in cognitive psychology shows that handwriting produces stronger memory encoding than typing — which means physical journal entries are recalled with greater fidelity during monthly reviews. Several elite amateur golfers use a simple A5 notebook with one page per round and a dedicated monthly review section. The format is less important than the discipline.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Physical notebook:</strong> Leuchtturm1917 A5 or Moleskine large. One spread per round entry (left page = quantitative, right page = narrative). One page per practice session. Tabbed divider for monthly reviews.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Hybrid approach (recommended):</strong> Voice memo in the car park immediately after the round (captures raw memory), then formal written or digital entry within 2 hours. This combines speed-of-capture with structured recording.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Minimum Viable Journal</span>
+    <h3>If You Do Nothing Else — Do This</h3>
+    <p>If the full system feels overwhelming to start, implement this minimum version immediately and build from it:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>After every round:</strong> Write 3 sentences — (1) primary SG leak today, (2) best decision, (3) lesson learned. Takes 3 minutes. Provides 80% of the pattern-identification value of the full system.</div></li>
+      <li><span class="step-n">2</span><div><strong>After every practice:</strong> Write 2 sentences — (1) drill result vs. benchmark, (2) what to do differently next session. Takes 2 minutes.</div></li>
+      <li><span class="step-n">3</span><div><strong>Monthly:</strong> Read all entries. Write one paragraph identifying the single most consistent pattern. Write three words that summarise the priority for next month.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">🏆</span>
+      <p><strong>Start today.</strong> A journal started imperfectly today is infinitely more valuable than a perfect journal started next month. The compound value of this system builds from the first entry — but only if the first entry is written.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  PROGRESS JOURNAL SYSTEM · GUIDE 17 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Record every session · Review every month · Let patterns become wisdom</span>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

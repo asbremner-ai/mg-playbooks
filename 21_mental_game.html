@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mental Game — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:160px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 21</p>
+  <h1>Mental<br><em>Game</em></h1>
+  <p class="hero-sub">The neuroscience of performance under pressure — arousal control, choking prevention, between-shot routines, managing bad patches, the yips, and building genuine competitive resilience.</p>
+  <div class="hero-tags">
+    <span class="htag">🧠 Pressure Management</span><span class="htag">😤 Choking</span>
+    <span class="htag">🌬️ Arousal Control</span><span class="htag">🔁 Between-Shot</span>
+    <span class="htag">📉 Bad Patches</span><span class="htag">🎯 The Yips</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('pressure',this)">Pressure</button>
+  <button class="tab" onclick="show('routine',this)">Routines</button>
+  <button class="tab" onclick="show('momentum',this)">Momentum</button>
+  <button class="tab" onclick="show('yips',this)">The Yips</button>
+  <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+  <button class="tab" onclick="show('postround',this)">Post-Round</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Mental Game Framework</h2>
+  <p class="sec-desc">Golf is the only major sport where the player has unlimited time to think between shots. This is simultaneously the greatest opportunity and the greatest liability. The mental game is not about positive thinking — it is about managing the relationship between conscious thought and automatic motor performance.</p>
+  <span class="badge badge-gold">🧠 Performance Neuroscience</span>
+  <div class="card">
+    <span class="card-tag">The Core Science — Why Thinking Hurts Performance</span>
+    <h3>Explicit vs. Implicit Processing</h3>
+    <p style="margin-bottom:12px;">Dr. Sian Beilock's research at the University of Chicago demonstrates that skilled motor performance (like a golf swing) is stored as implicit memory — it runs automatically, without conscious oversight. When a player consciously thinks about mechanics during execution, they switch from implicit to explicit processing. This disrupts the automatic programme and degrades performance.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Two Processing Systems</div>
+      <div class="formula-main">Implicit (automatic): fast, smooth, high-skill, no conscious access<br>Explicit (conscious): slow, fragmented, disrupts automatic programme<br><br>Skill acquisition → explicit (learning)<br>Skill execution → implicit (performing)<br><br>The error: using the learning system during performance</div>
+      <div class="formula-note">Tour players who were asked to describe their swing mechanics mid-round performed significantly worse than those thinking about targets. Conscious mechanics analysis is a practice-range tool, not an on-course tool.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">What Tour Players Think About On-Course</span>
+    <h3>Research Data — Tour Player Focus During Shots</h3>
+    <div class="bar-group">
+      <div class="bar-title">Tour Player On-Course Focus Distribution (Dr. Gio Valiante Research)</div>
+      <div class="bar-row"><span class="bar-lbl">Target focus</span><div class="bar-track"><div class="bar-fill gold" style="width:48%"></div></div><span class="bar-val">48%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Feel / tempo cue</span><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div><span class="bar-val">32%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Process cue (1 word)</span><div class="bar-track"><div class="bar-fill teal" style="width:14%"></div></div><span class="bar-val">14%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Mechanics</span><div class="bar-track"><div class="bar-fill red" style="width:6%"></div></div><span class="bar-val">6%</span></div>
+    </div>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The implication:</strong> On-course thought is either target-focused or feel-based. Mechanics are essentially absent. If you find yourself thinking about swing mechanics during a round, you are using the wrong cognitive system for the task.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Process vs. Outcome Goals</span>
+    <h3>The Most Practical Mental Skill</h3>
+    <table class="tbl">
+      <tr><th>Goal Type</th><th>Example</th><th>When to Use</th><th>Effect on Performance</th></tr>
+      <tr><td>Outcome goal</td><td>"I want to shoot 78"</td><td>Before the round, off-course</td><td>Motivating for preparation; damaging on-course</td></tr>
+      <tr><td>Process goal</td><td>"Commit to my target before every shot"</td><td>During the round</td><td>Keeps focus on what you control; reduces anxiety</td></tr>
+      <tr><td>Feel goal</td><td>"Smooth tempo — feel the finish"</td><td>During the shot</td><td>Keeps processing implicit; produces best execution</td></tr>
+    </table>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);">Outcome thinking during a round — "I need par here to stay under 80" — activates the explicit processing system and fragments the automatic motor programme. Switch to process thinking the moment you step onto the first tee.</p>
+  </div>
+</div>
+
+<!-- PRESSURE -->
+<div class="sec" id="pressure">
+  <h2 class="sec-title">Pressure Management</h2>
+  <p class="sec-desc">Pressure in golf is the perception that the outcome of a shot matters beyond normal. It triggers the fight-or-flight response — elevating cortisol, tightening muscles, accelerating breathing, and shifting cognitive resources toward threat assessment. Understanding the mechanism allows you to counter it.</p>
+  <span class="badge badge-rust">😤 Choking & Clutch Performance</span>
+  <div class="card">
+    <span class="card-tag">The Physiology of Choking</span>
+    <h3>What Happens in Your Body Under Pressure</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Cortisol and adrenaline spike:</strong> The stress response floods the body with cortisol and adrenaline. Heart rate increases. Muscles contract. Fine motor control — which golf requires above all else — degrades sharply. This is the physical mechanism of the choke.</div></li>
+      <li><span class="step-n">2</span><div><strong>Grip pressure increases unconsciously:</strong> EMG research shows grip pressure increases by 20–40% under competitive pressure without the player noticing. Elevated grip pressure travels up the forearms and eliminates the fluid release through impact that produces distance and accuracy.</div></li>
+      <li><span class="step-n">3</span><div><strong>Swing tempo accelerates:</strong> Tension shortens the backswing and accelerates the transition. A player who swings at 3:1 backswing-to-downswing tempo in practice often swings at 2:1 or faster under pressure, producing thin contact, blocked shots, and pulled putts.</div></li>
+      <li><span class="step-n">4</span><div><strong>Attention narrows — and shifts inward:</strong> Under pressure, attention narrows and shifts from external targets (the flag, the hole) to internal mechanics (what are my hands doing?). This is the explicit processing invasion that Beilock's research identifies as the primary choke mechanism.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Inverted-U Model</span>
+    <h3>Optimal Arousal — Finding Your Performance Zone</h3>
+    <p style="margin-bottom:12px;">The relationship between arousal and performance follows an inverted-U curve. Too little arousal (under-stimulated, casual, flat) produces poor performance. Too much arousal (anxious, tight, racing thoughts) also produces poor performance. Peak performance occurs in a narrow optimal arousal zone.</p>
+    <table class="tbl">
+      <tr><th>Arousal Level</th><th>Physical Signs</th><th>Performance Effect</th><th>Intervention</th></tr>
+      <tr><td class="bad">Too low</td><td>Flat, disengaged, sluggish</td><td>Lack of focus, slow reactions</td><td>Activation: music, movement, self-talk</td></tr>
+      <tr><td class="good">Optimal</td><td>Alert, energised, loose</td><td>Peak motor performance</td><td>Maintain: routine, breathing, process focus</td></tr>
+      <tr><td class="bad">Too high</td><td>Tight, racing thoughts, fast breathing</td><td>Choke mechanism activated</td><td>Downregulation: box breathing, reset routine</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Box Breathing — The Fastest Downregulation Tool</span>
+    <h3>Physiological Reset in 60 Seconds</h3>
+    <p style="margin-bottom:12px;">Box breathing (4-4-4-4) activates the parasympathetic nervous system directly, reducing heart rate, lowering cortisol, and restoring fine motor control within 60–90 seconds. This is not a meditation tool — it is a proven physiological intervention used by Special Forces, surgeons, and elite athletes.</p>
+    <div class="formula">
+      <div class="formula-lbl">Box Breathing Protocol</div>
+      <div class="formula-main">Inhale: 4 seconds through the nose<br>Hold: 4 seconds<br>Exhale: 4 seconds through the mouth (slow, controlled)<br>Hold: 4 seconds<br><br>Repeat 3–4 cycles = approximately 60–90 seconds<br>Heart rate reduction: 8–15 bpm per cycle in trained practitioners</div>
+      <div class="formula-note">Use this: walking to the ball after a poor shot, on the tee of a critical hole, before a pressure putt, or any time you notice grip pressure climbing. Make 3 deep exhales before addressing the ball a permanent part of your pre-shot routine under pressure.</div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Pressure Inoculation — Building Resilience</span>
+    <h3>You Cannot Perform Under Pressure You Haven't Practised Under</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Add consequences to practice:</strong> Practice without stakes produces practice performance. Add a consequence — 10 press-ups for every missed 5-footer, money on the line with a practice partner, or a designated number of consecutive makes required before leaving the green.</div></li>
+      <li><span class="step-n">2</span><div><strong>Simulate competition scenarios:</strong> The Guide 16 Solo Pressure Round protocol is the primary pressure inoculation tool. Use it at least twice per month. The physiological stress response must be experienced regularly to develop tolerance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Play competitions — even uncomfortable ones:</strong> Club competitions, casual medals, and friendly games with higher stakes are irreplaceable pressure training. No simulation fully replicates the weight of a real competitive round. Enter competitions regularly.</div></li>
+      <li><span class="step-n">4</span><div><strong>The 10-second rule:</strong> Dr. Gio Valiante's research shows that tour players physically move away from a bad shot within 10 seconds — walking away, taking a practice swing, or starting the walk to the next ball. This physically interrupts the rumination process before it becomes a spiral.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ROUTINES -->
+<div class="sec" id="routine">
+  <h2 class="sec-title">Between-Shot Routines</h2>
+  <p class="sec-desc">The between-shot routine is the mental management system that governs the 3–5 minutes between shots. Without a structured routine, the mind defaults to outcome thinking, error analysis, and future worry — all of which degrade performance on the next shot.</p>
+  <span class="badge badge-lime">🔁 The 50-Second System</span>
+  <div class="card">
+    <span class="card-tag">The Complete Between-Shot Routine</span>
+    <h3>From Last Shot to Next Shot — The Full Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Reaction phase (0–10 seconds after shot):</strong> Allow yourself a brief, contained emotional reaction. A controlled expletive, a shake of the head, a fist pump. This is healthy and normal. Then physically move away from the spot — start walking. The movement triggers the transition.</div></li>
+      <li><span class="step-n">2</span><div><strong>Transition phase (10 seconds–1 minute before shot):</strong> Walk to the ball in a neutral state. Use this time for practical tasks — checking yardage, reading the lie, observing conditions. These external, task-oriented thoughts occupy the conscious mind and prevent rumination.</div></li>
+      <li><span class="step-n">3</span><div><strong>Decision phase (60–30 seconds before shot):</strong> Make all strategic and club decisions completely before entering the pre-shot routine. Club selection, target selection, shot shape. Once committed, do not revisit these decisions.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pre-shot routine (30–0 seconds):</strong> The locked-down sequence. Same procedure every shot. Stand behind ball, visualise flight, align, address, one trigger thought, execute. Duration: 20–25 seconds. Consistency of duration is more important than the specific steps.</div></li>
+      <li><span class="step-n">5</span><div><strong>Post-shot debrief (optional, 10 seconds max):</strong> A brief analytical observation — "that was thin, stood up at impact" — is acceptable if done quickly and then released. Extended self-analysis between shots is damaging to rhythm and to subsequent shots.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Pre-Shot Routine in Detail</span>
+    <h3>The 20–25 Second Window</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Duration</th><th>Content</th><th>Cognitive Mode</th></tr>
+      <tr><td>Visualisation</td><td>5–7 sec</td><td>See the ball flight — start, apex, land, finish</td><td>Implicit / right-brain</td></tr>
+      <tr><td>Alignment</td><td>3–5 sec</td><td>Intermediate target, feet/shoulders parallel</td><td>Task-focused</td></tr>
+      <tr><td>Address waggle</td><td>3–4 sec</td><td>Grip check, posture, waggle to release tension</td><td>Physical — tension release</td></tr>
+      <tr><td>Trigger thought</td><td>1–2 sec</td><td>One word or feel cue: "smooth", "target", "tempo"</td><td>Implicit — blocks explicit</td></tr>
+      <tr><td>Execute</td><td>4–6 sec</td><td>Commit — no conscious thought during swing</td><td>Fully implicit</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>The abort rule:</strong> If you feel uncommitted, uncomfortable, or uncertain during the pre-shot routine — step away. Reset. An uncommitted swing produces a poor shot in 90%+ of cases. Stepping away and restarting the routine costs 10 seconds and saves a stroke.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Self-Talk — The Science</span>
+    <h3>Instructional vs. Motivational vs. Negative</h3>
+    <table class="tbl">
+      <tr><th>Self-Talk Type</th><th>Example</th><th>Effect</th><th>Use When</th></tr>
+      <tr><td>Instructional</td><td>"Swing through to the target"</td><td class="good">+12–18% performance improvement</td><td>Practice and pre-shot only</td></tr>
+      <tr><td>Motivational</td><td>"You've made this shot before"</td><td class="good">+8–12% under pressure</td><td>During pressure situations</td></tr>
+      <tr><td>Negative</td><td>"Don't hit it in the water"</td><td class="bad">−22% performance</td><td>Never — reframe immediately</td></tr>
+      <tr><td>Neutral observation</td><td>"150 yards, slight wind left"</td><td class="warn">No measurable effect</td><td>During decision-making</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The reframe rule:</strong> Every negative thought must be immediately reframed as a positive instruction. "Don't hit it right" → "Aim down the left side." The brain cannot process a negation clearly — it processes "right" and increases right-miss probability. Always frame as what you want, never as what you don't want.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MOMENTUM -->
+<div class="sec" id="momentum">
+  <h2 class="sec-title">Managing Momentum</h2>
+  <p class="sec-desc">Momentum in golf is real — a poor hole followed by a poor decision on the next tee frequently compounds into a run of double bogeys. Recognising the pattern and interrupting it is one of the highest-value mental skills in competitive golf.</p>
+  <span class="badge badge-teal">📉 Bad Patch Management</span>
+  <div class="card">
+    <span class="card-tag">The Momentum Spiral — How It Starts</span>
+    <h3>Anatomy of a Score Collapse</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Trigger event:</strong> A double bogey, a missed short putt, a penalty shot. The score and expectation gap activates frustration and outcome thinking.</div></li>
+      <li><span class="step-n">2</span><div><strong>Arousal spikes:</strong> Frustration elevates cortisol. Grip pressure increases. The swing tempo accelerates. The next shot is executed under sub-optimal arousal — and is often poor as a result.</div></li>
+      <li><span class="step-n">3</span><div><strong>Urgency thinking:</strong> "I need to get that back immediately." This produces aggressive club selections and risky targets on the next hole — compounding the damage. The urgency to recover causes the second poor hole.</div></li>
+      <li><span class="step-n">4</span><div><strong>Score-tracking obsession:</strong> The player starts adding up their score and calculating what they need on remaining holes. This is pure outcome thinking — the fastest route to continued poor performance.</div></li>
+    </ul>
+    <div class="info-box warn-box" style="margin-top:12px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Research finding:</strong> Statistical analysis of 50,000+ amateur rounds shows that a double bogey is followed by another bogey or worse on the next hole 58% of the time — compared to 34% following a par. The double bogey itself is rarely the problem. The psychological response to it is.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Reset Protocol</span>
+    <h3>Interrupting the Spiral — A 5-Step System</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Physical reset:</strong> After a bad hole, stop walking and take 3 slow, deep exhales through the mouth before reaching the next tee. This physiologically interrupts the cortisol response. Physical movement + controlled breathing = fastest arousal downregulation.</div></li>
+      <li><span class="step-n">2</span><div><strong>Score reset — play each hole in isolation:</strong> The next hole is a completely separate event. The score from the last hole is permanent and unaffected by your next shot. Play the next hole as if the scorecard started now. This mental reframing is not denial — it is rational.</div></li>
+      <li><span class="step-n">3</span><div><strong>Club down on the next tee:</strong> After a double bogey, take one less club than you would normally hit off the tee. This automatic decision forces a conservative play at exactly the moment when the psychological tendency is to be aggressive.</div></li>
+      <li><span class="step-n">4</span><div><strong>Accept the bogey target:</strong> After a momentum-breaking hole, the immediate next hole target is a bogey — not a birdie. A bogey stops the bleeding. A bogey following a double bogey is a good mental result, not a failure.</div></li>
+      <li><span class="step-n">5</span><div><strong>Reattach to the process:</strong> Return to your between-shot routine and pre-shot routine with deliberate attention. The routine is your anchor when score-thinking tries to take over. Trust the process.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Birdie Holes — Managing the Other Direction</span>
+    <h3>Overconfidence and the Birdie-Bogey Sequence</h3>
+    <p style="margin-bottom:12px;">Momentum cuts both ways. A birdie — especially an unexpected one — can produce overconfidence that leads to an aggressive tee shot on the next hole and a resulting bogey. The birdie-bogey sequence is as common as the double-bogey-bogey sequence at the 10 HCP level.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Treat a birdie as neutral:</strong> Acknowledge it briefly, then reset to your standard routine. A birdie does not change the difficulty of the next hole. The next hole demands exactly the same strategic decisions and the same routine.</div></li>
+      <li><span class="step-n">2</span><div><strong>Do not become aggressive after a birdie:</strong> The temptation to "keep the momentum going" by attacking on the next hole is one of the most common momentum-driven errors. The correct play on the next hole is identical to what it would be if the birdie had not happened.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Managing the Back Nine Fatigue Effect</span>
+    <h3>Why Scores Rise on Holes 14–18</h3>
+    <p style="margin-bottom:12px;">Amateur scores rise an average of 0.4 strokes per hole on holes 14–18 compared to the equivalent early holes. The primary cause is not physical fatigue — it is mental fatigue combined with score-awareness tension as the end of the round approaches.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Eat and drink on holes 9–12:</strong> Blood glucose depletion degrades decision-making quality measurably by the 15th hole. A banana, energy gel, or 30g of carbohydrate on the back nine prevents cognitive decline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Stop counting on hole 15:</strong> If you know your score on hole 15, you are almost certainly doing mental arithmetic rather than playing golf. Give yourself permission to not know your exact score until after the round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the between-hole walk deliberately:</strong> On the walk between the 14th green and 15th tee, perform your box breathing reset. Treat the final four holes as a fresh nine — with no score context.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- THE YIPS -->
+<div class="sec" id="yips">
+  <h2 class="sec-title">The Yips</h2>
+  <p class="sec-desc">The yips are involuntary muscle contractions during the execution of a fine motor skill — most commonly in putting and chipping. They are a neurological phenomenon caused by the explicit processing system attempting to override the automatic motor programme at the moment of execution.</p>
+  <span class="badge badge-rust">🎯 Yips — Diagnosis & Treatment</span>
+  <div class="card">
+    <span class="card-tag">What the Yips Actually Are</span>
+    <h3>Focal Dystonia — The Neurological Reality</h3>
+    <p style="margin-bottom:12px;">Research by Dr. Debbie Crews and Mayo Clinic studies classifies the yips as a form of focal dystonia — a task-specific involuntary muscle contraction triggered by the overthinking of a learned motor skill. They are not a sign of weakness. They are a neurological glitch caused by excessive explicit focus on the moment of impact.</p>
+    <div class="grid-2">
+      <div class="mini-card">
+        <span class="mini-tag">Type 1 Yips</span>
+        <h4>True Focal Dystonia</h4>
+        <p>Involuntary muscle twitch regardless of mental state. Neurological in origin. Requires a technique or grip change to break the motor pattern.</p>
+      </div>
+      <div class="mini-card">
+        <span class="mini-tag">Type 2 Yips</span>
+        <h4>Performance Anxiety</h4>
+        <p>Flinch or freeze driven by fear of missing. Psychological in origin. Responds to mental training, breathing, and routine changes.</p>
+      </div>
+    </div>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Diagnosis:</strong> If the yips occur on the range during casual practice with no pressure, it is likely Type 1. If they only occur in competitive or pressured situations, it is Type 2. The interventions differ significantly.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Interventions — Putting Yips</span>
+    <h3>Evidence-Based Solutions</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Change grip style (Type 1 & 2):</strong> A different grip creates a new motor pattern, breaking the established dystonia loop. The claw grip, arm-lock, cross-handed, and side-saddle grips have all been used successfully by tour players. The change disrupts the established neural pathway.</div></li>
+      <li><span class="step-n">2</span><div><strong>Change putter type (Type 1):</strong> A long or heavy putter (360g+) dampens the flinch effect by adding mass. Arm-lock putters (legal under current Rules) achieve a similar result by removing forearm/hand involvement — note that anchoring the putter to the body (belly/chest) is prohibited under Rule 14-1b since 2016.</div></li>
+      <li><span class="step-n">3</span><div><strong>External focus — target obsession (Type 2):</strong> Force your focus to the target hole exclusively during execution. The explicit processing that creates the yip requires internal focus (hands, wrists). External target focus blocks the intrusive thought pattern. Look at the hole, not the ball, during short putts.</div></li>
+      <li><span class="step-n">4</span><div><strong>Commit to a specific pace target (Type 2):</strong> Instead of thinking about the stroke, commit entirely to rolling the ball to a specific point 6 inches past the hole. Replace the feared outcome with a specific physical target. The task-focus replaces the anxiety-focus.</div></li>
+      <li><span class="step-n">5</span><div><strong>Routine reconstruction:</strong> Rebuild the pre-putt routine from scratch with a new sequence, new alignment ritual, and deliberately shorter time standing over the ball. The yip is often attached to a specific routine — breaking the routine breaks the yip trigger.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Chipping Yips</span>
+    <h3>When the Wedge Becomes Unreliable</h3>
+    <p style="margin-bottom:12px;">Chipping yips are more common than putting yips and are almost exclusively Type 2 — fear of the thin or heavy chip. The physical mechanism is the wrists flinching at impact in an attempt to control the shot.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Switch to a putting motion:</strong> The most reliable short-term fix. Use a putter or a 7-iron with a putting stroke from just off the green. Eliminating the wedge temporarily removes the yip trigger entirely.</div></li>
+      <li><span class="step-n">2</span><div><strong>Lead wrist extension drill:</strong> Chipping yips involve the lead wrist breaking down through impact. Practice chips with a ruler taped along the forearm and back of the lead hand — any wrist break makes contact with the ruler. This proprioceptive feedback re-trains the motor pattern.</div></li>
+      <li><span class="step-n">3</span><div><strong>Eyes on the landing zone, not the ball:</strong> Looking at a specific landing spot rather than the ball moves focus externally and reduces the self-monitoring that triggers the flinch. Practice chips while looking at your target landing zone, not the ball.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PRE-ROUND -->
+<div class="sec" id="preround">
+  <h2 class="sec-title">Pre-Round Mental Preparation</h2>
+  <p class="sec-desc">The mental state you carry onto the first tee is largely determined by what you do in the 60–90 minutes before your round. Arriving rushed, anxious, or cognitively underprepared sets the tone for the day. A structured pre-round mental protocol changes this.</p>
+  <span class="badge badge-gold">☀️ Competition Day Protocol</span>
+  <div class="card">
+    <span class="card-tag">The Night Before</span>
+    <h3>Preparation That Reduces Morning Anxiety</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Logistics complete by 9pm:</strong> Bag packed, equipment checked, clothing ready, travel route confirmed. Outstanding logistics create a background anxiety that disrupts sleep quality. Complete them the night before.</div></li>
+      <li><span class="step-n">2</span><div><strong>Course strategy review (10 minutes):</strong> Mentally walk the course — identify the 3 holes requiring the most strategic care, the 2 holes that offer genuine birdie opportunities, and any unusual conditions expected. This brief review activates strategic thinking overnight.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set a process goal, not a score goal:</strong> Decide on one process commitment for tomorrow's round — "I will commit to every target before addressing the ball" — and nothing more. Score goals create anxiety; process goals create focus.</div></li>
+      <li><span class="step-n">4</span><div><strong>Sleep 7–9 hours:</strong> Sleep deprivation reduces fine motor precision by 20–30% and decision quality by 25%. This is not negotiable as a performance input. Earlier bedtime if an early tee time is required.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Morning of Competition</span>
+    <h3>The 90-Minute Protocol</h3>
+    <table class="tbl">
+      <tr><th>Time Before Tee</th><th>Activity</th><th>Mental Purpose</th></tr>
+      <tr><td>90 minutes</td><td>Low-GI breakfast — oats, eggs, fruit</td><td>Stable blood glucose = stable decision quality</td></tr>
+      <tr><td>75 minutes</td><td>Arrive at course — no rush</td><td>Relaxed state entering preparation</td></tr>
+      <tr><td>60 minutes</td><td>Putting green — pace calibration only</td><td>Calibrate to green speed; build confidence with makes</td></tr>
+      <tr><td>45 minutes</td><td>Range — wedge to driver, read shape</td><td>Identify natural shot shape for today; do not fix</td></tr>
+      <tr><td>20 minutes</td><td>Short game — chips, bunker, pitches</td><td>Feel calibration for today's conditions</td></tr>
+      <tr><td>10 minutes</td><td>Putting — confidence building putts</td><td>End on makes — never leave on a miss</td></tr>
+      <tr><td>5 minutes</td><td>Quiet time — breathing, visualisation</td><td>Optimal arousal calibration before first tee</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">First Tee Nerves</span>
+    <h3>Managing the Most Common Anxiety Point</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Accept the nerves:</strong> First tee nerves are a physiological reality for every competitive golfer at every level. Research shows that reframing nervousness as "excitement" (rather than anxiety) produces measurably better first hole performance. Say: "I'm excited" — not "I'm nervous."</div></li>
+      <li><span class="step-n">2</span><div><strong>Take an extra club:</strong> On the first tee, take one more club than you would mid-round and swing at 80%. Adrenaline makes you want to swing harder. A smooth, confident 80% swing with extra club is worth 2 strokes on the opening hole compared to a forced, tension-riddled driver.</div></li>
+      <li><span class="step-n">3</span><div><strong>The single process commitment:</strong> Remind yourself of your one process goal for the day — the one agreed the night before. This activates the process-thinking system before outcome-thinking can take hold.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- POST-ROUND -->
+<div class="sec" id="postround">
+  <h2 class="sec-title">Post-Round Mental Debrief</h2>
+  <p class="sec-desc">The post-round debrief is the mental game's practice session. A structured review converts the emotional data of the round into actionable intelligence — without falling into the trap of extended self-criticism that undermines confidence.</p>
+  <span class="badge badge-teal">📋 The Review Protocol</span>
+  <div class="card">
+    <span class="card-tag">The 15-Minute Post-Round Protocol</span>
+    <h3>Converting Round Data Into Improvement Intelligence</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Wait 30 minutes before reviewing:</strong> Immediate post-round review under emotional activation produces distorted analysis — the 3-putt on 17 dominates disproportionately. Wait for the emotional temperature to drop before analysis begins.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify 3 excellent decisions or executions:</strong> Start with what worked. Not what felt lucky — what was genuinely well-executed strategically or technically. Write these down. This is not false positivity — it is evidence-based confidence building.</div></li>
+      <li><span class="step-n">3</span><div><strong>Identify 1–2 mental patterns:</strong> Not swing faults — mental patterns. "I rushed my pre-shot routine on holes 11–14." "I tried to attack 3 sucker pins." These are the actionable mental insights. One or two per round. No more.</div></li>
+      <li><span class="step-n">4</span><div><strong>Set one process commitment for next round:</strong> Based on the mental pattern identified, set a single specific process commitment — "I will step away and restart the routine on any shot where I feel uncommitted." One commitment per round. Focus beats overwhelm.</div></li>
+      <li><span class="step-n">5</span><div><strong>Release the round:</strong> The post-round debrief is the final mental act of the day. After it is complete, the round is over and done. It cannot be changed. The only value it has is the intelligence it provides for the next round. Release it deliberately.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Confidence Inventory</span>
+    <h3>Building and Maintaining Competitive Confidence</h3>
+    <p style="margin-bottom:12px;">Confidence in golf is not a feeling — it is a skill built from a specific evidence base. Players who perform consistently under pressure have a mental inventory of past successes they draw on when confidence is tested. This inventory must be deliberately maintained.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Record evidence of competence:</strong> After every round or practice, note one specific example of a well-executed shot, decision, or recovery. Over time, this builds a retrievable library of evidence that supports the belief "I can do this."</div></li>
+      <li><span class="step-n">2</span><div><strong>Access the inventory under pressure:</strong> When facing a difficult shot, retrieve a specific memory of executing the same shot type successfully. "I've hit this draw under pressure before — on the 12th last August." Specific memory beats generic optimism every time.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never deny the difficulty:</strong> Telling yourself "this is easy" when it genuinely isn't creates cognitive dissonance that elevates anxiety. Instead: "This is challenging, and I have the skills to handle it." This is accurate confidence — not false reassurance.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>The compound effect:</strong> Mental game skills improve slowly but compound powerfully. A player who builds a structured between-shot routine, learns to reset after bad holes, and develops genuine competitive confidence over 12 months improves by 2–4 strokes per round without a single technical swing change. This is why the R&A research shows mental resilience accounts for 22% of improvement rate variance — the second largest factor after practice quality.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">MENTAL GAME PLAYBOOK — PRO EDITION · PERFORMANCE NEUROSCIENCE · PRESSURE MANAGEMENT · COMPETITIVE RESILIENCE</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

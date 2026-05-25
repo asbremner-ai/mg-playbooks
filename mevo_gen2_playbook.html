@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mevo Gen2 Pro — Data Mastery Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0c0f;--surface:#111318;--surface2:#181c22;--border:rgba(255,255,255,.07);
+  --white:#f0f2f5;--muted:#7a8494;--faint:#3a4050;
+  --gold:#f5c842;--teal:#3ecfb8;--rust:#e05a3a;--lime:#8fdc6a;--blue:#5b9cf6;--purple:#a87aff;
+  --r:10px;--r-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;min-height:100vh;}
+
+.hero{background:linear-gradient(160deg,#0d1117 0%,#0a1520 50%,#0d0a0f 100%);border-bottom:1px solid var(--border);padding:40px 20px 32px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 80% 50%,rgba(62,207,184,.07) 0%,transparent 60%),radial-gradient(ellipse 50% 80% at 10% 80%,rgba(245,200,66,.05) 0%,transparent 60%);pointer-events:none;}
+.hero-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Space Mono',monospace;font-size:clamp(1.6rem,5vw,2.4rem);font-weight:700;line-height:1.15;color:var(--white);margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{color:var(--muted);font-size:13px;max-width:600px;margin-bottom:18px;line-height:1.7;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.htag{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted);}
+
+.nav{display:flex;overflow-x:auto;gap:2px;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 12px;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:6px 14px;background:transparent;border:1px solid transparent;border-radius:var(--r-sm);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.tab:hover{color:var(--white);background:var(--surface2);}
+.tab.active{background:var(--surface2);border-color:var(--teal);color:var(--teal);}
+
+.sec{display:none;padding:20px 16px 40px;max-width:780px;margin:0 auto;}
+.sec.active{display:block;}
+.sec-title{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{color:var(--muted);font-size:13px;margin-bottom:20px;line-height:1.7;}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.card-gold{border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.04);}
+.card-teal{border-color:rgba(62,207,184,.2);background:rgba(62,207,184,.04);}
+.card-rust{border-color:rgba(224,90,58,.25);background:rgba(224,90,58,.04);}
+.card-lime{border-color:rgba(143,220,106,.2);background:rgba(143,220,106,.04);}
+.card-blue{border-color:rgba(91,156,246,.2);background:rgba(91,156,246,.04);}
+.card-purple{border-color:rgba(168,122,255,.2);background:rgba(168,122,255,.04);}
+.card-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;background:rgba(62,207,184,.1);padding:2px 7px;border-radius:3px;}
+.card-tag.gold{color:var(--gold);background:rgba(245,200,66,.1);}
+.card-tag.rust{color:var(--rust);background:rgba(224,90,58,.1);}
+.card-tag.lime{color:var(--lime);background:rgba(143,220,106,.1);}
+.card-tag.blue{color:var(--blue);background:rgba(91,156,246,.1);}
+.card-tag.purple{color:var(--purple);background:rgba(168,122,255,.1);}
+.card h3{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:8px;}
+.card p{color:var(--muted);font-size:13px;line-height:1.7;}
+
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.badge-teal{background:rgba(62,207,184,.12);color:var(--teal);border:1px solid rgba(62,207,184,.25);}
+.badge-gold{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.25);}
+.badge-rust{background:rgba(224,90,58,.1);color:var(--rust);border:1px solid rgba(224,90,58,.25);}
+.badge-lime{background:rgba(143,220,106,.1);color:var(--lime);border:1px solid rgba(143,220,106,.25);}
+.badge-blue{background:rgba(91,156,246,.1);color:var(--blue);border:1px solid rgba(91,156,246,.25);}
+.badge-purple{background:rgba(168,122,255,.1);color:var(--purple);border:1px solid rgba(168,122,255,.25);}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
+.tbl th{background:var(--surface2);color:var(--muted);font-weight:500;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.05em;}
+.tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white);vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.good{color:var(--lime);}
+.warn{color:var(--gold);}
+.bad{color:var(--rust);}
+
+.formula{background:var(--surface2);border:1px solid rgba(62,207,184,.2);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'Space Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;font-family:'DM Sans',sans-serif;}
+
+.alert{display:flex;gap:12px;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;}
+.alert-gold{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);}
+.alert-rust{background:rgba(224,90,58,.07);border:1px solid rgba(224,90,58,.2);}
+.alert-teal{background:rgba(62,207,184,.07);border:1px solid rgba(62,207,184,.2);}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.alert-body{font-size:13px;color:var(--muted);line-height:1.65;}
+.alert-body strong{color:var(--white);}
+
+.steps{list-style:none;padding:0;margin:10px 0 0;}
+.steps li{display:flex;gap:10px;margin-bottom:10px;font-size:13px;color:var(--muted);}
+.step-n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1px solid var(--faint);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--teal);margin-top:1px;}
+.steps li strong{color:var(--white);}
+
+.combo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.combo-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.combo-pill{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--faint);color:var(--white);}
+.combo-plus{font-size:16px;color:var(--faint);font-family:'Space Mono',monospace;}
+.combo-name{font-size:.85rem;font-weight:600;color:var(--white);}
+.combo-priority{margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;font-family:'Space Mono',monospace;}
+.p1{background:rgba(224,90,58,.15);color:var(--rust);border:1px solid rgba(224,90,58,.3);}
+.p2{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.25);}
+.p3{background:rgba(62,207,184,.1);color:var(--teal);border:1px solid rgba(62,207,184,.2);}
+
+.outcome-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;}
+@media(max-width:540px){.outcome-row{grid-template-columns:1fr;}}
+.outcome-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;}
+.ob-label{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;color:var(--teal);}
+.ob-val{font-size:12px;color:var(--white);line-height:1.45;}
+
+.diag-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+@media(max-width:520px){.diag-row{grid-template-columns:1fr;}}
+.diag-cell{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;}
+.dc-label{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.dc-val{font-size:13px;font-weight:600;margin-bottom:4px;}
+.dc-note{font-size:11px;color:var(--muted);line-height:1.5;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+
+hr{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'Space Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 7px;}}
+</style>
+</head>
+<body><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <p class="hero-label">FlightScope · Pro Package · Data Mastery</p>
+  <h1>Mevo Gen2<br><em>Expert Playbook</em></h1>
+  <p class="hero-sub">Every data point decoded — what it measures, what it reveals about your swing, the benchmarks that matter, and the key combinations that unlock diagnostic precision.</p>
+  <div class="hero-tags">
+    <span class="htag">📡 All 20 Data Points</span>
+    <span class="htag">⚡ Key Combinations</span>
+    <span class="htag">🎯 Benchmarks</span>
+    <span class="htag">🔬 D-Plane Science</span>
+    <span class="htag">📊 Session Protocols</span>
+    <span class="htag">🛠 Fault Diagnosis</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('ball',this)">Ball Data</button>
+  <button class="tab" onclick="show('club',this)">Club Data</button>
+  <button class="tab" onclick="show('flight',this)">Flight Data</button>
+  <button class="tab" onclick="show('consistency',this)">Consistency</button>
+  <button class="tab" onclick="show('combos',this)">Key Combos</button>
+  <button class="tab" onclick="show('dplane',this)">D-Plane</button>
+  <button class="tab" onclick="show('benchmarks',this)">Benchmarks</button>
+  <button class="tab" onclick="show('diagnosis',this)">Fault Finder</button>
+  <button class="tab" onclick="show('sessions',this)">Sessions</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Data Hierarchy</h2>
+  <p class="sec-desc">The Mevo Gen2 Pro Package generates 20 distinct data points. Understanding the hierarchy — which data drives which — is the foundation of intelligent analysis.</p>
+
+  <div class="alert alert-gold">
+    <span class="alert-icon">⚡</span>
+    <div class="alert-body"><strong>The Core Principle.</strong> The Mevo does not tell you what your swing looks like — it tells you what your swing produces. Ball data is the outcome. Club data is the cause. Always diagnose with club data, validate with ball data.</div>
+  </div>
+
+  <span class="badge badge-teal">📊 The Three Data Layers</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">Layer 1 — Impact Efficiency</span>
+    <h3>Was the strike efficient?</h3>
+    <p>Ball Speed, Club Speed, Smash Factor, Dynamic Loft, Spin Loft, Low Point. These tell you whether the club delivered energy to the ball efficiently at the moment of contact.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag gold">Layer 2 — Directional Control</span>
+    <h3>Where did the ball start and curve?</h3>
+    <p>Face Angle, Club Path, Face-to-Path, Attack Angle, Launch Direction, Spin Axis, Curve. These tell you everything about the D-Plane — the physics governing ball direction and curvature.</p>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag rust">Layer 3 — Flight Characteristics</span>
+    <h3>Did the ball fly optimally?</h3>
+    <p>Launch Angle, Spin Rate, Apex Height, Carry Distance, Total Distance. These are the output of Layers 1 and 2 — the evidence that your impact and direction numbers are producing the correct flight.</p>
+  </div>
+
+  <span class="badge badge-gold">🗺 The 20 Data Points — Master Map</span>
+  <table class="tbl">
+    <thead><tr><th>Data Point</th><th>Category</th><th>Driver</th><th>Irons</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ball Speed</strong></td><td>Ball</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Club Speed</strong></td><td>Ball</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Smash Factor</strong></td><td>Ball</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Carry Distance</strong></td><td>Ball</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Total Distance</strong></td><td>Ball</td><td class="warn">Secondary</td><td class="warn">Secondary</td></tr>
+      <tr><td><strong>Launch Angle</strong></td><td>Flight</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Launch Direction</strong></td><td>Flight</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Spin Rate</strong></td><td>Flight</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Spin Axis</strong></td><td>Flight</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Apex Height</strong></td><td>Flight</td><td class="warn">Useful</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Curve</strong></td><td>Flight</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Attack Angle</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Club Path</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Face Angle</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Face to Path (F2P)</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Dynamic Loft</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Spin Loft</strong></td><td>Club ★ Pro</td><td class="good">Critical</td><td class="warn">Useful</td></tr>
+      <tr><td><strong>Low Point</strong></td><td>Club ★ Pro</td><td class="warn">N/A</td><td class="good">Critical</td></tr>
+      <tr><td><strong>Vert. Swing Plane</strong></td><td>Club ★ Pro</td><td class="warn">Useful</td><td class="warn">Useful</td></tr>
+      <tr><td><strong>Horiz. Swing Plane</strong></td><td>Club ★ Pro</td><td class="warn">Useful</td><td class="warn">Useful</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- BALL DATA -->
+<div class="sec" id="ball">
+  <h2 class="sec-title">Ball Data</h2>
+  <p class="sec-desc">Five data points measuring what happened to the ball at and after impact. These are your efficiency and distance numbers.</p>
+
+  <span class="badge badge-gold">① Ball Speed</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Ball Speed</span>
+    <h3>The Speed the Ball Left the Clubface</h3>
+    <p>The single most important distance metric — more than club speed. It is the combined result of club speed, centredness of strike, and dynamic loft efficiency. A ball struck off-centre loses 3–8% ball speed even with identical club speed.</p>
+    <div class="formula">
+      <div class="formula-lbl">Ball Speed Benchmark</div>
+      <div class="formula-main">Driver:  Scratch = 160–175 mph · 10 HCP = 140–155 mph
+7-Iron:  Scratch = 120–130 mph · 10 HCP = 105–118 mph
+PW:      Scratch = 100–108 mph · 10 HCP = 88–98 mph</div>
+      <div class="formula-note">Ball speed × 2.5 = approximate carry distance (driver). If your ball speed is low, determine whether it is a speed problem (club speed low) or a contact problem (smash factor low) before choosing a fix.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">② Club Speed (Clubhead Speed)</span>
+  <div class="card card-teal">
+    <span class="card-tag">Club Speed</span>
+    <h3>The Raw Speed of the Clubhead at Impact</h3>
+    <p>Your engine size — your potential ceiling for distance. Club speed is not fixed; it can be trained. Increasing club speed by 5% with the Rypstick yields approximately 10–15 yards of driver carry, assuming smash factor is maintained.</p>
+    <div class="formula">
+      <div class="formula-lbl">Club Speed Benchmark</div>
+      <div class="formula-main">Driver: Scratch = 108–118 mph · 10 HCP = 93–103 mph
+7-Iron: Scratch = 88–96 mph  · 10 HCP = 78–87 mph</div>
+      <div class="formula-note">Track club speed weekly. Any drop of more than 3% vs. your average = fatigue, injury, or a mechanical change costing speed. Investigate immediately before continuing speed training.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-rust">③ Smash Factor</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Smash Factor</span>
+    <h3>Contact Efficiency — The Most Underrated Metric</h3>
+    <p>Smash Factor = Ball Speed ÷ Club Speed. It measures how efficiently the club transferred energy to the ball. The physical maximum for a legal driver is approximately 1.50. Smash factor is a pure contact quality metric — it rises when you hit the sweet spot and drops when you miss it.</p>
+    <div class="formula">
+      <div class="formula-lbl">Smash Factor Targets</div>
+      <div class="formula-main">Driver: Tour = 1.48–1.50 · Scratch = 1.46–1.49 · 10 HCP = 1.42–1.45
+7-Iron: Tour = 1.40–1.42 · Scratch = 1.38–1.41 · 10 HCP = 1.35–1.39
+PW:     Tour = 1.36–1.38 · Scratch = 1.34–1.37 · 10 HCP = 1.30–1.34</div>
+      <div class="formula-note">Below 1.43 driver consistently = contact quality problem. Below 1.35 irons = significant off-centre contact. Critical insight: a player with 105 mph and 1.40 smash (147 mph ball speed) will be out-driven by a player with 100 mph and 1.48 smash (148 mph ball speed) — with less effort.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">④⑤ Carry Distance and Total Distance</span>
+  <div class="card card-lime">
+    <span class="card-tag lime">Carry vs. Total</span>
+    <h3>Why Carry Is the Only Number That Matters for Club Selection</h3>
+    <p>Carry is where the ball lands. Total includes roll. On a mat or hard fairway, roll can add 15–30 yards, making total distance misleading for course management. Use carry exclusively for your personal distance matrix. Your mean carry — not your best carry — is your real distance. Most amateurs overestimate by 10–15 yards per club.</p>
+  </div>
+</div>
+
+<!-- CLUB DATA -->
+<div class="sec" id="club">
+  <h2 class="sec-title">Club Data — Pro Package</h2>
+  <p class="sec-desc">The diagnostic engine of the Mevo Gen2. These eight metrics tell you exactly what the club was doing at impact — the direct cause behind every ball flight result. Exclusive to the Pro Package.</p>
+
+  <div class="alert alert-teal">
+    <span class="alert-icon">🔬</span>
+    <div class="alert-body"><strong>Pro Package Exclusive.</strong> Attack Angle, Club Path, Face Angle, Face-to-Path, Dynamic Loft, Spin Loft, Low Point, and Swing Plane are only available with the Professional package. This is where diagnostic precision separates the Mevo Gen2 from basic launch monitors.</div>
+  </div>
+
+  <span class="badge badge-gold">⑥ Attack Angle (AoA)</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Attack Angle</span>
+    <h3>The Vertical Direction the Clubhead Was Travelling at Impact</h3>
+    <p>Measures whether the club was moving downward (negative) or upward (positive) at the moment of impact. This single number has enormous consequences for both distance (driver) and spin (irons).</p>
+    <div class="formula">
+      <div class="formula-lbl">Attack Angle Targets</div>
+      <div class="formula-main">Driver (optimal):         +3° to +5° ascending  = 15–25 extra yards
+Driver (typical amateur): −1° to −3° descending = distance lost
+Irons (optimal):          −3° to −5° descending = compression + spin
+Irons (too steep):        −8° to −12°           = over-spin, ballooning</div>
+      <div class="formula-note">For driver: every 1° more ascending attack angle = approximately 2–4 yards additional carry with no change in club speed. Fixing attack angle alone is the most common "free yards" opportunity in amateur golf.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">⑦ Club Path</span>
+  <div class="card card-teal">
+    <span class="card-tag">Club Path</span>
+    <h3>The Horizontal Direction the Clubhead Was Travelling at Impact</h3>
+    <p>The direction the clubhead was moving through impact, relative to the target line. Negative = out-to-in (fade/slice path). Positive = in-to-out (draw/hook path). Club path controls how much the ball curves — not where it starts. Do not confuse path with start direction.</p>
+    <div class="formula">
+      <div class="formula-lbl">Club Path Reference</div>
+      <div class="formula-main">−6° to −10°  = Out-to-in (classic slicer path)
+−1° to −4°   = Mild out-to-in (consistent fade pattern)
+ 0° to +1°   = Neutral path (tour standard)
++2° to +4°   = In-to-out (draw pattern)
++6° to +10°  = Severely in-to-out (push / hook)</div>
+      <div class="formula-note">Club path alone tells you nothing about shot shape. You need Face-to-Path to determine curve. A -8° path with a -6° face angle (only 2° F2P) produces a gentle fade, not the slice you might expect from the path number alone.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-rust">⑧ Face Angle</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Face Angle</span>
+    <h3>Where the Clubface Was Pointing at Impact — Controls 83% of Start Direction</h3>
+    <p>Measures where the face was pointing relative to the target line. Negative = closed (pointing left). Positive = open (pointing right). Face angle is the most powerful number in your data set — it controls approximately 83% of the ball's initial starting direction.</p>
+    <div class="formula">
+      <div class="formula-lbl">Face Angle Impact on Start Direction</div>
+      <div class="formula-main">Ball start direction ≈ Face Angle × 0.83
+
+Face +4° open   → ball starts ~+3.3° right of target
+Face −3° closed → ball starts ~−2.5° left of target</div>
+      <div class="formula-note">At 150 yards, 1° of face angle = approximately 7 feet of lateral movement at the target. HackMotion lead wrist angle data directly correlates with face angle — a 20° wrist angle difference produces 12–15° face angle difference at impact.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-purple">⑨ Face to Path (F2P) — THE Key Metric</span>
+  <div class="card card-purple">
+    <span class="card-tag purple">Face to Path — The Curve Engine</span>
+    <h3>The Relationship Between Face and Path — Most Important Single Combination</h3>
+    <p>F2P = Face Angle minus Club Path. It is the direct input to spin axis and ball curvature. F2P controls how much the ball curves, not where it starts. This is the number to obsess over.</p>
+    <div class="formula">
+      <div class="formula-lbl">F2P Reference Chart</div>
+      <div class="formula-main">F2P  0°         = No curve
+F2P +1° to +2°  = Gentle fade (tour-quality)
+F2P +3° to +5°  = Noticeable fade
+F2P +6° to +8°  = Strong fade / slice territory
+F2P −1° to −3°  = Reliable draw
+F2P −4° to −6°  = Strong draw / hook territory</div>
+      <div class="formula-note">Positive F2P = face open to path = fade/slice. Negative F2P = face closed to path = draw/hook. You can swing dramatically out-to-in (negative path) and still hit a draw — if your face is closed enough to that path. Fix F2P, fix shot shape.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-blue">⑩ Dynamic Loft</span>
+  <div class="card card-blue">
+    <span class="card-tag blue">Dynamic Loft</span>
+    <h3>The Actual Loft Delivered at Impact — Not the Stamped Loft</h3>
+    <p>Dynamic loft is the real loft of the clubface at impact, changed by shaft lean, wrist angle, and attack angle. It is the primary driver of launch angle and contributes significantly to spin rate. For irons, dynamic loft should always be less than stamped loft — this is what forward shaft lean achieves.</p>
+    <div class="formula">
+      <div class="formula-lbl">Dynamic Loft Targets</div>
+      <div class="formula-main">Driver: Optimal 12–15° · Too high >18° (ballooning) · Too low <10°
+7-Iron: Optimal 18–22°  (stamped loft ~32°; lean reduces it)
+PW:     Optimal 30–36°  (stamped loft ~44–48°)</div>
+      <div class="formula-note">If your dynamic loft equals your stamped loft on irons, you have no forward shaft lean — a significant power and trajectory problem indicating an early release or scoop at impact.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">⑪ Spin Loft</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Spin Loft</span>
+    <h3>The Efficiency of the Glancing Blow</h3>
+    <p>Spin Loft = Dynamic Loft minus Attack Angle. It represents the angle between the direction the club is travelling and the direction the face is pointing. Higher spin loft = more glancing blow = less ball speed, more spin. Lower is more efficient for driver distance; higher creates the spin needed for wedge control.</p>
+    <div class="formula">
+      <div class="formula-lbl">Spin Loft Targets</div>
+      <div class="formula-main">Driver (efficient): 12–16° · Above 20° = speed lost to spin
+7-Iron (balanced):  40–47°
+PW (short game):    50–58° · Higher = more spin, more control</div>
+      <div class="formula-note">For driver distance: reduce spin loft by improving attack angle (more ascending) and reducing dynamic loft. This is the primary driver distance optimisation lever — more impactful than shaft or ball changes.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">⑫ Low Point</span>
+  <div class="card card-lime">
+    <span class="card-tag lime">Low Point</span>
+    <h3>Where the Swing Arc Bottomed Out Relative to the Ball</h3>
+    <p>Measures where the bottom of the club's arc occurred relative to the ball position, in inches. Positive = ahead of (in front of) the ball — correct for irons. Negative = behind the ball — the primary cause of fat shots. Low point is the definitive diagnostic for fat/thin contact.</p>
+    <div class="formula">
+      <div class="formula-lbl">Low Point Standards</div>
+      <div class="formula-main">Tour (irons):  +1.0″ to +3.0″ ahead of ball
+Scratch:       +0.5″ to +2.0″ ahead of ball
+10 HCP:        −0.5″ to +1.5″ (inconsistent)
+
+Fat shot:  Low point −2″ or more (ground before ball)
+Thin shot: Low point too far ahead (ball below the arc)</div>
+      <div class="formula-note">Low point directly reflects weight transfer at impact. If low point is consistently behind the ball, weight is staying on the trail side. The TRS Slider training aid is specifically designed to fix this.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">⑬⑭ Vertical and Horizontal Swing Plane</span>
+  <div class="card card-teal">
+    <span class="card-tag">Swing Plane</span>
+    <h3>The Plane Angles of the Swing Arc</h3>
+    <div class="two-col" style="margin-top:10px;">
+      <div class="card" style="margin-bottom:0;">
+        <span class="card-tag">Vertical Plane</span>
+        <h3 style="font-size:.85rem;">Steep vs. Flat</h3>
+        <p style="font-size:12px;">Driver: 45–50° typical. Steep (&gt;55°) = over-the-top tendency. Flat (&lt;40°) = too inside. 7-iron: 55–62° optimal. Steep = fat/pull; flat = push/block.</p>
+      </div>
+      <div class="card card-gold" style="margin-bottom:0;">
+        <span class="card-tag gold">Horizontal Plane</span>
+        <h3 style="font-size:.85rem;">In-to-Out / Out-to-In</h3>
+        <p style="font-size:12px;">Closely related to club path. Confirms whether the swing is attacking from inside or outside. Use alongside club path — they should agree. Significant divergence indicates swing arc inconsistency.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FLIGHT DATA -->
+<div class="sec" id="flight">
+  <h2 class="sec-title">Flight Data</h2>
+  <p class="sec-desc">Six data points measuring the ball's behaviour in the air. These are the visible outputs of your impact and directional data.</p>
+
+  <span class="badge badge-gold">⑮ Launch Angle</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Launch Angle (Vertical)</span>
+    <h3>The Angle the Ball Left the Ground</h3>
+    <p>Launch angle is primarily determined by dynamic loft (minus approximately 30% due to friction). Most amateur golfers under-launch their driver significantly, costing carry distance. Optimal launch angle is speed-dependent — slower swingers need higher launch to maximise carry.</p>
+    <div class="formula">
+      <div class="formula-lbl">Launch Angle Targets by Club Speed</div>
+      <div class="formula-main">Driver (93–100 mph): Optimal Launch 14–16°, Spin 2,500–3,000 rpm
+Driver (100–108 mph): Optimal Launch 12–15°, Spin 2,200–2,700 rpm
+Driver (>108 mph): Optimal Launch 10–13°, Spin 1,900–2,400 rpm
+7-Iron: Optimal Launch 16–20°
+PW:     Optimal Launch 24–28°</div>
+      <div class="formula-note">Under-launching driver is the most common free-distance opportunity in amateur golf. Adjusting ball position and attack angle to move from 11° to 14° launch (with same spin reduction) can add 15–20 yards — no swing change required.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">⑯ Launch Direction (Horizontal)</span>
+  <div class="card card-teal">
+    <span class="card-tag">Launch Direction</span>
+    <h3>The Initial Horizontal Angle the Ball Started On</h3>
+    <p>The horizontal angle the ball started on — negative = left, positive = right. Should closely match your face angle calculation (83% of face angle). Use this to validate face angle data. If launch direction consistently diverges from the 83% prediction, suspect a setup aim problem or unusual gear effect from off-centre contact.</p>
+    <div class="formula">
+      <div class="formula-lbl">Validation Formula</div>
+      <div class="formula-main">Expected Launch Dir = Face Angle × 0.83
+
+Face angle +4° → expected launch direction ~+3.3°
+If actual = +1.5°, face angle data may be read at different timing</div>
+    </div>
+  </div>
+
+  <span class="badge badge-rust">⑰ Spin Rate</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Spin Rate</span>
+    <h3>Total Backspin — Trajectory, Distance, and Control</h3>
+    <p>Spin rate in rpm reflects total backspin. High spin creates height and stopping power — but costs distance when excessive. Low spin = penetrating flight with roll, but can balloon in wind or fly too low to carry hazards.</p>
+    <div class="formula">
+      <div class="formula-lbl">Spin Rate Targets by Club</div>
+      <div class="formula-main">Driver:   Optimal 2,000–2,700 rpm · Over 3,000 = too high · Under 1,800 = too low
+3-Wood:   Optimal 3,000–4,000 rpm
+5-Iron:   Optimal 5,000–6,000 rpm
+7-Iron:   Optimal 6,500–7,500 rpm
+PW full:  Optimal 8,500–9,500 rpm
+SW full:  Optimal 9,500–11,000 rpm</div>
+      <div class="formula-note">Driver over 3,000 rpm = too much dynamic loft and/or descending attack angle. Fix attack angle first. Driver spin under 2,000 = very fast swing speed (optimal) or potential contact mis-read — verify with smash factor.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-purple">⑱ Spin Axis</span>
+  <div class="card card-purple">
+    <span class="card-tag purple">Spin Axis</span>
+    <h3>The Tilt of the Spin — Why the Ball Curves</h3>
+    <p>The tilt of the ball's rotational axis. A tilted axis creates gyroscopic lift on one side (Magnus effect), producing curve. Positive = right tilt = fade/slice. Negative = left tilt = draw/hook. Spin axis is the visual output of Face-to-Path. Never try to fix spin axis directly — fix Face-to-Path, and spin axis corrects automatically.</p>
+    <div class="formula">
+      <div class="formula-lbl">Spin Axis Reference</div>
+      <div class="formula-main">±3°      = Minimal curve (straight shot)
+±5°–8°   = Clear shot shape (draw or fade)
+±10°–15° = Strong shape (requires aim adjustment)
+±20°+    = Hook or slice (reliability problem)</div>
+    </div>
+  </div>
+
+  <span class="badge badge-blue">⑲ Apex Height</span>
+  <div class="card card-blue">
+    <span class="card-tag blue">Apex Height</span>
+    <h3>The Peak Height the Ball Reached</h3>
+    <p>Maximum height in feet. For irons, a key scoring metric — low apex means the ball won't stop on firm greens. Very high apex on driver means excess spin. Apex is the combined product of launch angle and spin rate.</p>
+    <div class="formula">
+      <div class="formula-lbl">Apex Height Reference</div>
+      <div class="formula-main">Driver: Tour = 85–110 ft · Too low <60 ft · Too high >130 ft
+7-Iron: Tour = 80–100 ft · 10 HCP = 60–80 ft
+PW:     Tour = 100–120 ft · 10 HCP = 70–90 ft</div>
+      <div class="formula-note">Very high apex relative to distance = excess spin. This pairs with high dynamic loft and steep attack angle. Address those root causes — do not chase apex directly.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">⑳ Curve</span>
+  <div class="card card-lime">
+    <span class="card-tag lime">Curve</span>
+    <h3>Total Lateral Movement of the Ball in Flight (Yards)</h3>
+    <p>Total lateral movement in flight, in yards. Right = fade/slice. Left = draw/hook. This converts spin axis into a number your course management brain can use directly. A consistent 5–10 yards of same-direction curve is the hallmark of a reliable ball striker and a genuine scoring asset.</p>
+    <div class="formula">
+      <div class="formula-lbl">Curve Reference (Driver, ~250 yd carry)</div>
+      <div class="formula-main">0–5 yds    = Straight (less reliable in wind)
+5–15 yds   = Workable shape (draw or fade — ideal)
+15–30 yds  = Strong shape (requires deliberate aim adjustment)
+30+ yds    = Hook or slice (reliability and scoring problem)</div>
+    </div>
+  </div>
+</div>
+
+<!-- CONSISTENCY -->
+<div class="sec" id="consistency">
+  <h2 class="sec-title">Consistency Metrics</h2>
+  <p class="sec-desc">Beyond single-shot readings, the Pro Package tracks statistical consistency across a session. These are often more revealing than any individual shot number.</p>
+
+  <div class="alert alert-gold">
+    <span class="alert-icon">📊</span>
+    <div class="alert-body"><strong>The Key Insight.</strong> A single shot is noise. Ten shots is a pattern. Fifty shots is a trend. Consistency metrics (standard deviations) separate genuine ball-strikers from those who got lucky. A player with 165-yard mean carry and ±6 std dev is more dangerous than a player with 170-yard mean and ±18.</div>
+  </div>
+
+  <span class="badge badge-teal">Carry Standard Deviation</span>
+  <div class="card card-teal">
+    <span class="card-tag">Carry Std Dev — Distance Consistency</span>
+    <h3>How Tight Is Your Strike?</h3>
+    <table class="tbl">
+      <thead><tr><th>Carry Std Dev</th><th>Rating</th><th>What It Means</th></tr></thead>
+      <tbody>
+        <tr><td class="good">&lt; 6 yds</td><td class="good">Tour-level</td><td>Exceptional strike consistency. Carry is predictable for club selection.</td></tr>
+        <tr><td class="good">6–10 yds</td><td class="good">Scratch standard</td><td>Strong contact quality. Minor variations from off-centre misses.</td></tr>
+        <tr><td class="warn">10–15 yds</td><td class="warn">Acceptable</td><td>Noticeable inconsistency. Review smash factor variance shot to shot.</td></tr>
+        <tr><td class="bad">&gt; 15 yds</td><td class="bad">Problem</td><td>Significant contact issue. TRS Ball + Mevo contact mapping session required immediately.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">Lateral Direction Standard Deviation</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Lateral Std Dev — Dispersion Width</span>
+    <h3>Your Real Shot Dispersion on the Course</h3>
+    <table class="tbl">
+      <thead><tr><th>Lateral Std Dev</th><th>At 150 yds</th><th>Rating</th></tr></thead>
+      <tbody>
+        <tr><td class="good">&lt; 3°</td><td class="good">±8 yds L/R</td><td class="good">Tour-level dispersion</td></tr>
+        <tr><td class="good">3–5°</td><td class="good">±8–13 yds</td><td class="good">Scratch standard</td></tr>
+        <tr><td class="warn">5–8°</td><td class="warn">±13–21 yds</td><td class="warn">10 HCP typical — significant improvement available</td></tr>
+        <tr><td class="bad">&gt; 8°</td><td class="bad">&gt; 21 yds</td><td class="bad">High face/path inconsistency. Major scoring liability.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span class="badge badge-rust">Smash Factor Standard Deviation</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Smash Std Dev — Contact Location Consistency</span>
+    <h3>Are You Finding the Sweet Spot Reliably?</h3>
+    <table class="tbl">
+      <thead><tr><th>Smash Std Dev</th><th>Rating</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td class="good">&lt; 0.02</td><td class="good">Excellent</td><td>Contact location is highly consistent. No action needed.</td></tr>
+        <tr><td class="warn">0.02–0.04</td><td class="warn">Acceptable</td><td>Some face miss-hits occurring. Periodic TRS Ball check.</td></tr>
+        <tr><td class="bad">&gt; 0.05</td><td class="bad">Problem</td><td>Contact quality is inconsistent. TRS Ball session is immediate priority.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- KEY COMBOS -->
+<div class="sec" id="combos">
+  <h2 class="sec-title">Key Data Combinations</h2>
+  <p class="sec-desc">No single data point tells the full story. Expert analysis comes from reading combinations — the relationships between numbers that reveal the true cause of a shot pattern.</p>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">F2P</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">SPIN AXIS</span>
+      <span class="combo-name">Shot Shape Engine</span>
+      <span class="combo-priority p1">P1 — Critical</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Face-to-Path and Spin Axis are two measurements of the same phenomenon — the D-Plane. They should always correlate: positive F2P always produces positive (rightward-tilted) spin axis. This pair is your primary diagnostic for every directional problem.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">F2P +5° · Axis +14°</div><div class="ob-val">Strong fade. Face well open to path. Grip/wrist change required. Check HackMotion.</div></div>
+      <div class="outcome-box"><div class="ob-label">F2P −3° · Axis −8°</div><div class="ob-val">Reliable draw. Face slightly closed to path. Tour-quality shape. Protect it.</div></div>
+      <div class="outcome-box"><div class="ob-label">F2P 0° · Axis 0°</div><div class="ob-val">Dead straight. Rare. Inherently unstable in wind. Slight draw is preferred long-term.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">FACE</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">PATH</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">LAUNCH DIR</span>
+      <span class="combo-name">Full D-Plane Diagnosis</span>
+      <span class="combo-priority p1">P1 — Critical</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The complete shot diagnosis. Launch direction validates face angle (83% rule). F2P explains the curve. This combination eliminates all guesswork about what is causing a shot pattern.</p>
+    <div class="formula" style="margin-top:0;">
+      <div class="formula-lbl">Example Full Diagnosis</div>
+      <div class="formula-main">Face: +3° · Path: −5° · F2P: +8° (large fade)
+Launch Dir: ~+2.5° (confirms face dominant = starts right)
+Ball: starts right, fades further right
+Fix: Close face to path. Path change alone will not fix this.</div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">AoA</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">DYN LOFT</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">SPIN RATE</span>
+      <span class="combo-name">Spin Generator Diagnosis</span>
+      <span class="combo-priority p1">P1 — Critical</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">Spin rate is primarily a product of Spin Loft (Dynamic Loft minus Attack Angle). This combination tells you exactly which variable to adjust when spin is too high or too low.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">AoA −4° · DL 18° · Spin 3,400 (Driver)</div><div class="ob-val">Spin Loft = 22°. Excessive. Fix: ascending AoA. Move ball forward, tee higher.</div></div>
+      <div class="outcome-box"><div class="ob-label">AoA +4° · DL 13° · Spin 2,300 (Driver)</div><div class="ob-val">Spin Loft = 9°. Optimal. Ascending attack + controlled loft = efficient driver.</div></div>
+      <div class="outcome-box"><div class="ob-label">AoA −8° · DL 30° · Spin 9,500 (7i)</div><div class="ob-val">Very steep. Spin Loft = 38°. Ball balloons. Flatten attack angle, maintain shaft lean.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">CLUB SPD</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">SMASH</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">BALL SPD</span>
+      <span class="combo-name">Distance Efficiency Audit</span>
+      <span class="combo-priority p2">P2 — Important</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">This trio tells you whether your distance problem is a speed problem or a contact quality problem — two completely different solutions requiring completely different training responses.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">CHS 95 · Smash 1.44 · Ball 137</div><div class="ob-val">Speed needs work (Rypstick). Contact acceptable. Speed training is the lever.</div></div>
+      <div class="outcome-box"><div class="ob-label">CHS 105 · Smash 1.40 · Ball 147</div><div class="ob-val">Plenty of speed — contact losing 8 mph. TRS Ball + contact drills priority.</div></div>
+      <div class="outcome-box"><div class="ob-label">CHS 105 · Smash 1.48 · Ball 155</div><div class="ob-val">Excellent efficiency. Both speed and contact optimised. Focus on direction.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">LOW PT</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">SMASH</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">AoA</span>
+      <span class="combo-name">Iron Contact Diagnosis</span>
+      <span class="combo-priority p2">P2 — Important</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">For iron play, this combination identifies whether contact issues are caused by low point position (arc problem) or angle/plane issues. The fix is fundamentally different for each.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">Low Pt −1.5″ · Smash 1.34 · AoA −2°</div><div class="ob-val">Arc behind ball. Too shallow. Move weight forward. Ball position back slightly.</div></div>
+      <div class="outcome-box"><div class="ob-label">Low Pt +2.0″ · Smash 1.36 · AoA −9°</div><div class="ob-val">Very steep. Good low point but thin contact likely. Shallow the attack angle.</div></div>
+      <div class="outcome-box"><div class="ob-label">Low Pt +1.5″ · Smash 1.41 · AoA −4°</div><div class="ob-val">Tour quality. Good arc, appropriate descent, efficient contact. Protect this.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <span class="combo-pill">LAUNCH</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">SPIN</span>
+      <span class="combo-plus">+</span>
+      <span class="combo-pill">APEX</span>
+      <span class="combo-name">Trajectory Optimisation</span>
+      <span class="combo-priority p3">P3 — Useful</span>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">These three define the full trajectory shape and reveal whether distance is being lost to sub-optimal flight. For driver: high launch + low spin = maximum carry. For scoring irons: high apex = maximum stopping power.</p>
+    <table class="tbl" style="margin-top:0;">
+      <thead><tr><th>Launch</th><th>Spin</th><th>Apex</th><th>Outcome</th></tr></thead>
+      <tbody>
+        <tr><td>9°</td><td>1,800</td><td>50 ft</td><td class="bad">Too low. Knuckleball in wind. Contact / smash check needed.</td></tr>
+        <tr><td>13°</td><td>3,400</td><td>130 ft</td><td class="warn">Balloons. Over-spin from steep AoA. Attack angle fix needed.</td></tr>
+        <tr><td>14°</td><td>2,500</td><td>95 ft</td><td class="good">Optimal. High launch, controlled spin — maximum carry.</td></tr>
+        <tr><td>16°</td><td>2,200</td><td>85 ft</td><td class="good">Excellent for fast swings. Penetrating — highly wind resistant.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- D-PLANE -->
+<div class="sec" id="dplane">
+  <h2 class="sec-title">The D-Plane — Complete Framework</h2>
+  <p class="sec-desc">D-Plane (Definitive Plane) is the physics model that explains every ball flight. Understanding it deeply transforms how you read every Mevo session.</p>
+
+  <div class="alert alert-teal">
+    <span class="alert-icon">🔬</span>
+    <div class="alert-body"><strong>The D-Plane superseded the old ball flight laws.</strong> The old model said "path determines start direction, face determines curve." Modern FlightScope / TrackMan research proved the opposite: face controls ~83% of start direction; path controls curve via the face-to-path relationship. This changes everything about how you fix ball flight.</div>
+  </div>
+
+  <div class="formula">
+    <div class="formula-lbl">The Three D-Plane Laws</div>
+    <div class="formula-main">1. Start Direction ≈ (Face Angle × 0.83) + (Club Path × 0.17)
+2. Curve = Proportional to Face-to-Path (F = Face Angle − Club Path)
+3. Spin Axis ≈ F2P × 2.5–3.0 (approximate degree conversion)
+
+Positive F2P = Open face to path = Right axis tilt = FADE / SLICE
+Negative F2P = Closed face to path = Left axis tilt = DRAW / HOOK</div>
+    <div class="formula-note">Key practical insight: you can swing dramatically out-to-in and hit a draw — if your face is sufficiently closed to that path. Fix the face first. Path adjustment refines shape, not start direction.</div>
+  </div>
+
+  <span class="badge badge-gold">9-Shot Shape Matrix</span>
+  <table class="tbl">
+    <thead><tr><th>Face vs. Target</th><th>Path vs. Target</th><th>F2P</th><th>Ball Flight</th></tr></thead>
+    <tbody>
+      <tr><td>Open (+4°)</td><td>Out-to-in (−5°)</td><td>+9° (large)</td><td class="bad">Push-slice: starts right, curves hard right</td></tr>
+      <tr><td>Open (+2°)</td><td>Slightly O-to-I (−2°)</td><td>+4° (moderate)</td><td class="warn">Fade: starts slightly right, curves right</td></tr>
+      <tr><td>Open (+1°)</td><td>Neutral (0°)</td><td>+1° (small)</td><td class="good">Gentle fade: tour-quality controlled shape</td></tr>
+      <tr><td>Square (0°)</td><td>Square (0°)</td><td>0°</td><td class="good">Straight: rare and unstable in wind</td></tr>
+      <tr><td>Closed (−1°)</td><td>In-to-out (+2°)</td><td>−3° (small)</td><td class="good">Reliable draw: preferred stock shot</td></tr>
+      <tr><td>Closed (−3°)</td><td>In-to-out (+3°)</td><td>−6° (large)</td><td class="warn">Strong draw: requires deliberate aim left</td></tr>
+      <tr><td>Closed (−4°)</td><td>In-to-out (+5°)</td><td>−9° (very large)</td><td class="bad">Hook: uncontrollable left curve</td></tr>
+      <tr><td>Closed (−4°)</td><td>Out-to-in (−6°)</td><td>+2° (small)</td><td class="warn">Pull-fade: starts left (face), fades right (path)</td></tr>
+      <tr><td>Open (+5°)</td><td>In-to-out (+4°)</td><td>+1° (small)</td><td class="warn">Push-straight: starts right (face), minimal curve</td></tr>
+    </tbody>
+  </table>
+
+  <span class="badge badge-rust" style="margin-top:16px;">D-Plane Fix Protocol</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Correct Order of Operations</span>
+    <h3>How to Fix Ball Flight Using Mevo Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify start direction error.</strong> Check Launch Direction and Face Angle. Ball starting wrong = face problem. If starting right, face is open. Fix the face first — grip, wrist angle via HackMotion.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify curve error.</strong> Check F2P and Spin Axis. Too much curve = F2P too large. Reduce F2P by closing face to path, changing path, or both.</div></li>
+      <li><span class="step-n">3</span><div><strong>Do not chase path alone.</strong> The most common coaching error: player slices, teacher says "swing more right" (path only). Path changes shift start direction more than they reduce curve. Fix face first, then path.</div></li>
+      <li><span class="step-n">4</span><div><strong>Validate with Spin Axis.</strong> After any change, spin axis must move toward 0. If spin axis didn't budge after a face change, the change has not reached impact — continue the intervention.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- BENCHMARKS -->
+<div class="sec" id="benchmarks">
+  <h2 class="sec-title">Elite Benchmarks</h2>
+  <p class="sec-desc">Tour, scratch, and 10-handicap benchmarks for every key metric. Use as a reference framework — not a ceiling — when evaluating your data against your improvement trajectory.</p>
+
+  <span class="badge badge-gold">Driver Benchmarks</span>
+  <table class="tbl">
+    <thead><tr><th>Metric</th><th class="good">Tour</th><th>Scratch</th><th class="warn">10 HCP</th><th>Typical Amateur</th></tr></thead>
+    <tbody>
+      <tr><td>Club Speed</td><td class="good">113 mph</td><td>108 mph</td><td class="warn">96 mph</td><td>88 mph</td></tr>
+      <tr><td>Ball Speed</td><td class="good">167 mph</td><td>160 mph</td><td class="warn">141 mph</td><td>128 mph</td></tr>
+      <tr><td>Smash Factor</td><td class="good">1.48–1.49</td><td>1.46–1.48</td><td class="warn">1.42–1.45</td><td>1.37–1.41</td></tr>
+      <tr><td>Launch Angle</td><td class="good">10.9–14°</td><td>13–15°</td><td class="warn">11–13°</td><td>9–12°</td></tr>
+      <tr><td>Spin Rate</td><td class="good">2,650 rpm</td><td>2,500 rpm</td><td class="warn">3,100 rpm</td><td>3,600 rpm</td></tr>
+      <tr><td>Attack Angle</td><td class="good">+1.3°</td><td>+2–3°</td><td class="warn">−1°</td><td>−3°</td></tr>
+      <tr><td>Apex Height</td><td class="good">102 ft</td><td>95 ft</td><td class="warn">78 ft</td><td>65 ft</td></tr>
+      <tr><td>Carry Distance</td><td class="good">270–295 yds</td><td>255–275 yds</td><td class="warn">225–245 yds</td><td>195–215 yds</td></tr>
+      <tr><td>Face to Path</td><td class="good">±1–2°</td><td>±2–3°</td><td class="warn">±4–6°</td><td>±8–12°</td></tr>
+      <tr><td>Spin Axis</td><td class="good">±3–5°</td><td>±5–8°</td><td class="warn">±10–14°</td><td>±15–22°</td></tr>
+    </tbody>
+  </table>
+
+  <span class="badge badge-teal" style="margin-top:14px;">7-Iron Benchmarks</span>
+  <table class="tbl">
+    <thead><tr><th>Metric</th><th class="good">Tour</th><th>Scratch</th><th class="warn">10 HCP</th></tr></thead>
+    <tbody>
+      <tr><td>Club Speed</td><td class="good">92 mph</td><td>87 mph</td><td class="warn">80 mph</td></tr>
+      <tr><td>Ball Speed</td><td class="good">128 mph</td><td>121 mph</td><td class="warn">111 mph</td></tr>
+      <tr><td>Smash Factor</td><td class="good">1.40–1.42</td><td>1.38–1.41</td><td class="warn">1.35–1.38</td></tr>
+      <tr><td>Launch Angle</td><td class="good">16–18°</td><td>17–19°</td><td class="warn">15–17°</td></tr>
+      <tr><td>Spin Rate</td><td class="good">7,100 rpm</td><td>7,000 rpm</td><td class="warn">7,500 rpm</td></tr>
+      <tr><td>Attack Angle</td><td class="good">−4.1°</td><td>−3° to −5°</td><td class="warn">−5° to −8°</td></tr>
+      <tr><td>Dynamic Loft</td><td class="good">20.4°</td><td>21–23°</td><td class="warn">24–28°</td></tr>
+      <tr><td>Low Point</td><td class="good">+1.5–2.5″</td><td>+1.0–2.0″</td><td class="warn">0–+1.0″</td></tr>
+      <tr><td>Carry Distance</td><td class="good">175–185 yds</td><td>165–175 yds</td><td class="warn">148–160 yds</td></tr>
+      <tr><td>Carry Std Dev</td><td class="good">±3 yds</td><td>±5 yds</td><td class="warn">±9 yds</td></tr>
+    </tbody>
+  </table>
+
+  <span class="badge badge-rust" style="margin-top:14px;">Pitching Wedge Benchmarks</span>
+  <table class="tbl">
+    <thead><tr><th>Metric</th><th class="good">Tour</th><th>Scratch</th><th class="warn">10 HCP</th></tr></thead>
+    <tbody>
+      <tr><td>Spin Rate (full)</td><td class="good">9,200 rpm</td><td>8,800 rpm</td><td class="warn">7,500 rpm</td></tr>
+      <tr><td>Launch Angle</td><td class="good">26–30°</td><td>25–28°</td><td class="warn">22–26°</td></tr>
+      <tr><td>Dynamic Loft</td><td class="good">32–35°</td><td>34–37°</td><td class="warn">38–42°</td></tr>
+      <tr><td>Carry Std Dev</td><td class="good">±3 yds</td><td>±5 yds</td><td class="warn">±9 yds</td></tr>
+      <tr><td>Apex Height</td><td class="good">100–120 ft</td><td>90–110 ft</td><td class="warn">70–90 ft</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FAULT FINDER -->
+<div class="sec" id="diagnosis">
+  <h2 class="sec-title">Fault Finder</h2>
+  <p class="sec-desc">Start with the ball flight problem you observe. Work through the diagnostic chain to the root cause in your data. Never guess — let the numbers lead the diagnosis.</p>
+
+  <span class="badge badge-rust">🔴 Slice / Strong Fade</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Ball starts right, curves further right</span>
+    <h3>Root Cause Diagnosis</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check First</div><div class="dc-val" style="color:var(--rust);">Face Angle</div><div class="dc-note">Open face (+4° or more) = ball starts right. Face is 83% of start direction. Almost always the primary fault.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check Second</div><div class="dc-val" style="color:var(--gold);">Face to Path</div><div class="dc-note">Large positive F2P (+5°+) = excessive rightward curve. Close the face relative to path, not just relative to target.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check Third</div><div class="dc-val" style="color:var(--teal);">Club Path</div><div class="dc-note">Out-to-in path amplifies fade. But path alone does not cause a slice — F2P does. Fix face first, then path.</div></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);"><strong style="color:var(--white);">Fix sequence:</strong> Strengthen grip → check HackMotion wrist angle (reduce extension) → confirm face angle moves toward 0 or negative → F2P reduces → spin axis reduces → curve reduces.</p>
+  </div>
+
+  <span class="badge badge-gold">🟡 Distance Loss</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Shorter than you should be</span>
+    <h3>Three-Step Distance Diagnosis</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Step 1</div><div class="dc-val" style="color:var(--gold);">Smash Factor</div><div class="dc-note">Below 1.44 (driver)? Contact is the distance thief. No fitness or speed work will fix a contact problem.</div></div>
+      <div class="diag-cell"><div class="dc-label">Step 2</div><div class="dc-val" style="color:var(--gold);">Launch + Spin</div><div class="dc-note">Under-launching or over-spinning? Low launch + high spin = attack angle problem. Free yards available with no swing change.</div></div>
+      <div class="diag-cell"><div class="dc-label">Step 3</div><div class="dc-val" style="color:var(--gold);">Club Speed</div><div class="dc-note">If smash and trajectory are optimal but distance is still short, club speed is the ceiling. Rypstick protocol required.</div></div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">🔵 Fat / Heavy Iron Shots</span>
+  <div class="card card-teal">
+    <span class="card-tag">Hitting ground before the ball</span>
+    <h3>Arc and Weight Transfer Diagnosis</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Primary</div><div class="dc-val" style="color:var(--teal);">Low Point</div><div class="dc-note">Low point at 0″ or negative = arc bottoming behind the ball. Weight not transferring to lead side at impact.</div></div>
+      <div class="diag-cell"><div class="dc-label">Confirm</div><div class="dc-val" style="color:var(--teal);">Attack Angle</div><div class="dc-note">Fat + shallow AoA = weight hanging back. Fat + very steep AoA = ball too far forward. Different fixes for each.</div></div>
+      <div class="diag-cell"><div class="dc-label">Validate</div><div class="dc-val" style="color:var(--teal);">Smash Factor</div><div class="dc-note">Fat shots dramatically reduce smash factor (1.25–1.32). This confirms and quantifies the low point problem.</div></div>
+    </div>
+  </div>
+
+  <span class="badge badge-purple">🟣 Inconsistency — Different Ball Flight Every Shot</span>
+  <div class="card card-purple">
+    <span class="card-tag purple">Ball goes different places each swing</span>
+    <h3>Consistency Variance Diagnosis</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--purple);">Smash Std Dev</div><div class="dc-note">High smash variance (&gt;0.04) = contact location inconsistency. TRS Ball contact session is the immediate priority.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--purple);">F2P Variance</div><div class="dc-note">F2P varying shot-to-shot? Face angle is inconsistent. HackMotion wrist audit — you are releasing differently each swing.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--purple);">AoA Variance</div><div class="dc-note">Attack angle varying &gt;4° shot-to-shot? Swing arc is unreliable. Low point training with TRS Slider.</div></div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">🟢 High Spin on Driver — Ballooning</span>
+  <div class="card card-lime">
+    <span class="card-tag lime">Ball peaks high and falls short</span>
+    <h3>Excess Spin Diagnosis</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Primary</div><div class="dc-val" style="color:var(--lime);">Attack Angle</div><div class="dc-note">Descending AoA on driver is the #1 cause. Move ball forward, tee higher, flatten attack angle. Free yards.</div></div>
+      <div class="diag-cell"><div class="dc-label">Secondary</div><div class="dc-val" style="color:var(--lime);">Dynamic Loft</div><div class="dc-note">Dynamic loft &gt;18° on driver = too much loft at impact. Check for early release or flip through impact.</div></div>
+      <div class="diag-cell"><div class="dc-label">Confirm</div><div class="dc-val" style="color:var(--lime);">Spin Loft</div><div class="dc-note">Spin Loft &gt;20° (driver) = inefficient glancing blow. Reducing spin loft is the primary distance optimisation target.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SESSIONS -->
+<div class="sec" id="sessions">
+  <h2 class="sec-title">Session Protocols</h2>
+  <p class="sec-desc">How to structure Mevo sessions to extract maximum intelligence. Accumulate data deliberately — one shot is noise, ten shots is a pattern, fifty is a trend.</p>
+
+  <div class="alert alert-gold">
+    <span class="alert-icon">📋</span>
+    <div class="alert-body"><strong>The Golden Rule.</strong> Never mix diagnostic and improvement work in the same session. Diagnostic sessions capture your current baseline with no swing thoughts. Improvement sessions use training aids and specific intents. Data from an improvement session is not your baseline — it is your work in progress.</div>
+  </div>
+
+  <span class="badge badge-teal">Monthly Baseline Session — 45 min</span>
+  <div class="card card-teal">
+    <span class="card-tag">Your Handicap in Numbers</span>
+    <h3>The Most Important Session You Will Run — Monthly</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>10 Driver shots:</strong> Normal swing, no swing thoughts, record every metric. Calculate averages. Compare against previous month. Any metric moving more than 3% = trend requiring investigation.</div></li>
+      <li><span class="step-n">2</span><div><strong>10 × 7-Iron shots:</strong> Focus on smash factor, attack angle, dynamic loft, low point, and carry std dev. These are your iron striking benchmark numbers.</div></li>
+      <li><span class="step-n">3</span><div><strong>10 × PW shots:</strong> Full swing only. Carry std dev is the critical metric — it directly represents scoring proximity potential from 100–130 yards.</div></li>
+      <li><span class="step-n">4</span><div><strong>Export and analyse:</strong> CSV to myflightscope.com, then import into the AI Coach tool. Identify the one or two metrics that moved most vs. last month — those are your next training priorities.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">Wedge Matrix Build — 60 min, Quarterly</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Build Your Personal Distance Chart</span>
+    <h3>The Most Direct Scoring Tool the Mevo Produces</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>5 shots per club per swing length:</strong> PW, GW, SW, LW × full (12 o'clock), ¾ (10 o'clock), ½ (9 o'clock), ¼ (7 o'clock) = 80 shots total. Record mean carry and spin rate for each combination.</div></li>
+      <li><span class="step-n">2</span><div><strong>Note spin rates:</strong> Your spin rate at each distance is your proximity predictor. Low spin at ¾ wedge = grip or delivery issue reducing stopping power.</div></li>
+      <li><span class="step-n">3</span><div><strong>Laminate the matrix:</strong> 16 cells (4 clubs × 4 lengths). Carry it. Use it on the course. This chart alone saves 3–5 shots per round from chronic under-clubbing.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-rust">Speed Tracking Session — 20 min, Weekly</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Rypstick + Mevo Integration</span>
+    <h3>Measuring Speed Gains and Transfer</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pre-Rypstick baseline:</strong> 3 driver shots before any speed work. Record club speed. This is your "cold" baseline for the session.</div></li>
+      <li><span class="step-n">2</span><div><strong>Post-Rypstick check:</strong> After Rypstick protocol, hit 3 driver shots. Compare club speed and smash factor. Speed gain with no smash factor loss = efficient, transferable speed gain.</div></li>
+      <li><span class="step-n">3</span><div><strong>Track weekly trend:</strong> Chart club speed over 8 weeks. Target +5% improvement. Any week-over-week drop greater than 2% = potential fatigue. Rest before continuing speed work.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-lime">D-Plane Fix Session — 30 min</span>
+  <div class="card card-lime">
+    <span class="card-tag lime">Ball Flight Correction Protocol</span>
+    <h3>Systematic Face / Path Correction Using the Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>5-shot diagnostic block:</strong> Normal swing, record face angle, path, F2P, spin axis. Establish today's baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Isolate the face:</strong> Make a grip or wrist change (using HackMotion feedback). Hit 5 shots. Confirm face angle has moved. Validate with launch direction (83% rule).</div></li>
+      <li><span class="step-n">3</span><div><strong>Confirm F2P has reduced:</strong> The face change must reduce F2P — not just face angle. If F2P remains unchanged, path has compensated and a path adjustment is also needed.</div></li>
+      <li><span class="step-n">4</span><div><strong>5-shot confirmation block:</strong> With the change feeling natural, hit 5 shots without consciously thinking about it. This tests whether the change is grooved or merely forced. The data will tell you the truth.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-blue">Iron Contact Session — 30 min</span>
+  <div class="card card-blue">
+    <span class="card-tag blue">Low Point + Smash Factor Improvement</span>
+    <h3>Arc and Contact Quality Work</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Establish low point baseline:</strong> 10 × 7-iron shots, record low point mean and std dev. Below +0.5″ mean or more than 1.5″ std dev = arc problem requiring immediate attention.</div></li>
+      <li><span class="step-n">2</span><div><strong>TRS Slider drill:</strong> 20 reps. Immediately follow with 7 shots on the Mevo. Compare low point to baseline — should move toward +1.5″ ahead of ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>Track smash factor response:</strong> As low point improves, smash factor should increase. This feedback loop confirms the change is reaching impact — not just feel.</div></li>
+    </ul>
+  </div>
+
+  <div class="footer">MEVO GEN2 PRO — DATA MASTERY PLAYBOOK · ALL 20 DATA POINTS · D-PLANE FRAMEWORK · SESSION PROTOCOLS</div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

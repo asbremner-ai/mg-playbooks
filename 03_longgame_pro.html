@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Long Game Playbook — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Long Game</p>
+  <h1>Long Game<br><em>Playbook</em></h1>
+  <p class="hero-sub">SG: Off-Tee & Approach · biomechanics · D-Plane theory · wind mathematics · course management.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 SG: Off-Tee & Approach</span><span class="htag">🏌️ Driving</span>
+    <span class="htag">⛳ Iron Play</span><span class="htag">🌬️ D-Plane</span>
+    <span class="htag">🧠 Course Management</span><span class="htag">📋 Practice Plans</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('sg',this)">SG Data</button>
+  <button class="tab" onclick="show('driving',this)">Driving</button>
+  <button class="tab" onclick="show('irons',this)">Iron Play</button>
+  <button class="tab" onclick="show('fairway',this)">FW & Hybrids</button>
+  <button class="tab" onclick="show('shaping',this)">Shot Shaping</button>
+  <button class="tab" onclick="show('management',this)">Course Mgmt</button>
+  <button class="tab" onclick="show('drills',this)">Drills</button>
+  <button class="tab" onclick="show('plans',this)">Plans</button>
+  <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+</div>
+
+<!-- SG -->
+<div class="sec active" id="sg">
+  <h2 class="sec-title">SG: Off-Tee & Approach</h2>
+  <p class="sec-desc">The long game is the largest single source of strokes lost for a 10 handicap. Approach play and ball-striking precision are the primary levers to attack.</p>
+  <span class="badge badge-gold">📊 The Data</span>
+  <div class="card">
+    <span class="card-tag">The Gap — 10 HCP vs Tour</span>
+    <h3>Where Strokes Are Lost</h3>
+    <table class="tbl"><tr><th>Metric</th><th>PGA Tour</th><th>10 HCP</th><th>Target</th></tr>
+    <tr><td>SG: Approach</td><td class="good">0.0 baseline</td><td class="bad">−2.0 to −3.0</td><td>&gt;−1.5</td></tr>
+    <tr><td>SG: Off-Tee</td><td class="good">0.0 baseline</td><td class="bad">−1.4 to −2.0</td><td>&gt;−1.0</td></tr>
+    <tr><td>GIR%</td><td class="good">65%</td><td class="bad">28–35%</td><td>40%+</td></tr>
+    <tr><td>Approach proximity (150 yds)</td><td class="good">21 ft</td><td class="bad">50–60 ft</td><td>&lt;30 ft</td></tr>
+    <tr><td>Dispersion L/R (150 yds)</td><td class="good">±8 yds</td><td class="bad">±25 yds</td><td>±15 yds</td></tr>
+    <tr><td>Fairways hit %</td><td class="good">62%</td><td class="bad">40–50%</td><td>50%+</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Most important single change:</strong> Stop under-clubbing. 10 HCPs overestimate carry distance by 10–15 yards per club. Use a launch monitor to establish real distances. Take one more club than feels natural until real carry distances are verified.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">GIR Impact on Scoring</span>
+    <h3>Why GIR Is the Master Metric</h3>
+    <table class="tbl"><tr><th>Level</th><th>GIR%</th><th>Scoring Avg</th><th>Key Improvement</th></tr>
+    <tr><td>PGA Tour</td><td class="good">65–68%</td><td class="good">−1 to +1</td><td>Proximity, not GIR rate</td></tr>
+    <tr><td>Scratch</td><td class="warn">50–55%</td><td class="warn">72–74</td><td>Reduce dispersion</td></tr>
+    <tr><td>5 HCP</td><td class="warn">38–45%</td><td class="warn">77–79</td><td>Distance calibration</td></tr>
+    <tr><td>10 HCP</td><td class="bad">28–35%</td><td class="bad">82–85</td><td>Under-clubbing correction</td></tr>
+    <tr><td>10→5 target</td><td class="warn">40–48%</td><td class="warn">78–80</td><td>+10% GIR ≈ 3 strokes/rnd</td></tr></table>
+  </div>
+</div>
+
+<!-- DRIVING -->
+<div class="sec" id="driving">
+  <h2 class="sec-title">Driving</h2>
+  <p class="sec-desc">Tour-level driving is built on biomechanical efficiency — generating maximum speed through optimal sequencing, not raw effort.</p>
+  <span class="badge badge-lime">🏌️ Biomechanics & Technique</span>
+  <div class="card">
+    <span class="card-tag">The Kinematic Sequence</span>
+    <h3>How Tour Players Create Speed</h3>
+    <p>Every tour player produces the same sequence: lower body → torso → lead arm → club. Each segment accelerates then decelerates, passing energy to the next link. Disrupting this sequence — typically by the upper body starting first — kills speed at the source.</p>
+    <div class="bar-group">
+      <div class="bar-title">Tour Standard Peak Velocities — Kinematic Sequence</div>
+      <div class="bar-row"><span class="bar-lbl">Pelvis</span><div class="bar-track"><div class="bar-fill gold" style="width:20%"></div></div><span class="bar-val">~500°/sec</span></div>
+      <div class="bar-row"><span class="bar-lbl">Thorax</span><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div><span class="bar-val">~750°/sec</span></div>
+      <div class="bar-row"><span class="bar-lbl">Lead Arm</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-val">~1,000°/sec</span></div>
+      <div class="bar-row"><span class="bar-lbl">Clubhead</span><div class="bar-track"><div class="bar-fill teal" style="width:100%"></div></div><span class="bar-val">~2,500°/sec</span></div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Attack Angle — The Distance Variable</span>
+    <h3>Hitting Up: The Physics of Distance</h3>
+    <table class="tbl"><tr><th>Attack Angle</th><th>Launch</th><th>Spin</th><th>Carry (100mph)</th></tr>
+    <tr><td>−3° (descending)</td><td class="bad">9–11°</td><td class="bad">3,200 rpm</td><td class="bad">229 yds</td></tr>
+    <tr><td>0° (neutral)</td><td class="warn">12–13°</td><td class="warn">2,800 rpm</td><td class="warn">244 yds</td></tr>
+    <tr><td>+3° (ascending)</td><td class="good">14–15°</td><td class="good">2,400 rpm</td><td class="good">256 yds</td></tr>
+    <tr><td>+5° (optimal)</td><td class="good">15–17°</td><td class="good">2,100 rpm</td><td class="good">263 yds</td></tr></table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Smash Factor</span>
+    <h3>Efficiency Metric — Free Yards</h3>
+    <div class="formula">
+      <div class="formula-lbl">Smash Factor Formula</div>
+      <div class="formula-main">Smash Factor = Ball Speed ÷ Club Speed<br><br>Tour avg: 1.48–1.49 · 10 HCP typical: 1.42–1.45<br>Improving from 1.43 → 1.48 at 95 mph adds ~18 carry yards with no speed increase</div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Speed Development</span>
+    <h3>Adding Clubhead Speed — Science-Based</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>SuperSpeed overspeed training:</strong> 3× per week, 10 min. Swing lighter sticks at max effort. Produces 4–8% speed gains in 4–6 weeks. Highest ROI speed training available.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pure intent:</strong> Swinging with maximal acceleration with no conscious mechanical thought often produces highest measured speeds. Fear of bad shots is the primary speed inhibitor.</div></li>
+      <li><span class="step-n">3</span><div><strong>Thoracic mobility:</strong> Restricted upper spine rotation caps shoulder turn. 10 minutes of daily thoracic work is one of the most underutilised speed gains available.</div></li>
+      <li><span class="step-n">4</span><div><strong>Hip-shoulder separation (X-factor):</strong> 40–50° of separation at the top drives torque. Targeted flexibility work adds speed directly.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Common Driver Faults</span>
+    <h3>Fix by Cause, Not Symptom</h3>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Fault: Slice</span><h4>Out-to-In + Open Face</h4><p>Trail elbow drops to hip, not outward. Feel club approaching from 4 o'clock. Rotate forearms through impact.</p></div>
+      <div class="mini-card"><span class="mini-tag">Fault: Loss of Distance</span><h4>Premature Casting</h4><p>Trail elbow stays close to trail hip in early downswing. "Pressure the grip" late into impact zone.</p></div>
+      <div class="mini-card"><span class="mini-tag">Fault: Block/Push</span><h4>In-to-Out, Stalled Hips</h4><p>Clear hips more aggressively. Lead hip must rotate to face target at impact.</p></div>
+      <div class="mini-card"><span class="mini-tag">Fault: Hook</span><h4>Over-Drawing Driver</h4><p>Strengthen grip pressure in trail hand slightly. Feel face more open at impact. Ball position one inch further forward.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- IRON PLAY -->
+<div class="sec" id="irons">
+  <h2 class="sec-title">Iron Play</h2>
+  <p class="sec-desc">Tour-level iron play is defined by three qualities: consistent ball-first contact, accurate distance calibration, and precise target selection.</p>
+  <span class="badge badge-teal">⛳ Ball-Striking Science</span>
+  <div class="card">
+    <span class="card-tag">Optimal Ball Flight by Club</span>
+    <h3>Launch Monitor Target Numbers</h3>
+    <table class="tbl"><tr><th>Club</th><th>Attack Angle</th><th>Launch</th><th>Spin</th><th>Tour Carry</th></tr>
+    <tr><td>4-iron</td><td>−2° to −3°</td><td>16–18°</td><td>4,500–5,500</td><td>195 yds</td></tr>
+    <tr><td>6-iron</td><td>−3° to −4°</td><td>18–20°</td><td>5,500–6,500</td><td>175 yds</td></tr>
+    <tr><td>7-iron</td><td>−4° to −5°</td><td>20–22°</td><td>6,500–7,500</td><td>165 yds</td></tr>
+    <tr><td>9-iron</td><td>−5° to −6°</td><td>23–26°</td><td>8,000–9,500</td><td>140 yds</td></tr>
+    <tr><td>PW</td><td>−5° to −7°</td><td>25–28°</td><td>9,000–11,000</td><td>120 yds</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Low Point Control</span>
+    <h3>The Defining Skill of Iron Play</h3>
+    <div class="formula">
+      <div class="formula-lbl">Low Point Benchmark</div>
+      <div class="formula-main">Tour: Low point 2.5" forward of ball (consistent ±0.5")<br>10 HCP: Low point 1" behind to 2" forward (inconsistent ±2")<br><br>80% of amateur iron errors (fat, thin, scoop) come from inconsistent low point — not swing shape or path.</div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Dispersion Control</span>
+    <h3>Know Your Cone — Aim Accordingly</h3>
+    <div class="bar-group">
+      <div class="bar-title">Typical Dispersion Patterns — 7-Iron, 150 Yards</div>
+      <div class="bar-row"><span class="bar-lbl">Tour Pro</span><div class="bar-track"><div class="bar-fill gold" style="width:16%"></div></div><span class="bar-val">±8 yds L/R</span></div>
+      <div class="bar-row"><span class="bar-lbl">Scratch</span><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div><span class="bar-val">±16 yds L/R</span></div>
+      <div class="bar-row"><span class="bar-lbl">5 HCP</span><div class="bar-track"><div class="bar-fill teal" style="width:50%"></div></div><span class="bar-val">±20 yds L/R</span></div>
+      <div class="bar-row"><span class="bar-lbl">10 HCP</span><div class="bar-track"><div class="bar-fill red" style="width:62%"></div></div><span class="bar-val">±25 yds L/R</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Targeting a flag 10 yards from the green edge with ±25 yd dispersion means 30–40% of shots miss the green. Aim based on your dispersion cone, not the flag.</p>
+  </div>
+</div>
+
+<!-- FAIRWAY WOODS & HYBRIDS -->
+<div class="sec" id="fairway">
+  <h2 class="sec-title">Fairway Woods & Hybrids</h2>
+  <p class="sec-desc">Fairway woods and hybrids are the most technically misunderstood clubs in the bag. Data overwhelmingly favours hybrids over long irons for most players below 105 mph swing speed.</p>
+  <span class="badge badge-lime">🏌️ Sweep & Launch Science</span>
+  <div class="card">
+    <span class="card-tag">Attack Angle — Fairway Wood Physics</span>
+    <h3>The Shallow Arc</h3>
+    <table class="tbl"><tr><th>Attack Angle (3W)</th><th>Launch</th><th>Spin</th><th>Carry (100mph)</th></tr>
+    <tr><td class="bad">−4° (too steep)</td><td class="bad">10–12°</td><td class="bad">4,800 rpm</td><td class="bad">198 yds</td></tr>
+    <tr><td class="good">−1° (ideal)</td><td class="good">13–15°</td><td class="good">3,400 rpm</td><td class="good">225 yds</td></tr>
+    <tr><td class="good">+2° (slightly ascending)</td><td class="good">15–17°</td><td class="warn">2,800 rpm</td><td class="good">228 yds</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Players who sweep fairway woods gain an average of 18 yards carry vs. those who hit down steeply.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Hybrid vs. Long Iron — The Data</span>
+    <h3>When Technology Wins</h3>
+    <div class="bar-group">
+      <div class="bar-title">Hybrid vs. 4-Iron — Average Performance (95 mph swing speed)</div>
+      <div class="bar-row"><span class="bar-lbl">Hybrid carry</span><div class="bar-track"><div class="bar-fill gold" style="width:91%"></div></div><span class="bar-val">182 yds avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">4-iron carry</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-val">165 yds avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">Hybrid GIR rate</span><div class="bar-track"><div class="bar-fill gold" style="width:76%"></div></div><span class="bar-val">38% from 175 yds</span></div>
+      <div class="bar-row"><span class="bar-lbl">4-iron GIR rate</span><div class="bar-track"><div class="bar-fill red" style="width:44%"></div></div><span class="bar-val">22% from 175 yds</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">For players under 105 mph swing speed: replace 3 and 4 irons with hybrids unless you shape the ball aggressively and prefer blade control.</p>
+  </div>
+</div>
+
+<!-- SHOT SHAPING -->
+<div class="sec" id="shaping">
+  <h2 class="sec-title">Shot Shaping</h2>
+  <p class="sec-desc">Modern ball flight science has completely revised our understanding of why the ball curves. D-Plane theory enables deliberate, repeatable shot shaping.</p>
+  <span class="badge badge-teal">🌬️ D-Plane & Ball Flight Laws</span>
+  <div class="card">
+    <span class="card-tag">Modern Ball Flight Laws</span>
+    <h3>The D-Plane — How the Ball Really Curves</h3>
+    <div class="formula">
+      <div class="formula-lbl">Ball Flight Laws (Modern — D-Plane)</div>
+      <div class="formula-main">Start Direction = 75–83% Face Angle + 17–25% Path<br>Curve Amount = Proportional to (Face-to-Path difference)<br><br>Face 2° open to path → gentle fade<br>Face 5° open to path → significant slice<br>Face 3° closed to path → reliable draw</div>
+      <div class="formula-note">Path controls curve magnitude; face controls starting direction. You can swing dramatically left (out-to-in) and still hit a draw if the face is sufficiently closed to your path.</div>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Controlled Fade — Tour Method</span>
+    <h3>Reliable Left-to-Right Ball Flight</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Target: Face 1–2° open to path.</strong> Subtle is repeatable.</div></li>
+      <li><span class="step-n">2</span><div>Weaken grip slightly (both hands toward target). Promotes open face relative to path.</div></li>
+      <li><span class="step-n">3</span><div>Open stance 5–8°. Swing along your foot line — slightly out-to-in relative to target.</div></li>
+      <li><span class="step-n">4</span><div>Hold the lead wrist slightly extended (not cupped) through impact. Result: 5–12 yards of controlled fade.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Controlled Draw — Tour Method</span>
+    <h3>Reliable Right-to-Left Ball Flight</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Target: Face 1–3° closed to path.</strong> Subtle is repeatable.</div></li>
+      <li><span class="step-n">2</span><div>Strengthen grip modestly (trail hand slightly away from target). Promotes closed face relative to path.</div></li>
+      <li><span class="step-n">3</span><div>Close stance 5–8°. Ball slightly further back. Swing along your foot line — in-to-out relative to target.</div></li>
+      <li><span class="step-n">4</span><div>Allow natural forearm rotation through impact. Result: 8–15 yards of controlled draw with added distance from lower spin.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- COURSE MANAGEMENT -->
+<div class="sec" id="management">
+  <h2 class="sec-title">Course Management</h2>
+  <p class="sec-desc">The fastest route to a lower handicap is eliminating double bogeys — not adding birdies. Management decisions determine how often doubles happen.</p>
+
+  <div class="info-box">
+    <h3>Double Bogey Rate — Where You Need to Get To</h3>
+    <table><thead><tr><th>Level</th><th>Doubles per Round</th></tr></thead>
+    <tbody>
+      <tr><td>10 HCP</td><td>3.2</td></tr>
+      <tr><td>7 HCP</td><td>2.1</td></tr>
+      <tr><td>5 HCP</td><td>1.4</td></tr>
+      <tr><td>Scratch</td><td>0.6</td></tr>
+      <tr><td>PGA Tour</td><td>0.2</td></tr>
+    </tbody></table>
+    <p style="margin:12px 0 0;font-size:14px;color:var(--text-muted);">Eliminating 2 doubles per round saves ~2 shots immediately. Moving from 10 to 5 HCP requires eliminating doubles — not adding birdies.</p>
+  </div>
+
+  <div class="info-box">
+    <h3>SG Decision Model — Quick Reference</h3>
+    <table><thead><tr><th>Scenario</th><th>Aggressive</th><th>Conservative</th><th>SG Verdict</th></tr></thead>
+    <tbody>
+      <tr><td>150-yd par-3, water left</td><td>Pin: 4.2 expected</td><td>Centre: 3.9 expected</td><td>Centre +0.3 SG</td></tr>
+      <tr><td>Recovery from trees</td><td>Through gap (30%): 5.2</td><td>Punch out: 4.8</td><td>Punch +0.4 SG</td></tr>
+      <tr><td>Par-5 in 2, water (40%)</td><td>Go: 4.65 avg</td><td>Layup: 4.85 avg</td><td>Go +0.2 SG (marginal)</td></tr>
+    </tbody></table>
+  </div>
+
+  <div style="background:rgba(163,230,53,.06);border:1px solid rgba(163,230,53,.25);border-radius:10px;padding:18px 22px;margin:22px 0 4px;">
+  <p style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin:0 0 8px 0;">Full Frameworks in Guides 20 &amp; 23</p>
+  <p style="margin:0;line-height:1.6;color:var(--text-muted);">Complete hole-by-hole strategy, target selection, layup vs. attack framework, and scoring zone management are in <strong style="color:var(--gold);">Guide 20 — Course Management</strong>. All weather and wind adjustment tables are in <strong style="color:var(--gold);">Guide 23 — Weather &amp; Conditions</strong>.</p>
+</div>
+</div>
+
+<!-- DRILLS -->
+<div class="sec" id="drills">
+  <h2 class="sec-title">Practice Drills</h2>
+  <p class="sec-desc">Drills that incorporate deliberate metrics, feedback loops, and pressure components used by tour players. Each targets a specific, measurable variable.</p>
+  <span class="badge badge-gold">🏌️ Driver Drills</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">📊</div><div><h4>Launch Monitor Session — Data Baseline</h4><div class="drill-meta">45 MIN · ONCE PER MONTH · DRIVER + 7-IRON · ESSENTIAL</div></div></div>
+    <p>Book regular launch monitor sessions. Establish and track: Clubhead Speed, Ball Speed, Smash Factor, Launch Angle, Spin Rate, Carry Distance, and Dispersion for both driver and 7-iron. These six numbers tell you exactly where your technique gains and losses are.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🦶</div><div><h4>Step Drill — Sequence Training</h4><div class="drill-meta">15 MIN · KINEMATIC SEQUENCE · DRIVER · DAILY</div></div></div>
+    <p>Feet together. Begin backswing, then step lead foot forward as you start the downswing — like a baseball player striding into a pitch. Enforces lower-body-first sequence. Hit 20–30 shots until the feel becomes automatic.</p>
+  </div>
+  <hr>
+  <span class="badge badge-teal">⛳ Iron Drills</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🧱</div><div><h4>Alignment Stick — Low Point Control</h4><div class="drill-meta">15 MIN · BALL-FIRST CONTACT · 7-IRON · ESSENTIAL</div></div></div>
+    <p>Push an alignment stick into the ground 4 inches behind the ball at a 45° angle. Make swings without hitting the stick. If you strike it, your low point is behind the ball. Instant, unambiguous feedback. Used by tour coaches at all levels.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">📏</div><div><h4>Impact Tape + Face Mapping</h4><div class="drill-meta">15 MIN · STRIKE QUALITY · ALL IRONS · BENCHMARK</div></div></div>
+    <p>Apply impact tape to your clubface. Hit 10 shots. Photograph the pattern. Moving contact 10mm toward centre increases Smash Factor by ~0.03 — worth 3–4 yards per shot with no swing change.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🎮</div><div><h4>Simulated Hole Drill</h4><div class="drill-meta">25 MIN · COURSE REALISM · FULL BAG · WEEKLY</div></div></div>
+    <p>Play a full imaginary hole on the range. Tee shot to a fairway corridor, select approach club for where it landed, hit a wedge to a flag. Full pre-shot routine every shot. Track fairway hit rate, GIR rate, and proximity. Play 9 simulated holes.</p>
+  </div>
+  <hr>
+  <span class="badge badge-lime">⚡ Speed & Shape</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">⚡</div><div><h4>SuperSpeed Protocol</h4><div class="drill-meta">10 MIN · CLUBHEAD SPEED · 3× PER WEEK</div></div></div>
+    <p>Overspeed training sticks — light club × 10, medium × 10, driver × 10 at maximum effort. Neurologically re-educates the body to allow higher speeds with normal club. 4–6 week commitment produces 4–8% speed gains.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🔄</div><div><h4>9-Shot Ball Flight Game</h4><div class="drill-meta">20 MIN · SHOT SHAPING · 7-IRON · ADVANCED</div></div></div>
+    <p>Hit 9 deliberate shots in a 3×3 matrix: straight/fade/draw at normal, high, and low height. Score 1 point per successful execution. Used by Hogan and Trevino to develop complete ball-flight control. Even rough approximations build face-path awareness.</p>
+  </div>
+</div>
+
+<!-- PRACTICE PLANS -->
+<div class="sec" id="plans">
+  <h2 class="sec-title">Structured Practice Plans</h2>
+  <p class="sec-desc">Three frameworks used by tour players and their coaches. Every session includes at least one measurable metric.</p>
+  <span class="badge badge-gold">📋 Frameworks</span>
+  <div class="card">
+    <span class="card-tag">Plan 1 — Maintenance (2× per week, 45 min)</span>
+    <h3>Keeping the Engine Running</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>0–10 min — Activation:</strong> Wedge and 7-iron at 60–80%. Identify today's natural ball flight. Work with it.</div></li>
+      <li><span class="step-n">B</span><div><strong>10–25 min — Iron calibration:</strong> 7-iron, 5-iron, hybrid × 5 each. Use alignment sticks. Track strike quality.</div></li>
+      <li><span class="step-n">C</span><div><strong>25–35 min — Driver:</strong> 10 drives to a fairway corridor. Track fairway hit %. Pure execution, no mechanics.</div></li>
+      <li><span class="step-n">D</span><div><strong>35–45 min — Simulation:</strong> 5 simulated holes. Full routine on every shot.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Plan 2 — Improvement (4× per week, 75 min)</span>
+    <h3>Active Handicap Reduction</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>0–10 min — Sequencing:</strong> Step drill × 20. Low-point drill with alignment stick × 20.</div></li>
+      <li><span class="step-n">B</span><div><strong>10–25 min — Iron quality:</strong> Impact tape session. 20 mid-irons. Adjust setup until centre contact.</div></li>
+      <li><span class="step-n">C</span><div><strong>25–45 min — Driver:</strong> Fairway corridor × 15 (track %). SuperSpeed protocol × 30 swings then transfer shots.</div></li>
+      <li><span class="step-n">D</span><div><strong>45–60 min — Shot shaping:</strong> Alternate fade/draw × 20 with 7-iron.</div></li>
+      <li><span class="step-n">E</span><div><strong>60–75 min — Pressure:</strong> 9 simulated holes. Full routine. Record GIR rate and proximity.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Plan 3 — Tour Player Weekly</span>
+    <h3>Elite 5-Day Framework</h3>
+    <table class="tbl"><tr><th>Day</th><th>Focus</th><th>Key Session</th></tr>
+    <tr><td>Monday</td><td>Technical audit</td><td>Launch monitor, video review, fault work</td></tr>
+    <tr><td>Tuesday</td><td>Distance & speed</td><td>SuperSpeed, driver corridor, carry calibration</td></tr>
+    <tr><td>Wednesday</td><td>Ball-striking</td><td>Alignment stick drills, impact tape, dispersion mapping</td></tr>
+    <tr><td>Thursday</td><td>Course simulation</td><td>18-hole simulation, shot shaping on demand</td></tr>
+    <tr><td>Friday</td><td>Pre-round calibration</td><td>Full routine only, natural shape acceptance</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Tour Principle:</strong> Track at least one measurable metric per session — Smash Factor, fairway hit %, approach proximity, or dispersion radius. Without data, practice is anecdote. With data, every session either confirms progress or signals course correction.</p>
+  </div>
+</div>
+
+<!-- PRE-ROUND -->
+<div class="sec" id="preround">
+  <h2 class="sec-title">Pre-Round Warmup</h2>
+  <p class="sec-desc">The pre-round warmup is for calibration and confidence — not for practice. Tour players arrive knowing their swing; the warmup confirms today's feel.</p>
+  <span class="badge badge-lime">⏱ 30-Minute Pro Protocol</span>
+  <div class="card">
+    <span class="card-tag">Minutes 1–5 · Physical Activation</span>
+    <h3>Prime the Body First</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Thoracic rotations × 10 each way. Hip circles × 10 each direction. Shoulder rotations × 10.</div></li>
+      <li><span class="step-n">2</span><div>Swing two clubs together slowly × 10 each direction — resistance warms golf-specific muscles without fatigue.</div></li>
+      <li><span class="step-n">3</span><div>Single-leg balance hold (lead leg) × 20 seconds — activates stabilising muscles required for consistent impact.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Minutes 6–18 · Club Progression</span>
+    <h3>Read Your Natural Shape Today</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>PW × 8 shots at 60–70% effort. What is today's natural ball flight? Accept it. You will play with it today.</div></li>
+      <li><span class="step-n">2</span><div>7-iron × 8 shots building to 85%. Identify your shape. Note any timing issues.</div></li>
+      <li><span class="step-n">3</span><div>Hybrid or 5-iron × 5 shots. Confirm long iron feel.</div></li>
+      <li><span class="step-n">4</span><div>3-wood × 4 shots off low tee — feel the sweep motion for tight driving holes.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Minutes 19–26 · Driver</span>
+    <h3>Tee Shot Calibration</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>4 drives at 75–80% effort. Pick a corridor target for each. Observe the shape — drawing or fading today?</div></li>
+      <li><span class="step-n">2</span><div>Make your tee shot strategy decision for hole 1: driver or 3-wood? Commit before leaving the range.</div></li>
+      <li><span class="step-n">3</span><div>End with 2 drives that feel solid. Replay them mentally as you walk to the first tee.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Minutes 27–30 · Mental Switch</span>
+    <h3>Transition to Play Mode</h3>
+    <p>Close eyes and visualise hole 1. Decide which 3–4 holes are your birdie opportunities. Commit to playing conservatively on the two hardest holes. Walk to the first tee trusting your swing, committed to your strategy.</p>
+  </div>
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Short on time (10 min)?</strong> PW × 6, 7-iron × 5, driver × 4 (tempo only), one crisp 9-iron. Accept whatever shape you see and play with it. Never reach the first tee without hitting your driver at least once.</p>
+  </div>
+</div>
+
+<div class="footer">THE LONG GAME PLAYBOOK — PRO EDITION · SG: OFF-TEE & APPROACH FRAMEWORK</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

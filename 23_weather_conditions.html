@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Weather & Conditions Play — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 23</p>
+  <h1>Weather &<br><em>Conditions Play</em></h1>
+  <p class="hero-sub">Complete adjustments for wind, rain, cold, heat, firm and soft ground, altitude, and links conditions — precise numbers for every variable that affects distance, trajectory, and strategy.</p>
+  <div class="hero-tags">
+    <span class="htag">🌬️ Wind Maths</span><span class="htag">🌧️ Rain</span>
+    <span class="htag">❄️ Cold & Heat</span><span class="htag">⛰️ Altitude</span>
+    <span class="htag">🏖️ Firm & Fast</span><span class="htag">🌿 Links Play</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('wind',this)">Wind</button>
+  <button class="tab" onclick="show('rain',this)">Rain</button>
+  <button class="tab" onclick="show('temperature',this)">Temperature</button>
+  <button class="tab" onclick="show('firm',this)">Firm & Fast</button>
+  <button class="tab" onclick="show('links',this)">Links</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Conditions Framework</h2>
+  <p class="sec-desc">Conditions are the great equaliser. A 10 HCP player who understands and applies precise conditions adjustments will outperform a 7 HCP player who ignores them. Every environmental variable has a quantifiable effect — know the numbers and apply them automatically.</p>
+  <span class="badge badge-teal">🌍 The Conditions Advantage</span>
+  <div class="card">
+    <span class="card-tag">Why Conditions Matter More Than Most Players Realise</span>
+    <h3>Quantifying the Environmental Effect</h3>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Effect on Carry Distance</th><th>Effect on Strategy</th></tr>
+      <tr><td>30 mph headwind</td><td class="bad">−30% (−45 yds from 150)</td><td>Completely changes club selection; trajectory critical</td></tr>
+      <tr><td>Heavy rain</td><td class="bad">−8 to −15%</td><td>Greens hold; rough heavier; grip management essential</td></tr>
+      <tr><td>0°C temperature</td><td class="bad">−12 to −15%</td><td>Muscle stiffness adds further 5–8% reduction</td></tr>
+      <tr><td>2,000m altitude</td><td class="good">+8 to +10%</td><td>Ball travels further; must de-club; spin slightly reduced</td></tr>
+      <tr><td>Firm fairways</td><td class="good">+20–40 yds run</td><td>Driver distance increases; approach stops less; strategy shifts</td></tr>
+      <tr><td>30 mph tailwind</td><td class="good">+15% (about half headwind effect)</td><td>Lower trajectory preferred; ball runs significantly</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The compound effect:</strong> Conditions rarely occur in isolation. A cold, wet, 20 mph headwind day can reduce effective carry distance by 35–45%. A warm, dry, tailwind day at sea level vs. the same at 1,500m altitude can produce 60+ yard differences. Identify all active conditions and stack the adjustments.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Conditions Adjustment Checklist</span>
+    <h3>Apply Before Every Round</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Check wind speed and direction at flag height:</strong> Ground wind often differs significantly from elevated wind. Use the grass throw method, observe tree tops, or use a weather app with wind speed data. Commit to a wind number before the round.</div></li>
+      <li><span class="step-n">2</span><div><strong>Confirm temperature:</strong> Apply the temperature deduction table. Muscle stiffness adds an additional 5% beyond ball compression effects in cold weather. Account for both.</div></li>
+      <li><span class="step-n">3</span><div><strong>Assess ground firmness:</strong> Bounce the ball once on the fairway on the first hole. Listen to the sound — a firm crack means significant run; a dull thud means the ground is soft and absorbing. Adjust landing zone strategy accordingly.</div></li>
+      <li><span class="step-n">4</span><div><strong>Check green speed:</strong> Two putts on the practice green confirms stimp reading for today. Note whether greens are soft (hold shots) or firm (release). This affects approach strategy for the whole round.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- WIND -->
+<div class="sec" id="wind">
+  <h2 class="sec-title">Wind Adjustments</h2>
+  <p class="sec-desc">Wind is the most impactful and most mismanaged conditions variable in golf. The standard amateur error is under-adjusting for headwinds. Tour caddies apply precise percentage adjustments — not feel-based guesses.</p>
+  <span class="badge badge-lime">🌬️ The Tour Caddie Formula</span>
+  <div class="card">
+    <span class="card-tag">Headwind & Tailwind — The Formula</span>
+    <h3>Percentage Adjustments by Wind Speed</h3>
+    <table class="tbl">
+      <tr><th>Wind Speed</th><th>Headwind (add)</th><th>Tailwind (subtract)</th><th>150 yd Headwind</th><th>150 yd Tailwind</th></tr>
+      <tr><td>5 mph</td><td>+5%</td><td>−3%</td><td>+8 yds</td><td>−5 yds</td></tr>
+      <tr><td>10 mph</td><td>+10%</td><td>−5%</td><td>+15 yds</td><td>−8 yds</td></tr>
+      <tr><td>15 mph</td><td>+15%</td><td>−7%</td><td>+23 yds</td><td>−11 yds</td></tr>
+      <tr><td>20 mph</td><td>+20%</td><td>−10%</td><td>+30 yds</td><td>−15 yds</td></tr>
+      <tr><td>25 mph</td><td>+25%</td><td>−12%</td><td>+38 yds</td><td>−18 yds</td></tr>
+      <tr><td>30 mph</td><td>+30%</td><td>−15%</td><td>+45 yds</td><td>−23 yds</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Why headwind costs more than tailwind saves:</strong> A headwind increases drag and spin effect disproportionately. A ball ballooning into a 20 mph headwind loses significantly more than the same ball is aided by a 20 mph tailwind — because the tailwind reduces backspin drag effect non-linearly. Always over-adjust for headwinds; slightly under-adjust for tailwinds.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Crosswind Adjustments</span>
+    <h3>Aim Adjustment and Carry Effect</h3>
+    <table class="tbl">
+      <tr><th>Crosswind</th><th>Carry Effect</th><th>Lateral Drift at 150 yds</th><th>Aim Adjustment</th></tr>
+      <tr><td>Direct crosswind (90°)</td><td>+5% (acts like headwind)</td><td>~10 yds per 10 mph</td><td>Aim into wind by drift amount</td></tr>
+      <tr><td>45° into wind</td><td>+7–8%</td><td>~5 yds per 10 mph</td><td>Half aim; half club adjustment</td></tr>
+      <tr><td>45° downwind</td><td>−2 to −3%</td><td>~5 yds per 10 mph</td><td>Minimal carry change; aim adjustment for drift</td></tr>
+    </table>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Working Crosswind — Two Options</div>
+      <div class="formula-main">Option 1 — Aim into wind:<br>Aim the dispersion cone into the wind by the calculated drift distance.<br>Hit your normal shot. Wind returns ball to target.<br><br>Option 2 — Curve into wind:<br>Play a draw into a right-to-left wind; fade into a left-to-right wind.<br>The curve cancels the drift. Requires reliable shape execution.</div>
+      <div class="formula-note">Option 1 is the higher-percentage play for most golfers. Option 2 requires reliable shot shaping — do not attempt it under pressure unless that shape is your go-to shot. A mis-hit with option 2 sends the ball double the lateral distance.</div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Wind Trajectory Strategy</span>
+    <h3>Low vs. High Shots in Wind</h3>
+    <table class="tbl">
+      <tr><th>Shot Type</th><th>Into Headwind</th><th>Downwind</th><th>Crosswind</th></tr>
+      <tr><td>High trajectory</td><td class="bad">Worst — ball balloons, distance loss amplified</td><td class="warn">More run on landing; caution</td><td class="bad">Maximum drift — avoid</td></tr>
+      <tr><td>Standard trajectory</td><td class="warn">Moderate effect — standard adjustment</td><td class="good">Normal play</td><td class="warn">Standard drift — adjust aim</td></tr>
+      <tr><td>Low punch / stinger</td><td class="good">Best — minimises drag; lower spin reduces balloon</td><td class="warn">May under-fly; account for</td><td class="good">Less drift — preferred option</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The low punch into wind:</strong> Ball back in stance, extra shaft lean, abbreviated follow-through to 9 o'clock. This produces a penetrating trajectory that holds its line in wind better than any other shot type. Practise it specifically — the technique is different from a standard iron shot and requires range time to become reliable.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Reading Wind Direction</span>
+    <h3>The Four Methods</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Grass throw:</strong> Toss a pinch of grass directly upward. Direction it carries confirms wind direction at ground level. Speed of travel gives a rough speed estimate.</div></li>
+      <li><span class="step-n">2</span><div><strong>Treetop observation:</strong> Wind at flag height (30 feet) is better approximated by lower branches than treetops. Upper canopy movement shows wind at 50+ feet — often stronger and different direction from playing level.</div></li>
+      <li><span class="step-n">3</span><div><strong>Flag observation:</strong> The flag tells you direction at exactly the height where the ball will fly at its apex. This is your most reliable single indicator. Confirm flag direction on every shot.</div></li>
+      <li><span class="step-n">4</span><div><strong>Weather app with wind layers:</strong> Apps such as Weather Underground or WindFinder show wind speed at 10m and 80m height. The difference between these layers can be significant on a gusty day. Check these before the round.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- RAIN -->
+<div class="sec" id="rain">
+  <h2 class="sec-title">Rain & Wet Conditions</h2>
+  <p class="sec-desc">Rain affects every aspect of the game — carry distance, grip quality, spin generation, green behaviour, rough weight, and putting pace. The player with a complete rain adjustment system gains 2–3 strokes over the player who simply hopes for the best.</p>
+  <span class="badge badge-rust">🌧️ Wet Weather System</span>
+  <div class="card">
+    <span class="card-tag">Distance Effects in Rain</span>
+    <h3>How Wet Conditions Reduce Distance</h3>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Distance Effect</th><th>Cause</th><th>Club Adjustment</th></tr>
+      <tr><td>Light rain</td><td class="warn">−3 to −5%</td><td>Slightly wet ball; grip tension</td><td>+½ club on approaches</td></tr>
+      <tr><td>Moderate rain</td><td class="bad">−8 to −12%</td><td>Wet face + grip; tighter swing</td><td>+1 club minimum</td></tr>
+      <tr><td>Heavy rain</td><td class="bad">−12 to −18%</td><td>Water cushion between ball/face; max tension</td><td>+1 to +2 clubs</td></tr>
+      <tr><td>Wet rough</td><td class="bad">−15 to −25%</td><td>Heavy grass grabs hosel; closes face</td><td>+2 clubs from rough</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Grip Management in Rain</span>
+    <h3>The Most Critical Physical Adjustment</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Carry 3–4 gloves and rotate:</strong> A saturated glove loses 60–70% of its grip friction. Rotate gloves every 3–4 holes. Keep spare gloves in a dry bag section. A dry glove is worth more than any swing adjustment in rain.</div></li>
+      <li><span class="step-n">2</span><div><strong>Dry the grip before every shot:</strong> Use a towel on the club and on your glove hand before every shot in rain. The extra 15 seconds this takes saves a minimum of one shot per wet round from grip-related mishits.</div></li>
+      <li><span class="step-n">3</span><div><strong>Reduce grip pressure consciously:</strong> The instinctive response to a wet grip is to grip harder. This is the wrong response — it stiffens the wrists, reduces distance, and produces pushes. Consciously reduce grip pressure to 3–4 out of 10. Trust the club.</div></li>
+      <li><span class="step-n">4</span><div><strong>Consider rain grips:</strong> Cord grips or rain-specific grips (e.g. Golf Pride MCC Plus4 with texture) provide significantly better wet performance than standard rubber grips. A re-grip before a wet season competition is a legitimate equipment decision.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Wet Green Strategy</span>
+    <h3>Adjustments That Change Your Approach Targets</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Greens hold more — attack more pins:</strong> Soft greens stop the ball within 3–5 feet of landing. Tucked pins that you would normally play away from become accessible. This is a genuine scoring advantage in wet conditions — take it.</div></li>
+      <li><span class="step-n">2</span><div><strong>Spin is still reduced by wet conditions:</strong> Even though greens are soft, a wet face reduces grooves effectiveness and spin generation. The ball will land and stop — but not via spin. It simply plugs or rolls very little. Land it on target, not short.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putting pace is significantly slower:</strong> Water on the green surface and in the grass fibres slows pace. Add 20–30% more pace to all putts. A putt that would die at the hole in dry conditions will finish 3–4 feet short in heavy rain.</div></li>
+      <li><span class="step-n">4</span><div><strong>Break is reduced:</strong> Water in the surface grass effectively fills the grain, reducing the lateral influence on the ball. Read less break on wet greens — approximately 15–20% less break than the same putt in dry conditions.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Mud Ball Management</span>
+    <h3>The Physics of Mud-Affected Shots</h3>
+    <div class="formula">
+      <div class="formula-lbl">Mud Ball Effect</div>
+      <div class="formula-main">Mud on right side of ball (for right-handed player):<br>→ Ball curves left (toward mud)<br>→ Aim right of target by estimated drift<br><br>Mud on left side: curves right — aim left<br>Mud on back of ball: lower trajectory, less distance<br>Mud on front (face side): reduced distance; less predictable<br><br>Magnitude: small mud = 5–10 yd drift at 150 yds<br>Large mud = 15–25 yd drift at 150 yds</div>
+      <div class="formula-note">Always check the ball for mud before hitting. If lift, clean, and place rules are in effect, use them. If not, account for the mud's position and adjust aim accordingly. Ignoring mud on the ball costs shots every wet round.</div>
+    </div>
+  </div>
+</div>
+
+<!-- TEMPERATURE -->
+<div class="sec" id="temperature">
+  <h2 class="sec-title">Temperature & Altitude</h2>
+  <p class="sec-desc">Cold is the most underestimated performance variable in club selection. Most golfers know it affects distance but dramatically underestimate by how much — especially when muscle stiffness is compounded with ball compression effects.</p>
+  <span class="badge badge-gold">❄️ Temperature & Elevation</span>
+  <div class="card">
+    <span class="card-tag">Cold Weather Distance Loss</span>
+    <h3>Ball Compression + Muscle Stiffness Combined</h3>
+    <table class="tbl">
+      <tr><th>Temperature</th><th>Ball Effect</th><th>Muscle Stiffness</th><th>Combined Distance Loss</th><th>Club Adjustment</th></tr>
+      <tr><td>20°C (68°F) — baseline</td><td>None</td><td>None</td><td>—</td><td>None</td></tr>
+      <tr><td>15°C (59°F)</td><td>−2%</td><td>−2%</td><td class="warn">−4 to −5%</td><td>+½ club</td></tr>
+      <tr><td>10°C (50°F)</td><td>−4%</td><td>−4%</td><td class="warn">−7 to −9%</td><td>+1 club</td></tr>
+      <tr><td>5°C (41°F)</td><td>−7%</td><td>−6%</td><td class="bad">−12 to −14%</td><td>+1.5 clubs</td></tr>
+      <tr><td>0°C (32°F)</td><td>−10%</td><td>−8%</td><td class="bad">−16 to −18%</td><td>+2 clubs</td></tr>
+      <tr><td>−5°C (23°F)</td><td>−13%</td><td>−10%</td><td class="bad">−20 to −22%</td><td>+2.5 clubs</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Ball selection in cold:</strong> Use a low-compression ball (compression rating 70–85) in temperatures below 10°C. High-compression balls (90+) become significantly harder in cold and lose smash factor. A compression-matched ball recovers approximately half the temperature-related distance loss.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Altitude Adjustments</span>
+    <h3>Playing in Elevated Conditions</h3>
+    <table class="tbl">
+      <tr><th>Altitude</th><th>Distance Gain</th><th>Example: 150 yd shot</th><th>Strategy Effect</th></tr>
+      <tr><td>Sea level (baseline)</td><td>None</td><td>150 yds</td><td>Standard play</td></tr>
+      <tr><td>500m (1,640 ft)</td><td>+2 to +3%</td><td>153–155 yds</td><td>Minor — club down on long irons</td></tr>
+      <tr><td>1,000m (3,280 ft)</td><td>+4 to +5%</td><td>156–158 yds</td><td>Noticeable — 1 club down on all irons</td></tr>
+      <tr><td>1,500m (4,920 ft)</td><td>+7 to +8%</td><td>161–162 yds</td><td>Significant — 1 full club down</td></tr>
+      <tr><td>2,000m (6,560 ft)</td><td>+9 to +11%</td><td>164–167 yds</td><td>Major — 1.5 clubs down; reduced spin, harder to stop</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Spin effect at altitude:</strong> Reduced air density at altitude also reduces backspin. The ball not only flies further but stops less reliably. Land approach shots shorter than normal to account for reduced spin-stop. Aim front half of greens on approaches at altitude even with tucked pins.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Hot Weather Adjustments</span>
+    <h3>Heat and Humidity Effects</h3>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Effect</th><th>Adjustment</th></tr>
+      <tr><td>High temperature (30°C+)</td><td class="good">+3 to +5% distance</td><td>−½ club on long irons and above</td></tr>
+      <tr><td>High humidity</td><td class="good">+1 to +2% (humid air is less dense)</td><td>Minimal — combine with temperature effect</td></tr>
+      <tr><td>Firm, hot fairways</td><td class="good">+20–40 yds run</td><td>Carry hazards by standard distance; run is a bonus</td></tr>
+      <tr><td>Hard baked greens (hot dry)</td><td class="bad">Less stopping power</td><td>Land on front of green; aim short of tucked pins</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FIRM & FAST -->
+<div class="sec" id="firm">
+  <h2 class="sec-title">Firm & Fast Conditions</h2>
+  <p class="sec-desc">Firm, fast conditions — whether from summer heat, drought, or links turf — fundamentally change the game. The ball runs further, greens repel approach shots, and the ground game becomes a weapon for players who understand it.</p>
+  <span class="badge badge-lime">🏖️ Firm Ground Strategy</span>
+  <div class="card">
+    <span class="card-tag">The Ground Game — Using the Turf as a Tool</span>
+    <h3>Running the Ball Deliberately</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Land short, let the ball run:</strong> On firm fairways, approach shots that land 15–20 yards short of the green will run onto the putting surface — often more accurately than a high-spinning carry shot. Tour players trained on links courses use this as a primary weapon, not a last resort.</div></li>
+      <li><span class="step-n">2</span><div><strong>The bump-and-run as a primary shot:</strong> Around the green on firm turf, the bump-and-run (7-iron or hybrid with a putting-style stroke) is more reliable than a high lob or chip. The ball rolls predictably and is less affected by poor contact than a lofted wedge shot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Driver runs further — plan for it:</strong> On firm fairways, driver carry of 250 yards becomes 280–290 yards total. Hazards that were safely behind your landing zone in soft conditions may now be reachable. Recalculate carry requirements vs. total distance on every tee.</div></li>
+      <li><span class="step-n">4</span><div><strong>Par 5s become shorter:</strong> A par 5 that requires two shots from 250 yards in wet conditions may be reachable in two from 230 yards with firm fairways. Reassess reachability on firm days.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Approach Shot Strategy on Firm Greens</span>
+    <h3>When the Green Repels the Ball</h3>
+    <table class="tbl">
+      <tr><th>Green Firmness</th><th>Landing Target</th><th>Spin Effect</th><th>Over/Under Risk</th></tr>
+      <tr><td>Soft (winter/rain)</td><td>Flag or slightly past</td><td>High — ball stops within 3–5 ft of landing</td><td>Under-shooting risk</td></tr>
+      <tr><td>Normal</td><td>3–5 yds short of flag</td><td>Moderate — ball releases 8–15 ft</td><td>Both — standard play</td></tr>
+      <tr><td>Firm (summer)</td><td>Front third of green</td><td>Low — ball releases 20–40 ft</td><td>Over-shooting is the primary risk</td></tr>
+      <tr><td>Very firm (baked)</td><td>Short of green, run on</td><td>Minimal — consider bump and run</td><td>Any high shot risks bouncing over</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Putting on Fast Greens</span>
+    <h3>Speed and Break Adjustments</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Shorter backswing for same distance:</strong> On fast greens (Stimp 12+), the same stroke length that works on normal greens produces a putt that travels 40–60% further. Shorten the backswing and increase the mental focus on pace — not direction.</div></li>
+      <li><span class="step-n">2</span><div><strong>More break than you think:</strong> Fast greens amplify break. A putt that breaks 8 inches on Stimp 10 greens will break 14–16 inches on Stimp 13 greens on the same slope. Over-read the break on fast greens — the most common miss is the low side.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never charge on fast greens:</strong> The standard advice to "never up, never in" should be completely abandoned on fast greens. A putt hit firmly past the hole on Stimp 13+ leaves a 4–6 foot downhill return. Lag to 18 inches below the hole on every long putt.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- LINKS -->
+<div class="sec" id="links">
+  <h2 class="sec-title">Links Golf</h2>
+  <p class="sec-desc">Links courses play differently in every meaningful way — firm ground, relentless wind, unpredictable bounces, pot bunkers, rough that grabs, and greens that favour approach from below. Players who understand links principles gain 3–5 strokes over those who simply transplant parkland technique.</p>
+  <span class="badge badge-rust">🌿 Links Strategy</span>
+  <div class="card">
+    <span class="card-tag">The Links Mindset</span>
+    <h3>Fundamentally Different Strategic Principles</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The ground is the fifth dimension:</strong> Links golf uses the ground as a playing surface. Running the ball on the fairway, bouncing it onto the green, using slopes to redirect shots — these are not backup options on a links; they are primary technique.</div></li>
+      <li><span class="step-n">2</span><div><strong>Wind direction determines strategy:</strong> Before every hole, identify the wind direction relative to the hole layout. A direct headwind on a par 4 changes the target side of the fairway. A crosswind changes the miss direction preference. Recalibrate strategy every hole as wind shifts.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pot bunkers are disasters — not obstacles:</strong> A pot bunker on a links is not a greenside bunker with a manageable recovery. A deep pot bunker demands a lateral or backward escape to avoid compounding strokes. Aim dramatically away from pot bunkers — even at the cost of a longer hole.</div></li>
+      <li><span class="step-n">4</span><div><strong>Accept unpredictable bounces:</strong> The uneven links surface produces random bounces that would never happen on parkland. This is inherent to the form of golf. Accept it, plan for it, and ensure your target zones account for worst-case bounce outcomes.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Links Shot Selection</span>
+    <h3>Which Shots Work and Which Don't</h3>
+    <table class="tbl">
+      <tr><th>Shot</th><th>Links Effectiveness</th><th>When to Use</th><th>Avoid When</th></tr>
+      <tr><td>High lob shot</td><td class="bad">Risky — wind effect amplified</td><td>Absolutely forced only</td><td>Any wind; firm lies</td></tr>
+      <tr><td>Standard chip</td><td class="warn">Moderate — use with ground</td><td>Short rough, calm conditions</td><td>Deep rough; heavy wind</td></tr>
+      <tr><td>Bump and run</td><td class="good">Primary shot — highly effective</td><td>Always when path is clear</td><td>Must clear a ridge or bunker</td></tr>
+      <tr><td>Low punch iron</td><td class="good">Essential into wind</td><td>Any shot into 15+ mph wind</td><td>Downwind where normal loft works</td></tr>
+      <tr><td>Fairway wood from rough</td><td class="warn">Use hybrid instead</td><td>Sitting up in light rough</td><td>Heavy rough — club grabs</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Links Course Management Principles</span>
+    <h3>Hole-by-Hole Thinking</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Always identify the dangerous side:</strong> On a links, one side of every hole is almost always significantly worse than the other. Rough that is unplayable, a burn, OOB, or a steep drop. Identify this before the tee shot and aim the dispersion cone away from it unconditionally.</div></li>
+      <li><span class="step-n">2</span><div><strong>Play to the open side of greens:</strong> Many links greens funnel toward a bailout area. Identify the open side — where a miss still leaves a simple chip — and aim for it when the flag is tucked. The open miss on a links is almost always better than the closed miss.</div></li>
+      <li><span class="step-n">3</span><div><strong>Bogey management on brutal holes:</strong> Links courses have holes that simply play hard — into a 30 mph wind, uphill, narrow, bunkers everywhere. Accept that a bogey on these holes is a fine result. The player who makes par by playing aggressive and getting lucky will give those shots back on the next difficult hole.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>The links scoring mindset:</strong> A links round is not about replicating your best parkland performance. It is about accumulating the fewest strokes against a form of golf that demands adaptation above all else. The player who adapts fastest — to the wind, the bounces, the strategy — scores best. Technique is secondary to adaptability on links courses.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">WEATHER & CONDITIONS PLAY — PRO EDITION · WIND MATHS · RAIN · COLD · FIRM & FAST · LINKS</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

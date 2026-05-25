@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Stats Interpretation — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:160px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 26</p>
+  <h1>Stats<br><em>Interpretation</em></h1>
+  <p class="hero-sub">How to read Arccos, Shot Scope, and Strokes Gained data — what each SG metric means, which weaknesses to prioritise, translating numbers into a practice plan, and avoiding false patterns in small samples.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 Strokes Gained</span><span class="htag">🎯 Arccos</span>
+    <span class="htag">📡 Shot Scope</span><span class="htag">🔍 Pattern Recognition</span>
+    <span class="htag">📋 Practice Plan</span><span class="htag">⚠️ Sample Size</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('sg',this)">Strokes Gained</button>
+  <button class="tab" onclick="show('platforms',this)">Platforms</button>
+  <button class="tab" onclick="show('priorities',this)">Prioritising</button>
+  <button class="tab" onclick="show('practice',this)">Practice Plan</button>
+  <button class="tab" onclick="show('samples',this)">Sample Size</button>
+  <button class="tab" onclick="show('arccos',this)">Arccos Air</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Stats Framework</h2>
+  <p class="sec-desc">On-course stat tracking converts subjective "I think I need to work on X" into objective "the data shows I lose 1.2 strokes per round on approaches from 150–175 yards." The difference between those two statements is the difference between purposeful practice and comfortable practice.</p>
+  <span class="badge badge-gold">📊 Data-Driven Improvement</span>
+  <div class="card">
+    <span class="card-tag">Why Traditional Stats Miss the Point</span>
+    <h3>Fairways Hit and GIR Are the Wrong Metrics</h3>
+    <p style="margin-bottom:12px;">Traditional golf statistics — fairways hit, greens in regulation, putts per round — are flawed as improvement guides. They conflate quality and context. A 15-foot putt holed counts the same as a 3-foot putt. Missing the green from 220 yards is treated the same as missing from 140 yards. Strokes Gained solves both problems by measuring performance relative to expectation.</p>
+    <div class="formula">
+      <div class="formula-lbl">Why Traditional Stats Mislead</div>
+      <div class="formula-main">Putts per round: 28 putts could mean excellent putting<br>OR missing 8 greens by 1 foot (easy chips, short putts).<br>Same number — completely different meaning.<br><br>GIR: 10 greens hit from average of 185 yards<br>OR 10 greens hit from average of 142 yards.<br>Same GIR — completely different ball-striking quality.</div>
+      <div class="formula-note">Strokes Gained normalises for distance and situation. Every shot is compared to the Tour average for that exact situation — distance, lie, and scoring context. This produces a true measure of how you perform relative to expectation, independent of course difficulty or context.</div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Five Strokes Gained Categories</span>
+    <h3>The Complete Picture of Your Game</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>Covers</th><th>Tour Average</th><th>10 HCP Typical</th></tr>
+      <tr><td>SG: Off the Tee (OTT)</td><td>All tee shots on par 4s and 5s</td><td>0.00</td><td class="bad">−0.8 to −1.2</td></tr>
+      <tr><td>SG: Approach (APP)</td><td>All approach shots to the green</td><td>0.00</td><td class="bad">−1.2 to −1.8</td></tr>
+      <tr><td>SG: Around the Green (ARG)</td><td>Chips, pitches, bunker shots under 30 yds</td><td>0.00</td><td class="bad">−0.6 to −1.0</td></tr>
+      <tr><td>SG: Putting (PUTT)</td><td>All putts on the green</td><td>0.00</td><td class="warn">−0.4 to −0.8</td></tr>
+      <tr><td>SG: Total</td><td>Sum of all four categories</td><td>0.00</td><td class="bad">−3.0 to −4.5</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The scratch standard:</strong> A scratch golfer averages approximately 0.00 across all SG categories vs. Tour average — meaning they play to Tour average. A 10 HCP player losing 3.5 strokes total per round must recover those strokes through handicap adjustment in competitions. The SG breakdown tells you exactly where those 3.5 strokes are lost — and therefore where to practise.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="sg">
+  <h2 class="sec-title">Strokes Gained — Deep Dive</h2>
+  <p class="sec-desc">Each SG category measures a distinct part of the game and requires a different interpretation approach. Understanding what the numbers mean — and what they don't — prevents misdiagnosis and misallocated practice time.</p>
+  <span class="badge badge-lime">🔬 SG Mechanics</span>
+  <div class="card">
+    <span class="card-tag">SG: Approach — The Most Impactful Category</span>
+    <h3>Where Most of the Game is Won or Lost</h3>
+    <p style="margin-bottom:12px;">SG Approach is consistently the largest differentiator between handicap levels. Research across 200,000+ tracked rounds shows approach play accounts for approximately 40% of the scoring difference between a 10 HCP and scratch — more than any other category.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>What it measures:</strong> The expected strokes to hole out from your approach shot position compared to where you finish. If you are 150 yards out (expected 2.9 strokes to hole) and you leave yourself 25 feet (expected 2.1 strokes to hole) — you gained 0.8 strokes on the approach.</div></li>
+      <li><span class="step-n">2</span><div><strong>Distance bands matter:</strong> Break SG: APP by distance band — 100–125 yards, 125–150, 150–175, 175–200, 200+. A player who loses 0.3 SG from 150–175 yards but gains 0.1 SG from 125–150 yards has a very specific practice target. The overall number hides this.</div></li>
+      <li><span class="step-n">3</span><div><strong>Direction of miss matters:</strong> Arccos and Shot Scope both show where your approach misses land. If 68% of your short-side misses are left, your tendency is systematic — adjust your aim or check your shot shape consistency.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">SG: Putting — The Most Misread Category</span>
+    <h3>Why Putting SG Requires Careful Interpretation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Distance distribution is critical context:</strong> A player who consistently hits approaches to 45 feet will have worse SG: PUTT than a player hitting to 18 feet — even with identical putting technique. Poor SG: PUTT can indicate approach shot problems, not putting problems. Always cross-reference with SG: APP.</div></li>
+      <li><span class="step-n">2</span><div><strong>Separate long and short putting:</strong> Break putting into two zones: over 20 feet (lag putting — pace and direction) and under 20 feet (scoring zone — make percentage). A player who lags perfectly but misses 6-footers has a different problem than one who 3-putts from 40 feet.</div></li>
+      <li><span class="step-n">3</span><div><strong>Make percentage by distance:</strong> The most actionable putting metric. Compare your make percentage at 4, 6, 8, 10, 15, and 20 feet to Tour average. Where does yours fall off most steeply? That distance is your putting practice priority.</div></li>
+    </ul>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Tour Make %</th><th>Scratch Make %</th><th>10 HCP Make %</th></tr>
+      <tr><td>3 feet</td><td class="good">99%</td><td class="good">97%</td><td class="good">92%</td></tr>
+      <tr><td>5 feet</td><td class="good">88%</td><td class="good">80%</td><td class="warn">68%</td></tr>
+      <tr><td>8 feet</td><td class="warn">65%</td><td class="warn">52%</td><td class="bad">38%</td></tr>
+      <tr><td>10 feet</td><td class="warn">52%</td><td class="warn">40%</td><td class="bad">28%</td></tr>
+      <tr><td>15 feet</td><td class="bad">32%</td><td class="bad">22%</td><td class="bad">14%</td></tr>
+      <tr><td>20 feet</td><td class="bad">20%</td><td class="bad">13%</td><td class="bad">8%</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">SG: Off the Tee</span>
+    <h3>What Tee Shot Data Actually Shows</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Distance vs. accuracy trade-off:</strong> SG: OTT captures both. A short, accurate drive and a long, slightly offline drive can produce the same SG value if the expected strokes from each position are equal. The data tells you whether your trade-off is optimal — or whether you are giving up accuracy without gaining enough distance.</div></li>
+      <li><span class="step-n">2</span><div><strong>Penalty frequency:</strong> OB, water, and unplayable lies are the most damaging tee shot outcomes. Your penalty frequency per round is the first number to address in SG: OTT analysis. Even one penalty shot per round costs more than any other single tee shot metric.</div></li>
+      <li><span class="step-n">3</span><div><strong>Average approach distance after tee shot:</strong> This is the bridge between SG: OTT and SG: APP. If your average approach is 168 yards, what does that translate to in expected GIR? If adding 20 yards of driving distance reduces average approach to 148 yards, the GIR gain from that distance increase is quantifiable.</div></li>
+    </ul>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">SG: Around the Green</span>
+    <h3>The Most Undervalued Category at 10 HCP</h3>
+    <p style="margin-bottom:12px;">SG: ARG covers all shots within 30 yards of the green that are not on the putting surface. This category is often dismissed as "just chipping" — but research shows it accounts for 20–25% of the scoring gap between 10 HCP and scratch. A player who converts more chips to tap-ins gains significantly without any change to ball-striking.</p>
+    <div class="bar-group">
+      <div class="bar-title">Scrambling % — Make Par After Missing Green (Tour Reference)</div>
+      <div class="bar-row"><span class="bar-lbl">Tour average</span><div class="bar-track"><div class="bar-fill gold" style="width:60%"></div></div><span class="bar-val">58–62%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Scratch amateur</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-val">46–52%</span></div>
+      <div class="bar-row"><span class="bar-lbl">5 HCP</span><div class="bar-track"><div class="bar-fill teal" style="width:37%"></div></div><span class="bar-val">36–40%</span></div>
+      <div class="bar-row"><span class="bar-lbl">10 HCP</span><div class="bar-track"><div class="bar-fill red" style="width:25%"></div></div><span class="bar-val">24–28%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="platforms">
+  <h2 class="sec-title">Arccos & Shot Scope</h2>
+  <p class="sec-desc">Both platforms automatically track every shot using GPS sensors — Arccos via sensors in grip ends, Shot Scope via wristband + club tags. Both produce SG data but differ in interface, subscription model, and the depth of specific analytics.</p>
+  <span class="badge badge-teal">📡 Platform Guide</span>
+  <div class="card">
+    <span class="card-tag">Arccos Caddie</span>
+    <h3>Key Features and How to Read the Dashboard</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Strokes Gained dashboard:</strong> The home screen shows SG breakdown across all five categories with trend lines. The most important view is the 10-round rolling average — not single round data. Navigate to Analytics → Strokes Gained → Rolling Average.</div></li>
+      <li><span class="step-n">2</span><div><strong>Approach analysis by distance:</strong> Under Analytics → Approach, filter by distance band. Identify your worst-performing 25-yard window. This single data point should determine your next 4 weeks of approach practice sessions.</div></li>
+      <li><span class="step-n">3</span><div><strong>Smart Club Distances:</strong> Arccos calculates your actual average carry distance per club from tracked rounds — not your perceived distance. Compare your Arccos distances to your perceived distances. Most 10 HCP players discover they carry each club 5–12 yards shorter than they believe.</div></li>
+      <li><span class="step-n">4</span><div><strong>Caddie AI:</strong> The in-round caddie feature provides club recommendations based on your personal distance data, wind, and elevation. Following Caddie recommendations consistently has been shown to improve approach proximity by 8–12% vs. manual club selection.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Shot Scope</span>
+    <h3>Key Features and Dashboard Navigation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Performance dashboard:</strong> The primary analytics view shows handicap-adjusted SG benchmarks, meaning your numbers are compared to your own handicap group rather than Tour average. This is arguably more useful for practice prioritisation — you can see where you underperform vs. other 10 HCPs, not just vs. Tour.</div></li>
+      <li><span class="step-n">2</span><div><strong>Proximity to hole by distance:</strong> Shot Scope's proximity data is one of its strongest features. Navigate to Approach → Proximity → by Distance. This shows your average distance from the flag by 10-yard approach distance band — the clearest single view of your approach shot performance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Miss pattern mapping:</strong> Shot Scope plots every approach miss on a green graphic. After 10+ rounds, clear miss patterns emerge — whether you miss systematically short, long, left, or right. This data directly informs aim adjustments and practice targets.</div></li>
+      <li><span class="step-n">4</span><div><strong>Putting heatmaps:</strong> The putting section shows where on the green you most commonly start putting from. If your heatmap shows a concentration of 35–50 foot first putts, your approach is leaving you in 3-putt territory — suggesting an approach problem, not a putting problem.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Manual Stat Tracking (No Device)</span>
+    <h3>Simple Paper-Based System for Key Metrics</h3>
+    <p style="margin-bottom:12px;">If you prefer not to use a tracking device, this simplified 5-metric system captures the most important data with a pencil on the scorecard.</p>
+    <table class="tbl">
+      <tr><th>Metric</th><th>How to Track</th><th>Target (10 HCP)</th></tr>
+      <tr><td>Fairways hit</td><td>F or M (miss) next to tee score</td><td>55–65%</td></tr>
+      <tr><td>GIR</td><td>Circle if green hit in regulation</td><td>40–50%</td></tr>
+      <tr><td>Putts per GIR</td><td>Note putts only on holes where GIR</td><td>Under 1.85</td></tr>
+      <tr><td>Up and down %</td><td>Tick if scramble succeeds from off green</td><td>28–35%</td></tr>
+      <tr><td>Penalty shots</td><td>P next to any penalty</td><td>Under 1.0 per round</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="priorities">
+  <h2 class="sec-title">Prioritising Your Weaknesses</h2>
+  <p class="sec-desc">Having data is only valuable if it leads to correct prioritisation. The most common mistake is practising what feels comfortable, or practising the category with the worst absolute number rather than the category with the highest improvement potential.</p>
+  <span class="badge badge-rust">🎯 Where to Focus</span>
+  <div class="card">
+    <span class="card-tag">The Prioritisation Framework</span>
+    <h3>Not All Weaknesses Are Equal</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Biggest SG loss first — not worst absolute stat:</strong> A player who loses 1.8 SG on approach and 0.5 SG on putting should practise approaches first — even if their putting feel worse. The numbers determine priority, not perception.</div></li>
+      <li><span class="step-n">2</span><div><strong>Controllable vs. uncontrollable:</strong> Some losses are hard to improve quickly (SG: OTT for a player with limited swing speed). Others respond rapidly to targeted practice (SG: PUTT for a player with poor pace control). Prioritise areas where rapid improvement is achievable over areas requiring months of physical development.</div></li>
+      <li><span class="step-n">3</span><div><strong>Consistency before peak:</strong> A player who occasionally makes great approach shots but also makes many poor ones should focus on tightening the dispersion before trying to improve average proximity. Consistency (reducing worst-case outcomes) is worth more than raising the best-case ceiling.</div></li>
+      <li><span class="step-n">4</span><div><strong>The elimination principle:</strong> Identify your most costly single shot type — the specific miss that produces the most double bogeys. This is your priority target. A player who loses 80% of their doubles from greenside bunkers should practise greenside bunker play above all else until that rate changes.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The 10 HCP Priority Hierarchy</span>
+    <h3>What the Data Says About Where 10 HCP Players Lose the Most</h3>
+    <div class="bar-group">
+      <div class="bar-title">Average SG Loss by Category — 10 HCP vs. Scratch (per round)</div>
+      <div class="bar-row"><span class="bar-lbl">SG: Approach</span><div class="bar-track"><div class="bar-fill red" style="width:100%"></div></div><span class="bar-val">−1.4 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">SG: Off the Tee</span><div class="bar-track"><div class="bar-fill red" style="width:72%"></div></div><span class="bar-val">−1.0 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">SG: Around Green</span><div class="bar-track"><div class="bar-fill gold" style="width:57%"></div></div><span class="bar-val">−0.8 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">SG: Putting</span><div class="bar-track"><div class="bar-fill teal" style="width:43%"></div></div><span class="bar-val">−0.6 avg</span></div>
+    </div>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The data verdict:</strong> For the average 10 HCP, approach play and driving are the two highest-leverage improvement areas. This contradicts the common belief that putting is where most strokes are lost. Putting practice should be third or fourth priority for most 10 HCP players — not first. Let the data, not the folklore, determine your practice calendar.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="practice">
+  <h2 class="sec-title">Stats to Practice Plan</h2>
+  <p class="sec-desc">The final step in the stats workflow is translating data into a specific, time-allocated practice plan. A data-driven practice plan specifies not just what to work on, but how much time, in what format, and what success looks like.</p>
+  <span class="badge badge-lime">📋 Building Your Plan</span>
+  <div class="card">
+    <span class="card-tag">The Translation Process</span>
+    <h3>From Number to Drill in Four Steps</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify the specific loss pattern:</strong> "I lose 1.4 SG on approaches" is not actionable. "I lose 0.6 SG on approaches from 150–175 yards — my proximity average is 52 feet vs. Tour benchmark of 38 feet" is actionable. Drill into distance bands, miss directions, and specific scenarios.</div></li>
+      <li><span class="step-n">2</span><div><strong>Convert to a practice target:</strong> Using the identified loss, set a 4-week improvement target. "Reduce 150–175 yard proximity average from 52 feet to 44 feet." This is measurable, specific, and achievable within a practice block.</div></li>
+      <li><span class="step-n">3</span><div><strong>Allocate time proportionally:</strong> Assign practice time in proportion to SG loss weight. If approach is 40% of your total SG loss, approximately 40% of practice time goes to approach work. Not 90% on putting because putting "feels off today."</div></li>
+      <li><span class="step-n">4</span><div><strong>Measure after 4 weeks:</strong> After a 4-week focused block, review the data. Did the target metric improve? If yes — move to next priority. If not — reassess whether the practice method addressed the actual cause.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Sample Practice Plan — 10 HCP Data Profile</span>
+    <h3>Hypothetical Player: Loses 1.4 APP, 0.8 ARG, 0.6 PUTT</h3>
+    <table class="tbl">
+      <tr><th>Practice Session Type</th><th>Time Allocation</th><th>SG Target</th><th>Metric to Track</th></tr>
+      <tr><td>Approach play 150–175 yds</td><td>30% of range time</td><td>SG: APP</td><td>Proximity average; miss direction %</td></tr>
+      <tr><td>Greenside chipping (varied lies)</td><td>20% of session</td><td>SG: ARG</td><td>Up and down conversion %</td></tr>
+      <tr><td>Bunker play</td><td>10% of session</td><td>SG: ARG</td><td>Bunker save % (aim: above 35%)</td></tr>
+      <tr><td>Putting — 5–10 foot zone</td><td>20% of session</td><td>SG: PUTT</td><td>Make % from 6 and 8 feet</td></tr>
+      <tr><td>Putting — lag 30–50 feet</td><td>10% of session</td><td>SG: PUTT</td><td>3-putt rate (aim: below 8%)</td></tr>
+      <tr><td>Driver / tee shots</td><td>10% of session</td><td>SG: OTT</td><td>Fairway % and penalty rate</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="samples">
+  <h2 class="sec-title">Sample Size & False Patterns</h2>
+  <p class="sec-desc">The most dangerous trap in stats-based analysis is drawing conclusions from too few rounds. Small samples produce dramatic-looking numbers that evaporate when more data is collected. Understanding statistical validity prevents misdirected practice based on noise, not signal.</p>
+  <span class="badge badge-rust">⚠️ Statistical Validity</span>
+  <div class="card">
+    <span class="card-tag">Minimum Sample Sizes</span>
+    <h3>How Many Rounds Before You Can Trust the Number</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Minimum Rounds</th><th>Reliable at</th><th>Warning</th></tr>
+      <tr><td>SG: Total</td><td>10 rounds</td><td class="good">20+ rounds</td><td>Early readings wildly variable</td></tr>
+      <tr><td>SG: Approach</td><td>15 rounds</td><td class="good">25+ rounds</td><td>Approach varies heavily by course</td></tr>
+      <tr><td>SG: Putting</td><td>20 rounds</td><td class="good">30+ rounds</td><td>Most variable category — most rounds needed</td></tr>
+      <tr><td>SG: Around Green</td><td>15 rounds</td><td class="good">20+ rounds</td><td>Low frequency shots — needs many rounds</td></tr>
+      <tr><td>Proximity by distance band</td><td>25 rounds</td><td class="good">40+ rounds</td><td>Narrow bands have few shots per round</td></tr>
+      <tr><td>Make % at specific distance</td><td>50 putts minimum</td><td class="good">100+ putts</td><td>Small samples produce extreme percentages</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Common False Patterns</span>
+    <h3>Traps That Produce Wrong Practice Priorities</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The three-round putting slump:</strong> Three rounds with 34, 36, and 35 putts feels like a putting crisis. It is almost certainly random variation. Putting is the highest-variance SG category — it requires 20–30 rounds to establish a reliable baseline. Three bad putting rounds prove nothing about your putting skill.</div></li>
+      <li><span class="step-n">2</span><div><strong>The course-specific distortion:</strong> A course with exceptionally fast greens, severe rough, or unusual wind exposure will skew every SG category for the rounds played there. If 8 of your 15 tracked rounds are from the same difficult course, your data over-represents that course's challenges. Track across multiple courses.</div></li>
+      <li><span class="step-n">3</span><div><strong>The self-fulfilling focus trap:</strong> Once you identify a perceived weakness and start thinking about it on-course, performance in that area typically worsens temporarily — the explicit processing effect. A data-driven weakness may appear to confirm itself not because it is genuinely a weakness but because awareness increases anxiety in that specific situation.</div></li>
+      <li><span class="step-n">4</span><div><strong>Confusing correlation with cause:</strong> A player who loses SG: PUTT may actually have an approach problem. Poor approach shots leave longer first putts — which produce more 3-putts and worse SG: PUTT. The putting stat looks bad but the root cause is approach proximity. Always check whether a stat reflects a genuine skill weakness or is the downstream consequence of another weakness.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Rolling Average Rule</span>
+    <h3>The Only Number Worth Trusting</h3>
+    <div class="formula">
+      <div class="formula-lbl">The 10-Round Rolling Average</div>
+      <div class="formula-main">Never make practice decisions from single-round data.<br>Never make practice decisions from fewer than 10 rounds.<br><br>Use the 10-round rolling average as your baseline.<br>Update it after every round.<br>Only act on trends that persist across 3+ consecutive 10-round windows.<br><br>Signal: metric moves consistently in the same direction across 3 months.<br>Noise: metric fluctuates widely round to round with no clear trend.</div>
+      <div class="formula-note">Both Arccos and Shot Scope have rolling average views built into their dashboards. Set this as your default view. Resist the temptation to analyse single-round spikes — they almost always revert to the mean by the following round.</div>
+    </div>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>The data discipline:</strong> The players who improve fastest with tracking technology are not those who analyse every round obsessively. They are those who track consistently, review monthly, act on confirmed trends, and resist reacting to noise. Treat your data like a coach treats a season of film — patterns over time, not individual plays.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="arccos">
+  <h2 class="sec-title">Arccos Air — Complete Guide</h2>
+  <p class="sec-desc">A full system for interpreting every data point the Arccos Air generates — what each metric means, how to read it correctly, common misinterpretations, and exactly how to feed the data into your practice and course management decisions.</p>
+
+  <div class="info-box tip">
+    <span class="ico">📡</span>
+    <p><strong>What Arccos Air does differently.</strong> Unlike manual tracking or basic GPS apps, Arccos Air automatically detects every shot via sensors in your grip ends, tags each shot with GPS coordinates, and compares every single shot to a database of 1 billion+ tracked shots — producing Strokes Gained data calibrated to your exact situation on every hole of every round.</p>
+  </div>
+
+  <!-- SETUP -->
+  <span class="badge badge-lime">⚙️ Setup & Calibration</span>
+  <div class="card">
+    <span class="card-tag">Getting Accurate Data From Round One</span>
+    <h3>Setup Steps That Determine Data Quality</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Sensor placement:</strong> Arccos Air sensors screw into the butt end of every club grip — including putter. Every club must have a sensor for complete data. Missing clubs produce gaps in SG calculations that distort every category. Check all sensors are snug before every round.</div></li>
+      <li><span class="step-n">2</span><div><strong>Shot detection calibration:</strong> Arccos auto-detects shots via the accelerometer in the sensor. For the first 3–4 rounds, review every shot in the app post-round and correct any missed shots or false positives (practice swings occasionally trigger detection). The AI learns your swing signature — calibration accuracy improves significantly by rounds 5–8.</div></li>
+      <li><span class="step-n">3</span><div><strong>Club assignment:</strong> Ensure every club is correctly assigned in the app with accurate loft and club type. Arccos uses club type to categorise shots into the correct SG bucket — a misassigned utility iron logged as a wood will distort both SG: OTT and SG: APP calculations.</div></li>
+      <li><span class="step-n">4</span><div><strong>Post-round review (mandatory for first 10 rounds):</strong> Open the round review within 30 minutes of finishing. Walk through every shot on the map view. Correct any detection errors. This 10-minute habit ensures the data feeding your SG calculations is accurate — it compounds over your entire tracking history.</div></li>
+    </ul>
+  </div>
+
+  <!-- SMART DISTANCES -->
+  <span class="badge badge-gold">📏 Smart Club Distances</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Most Immediately Actionable Arccos Feature</span>
+    <h3>Your Real Distances — Not What You Think You Hit</h3>
+    <p style="margin-bottom:12px;">Arccos Smart Club Distances calculates your actual average carry per club from real on-course shots — accounting for your miss-hits, not just your best strikes. This is almost always a revelation. Research across Arccos users shows the average 10 HCP player overestimates their carry distance by 8–14 yards per club.</p>
+    <table class="tbl">
+      <tr><th>What Arccos Shows</th><th>What It Means</th><th>Action</th></tr>
+      <tr><td>Smart Distance per club</td><td>Your true average carry including all misses tracked on course</td><td class="good">Use these for club selection — not your best-day range distances</td></tr>
+      <tr><td>Distance Consistency %</td><td>How tight your carry distribution is — the tighter the better</td><td class="warn">Below 80% consistency = contact quality issue → Mevo smash factor session</td></tr>
+      <tr><td>Max vs. Average gap</td><td>Difference between your best and average carry per club</td><td class="warn">Gap &gt;15 yds per club = significant mishit rate → TRS Ball contact work</td></tr>
+      <tr><td>Under-clubbing trend</td><td>Arccos flags if you consistently finish short of target</td><td class="bad">If flagged: commit to +1 club on every approach until flag clears</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The single biggest scoring gain available from Arccos:</strong> Simply using Smart Club Distances for club selection instead of perceived distances. Studies across 250,000+ Arccos users showed players who switched to Smart Distance club selection reduced their average approach proximity by 11 feet — equivalent to approximately 0.4 SG: APP improvement per round. No swing change required.</p>
+    </div>
+  </div>
+
+  <!-- CADDIE AI -->
+  <span class="badge badge-teal">🤖 Arccos Caddie AI</span>
+  <div class="card card-teal">
+    <span class="card-tag">In-Round Club Recommendations</span>
+    <h3>What the AI Accounts For — and How to Use It</h3>
+    <p style="margin-bottom:12px;">The Arccos Caddie AI recommendation engine accounts for your personal Smart Distances, live wind speed and direction, elevation change, temperature, and the specific hole layout. It is not a generic recommendation — it is personalised to your actual shot data.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Wind adjustment:</strong> Caddie applies the tour caddie wind percentage formula automatically — into: +10% per 10 mph; downwind: −5% per 10 mph. It adjusts for crosswind carry loss as well. Trust the wind adjustment on approaches over 10 mph; most amateurs significantly under-club into the wind.</div></li>
+      <li><span class="step-n">2</span><div><strong>Elevation correction:</strong> Caddie adjusts for hole elevation change using the course's GPS contour data. A 10-metre uphill approach adds approximately 3–4 yards to required carry — Caddie applies this automatically. On hilly courses this feature alone can save 2–3 strokes per round from incorrect elevation adjustments.</div></li>
+      <li><span class="step-n">3</span><div><strong>Flag position vs. centre:</strong> Caddie recommends targeting the fat part of the green by default — not the flag. If your dispersion shows a right miss tendency, Caddie will adjust the aim point left of the flag accordingly. This is course-management intelligence built into every recommendation.</div></li>
+      <li><span class="step-n">4</span><div><strong>When to override Caddie:</strong> Override when you have specific local knowledge (firm/wet conditions), when your form on a specific club is unusually good or bad today, or when the recommended club is one you have low confidence in. Track your overrides — if you consistently outperform Caddie on a specific club, your Smart Distance for that club may need more data.</div></li>
+    </ul>
+  </div>
+
+  <!-- SG DASHBOARD -->
+  <span class="badge badge-rust">📊 Reading the SG Dashboard</span>
+  <div class="card card-rust">
+    <span class="card-tag">The Five Views That Matter Most</span>
+    <h3>Dashboard Navigation — What to Look At and When</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Rolling Average (primary view):</strong> Analytics → Strokes Gained → Rolling Average. Set to 10-round window. This is the only SG view you should base practice decisions on. Single-round data is noise. The rolling average is the signal.</div></li>
+      <li><span class="step-n">2</span><div><strong>Approach by Distance Band:</strong> Analytics → Approach → by Distance. This breaks your SG: APP into 25-yard windows (100–125, 125–150, 150–175, 175–200, 200+). Identify your worst-performing band. That distance range is your iron practice priority for the next 4-week block.</div></li>
+      <li><span class="step-n">3</span><div><strong>Approach Miss Pattern:</strong> Analytics → Approach → Miss Direction. After 15+ rounds, a clear miss pattern emerges. If 65%+ of your misses are in one direction, this is systematic — not random. Adjust your aim point on course, and investigate the HackMotion face angle / F2P combination that is causing the directional bias.</div></li>
+      <li><span class="step-n">4</span><div><strong>Putting Heatmap:</strong> Analytics → Putting → Distance Distribution. This shows where on the green you are most commonly starting your first putt from. A heatmap concentrated at 35–50 feet means your approaches are leaving you in 3-putt territory — the problem is approach proximity, not putting skill.</div></li>
+      <li><span class="step-n">5</span><div><strong>Hole Performance:</strong> Analytics → Hole Analysis → by Par. This shows your average score relative to par on par 3s, 4s, and 5s. Consistently losing strokes on par 3s suggests an iron accuracy issue. Losing on par 5s suggests poor scoring-hole decision-making or weak approach from layup positions.</div></li>
+    </ul>
+  </div>
+
+  <!-- KEY METRICS DECODED -->
+  <span class="badge badge-lime">🔍 Every Arccos Metric Decoded</span>
+  <div class="card">
+    <span class="card-tag">Complete Metric Reference</span>
+    <h3>What Each Number Means and What to Do With It</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>What It Measures</th><th>Benchmark (10 HCP)</th><th>Action Trigger</th></tr>
+      <tr><td><strong>SG: Total</strong></td><td>Your overall performance vs. Tour average per round</td><td class="warn">−3.0 to −4.5</td><td>Focus on the single largest SG category loss</td></tr>
+      <tr><td><strong>SG: Approach</strong></td><td>Quality of all shots to the green</td><td class="warn">−1.2 to −1.8</td><td>Drill into distance bands — find the worst 25-yd window</td></tr>
+      <tr><td><strong>SG: Off the Tee</strong></td><td>Tee shot quality on par 4s &amp; 5s</td><td class="warn">−0.8 to −1.2</td><td>Check penalty frequency first, then distance vs. accuracy trade-off</td></tr>
+      <tr><td><strong>SG: Around Green</strong></td><td>Chips, pitches, bunker shots &lt;30 yds</td><td class="warn">−0.6 to −1.0</td><td>Check up-and-down % by lie type (tight, rough, bunker)</td></tr>
+      <tr><td><strong>SG: Putting</strong></td><td>All putts on the green</td><td class="warn">−0.4 to −0.8</td><td>Cross-reference with approach proximity — may be an approach problem</td></tr>
+      <tr><td><strong>Smart Distance</strong></td><td>True average carry per club (all shots)</td><td>—</td><td>If &gt;8 yds below perceived: switch to Smart Distance for all club selection</td></tr>
+      <tr><td><strong>Proximity Average</strong></td><td>Average feet from hole on approach shots</td><td class="warn">50–60 ft (150 yds)</td><td>Above 55 ft at 150 yds: approach practice is #1 priority</td></tr>
+      <tr><td><strong>Fairways Hit %</strong></td><td>Tee shot accuracy on par 4s &amp; 5s</td><td class="warn">48–58%</td><td>Below 40%: check HackMotion face angle + path data from Mevo</td></tr>
+      <tr><td><strong>GIR %</strong></td><td>Greens in regulation</td><td class="warn">32–42%</td><td>Below 30%: proximity data tells you whether it is accuracy or distance</td></tr>
+      <tr><td><strong>Scrambling %</strong></td><td>Par saves after missing green</td><td class="warn">26–34%</td><td>Below 25%: short game practice priority; break by lie type</td></tr>
+      <tr><td><strong>3-Putt %</strong></td><td>Percentage of greens resulting in 3+ putts</td><td class="warn">12–18%</td><td>Above 15%: check first putt distance — lag putting or approach problem</td></tr>
+      <tr><td><strong>Make % by Distance</strong></td><td>Putts made at each distance band</td><td>See table above</td><td>Find the distance where your make % first falls below Tour −15% — that is your putting practice zone</td></tr>
+      <tr><td><strong>Penalty Frequency</strong></td><td>Penalty shots per round average</td><td class="warn">0.8–1.5</td><td>Above 1.5: tee shot strategy review — club down on high-penalty holes</td></tr>
+      <tr><td><strong>Par 3 Performance</strong></td><td>Avg score relative to par on par 3s</td><td class="warn">+0.4 to +0.7</td><td>Above +0.8: iron accuracy from 140–200 yds is a priority</td></tr>
+    </table>
+  </div>
+
+  <!-- ARCCOS + MEVO + HACKMOTION -->
+  <span class="badge badge-gold">🔗 Integrating Arccos With Your Full Data System</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Three-System Diagnostic Chain</span>
+    <h3>Arccos → Mevo → HackMotion: From Problem to Root Cause</h3>
+    <p style="margin-bottom:12px;">Arccos tells you <em>where</em> strokes are being lost on the course. Mevo tells you <em>what the ball is doing</em> at impact. HackMotion tells you <em>why the club is producing that outcome</em>. Used together, the diagnostic chain runs from scoring outcome all the way back to the wrist angle that caused it.</p>
+    <table class="tbl">
+      <tr><th>Arccos Identifies</th><th>Mevo Diagnoses</th><th>HackMotion Fixes</th></tr>
+      <tr><td>High SG: APP loss from 150–175 yds — misses left</td><td>Negative F2P (face closed to path), high spin axis left, draw bias</td><td>Too much lead wrist flexion at top (−35°+) — reduce by 10–15°</td></tr>
+      <tr><td>High SG: APP loss — distance short of target</td><td>Low smash factor (&lt;1.42), low ball speed vs. club speed</td><td>Impact flex more extended than address — flip confirmed. Biofeedback on impact position.</td></tr>
+      <tr><td>High SG: OTT — driver accuracy, right misses</td><td>Face angle open (+4°+), positive F2P, high spin axis</td><td>Lead wrist extended at top (+15°+) — reduce extension, move toward −15°</td></tr>
+      <tr><td>High SG: ARG — poor up-and-down</td><td>Low smash factor on chip shots, thin/fat contact</td><td>Extension at chip impact — flip confirmed. G-Force Wedge + biofeedback on impact wrist angle.</td></tr>
+      <tr><td>High SG: PUTT with good approach proximity</td><td>N/A — genuine putting problem</td><td>HackMotion putting mode: wrist variance at impact &gt;±3° — biofeedback on stroke stability.</td></tr>
+    </table>
+  </div>
+
+  <!-- POST ROUND PROTOCOL -->
+  <span class="badge badge-teal">📋 Post-Round Arccos Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">The 15-Minute Review That Drives Everything</span>
+    <h3>What to Do With Your Data After Every Round</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Minutes 0–5 — Shot verification:</strong> Open the round in Arccos. Walk through the hole-by-hole map view. Correct any missed detections or false positives (particularly important for chip shots and short pitches near the green, which are occasionally mis-categorised). Never skip this step — garbage data produces garbage insights.</div></li>
+      <li><span class="step-n">2</span><div><strong>Minutes 5–8 — Identify the day's single biggest SG loss:</strong> Go to Analytics → This Round → SG Breakdown. Which category lost the most? What was the specific shot type? Note it. This is your only post-round takeaway — do not try to fix everything from one round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Minutes 8–12 — Check rolling average movement:</strong> Open the 10-round rolling average. Did any category move by 0.2+ SG in either direction vs. last review? A consistent 0.2 SG/round improvement in any category across 3+ months is meaningful — record it in your Progress Journal as a confirmed gain.</div></li>
+      <li><span class="step-n">4</span><div><strong>Minutes 12–15 — Set one practice target:</strong> Based on today's data, set one specific practice metric for your next session. "Approach from 150–175 yds — proximity target under 42 feet for 10+ shots on Mevo." One target, measurable, directly linked to the Arccos data that identified the gap.</div></li>
+    </ul>
+  </div>
+
+  <!-- MONTHLY REVIEW -->
+  <span class="badge badge-rust">📆 Monthly Arccos Review Protocol</span>
+  <div class="card card-rust">
+    <span class="card-tag">Monthly Review — The Strategic Layer</span>
+    <h3>What to Examine Once Per Month to Drive Your Training Block</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>10-round rolling average — all five SG categories:</strong> Write down the current rolling average for each. Compare to last month. Which categories improved, held steady, or worsened? Only categories that have changed by 0.15+ SG/round consistently represent a genuine trend — not noise.</div></li>
+      <li><span class="step-n">2</span><div><strong>Approach distance band analysis:</strong> Identify your worst-performing 25-yard approach band this month. Has it changed from last month? If the same band has been your weakest for 3 consecutive months, it is a confirmed technical weakness — book a Mevo session targeting that specific distance and cross-reference the data.</div></li>
+      <li><span class="step-n">3</span><div><strong>Smart Distance calibration check:</strong> After every 5+ rounds, Arccos updates your Smart Distances. Check whether any club has shifted by more than 5 yards. A gain of 5+ yards in driver Smart Distance that has held for 10 rounds = confirmed speed or contact improvement. Log it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Penalty frequency trend:</strong> Calculate your penalty shots per round average for the month. If above 1.5, identify which holes and shot types are producing the penalties. This is a course management problem as much as a technique problem — adjust your strategy card for those specific holes.</div></li>
+      <li><span class="step-n">5</span><div><strong>Set next month's single focus metric:</strong> Based on the full monthly review, select one SG category and one specific sub-metric within it as next month's primary focus. Allocate practice time accordingly. Do not split focus across all four categories — targeted practice on one confirmed weakness produces faster improvement than diluted effort across all of them.</div></li>
+    </ul>
+  </div>
+
+  <!-- COMMON MISREADINGS -->
+  <span class="badge badge-lime">⚠️ Common Arccos Misinterpretations</span>
+  <div class="card">
+    <span class="card-tag">Traps That Produce Wrong Conclusions</span>
+    <h3>How to Avoid Misreading Your Own Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>"My SG: Putting is terrible — I need to practise putting."</strong> Check your approach proximity first. If your average first putt is from 45+ feet, your putting SG will look poor even with excellent putting technique. Proximity above 45 feet at your approach distances = approach problem disguised as a putting problem. Fix approach first.</div></li>
+      <li><span class="step-n">2</span><div><strong>"My Smart Distances are wrong — I hit it further than that."</strong> Smart Distances include all your on-course shots, including mishits, awkward lies, and punch shots. They are not wrong — they are accurate. Your perceived distance is what is inflated. The discomfort of seeing lower numbers than expected is exactly the information you need to club up consistently.</div></li>
+      <li><span class="step-n">3</span><div><strong>"One great round improved my SG: APP by 0.6 — I've fixed it."</strong> A single round shift of any magnitude is noise. Require 3 consecutive 10-round rolling average improvements before declaring any SG category genuinely improved. Premature celebration leads to abandoning the practice that was working.</div></li>
+      <li><span class="step-n">4</span><div><strong>"The Caddie AI said 8-iron but I felt like 7-iron was right."</strong> Track your overrides. If you override Caddie and consistently finish closer to the flag — your Smart Distances for that club need more data or your feel is capturing something (recent warmup, wind feel) that the app cannot. If you override and finish short/long — trust Caddie. The data wins over feel in the long run.</div></li>
+      <li><span class="step-n">5</span><div><strong>"My SG: OTT is fine so I don't need to practise driving."</strong> SG: OTT being neutral (0.0) relative to Tour is a scratch-level standard. At 10 HCP, a neutral OTT reading likely means you are playing conservatively with irons off tees. Check average approach distance — if it is above 165 yards, there may be distance gains available that would significantly improve your approach SG.</div></li>
+    </ul>
+  </div>
+
+  <!-- ARCCOS BENCHMARKS -->
+  <span class="badge badge-gold">🎯 Arccos Benchmarks by Handicap</span>
+  <div class="card card-gold">
+    <span class="card-tag">Your Personal Target Dashboard</span>
+    <h3>The Numbers to Work Toward — Quarter by Quarter</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th class="bad">Current 10 HCP</th><th class="warn">Target 5 HCP</th><th class="good">Target Scratch</th></tr>
+      <tr><td>SG: Total (vs. Tour)</td><td class="bad">−3.0 to −4.5</td><td class="warn">−1.5 to −2.5</td><td class="good">0.0 to −0.5</td></tr>
+      <tr><td>SG: Approach</td><td class="bad">−1.2 to −1.8</td><td class="warn">−0.6 to −1.0</td><td class="good">−0.1 to −0.4</td></tr>
+      <tr><td>SG: Off the Tee</td><td class="bad">−0.8 to −1.2</td><td class="warn">−0.4 to −0.7</td><td class="good">−0.1 to −0.3</td></tr>
+      <tr><td>SG: Around Green</td><td class="bad">−0.6 to −1.0</td><td class="warn">−0.3 to −0.6</td><td class="good">0.0 to −0.2</td></tr>
+      <tr><td>SG: Putting</td><td class="warn">−0.4 to −0.8</td><td class="warn">−0.2 to −0.4</td><td class="good">0.0 to −0.2</td></tr>
+      <tr><td>Proximity (150 yds)</td><td class="bad">50–60 ft</td><td class="warn">38–48 ft</td><td class="good">28–36 ft</td></tr>
+      <tr><td>Scrambling %</td><td class="bad">24–30%</td><td class="warn">35–42%</td><td class="good">46–52%</td></tr>
+      <tr><td>3-Putt %</td><td class="bad">14–20%</td><td class="warn">8–13%</td><td class="good">4–7%</td></tr>
+      <tr><td>GIR %</td><td class="bad">32–42%</td><td class="warn">48–56%</td><td class="good">60–68%</td></tr>
+      <tr><td>Penalty / round</td><td class="bad">1.2–2.0</td><td class="warn">0.5–1.0</td><td class="good">0.2–0.5</td></tr>
+      <tr><td>Fairways Hit %</td><td class="bad">48–58%</td><td class="warn">58–66%</td><td class="good">65–72%</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>How to use this table:</strong> Review your Arccos 10-round rolling averages against these benchmarks monthly. Identify which column you sit in for each metric. The metrics where you are furthest from your target column are your practice priorities. Move one metric into the next column each quarter — that is the pace of sustainable improvement.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">STATS INTERPRETATION — PRO EDITION · STROKES GAINED · ARCCOS AIR · SHOT SCOPE · SAMPLE SIZE · PRACTICE PRIORITISATION</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>

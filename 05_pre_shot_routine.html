@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pre-Shot Routine & Practice Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Advanced Player Edition</p>
+  <h1>Pre-Shot Routine<br><em>&amp; Practice Plan</em></h1>
+  <p class="hero-sub">Trust the Process — One Shot at a Time. Full-swing, putting, and short game routines plus structured practice plans.</p>
+  <div class="hero-tags">
+    <span class="htag">🏌️ Full-Swing Routine</span><span class="htag">🎯 Putting Routine</span>
+    <span class="htag">🌊 Short Game Routine</span><span class="htag">📋 Practice Plans</span>
+    <span class="htag">📅 Weekly Schedule</span><span class="htag">✅ Quick Reference</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('fullswing',this)">Full Swing</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('shortgame',this)">Short Game</button>
+  <button class="tab" onclick="show('rangeprac',this)">Range Plan</button>
+  <button class="tab" onclick="show('puttingprac',this)">Putting Plan</button>
+  <button class="tab" onclick="show('sgprac',this)">SG Plan</button>
+  <button class="tab" onclick="show('weekly',this)">Weekly</button>
+  <button class="tab" onclick="show('checklist',this)">Checklists</button>
+</div>
+
+<div class="sec active" id="fullswing">
+  <h2 class="sec-title">Full-Swing Routine</h2>
+  <p class="sec-desc">All thinking happens BEFORE you step into the shot — zero analysis once you move. Identical timing every time — same on the 1st tee as the 18th under pressure.</p>
+  <span class="badge badge-lime">🏌️ The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Every Shot, Every Time</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Read & Decide (behind ball):</strong> Stand 2–3m behind the ball. Assess lie, wind, distance, shot shape. Pick ONE precise target — not a zone. Commit fully. All thinking stops when you leave this spot.</div></li>
+      <li><span class="step-n">2</span><div><strong>The Trigger Breath:</strong> Before stepping in, take one slow, deliberate exhale. Transitions your brain from analytical mode to athletic mode and physically lowers heart rate. Non-negotiable on pressure shots.</div></li>
+      <li><span class="step-n">3</span><div><strong>Purpose Practice Swing:</strong> One rehearsal swing focused on FEEL — the tempo and sensation of the shot. Not a mechanical check. Smooth and confident, never tentative.</div></li>
+      <li><span class="step-n">4</span><div><strong>Approach & Align:</strong> Walk in from behind on the target line. Club face first (aimed at precise target), then feet, hips, shoulders. One look to confirm. Keep this brisk — the longer you stand over it, the more your mind wanders.</div></li>
+      <li><span class="step-n">5</span><div><strong>The Go Trigger:</strong> A personal trigger that fires the swing — forward press, look-then-back, waggle, or exhale. Pick ONE and use it EVERY time. If you feel frozen, the trigger breaks the loop.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Managing Mental Focus</span>
+    <h3>Handling Every Situation</h3>
+    <table class="tbl"><tr><th>Situation</th><th>Strategy</th></tr>
+    <tr><td>After a bad shot</td><td>10-second reaction window, then close with a physical cue (tuck tee in pocket, sip water). That shot is done.</td></tr>
+    <tr><td>When feeling rushed</td><td>Deliberately slow your walk to the ball. Nerves speed everything up — a slower walk physically counters this.</td></tr>
+    <tr><td>Anchor phrase</td><td>A single internal word at Step 2: "process", "smooth", or "one shot". Interrupts negative thought loops.</td></tr>
+    <tr><td>Between shots</td><td>Stay in the present. Chat, enjoy the scenery. Only enter "routine mode" when it is your turn.</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>The Non-Negotiable:</strong> The routine should be IDENTICAL whether you are 1-up or 3-down. Consistency of process is the whole point. A routine that varies is not a routine — it is just a habit.</p>
+  </div>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Routine</h2>
+  <p class="sec-desc">Putting is the most mental part of the game — commit to a line and trust it. Once you have read the putt, your only job is start line and speed — not outcome.</p>
+  <span class="badge badge-gold">🎯 The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Hole More Putts Through Process</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Read from Low Side:</strong> Always read from the LOW SIDE of the hole first — you see true break from here. Then check from behind the ball. Pick one precise entry point into the hole.</div></li>
+      <li><span class="step-n">2</span><div><strong>Visualise the Roll:</strong> Standing behind the ball, watch the ball roll into the hole in your mind — full journey, start to finish. Shifts focus from mechanics to outcome and builds confidence before stepping in.</div></li>
+      <li><span class="step-n">3</span><div><strong>Intermediate Target:</strong> Pick a spot 6–12 inches in front of the ball on your start line. Aim the putter face there — not at the hole. Dramatically improves accuracy on longer putts.</div></li>
+      <li><span class="step-n">4</span><div><strong>Two Practice Strokes (looking at hole):</strong> Take two rehearsal strokes while LOOKING AT THE HOLE, not the ball. Like throwing — you look at the target, not your hand. Calibrates feel and distance naturally.</div></li>
+      <li><span class="step-n">5</span><div><strong>Sole, Look, Go:</strong> Set up to the ball, one smooth look at the hole, eyes back to the ball, stroke within 2–3 seconds. No hesitation. Doubt lives in the pause.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Putting Mindset Keys</span>
+    <h3>Mental Framework</h3>
+    <ul class="checklist">
+      <li>Read is committed — no changing your mind once you step into the shot.</li>
+      <li>You control start line and speed. The hole does the rest.</li>
+      <li>A missed putt on the correct line is a GOOD putt. Trust the read.</li>
+      <li>Speed kills — on slippery greens, focus 80% of attention on pace, 20% on line.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="shortgame">
+  <h2 class="sec-title">Short Game Routine</h2>
+  <p class="sec-desc">Variables change dramatically — lie, surface, trajectory, spin. Assess first, always. Pick your SHOT TYPE before picking your club. Deceleration comes from doubt.</p>
+  <span class="badge badge-teal">🌊 The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Commitment Prevents Deceleration</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Assess All Variables:</strong> Check lie (tight/fluffy/buried/slope), landing zone needed, green to work with. Decide SHOT TYPE first: chip, pitch, flop, or bump-and-run. Then select club.</div></li>
+      <li><span class="step-n">2</span><div><strong>Precise Landing Spot:</strong> Not a zone — a specific blade of grass or mark where the ball must land. This is your ACTUAL target, not the hole. Everything is built around hitting that spot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Feel-Based Practice Swings (2–3 swings):</strong> Take rehearsal swings LOOKING AT YOUR LANDING SPOT. Feel the exact length and pace of swing needed. This is feel calibration, not mechanical checking.</div></li>
+      <li><span class="step-n">4</span><div><strong>Visualise Full Shot:</strong> See the entire trajectory — flight, landing, and roll to the hole. Primes your hands and brain to execute, and builds the commitment needed to prevent deceleration at impact.</div></li>
+      <li><span class="step-n">5</span><div><strong>Setup and Go with Conviction:</strong> Walk in, set up, and go WITHOUT hesitation. Deceleration almost always comes from doubt — and doubt comes from a routine that did not build enough commitment before the shot.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Shot Selection Guide</span>
+    <h3>Right Shot for Every Situation</h3>
+    <table class="tbl"><tr><th>Shot Type</th><th>When to Use</th><th>Club</th></tr>
+    <tr><td>Bump-and-run</td><td>Tight lie, firm ground, plenty of green</td><td>7–9 iron, PW</td></tr>
+    <tr><td>Chip</td><td>Short grass, moderate green to work with</td><td>PW, GW</td></tr>
+    <tr><td>Pitch</td><td>Need height, soft landing, less roll</td><td>SW, LW</td></tr>
+    <tr><td>Flop</td><td>Tight pin, need to stop quickly, open lie</td><td>LW (60°+)</td></tr>
+    <tr><td>Bunker shot</td><td>Sand — open face, swing through the sand</td><td>SW</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="rangeprac">
+  <h2 class="sec-title">Range Practice Plan</h2>
+  <p class="sec-desc">The goal of range practice is NOT to hit perfect shots — it is to groove the ROUTINE so it becomes automatic under pressure. Every ball should use your full pre-shot routine.</p>
+  <span class="badge badge-lime">⛳ 60-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>Structure Every Range Visit</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–10 min</td><td>Warm-Up</td><td>Short irons only. Loose, easy swings. No target. Just feel the club.</td></tr>
+    <tr><td>10–25 min</td><td>Routine Groove</td><td>5 different clubs. Hit 3 balls each with FULL ROUTINE — including walk-in, breath, and go-trigger. No rushing.</td></tr>
+    <tr><td>25–40 min</td><td>Target Focus</td><td>3 alignment sticks or 3 specific targets. Each shot: full routine, different target. Change club every 4 shots.</td></tr>
+    <tr><td>40–50 min</td><td>Pressure Simulation</td><td>Play 9 imaginary holes. Visualise each hole, pick realistic targets, full routine every shot. Score routine quality (1–5).</td></tr>
+    <tr><td>50–60 min</td><td>Cool Down</td><td>Finish with wedges to a specific distance. Focus on tempo and clean contact. End on a good note.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Key Range Drills</span>
+    <h3>Drills That Build Real Skills</h3>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">1️⃣</div><div><h4>One Ball Drill</h4><div class="drill-meta">ROUTINE · ESSENTIAL</div></div></div>
+      <p>Hit one shot, fully reset, walk away from the mat between each ball. Eliminates the "bucket emptying" habit that bypasses the routine.</p>
+    </div>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">⏱️</div><div><h4>Clock Drill</h4><div class="drill-meta">TIMING · CONSISTENCY</div></div></div>
+      <p>Time your routine with a stopwatch. Aim for 20–28 seconds consistently. If it varies by more than 5 seconds, slow down and standardise.</p>
+    </div>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">🔊</div><div><h4>Distraction Drill</h4><div class="drill-meta">MENTAL TOUGHNESS</div></div></div>
+      <p>Have a friend talk, make noise, or stand nearby during your routine. Practise maintaining focus and tempo regardless of external noise.</p>
+    </div>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Golden Rule:</strong> Never hit a ball on the range without a full routine. Lazy range practice builds lazy course habits. Quality, not quantity.</p>
+  </div>
+</div>
+
+<div class="sec" id="puttingprac">
+  <h2 class="sec-title">Putting Green Plan</h2>
+  <p class="sec-desc">Elite putting practice splits time between distance control, start-line accuracy, and pressure simulation. Use your full putting routine on EVERY practice putt.</p>
+  <span class="badge badge-gold">🎯 40-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>40-Minute Putting Session</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–8 min</td><td>Distance Control</td><td>Place tees at 20ft, 30ft, 40ft. Roll 5 putts to each. Goal: every ball stops within 2 feet of the hole. Feel only.</td></tr>
+    <tr><td>8–20 min</td><td>Start-Line Gate</td><td>Two tees 3 inches apart, 6 inches in front of ball. Every putt must pass through the gate. Use 6–8ft putts. Full routine.</td></tr>
+    <tr><td>20–30 min</td><td>Circle Drill (Pressure)</td><td>8 balls in a circle at 4 feet. Make all 8 consecutively. Missing restarts. Full routine on every putt.</td></tr>
+    <tr><td>30–40 min</td><td>Course Simulation</td><td>Move around the green, pick different holes. Play 9 imaginary holes — 2-putt target on each. Score routine quality.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Mental Focus Drills</span>
+    <h3>Develop Feel and Concentration</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Eyes-Closed Drill:</strong> After setting up normally, close eyes and stroke the putt. Develops feel and stops mechanical overthinking. Use on 3–6ft putts.</div></li>
+      <li><span class="step-n">▸</span><div><strong>One-Handed Drill:</strong> Putt with your lead hand only for 10 minutes. Builds feel and forces correct stroke path.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Pre-Round Routine:</strong> Before every round — 5 lag putts, 5 mid-range (10–15ft), 5 short (3–4ft). Always end on a make.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="sgprac">
+  <h2 class="sec-title">Short Game Practice Plan</h2>
+  <p class="sec-desc">Short game practice must simulate real on-course conditions — different lies, different shots, specific landing spots. Always use your full routine.</p>
+  <span class="badge badge-teal">🌊 45-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>45-Minute Short Game Session</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–10 min</td><td>Landing Spot Accuracy</td><td>Place a towel 3–5 feet onto the green. Hit 10 chips aiming to land on the towel. Score: 1 point per landing.</td></tr>
+    <tr><td>10–20 min</td><td>Shot Variety</td><td>Same hole, 5 different lies: tight, fluffy, uphill, downhill, rough. Hit each once using full routine.</td></tr>
+    <tr><td>20–30 min</td><td>Up-and-Down Game</td><td>Drop 10 balls around a green in random spots. Attempt up-and-down on each. Track success rate. Target: 5/10+.</td></tr>
+    <tr><td>30–40 min</td><td>Pressure Simulation</td><td>Set a target: hole 5 chips in a row. Missing restarts. Full routine on every shot.</td></tr>
+    <tr><td>40–45 min</td><td>Bunker Practice</td><td>5 bunker shots from flat lie, 5 from plugged lie. Focus on landing spot and full follow-through.</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Short Game Mental Keys</span>
+    <h3>The Mindset for Success</h3>
+    <ul class="checklist">
+      <li>Land spot first — always pick the landing spot before thinking about the hole.</li>
+      <li>Commit to the shot — half-committed chips cause chunking and thinning.</li>
+      <li>Feel swings LOOKING at the landing spot — not at the ball.</li>
+      <li>Acceleration through impact — finish the swing, never decelerate into the ball.</li>
+      <li>Accept outcomes — a solid routine is success, regardless of result.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="weekly">
+  <h2 class="sec-title">Weekly Practice Schedule</h2>
+  <p class="sec-desc">Designed for 3–4 practice sessions per week in addition to a weekend round. Quality of routine use always beats quantity of balls hit.</p>
+  <span class="badge badge-rust">📅 Weekly Structure</span>
+  <div class="card">
+    <span class="card-tag">Weekly Schedule</span>
+    <h3>Day-by-Day Plan</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Focus</th></tr>
+    <tr><td>Monday</td><td>Rest / Light</td><td>Rest or 20-min putting green only. Lag putting and circle drill. No full swings.</td></tr>
+    <tr><td>Tuesday</td><td>Range — 60 min</td><td>Full swing routine practice. Warm-up + Routine Groove Drill + Pressure Simulation.</td></tr>
+    <tr><td>Wednesday</td><td>Short Game — 45 min</td><td>Short game session: landing spot accuracy, shot variety, up-and-down game.</td></tr>
+    <tr><td>Thursday</td><td>Putting — 40 min</td><td>Putting session: lag control, gate drill, circle drill. End with pre-round routine.</td></tr>
+    <tr><td>Friday</td><td>Combo — 60 min</td><td>30 min range (target focus + pressure sim) + 30 min putting (start line focus).</td></tr>
+    <tr><td>Saturday</td><td>Course Round</td><td>Play full round. Grade EVERY shot on routine quality (1–5). Track, don't judge.</td></tr>
+    <tr><td>Sunday</td><td>Course or Rest</td><td>Casual round OR rest. If playing: focus only on routine — ignore score.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Monthly Progression</span>
+    <h3>Four-Week Theme Plan</h3>
+    <table class="tbl"><tr><th>Week</th><th>Theme</th><th>Focus</th></tr>
+    <tr><td>Week 1</td><td>Establish</td><td>Learn and standardize all 3 routines. Time them. Write them on a card.</td></tr>
+    <tr><td>Week 2</td><td>Groove</td><td>Full routine on EVERY range ball, every putt, every chip. No exceptions.</td></tr>
+    <tr><td>Week 3</td><td>Pressure Test</td><td>Add pressure drills. Circle drill, consecutive chip challenge, clock drill.</td></tr>
+    <tr><td>Week 4</td><td>Course Transfer</td><td>Full round with routine grading. Identify where routine breaks down on the course.</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Track routine quality, not just score.</strong> A round with a consistent routine and a high score is more valuable than a lucky low round with a broken routine. Discipline today builds excellence tomorrow.</p>
+  </div>
+</div>
+
+<div class="sec" id="checklist">
+  <h2 class="sec-title">Quick-Reference Checklists</h2>
+  <p class="sec-desc">Print these or screenshot for your bag. Review before every round. The routine is your anchor — use it on every single shot.</p>
+  <span class="badge badge-lime">✅ Quick Reference</span>
+  <div class="card">
+    <span class="card-tag">Full-Swing Routine</span>
+    <h3>Every Full Shot</h3>
+    <ul class="checklist">
+      <li>Stand behind ball — read, decide, commit</li>
+      <li>Trigger breath (slow exhale)</li>
+      <li>One feel-based practice swing</li>
+      <li>Walk in on target line</li>
+      <li>Club face first, then body alignment</li>
+      <li>One look to confirm</li>
+      <li>Go trigger — fire the swing</li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Putting Routine</span>
+    <h3>Every Putt</h3>
+    <ul class="checklist">
+      <li>Read from low side of hole</li>
+      <li>Visualise ball rolling into hole</li>
+      <li>Pick intermediate target (6–12 inches)</li>
+      <li>Two practice strokes looking at hole</li>
+      <li>Sole putter, one look, stroke in 2–3 sec</li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Short Game Routine</span>
+    <h3>Every Chip, Pitch & Bunker Shot</h3>
+    <ul class="checklist">
+      <li>Assess lie, slope, and green to work with</li>
+      <li>Decide shot type FIRST, then club</li>
+      <li>Pick precise landing spot</li>
+      <li>2–3 feel swings looking at landing spot</li>
+      <li>Visualise full shot trajectory</li>
+      <li>Step in and go with conviction</li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Mental Focus Keys</span>
+    <h3>Between Every Shot</h3>
+    <ul class="checklist">
+      <li>10-second reaction window after bad shots</li>
+      <li>Physical cue to close out last shot</li>
+      <li>Slow your walk when nervous</li>
+      <li>Anchor word at trigger breath</li>
+      <li>Grade routine quality, not result</li>
+      <li>Thinking zone = behind the ball ONLY</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">PRE-SHOT ROUTINE & PRACTICE PLAN · ADVANCED PLAYER EDITION · TRUST THE PROCESS</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

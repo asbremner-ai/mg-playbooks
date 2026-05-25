@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Competitive Strategy — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 24</p>
+  <h1>Competitive Strategy<br><em>& Tournament Prep</em></h1>
+  <p class="hero-sub">Tournament day protocol, stroke play vs. Stableford vs. matchplay strategy, handicap management, dealing with slow play, and how to win in foursomes, fourballs, and scrambles.</p>
+  <div class="hero-tags">
+    <span class="htag">🏆 Tournament Day</span><span class="htag">🎯 Stroke Play</span>
+    <span class="htag">⚡ Stableford</span><span class="htag">⚔️ Matchplay</span>
+    <span class="htag">🤝 Team Formats</span><span class="htag">🧮 Handicap</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('tournday',this)">Tournament Day</button>
+  <button class="tab" onclick="show('strokeplay',this)">Stroke Play</button>
+  <button class="tab" onclick="show('stableford',this)">Stableford</button>
+  <button class="tab" onclick="show('matchplay',this)">Matchplay</button>
+  <button class="tab" onclick="show('formats',this)">Team Formats</button>
+  <button class="tab" onclick="show('handicap',this)">Handicap</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Competing to Win</h2>
+  <p class="sec-desc">Competition changes golf. The same course, same clubs, same player — but with a scorecard and a field, the psychological and strategic demands are entirely different. The player who understands how to compete, not just how to play, gains 2–4 strokes per competitive round over their practice average.</p>
+  <span class="badge badge-gold">🏆 The Competition Edge</span>
+  <div class="card">
+    <span class="card-tag">Why Competition Scores Differ from Practice Scores</span>
+    <h3>The Three Sources of Competition Score Inflation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Psychological pressure (+1.5 to +2.5 strokes):</strong> Competitive arousal degrades fine motor control, accelerates decision-making, and triggers explicit processing during execution. Every competitive golfer shoots higher than their practice average — the gap measures their current mental game weakness.</div></li>
+      <li><span class="step-n">2</span><div><strong>Strategic errors (+1 to +2 strokes):</strong> Without a scorecard-driven strategic framework, players make decisions that feel correct but are statistically poor — attacking sucker pins, pressing after bogeys, abandoning process goals mid-round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Slow play disruption (+0.5 to +1 stroke):</strong> Being forced to wait on every shot breaks pre-shot routine rhythm, allows negative thinking to occupy the mental space, and causes a kind of deliberate over-thinking that directly degrades automatic motor performance.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>The goal:</strong> A competition round should eventually perform within 2 strokes of your practice average. The current gap between your competition average and practice average tells you exactly how much the mental and strategic game is costing you. Track this metric every competition.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Format Strategy Matters</span>
+    <h3>Different Formats Demand Different Game Plans</h3>
+    <table class="tbl">
+      <tr><th>Format</th><th>Primary Goal</th><th>Risk Tolerance</th><th>Key Strategic Adjustment</th></tr>
+      <tr><td>Stroke play (medal)</td><td>Minimise total strokes</td><td>Low — every shot counts</td><td>Eliminate doubles; par is always good</td></tr>
+      <tr><td>Stableford</td><td>Maximise points</td><td>Moderate — pick up and move on</td><td>Attack on strong holes; abandon weak holes early</td></tr>
+      <tr><td>Matchplay</td><td>Win more holes than opponent</td><td>Variable — situational</td><td>Adjust aggression based on match position</td></tr>
+      <tr><td>Fourball</td><td>One partner scores</td><td>High — partner covers misses</td><td>Take the aggressive line your partner cannot</td></tr>
+      <tr><td>Foursomes</td><td>Team scores every shot</td><td>Very low — partner plays your misses</td><td>Safety first on tee shots; minimise recovery situations</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- TOURNAMENT DAY -->
+<div class="sec" id="tournday">
+  <h2 class="sec-title">Tournament Day Protocol</h2>
+  <p class="sec-desc">The 24 hours before and the morning of a competition are when the round is won or lost mentally. A structured tournament day protocol removes variables, reduces anxiety, and allows you to walk onto the first tee in optimal competitive state.</p>
+  <span class="badge badge-lime">☀️ Competition Day System</span>
+  <div class="card">
+    <span class="card-tag">The Night Before</span>
+    <h3>Preparation That Eliminates Morning Anxiety</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Logistics completed by 9pm:</strong> Bag checked, clubs clean, wet weather gear packed, travel time confirmed with buffer. Logistics anxiety is low-level but persistent — eliminate it entirely the night before.</div></li>
+      <li><span class="step-n">2</span><div><strong>Course review — 15 minutes:</strong> Walk the course mentally. Identify 3 holes requiring special strategic care. Identify 2 holes offering realistic birdie opportunities for your game. Note any unusual features — blind tees, false fronts, deceptive carries.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set one process commitment:</strong> One specific, controllable process goal for tomorrow. Not "shoot 78" — instead: "commit fully to my target before every shot." Write it down. This becomes your anchor thought on the first tee.</div></li>
+      <li><span class="step-n">4</span><div><strong>7–9 hours of sleep:</strong> Non-negotiable. Sleep deprivation reduces fine motor precision 20–30% and decision quality 25%. An early tee time requires an earlier bedtime — not an earlier alarm.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Morning Protocol</span>
+    <h3>90 Minutes Before Tee Time</h3>
+    <table class="tbl">
+      <tr><th>Time Before Tee</th><th>Activity</th><th>Purpose</th></tr>
+      <tr><td>−90 min</td><td>Low-GI breakfast: oats, eggs, banana</td><td>Stable blood glucose for 4+ hours</td></tr>
+      <tr><td>−75 min</td><td>Arrive at course — unhurried</td><td>Relaxed state entering warm-up</td></tr>
+      <tr><td>−60 min</td><td>Putting green — pace only, end on makes</td><td>Green speed calibration + confidence</td></tr>
+      <tr><td>−45 min</td><td>Range — wedge to driver, read natural shape</td><td>Identify today's shot pattern; do NOT fix</td></tr>
+      <tr><td>−25 min</td><td>Short game — chips, one bunker shot, pitches</td><td>Turf feel; confirm short game touch</td></tr>
+      <tr><td>−10 min</td><td>Putting — end on 5 consecutive makes from 4 ft</td><td>Confidence anchor before first tee</td></tr>
+      <tr><td>−5 min</td><td>Quiet — breathe, recall process commitment</td><td>Optimal arousal calibration</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Do not try to fix your swing on competition day:</strong> The warm-up is for calibration — finding out what your game is doing today — not for correcting faults. Whatever shape the ball is flying, build a strategy around it. A consistent fade is a playable shot. A swing change mid-warm-up produces confusion, not improvement.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Dealing With Slow Play</span>
+    <h3>Protecting Your Rhythm When You Cannot Control Pace</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Use waiting time productively:</strong> While waiting to play, visualise the upcoming shot — flight, land, roll. This extends the pre-shot routine beneficially rather than allowing negative thought to fill the gap.</div></li>
+      <li><span class="step-n">2</span><div><strong>Do not address the ball early:</strong> Standing over the ball waiting for the group ahead to clear is the most damaging slow play effect. It forces you to hold the address position under pressure, building tension. Stay behind the ball until you can play immediately.</div></li>
+      <li><span class="step-n">3</span><div><strong>Maintain conversational rhythm:</strong> Slow play breaks conversational rhythm in competitive rounds, which can shift focus to score-tracking. Keep relaxed conversation going in the group — it occupies the conscious mind and prevents rumination.</div></li>
+      <li><span class="step-n">4</span><div><strong>Reset routine after a long wait:</strong> If you have waited more than 5 minutes to play a shot, walk back from the address position and restart your pre-shot routine completely. The physical and mental state you were in before the wait has dissipated.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- STROKE PLAY -->
+<div class="sec" id="strokeplay">
+  <h2 class="sec-title">Stroke Play Strategy</h2>
+  <p class="sec-desc">Stroke play is the purest test — every shot counts, nothing can be conceded, and a single hole can wreck a round. The strategic framework for stroke play is fundamentally conservative: never take on risk that threatens a double bogey when a bogey is acceptable.</p>
+  <span class="badge badge-lime">🎯 Medal / Stroke Play</span>
+  <div class="card">
+    <span class="card-tag">The Stroke Play Mindset</span>
+    <h3>Par Is Always Good. Bogey Is Acceptable. Double Is Costly.</h3>
+    <p style="margin-bottom:12px;">In stroke play, the scoring objective is not to make birdies — it is to avoid doubles and worse. Statistical analysis of competitive amateur rounds shows that eliminating one double bogey per round improves handicap more reliably than adding one birdie per round. The asymmetry is stark: a double costs 2 strokes above par; a birdie gains only 1 stroke below par.</p>
+    <table class="tbl">
+      <tr><th>Score</th><th>Frequency (10 HCP)</th><th>Net Effect vs. Par</th><th>Strategic Priority</th></tr>
+      <tr><td>Eagle</td><td class="good">0.05/round</td><td class="good">−2 strokes</td><td>Take if 90% carry confidence present</td></tr>
+      <tr><td>Birdie</td><td class="good">1.2/round</td><td class="good">−1 stroke</td><td>Attack when odds favour; never force</td></tr>
+      <tr><td>Par</td><td class="good">8.5/round</td><td>0</td><td>Always acceptable; never "just" a par</td></tr>
+      <tr><td>Bogey</td><td class="warn">6.5/round</td><td class="warn">+1 stroke</td><td>Acceptable result; never press to recover immediately</td></tr>
+      <tr><td>Double+</td><td class="bad">3.2/round</td><td class="bad">+2 or more</td><td>Primary target to eliminate — course management focus</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Stroke Play Decision Rules</span>
+    <h3>The Six Non-Negotiables</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Never aim at a sucker pin in stroke play:</strong> A tucked pin over a bunker, against a water edge, or on a tight tier is a sucker pin. Aim for the fattest part of the green. The saved strokes from avoided short-side disasters far exceed any proximity gain from attacking these pins.</div></li>
+      <li><span class="step-n">2</span><div><strong>Always take enough club:</strong> Under-clubbing costs more strokes in competitive stroke play than almost any other single error. When in doubt, take one more club and swing at 85%. A longer ball in the right zone beats a short ball in the wrong zone every time.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never press after a bogey:</strong> The hole after a bogey is statistically the most dangerous hole of the round. Take a conservative tee club, aim for the fat of the fairway, and accept another bogey if that is what the hole offers. Two consecutive bogeys is manageable. A bogey followed by a double is a four-shot swing.</div></li>
+      <li><span class="step-n">4</span><div><strong>Play the 3-shot par 5 deliberately:</strong> When laying up on a par 5, the second shot is a strategic decision. Lay up to your exact best wedge distance — not just "short of the bunker." A wedge from your ideal yardage is worth 0.3 strokes more than a wedge from an awkward distance.</div></li>
+      <li><span class="step-n">5</span><div><strong>Take unplayable liberally:</strong> A ball behind a tree, in an unplayable lie, or on a severe slope is worth dropping under penalty of one stroke and playing from a known lie. Attempting impossible recovery shots from bad lies to avoid the penalty costs strokes far more often than it saves them.</div></li>
+      <li><span class="step-n">6</span><div><strong>Never add up the score before hole 17:</strong> Score awareness on the 14th hole shifts focus from process to outcome and consistently degrades performance on the final holes. Play hole by hole. Your score is whatever it is when you sign the card.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- STABLEFORD -->
+<div class="sec" id="stableford">
+  <h2 class="sec-title">Stableford Strategy</h2>
+  <p class="sec-desc">Stableford changes the strategic calculus fundamentally. Unlike stroke play, a hole where you score zero points (double bogey or worse) costs the same as a hole where you score one point (bogey). This eliminates the paralysing fear of doubles — but introduces specific aggressive opportunities that must be exploited.</p>
+  <span class="badge badge-teal">⚡ Stableford Points Strategy</span>
+  <div class="card">
+    <span class="card-tag">The Stableford Framework</span>
+    <h3>How the Points System Changes Every Decision</h3>
+    <table class="tbl">
+      <tr><th>Score vs Par</th><th>Points (Standard)</th><th>Strategic Implication</th></tr>
+      <tr><td>Eagle (−2)</td><td class="good">4 points</td><td>Maximum risk justified on par 5s and short par 4s</td></tr>
+      <tr><td>Birdie (−1)</td><td class="good">3 points</td><td>Attack accessible pins more aggressively than in stroke play</td></tr>
+      <tr><td>Par</td><td class="warn">2 points</td><td>Good result; solid foundation</td></tr>
+      <tr><td>Bogey (+1)</td><td class="warn">1 point</td><td>Acceptable; no catastrophe</td></tr>
+      <tr><td>Double+ (+2 or more)</td><td class="bad">0 points</td><td>Same as a triple — pick up and move on immediately</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The critical insight:</strong> In Stableford, a double bogey and a triple bogey score identically — zero points. Once you are certain of zero points on a hole, picking up the ball and walking to the next tee is the rational decision. Saving energy and focus for the next hole is worth more than completing a hole that has already cost maximum points.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Stableford Aggression Rules</span>
+    <h3>When to Attack and When to Abandon</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Attack on your stroke holes:</strong> Your handicap strokes are received on the most difficult holes. On a hole where you receive a stroke, your effective par is one lower — this changes the scoring significantly. An 8-iron approach on a par 4 handicap 3 hole that results in a bogey still scores 2 points. Use your stroke holes aggressively.</div></li>
+      <li><span class="step-n">2</span><div><strong>Be more aggressive on open pins:</strong> In Stableford, attacking an accessible pin that results in a birdie produces 3 points vs. 2 from a safe centre-green approach. The 1-point gain from a birdie justifies more pin attacks than in stroke play — specifically on your stroke holes and par 5s.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pick up decisively — without guilt:</strong> When you are looking at double bogey or worse on a hole, mark your card for zero and walk to the next tee. Do not complete the hole for pride. Every shot wasted completing a zero-point hole is focus and energy taken from the next hole.</div></li>
+      <li><span class="step-n">4</span><div><strong>Track running points, not score:</strong> In Stableford, think in points — not strokes. "I'm at 26 points after 13 holes" is more strategically useful than "I'm 3 over." Points tell you exactly how you're performing against the scoring target (36 points = to handicap).</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Stableford Targets</span>
+    <h3>What Different Points Scores Mean</h3>
+    <table class="tbl">
+      <tr><th>Points Total</th><th>Performance vs. HCP</th><th>Approx. Nett Score</th><th>Competitive Result</th></tr>
+      <tr><td>Under 28</td><td class="bad">Poor (6+ below HCP)</td><td>6+ over nett</td><td>Bottom half of field</td></tr>
+      <tr><td>28–32</td><td class="warn">Average (2–6 below HCP)</td><td>2–6 over nett</td><td>Mid-field</td></tr>
+      <tr><td>33–36</td><td class="warn">To handicap</td><td>Level to 3 over nett</td><td>Competitive</td></tr>
+      <tr><td>37–40</td><td class="good">Above HCP</td><td>1–4 under nett</td><td>Podium position</td></tr>
+      <tr><td>40+</td><td class="good">Exceptional</td><td>5+ under nett</td><td>Winner territory</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- MATCHPLAY -->
+<div class="sec" id="matchplay">
+  <h2 class="sec-title">Matchplay Strategy</h2>
+  <p class="sec-desc">Matchplay is the most psychologically complex format in golf. The opponent becomes a variable in your decision-making. Aggression level, risk tolerance, and target selection all shift based on the match position — not the scorecard.</p>
+  <span class="badge badge-rust">⚔️ Hole-by-Hole Combat</span>
+  <div class="card">
+    <span class="card-tag">The Matchplay Framework</span>
+    <h3>Position-Dependent Strategy</h3>
+    <table class="tbl">
+      <tr><th>Match Position</th><th>Risk Tolerance</th><th>Strategy</th><th>Key Principle</th></tr>
+      <tr><td>3+ up</td><td>Low — protect lead</td><td>Conservative; target centre greens; force opponent to make pars</td><td>Make them beat you; do not beat yourself</td></tr>
+      <tr><td>1–2 up</td><td>Moderate</td><td>Standard strategy; match opponent's aggression</td><td>Continue your own game plan</td></tr>
+      <tr><td>All square</td><td>Moderate-high</td><td>Standard play; take calculated birdie opportunities</td><td>The match is won in the final 6 holes</td></tr>
+      <tr><td>1–2 down</td><td>High — need pars and birdies</td><td>Attack accessible pins; pressure opponent to match</td><td>Force mistakes; do not wait for opponent to give it</td></tr>
+      <tr><td>3+ down</td><td>Very high — need birdies</td><td>Attack everything reasonable; change is required</td><td>Nothing to lose — play to your natural game</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Reading the Opponent</span>
+    <h3>Using the Opponent's Position in Your Decision</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When your opponent is in trouble:</strong> Play conservatively. If your opponent is in deep rough, behind trees, or has hit OOB — they are likely to make bogey or worse. Your par wins the hole. Do not give the hole back by taking an unnecessary risk to try for birdie.</div></li>
+      <li><span class="step-n">2</span><div><strong>When your opponent is in good position:</strong> Match their aggression. If they are on the fairway at 150 yards in the fairway, a par is likely coming. Now is the time to attack a pin — matching a par wins nothing; a birdie wins the hole.</div></li>
+      <li><span class="step-n">3</span><div><strong>When your opponent has already conceded the hole:</strong> Play safely. The hole is already won — completing it without error protects your psychological momentum and gives no information to the opponent about your tendencies.</div></li>
+      <li><span class="step-n">4</span><div><strong>Concession strategy:</strong> Conceding a short putt keeps the opponent in their comfort zone. Making them putt a 3-footer under pressure — even when you expect them to make it — applies psychological pressure that occasionally produces a miss. In a close match, this is legitimate gamesmanship.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Final 6 Holes</span>
+    <h3>Where Matchplay Is Won and Lost</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Play the course, not the match:</strong> On holes 13–18, the temptation to adjust strategy based on every development in the match becomes overwhelming. The players who perform best on the final 6 holes are those who commit fully to their game plan and let the match situation influence only the degree of aggression — not the fundamentals.</div></li>
+      <li><span class="step-n">2</span><div><strong>Avoid dormie panic:</strong> Being 2 up with 2 to play (dormie) is a winning position — but statistically it is also the most common position from which a match is halved rather than won. The player who is dormie 2 up frequently becomes defensive and hands back holes. Play dormie as if you were 1 up — just need one more good hole.</div></li>
+      <li><span class="step-n">3</span><div><strong>The conceded putt trap:</strong> When winning a match comfortably, opponents sometimes concede every short putt for 15 holes — then stop conceding them at a critical moment. Practise short putts in pressure scenarios (see Guide 16) so that an unconceeded 3-footer never becomes a psychological event.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- TEAM FORMATS -->
+<div class="sec" id="formats">
+  <h2 class="sec-title">Team Formats</h2>
+  <p class="sec-desc">Fourballs, foursomes, and scrambles each demand a completely different strategic and psychological approach from individual stroke play. Understanding your role within the team format unlocks significant competitive advantage.</p>
+  <span class="badge badge-gold">🤝 Fourball · Foursomes · Scramble</span>
+  <div class="card">
+    <span class="card-tag">Fourball (Best Ball)</span>
+    <h3>When to Be the Aggressor</h3>
+    <p style="margin-bottom:12px;">In fourball, one partner can take the aggressive line while the other plays safely. The player who has already secured a good score on the hole should take the conservative route; the player who is in trouble should be aggressive — the partner's score backs them up.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Split roles deliberately:</strong> Before the round, agree who will play the aggressive tee shot and who will play safely on each type of hole. Typically the longer hitter goes aggressive off the tee while the shorter hitter plays for position.</div></li>
+      <li><span class="step-n">2</span><div><strong>If partner is safe, you are free:</strong> When your partner is on the fairway or on the green with a makeable putt — you have full freedom to attack. Their score is in the bank. Use your shot to apply pressure — attack the pin, attempt the carry that you would not in stroke play.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never both take the same risk:</strong> If your partner has gone for the carry and failed, do not attempt the same carry. The partnership now needs a score — play safely and let the partner's aggressive play be the lesson, not a mutual catastrophe.</div></li>
+    </ul>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">Foursomes (Alternate Shot)</span>
+    <h3>The Most Demanding Format</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Safety dominates every tee shot:</strong> In foursomes, a poor tee shot forces your partner to recover. The most important shot in foursomes is keeping the ball in play off the tee. Take the safest club that keeps the ball in the fairway — 3-wood or even hybrid — on any hole where OOB or a severe penalty is present.</div></li>
+      <li><span class="step-n">2</span><div><strong>Set up your partner, not yourself:</strong> Every shot in foursomes should be played with one priority — leaving your partner the simplest possible next shot. This means leaving the ball in the fairway rather than maximising distance, leaving a full shot into the green rather than a difficult partial wedge, and lagging putts to a makeable distance rather than trying to hole them.</div></li>
+      <li><span class="step-n">3</span><div><strong>Know the order on key holes:</strong> Before the round, identify which player will tee off on holes 1 and 10 (and therefore which player will play the even/odd tee shots). Strategically, the stronger long game player should tee off on the hardest driving holes.</div></li>
+      <li><span class="step-n">4</span><div><strong>Never critique your partner's shot:</strong> Foursomes is psychologically fragile. A partner who feels criticised loses confidence and focus on their next shot. Positive reinforcement only — and trust that your partner is doing their best on every shot.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Scramble</span>
+    <h3>Maximising the Team Score</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The aggressive player goes last:</strong> In a 4-person scramble, the most reliable player goes second (providing a safety net if the first misses), and the most aggressive player goes last — knowing exactly what score needs to be beaten and whether it's safe to attack.</div></li>
+      <li><span class="step-n">2</span><div><strong>Always have one conservative tee shot:</strong> One player should be designated to play for the fairway on every tee, ensuring the team always has at least one good position to use. The other three can attempt more aggressive lines.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the short game advantage ruthlessly:</strong> In a scramble, the best short game player should always play last — knowing where the ball needs to finish from a chip or putt. This player has maximum information and should have maximum pressure to deliver.</div></li>
+      <li><span class="step-n">4</span><div><strong>Never use a risky drive position unless forced:</strong> If three players are in the fairway, do not use the fourth player's aggressive drive that finished in rough — even if it's 40 yards further. Fairway + 20 yards forward is almost always better than rough + 40 yards forward.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HANDICAP -->
+<div class="sec" id="handicap">
+  <h2 class="sec-title">Handicap Management</h2>
+  <p class="sec-desc">Your World Handicap System (WHS) index is a performance metric that should be managed deliberately. Understanding how the system works, what affects your index, and how to maintain a realistic relationship between your handicap and your genuine ability is essential for competitive golf.</p>
+  <span class="badge badge-teal">🧮 WHS Index Management</span>
+  <div class="card">
+    <span class="card-tag">How the WHS Works</span>
+    <h3>The Core Mechanics</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Best 8 of last 20 differentials:</strong> Your handicap index is calculated from the best 8 of your most recent 20 score differentials (adjusted score minus course rating × 113/slope). Only your best performances drive the index — your worst rounds are automatically discarded.</div></li>
+      <li><span class="step-n">2</span><div><strong>Score differential, not raw score:</strong> A 78 on a course rated 71.5 with a slope of 130 produces a different differential than a 78 on a course rated 69.2 with a slope of 115. Course difficulty is fully accounted for. Playing easier courses does not inflate your handicap.</div></li>
+      <li><span class="step-n">3</span><div><strong>Daily updates:</strong> WHS indices update daily in most jurisdictions as new scores are submitted. A strong competition score can reduce your index immediately. A series of poor scores takes time to impact — because only the best 8 of 20 count.</div></li>
+      <li><span class="step-n">4</span><div><strong>Exceptional Score Reduction:</strong> A single round significantly better than your current index (more than approximately 7 under index) triggers an exceptional score reduction — the index drops immediately by a larger amount. This is the system protecting competition integrity.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Handicap and Competition Expectations</span>
+    <h3>What Your Index Actually Means</h3>
+    <p style="margin-bottom:12px;">Your handicap index represents approximately the average of your best 8 out of 20 rounds — roughly the score you would shoot on a good day at a standard course. It is not the score you should expect to match every round.</p>
+    <table class="tbl">
+      <tr><th>Round Type</th><th>Frequency</th><th>Nett Score vs. HCP</th></tr>
+      <tr><td>Playing to or better than HCP</td><td class="good">~40% of rounds</td><td>0 or better nett</td></tr>
+      <tr><td>1–3 over HCP nett</td><td class="warn">~35% of rounds</td><td>1–3 over nett</td></tr>
+      <tr><td>4–6 over HCP nett</td><td class="warn">~18% of rounds</td><td>4–6 over nett</td></tr>
+      <tr><td>6+ over HCP nett (bad day)</td><td class="bad">~7% of rounds</td><td>7+ over nett</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Managing expectations:</strong> Expecting to play to handicap every round is statistically unrealistic. Expecting to play to handicap in 4 out of 10 competitive rounds is accurate. Use this data to manage post-round analysis — a round 3 over handicap is statistically normal and does not indicate a deteriorating game.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">COMPETITIVE STRATEGY & TOURNAMENT PREP — PRO EDITION · STROKE PLAY · STABLEFORD · MATCHPLAY · TEAM FORMATS</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+</body>
+</html>
