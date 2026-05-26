@@ -4,476 +4,1063 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Golf Playbooks">
-<title>Golf Playbooks</title>
+<title>Golf Playbooks — 10 HCP → Scratch</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-:root{
-  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
-  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
-  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
-  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
-  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
-  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
-  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
-  --good:#70c870;--warn:#e0b840;--bad:#e07060;
-  --r:12px;--r-sm:8px;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Page */
+  --bg:        #f2f4f0;
+  --surface:   #ffffff;
+  --surface2:  #f8f9f6;
+  --border:    #d8ddd4;
+  --border-hi: #b0b8a8;
+
+  /* Text — dark, high contrast on white cards */
+  --text-primary: #111c0e;
+  --text-body:    #2e3a2a;
+  --text-muted:   #566050;
+  --text-faint:   #8a9884;
+
+  /* Pillar accent colours */
+  --gold:        #c49a08;
+  --gold-hi:     #e8b800;
+  --gold-bg:     #fffbeb;
+  --gold-border: #f0d060;
+  --gold-tag-bg: #fef3c0;
+  --gold-tag-tx: #92700a;
+
+  --lime:        #2d7a1c;
+  --lime-hi:     #3aaa22;
+  --lime-bg:     #f1faf0;
+  --lime-border: #88cc78;
+  --lime-tag-bg: #dcf5d8;
+  --lime-tag-tx: #1e5a12;
+
+  --teal:        #0e7c74;
+  --teal-hi:     #12a89e;
+  --teal-bg:     #f0faf9;
+  --teal-border: #7dd4cf;
+  --teal-tag-bg: #ccefed;
+  --teal-tag-tx: #0b5e58;
+
+  --rust:        #b84820;
+  --rust-hi:     #d85a28;
+  --rust-bg:     #fff5f1;
+  --rust-border: #f0a888;
+  --rust-tag-bg: #fde0d4;
+  --rust-tag-tx: #8a3018;
+
+  --violet:      #5a30b8;
+  --violet-hi:   #7040d8;
+  --violet-bg:   #f6f2ff;
+  --violet-border:#c4acf0;
+  --violet-tag-bg:#e8dcfc;
+  --violet-tag-tx:#3e1e8a;
+
+  --r:    12px;
+  --r-sm: 8px;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
-.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
-.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
-.hero h1 em{color:var(--lime-hi);font-style:italic;}
-.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
-.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
-.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
-.index-wrap{max-width:720px;margin:0 auto;padding:0 16px 60px;position:relative;z-index:1;}
-.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px;}
-.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;text-align:center;}
-.stat-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;color:var(--lime-hi);line-height:1;}
-.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
-.tip-bar{background:var(--gold-dim);border:1px solid rgba(224,184,64,.2);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:24px;display:flex;gap:10px;align-items:flex-start;}
-.tip-bar p{font-size:12px;color:rgba(240,208,112,.9);line-height:1.65;}
-.tip-bar strong{color:var(--gold-hi);display:block;margin-bottom:2px;}
-.section-head{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:28px 0 14px;display:flex;align-items:center;gap:10px;}
+body{
+  background:var(--bg);
+  color:var(--text-primary);
+  font-family:'Inter',sans-serif;
+  min-height:100vh;overflow-x:hidden;
+  font-size:15px;line-height:1.6;
+}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(160deg,#0d1f0a 0%,#1a3414 60%,#0f2a10 100%);
+  padding:52px 20px 38px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(245,196,53,0.12) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 20%,rgba(94,203,62,0.08) 0%,transparent 50%);
+  pointer-events:none;
+}
+.hero::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#c49a08,#3aaa22,#12a89e,#7040d8,#d85a28);
+}
+.hero-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(245,210,80,0.85);margin-bottom:14px;position:relative;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,8vw,3.4rem);
+  font-weight:900;line-height:1.05;
+  color:#ffffff;margin-bottom:10px;position:relative;
+}
+.hero h1 em{color:#f5d050;font-style:italic;}
+.hero-sub{
+  font-size:13.5px;color:rgba(220,235,210,0.82);
+  max-width:460px;margin:0 auto 22px;
+  font-weight:300;line-height:1.7;position:relative;
+}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:relative;}
+.htag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:5px 11px;border-radius:4px;
+  background:rgba(245,196,53,0.15);
+  border:1px solid rgba(245,196,53,0.35);
+  color:#f5d050;
+}
+
+/* ── HERO STATS ── */
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;margin:24px 0;
+}
+.stat-box{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);padding:14px 12px;text-align:center;
+  box-shadow:0 1px 3px rgba(0,0,0,0.06);
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:1.9rem;font-weight:900;
+  color:var(--lime);line-height:1;
+}
+.stat-lbl{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-muted);margin-top:5px;
+}
+
+/* ── TIP BAR ── */
+.tip-bar{
+  background:var(--gold-bg);
+  border:1px solid var(--gold-border);
+  border-radius:var(--r-sm);padding:13px 16px;
+  margin-bottom:28px;display:flex;gap:10px;align-items:flex-start;
+}
+.tip-bar p{font-size:12.5px;color:#6b4e08;line-height:1.65;}
+.tip-bar strong{color:var(--gold);display:block;margin-bottom:2px;font-size:13px;}
+
+/* ── WRAPPER ── */
+.index-wrap{max-width:720px;margin:0 auto;padding:0 16px 60px;}
+
+/* ── PILLAR NAV ── */
+.pillar-nav{
+  display:flex;overflow-x:auto;
+  background:#ffffff;
+  border-bottom:2px solid var(--border);
+  padding:0 4px;scrollbar-width:none;
+  position:sticky;top:0;z-index:100;
+  -webkit-overflow-scrolling:touch;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
+.pillar-nav::-webkit-scrollbar{display:none;}
+
+.ptab{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  background:none;border:none;
+  border-bottom:3px solid transparent;
+  padding:14px 13px;cursor:pointer;
+  white-space:nowrap;flex-shrink:0;
+  transition:all .2s;-webkit-appearance:none;
+  color:var(--text-faint);
+  font-weight:500;
+}
+.ptab:hover{color:var(--text-muted);}
+
+.ptab[data-pillar="plan"].active   {color:var(--gold);   border-bottom-color:var(--gold);}
+.ptab[data-pillar="score"].active  {color:var(--gold);   border-bottom-color:var(--gold);}
+.ptab[data-pillar="strike"].active {color:var(--lime);   border-bottom-color:var(--lime);}
+.ptab[data-pillar="measure"].active{color:var(--teal);   border-bottom-color:var(--teal);}
+.ptab[data-pillar="prepare"].active{color:var(--rust);   border-bottom-color:var(--rust);}
+.ptab[data-pillar="compete"].active{color:var(--violet); border-bottom-color:var(--violet);}
+
+/* ── PILLAR SECTIONS ── */
+.pillar-sec{display:none;animation:rise .25s ease;}
+.pillar-sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── PILLAR HEADER ── */
+.pillar-header{
+  padding:24px 0 12px;
+  display:flex;align-items:center;gap:14px;
+  border-bottom:2px solid var(--border);
+  margin-bottom:6px;
+}
+.pillar-icon{font-size:1.7rem;line-height:1;}
+.pillar-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:900;line-height:1.1;
+}
+.pillar-tagline{
+  font-size:13px;color:var(--text-muted);
+  margin:10px 0 20px;line-height:1.7;font-weight:400;
+}
+.ph-score   .pillar-name{color:var(--gold);}
+.ph-strike  .pillar-name{color:var(--lime);}
+.ph-measure .pillar-name{color:var(--teal);}
+.ph-prepare .pillar-name{color:var(--rust);}
+.ph-compete .pillar-name{color:var(--violet);}
+
+/* ── SECTION HEADS ── */
+.section-head{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.22em;text-transform:uppercase;
+  margin:24px 0 12px;
+  display:flex;align-items:center;gap:10px;
+  color:var(--text-faint);
+}
 .section-head::after{content:'';flex:1;height:1px;background:var(--border);}
-.guide-card{display:flex;align-items:center;gap:16px;background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;text-decoration:none;color:inherit;transition:border-color .2s,transform .15s;position:relative;overflow:hidden;}
-.guide-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.25),transparent);}
-.guide-card:active{transform:scale(0.985);}
-.guide-card:hover{border-color:var(--border-hi);}
-.card-icon{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;border:1px solid var(--border);}
+.sh-gold  {color:var(--gold);}
+.sh-lime  {color:var(--lime);}
+.sh-teal  {color:var(--teal);}
+.sh-rust  {color:var(--rust);}
+.sh-violet{color:var(--violet);}
+
+/* ── GUIDE CARDS ── */
+.guide-card{
+  display:flex;align-items:center;gap:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:16px 14px;margin-bottom:10px;
+  text-decoration:none;color:inherit;
+  transition:border-color .18s,box-shadow .18s,transform .12s;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+.guide-card:hover{
+  border-color:var(--border-hi);
+  box-shadow:0 4px 14px rgba(0,0,0,0.1);
+}
+.guide-card:active{transform:scale(0.983);}
+
+.card-icon{
+  width:50px;height:50px;border-radius:11px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.45rem;border:1px solid var(--border);
+}
 .card-body{flex:1;min-width:0;}
-.card-number{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:3px;opacity:.8;}
-.card-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.2;margin-bottom:4px;}
-.card-desc{font-size:11.5px;color:var(--muted);line-height:1.5;}
-.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px;}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:3px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
-.card-tag.gold{background:var(--gold-dim);color:var(--gold-hi);border-color:rgba(224,184,64,.2);}
-.card-tag.teal{background:var(--teal-dim);color:var(--teal-hi);border-color:rgba(72,176,168,.2);}
-.card-tag.rust{background:var(--rust-dim);color:var(--rust-hi);border-color:rgba(216,96,48,.2);}
-.card-arrow{color:var(--faint);font-size:1.1rem;flex-shrink:0;transition:color .2s,transform .2s;}
-.guide-card:hover .card-arrow{color:var(--lime);transform:translateX(3px);}
-/* Special card variants */
-.guide-card.scratch-card{border-color:rgba(224,184,64,.3);background:linear-gradient(145deg,rgba(224,184,64,.06),var(--surface));}
-.guide-card.scratch-card::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.35),transparent);}
-.guide-card.scratch-card:hover{border-color:rgba(224,184,64,.6);}
-.guide-card.scratch-card .card-number{color:var(--gold);}
-.guide-card.scratch-card:hover .card-arrow{color:var(--gold);}
-.guide-card.data-card{border-color:rgba(62,207,184,.25);background:linear-gradient(145deg,rgba(62,207,184,.05),var(--surface));}
-.guide-card.data-card::before{background:linear-gradient(90deg,transparent,rgba(62,207,184,.3),transparent);}
-.guide-card.data-card:hover{border-color:rgba(62,207,184,.5);}
-.guide-card.data-card .card-number{color:var(--teal-hi);}
-.guide-card.data-card:hover .card-arrow{color:var(--teal-hi);}
-.guide-card.tools-card{border-color:rgba(160,200,80,.3);background:linear-gradient(145deg,rgba(160,200,80,.06),var(--surface));}
-.guide-card.tools-card::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.35),transparent);}
-.guide-card.tools-card:hover{border-color:rgba(160,200,80,.6);}
-.guide-card.tools-card .card-number{color:var(--lime-hi);}
-.guide-card.tools-card:hover .card-arrow{color:var(--lime-hi);}
-.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
-@media(max-width:480px){.hero-stats{grid-template-columns:repeat(3,1fr);}.card-icon{width:44px;height:44px;font-size:1.2rem;}}
+
+/* GUIDE NUMBER — dark and readable */
+.card-number{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--text-faint);margin-bottom:3px;
+  font-weight:500;
+}
+/* Pillar-coloured guide numbers */
+.p-plan    .card-number{color:var(--gold);}
+.p-score   .card-number{color:var(--gold);}
+.p-strike  .card-number{color:var(--lime);}
+.p-measure .card-number{color:var(--teal);}
+.p-prepare .card-number{color:var(--rust);}
+.p-compete .card-number{color:var(--violet);}
+
+/* CARD TITLE — dark, primary */
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;
+  color:var(--text-primary);
+  line-height:1.22;margin-bottom:5px;
+}
+
+/* CARD DESC — readable body text */
+.card-desc{
+  font-size:12.5px;
+  color:var(--text-body);
+  line-height:1.6;
+  font-weight:400;
+}
+
+/* CARD TAGS */
+.card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.card-tag{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;
+  background:#eef0ec;border:1px solid var(--border);
+  color:var(--text-muted);font-weight:500;
+}
+.ct-gold  {background:var(--gold-tag-bg);  border-color:var(--gold-border);  color:var(--gold-tag-tx);}
+.ct-lime  {background:var(--lime-tag-bg);  border-color:var(--lime-border);  color:var(--lime-tag-tx);}
+.ct-teal  {background:var(--teal-tag-bg);  border-color:var(--teal-border);  color:var(--teal-tag-tx);}
+.ct-rust  {background:var(--rust-tag-bg);  border-color:var(--rust-border);  color:var(--rust-tag-tx);}
+.ct-violet{background:var(--violet-tag-bg);border-color:var(--violet-border);color:var(--violet-tag-tx);}
+
+.card-arrow{
+  color:var(--border-hi);font-size:1.2rem;flex-shrink:0;
+  transition:color .18s,transform .18s;
+}
+.guide-card:hover .card-arrow{transform:translateX(3px);}
+.p-plan    .guide-card:hover .card-arrow{color:var(--gold);}
+.p-score   .guide-card:hover .card-arrow{color:var(--gold);}
+.p-strike  .guide-card:hover .card-arrow{color:var(--lime);}
+.p-measure .guide-card:hover .card-arrow{color:var(--teal);}
+.p-prepare .guide-card:hover .card-arrow{color:var(--rust);}
+.p-compete .guide-card:hover .card-arrow{color:var(--violet);}
+
+/* ── START HERE BLOCK ── */
+.start-here-wrap{
+  background:var(--rust-bg);
+  border:1.5px solid var(--rust-border);
+  border-radius:var(--r);padding:4px;
+  margin-bottom:10px;
+}
+.start-label{
+  font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--rust);padding:10px 14px 4px;font-weight:500;
+}
+.start-here-wrap .guide-card{
+  margin-bottom:0;background:transparent;
+  border:none;box-shadow:none;
+}
+.start-here-wrap .guide-card:hover{background:rgba(184,72,32,0.05);box-shadow:none;}
+.start-here-wrap .card-number{color:var(--rust);}
+.start-here-wrap .guide-card:hover .card-arrow{color:var(--rust);}
+
+/* ── PLAN BLOCK ── */
+.plan-block{
+  background:var(--gold-bg);
+  border:1.5px solid var(--gold-border);
+  border-radius:var(--r);padding:4px;
+  margin-bottom:10px;
+}
+.plan-label{
+  font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);padding:10px 14px 4px;font-weight:500;
+}
+.plan-block .guide-card{
+  margin-bottom:0;background:transparent;
+  border:none;border-top:1px solid var(--gold-border);
+  box-shadow:none;
+}
+.plan-block .guide-card:first-of-type{border-top:none;}
+.plan-block .guide-card:hover{background:rgba(196,154,8,0.05);box-shadow:none;}
+.plan-block .card-number{color:var(--gold);}
+.plan-block .guide-card:hover .card-arrow{color:var(--gold);}
+
+/* ── SESSION BADGE ── */
+.session-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;font-size:7.5px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;
+  background:var(--teal-tag-bg);
+  border:1px solid var(--teal-border);
+  color:var(--teal-tag-tx);
+  margin-left:7px;vertical-align:middle;font-weight:500;
+}
+
+/* ── ACTIVE PROGRAMME CARD ── */
+.active-card{
+  background:var(--teal-bg);
+  border-color:var(--teal-border);
+}
+.active-card:hover{border-color:var(--teal);}
+.active-card .card-number{color:var(--teal);}
+.active-card:hover .card-arrow{color:var(--teal);}
+
+/* ── AI CARD ── */
+.ai-card{
+  background:var(--lime-bg);
+  border-color:var(--lime-border);
+}
+.ai-card:hover{border-color:var(--lime);}
+.ai-card .card-number{color:var(--lime);}
+.ai-card:hover .card-arrow{color:var(--lime);}
+
+/* ── FOOTER ── */
+.footer{
+  text-align:center;padding:24px 16px;
+  font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  color:var(--text-faint);letter-spacing:.18em;
+  border-top:1px solid var(--border);
+  margin-top:20px;
+}
+
+@media(max-width:480px){
+  .card-icon{width:44px;height:44px;font-size:1.2rem;}
+  .card-title{font-size:.97rem;}
+  .ptab{font-size:8.5px;padding:13px 10px;}
+  .card-desc{font-size:12px;}
+}
 </style>
 </head>
 <body>
 
+<!-- ══════ HERO ══════ -->
 <div class="hero">
-  <p class="hero-label">10 HCP → Scratch</p>
+  <p class="hero-label">10 HCP → Scratch · The Scratch Project</p>
   <h1>Golf<br><em>Playbooks</em></h1>
-  <p class="hero-sub">Pro-level guides covering every aspect of your game — strokes gained framework, tour technique, data mastery, AI coaching, and a formal 24-month plan to scratch.</p>
+  <p class="hero-sub">Pro-level guides covering every aspect of your game — five pillars, one goal. Strokes gained framework, tour technique, data mastery, and a formal 24-month plan to scratch.</p>
   <div class="hero-tags">
-    <span class="htag">🏌️ 10 HCP</span>
-    <span class="htag">🎯 SG Framework</span>
-    <span class="htag">⛳ Mevo Gen2 Pro</span>
-    <span class="htag">🖥️ HackMotion</span>
-    <span class="htag">🏆 10→Scratch Plan</span>
+    <span class="htag">⛳ Score</span>
+    <span class="htag">🏌️ Strike</span>
+    <span class="htag">📡 Measure</span>
+    <span class="htag">💪 Prepare</span>
+    <span class="htag">🧠 Compete</span>
     <span class="htag">📱 Mobile Optimised</span>
   </div>
 </div>
 
+<!-- ══════ PILLAR NAV ══════ -->
+<nav class="pillar-nav">
+  <button class="ptab active" data-pillar="plan"    onclick="showPillar('plan',this)">📌 The Plan</button>
+  <button class="ptab"        data-pillar="score"   onclick="showPillar('score',this)">⛳ Score</button>
+  <button class="ptab"        data-pillar="strike"  onclick="showPillar('strike',this)">🏌️ Strike</button>
+  <button class="ptab"        data-pillar="measure" onclick="showPillar('measure',this)">📡 Measure</button>
+  <button class="ptab"        data-pillar="prepare" onclick="showPillar('prepare',this)">💪 Prepare</button>
+  <button class="ptab"        data-pillar="compete" onclick="showPillar('compete',this)">🧠 Compete</button>
+</nav>
+
+<!-- ══════ CONTENT ══════ -->
 <div class="index-wrap">
 
   <div class="hero-stats">
-    <div class="stat-box"><div class="stat-num">30+</div><div class="stat-lbl">Playbooks</div></div>
+    <div class="stat-box"><div class="stat-num">31</div><div class="stat-lbl">Playbooks</div></div>
     <div class="stat-box"><div class="stat-num">200+</div><div class="stat-lbl">Topics</div></div>
     <div class="stat-box"><div class="stat-num">10→0</div><div class="stat-lbl">HCP Goal</div></div>
   </div>
 
   <div class="tip-bar">
-    <span style="font-size:1rem;flex-shrink:0">💡</span>
-    <p><strong>How to add to your Home Screen</strong>
-    Open any guide in Safari → tap Share → "Add to Home Screen". Do the same for this page to keep everything one tap away.</p>
+    <span style="font-size:1.05rem;flex-shrink:0">💡</span>
+    <p><strong>Add to Home Screen</strong>Open in Safari → tap Share → "Add to Home Screen". Do the same for this page to keep all 31 guides one tap away.</p>
   </div>
 
-  <!-- SCORING GAME -->
-  <div class="section-head">Scoring Game</div>
+  <!-- ════════ THE PLAN ════════ -->
+  <div class="pillar-sec p-plan active" id="sec-plan">
 
-  <a class="guide-card" href="01_putting_pro.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(224,184,64,.05))">🎯</div>
-    <div class="card-body">
-      <div class="card-number">Guide 01</div>
-      <div class="card-title">Putting Playbook</div>
-      <div class="card-desc">SG: Putting data, AimPoint green reading, pace control science, start-line physics, tour practice plans.</div>
-      <div class="card-tags"><span class="card-tag gold">SG: Putting</span><span class="card-tag">AimPoint</span><span class="card-tag">Pace Control</span><span class="card-tag">9 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head sh-rust">▶ Start Here</div>
+    <div class="start-here-wrap">
+      <div class="start-label">System Overview — Read First</div>
+      <a class="guide-card" href="04_complete_golfer.html">
+        <div class="card-icon" style="background:var(--rust-bg);border-color:var(--rust-border);">🧭</div>
+        <div class="card-body">
+          <div class="card-number">Guide 04 · System Overview</div>
+          <div class="card-title">The Complete Golfer</div>
+          <div class="card-desc">The research foundation — why technique is only 20% of improvement. The 6 levers, key data, and cross-references to every pillar. Start here before anything else.</div>
+          <div class="card-tags">
+            <span class="card-tag ct-rust">Start Here</span>
+            <span class="card-tag ct-rust">R&A Research</span>
+            <span class="card-tag ct-rust">6 Levers</span>
+            <span class="card-tag">8 tabs</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+    </div>
 
-  <a class="guide-card" href="02_shortgame_pro.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05))">🌊</div>
-    <div class="card-body">
-      <div class="card-number">Guide 02</div>
-      <div class="card-title">Short Game Playbook</div>
-      <div class="card-desc">SG: Around-Green, chipping, pitching, bunker play, spin science, wedge matrix, pre-round protocol.</div>
-      <div class="card-tags"><span class="card-tag teal">SG: Around-Green</span><span class="card-tag">Bunker</span><span class="card-tag">Wedge Matrix</span><span class="card-tag">10 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head sh-gold">🏆 24 Months to Scratch</div>
+    <div class="plan-block">
+      <div class="plan-label">Formal Scratch Project — Execute in Sequence</div>
 
-  <a class="guide-card" href="22_wedge_distances.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.12),rgba(160,200,80,.08))">📏</div>
-    <div class="card-body">
-      <div class="card-number">Guide 22</div>
-      <div class="card-title">Wedge Distance Matrix</div>
-      <div class="card-desc">Build your personal carry distance matrix for every wedge at every swing length. Eliminate yardage guesswork around the green.</div>
-      <div class="card-tags"><span class="card-tag teal">Carry Distances</span><span class="card-tag">4 Swing Lengths</span><span class="card-tag">Mevo Protocol</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+      <a class="guide-card" href="10_scratch_plan.html">
+        <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🏆</div>
+        <div class="card-body">
+          <div class="card-number">Guide 10 · 24-Month Master Plan</div>
+          <div class="card-title">10 to Scratch — The Full Framework</div>
+          <div class="card-desc">All 4 phases, SG targets at every milestone, fitness and nutrition integration, competitive play requirements, Phase 4 (Months 13–24), and the projected handicap trajectory to zero.</div>
+          <div class="card-tags">
+            <span class="card-tag ct-gold">4 Phases</span>
+            <span class="card-tag ct-gold">HCP Trajectory</span>
+            <span class="card-tag ct-gold">Months 1–24</span>
+            <span class="card-tag">9 tabs</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
 
-  <!-- BALL STRIKING -->
-  <div class="section-head">Ball Striking</div>
+      <a class="guide-card" href="27_six_month_plan.html">
+        <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">📅</div>
+        <div class="card-body">
+          <div class="card-number">Guide 27 · Phases 1 & 2 · Jun–Nov 2026</div>
+          <div class="card-title">Six-Month Plan — Months 1–6</div>
+          <div class="card-desc">Day-by-day execution from 1 June 2026. Day One Protocol, month-by-month skill themes, session templates, competition schedule, and the baseline assessment framework.</div>
+          <div class="card-tags">
+            <span class="card-tag ct-gold">Jun–Nov 2026</span>
+            <span class="card-tag">Day One Protocol</span>
+            <span class="card-tag">Week-by-Week</span>
+            <span class="card-tag">7 tabs</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
 
-  <a class="guide-card" href="03_longgame_pro.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(160,200,80,.05))">🏌️</div>
-    <div class="card-body">
-      <div class="card-number">Guide 03</div>
-      <div class="card-title">Long Game Playbook</div>
-      <div class="card-desc">Driving biomechanics, iron play, D-Plane theory, fairway woods and hybrids, shot shaping, wind maths, course management decisions.</div>
-      <div class="card-tags"><span class="card-tag">SG: Off-Tee</span><span class="card-tag">D-Plane</span><span class="card-tag">Wind %</span><span class="card-tag">9 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+      <a class="guide-card" href="28_months_7_12_plan.html">
+        <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">📆</div>
+        <div class="card-body">
+          <div class="card-number">Guide 28 · Phase 3 · Dec 2026–May 2027</div>
+          <div class="card-title">Months 7–12 — Build the Attack</div>
+          <div class="card-desc">The precision shift: approach-dominant sessions, 2× monthly competition, Phase 2 audit protocol, distance re-verification, and the ~5 HCP to single figures framework.</div>
+          <div class="card-tags">
+            <span class="card-tag ct-gold">Dec 2026–May 2027</span>
+            <span class="card-tag">Precision Phase</span>
+            <span class="card-tag">Iron Dominant</span>
+            <span class="card-tag">7 tabs</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+    </div>
 
-  <a class="guide-card" href="11_shot_dispersion.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.12),rgba(72,176,168,.1))">📊</div>
-    <div class="card-body">
-      <div class="card-number">Guide 11</div>
-      <div class="card-title">Shot Dispersion Mapping</div>
-      <div class="card-desc">Build your personal dispersion profile club by club. Use it on-course to aim correctly, reduce double bogeys, and gain strokes through smarter targeting.</div>
-      <div class="card-tags"><span class="card-tag">Dispersion Data</span><span class="card-tag">Club by Club</span><span class="card-tag teal">On-Course Use</span><span class="card-tag">7 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head sh-teal">🗓️ Active Programme</div>
+    <a class="guide-card active-card" href="practice_plan.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🗓️</div>
+      <div class="card-body">
+        <div class="card-number">4-Week Training Programme <span class="session-badge">Active · May–Jun 2026</span></div>
+        <div class="card-title">Road to Scratch — Personal Programme</div>
+        <div class="card-desc">Built from your Tuesday session data. Four priorities: face control, ball striking, wedge precision, spin. Week-by-week drills with scored targets and course transfer protocol.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">Your Data</span>
+          <span class="card-tag ct-teal">Face Control</span>
+          <span class="card-tag ct-teal">105 mph</span>
+          <span class="card-tag">4 Weeks</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="swing_mechanics.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(72,176,168,.08))">⚙️</div>
-    <div class="card-body">
-      <div class="card-number">Swing Mechanics</div>
-      <div class="card-title">Swing Mechanics</div>
-      <div class="card-desc">Kinematic sequence, impact position fundamentals, swing plane, attack angle, and the technical framework for a repeatable ball-striking pattern.</div>
-      <div class="card-tags"><span class="card-tag">Kinematic Sequence</span><span class="card-tag">Impact Position</span><span class="card-tag">Plane</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+  </div><!-- /sec-plan -->
 
-  <a class="guide-card" href="25_speed_training.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(160,200,80,.08))">⚡</div>
-    <div class="card-body">
-      <div class="card-number">Guide 25</div>
-      <div class="card-title">Speed Training</div>
-      <div class="card-desc">Overspeed training protocols, Rypstick programming, SuperSpeed methodology, speed-retention drills, and tracking club speed gains over time.</div>
-      <div class="card-tags"><span class="card-tag gold">Overspeed</span><span class="card-tag">Rypstick</span><span class="card-tag">SuperSpeed</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
 
-  <!-- COURSE & STRATEGY -->
-  <div class="section-head">Course & Strategy</div>
+  <!-- ════════ SCORE ════════ -->
+  <div class="pillar-sec p-score" id="sec-score">
+    <div class="pillar-header ph-score">
+      <span class="pillar-icon">⛳</span>
+      <div><div class="pillar-name">Score</div></div>
+    </div>
+    <p class="pillar-tagline">What you do from tee to hole — decisions, strategy, and on-course execution. Everything needed to convert ball-striking into the lowest possible number.</p>
 
-  <a class="guide-card" href="20_course_management.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(224,184,64,.08))">🗺️</div>
-    <div class="card-body">
-      <div class="card-number">Guide 20</div>
-      <div class="card-title">Course Management</div>
-      <div class="card-desc">SG decision model, expected value targeting, dispersion-based aiming, double-bogey elimination, and hole-by-hole decision frameworks.</div>
-      <div class="card-tags"><span class="card-tag teal">SG Decision Model</span><span class="card-tag">Risk/Reward</span><span class="card-tag">Targeting</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">Scoring Fundamentals</div>
 
-  <a class="guide-card" href="23_weather_conditions.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05))">🌬️</div>
-    <div class="card-body">
-      <div class="card-number">Guide 23</div>
-      <div class="card-title">Weather & Conditions Play</div>
-      <div class="card-desc">Wind percentage formula, temperature and altitude adjustments, wet/firm conditions adaptations, and the complete conditions decision matrix.</div>
-      <div class="card-tags"><span class="card-tag teal">Wind %</span><span class="card-tag">Altitude</span><span class="card-tag">Conditions Matrix</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="01_putting_pro.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🎯</div>
+      <div class="card-body">
+        <div class="card-number">Guide 01</div>
+        <div class="card-title">Putting Playbook</div>
+        <div class="card-desc">SG: Putting benchmarks, AimPoint Express green reading, pace control science, start-line physics, 4-phase tour routine, and practice plans from maintenance to tour level.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">SG: Putting</span>
+          <span class="card-tag">AimPoint</span>
+          <span class="card-tag">Pace Control</span>
+          <span class="card-tag">9 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="24_competitive_strategy.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(216,96,48,.08))">🏆</div>
-    <div class="card-body">
-      <div class="card-number">Guide 24</div>
-      <div class="card-title">Competitive Strategy</div>
-      <div class="card-desc">Strokeplay vs matchplay strategy, scoring zone management, pressure-shot frameworks, and competition-day decision protocols.</div>
-      <div class="card-tags"><span class="card-tag gold">Strokeplay</span><span class="card-tag">Matchplay</span><span class="card-tag">Pressure Shots</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="02_shortgame_pro.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🌊</div>
+      <div class="card-body">
+        <div class="card-number">Guide 02</div>
+        <div class="card-title">Short Game Playbook</div>
+        <div class="card-desc">SG: Around-Green, chipping attack angles, pitching, lob shots, bunker physics, spin science, shot selection hierarchy, and the full wedge distance matrix.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">SG: Around-Green</span>
+          <span class="card-tag">Bunker Play</span>
+          <span class="card-tag">Spin Science</span>
+          <span class="card-tag">10 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="12_rules_of_golf.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(216,96,48,.15),rgba(216,96,48,.05))">📜</div>
-    <div class="card-body">
-      <div class="card-number">Guide 12</div>
-      <div class="card-title">Rules of Golf</div>
-      <div class="card-desc">Penalty reference, relief procedures, common situations decoded, stroke and distance, penalty areas, and signing the card correctly.</div>
-      <div class="card-tags"><span class="card-tag rust">Penalties</span><span class="card-tag">Relief</span><span class="card-tag">Quick Reference</span><span class="card-tag">7 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="22_wedge_distances.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">📏</div>
+      <div class="card-body">
+        <div class="card-number">Guide 22</div>
+        <div class="card-title">Wedge Distance Matrix</div>
+        <div class="card-desc">Build your personal carry distance matrix for every wedge at every swing length using the Mevo. Eliminate yardage guesswork in the scoring zone permanently.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">Carry Distances</span>
+          <span class="card-tag">4 Swing Lengths</span>
+          <span class="card-tag">Mevo Protocol</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <!-- COMPLETE GAME -->
-  <div class="section-head">Complete Game</div>
+    <div class="section-head">On-Course Execution</div>
 
-  <a class="guide-card" href="04_complete_golfer.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(216,96,48,.15),rgba(216,96,48,.05))">🧠</div>
-    <div class="card-body">
-      <div class="card-number">Guide 04</div>
-      <div class="card-title">The Complete Golfer</div>
-      <div class="card-desc">Mental game, equipment fitting, stats tracking, practice design, recovery, and the 3-phase roadmap to single figures.</div>
-      <div class="card-tags"><span class="card-tag rust">Mental Game</span><span class="card-tag">Stats</span><span class="card-tag">Practice Design</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="08_pro_round_prep.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🗺️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 08</div>
+        <div class="card-title">Pro Round Preparation</div>
+        <div class="card-desc">Course recon, hole-by-hole strategy building, morning protocol, range warmup sequence, short game pre-round, and the strategy card system for competition day.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">Strategy Card</span>
+          <span class="card-tag">Course Recon</span>
+          <span class="card-tag">Warmup</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="21_mental_game.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(176,122,255,.15),rgba(216,96,48,.08))">🧘</div>
-    <div class="card-body">
-      <div class="card-number">Guide 21</div>
-      <div class="card-title">Mental Game Mastery</div>
-      <div class="card-desc">Pre-shot routine psychology, composure under pressure, post-shot reset protocols, confidence building, and the mental frameworks used by tour professionals.</div>
-      <div class="card-tags"><span class="card-tag rust">Composure</span><span class="card-tag">Pre-Shot Psychology</span><span class="card-tag">Confidence</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="20_course_management.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">⚖️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 20</div>
+        <div class="card-title">Course Management</div>
+        <div class="card-desc">SG decision model, expected value framework, dispersion-based targeting, double-bogey elimination (3.2/round at 10 HCP), tee strategy, and hole-by-hole decision system.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">SG Decision Model</span>
+          <span class="card-tag">Risk/Reward</span>
+          <span class="card-tag">Targeting</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="05_pre_shot_routine.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(160,200,80,.05))">🔁</div>
-    <div class="card-body">
-      <div class="card-number">Guide 05</div>
-      <div class="card-title">Pre-Shot Routine & Practice Plan</div>
-      <div class="card-desc">Full-swing, putting and short game routines, weekly schedule template, practice plans, quick-reference checklists.</div>
-      <div class="card-tags"><span class="card-tag">Routines</span><span class="card-tag">Practice Plans</span><span class="card-tag">Checklists</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">Conditions & Rules</div>
 
-  <a class="guide-card" href="16_solo_pressure_round.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(216,96,48,.15),rgba(72,176,168,.08))">🔥</div>
-    <div class="card-body">
-      <div class="card-number">Guide 16</div>
-      <div class="card-title">Solo Pressure Round Protocol</div>
-      <div class="card-desc">Setup rules, scoring formats with consequences, pressure protocols, in-round data collection, mental framework, and the post-round review system.</div>
-      <div class="card-tags"><span class="card-tag rust">Pressure Training</span><span class="card-tag">Scoring Formats</span><span class="card-tag">Mental Framework</span><span class="card-tag">7 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="23_weather_conditions.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🌬️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 23</div>
+        <div class="card-title">Weather & Conditions Play</div>
+        <div class="card-desc">Wind percentage formula, temperature and altitude adjustments, wet and firm conditions adaptations, and the complete conditions decision matrix for every scenario.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">Wind %</span>
+          <span class="card-tag">Altitude</span>
+          <span class="card-tag">Conditions Matrix</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <!-- PERFORMANCE & PREPARATION -->
-  <div class="section-head">Performance &amp; Preparation</div>
+    <a class="guide-card" href="24_competitive_strategy.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🏆</div>
+      <div class="card-body">
+        <div class="card-number">Guide 24</div>
+        <div class="card-title">Competitive Strategy</div>
+        <div class="card-desc">Strokeplay vs matchplay decision differences, scoring zone management, pressure-shot frameworks, and the complete competition-day decision protocol.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">Strokeplay</span>
+          <span class="card-tag">Matchplay</span>
+          <span class="card-tag">Pressure Shots</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="06_golf_fitness.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(160,200,80,.05))">💪</div>
-    <div class="card-body">
-      <div class="card-number">Guide 06</div>
-      <div class="card-title">Golf Fitness Plan</div>
-      <div class="card-desc">TPI-based 6-month programme — mobility, strength, power, pre-round activation, recovery.</div>
-      <div class="card-tags"><span class="card-tag">6-Month Plan</span><span class="card-tag">TPI</span><span class="card-tag">SuperSpeed</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="12_rules_of_golf.html">
+      <div class="card-icon" style="background:#f0f2ee;border-color:var(--border);">📜</div>
+      <div class="card-body">
+        <div class="card-number">Guide 12</div>
+        <div class="card-title">Rules of Golf</div>
+        <div class="card-desc">Penalty reference, relief procedures, common situations decoded, stroke and distance, penalty areas, lateral relief, and signing the card correctly.</div>
+        <div class="card-tags">
+          <span class="card-tag">Penalties</span>
+          <span class="card-tag">Relief</span>
+          <span class="card-tag">Quick Reference</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="07_golf_nutrition.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05))">🍎</div>
-    <div class="card-body">
-      <div class="card-number">Guide 07</div>
-      <div class="card-title">Golf Nutrition Plan</div>
-      <div class="card-desc">Calorie cycling, golf day fuelling, on-course nutrition, supplements, fat loss without performance sacrifice.</div>
-      <div class="card-tags"><span class="card-tag teal">Golf Day</span><span class="card-tag">Calorie Cycling</span><span class="card-tag">Supplements</span><span class="card-tag">7 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+  </div><!-- /sec-score -->
 
-  <a class="guide-card" href="08_pro_round_prep.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(224,184,64,.05))">📋</div>
-    <div class="card-body">
-      <div class="card-number">Guide 08</div>
-      <div class="card-title">Pro Round Preparation</div>
-      <div class="card-desc">Course recon, hole-by-hole strategy, morning protocol, range warmup, strategy card system.</div>
-      <div class="card-tags"><span class="card-tag gold">Strategy Card</span><span class="card-tag">Course Recon</span><span class="card-tag">Warmup</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
 
-  <a class="guide-card" href="13_injury_prevention.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(216,96,48,.15),rgba(216,96,48,.05))">🩺</div>
-    <div class="card-body">
-      <div class="card-number">Guide 13</div>
-      <div class="card-title">Injury Prevention &amp; Management</div>
-      <div class="card-desc">Lower back, elbow, wrist, shoulder, hip and knee protocols. Prevention programme, return-to-play framework, and physio-aligned management guidelines.</div>
-      <div class="card-tags"><span class="card-tag rust">Lower Back</span><span class="card-tag">Shoulder</span><span class="card-tag">Return to Play</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+  <!-- ════════ STRIKE ════════ -->
+  <div class="pillar-sec p-strike" id="sec-strike">
+    <div class="pillar-header ph-strike">
+      <span class="pillar-icon">🏌️</span>
+      <div><div class="pillar-name">Strike</div></div>
+    </div>
+    <p class="pillar-tagline">The technical framework — ball-striking mechanics, club speed, shot dispersion, and the tools to understand and improve every shot shape.</p>
 
-  <!-- TECHNICAL DEVELOPMENT -->
-  <div class="section-head">Technical Development</div>
+    <div class="section-head sh-lime">Technical Framework</div>
 
-  <a class="guide-card" href="14_video_analysis.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05))">🎥</div>
-    <div class="card-body">
-      <div class="card-number">Guide 14</div>
-      <div class="card-title">Video Analysis &amp; Self-Coaching</div>
-      <div class="card-desc">Camera setup, down-the-line and face-on checkpoints, key swing positions to audit, apps and tools, inter-session review protocol, coach integration workflow.</div>
-      <div class="card-tags"><span class="card-tag teal">Camera Setup</span><span class="card-tag">Checkpoints</span><span class="card-tag">Apps &amp; Tools</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="03_longgame_pro.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🏌️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 03</div>
+        <div class="card-title">Long Game Playbook</div>
+        <div class="card-desc">Driving biomechanics, iron play, kinematic sequence, fairway woods and hybrids, D-Plane shot shaping, wind maths, smash factor, and course management off the tee.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">SG: Off-Tee</span>
+          <span class="card-tag">D-Plane</span>
+          <span class="card-tag">Wind %</span>
+          <span class="card-tag">9 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="15_equipment_fitting.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(160,200,80,.08))">🔧</div>
-    <div class="card-body">
-      <div class="card-number">Guide 15</div>
-      <div class="card-title">Equipment Fitting Roadmap</div>
-      <div class="card-desc">Fitting priority by SG impact, putter fitting, driver fitting, irons and wedges, how to read fitting data, ball fitting, when to re-fit as your game improves.</div>
-      <div class="card-tags"><span class="card-tag gold">Fitting Order</span><span class="card-tag">Putter</span><span class="card-tag">Driver</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="swing_mechanics.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">⚙️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 19 · Swing Mechanics</div>
+        <div class="card-title">Swing Mechanics</div>
+        <div class="card-desc">Kinematic sequence, the 5 universal setup principles, impact physics, D-Plane science, driver through wedge attack angles, and fault correction for every club category.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Kinematic Sequence</span>
+          <span class="card-tag">Impact Position</span>
+          <span class="card-tag">Fault Fix</span>
+          <span class="card-tag">6 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <!-- TRAINING TOOLS -->
-  <div class="section-head">Training Tools</div>
+    <div class="section-head">Dispersion & Speed</div>
 
-  <a class="guide-card tools-card" href="18_training_aids_2.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.22),rgba(160,200,80,.06));border-color:rgba(160,200,80,.3);">🛠️</div>
-    <div class="card-body">
-      <div class="card-number">Guide 18 · Training Arsenal</div>
-      <div class="card-title">Your Training Arsenal</div>
-      <div class="card-desc">Complete protocols for all 10 training aids: HackMotion, Mevo Gen2, ExPutt, TRS system, Foot Pedal, Rypstick, Smash Bag, G-Force Wedge. Integration plan and reactive deployment system.</div>
-      <div class="card-tags"><span class="card-tag">HackMotion</span><span class="card-tag">Mevo Gen2</span><span class="card-tag">ExPutt</span><span class="card-tag teal">10 Tools</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="11_shot_dispersion.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">📊</div>
+      <div class="card-body">
+        <div class="card-number">Guide 11</div>
+        <div class="card-title">Shot Dispersion Mapping</div>
+        <div class="card-desc">Build your personal dispersion profile club by club using the Mevo. Apply it on-course for smarter targeting, double-bogey elimination, and data-driven aim points.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Dispersion Data</span>
+          <span class="card-tag">Club by Club</span>
+          <span class="card-tag">On-Course Use</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <!-- AI COACHING -->
-  <div class="section-head">AI Coaching</div>
+    <a class="guide-card" href="25_speed_training.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">⚡</div>
+      <div class="card-body">
+        <div class="card-number">Guide 25</div>
+        <div class="card-title">Speed Training</div>
+        <div class="card-desc">Overspeed training protocols, SuperSpeed and Rypstick programming, neurological basis of speed gains, periodisation, when not to train, and tracking real progress over 12–24 months.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Overspeed</span>
+          <span class="card-tag">Rypstick</span>
+          <span class="card-tag">SuperSpeed</span>
+          <span class="card-tag">6 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="09_golf_coach_ai.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.2),rgba(72,176,168,.1))">🤖</div>
-    <div class="card-body">
-      <div class="card-number">Guide 09 · Live AI</div>
-      <div class="card-title">Golf Coach AI</div>
-      <div class="card-desc">Import your Mevo CSV or enter data manually. Claude analyses every number and delivers specific, drill-based coaching.</div>
-      <div class="card-tags"><span class="card-tag">Mevo CSV Import</span><span class="card-tag">Manual Entry</span><span class="card-tag gold">Live Claude AI</span><span class="card-tag">Session History</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">Self-Coaching</div>
 
-  <a class="guide-card" href="golf_analysis.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(72,176,168,.1))">📈</div>
-    <div class="card-body">
-      <div class="card-number">Golf Analysis</div>
-      <div class="card-title">Golf Analysis Tool</div>
-      <div class="card-desc">Data analysis framework for interpreting your round stats, SG category breakdown, and identifying the highest-leverage improvement areas.</div>
-      <div class="card-tags"><span class="card-tag">SG Analysis</span><span class="card-tag">Round Stats</span><span class="card-tag teal">Data-Driven</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="14_video_analysis.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🎥</div>
+      <div class="card-body">
+        <div class="card-number">Guide 14</div>
+        <div class="card-title">Video Analysis & Self-Coaching</div>
+        <div class="card-desc">Camera setup positions, down-the-line and face-on checkpoints, key swing positions to audit, recommended apps, inter-session review protocol, and coach integration workflow.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">Camera Setup</span>
+          <span class="card-tag">Checkpoints</span>
+          <span class="card-tag">Apps & Tools</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="26_stats_interpretation.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(160,200,80,.08))">🔢</div>
-    <div class="card-body">
-      <div class="card-number">Guide 26</div>
-      <div class="card-title">Stats &amp; SG Interpretation</div>
-      <div class="card-desc">How to read and act on your strokes gained data, category benchmarks by handicap, SG-to-practice translation, and building a stats-driven improvement plan.</div>
-      <div class="card-tags"><span class="card-tag teal">SG Framework</span><span class="card-tag">Benchmarks</span><span class="card-tag">Practice Direction</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+  </div><!-- /sec-strike -->
 
-  <!-- DATA MASTERY -->
-  <div class="section-head">Data Mastery</div>
 
-  <a class="guide-card data-card" href="mevo_gen2_playbook.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(245,200,66,.18),rgba(62,207,184,.08))">📡</div>
-    <div class="card-body">
-      <div class="card-number">Data Guide 01 · Expert</div>
-      <div class="card-title">Mevo Gen2 Data Mastery</div>
-      <div class="card-desc">All 20 Pro Package data points decoded — D-Plane science, key combinations, benchmarks, fault finder, and session protocols.</div>
-      <div class="card-tags"><span class="card-tag gold">20 Data Points</span><span class="card-tag">D-Plane</span><span class="card-tag">F2P + Spin Axis</span><span class="card-tag teal">10 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+  <!-- ════════ MEASURE ════════ -->
+  <div class="pillar-sec p-measure" id="sec-measure">
+    <div class="pillar-header ph-measure">
+      <span class="pillar-icon">📡</span>
+      <div><div class="pillar-name">Measure</div></div>
+    </div>
+    <p class="pillar-tagline">Data, feedback, and AI coaching — turning raw numbers into precise practice priorities. Your edge is knowing exactly where strokes are lost and gained.</p>
 
-  <a class="guide-card data-card" href="hackmotion_playbook.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(143,220,106,.18),rgba(62,207,184,.08))">🖥️</div>
-    <div class="card-body">
-      <div class="card-number">Data Guide 02 · Expert</div>
-      <div class="card-title">HackMotion Data Mastery</div>
-      <div class="card-desc">Three measurement axes, five swing positions, tour benchmarks, Mevo integration, fault finder, and protocols for full swing, short game, and putting.</div>
-      <div class="card-tags"><span class="card-tag">3 Axes</span><span class="card-tag">5 Positions</span><span class="card-tag">Mevo Link</span><span class="card-tag teal">11 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head sh-teal">Device Data Mastery</div>
 
-  <!-- PROGRESS & PLANNING -->
-  <div class="section-head">Progress &amp; Planning</div>
+    <a class="guide-card" href="mevo_gen2_playbook.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">📡</div>
+      <div class="card-body">
+        <div class="card-number">Data Guide 01 · Expert</div>
+        <div class="card-title">Mevo Gen2 Data Mastery</div>
+        <div class="card-desc">All 20 Pro Package data points decoded — D-Plane science, key metric combinations, tour benchmarks, fault finder, session protocols, and how to read each number in context.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">20 Data Points</span>
+          <span class="card-tag">D-Plane</span>
+          <span class="card-tag">F2P + Spin Axis</span>
+          <span class="card-tag">10 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="17_progress_journal.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(160,200,80,.08))">📓</div>
-    <div class="card-body">
-      <div class="card-number">Guide 17</div>
-      <div class="card-title">Progress Journal System</div>
-      <div class="card-desc">Round entry templates, practice log structure, mental game tracking, monthly and quarterly review protocols, and the compound intelligence system.</div>
-      <div class="card-tags"><span class="card-tag teal">Round Entry</span><span class="card-tag">Practice Log</span><span class="card-tag">Monthly Review</span><span class="card-tag">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="hackmotion_playbook.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🖥️</div>
+      <div class="card-body">
+        <div class="card-number">Data Guide 02 · Expert</div>
+        <div class="card-title">HackMotion Data Mastery</div>
+        <div class="card-desc">Three measurement axes, five key swing positions, tour benchmarks, Mevo integration for combined data, fault finder, and protocols for full swing, short game, and putting.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">3 Axes</span>
+          <span class="card-tag">5 Positions</span>
+          <span class="card-tag">Mevo Link</span>
+          <span class="card-tag">11 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="practice_plan.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(72,176,168,.08))">📅</div>
-    <div class="card-body">
-      <div class="card-number">Practice Plan</div>
-      <div class="card-title">Practice Plan Builder</div>
-      <div class="card-desc">Structured weekly practice templates, session design principles, block vs. random practice frameworks, and time allocation by SG category.</div>
-      <div class="card-tags"><span class="card-tag">Weekly Template</span><span class="card-tag">Session Design</span><span class="card-tag">SG Allocation</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">Strokes Gained Intelligence</div>
 
-  <a class="guide-card" href="27_six_month_plan.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(160,200,80,.08))">🗓️</div>
-    <div class="card-body">
-      <div class="card-number">Guide 27 · Months 1–6</div>
-      <div class="card-title">Six Month Plan</div>
-      <div class="card-desc">Phases 1 and 2 of the scratch journey — weekly schedules, SG targets, fitness and nutrition integration, milestone checkpoints, and skill priorities.</div>
-      <div class="card-tags"><span class="card-tag gold">Phases 1–2</span><span class="card-tag">Weekly Schedule</span><span class="card-tag">SG Targets</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="26_stats_interpretation.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🔢</div>
+      <div class="card-body">
+        <div class="card-number">Guide 26</div>
+        <div class="card-title">Stats & SG Interpretation</div>
+        <div class="card-desc">How to read Arccos and Shot Scope SG data, what each category means, distance band analysis, make-percentage tables, sample size warnings, and translating data into practice direction.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">SG Framework</span>
+          <span class="card-tag">Benchmarks</span>
+          <span class="card-tag">Practice Direction</span>
+          <span class="card-tag">6 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="28_months_7_12_plan.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.18),rgba(216,96,48,.08))">📆</div>
-    <div class="card-body">
-      <div class="card-number">Guide 28 · Months 7–12</div>
-      <div class="card-title">Months 7–12 Plan</div>
-      <div class="card-desc">Phases 3 and 4 — precision refinement, competitive play requirements, SG benchmarks for single figures, speed and fitness phase targets.</div>
-      <div class="card-tags"><span class="card-tag gold">Phases 3–4</span><span class="card-tag">Single Figures</span><span class="card-tag">Competition</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">AI Coaching</div>
 
-  <!-- THE GOAL -->
-  <div class="section-head">The Goal</div>
+    <a class="guide-card ai-card" href="09_golf_coach_ai.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🤖</div>
+      <div class="card-body">
+        <div class="card-number">Guide 09 · Live AI</div>
+        <div class="card-title">Golf Coach AI</div>
+        <div class="card-desc">Import your Mevo CSV or enter data manually. Claude analyses every metric and delivers specific, drill-based coaching personalised to your launch monitor numbers.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Live Claude AI</span>
+          <span class="card-tag">Mevo CSV Import</span>
+          <span class="card-tag">Manual Entry</span>
+          <span class="card-tag">Session History</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-  <a class="guide-card" href="scratch_plan.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(160,200,80,.08))">📋</div>
-    <div class="card-body">
-      <div class="card-number">Scratch Plan</div>
-      <div class="card-title">Scratch Plan Reference</div>
-      <div class="card-desc">The condensed scratch reference — key metrics, phase targets, and the most critical actions for each stage of the journey to zero handicap.</div>
-      <div class="card-tags"><span class="card-tag gold">Quick Reference</span><span class="card-tag">Phase Targets</span><span class="card-tag">Key Metrics</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <div class="section-head">Session Records</div>
 
-  <a class="guide-card scratch-card" href="10_scratch_plan.html">
-    <div class="card-icon" style="background:linear-gradient(135deg,rgba(224,184,64,.22),rgba(224,184,64,.06));border-color:rgba(224,184,64,.3);">🏆</div>
-    <div class="card-body">
-      <div class="card-number">Guide 10 · 24-Month Plan</div>
-      <div class="card-title">10 to Scratch</div>
-      <div class="card-desc">The formal plan: 4 phases, weekly schedule, SG targets, fitness protocol, nutrition, competitive play requirements, and a milestone tracker to scratch.</div>
-      <div class="card-tags"><span class="card-tag gold">4 Phases</span><span class="card-tag gold">Scratch Targets</span><span class="card-tag gold">24 Months</span><span class="card-tag gold">8 tabs</span></div>
-    </div><div class="card-arrow">›</div>
-  </a>
+    <a class="guide-card" href="golf_analysis.html" style="border-color:var(--teal-border);">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">📈</div>
+      <div class="card-body">
+        <div class="card-number">Session Report <span class="session-badge">Tuesday · 54 Shots</span></div>
+        <div class="card-title">Launch Monitor Analysis</div>
+        <div class="card-desc">Your Tuesday session — driver, 5-iron, 7-iron, PW. Identifies face control (spin axis ±13.4°), thin contact, and wedge direction as priority fixes with specific corrective drills.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-teal">Your Data</span>
+          <span class="card-tag ct-teal">105 mph Driver</span>
+          <span class="card-tag">Priority Fixes</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
 
-</div>
+  </div><!-- /sec-measure -->
 
-<div class="footer">GOLF PLAYBOOKS · 10 HCP → SCRATCH · STROKES GAINED · MEVO GEN2 · HACKMOTION · 24-MONTH PLAN</div>
 
+  <!-- ════════ PREPARE ════════ -->
+  <div class="pillar-sec p-prepare" id="sec-prepare">
+    <div class="pillar-header ph-prepare">
+      <span class="pillar-icon">💪</span>
+      <div><div class="pillar-name">Prepare</div></div>
+    </div>
+    <p class="pillar-tagline">Body, equipment, and training tools — the 80% of improvement that has nothing to do with the range. Showing up physically and technically ready is a competitive advantage.</p>
+
+    <div class="section-head sh-rust">Body</div>
+
+    <a class="guide-card" href="06_golf_fitness.html">
+      <div class="card-icon" style="background:var(--rust-tag-bg);border-color:var(--rust-border);">💪</div>
+      <div class="card-body">
+        <div class="card-number">Guide 06</div>
+        <div class="card-title">Golf Fitness Plan</div>
+        <div class="card-desc">TPI-based 6-month programme — mobility, strength, power, and pre-round activation. Phase-by-phase from base building to explosive power, with the daily 6-minute mobility protocol.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-rust">6-Month Plan</span>
+          <span class="card-tag">TPI</span>
+          <span class="card-tag">SuperSpeed</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="07_golf_nutrition.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🍎</div>
+      <div class="card-body">
+        <div class="card-number">Guide 07</div>
+        <div class="card-title">Golf Nutrition Plan</div>
+        <div class="card-desc">Calorie cycling, golf day fuelling protocols, on-course nutrition by hole, strength and speed day plans, supplement stack, and fat loss without performance sacrifice.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Golf Day</span>
+          <span class="card-tag">Calorie Cycling</span>
+          <span class="card-tag">Supplements</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="13_injury_prevention.html">
+      <div class="card-icon" style="background:var(--rust-tag-bg);border-color:var(--rust-border);">🩺</div>
+      <div class="card-body">
+        <div class="card-number">Guide 13</div>
+        <div class="card-title">Injury Prevention & Management</div>
+        <div class="card-desc">Lower back, elbow, wrist, shoulder, hip and knee protocols. Prevention programme, physio-aligned management, and a structured return-to-play framework for every common golf injury.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-rust">Lower Back</span>
+          <span class="card-tag">Shoulder</span>
+          <span class="card-tag">Return to Play</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <div class="section-head">Equipment</div>
+
+    <a class="guide-card" href="15_equipment_fitting.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🔧</div>
+      <div class="card-body">
+        <div class="card-number">Guide 15</div>
+        <div class="card-title">Equipment Fitting Roadmap</div>
+        <div class="card-desc">Fitting priority by SG impact (putter first, +0.3–0.8 SG), putter and driver fitting, irons and wedges, how to read fitting data, ball fitting, and when to re-fit as your game improves.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-gold">Fitting Order</span>
+          <span class="card-tag">Putter First</span>
+          <span class="card-tag">Driver</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <div class="section-head">Training Arsenal & Practice</div>
+
+    <a class="guide-card" href="18_training_aids_2.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🛠️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 18 · Training Arsenal</div>
+        <div class="card-title">Your Training Arsenal</div>
+        <div class="card-desc">Complete protocols for all 10 training aids: HackMotion, Mevo Gen2, ExPutt, TRS system, Foot Pedal, Rypstick, Smash Bag, G-Force Wedge. Integration plan and reactive deployment by SG data.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">HackMotion</span>
+          <span class="card-tag">Mevo Gen2</span>
+          <span class="card-tag">ExPutt</span>
+          <span class="card-tag">10 Tools</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <a class="guide-card" href="05_pre_shot_routine.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🔁</div>
+      <div class="card-body">
+        <div class="card-number">Guide 05</div>
+        <div class="card-title">Pre-Shot Routine & Practice Plans</div>
+        <div class="card-desc">Full-swing, putting and short game routines built on tour neuroscience. Weekly schedule template, maintenance and improvement practice plans, and quick-reference checklists.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-lime">Routines</span>
+          <span class="card-tag">Practice Plans</span>
+          <span class="card-tag">Checklists</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+  </div><!-- /sec-prepare -->
+
+
+  <!-- ════════ COMPETE ════════ -->
+  <div class="pillar-sec p-compete" id="sec-compete">
+    <div class="pillar-header ph-compete">
+      <span class="pillar-icon">🧠</span>
+      <div><div class="pillar-name">Compete</div></div>
+    </div>
+    <p class="pillar-tagline">Mental game, pressure performance, and the tracking systems that compound improvement over 24 months. The final strokes to scratch are won here.</p>
+
+    <div class="section-head sh-violet">Mental Game</div>
+
+    <a class="guide-card" href="21_mental_game.html">
+      <div class="card-icon" style="background:var(--violet-tag-bg);border-color:var(--violet-border);">🧘</div>
+      <div class="card-body">
+        <div class="card-number">Guide 21</div>
+        <div class="card-title">Mental Game Mastery</div>
+        <div class="card-desc">Neuroscience of pressure, choking mechanism, arousal control and box breathing protocol, between-shot routines, managing bad patches, the yips, and pre/post-round psychological systems.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-violet">Pressure Science</span>
+          <span class="card-tag">Box Breathing</span>
+          <span class="card-tag">The Yips</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <div class="section-head">Pressure Training</div>
+
+    <a class="guide-card" href="16_solo_pressure_round.html">
+      <div class="card-icon" style="background:var(--rust-tag-bg);border-color:var(--rust-border);">🔥</div>
+      <div class="card-body">
+        <div class="card-number">Guide 16</div>
+        <div class="card-title">Solo Pressure Round Protocol</div>
+        <div class="card-desc">Simulate competitive pressure playing alone. Setup rules, scoring formats with real consequences, pressure protocols, in-round data collection, mental framework, and post-round review system.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-rust">Pressure Training</span>
+          <span class="card-tag">Scoring Formats</span>
+          <span class="card-tag">Mental Framework</span>
+          <span class="card-tag">7 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+    <div class="section-head">Tracking & Review</div>
+
+    <a class="guide-card" href="17_progress_journal.html">
+      <div class="card-icon" style="background:var(--violet-tag-bg);border-color:var(--violet-border);">📓</div>
+      <div class="card-body">
+        <div class="card-number">Guide 17</div>
+        <div class="card-title">Progress Journal System</div>
+        <div class="card-desc">Round entry templates, practice log structure, mental game tracking, monthly and quarterly review protocols. The compound intelligence system that fills the gap SG data cannot — the why behind the what.</div>
+        <div class="card-tags">
+          <span class="card-tag ct-violet">Round Entry</span>
+          <span class="card-tag">Monthly Review</span>
+          <span class="card-tag">Mental Tracking</span>
+          <span class="card-tag">8 tabs</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+
+  </div><!-- /sec-compete -->
+
+</div><!-- /index-wrap -->
+
+<div class="footer">GOLF PLAYBOOKS · 5 PILLARS · 31 GUIDES · 10 HCP → SCRATCH · STROKES GAINED · 24-MONTH PLAN</div>
+
+<script>
+function showPillar(id, btn) {
+  document.querySelectorAll('.pillar-sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+  btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  window.scrollTo({top:document.querySelector('.pillar-nav').offsetTop - 1,behavior:'smooth'});
+}
+</script>
 </body>
 </html>
