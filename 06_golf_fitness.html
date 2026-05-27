@@ -150,13 +150,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
 </head>
 <body>
-<!-- HOME NAV -->
-<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
-  </a>
-  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
-</div>
 <div class="hero">
   <p class="hero-label">Golf Longevity · 6-Month Fitness Plan</p>
   <h1>Golf Fitness<br><em>Playbook</em></h1>
@@ -176,6 +169,8 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('library',this)">Exercise Library</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
   <button class="tab" onclick="show('postround',this)">Post-Round</button>
+  <button class="tab" onclick="show('grf',this)">GRF Training</button>
+  <button class="tab" onclick="show('hrv',this)">HRV & Readiness</button>
 </div>
 
 <div class="sec active" id="overview">
@@ -487,6 +482,159 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
 </div>
 
+
+<!-- GROUND REACTION FORCE TRAINING -->
+<div class="sec" id="grf">
+  <h2 class="sec-title">Ground Reaction Force Training</h2>
+  <p class="sec-desc">Ground Reaction Force (GRF) is the largest single source of clubhead speed (30–35%) — and the most undertrained physical variable in amateur golf. The Speed Training playbook identifies GRF as the #1 speed source; this section provides the dedicated technical and physical protocol to develop it.</p>
+  <span class="badge badge-lime">⚡ GRF — The Physics of Golf Speed</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Ground Reaction Force Is — and Why It Dominates Speed</span>
+    <h3>Newton's Third Law Applied to the Golf Swing</h3>
+    <p style="margin-bottom:8px;">When you push into the ground with your feet, the ground pushes back with equal and opposite force. This ground reaction force travels up through the legs, hips, and core — initiating the kinematic chain that produces clubhead speed. The more force you produce into the ground, and the better your timing of that force, the faster the chain moves.</p>
+    <table class="tbl"><tr><th>Player Category</th><th>Peak Vertical GRF</th><th>Horizontal GRF Ratio</th><th>Driver Speed</th></tr>
+    <tr><td class="good">PGA Tour average</td><td>1.8–2.2× body weight</td><td>High horizontal (target direction)</td><td>113–115 mph</td></tr>
+    <tr><td class="warn">Scratch amateur</td><td>1.4–1.7× body weight</td><td>Moderate horizontal</td><td>105–110 mph</td></tr>
+    <tr><td class="bad">10 HCP typical</td><td>1.0–1.3× body weight</td><td>Low horizontal, inconsistent timing</td><td>90–100 mph</td></tr></table>
+    <div class="formula" style="margin-top:12px;"><div class="formula-lbl">The GRF Speed Sequence (Right-Handed Player)</div><div class="formula-main">Transition: Trail foot drives DOWN into ground (vertical loading)<br>Early downswing: Pressure shifts laterally to lead foot<br>Impact zone: Lead foot drives DOWN and OUT (horizontal force toward target)<br>Follow-through: Lead heel may rise as force is transferred upward through body</div></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🔄 The Squat-Jump Sequence — Elite Transition Mechanics</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Squat into Jump — The Most Powerful Transition Move</span>
+    <h3>How Tour Players Load and Explode</h3>
+    <p style="margin-bottom:8px;">High-speed force plate data from tour players consistently shows a vertical downward force spike in early transition (the "squat"), immediately followed by a powerful upward force production (the "jump"). This squat-jump sequence is absent in most amateur swings — replaced by a level rotation that produces significantly less GRF and therefore less speed.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The squat (transition):</strong> As the backswing completes, the hips drop slightly downward before initiating rotation. This is a subtle movement — 1–3 inches of downward motion — not a visible knee bend. The sensation is "sitting into the ground" at the top before driving through. Force plate data shows this squat creates 1.2–1.5× bodyweight of loading force before any rotation begins.</div></li>
+      <li><span class="step-n">2</span><div><strong>The jump (downswing):</strong> From the loaded squat position, the legs drive upward and toward the target simultaneously. The sensation is "pushing the ground away" — not "rotating the hips." This vertical drive is what creates the upward GRF peak (1.8–2.2× bodyweight at tour level) that initiates the kinematic chain. The rotation is a consequence of this push, not the primary input.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lead foot drives down through impact:</strong> At and through impact, the lead foot presses firmly into the ground. The lead heel rises only after impact — rising prematurely before impact signals a loss of GRF. Feel the lead heel "pressing into the ground" through the hitting zone.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pressure transfer sequence — feel it:</strong> Trail foot heavy at address → trail foot heavier at top of backswing → lead foot heavier at impact → full weight on lead side at finish. The transfer should feel progressive, not sudden. A sudden lunge (early extension) short-circuits the GRF sequence and produces the "stall" pattern — hips stop rotating and the hands flip through.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">🏋️ GRF Training Exercises</span>
+  <div class="card">
+    <span class="card-tag">Phase 1 — GRF Awareness Drills (Weeks 1–4)</span>
+    <h3>Building the Neural Pattern Before Adding Load</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Trail Heel Rise Drill:</strong> Take your address position without a club. Make a backswing to the top, then drive your lead foot into the ground while allowing the trail heel to rise naturally. Hold the impact position for 2 seconds. Focus entirely on the lead foot pressure. 3 sets × 15 reps, 3× per week. This isolates the pressure transfer without any speed or rotation complexity.</div></li>
+      <li><span class="step-n">2</span><div><strong>Jump and Land Drill:</strong> Stand in golf address posture. Jump vertically (both feet leave the ground simultaneously) and land in impact posture — weight on lead side, hips slightly open. Feel the ground reaction force on landing. This develops the neuromuscular awareness of what GRF feels like as a sensation. 3 sets × 10 reps.</div></li>
+      <li><span class="step-n">3</span><div><strong>Step Drill (Dynamic):</strong> Start with feet together. As you initiate the downswing, step your lead foot into its normal position and drive it into the ground. This exaggerates the lateral pressure shift and forces a correct GRF sequence. Used extensively by TPI coaches to teach pressure transfer. Hit 20 shots with the step drill before 20 normal shots to transfer the feeling.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Phase 2 — GRF Strength Development (Weeks 5–12)</span>
+    <h3>Building the Physical Capacity to Generate Force</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Single-Leg Squat and Press (Lateral):</strong> Stand on your lead leg. Squat to 90° knee flexion, then drive upward and slightly outward (toward target direction). 4 sets × 8 reps per leg. This trains the hip abductors and glutes to produce horizontal GRF — exactly the force component that drives hip rotation through impact. Progress from bodyweight to dumbbell held at chest.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hex Bar Deadlift — Vertical Force Production:</strong> The hex bar deadlift is the most sport-specific GRF exercise for golf. It trains the exact muscles (glutes, hamstrings, lower back) responsible for producing vertical ground force. 3 sets × 5 reps at 80% 1RM. Start with Romanian Deadlift in Phase 1 if hex bar is unavailable.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lateral Bounds (Plyometric):</strong> Stand on one leg, bound laterally to the other leg, landing with control. Focuses on horizontal force production and the landing stability that mirrors the lead side at impact. 3 sets × 8 bounds per direction. Progress from short bounds to maximum distance bounds as strength and control improve.</div></li>
+      <li><span class="step-n">4</span><div><strong>Med Ball Squat-to-Slam:</strong> Hold a medicine ball (4–6 kg). Squat into a loaded position, then drive upward explosively, slamming the ball downward at full arm extension. The squat-to-drive pattern mirrors the GRF sequence in the golf transition. 3 sets × 10 reps. This builds power in the exact movement direction required.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Phase 3 — GRF Power Integration (Weeks 13–24)</span>
+    <h3>Transferring GRF Strength to Clubhead Speed</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Jump Swing with SuperSpeed:</strong> Use the lightest SuperSpeed stick. Begin each swing with a deliberate "squat" at the top, then drive upward as you initiate the downswing. The lighter implement allows you to feel the GRF-initiated speed without technical interference. 3 sets × 10 swings. Compare Mevo speed readings vs. normal SuperSpeed sessions to quantify GRF contribution.</div></li>
+      <li><span class="step-n">2</span><div><strong>Box Jump to Address Position:</strong> Stand facing a plyo box (30–40 cm height). Jump to the top of the box, land in golf address posture, and immediately drive back down into a simulated impact posture. The landing and immediate re-drive trains the stretch-shortening cycle that mirrors the squat-jump transition sequence. 4 sets × 6 reps.</div></li>
+      <li><span class="step-n">3</span><div><strong>Mevo Speed Tracking — GRF Sessions vs. Standard Sessions:</strong> Track driver speed separately on sessions where you deliberately focus on the squat-jump sequence vs. standard sessions. Most players see 2–5 mph additional speed when GRF is consciously sequenced. This quantifies the contribution and motivates continued focus on the movement.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">GRF Fault Finder</span>
+    <h3>Diagnosing Your Ground Force Issues</h3>
+    <table class="tbl"><tr><th>Fault</th><th>Sign</th><th>Speed Cost</th><th>Fix</th></tr>
+    <tr><td>Flat-footed through impact</td><td>Trail heel never rises; weight stays even</td><td>−10 to −20 mph</td><td>Step drill; jump drill; trail heel rise drill</td></tr>
+    <tr><td>Early extension (standing up)</td><td>Hips move toward the ball in downswing</td><td>−8 to −15 mph</td><td>Wall drill; hip hinge maintenance drill; glute activation</td></tr>
+    <tr><td>Lead heel rise before impact</td><td>Weight leaves lead side before contact</td><td>−5 to −10 mph</td><td>Lead foot pressure drill; press lead heel down through impact</td></tr>
+    <tr><td>Lateral sway (not drive)</td><td>Body moves sideways, not rotationally</td><td>−5 to −8 mph</td><td>Step drill; resistance band around hips; "jump" cue instead of "shift"</td></tr></table>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The integration priority:</strong> GRF training produces the largest speed gains for players who have already built a basic kinematic sequence (correct order: lower body → torso → arm → club) but have plateaued on overspeed gains. If SuperSpeed training has stalled, GRF is almost certainly the limiting factor. Dedicate 8 weeks to GRF-focused work before re-testing with overspeed protocols.</p></div>
+</div>
+
+<!-- HRV AND READINESS TRACKING -->
+<div class="sec" id="hrv">
+  <h2 class="sec-title">HRV &amp; Physical Readiness</h2>
+  <p class="sec-desc">Heart Rate Variability (HRV) is the most validated, non-invasive marker of nervous system recovery available. Training hard on a low-HRV day produces injury risk and poor neural adaptation. This section provides the full protocol for integrating HRV into your training and competition schedule.</p>
+  <span class="badge badge-teal">📊 What HRV Actually Measures</span>
+  <div class="card card-gold">
+    <span class="card-tag">HRV — The Science</span>
+    <h3>Why Beat-to-Beat Variation Predicts Training Readiness</h3>
+    <p style="margin-bottom:8px;">Heart rate variability measures the millisecond differences between consecutive heartbeats. Counter-intuitively, higher variability is better — it indicates the autonomic nervous system is responsive and adaptive. Low HRV indicates the sympathetic nervous system is dominant (stress, fatigue, inflammation) and the body is prioritising recovery over performance adaptation.</p>
+    <table class="tbl"><tr><th>HRV State</th><th>What It Means</th><th>Training Recommendation</th><th>Golf Application</th></tr>
+    <tr><td class="good">High HRV (10%+ above baseline)</td><td>Nervous system recovered, primed for adaptation</td><td>High-intensity training day — push hard</td><td>Speed work, overspeed, new technique acquisition</td></tr>
+    <tr><td class="warn">Normal HRV (±10% of baseline)</td><td>Adequate recovery, normal training response</td><td>Moderate training — standard programme</td><td>Normal range sessions, standard fitness work</td></tr>
+    <tr><td class="bad">Low HRV (10%+ below baseline)</td><td>Under-recovered — sympathetic dominance</td><td>Rest, active recovery, or light technical work only</td><td>Putting and short game only; no speed work; light stretch</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Critical interaction — overspeed training:</strong> Speed training (SuperSpeed, Rypstick) is a neurological training stimulus. It requires a recovered nervous system to produce adaptation. Running a full speed protocol on a low-HRV day produces fatigue without speed gain — and increases injury risk. High-HRV days are when speed work should be scheduled. This single adjustment can accelerate speed gains by 20–30%.</p></div>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">📱 Measurement Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">How to Measure HRV — Tools and Timing</span>
+    <h3>Accurate Measurement Without Expensive Equipment</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When to measure:</strong> Immediately upon waking — before getting out of bed, before coffee, before checking your phone. HRV is most stable and reproducible at this moment. Any activity, caffeine, or emotional stimulation within 30 minutes before measurement reduces accuracy significantly.</div></li>
+      <li><span class="step-n">2</span><div><strong>Measurement duration:</strong> A minimum of 60 seconds is required for a reliable reading. Most apps use a 60–120 second measurement. Shorter readings are unreliable; longer readings add precision but are rarely necessary.</div></li>
+      <li><span class="step-n">3</span><div><strong>Body position — always consistent:</strong> Measure in the same body position every day. Lying down produces the highest and most stable HRV readings. Sitting produces slightly lower readings. Standing produces the lowest. Changing position between days makes your baseline comparison unreliable.</div></li>
+    </ul>
+    <div class="card" style="margin-top:16px;">
+      <span class="card-tag">Recommended HRV Tools</span>
+      <h3>By Budget and Commitment Level</h3>
+      <table class="tbl"><tr><th>Tool</th><th>Cost</th><th>Method</th><th>Recommendation</th></tr>
+      <tr><td class="good">HRV4Training (app)</td><td>Free/low cost</td><td>Phone camera — no hardware needed</td><td>Best starting point — sufficient accuracy for training decisions</td></tr>
+      <tr><td class="warn">Polar H10 chest strap + Elite HRV app</td><td>£80–100</td><td>Chest strap ECG-quality</td><td>High accuracy — recommended if training seriously</td></tr>
+      <tr><td class="good">Oura Ring Gen 3</td><td>£300–350</td><td>Continuous overnight HRV</td><td>Best overall — overnight data eliminates morning measurement variability</td></tr>
+      <tr><td class="warn">Whoop 4.0</td><td>£30/month subscription</td><td>Continuous wrist-based</td><td>Good all-in-one readiness score — less precise than Oura or Polar</td></tr></table>
+    </div>
+  </div>
+  <span class="badge badge-gold" style="margin-top:20px;">📈 Building and Reading Your Baseline</span>
+  <div class="card">
+    <span class="card-tag">Establishing Your Personal Baseline — Weeks 1–4</span>
+    <h3>Why Individual Baselines Matter More Than Population Norms</h3>
+    <p style="margin-bottom:8px;">HRV is highly individual. A reading of 65 ms rMSSD may indicate peak readiness for one person and significant fatigue for another. What matters is your personal baseline — the average of your HRV over 4–6 weeks of consistent measurement in a stable training period. All training decisions are made relative to your baseline, not population averages.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Weeks 1–4 — baseline only:</strong> Measure every morning but make no training adjustments based on HRV. Simply observe. Note patterns: does HRV drop after poor sleep? After alcohol? After consecutive hard training days? After competition? These patterns become your personal readiness dictionary.</div></li>
+      <li><span class="step-n">2</span><div><strong>Week 5 onwards — apply the data:</strong> Begin adjusting training intensity based on HRV relative to your 7-day rolling average (most apps calculate this automatically). High reading → push. Normal → standard. Low → back off.</div></li>
+      <li><span class="step-n">3</span><div><strong>Track alongside training load and subjective feel:</strong> Note your Perceived Exertion (RPE) after each session alongside your HRV reading. Over time you will see patterns: sessions at high RPE consistently drop HRV the next morning; poor sleep drops it more than hard training. These insights let you make proactive recovery decisions.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">🏌️ Golf-Specific HRV Application</span>
+  <div class="card card-teal">
+    <span class="card-tag">Integrating HRV into the Scratch Programme</span>
+    <h3>Week-by-Week Training Decisions Based on Readiness</h3>
+    <table class="tbl"><tr><th>Day</th><th>High HRV</th><th>Normal HRV</th><th>Low HRV</th></tr>
+    <tr><td>Planned speed day</td><td>Full SuperSpeed / Rypstick protocol</td><td>Reduce to 75% effort overspeed</td><td>Skip — mobility and putting only</td></tr>
+    <tr><td>Planned strength day</td><td>Push weights — progressive overload</td><td>Moderate load — normal programme</td><td>Reduce to 60% load or mobility only</td></tr>
+    <tr><td>Planned range session</td><td>Technique acquisition — learn new moves</td><td>Maintenance and consolidation</td><td>Short game and putting — no full swing</td></tr>
+    <tr><td>Pre-competition day</td><td>Light calibration only — protect readiness</td><td>Light calibration — normal</td><td>Rest completely — protect for competition</td></tr>
+    <tr><td>Competition day</td><td>Expect peak performance — compete aggressively</td><td>Normal competition mindset</td><td>Manage expectations — score may be affected by fatigue</td></tr></table>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">😴 Sleep — The Primary HRV Driver</span>
+  <div class="card card-gold">
+    <span class="card-tag">Sleep Quality — The Most Impactful Recovery Variable</span>
+    <h3>Targets and Optimisation Protocol</h3>
+    <p style="margin-bottom:8px;">Sleep is the single most powerful recovery intervention available. A single night of poor sleep reduces HRV by an average of 15–25%, which cascades into reduced motor learning, reduced speed adaptation, and impaired decision-making on course. Optimising sleep is the highest-ROI recovery investment in the programme.</p>
+    <table class="tbl"><tr><th>Sleep Metric</th><th>Target (Athlete in Training)</th><th>Effect on Performance</th></tr>
+    <tr><td>Total sleep duration</td><td>7.5–9 hours</td><td>Below 7 hrs: −20–30% motor learning capacity</td></tr>
+    <tr><td>Deep sleep (slow wave)</td><td>15–25% of total (90–135 min)</td><td>Primary window for muscle repair and hormonal recovery</td></tr>
+    <tr><td>REM sleep</td><td>20–25% of total (90–120 min)</td><td>Primary window for motor skill consolidation — technique learned today is encoded overnight</td></tr>
+    <tr><td>Sleep consistency (timing)</td><td>Same ±30 min bedtime/wake time</td><td>Circadian rhythm stability improves HRV by 8–12% vs. irregular sleep</td></tr></table>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Pre-sleep protocol (60 min before bed):</strong> No screens or dim blue-light filter. Room temperature 17–19°C. No alcohol (alcohol reduces REM sleep by 20–25% even if it aids sleep onset — the sleep quality is significantly worse). Consistent wind-down routine signals the brain to begin melatonin production.</div></li>
+      <li><span class="step-n">2</span><div><strong>Morning protocol for HRV accuracy:</strong> Measure HRV before coffee or any stimulation. Note total hours slept alongside the HRV reading. Within 2–3 weeks you will see a direct correlation between sleep duration/quality and next-morning HRV — the most motivating data for sleep behaviour change.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pre-competition sleep:</strong> The night before a competition matters less than the two nights before. Competition anxiety often disrupts final-night sleep — pre-plan for this by banking extra sleep the two previous nights. A night of poor sleep before competition does not significantly impair performance if the preceding nights were well-rested.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Additional Readiness Markers — Beyond HRV</span>
+    <h3>The Full Readiness Picture</h3>
+    <table class="tbl"><tr><th>Marker</th><th>How to Assess</th><th>Threshold for Concern</th><th>Action</th></tr>
+    <tr><td>Resting heart rate</td><td>Morning measurement (most apps auto-track)</td><td>5+ bpm above 7-day avg</td><td>Reduce training load — likely under-recovered</td></tr>
+    <tr><td>Grip strength</td><td>Squeeze a ball or use a hand dynamometer</td><td>Noticeably weaker than normal</td><td>Strong indicator of CNS fatigue — rest day</td></tr>
+    <tr><td>Reaction time</td><td>Smartphone reaction time app (e.g. Human Benchmark)</td><td>10%+ slower than average</td><td>CNS under-recovered — fine motor skills affected</td></tr>
+    <tr><td>Subjective wellness</td><td>1–10 rating on energy, muscle soreness, mood, sleep quality</td><td>Three consecutive low days</td><td>Mandatory easy week — review training load</td></tr></table>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The compound effect:</strong> HRV-guided training is not about doing less — it is about doing the right intensity at the right time. Players who train at maximum intensity every day regardless of HRV plateau earlier and accumulate more injuries. Players who use HRV data to push hard on recovery days and back off on low-HRV days progress faster over 6–12 months. The evidence is consistent across sports science — readiness-guided training outperforms fixed-schedule training for long-term athletic development.</p></div>
+</div>
+
 <div class="footer">GOLF FITNESS PLAN · 6-MONTH PROGRAMME · TPI-BASED METHODOLOGY</div>
 <script>
 function show(id,btn){
@@ -497,31 +645,5 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
-
-<!-- RELATED GUIDES PANEL -->
-<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
-  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
-  <div style="display:flex;flex-wrap:wrap;gap:10px;">
-  <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Speed Training</span>
-  </a>
-  <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
-  </a>
-  <a href="13_injury_prevention.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🩺</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Injury Prevention</span>
-  </a>
-  <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
-  </a>
-  </div>
-  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
-    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
-  </div>
-</div>
 </body>
 </html>

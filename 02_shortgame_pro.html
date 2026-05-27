@@ -149,13 +149,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 </head>
 <body>
-<!-- HOME NAV -->
-<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
-  </a>
-  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
-</div>
 <div class="hero">
   <p class="hero-label">Pro Playbook · Short Game</p>
   <h1>Short Game<br><em>Playbook</em></h1>
@@ -173,6 +166,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('lob',this)">Lob Shot</button>
   <button class="tab" onclick="show('bunker',this)">Bunker</button>
   <button class="tab" onclick="show('spin',this)">Spin & Traj.</button>
+  <button class="tab" onclick="show('wedgespin',this)">Adv. Wedge</button>
   <button class="tab" onclick="show('selection',this)">Shot Select.</button>
   <button class="tab" onclick="show('drills',this)">Drills</button>
   <button class="tab" onclick="show('plans',this)">Plans</button>
@@ -398,6 +392,94 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
 </div>
 
+
+<!-- ADVANCED WEDGE SPIN — ELITE TECHNIQUE -->
+<div class="sec" id="wedgespin">
+  <h2 class="sec-title">Advanced Wedge Spin</h2>
+  <p class="sec-desc">Elite wedge play operates on a fundamentally different logic to standard instruction. Tour players calculate landing zones and spin independently — they never simply "aim at the flag." This section covers the four variables that govern spin, how to produce it in every condition, and the landing zone targeting system used on tour.</p>
+  <span class="badge badge-gold">🎯 Landing Zone Targeting — The Tour Method</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Tour Players Never Aim at the Flag</span>
+    <h3>The Two-Calculation System</h3>
+    <p style="margin-bottom:10px;">A PGA Tour player arriving at a 60-yard wedge shot makes two separate calculations before committing to a club and trajectory: (1) where do I want the ball to land, and (2) how far will it spin back or roll forward from that landing point. The flag is the output — not the input.</p>
+    <table class="tbl"><tr><th>Variable</th><th>Tour Process</th><th>10 HCP Process</th><th>SG Cost of Difference</th></tr>
+    <tr><td>Target selection</td><td>Specific landing zone, calculated spin</td><td>Aim at the flag</td><td>−0.4 to −0.8 SG/round</td></tr>
+    <tr><td>Spin awareness</td><td>Know exact spin rate for each setup</td><td>Hope for the best</td><td>Inconsistent proximity</td></tr>
+    <tr><td>Condition adjustment</td><td>Wet = less spin, change landing zone</td><td>Same shot always</td><td>Green misses in wet conditions</td></tr>
+    <tr><td>Landing zone precision</td><td>Aim for 3-foot landing circle</td><td>Aim for the green</td><td>−1.0 to −1.5 SG/round</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Practical application:</strong> From 60 yards with a full lob wedge generating 9,500 rpm, the ball will land and spin back 4–6 feet. Land it 5 feet past the flag. From the same distance with a partial gap wedge generating 6,000 rpm, the ball will land and roll forward 3–4 feet. Land it 4 feet short of the flag. Same distance, same flag — completely different landing zones.</p></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">⚙️ The Four Spin Variables — In Combination</span>
+  <div class="card card-teal">
+    <span class="card-tag">Variable 1 — Groove Condition</span>
+    <h3>The Most Underestimated Spin Factor</h3>
+    <table class="tbl"><tr><th>Groove Condition</th><th>Spin Rate (SW, 80 yds)</th><th>Landing Behaviour</th><th>Action</th></tr>
+    <tr><td class="good">New / sharp grooves</td><td>9,000–11,000 rpm</td><td>Checks hard, may spin back</td><td>Account for spinback in landing zone</td></tr>
+    <tr><td class="warn">Moderate wear (50–70 rds)</td><td>7,000–8,500 rpm</td><td>One hop and stop</td><td>Standard landing zone calculation</td></tr>
+    <tr><td class="bad">Heavy wear (100+ rds)</td><td>4,500–6,000 rpm</td><td>Runs out significantly</td><td>Land shorter — more roll expected</td></tr></table>
+    <p style="margin-top:8px;"><strong>Groove test:</strong> Drag your thumbnail across the grooves. Sharp = defined resistance. Worn = smooth, no resistance. Replace wedges every 70 rounds of competitive play — groove wear is the single largest undetected spin loss in the amateur game.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Variable 2 — Ball Cover Interaction</span>
+    <h3>Urethane vs. Surlyn — The Friction Difference</h3>
+    <table class="tbl"><tr><th>Ball Cover</th><th>Spin Potential</th><th>Groove Interaction</th><th>Right Player</th></tr>
+    <tr><td class="good">Urethane (multi-layer)</td><td>High — 9,000–11,000 rpm possible</td><td>Maximum groove bite</td><td>85+ mph swing speed, scratch pursuit</td></tr>
+    <tr><td class="warn">Surlyn (2-piece)</td><td>Low — 4,000–6,500 rpm maximum</td><td>Minimal groove engagement</td><td>Below 85 mph, distance priority</td></tr></table>
+    <p style="margin-top:8px;">At 105 mph driver speed (your session data), a urethane-covered ball will produce significantly more greenside spin. The combination of sharp grooves + urethane cover + correct technique can produce 2,000–3,000 rpm more than the same swing with a 2-piece Surlyn ball.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Variable 3 — Attack Angle and Presentation</span>
+    <h3>How Steep Descent Produces Spin</h3>
+    <p style="margin-bottom:8px;">Spin is generated by the friction between the grooves and the ball cover at the moment of contact. A steeper attack angle produces a longer "dwell time" of the groove on the cover — generating more friction and higher spin rates.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The "zip" technique for maximum spin:</strong> Position the ball one inch behind centre, hands 3–4 inches ahead, weight 65% on lead foot. Make an accelerating, descending strike — do not decelerate into the ball. Tour players generate MORE speed through impact on short wedge shots than the average amateur realises. Deceleration is the primary cause of low spin from close range.</div></li>
+      <li><span class="step-n">2</span><div><strong>Steep attack angle targets:</strong> For maximum spin, attack angle should be −7° to −10° for a full wedge. This is steeper than most amateurs achieve. Use Mevo attack angle data on wedge shots — anything shallower than −4° produces significantly less spin.</div></li>
+      <li><span class="step-n">3</span><div><strong>Clubhead speed at impact — do not decelerate:</strong> A half-swing wedge should not mean a decelerated clubhead. Tour players accelerate through the entire hitting zone even on 40-yard shots. Deceleration adds dynamic loft (flipping the wrists) and kills spin simultaneously — the worst possible combination.</div></li>
+    </ul>
+    <div class="formula"><div class="formula-lbl">Attack Angle vs. Spin Rate (SW, 80 mph club speed)</div><div class="formula-main">−3° attack angle: ~6,500 rpm (one hop and roll)<br>−5° attack angle: ~8,000 rpm (one hop and stop)<br>−7° attack angle: ~9,500 rpm (check, potential spinback)<br>−10° attack angle: ~11,000 rpm (spinback on firm greens)</div></div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Variable 4 — Conditions Adjustment</span>
+    <h3>Wet Conditions, Rough Lies, and Spin Management</h3>
+    <table class="tbl"><tr><th>Condition</th><th>Spin Impact</th><th>Adjustment Required</th><th>Landing Zone Change</th></tr>
+    <tr><td>Wet face / wet ball</td><td>−30 to −40% spin</td><td>Towel dry between every shot</td><td>Land 6–10 feet shorter of flag</td></tr>
+    <tr><td>Light rough (clean lie)</td><td>−10 to −20% spin</td><td>Steeper attack, ball back</td><td>Land 3–5 feet shorter</td></tr>
+    <tr><td>Heavy rough (flier)</td><td>−40 to −60% spin</td><td>Accept the run — land well short</td><td>Land well short, plan for 15+ ft rollout</td></tr>
+    <tr><td>Hard/fast greens</td><td>Spin back amplified</td><td>Land further past flag (spin brings it back)</td><td>Land 8–12 feet past flag</td></tr>
+    <tr><td>Soft greens</td><td>Ball pitches and stops</td><td>Standard or land slightly short</td><td>Land at flag or 2–3 ft short</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Wet conditions protocol:</strong> In wet conditions, carry an extra towel. Dry the club face AND the ball before every wedge shot. This single habit recovers 20–25% of the spin lost to moisture. Tour caddies dry the ball before every shot in wet conditions — non-negotiable at tour level.</p></div>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">⚡ Bounce Utilisation</span>
+  <div class="card">
+    <span class="card-tag">Bounce — Leading Edge vs. Sole</span>
+    <h3>Using the Right Part of the Club for the Lie</h3>
+    <p style="margin-bottom:8px;">Bounce is the angle between the leading edge and the trailing edge of the sole. High bounce prevents the leading edge from digging; low bounce suits tight lies where the leading edge needs to slide under the ball. Most amateurs use the wrong wedge bounce for the conditions — producing either digging (high bounce on tight lie) or skulling (low bounce in soft conditions).</p>
+    <table class="tbl"><tr><th>Condition</th><th>Bounce Required</th><th>Technique Cue</th><th>Shot Result</th></tr>
+    <tr><td>Fluffy rough, soft sand</td><td>High (12–16°)</td><td>Open face, shallow entry — bounce enters first</td><td>Slides through, ball pops up</td></tr>
+    <tr><td>Tight fairway, firm sand</td><td>Low (4–8°)</td><td>Square face, steeper entry — leading edge enters first</td><td>Clean contact on firm surface</td></tr>
+    <tr><td>Normal grass</td><td>Mid (8–12°)</td><td>Standard setup — either bounce works</td><td>Standard spin and trajectory</td></tr></table>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Open face = more bounce:</strong> When you open the face of any wedge at address, you increase the effective bounce. This is why the open-face bunker shot works — you are presenting the bounce into the sand, not the leading edge. The same principle applies from fluffy rough.</div></li>
+      <li><span class="step-n">2</span><div><strong>Square or closed face = less bounce / more leading edge:</strong> On tight, firm lies, a square or slightly forward-leaning shaft exposes the leading edge and reduces bounce. This is the correct technique for a clean chip from hardpan or compacted fairway.</div></li>
+      <li><span class="step-n">3</span><div><strong>Match your wedge set to your course conditions:</strong> If you regularly play on firm, well-maintained courses, low-bounce wedges (4–8°) suit your conditions. If you play on soft, lush courses or frequently in wet conditions, higher bounce (10–14°) prevents digging. Equipment fitting for wedges should always include bounce selection for local conditions.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">📊 Landing Zone Calculation System</span>
+  <div class="card card-gold">
+    <span class="card-tag">Building Your Personal Spin Map</span>
+    <h3>Practice Protocol — Know Your Numbers</h3>
+    <p style="margin-bottom:8px;">Using your Mevo, spend one 45-minute session mapping your personal spin rates for each wedge at each swing length. This becomes your landing zone reference — more valuable than any generic distance matrix.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Session setup:</strong> Hit 6 shots per club per swing length (full, 3/4, 1/2) to a target on a firm, receptive surface. Record Mevo spin rate and carry distance for each cluster. Eliminate outliers and average the remaining 4.</div></li>
+      <li><span class="step-n">2</span><div><strong>Calculate landing-to-flag adjustment:</strong> For each spin rate bracket, note the ball's behaviour from 3 shots on the practice green. High spin (9,000+ rpm) → ball typically stops within 1–2 feet or spins back. Mid spin (6,000–8,000 rpm) → one hop, rolls 2–4 feet. Low spin (4,000–5,500 rpm) → runs 5–10 feet.</div></li>
+      <li><span class="step-n">3</span><div><strong>Build a cheat-sheet for the yardage book:</strong> Record the landing zone offset for each combination. Example: "SW full = land 4 ft past flag. SW 3/4 = land 2 ft short. GW full = land on flag. GW 3/4 = land 3 ft short."</div></li>
+      <li><span class="step-n">4</span><div><strong>Recalibrate after groove replacement:</strong> New grooves change your spin map by 1,000–2,000 rpm across all wedges. Spend 30 minutes recalibrating after any wedge replacement before your next competition.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The elite differentiator:</strong> At tour level, every wedge shot from inside 100 yards has a pre-calculated landing zone based on spin rate, green firmness, and slope. Proximity from 50–100 yards separates scratch from 5 HCP more than any other single metric. Building a personal spin map and landing zone system — even a rough version — immediately improves this category.</p></div>
+</div>
+
+
 <!-- SHOT SELECTION -->
 <div class="sec" id="selection">
   <h2 class="sec-title">Shot Selection</h2>
@@ -548,35 +630,5 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
-
-<!-- RELATED GUIDES PANEL -->
-<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
-  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
-  <div style="display:flex;flex-wrap:wrap;gap:10px;">
-  <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
-  </a>
-  <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">📏</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Wedge Distance Matrix</span>
-  </a>
-  <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
-  </a>
-  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
-  </a>
-  <a href="15_equipment_fitting.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🔧</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Equipment Fitting</span>
-  </a>
-  </div>
-  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
-    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
-  </div>
-</div>
 </body>
 </html>
