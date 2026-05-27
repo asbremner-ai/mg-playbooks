@@ -131,7 +131,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
 
 <div class="hero">
   <p class="hero-label">Injury Prevention · Guide 13</p>
@@ -379,28 +386,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="inj-card">
     <div class="inj-header">
-      <div class="inj-icon">🔴</div>
-      <div>
-        <div class="inj-title">Hip Labral Tear — Speed-Training Specific Risk</div>
-        <div class="inj-sub">Lead Hip · Elevated Risk During Overspeed Training</div>
-      </div>
-    </div>
-    <span class="risk-tag risk-high">⬆ Elevated Risk — Speed Training Athletes</span>
-    <div class="inj-section">Why Speed Training Increases This Risk</div>
-    <div class="inj-body">Overspeed training and ground reaction force development place significantly higher rotational and compressive loads on the lead hip than normal golf practice. The lead hip labrum — the fibrocartilage ring that deepens and stabilises the hip socket — absorbs these forces. Cumulative loading without adequate hip stability and mobility can produce progressive labral irritation and eventual tearing. This is the most common serious hip injury in tour players who train intensively for speed.</div>
-    <div class="inj-section">Warning Signs — Catch It Early</div>
-    <div class="inj-body">Deep anterior groin pain that begins during or immediately after speed training sessions. A clicking or locking sensation in the lead hip at full follow-through. Loss of lead hip internal rotation range (measurable — your physiotherapist can assess). Pain when driving a car (hip in prolonged flexion). Pain when performing a deep squat on the lead leg. Any of these during or following a speed training block requires immediate assessment — not management through the pain.</div>
-    <div class="inj-section">Prevention Protocol</div>
-    <div class="inj-body">
-      <strong>Hip CARs daily (see fitness guide):</strong> Controlled articular rotations are the most direct prevention tool — they maintain neurological control and access to end-range hip positions under load.<br><br>
-      <strong>Lead hip strengthening:</strong> Side-lying hip abduction against a band (clam shells), single-leg Romanian deadlift, Bulgarian split squat — all specifically load the lead hip in the positions required for the follow-through. 3 sets, 3× per week minimum during speed training phases.<br><br>
-      <strong>Speed training volume management:</strong> Do not increase SuperSpeed or Rypstick session frequency beyond 3× per week. The hip labrum adapts more slowly than the nervous system's speed capacity — you will feel capable of more before the tissue is ready for it.<br><br>
-      <strong>Assess before increasing speed targets:</strong> If you plateau in speed gain at any point, do not simply add sessions — first confirm hip internal rotation range is maintained. A range reduction signals the hip is under load stress before symptoms appear.
-    </div>
-  </div>
-
-  <div class="inj-card">
-    <div class="inj-header">
       <div class="inj-icon">🟢</div>
       <div>
         <div class="inj-title">Lead Knee Stress (Medial Compartment)</div>
@@ -586,5 +571,27 @@ function show(id, btn) {
   window.scrollTo({top: document.querySelector('.nav').offsetTop, behavior: 'smooth'});
 }
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Fitness Plan</span>
+  </a>
+  <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+  </a>
+  <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
 </body>
 </html>

@@ -149,7 +149,14 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
 <div class="hero">
   <p class="hero-label">Pro Playbook · Long Game</p>
   <h1>Long Game<br><em>Playbook</em></h1>
@@ -247,32 +254,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">3</span><div><strong>Thoracic mobility:</strong> Restricted upper spine rotation caps shoulder turn. 10 minutes of daily thoracic work is one of the most underutilised speed gains available.</div></li>
       <li><span class="step-n">4</span><div><strong>Hip-shoulder separation (X-factor):</strong> 40–50° of separation at the top drives torque. Targeted flexibility work adds speed directly.</div></li>
     </ul>
-  </div>
-  <div class="card card-teal">
-    <span class="card-tag">The Transition — Elite Biomechanics</span>
-    <h3>What Actually Happens in 0.3 Seconds</h3>
-    <p style="margin-bottom:12px;">The transition begins before the backswing is complete. Tour players initiate lower body movement toward the target while the club and arms are still completing the backswing. This overlap — not sequential movement — is the defining characteristic of an elite transition.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Phase 1 — Lateral Drive (0–0.1 sec):</strong> The pelvis shifts laterally toward the target by 2–4 inches before rotating. This lateral shift lowers the lead hip, transfers pressure to the lead side, and drops the trail elbow into the slot passively. Players who rotate before shifting produce an over-the-top path. Swing thought: "bump the lead hip toward the target."</div></li>
-      <li><span class="step-n">2</span><div><strong>Phase 2 — Rotational Unwinding (0.1–0.2 sec):</strong> Only after the lateral shift has moved the lead hip forward does the pelvis rotate aggressively. This sequencing is non-negotiable. Early rotation before lateral shift = hip spin-out = club thrown over the top = slice pattern. The lateral drive causes the rotation, it does not replace it.</div></li>
-      <li><span class="step-n">3</span><div><strong>Phase 3 — Sequential Deceleration (0.2–0.3 sec):</strong> As the pelvis decelerates (hips face target at impact), the thorax accelerates. As the thorax decelerates, the lead arm accelerates. As the arm decelerates, the club releases. A segment that fails to decelerate steals speed from the next link — this is the biomechanical definition of a blocked shot or stall.</div></li>
-    </ul>
-    <div class="info-box elite" style="margin-top:12px;">
-      <span class="ico">⭐</span>
-      <p><strong>HackMotion cross-reference:</strong> Correct transition produces radial deviation maintained through P4, then a clean release to ulnar through P7. An early release (cast) shows radial deviation collapsing at P5–P6 — the lag dumped before the lateral drive created the delivery position. Cross-reference with Mevo club speed vs. your ceiling: the gap is transition efficiency.</p>
-    </div>
-  </div>
-  <div class="card card-gold">
-    <span class="card-tag">Lead Forearm Supination Rate</span>
-    <h3>Face Angle Timing Through the Impact Zone</h3>
-    <p style="margin-bottom:12px;">The lead forearm rotates from pronated at the top of the backswing to supinated in the follow-through. The rate and timing of this supination directly controls face angle at impact and is a primary speed variable that most players never consciously train.</p>
-    <table class="tbl">
-      <tr><th>Supination Timing</th><th>Face at Impact</th><th>Ball Flight</th><th>Root Cause</th></tr>
-      <tr><td class="bad">Too early (before P7)</td><td class="bad">Closed</td><td class="bad">Hook / pull-draw</td><td>Stalled hips; arms racing body</td></tr>
-      <tr><td class="good">Optimal (accelerating through P7)</td><td class="good">Square</td><td class="good">Straight / gentle draw</td><td>Correct sequence; max speed</td></tr>
-      <tr><td class="bad">Too slow (stalls at P7)</td><td class="bad">Open</td><td class="bad">Block / push-fade</td><td>Chicken wing; lack of release</td></tr>
-    </table>
-    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Optimal supination accelerates through P7 into P9 — the face squares at impact, not before or after. This delivers peak clubhead speed and a centred face angle simultaneously. HackMotion Axis 3 (rotation/pronation-supination) is your direct readout.</p>
   </div>
   <div class="card">
     <span class="card-tag">Common Driver Faults</span>
@@ -384,33 +365,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">3</span><div>Close stance 5–8°. Ball slightly further back. Swing along your foot line — in-to-out relative to target.</div></li>
       <li><span class="step-n">4</span><div>Allow natural forearm rotation through impact. Result: 8–15 yards of controlled draw with added distance from lower spin.</div></li>
     </ul>
-  </div>
-  <div class="card">
-    <span class="card-tag">Gear Effect — The D-Plane Modifier</span>
-    <h3>How Off-Centre Contact Changes Ball Flight</h3>
-    <p style="margin-bottom:12px;">Gear effect is the most commonly overlooked variable in ball flight diagnosis. When the ball is struck off-centre, the clubhead rotates around its centre of gravity at impact, imparting additional spin axis tilt that is completely independent of face-to-path. This modifies the D-Plane output on every off-centre strike.</p>
-    <table class="tbl">
-      <tr><th>Strike Location</th><th>Gear Effect Added</th><th>Net Change to Ball Flight</th></tr>
-      <tr><td class="warn">Toe strike</td><td class="warn">+draw spin (3–7° axis)</td><td class="warn">Less fade / more draw than F2P predicts</td></tr>
-      <tr><td class="warn">Heel strike</td><td class="warn">+fade spin (3–7° axis)</td><td class="warn">More fade / less draw than F2P predicts</td></tr>
-      <tr><td class="good">Centre strike</td><td class="good">None</td><td class="good">D-Plane predicts accurately</td></tr>
-      <tr><td>High face (driver)</td><td>−300–500 rpm spin</td><td>Higher launch, less curve, more carry</td></tr>
-      <tr><td class="bad">Low face (driver)</td><td class="bad">+300–600 rpm spin</td><td class="bad">Lower launch, more curve, distance loss</td></tr>
-    </table>
-    <div class="info-box warn-box" style="margin-top:12px;">
-      <span class="ico">⚠️</span>
-      <p><strong>Diagnostic implication:</strong> If your Mevo spin axis varies widely despite stable F2P, the problem is contact location — gear effect is overriding the D-Plane. TRS Ball + Mevo is the correct diagnostic pairing. Fix contact quality first, then trust F2P for shot shape analysis.</p>
-    </div>
-  </div>
-  <div class="card card-gold">
-    <span class="card-tag">Gear Effect — Driver Specifics</span>
-    <h3>Why Toe Strikes Produce Unexpected Draws</h3>
-    <p>A toe strike on the driver adds draw-spin through gear effect. A player with a mild out-to-in path — which should produce a fade — can hit consistent draws if they consistently strike the toe, because the gear effect draw-spin exceeds the fade-spin contribution from the path. This is not a technique fix — it is a contact location problem masking as a shot shape. Verify with impact tape: if your toe strike players are drawing the ball, the fix is centring contact, not further closing the face.</p>
-    <div class="formula" style="margin-top:12px;">
-      <div class="formula-lbl">Gear Effect + D-Plane Combined</div>
-      <div class="formula-main">Final spin axis = D-Plane spin axis ± Gear Effect contribution<br><br>Example: F2P +3° (fade) + toe strike gear effect (−5°) = net −2° draw<br>The ball draws despite an open-face-to-path relationship</div>
-      <div class="formula-note">This is why "fixing your path" alone fails when contact is inconsistent — the gear effect is adding more spin axis tilt than the face-path relationship produces.</div>
-    </div>
   </div>
 </div>
 
@@ -606,5 +560,35 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="swing_mechanics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚙️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Swing Mechanics</span>
+  </a>
+  <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📊</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Shot Dispersion Mapping</span>
+  </a>
+  <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+  </a>
+  <a href="14_video_analysis.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🎥</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Video Analysis</span>
+  </a>
+  <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
 </body>
 </html>

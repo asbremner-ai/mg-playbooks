@@ -148,7 +148,14 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
 <div class="hero">
   <p class="hero-label">Pro Playbook · Short Game</p>
   <h1>Short Game<br><em>Playbook</em></h1>
@@ -260,39 +267,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <tr><td>Mid pitch (GW)</td><td class="warn">4,000–6,000 rpm</td><td>One bounce and roll</td></tr>
     <tr><td>Bump-and-run (PW)</td><td class="warn">2,500–4,000 rpm</td><td>Rolls out significantly</td></tr></table>
   </div>
-  <div class="card card-gold">
-    <span class="card-tag">Partial Wedge Mechanics — 40–80 Yards</span>
-    <h3>Tour Technique for the Scoring Zone</h3>
-    <p style="margin-bottom:12px;">The partial wedge is not a reduced full swing — it is a precision swing with a fixed arc length and consistent tempo. Distance is controlled by backswing arc length, never by deceleration or grip adjustment.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Constant acceleration at all distances:</strong> A 9 o'clock backswing accelerates at the same rate as a full swing. The only variable is arc length. Deceleration is the primary cause of thin and heavy partial wedge misses — it changes the low point and the dynamic loft unpredictably.</div></li>
-      <li><span class="step-n">2</span><div><strong>Shaft lean is non-negotiable at all swing lengths:</strong> The impact position — hands ahead, flat lead wrist — is identical at a ¼ swing and a full swing. Most amateurs lose shaft lean on shorter shots by scooping, producing unpredictable launch and distance.</div></li>
-      <li><span class="step-n">3</span><div><strong>50/50 rule — follow-through mirrors backswing:</strong> A 9 o'clock backswing finishes at 3 o'clock. This symmetry enforces consistent tempo and eliminates deceleration. Set the finish length before the swing begins, not during it.</div></li>
-      <li><span class="step-n">4</span><div><strong>Body rotation controls distance — not arm length:</strong> Tour players control partial distances primarily through body rotation, keeping arms, hands, and face angle consistent. Less rotation = less distance. This removes hand-action variability from partial wedge play.</div></li>
-    </ul>
-    <div class="info-box tip" style="margin-top:12px;">
-      <span class="ico">💡</span>
-      <p><strong>Dead hands drill:</strong> Hit 10 partial wedges with passive hands — shoulders and body only, no wrist action. Ball flight is often surprisingly consistent because face angle variability from hand action is removed. Once you can produce consistent dead-hands shots, gradually reintroduce natural wrist hinge to restore spin.</p>
-    </div>
-  </div>
   <div class="card">
-    <span class="card-tag">Flier Lie — Physics and Management</span>
-    <h3>The Lie That Changes Everything</h3>
-    <p style="margin-bottom:12px;">A flier occurs when grass is trapped between the clubface and ball at impact, acting as a lubricant that prevents groove contact. Spin rate drops 30–60%, the ball launches higher, and carry increases 10–25% over a clean lie. This is not a minor adjustment — it is a different shot.</p>
-    <table class="tbl">
-      <tr><th>Condition</th><th>Flier Risk</th><th>Adjustment</th></tr>
-      <tr><td class="bad">Ball sitting up in light rough</td><td class="bad">High</td><td class="warn">Club down 1–2; land well short of flag</td></tr>
-      <tr><td class="bad">Wet rough / morning dew</td><td class="bad">Very high</td><td class="warn">Club down 2; aim fat part of green only</td></tr>
-      <tr><td class="bad">Lush rough growing toward target</td><td class="bad">High</td><td class="warn">Club down; accept reduced spin and rollout</td></tr>
-      <tr><td class="good">Tight/firm lie</td><td class="good">None</td><td class="good">Normal carry and spin</td></tr>
-      <tr><td class="good">Ball sitting down in rough</td><td class="good">Minimal</td><td class="good">Slight spin reduction; allow for run</td></tr>
-    </table>
-    <div class="info-box warn-box" style="margin-top:12px;">
-      <span class="ico">⚠️</span>
-      <p><strong>Inside 80 yards from a genuine flier lie:</strong> The correct play is often a lower-lofted club (PW or 9-iron) run along the ground to the green, removing the flier variable entirely. A flier from 60 yards with a lofted wedge can easily overshoot the green. Mevo diagnostic: a 7-iron from rough producing 4,500 rpm (expected 6,500+) confirms a significant flier — not a technique error.</p>
-    </div>
-  </div>
-  <div class="card card-teal">
     <span class="card-tag">Proximity Data by Distance</span>
     <h3>Where You Should Be Landing</h3>
     <table class="tbl"><tr><th>Distance</th><th>Tour Avg</th><th>10 HCP</th><th>Target</th></tr>
@@ -573,5 +548,35 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
+  </a>
+  <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📏</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Wedge Distance Matrix</span>
+  </a>
+  <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
+  </a>
+  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+  </a>
+  <a href="15_equipment_fitting.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔧</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Equipment Fitting</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
 </body>
 </html>

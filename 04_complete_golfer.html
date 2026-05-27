@@ -149,7 +149,14 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
 <div class="hero">
   <p class="hero-label">Complete Golfer · Beyond Technique</p>
   <h1>The Complete<br><em>Golfer</em></h1>
@@ -387,20 +394,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">6</span><div><strong>Rest:</strong> Two 45-minute sessions produce better skill development than one 90-minute session. Fatigue degrades practice quality rapidly.</div></li>
     </ul>
   </div>
-  <div class="card">
-    <span class="card-tag">Why Interleaving Works — Contextual Interference Explained</span>
-    <h3>The Science Behind the Discomfort</h3>
-    <p style="margin-bottom:12px;">The contextual interference effect (Schmidt &amp; Lee; Robert Bjork, UCLA) is one of the most replicated findings in motor learning: switching between different skills within a practice session produces more errors during practice but dramatically better retention and transfer to the course. The mechanism is well understood — interleaving forces the brain to actively reconstruct the motor programme for each new shot, which strengthens the programme's encoding. Blocked practice allows the brain to use short-term working memory, bypassing deep encoding entirely.</p>
-    <table class="tbl">
-      <tr><th>Practice Structure</th><th>During Session</th><th>72hr Retention</th><th>Course Transfer</th></tr>
-      <tr><td class="bad">Blocked (same shot × 20)</td><td class="good">Feels easy, high success rate</td><td class="bad">Poor (42%)</td><td class="bad">Minimal</td></tr>
-      <tr><td class="good">Interleaved (new shot each rep)</td><td class="bad">Difficult, more errors</td><td class="good">Excellent (78%)</td><td class="good">Strong</td></tr>
-    </table>
-    <div class="info-box warn-box" style="margin-top:12px;">
-      <span class="ico">⚠️</span>
-      <p><strong>The acquisition exception:</strong> When learning a completely new movement pattern prescribed by your coach, a brief blocked phase (10–15 minutes) is necessary to acquire the basic feel. Once the feel is established, immediately switch to interleaved practice. Never stay in the blocked phase longer than acquisition requires — it is the learning environment, not the training environment.</p>
-    </div>
-  </div>
   <div class="card card-gold">
     <span class="card-tag">Where to Spend Practice Time</span>
     <h3>The SG-Optimal 80/20 Rule</h3>
@@ -448,20 +441,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Practice Recovery</span>
     <h3>Deliberate Practice Cap</h3>
     <p>Beyond 60–90 minutes of deliberate practice per session, skill acquisition drops to near zero and injury risk increases. Ericsson's research found expert performers practise deliberately for no more than 4 hours per day — most at 2–3 hours. Quality and recovery beat quantity every time.</p>
-  </div>
-  <div class="card card-teal">
-    <span class="card-tag">HRV Monitoring — The Elite Recovery Standard</span>
-    <h3>Measuring Readiness Before You Train</h3>
-    <p style="margin-bottom:12px;">Heart rate variability (HRV) — the variation in time between heartbeats — is the most sensitive physiological marker of recovery readiness available without laboratory equipment. High HRV = well-recovered nervous system, ready for high-quality training. Low HRV = under-recovered, meaning training on that day produces less adaptation and higher injury risk. Elite athletes across all sports track HRV daily to guide training intensity.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>How to measure:</strong> HRV4Training (app — camera-based, no hardware needed) or Whoop/Garmin/Apple Watch (hardware). Measure every morning immediately upon waking, before getting out of bed, for 1–2 minutes. Build a 2-week baseline before using the data to inform decisions.</div></li>
-      <li><span class="step-n">2</span><div><strong>How to use it:</strong> On a high-HRV day (≥10% above your personal baseline), schedule your most demanding sessions — speed training, intensive range work, physical training. On a low-HRV day (≥10% below baseline), reduce session intensity or switch to putting/short game work. Never do SuperSpeed or heavy strength training on a low-HRV day — the nervous system is not primed to produce or absorb the stimulus.</div></li>
-      <li><span class="step-n">3</span><div><strong>Golfer-specific signals:</strong> HRV consistently below baseline for 3+ days = accumulated fatigue from training load. Reduce volume immediately — not just intensity. HRV below baseline the morning of a competition = physical system is not primed. Reduce warm-up intensity and increase pre-shot routine adherence as your primary focus.</div></li>
-    </ul>
-    <div class="info-box tip" style="margin-top:12px;">
-      <span class="ico">💡</span>
-      <p><strong>Free option:</strong> HRV4Training uses your phone's camera for a measurement that is accurate enough for daily training guidance. It takes 60 seconds. Over 12 weeks it builds a personalised baseline that becomes your most useful training tool outside of Mevo data.</p>
-    </div>
   </div>
 </div>
 
@@ -530,5 +509,35 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+  </a>
+  <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+  </a>
+  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+  </a>
+  <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+  </a>
+  <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
 </body>
 </html>

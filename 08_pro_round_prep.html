@@ -149,7 +149,14 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 
 </head>
-<body><a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
 <div class="hero">
   <p class="hero-label">Pro Caddie Methodology · Complete Framework</p>
   <h1>Pro Round<br><em>Preparation</em></h1>
@@ -330,18 +337,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">4</span><div><strong>Check conditions update.</strong> Confirm wind direction, temperature, whether greens will be slower or faster than normal. Factor into your pre-existing strategy.</div></li>
     </ul>
   </div>
-  <div class="card card-gold">
-    <span class="card-tag">Motor Imagery — How to Visualise Correctly</span>
-    <h3>What "Visualisation" Actually Means at Elite Level</h3>
-    <p style="margin-bottom:12px;">Visualisation is not daydreaming about making birdies. Motor imagery — the specific, scientifically validated form used by elite athletes — activates the same neural pathways as physical execution. Research by Dr. Blaslotto (University of Chicago) showed basketball free throw performance improved 23% from imagery practice alone, with no physical practice. Dr. Frank Lees's work with golfers confirms similar effects. Done correctly, the 15-minute morning imagery session is a genuine performance tool — not a mental warm-up ritual.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Internal imagery (first-person perspective):</strong> See through your own eyes — look down at the ball, see the club at address, feel the club in your hands. This produces far stronger neural activation than watching yourself from outside, and is the form that transfers best to actual execution. Avoid the observer's perspective (watching yourself from behind) — it is less effective and more likely to activate performance anxiety.</div></li>
-      <li><span class="step-n">2</span><div><strong>Multi-sensory:</strong> Include kinaesthetic feel (the sensation of the swing, the weight of the club), auditory cues (the sound of contact), and visual outcome (the ball flight, landing, roll). Single-sense imagery is significantly less effective than multi-sense. The richer the imagery, the stronger the neural priming effect.</div></li>
-      <li><span class="step-n">3</span><div><strong>Real-time speed:</strong> Imagery performed at actual swing speed activates motor pathways more effectively than slow-motion imagery. Walk through your pre-shot routine, then execute the swing in your mind at full speed. Tour players consistently report their pre-round imagery feels like watching a real shot — not a constructed fantasy.</div></li>
-      <li><span class="step-n">4</span><div><strong>Focus on process, not outcome:</strong> Image the feel of the setup, the sensation of the backswing tempo, the click of the strike, the sight of the ball flight — not "the ball lands 3 feet from the flag." Outcome imagery activates outcome thinking. Process imagery activates motor system priming. The distinction matters significantly under competitive pressure.</div></li>
-      <li><span class="step-n">5</span><div><strong>Most effective timing:</strong> 30–60 minutes before play, after reviewing the strategy card. The strategy review provides the course information; the imagery session embeds it as anticipated motor patterns. Together they constitute the complete mental preparation that results in "already having played the round" before teeing off.</div></li>
-    </ul>
-  </div>
 </div>
 
 <div class="sec" id="range">
@@ -511,5 +506,35 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+  </a>
+  <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚖️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Course Management</span>
+  </a>
+  <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
+  </a>
+  <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+  </a>
+  <a href="12_rules_of_golf.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📜</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Rules of Golf</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
 </body>
 </html>
