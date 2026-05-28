@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Putting Playbook — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Putting</p>
+  <h1>Masterclass<br><em>in Putting</em></h1>
+  <p class="hero-sub">Strokes Gained framework · AimPoint green reading · tour-level practice plans and drills.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 SG: Putting</span><span class="htag">🎯 Pace Control</span>
+    <span class="htag">📐 Start Direction</span><span class="htag">🔍 AimPoint</span>
+    <span class="htag">🏋️ Practice Plans</span><span class="htag">⏱ Pre-Round</span>
+  </div>
+</div>
+<div class="nav" id="nav">
+  <button class="tab active" onclick="show('sg',this)">SG: Putting</button>
+  <button class="tab" onclick="show('pace',this)">Pace Control</button>
+  <button class="tab" onclick="show('direction',this)">Start Direction</button>
+  <button class="tab" onclick="show('routine',this)">Routine</button>
+  <button class="tab" onclick="show('reading',this)">Green Reading</button>
+  <button class="tab" onclick="show('mechanics',this)">Mechanics</button>
+  <button class="tab" onclick="show('drills',this)">Drills</button>
+  <button class="tab" onclick="show('plans',this)">Practice Plans</button>
+  <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+  <button class="tab" onclick="show('greencond',this)">Green Cond.</button>
+</div>
+
+<!-- SG: PUTTING -->
+<div class="sec active" id="sg">
+  <h2 class="sec-title">Strokes Gained: Putting</h2>
+  <p class="sec-desc">SG: Putting compares every putt you make against the statistical tour average for the same distance — giving you a precise strokes gained or lost number per round.</p>
+  <span class="badge badge-gold">📊 The Data Framework</span>
+  <div class="card">
+    <span class="card-tag">Tour Baseline — Expected Putts from Distance</span>
+    <h3>Where You Stand vs. Tour</h3>
+    <div class="bar-group">
+      <div class="bar-title">Tour Putting Baseline (Expected Putts)</div>
+      <div class="bar-row"><span class="bar-lbl">3 feet</span><div class="bar-track"><div class="bar-fill gold" style="width:96%"></div></div><span class="bar-val">1.04 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">5 feet</span><div class="bar-track"><div class="bar-fill gold" style="width:80%"></div></div><span class="bar-val">1.18 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">10 feet</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-val">1.54 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">20 feet</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-val">1.65 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">30 feet</span><div class="bar-track"><div class="bar-fill teal" style="width:38%"></div></div><span class="bar-val">1.82 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">50 feet</span><div class="bar-track"><div class="bar-fill teal" style="width:28%"></div></div><span class="bar-val">1.97 avg</span></div>
+      <div class="bar-row"><span class="bar-lbl">60+ feet</span><div class="bar-track"><div class="bar-fill red" style="width:18%"></div></div><span class="bar-val">2.10+ avg</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Make Rate Benchmarks by Level</span>
+    <h3>Targets for Each Distance</h3>
+    <table class="tbl"><tr><th>Distance</th><th>PGA Tour</th><th>10 HCP</th><th>Target</th></tr>
+    <tr><td>3 ft</td><td class="good">99.5%</td><td class="warn">85%</td><td>95%+</td></tr>
+    <tr><td>5 ft</td><td class="good">87%</td><td class="warn">58%</td><td>75%+</td></tr>
+    <tr><td>8 ft</td><td class="good">63%</td><td class="bad">30%</td><td>45%+</td></tr>
+    <tr><td>10 ft</td><td class="good">54%</td><td class="bad">22%</td><td>35%+</td></tr>
+    <tr><td>15 ft</td><td class="warn">33%</td><td class="bad">10%</td><td>Lag focus</td></tr>
+    <tr><td>30 ft+</td><td class="bad">8%</td><td class="bad">1%</td><td>Lag to tap-in</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">SG: Putting — Level Benchmarks</span>
+    <h3>Your SG Gap to Tour</h3>
+    <table class="tbl"><tr><th>Level</th><th>SG/Round</th><th>3-Putt Rate</th></tr>
+    <tr><td>PGA Tour top 10</td><td class="good">+1.2 to +1.8</td><td class="good">&lt;2%</td></tr>
+    <tr><td>PGA Tour avg</td><td>0.0 baseline</td><td class="good">3%</td></tr>
+    <tr><td>Scratch amateur</td><td class="bad">−0.5 to −1.0</td><td class="warn">5–7%</td></tr>
+    <tr><td>5 handicap</td><td class="bad">−1.2 to −1.8</td><td class="bad">8–10%</td></tr>
+    <tr><td>10 handicap</td><td class="bad">−2.0 to −2.8</td><td class="bad">12–16%</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Key insight:</strong> For a 10 HCP, 3-putt elimination delivers the fastest gains. Each 3-putt loses ~1.0 SG stroke. Eliminating just 2 three-putts per round gains +2.0 SG: Putting.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Where to Focus — Leverage Points</span>
+    <h3>Highest ROI by Distance</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>5–8 foot putts (highest leverage):</strong> 10 HCP make rate 30–58% vs tour average. Each 10% improvement ≈ +0.3 SG/round. Spend 40% of practice time here.</div></li>
+      <li><span class="step-n">2</span><div><strong>Lag putting 30–50 feet (3-putt prevention):</strong> Tour pros 3-putt from 30 ft only 4% of the time. 10 HCP 3-putts ~25% of the time. Closing this gap saves 1+ putt per round immediately.</div></li>
+      <li><span class="step-n">3</span><div><strong>3-foot putts (confidence infrastructure):</strong> Build short putt routine until 3-foot make rate reaches 97%+. This is achievable with structured practice.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PACE CONTROL -->
+<div class="sec" id="pace">
+  <h2 class="sec-title">Pace Control</h2>
+  <p class="sec-desc">Pace control — not line — is the primary determinant of 3-putt frequency beyond 15 feet. A putt on the right line but wrong pace will miss; a putt with perfect pace can still drop from a slightly wrong line.</p>
+  <span class="badge badge-lime">🎯 Distance Control Science</span>
+  <div class="card">
+    <span class="card-tag">Tour Pace Benchmarks — 30ft Putts</span>
+    <h3>How Far Past the Hole?</h3>
+    <div class="bar-group">
+      <div class="bar-title">Average Ball Position Past Hole from 30 ft</div>
+      <div class="bar-row"><span class="bar-lbl">Tour top 10</span><div class="bar-track"><div class="bar-fill gold" style="width:72%"></div></div><span class="bar-val">14" past</span></div>
+      <div class="bar-row"><span class="bar-lbl">Tour average</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-val">18" past</span></div>
+      <div class="bar-row"><span class="bar-lbl">Scratch</span><div class="bar-track"><div class="bar-fill teal" style="width:44%"></div></div><span class="bar-val">26" past</span></div>
+      <div class="bar-row"><span class="bar-lbl">10 HCP</span><div class="bar-track"><div class="bar-fill red" style="width:28%"></div></div><span class="bar-val">38" past</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Green Speed vs. Optimal Pace</span>
+    <h3>Die at the Hole or Firm Pace?</h3>
+    <table class="tbl"><tr><th>Stimp</th><th>Optimal Pace Target</th><th>Effective Hole</th></tr>
+    <tr><td>8–9 (slow)</td><td>12–18" past</td><td>Normal</td></tr>
+    <tr><td>10–11 (tour typical)</td><td>6–12" past</td><td class="good">+15% larger</td></tr>
+    <tr><td>12–13 (fast)</td><td>Die at hole ±3"</td><td class="good">+25% larger</td></tr>
+    <tr><td>14+ (extreme)</td><td>Centre-cut or die</td><td>Precision required</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Pendulum Physics</span>
+    <h3>Arc Length, Not Force</h3>
+    <p>Consistent pace comes from consistent arc length with constant tempo — not varying force. A pendulum stroke with identical tempo produces distance variance under 4%. Varying acceleration increases it to 18%+.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Pace Formula</div>
+      <div class="formula-main">Distance ∝ (Backswing Length)² × Tempo constant</div>
+      <div class="formula-note">Doubling backswing length roughly quadruples distance. A consistent tempo (70–76 bpm for tour pros) is the foundation of pace control.</div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Slope Adjustment Formula</span>
+    <h3>Uphill & Downhill Pace</h3>
+    <div class="formula">
+      <div class="formula-lbl">Slope Pace Adjustment — Tour Caddie Rule</div>
+      <div class="formula-main">Uphill: Add ~10% of distance per % of gradient<br>Downhill: Subtract ~15% of distance per % of gradient</div>
+      <div class="formula-note">A 30-foot putt with 2% uphill gradient plays as ~36 feet. The same putt downhill plays as ~21 feet. Deliberately practise on slopes to develop this feel.</div>
+    </div>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Tour standard goal:</strong> 90%+ of lag putts from 30–50 feet within a 3-foot diameter circle. Track this metric in every session.</p>
+  </div>
+</div>
+
+<!-- START DIRECTION -->
+<div class="sec" id="direction">
+  <h2 class="sec-title">Starting Direction</h2>
+  <p class="sec-desc">Face angle at impact accounts for 83% of start direction. Path accounts for the remaining 17%. This changes everything about how you practise direction.</p>
+  <span class="badge badge-teal">📐 Face Angle Science</span>
+  <div class="card">
+    <span class="card-tag">The Physics of Start Line</span>
+    <h3>83% Face Angle — Most Leveraged Skill in Putting</h3>
+    <div class="formula">
+      <div class="formula-lbl">Start Line Formula</div>
+      <div class="formula-main">Start Direction = (0.83 × Face Angle) + (0.17 × Path Direction)</div>
+      <div class="formula-note">At 10 feet, each 1° of face angle error = 2.1 inches of miss. At 6 feet = 1.3 inches — often the difference between a make and a lip-out.</div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Aim Error Impact Table</span>
+    <h3>Why Aim Accuracy Matters</h3>
+    <table class="tbl"><tr><th>Aim Error</th><th>Miss at 6 ft</th><th>Miss at 10 ft</th><th>Miss at 20 ft</th></tr>
+    <tr><td>1°</td><td>1.3"</td><td>2.1"</td><td>4.2"</td></tr>
+    <tr><td>2°</td><td>2.6"</td><td>4.2"</td><td>8.4"</td></tr>
+    <tr><td>3°</td><td>3.9"</td><td>6.3"</td><td>12.5"</td></tr>
+    <tr><td class="bad">4° (common amateur)</td><td class="bad">5.2"</td><td class="bad">8.4"</td><td class="bad">Near 0% make rate</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">70% of amateur golfers aim their putter consistently in the same wrong direction. Use a chalk line or mirror regularly to recalibrate aim perception.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Topspin & True Roll</span>
+    <h3>Key Factors for Rapid Topspin</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Ball forward of centre:</strong> Contact on the slight upswing creates immediate topspin.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Dynamic loft 2–4° at impact:</strong> Too little loft skids the ball; too much creates backspin-to-topspin bounce that knocks it offline.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Centred strike on face:</strong> Off-centre strikes create skid without topspin.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ROUTINE -->
+<div class="sec" id="routine">
+  <h2 class="sec-title">Pre-Putt Routine</h2>
+  <p class="sec-desc">EEG research on tour players shows elite putters produce a specific brainwave pattern before pulling the trigger — quieting analytical brain and activating motor brain. Your routine achieves this consistently.</p>
+  <span class="badge badge-gold">🧠 Neuroscience of Putting</span>
+  <div class="card">
+    <span class="card-tag">Four-Phase Tour Routine</span>
+    <h3>What the Best Putters Do</h3>
+    <ul class="steps">
+      <li><span class="step-n">D</span><div><strong>Decision Phase (behind ball, 10–20 sec):</strong> Full read. Commit to ONE line and ONE pace. Visualise ball rolling into hole. Mental imagery improves make rate 8–12%.</div></li>
+      <li><span class="step-n">T</span><div><strong>Transition Phase (walking to ball, 3–5 sec):</strong> Identify your intermediate target on the start line — a spot 6–12 inches in front of ball. Your brain aims better at a proximate target.</div></li>
+      <li><span class="step-n">S</span><div><strong>Setup Phase (at address, 5–8 sec):</strong> Set face to intermediate target first. Build stance. 1–2 practice strokes looking at the hole feeling distance. One final look.</div></li>
+      <li><span class="step-n">E</span><div><strong>Execution (trigger to impact, &lt;3 sec):</strong> Consistent trigger (forward press, breath, or waggle). From trigger to backstroke under 1.5 seconds. Longer dwell time increases yips probability.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Timing Research</span>
+    <h3>The 20–28 Second Rule</h3>
+    <p>The highest-performing tour putters complete their full routine — from stepping behind the ball to completing the stroke — in 20–28 seconds. Brad Faxon, one of history's greatest putters, averaged 21 seconds.</p>
+    <div class="grid-2" style="margin-top:14px;">
+      <div class="mini-card">
+        <span class="mini-tag">Too Short (&lt;15 sec)</span>
+        <h4>Rushing</h4>
+        <p>Inadequate read, poor pace feel. Misses tend to be short or pulled. Gets worse under pressure.</p>
+      </div>
+      <div class="mini-card">
+        <span class="mini-tag">Too Long (&gt;35 sec)</span>
+        <h4>Over-Analysis</h4>
+        <p>Paralysis by analysis. Mechanical thinking at address. Deceleration. Tentative strokes.</p>
+      </div>
+    </div>
+  </div>
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Cue word strategy:</strong> Under pressure, use a single process word — "smooth," "through," or "roll it" — to activate the motor system and bypass the anxious analytical mind. Practise in pressure drills until it's automatic.</p>
+  </div>
+</div>
+
+<!-- GREEN READING -->
+<div class="sec" id="reading">
+  <h2 class="sec-title">Green Reading</h2>
+  <p class="sec-desc">AimPoint Express — used by dozens of major champions including Adam Scott and Henrik Stenson — converts the slope you feel underfoot into a precise aim offset, replacing guesswork entirely.</p>
+  <span class="badge badge-teal">🔍 AimPoint Express System</span>
+  <div class="card">
+    <span class="card-tag">AimPoint Express — 5-Step Method</span>
+    <h3>Feel the Slope, Aim the Fingers</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Stand at the midpoint of the putt.</strong> Feel slope underfoot with equal weight on both feet. Identify which foot feels higher.</div></li>
+      <li><span class="step-n">2</span><div><strong>Assess slope on a 1–4 scale.</strong> 1 = barely perceptible (0.5–1%), 2 = visible (1–2%), 3 = clear (2–3%), 4 = steep (3%+).</div></li>
+      <li><span class="step-n">3</span><div><strong>Hold fingers at arm's length.</strong> Slope number = fingers of aim offset above the high edge of the hole.</div></li>
+      <li><span class="step-n">4</span><div><strong>Adjust for distance.</strong> Beyond 20 feet: add half a finger per 10 feet. Inside 10 feet: subtract half a finger.</div></li>
+      <li><span class="step-n">5</span><div><strong>Commit fully.</strong> Pick an intermediate target and stroke to it. The system works best when trusted completely.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Four Factors in Every Read</span>
+    <h3>What Affects Break</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Primary slope:</strong> Dominant fall line. Identify from the lowest point looking toward the high side. All break relates to this.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Secondary slope:</strong> Cross-slopes that modify the primary direction. Most critical in the final 3 feet where the ball is slowest.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Green speed:</strong> Faster greens amplify all break 20–40%. Tour greens at stimp 12+ break 35% more than stimp 9 on the same slope.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Grain:</strong> Bermuda grass — shiny = downwind/downgrain (faster, less break). Dull = into grain (slower, more break). Grain can negate up to 50% of visible slope.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Low-Side Advantage</span>
+    <h3>Always Favour the High Side</h3>
+    <div class="bar-group">
+      <div class="bar-title">Make Rates by Miss Direction — 10ft Putt (Tour Data)</div>
+      <div class="bar-row"><span class="bar-lbl">Centre cup</span><div class="bar-track"><div class="bar-fill gold" style="width:100%"></div></div><span class="bar-val">100%</span></div>
+      <div class="bar-row"><span class="bar-lbl">High side 2"</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="bar-val">78%</span></div>
+      <div class="bar-row"><span class="bar-lbl">High side 4"</span><div class="bar-track"><div class="bar-fill teal" style="width:44%"></div></div><span class="bar-val">44%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Low side 2"</span><div class="bar-track"><div class="bar-fill red" style="width:0%"></div></div><span class="bar-val">0%</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">When uncertain, always choose the read with more break. A ball missing on the high side can still fall. Low side never enters the hole.</p>
+  </div>
+</div>
+
+<!-- MECHANICS -->
+<div class="sec" id="mechanics">
+  <h2 class="sec-title">Stroke Mechanics</h2>
+  <p class="sec-desc">SAM PuttLab data from thousands of tour players reveals exactly what elite putting strokes look like and why they work.</p>
+  <span class="badge badge-lime">⚙️ Biomechanics & Fitting</span>
+  <div class="card">
+    <span class="card-tag">SAM PuttLab — Tour Standard Metrics</span>
+    <h3>What a Tour Stroke Looks Like</h3>
+    <table class="tbl"><tr><th>Metric</th><th>Tour Avg</th><th>10 HCP Typical</th></tr>
+    <tr><td>Face angle at impact</td><td class="good">±0.5°</td><td class="bad">±2–3°</td></tr>
+    <tr><td>Path direction</td><td class="good">±1.0°</td><td class="bad">±3–5°</td></tr>
+    <tr><td>Impact point</td><td class="good">±2mm</td><td class="bad">±6–8mm</td></tr>
+    <tr><td>Tempo ratio (back:through)</td><td class="good">2:1</td><td class="warn">1:1 to 3:1</td></tr>
+    <tr><td>Dynamic loft at impact</td><td class="good">2.5–4°</td><td class="warn">0–7° (inconsistent)</td></tr>
+    <tr><td>Skid distance (20 ft putt)</td><td class="good">6–10"</td><td class="bad">12–22"</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Putter Fitting — Priority #1 Equipment</span>
+    <h3>Worth 0.3–0.8 SG: Putting Per Round</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Length:</strong> Correct length places eyes directly over ball. Too long = eyes outside → aim right. Too short = eyes inside → aim left.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Lie angle:</strong> Toe-up (heels down) causes pushes. Flat lie causes pulls. Must match your posture precisely.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Head style:</strong> Arc strokes suit toe-hang putters. Straight strokes suit face-balanced models. Mismatched head style fights your natural stroke.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Loft:</strong> Dynamic loft at impact should be 2–4°. Too little skids the ball; too much creates backspin bounce.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Grip Pressure Science</span>
+    <h3>The Pressure Paradox — Less Is More</h3>
+    <p>Grip pressure above 4/10 activates forearm muscles that restrict pendulum motion and create path deviation. Tour players average 2–3/10. Under pressure this rises naturally — which is why a deliberate light grip is part of many tour players' trigger. A 7/10 "death grip" causes pushes and pulls in equal measure.</p>
+  </div>
+</div>
+
+<!-- DRILLS -->
+<div class="sec" id="drills">
+  <h2 class="sec-title">Practice Drills</h2>
+  <p class="sec-desc">Drills combining techniques from Brad Faxon, Phil Kenyon, Dave Pelz, and AimPoint. Each targets a specific metric. Track and score every session.</p>
+  <span class="badge badge-gold">📏 Pace Drills</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">📏</div><div><h4>Speed Gate Drill</h4><div class="drill-meta">15 MIN · PACE CONTROL · 20–50 FT · TOUR STANDARD</div></div></div>
+    <p>Place two tees 17 inches apart behind the hole. Putt from 20, 30, 40, and 50 feet — roll the ball through the tees without going past them. Replicates the tour ideal of dying the ball just past the hole. Tour standard: 75%+ through the gate from 30 feet. 10 HCP target: 50%+ building to 65%.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🎳</div><div><h4>Random Distance Lag — No Repeat</h4><div class="drill-meta">15 MIN · PACE · VARIED DISTANCE</div></div></div>
+    <p>Place 6 balls at different distances — none the same. Putt each in sequence. Measure furthest ball from hole after each round. Target: all 6 balls within 4 feet of their respective holes. Simulates real course conditions where every putt is different.</p>
+  </div>
+  <hr>
+  <span class="badge badge-teal">📐 Direction Drills</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">〰️</div><div><h4>Chalk Line — Eyes Open & Closed</h4><div class="drill-meta">10 MIN · FACE ANGLE · ALIGNMENT · ESSENTIAL</div></div></div>
+    <p>Snap a chalk line on a flat section of green. Putt 10 balls with eyes open, then 10 with eyes closed immediately after impact. If the ball deviates from the line with eyes closed, your impact dynamics (not sight picture) are producing the error. Bypasses conscious interference to reveal the true mechanical issue.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🚪</div><div><h4>Micro-Gate — 1mm Tolerance</h4><div class="drill-meta">15 MIN · FACE ANGLE · 6–10 FT · PRECISION</div></div></div>
+    <p>Place two tees just wider than your putter head (~1.5 inches total) 12 inches in front of the ball. Putt 20 balls from 6 feet and 20 from 10 feet. Count tee clips. Tour standard: 50 consecutive without a clip. 10 HCP target: fewer than 4 clips per 20 putts. Reveals path issues the eye cannot detect.</p>
+  </div>
+  <hr>
+  <span class="badge badge-lime">⭕ Make Rate Drills</span>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🎯</div><div><h4>Tour Scoring Drill — Dave Pelz</h4><div class="drill-meta">20 MIN · MAKE RATE · 3–8 FT · BENCHMARK</div></div></div>
+    <p>Place 4 balls at 3, 4, 5, 6, 7, and 8 feet — 24 balls total. Putt all in order. Score 1 point per make. Benchmarks: Tour 22–24/24, Scratch 18–21, 5 HCP 14–18, 10 HCP entry 10–14. Track weekly improvement — this is your primary putting benchmark.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🔴</div><div><h4>Clock Drill — Full Rotation</h4><div class="drill-meta">20 MIN · MAKE RATE · 4 FT · PRESSURE</div></div></div>
+    <p>Place 12 balls in a clock formation around a hole at exactly 4 feet. Make all 12 consecutively — missing one restarts the clock. Covers every angle of break. Builds the ability to handle different break directions at the most important make-or-break distance.</p>
+  </div>
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">📈</div><div><h4>Make 100 Drill — Phil Kenyon Standard</h4><div class="drill-meta">30 MIN · MAKE RATE · 4–5 FT · RESILIENCE</div></div></div>
+    <p>Set up at 4 feet. Make 100 consecutive putts — missing resets the count to zero. Builds unshakeable short-putt confidence. Psychologically demanding after 80 consecutive makes. Phil Kenyon prescribes this weekly for tour players he coaches. First session may take 60 minutes; eventually under 20.</p>
+  </div>
+</div>
+
+<!-- PRACTICE PLANS -->
+<div class="sec" id="plans">
+  <h2 class="sec-title">Structured Practice Plans</h2>
+  <p class="sec-desc">Three structured plans — maintenance, intensive improvement, and the elite tour player weekly framework.</p>
+  <span class="badge badge-gold">📋 Plan Frameworks</span>
+  <div class="card">
+    <span class="card-tag">Plan 1 — Maintenance (2× per week, 30 min)</span>
+    <h3>For Golfers Playing Regularly</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>0–10 min — Pace calibration:</strong> 20 lag putts from 30–50 feet. Focus only on distance control. Track how many finish within 3 feet.</div></li>
+      <li><span class="step-n">B</span><div><strong>10–20 min — Make rate:</strong> Tour Scoring Drill (3–8 feet, 24 balls). Record score and track weekly trend.</div></li>
+      <li><span class="step-n">C</span><div><strong>20–30 min — Breaking putts:</strong> 6 putts from 12–15 feet on two different breaking putts. Apply full routine. Note accuracy of read vs. result.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Plan 2 — Improvement Focus (3× per week, 60 min)</span>
+    <h3>For Golfers Actively Building the Skill</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>0–10 min — Mechanics check:</strong> 20 putts down chalk line. Compare feel to result. Check impact location.</div></li>
+      <li><span class="step-n">B</span><div><strong>10–25 min — Pace:</strong> Speed Gate Drill from 20, 30, and 40 feet (10 balls each). Record gate-success %.</div></li>
+      <li><span class="step-n">C</span><div><strong>25–40 min — Make rate:</strong> Make 100 Drill at 4 feet. Record resets before completion.</div></li>
+      <li><span class="step-n">D</span><div><strong>40–55 min — Green reading:</strong> AimPoint Express — 5 different breaking putts from 10–20 feet. Record fingers used and actual result.</div></li>
+      <li><span class="step-n">E</span><div><strong>55–60 min — Pressure close:</strong> Play Par 18 Game. Finish only when you end on a make.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Plan 3 — Tour Player Weekly (5 days)</span>
+    <h3>Elite Practice Framework</h3>
+    <table class="tbl"><tr><th>Day</th><th>Focus</th><th>Key Drill</th></tr>
+    <tr><td>Monday</td><td>Mechanics</td><td>Chalk line, face angle check</td></tr>
+    <tr><td>Tuesday</td><td>Pace mastery</td><td>Speed gate, random lag</td></tr>
+    <tr><td>Wednesday</td><td>Make rate</td><td>Make 100, clock drill</td></tr>
+    <tr><td>Thursday</td><td>Green reading</td><td>AimPoint Express, 9-hole game</td></tr>
+    <tr><td>Friday</td><td>Pre-round sim</td><td>Full routine only, no mechanics</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Golden Rule:</strong> Never practise mechanics on the day you play. Mechanics are for practice days 2–3 days before the round. On play day, practise only feel, pace, and routine.</p>
+  </div>
+</div>
+
+<!-- PRE-ROUND -->
+<div class="sec" id="preround">
+  <h2 class="sec-title">Pre-Round Protocol</h2>
+  <p class="sec-desc">The putting green before your round is purely for calibration and confidence — never for swing changes. 15–20 minutes, structured.</p>
+  <span class="badge badge-lime">⏱ 20-Minute Tour Protocol</span>
+  <div class="card">
+    <span class="card-tag">Minutes 1–5 · Green Speed</span>
+    <h3>Calibrate the Greens</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Roll 3 putts from 40 feet with no target. Note how far past a mental mark they travel relative to your standard pace.</div></li>
+      <li><span class="step-n">2</span><div>Determine if today's greens are slow (stimp 8–9), medium (10–11), or fast (12+). Fast greens require 20–40% more break than slow greens on the same slope.</div></li>
+      <li><span class="step-n">3</span><div>Make one specific pace adjustment decision: "These are stimp 11 — I need to die the ball more and play wider break."</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Minutes 6–12 · Break Calibration</span>
+    <h3>Calibrate Break for Today's Speed</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Find a left-to-right breaking putt at 12–15 feet. Make 3 attempts calibrating break to today's speed.</div></li>
+      <li><span class="step-n">2</span><div>Repeat on a right-to-left breaker. Calibrate uphill and downhill speed on a sloped putt.</div></li>
+      <li><span class="step-n">3</span><div>Note grain direction on today's greens — affects all break reads throughout the round.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Minutes 13–18 · Confidence</span>
+    <h3>Build the Confidence Bank</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Make 6 putts in a row from 4 feet using full routine. Builds short-putt confidence for the round.</div></li>
+      <li><span class="step-n">2</span><div>Move to 6 feet and make 3 with full routine. Your last 3 putts before leaving should all be makes.</div></li>
+      <li><span class="step-n">3</span><div><strong>Never leave on a miss.</strong> The final stored memory before play directly affects confidence on the first green.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Minutes 19–20 · Mental Switch</span>
+    <h3>Transition to Play Mode</h3>
+    <p>Final 90 seconds: one long putt purely for feel, two short putts with full routine and zero mechanical thought. Walk to the first tee having made your last putt, in play mode, trusting your calibrated read and pace feel.</p>
+  </div>
+</div>
+
+
+<!-- GREEN CONDITIONS: GRAIN & ADVANCED READING -->
+<div class="sec" id="greencond">
+  <h2 class="sec-title">Advanced Green Conditions</h2>
+  <p class="sec-desc">AimPoint Express provides the foundation. Elite green reading adds the variables AimPoint cannot capture: grain direction, wet vs. dry surface behaviour, stimp estimation, and the target-focus putting method for long-range pace control.</p>
+  <span class="badge badge-gold">🌾 Grain Direction — The Hidden Variable</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Grain Is and Why It Matters</span>
+    <h3>How Grass Growth Direction Affects Every Putt</h3>
+    <p style="margin-bottom:10px;">Grain refers to the direction the grass blades lie on the putting surface. On courses with Bermuda or certain bentgrass, grain can affect break by 15–30% and pace by 10–20% — enough to turn a made putt into a miss. On poa annua greens (common in the UK), grain is less predictable but still present, particularly on warmer days.</p>
+    <table class="tbl"><tr><th>Grain Direction</th><th>Appearance</th><th>Effect on Pace</th><th>Effect on Break</th></tr>
+    <tr><td class="good">Downgrain (with grain)</td><td>Shiny, light surface — grass tips point toward you</td><td>Significantly faster — reduce pace 15–20%</td><td>Break amplified — ball moves more than line suggests</td></tr>
+    <tr><td class="bad">Into grain (against grain)</td><td>Dull, dark surface — grass tips away from you</td><td>Significantly slower — add pace 10–15%</td><td>Break reduced — ball holds line better</td></tr>
+    <tr><td class="warn">Cross grain (left-to-right)</td><td>Medium sheen on one side</td><td>Minor effect on pace</td><td>Ball pulled toward grain direction — add to break</td></tr>
+    <tr><td class="warn">Cross grain (right-to-left)</td><td>Medium sheen on other side</td><td>Minor effect on pace</td><td>Ball pulled toward grain direction — subtract from break</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Identifying Grain Direction — Three Methods</span>
+    <h3>Reading the Surface Before You Putt</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Sheen test (most reliable):</strong> Look at the putting surface from behind the ball. If the green looks shiny/light, you are putting downgrain — the grass tips are angled away from you, reflecting more light. If it looks dull/dark, you are putting into grain. This test works from any position around the green.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cup edge test:</strong> Look at the hole itself. The side where the grass appears frayed, worn, or overhanging is the downgrain side — the grass has been growing toward that edge. The side with clean, crisp edges is the into-grain side. This is particularly reliable on Bermuda greens.</div></li>
+      <li><span class="step-n">3</span><div><strong>Setting sun direction:</strong> Bermuda and many warm-season grasses grow toward the setting sun (westward in the UK) as a default. When in doubt on an unfamiliar course, assume a slight westward grain bias as a starting point and adjust based on observations.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Grain Adjustment Protocol</span>
+    <h3>Integrating Grain into Your AimPoint Read</h3>
+    <table class="tbl"><tr><th>Scenario</th><th>AimPoint Says</th><th>Grain Adjustment</th><th>Final Read</th></tr>
+    <tr><td>Right-to-left break, downgrain</td><td>2 boards right</td><td>Amplify — add 0.5–1 board</td><td>2.5–3 boards right</td></tr>
+    <tr><td>Right-to-left break, into grain</td><td>2 boards right</td><td>Reduce — subtract 0.5 board</td><td>1.5 boards right</td></tr>
+    <tr><td>Left-to-right putt, cross grain left-to-right</td><td>1 board left</td><td>Add grain pull — 0.5 board extra</td><td>1.5 boards left</td></tr>
+    <tr><td>Straight putt, downgrain</td><td>Dead straight</td><td>No break change — only pace</td><td>Straight, significantly less pace</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Calibration in practice rounds:</strong> Before any competition, roll 3 putts on different sections of the practice green — one clearly downgrain, one into grain, one cross grain. Observe the actual pace and break differences vs. your expectation. This calibrates your grain adjustment for that specific course and grass type.</p></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🌧️ Wet and Dry — Surface Condition Adjustments</span>
+  <div class="card card-teal">
+    <span class="card-tag">Wet Greens — How Moisture Changes Everything</span>
+    <h3>The Three Effects of Water on Putting Surface Behaviour</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Break reduction (20–30% less break):</strong> Water between the ball and surface acts as a lubricant, reducing the frictional forces that produce directional deviation. A putt that normally breaks 3 boards on a dry green may only break 2 boards on a wet one. Always reduce your break read in wet conditions — the instinct to read "more" break on a soft, wet green is consistently wrong.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pace increase required:</strong> Wet greens are slower due to surface friction and water resistance. The ball requires more pace to reach the same distance. A putt you would normally hit to 6 inches past the hole must be hit noticeably firmer to reach the same point. Start with 15–20% more pace than your normal pace for that distance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain becomes less relevant:</strong> Heavy dew or rain effectively neutralises grain effects — the water film between ball and surface overrides the directional influence of grass blade direction. In very wet conditions, read primarily for slope and ignore grain adjustment.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Fast Dry Greens — Heat and Firmness Effects</span>
+    <h3>When Stimp Exceeds 11 and Break Amplifies</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Break amplification (20–35% more break):</strong> On firm, fast greens above Stimp 11, putts break more than on slower surfaces because the ball maintains momentum longer on the low-friction surface. Your AimPoint read is calibrated to your normal conditions — increase break by 1 board for every 1 Stimp above your baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Die-at-the-hole pace strategy:</strong> On fast greens (Stimp 12+), the effective hole size is significantly larger for putts that barely reach the rim vs. putts that pass firmly. The ball that "dies" at the front edge is more likely to fall in on a fast surface than a firmly struck putt that clips the edge and spins out. Adjust your pace target to the front of the cup rather than 12–18 inches past.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain amplification on fast greens:</strong> Grain effects are more pronounced on fast, dry greens. A cross-grain putt that shifts 1 board on a wet Stimp 8 green may shift 2–2.5 boards on a fast Stimp 12 surface. Both grain and slope adjustments must be increased proportionally.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">📏 Stimp Estimation — Reading Speed Without a Stimpmeter</span>
+  <div class="card card-gold">
+    <span class="card-tag">Estimating Green Speed From Observation</span>
+    <h3>Four Indicators That Reveal Stimp Without a Sheet</h3>
+    <table class="tbl"><tr><th>Indicator</th><th>Slow (Stimp 8–9)</th><th>Medium (Stimp 10–11)</th><th>Fast (Stimp 12+)</th></tr>
+    <tr><td>Flag movement in breeze</td><td>Flags move freely</td><td>Flags move moderately</td><td>Flags barely move (very dry)</td></tr>
+    <tr><td>Ball bounce on green</td><td>Soft landing, digs in</td><td>Moderate bounce, settles</td><td>Hard bounce, skips forward</td></tr>
+    <tr><td>Grass appearance</td><td>Lush, visible blade texture</td><td>Medium texture</td><td>Tight, almost smooth from distance</td></tr>
+    <tr><td>Lag putt roll from 30 feet</td><td>Stops short of normal aim</td><td>Rolls expected distance</td><td>Runs well past normal pace</td></tr></table>
+    <div class="info-box elite" style="margin-top:12px;"><span class="ico">⭐</span><p><strong>Morning vs. afternoon adjustment:</strong> Greens on most courses are significantly faster in the afternoon vs. morning. Morning dew and mowing timing mean a Stimp 9 green at 8am can play at Stimp 11 by 2pm on a warm, dry day. Always re-calibrate your pace on the practice green immediately before your round — never rely on morning observations for an afternoon tee time.</p></div>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">👁️ Target-Focus Putting — The Look-at-Hole Method</span>
+  <div class="card card-teal">
+    <span class="card-tag">Looking at the Hole for Lag Putts — When and How</span>
+    <h3>The Research Behind Target-Focus Putting</h3>
+    <p style="margin-bottom:8px;">Research by Dr. Gabriele Wulf on attentional focus shows that external focus (looking at the target) produces better motor performance than internal focus (looking at the ball) for many athletic tasks — particularly those requiring distance calibration. For putts over 20–25 feet, looking at the hole while stroking can significantly improve pace control.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When to use it:</strong> Lag putts from 25 feet and beyond where pace control is the primary challenge. Short putts (under 15 feet) where start line is the primary challenge — keep the standard eyes-on-ball approach for these.</div></li>
+      <li><span class="step-n">2</span><div><strong>How to execute:</strong> Complete your normal pre-putt read. Take your stance. Waggle 1–2 times to feel the length of stroke required. Look at the hole. Take your rehearsal stroke (if you use one) while looking at the hole. Then make the actual stroke while looking at the hole — do not look back at the ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>The neurological basis:</strong> Looking at the target allows the visual system to calibrate the motor programme for the required distance in real-time — the same mechanism that allows you to throw a ball accurately to a target without looking at your hand. You are converting a motor task (pace control) into a targeting task, which is more natural to the human visual-motor system.</div></li>
+      <li><span class="step-n">4</span><div><strong>Adaptation period:</strong> This feels strange for the first 1–2 weeks. Practice exclusively on the putting green for 10 minutes per session for 2 weeks before using in competition. Jordan Spieth, Bryson DeChambeau, and others have used this method. The adaptation period is short; the pace improvement is often immediate.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>Integration priority:</strong> Address grain in the following sequence: (1) identify grain direction on the practice green before your round (2 minutes), (2) apply the sheen test on every green during the round, (3) apply a +/−0.5–1 board adjustment to your AimPoint read based on grain direction and putt length, (4) adjust pace by ±15% for grain on putts over 20 feet. Start with long putts where grain effect is largest — do not attempt grain adjustment on putts under 10 feet until you are confident in the read.</p></div>
+</div>
+
+<div class="footer">THE PUTTING PLAYBOOK — PRO EDITION · STROKES GAINED FRAMEWORK</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
