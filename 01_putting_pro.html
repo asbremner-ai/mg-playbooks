@@ -149,13 +149,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 </head>
 <body>
-<!-- HOME NAV -->
-<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
-    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
-  </a>
-  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
-</div>
 <div class="hero">
   <p class="hero-label">Pro Playbook · Putting</p>
   <h1>Masterclass<br><em>in Putting</em></h1>
@@ -176,6 +169,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('drills',this)">Drills</button>
   <button class="tab" onclick="show('plans',this)">Practice Plans</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+  <button class="tab" onclick="show('greencond',this)">Green Cond.</button>
 </div>
 
 <!-- SG: PUTTING -->
@@ -548,6 +542,86 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
 </div>
 
+
+<!-- GREEN CONDITIONS: GRAIN & ADVANCED READING -->
+<div class="sec" id="greencond">
+  <h2 class="sec-title">Advanced Green Conditions</h2>
+  <p class="sec-desc">AimPoint Express provides the foundation. Elite green reading adds the variables AimPoint cannot capture: grain direction, wet vs. dry surface behaviour, stimp estimation, and the target-focus putting method for long-range pace control.</p>
+  <span class="badge badge-gold">🌾 Grain Direction — The Hidden Variable</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Grain Is and Why It Matters</span>
+    <h3>How Grass Growth Direction Affects Every Putt</h3>
+    <p style="margin-bottom:10px;">Grain refers to the direction the grass blades lie on the putting surface. On courses with Bermuda or certain bentgrass, grain can affect break by 15–30% and pace by 10–20% — enough to turn a made putt into a miss. On poa annua greens (common in the UK), grain is less predictable but still present, particularly on warmer days.</p>
+    <table class="tbl"><tr><th>Grain Direction</th><th>Appearance</th><th>Effect on Pace</th><th>Effect on Break</th></tr>
+    <tr><td class="good">Downgrain (with grain)</td><td>Shiny, light surface — grass tips point toward you</td><td>Significantly faster — reduce pace 15–20%</td><td>Break amplified — ball moves more than line suggests</td></tr>
+    <tr><td class="bad">Into grain (against grain)</td><td>Dull, dark surface — grass tips away from you</td><td>Significantly slower — add pace 10–15%</td><td>Break reduced — ball holds line better</td></tr>
+    <tr><td class="warn">Cross grain (left-to-right)</td><td>Medium sheen on one side</td><td>Minor effect on pace</td><td>Ball pulled toward grain direction — add to break</td></tr>
+    <tr><td class="warn">Cross grain (right-to-left)</td><td>Medium sheen on other side</td><td>Minor effect on pace</td><td>Ball pulled toward grain direction — subtract from break</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Identifying Grain Direction — Three Methods</span>
+    <h3>Reading the Surface Before You Putt</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Sheen test (most reliable):</strong> Look at the putting surface from behind the ball. If the green looks shiny/light, you are putting downgrain — the grass tips are angled away from you, reflecting more light. If it looks dull/dark, you are putting into grain. This test works from any position around the green.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cup edge test:</strong> Look at the hole itself. The side where the grass appears frayed, worn, or overhanging is the downgrain side — the grass has been growing toward that edge. The side with clean, crisp edges is the into-grain side. This is particularly reliable on Bermuda greens.</div></li>
+      <li><span class="step-n">3</span><div><strong>Setting sun direction:</strong> Bermuda and many warm-season grasses grow toward the setting sun (westward in the UK) as a default. When in doubt on an unfamiliar course, assume a slight westward grain bias as a starting point and adjust based on observations.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Grain Adjustment Protocol</span>
+    <h3>Integrating Grain into Your AimPoint Read</h3>
+    <table class="tbl"><tr><th>Scenario</th><th>AimPoint Says</th><th>Grain Adjustment</th><th>Final Read</th></tr>
+    <tr><td>Right-to-left break, downgrain</td><td>2 boards right</td><td>Amplify — add 0.5–1 board</td><td>2.5–3 boards right</td></tr>
+    <tr><td>Right-to-left break, into grain</td><td>2 boards right</td><td>Reduce — subtract 0.5 board</td><td>1.5 boards right</td></tr>
+    <tr><td>Left-to-right putt, cross grain left-to-right</td><td>1 board left</td><td>Add grain pull — 0.5 board extra</td><td>1.5 boards left</td></tr>
+    <tr><td>Straight putt, downgrain</td><td>Dead straight</td><td>No break change — only pace</td><td>Straight, significantly less pace</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Calibration in practice rounds:</strong> Before any competition, roll 3 putts on different sections of the practice green — one clearly downgrain, one into grain, one cross grain. Observe the actual pace and break differences vs. your expectation. This calibrates your grain adjustment for that specific course and grass type.</p></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🌧️ Wet and Dry — Surface Condition Adjustments</span>
+  <div class="card card-teal">
+    <span class="card-tag">Wet Greens — How Moisture Changes Everything</span>
+    <h3>The Three Effects of Water on Putting Surface Behaviour</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Break reduction (20–30% less break):</strong> Water between the ball and surface acts as a lubricant, reducing the frictional forces that produce directional deviation. A putt that normally breaks 3 boards on a dry green may only break 2 boards on a wet one. Always reduce your break read in wet conditions — the instinct to read "more" break on a soft, wet green is consistently wrong.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pace increase required:</strong> Wet greens are slower due to surface friction and water resistance. The ball requires more pace to reach the same distance. A putt you would normally hit to 6 inches past the hole must be hit noticeably firmer to reach the same point. Start with 15–20% more pace than your normal pace for that distance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain becomes less relevant:</strong> Heavy dew or rain effectively neutralises grain effects — the water film between ball and surface overrides the directional influence of grass blade direction. In very wet conditions, read primarily for slope and ignore grain adjustment.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Fast Dry Greens — Heat and Firmness Effects</span>
+    <h3>When Stimp Exceeds 11 and Break Amplifies</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Break amplification (20–35% more break):</strong> On firm, fast greens above Stimp 11, putts break more than on slower surfaces because the ball maintains momentum longer on the low-friction surface. Your AimPoint read is calibrated to your normal conditions — increase break by 1 board for every 1 Stimp above your baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Die-at-the-hole pace strategy:</strong> On fast greens (Stimp 12+), the effective hole size is significantly larger for putts that barely reach the rim vs. putts that pass firmly. The ball that "dies" at the front edge is more likely to fall in on a fast surface than a firmly struck putt that clips the edge and spins out. Adjust your pace target to the front of the cup rather than 12–18 inches past.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain amplification on fast greens:</strong> Grain effects are more pronounced on fast, dry greens. A cross-grain putt that shifts 1 board on a wet Stimp 8 green may shift 2–2.5 boards on a fast Stimp 12 surface. Both grain and slope adjustments must be increased proportionally.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">📏 Stimp Estimation — Reading Speed Without a Stimpmeter</span>
+  <div class="card card-gold">
+    <span class="card-tag">Estimating Green Speed From Observation</span>
+    <h3>Four Indicators That Reveal Stimp Without a Sheet</h3>
+    <table class="tbl"><tr><th>Indicator</th><th>Slow (Stimp 8–9)</th><th>Medium (Stimp 10–11)</th><th>Fast (Stimp 12+)</th></tr>
+    <tr><td>Flag movement in breeze</td><td>Flags move freely</td><td>Flags move moderately</td><td>Flags barely move (very dry)</td></tr>
+    <tr><td>Ball bounce on green</td><td>Soft landing, digs in</td><td>Moderate bounce, settles</td><td>Hard bounce, skips forward</td></tr>
+    <tr><td>Grass appearance</td><td>Lush, visible blade texture</td><td>Medium texture</td><td>Tight, almost smooth from distance</td></tr>
+    <tr><td>Lag putt roll from 30 feet</td><td>Stops short of normal aim</td><td>Rolls expected distance</td><td>Runs well past normal pace</td></tr></table>
+    <div class="info-box elite" style="margin-top:12px;"><span class="ico">⭐</span><p><strong>Morning vs. afternoon adjustment:</strong> Greens on most courses are significantly faster in the afternoon vs. morning. Morning dew and mowing timing mean a Stimp 9 green at 8am can play at Stimp 11 by 2pm on a warm, dry day. Always re-calibrate your pace on the practice green immediately before your round — never rely on morning observations for an afternoon tee time.</p></div>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">👁️ Target-Focus Putting — The Look-at-Hole Method</span>
+  <div class="card card-teal">
+    <span class="card-tag">Looking at the Hole for Lag Putts — When and How</span>
+    <h3>The Research Behind Target-Focus Putting</h3>
+    <p style="margin-bottom:8px;">Research by Dr. Gabriele Wulf on attentional focus shows that external focus (looking at the target) produces better motor performance than internal focus (looking at the ball) for many athletic tasks — particularly those requiring distance calibration. For putts over 20–25 feet, looking at the hole while stroking can significantly improve pace control.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When to use it:</strong> Lag putts from 25 feet and beyond where pace control is the primary challenge. Short putts (under 15 feet) where start line is the primary challenge — keep the standard eyes-on-ball approach for these.</div></li>
+      <li><span class="step-n">2</span><div><strong>How to execute:</strong> Complete your normal pre-putt read. Take your stance. Waggle 1–2 times to feel the length of stroke required. Look at the hole. Take your rehearsal stroke (if you use one) while looking at the hole. Then make the actual stroke while looking at the hole — do not look back at the ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>The neurological basis:</strong> Looking at the target allows the visual system to calibrate the motor programme for the required distance in real-time — the same mechanism that allows you to throw a ball accurately to a target without looking at your hand. You are converting a motor task (pace control) into a targeting task, which is more natural to the human visual-motor system.</div></li>
+      <li><span class="step-n">4</span><div><strong>Adaptation period:</strong> This feels strange for the first 1–2 weeks. Practice exclusively on the putting green for 10 minutes per session for 2 weeks before using in competition. Jordan Spieth, Bryson DeChambeau, and others have used this method. The adaptation period is short; the pace improvement is often immediate.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>Integration priority:</strong> Address grain in the following sequence: (1) identify grain direction on the practice green before your round (2 minutes), (2) apply the sheen test on every green during the round, (3) apply a +/−0.5–1 board adjustment to your AimPoint read based on grain direction and putt length, (4) adjust pace by ±15% for grain on putts over 20 feet. Start with long putts where grain effect is largest — do not attempt grain adjustment on putts under 10 feet until you are confident in the read.</p></div>
+</div>
+
 <div class="footer">THE PUTTING PLAYBOOK — PRO EDITION · STROKES GAINED FRAMEWORK</div>
 <script>
 function show(id,btn){
@@ -558,35 +632,5 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
-
-<!-- RELATED GUIDES PANEL -->
-<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
-  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
-  <div style="display:flex;flex-wrap:wrap;gap:10px;">
-  <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🌊</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Short Game Playbook</span>
-  </a>
-  <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
-  </a>
-  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
-  </a>
-  <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
-  </a>
-  <a href="09_golf_coach_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
-  </a>
-  </div>
-  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
-    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
-  </div>
-</div>
 </body>
 </html>
