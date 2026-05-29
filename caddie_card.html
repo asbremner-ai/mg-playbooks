@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Caddie Card">
+<title>Caddie Reference Card — The Scratch Project</title>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Archivo:wght@600;700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0a0f0a;
+  --surface:#111a11;
+  --surface2:#182018;
+  --border:rgba(160,200,80,0.18);
+  --border-hi:rgba(160,200,80,0.38);
+  --lime:#a0c850;
+  --lime-hi:#c0e060;
+  --lime-dim:rgba(160,200,80,0.10);
+  --gold:#e0b840;
+  --gold-hi:#f0d070;
+  --gold-dim:rgba(224,184,64,0.10);
+  --teal:#48b0a8;
+  --teal-hi:#70ccc4;
+  --teal-dim:rgba(72,176,168,0.10);
+  --rust:#d86030;
+  --rust-hi:#f08050;
+  --rust-dim:rgba(216,96,48,0.10);
+  --white:#e8f0d8;
+  --muted:rgba(232,240,216,0.48);
+  --faint:rgba(232,240,216,0.10);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:14px;padding-bottom:40px;}
+
+/* ─── TOP BAR ─── */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.topbar-title{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--lime);}
+.topbar-sub{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.home-btn{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.home-btn:hover{color:var(--lime);}
+
+/* ─── TAB NAV ─── */
+.tabs{display:flex;overflow-x:auto;background:var(--surface);border-bottom:2px solid var(--border);scrollbar-width:none;padding:0 8px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-2px;padding:11px 12px;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+.tab.active{color:var(--lime-hi);border-bottom-color:var(--lime);}
+.tab:hover{color:var(--white);}
+
+/* ─── PANELS ─── */
+.panel{display:none;padding:16px;}
+.panel.active{display:block;}
+
+/* ─── SECTION HEADERS ─── */
+.sec-head{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;margin-top:18px;padding-bottom:6px;border-bottom:1px solid var(--lime-dim);}
+.sec-head:first-child{margin-top:0;}
+
+/* ─── MATRIX TABLE ─── */
+.matrix{width:100%;border-collapse:collapse;margin-bottom:14px;}
+.matrix th{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);padding:7px 8px;text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);}
+.matrix th:first-child{text-align:left;}
+.matrix td{padding:9px 8px;text-align:center;border-bottom:1px solid var(--faint);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;color:var(--white);}
+.matrix td:first-child{text-align:left;font-size:10px;color:var(--muted);font-weight:400;letter-spacing:0.08em;}
+.matrix tr:last-child td{border-bottom:none;}
+.matrix td input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:48px;text-align:center;outline:none;padding:2px 0;}
+.matrix td input:focus{border-bottom-color:var(--lime);}
+.matrix td input::placeholder{color:var(--muted);font-weight:400;font-size:11px;}
+
+.matrix-note{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:0.10em;text-transform:uppercase;color:var(--muted);padding:8px 10px;background:var(--surface2);border-radius:4px;margin-bottom:16px;line-height:1.6;}
+
+/* ─── WIND TABLE ─── */
+.wind-table{width:100%;border-collapse:collapse;margin-bottom:12px;}
+.wind-table th{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:7px 10px;text-align:center;border-bottom:1px solid var(--border);background:var(--surface2);}
+.wind-table th:first-child{text-align:left;}
+.wind-table td{padding:9px 10px;text-align:center;border-bottom:1px solid var(--faint);font-family:'Courier Prime',monospace;font-size:12px;}
+.wind-table td:first-child{text-align:left;color:var(--white);font-weight:700;}
+.wind-table td.into{color:var(--rust-hi);}
+.wind-table td.down{color:var(--teal-hi);}
+.wind-table td.example{color:var(--muted);font-size:10px;}
+.wind-table tr:last-child td{border-bottom:none;}
+
+/* ─── WIND CALC ─── */
+.calc-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:14px;}
+.calc-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.calc-row:last-child{margin-bottom:0;}
+.calc-label{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);min-width:80px;}
+.calc-input{background:var(--bg);border:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:14px;font-weight:700;padding:7px 10px;border-radius:4px;width:80px;text-align:center;outline:none;}
+.calc-input:focus{border-color:var(--lime);}
+.calc-select{background:var(--bg);border:1px solid var(--border);color:var(--white);font-family:'Courier Prime',monospace;font-size:12px;padding:7px 10px;border-radius:4px;outline:none;flex:1;}
+.calc-result{background:var(--lime-dim);border:1px solid var(--lime);border-radius:6px;padding:12px 14px;text-align:center;margin-top:10px;}
+.calc-result-num{font-family:'Archivo',sans-serif;font-size:2rem;font-weight:900;color:var(--lime-hi);line-height:1;}
+.calc-result-label{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.calc-btn{background:var(--lime-dim);border:1px solid var(--lime);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;padding:10px 16px;border-radius:4px;cursor:pointer;flex:1;transition:background 0.2s;}
+.calc-btn:active{background:rgba(160,200,80,0.25);}
+
+/* ─── DISPERSION ─── */
+.disp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.disp-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:12px 10px;text-align:center;}
+.disp-club{font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.disp-value{font-family:'Archivo',sans-serif;font-size:1.4rem;font-weight:900;color:var(--white);line-height:1;}
+.disp-unit{font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);}
+.disp-note{font-size:10px;color:var(--muted);margin-top:3px;font-family:'Courier Prime',monospace;}
+.disp-card.editable .disp-value input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Archivo',sans-serif;font-size:1.4rem;font-weight:900;width:64px;text-align:center;outline:none;}
+.disp-card.editable .disp-value input:focus{border-bottom-color:var(--lime);}
+
+/* ─── RULES ─── */
+.rule-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.rule-list li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.5;}
+.rule-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.rule-list li strong{color:var(--white);}
+
+.rule-card{background:var(--surface2);border-left:3px solid var(--lime);border-radius:0 6px 6px 0;padding:12px 14px;margin-bottom:10px;}
+.rule-card.gold{border-left-color:var(--gold);}
+.rule-card.teal{border-left-color:var(--teal);}
+.rule-card.rust{border-left-color:var(--rust);}
+.rule-card-label{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:0.16em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;}
+.rule-card.gold .rule-card-label{color:var(--gold);}
+.rule-card.teal .rule-card-label{color:var(--teal);}
+.rule-card.rust .rule-card-label{color:var(--rust);}
+.rule-card p{font-size:13px;color:var(--white);line-height:1.55;}
+.rule-card p span{color:var(--muted);}
+
+/* ─── SG TARGETS ─── */
+.sg-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--faint);}
+.sg-row:last-child{border-bottom:none;}
+.sg-cat{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:0.10em;color:var(--white);}
+.sg-meta{display:flex;gap:12px;align-items:center;}
+.sg-now{font-size:10px;color:var(--muted);}
+.sg-target{font-family:'Courier Prime',monospace;font-size:11px;font-weight:700;color:var(--lime);}
+.sg-bar-wrap{width:80px;height:4px;background:var(--faint);border-radius:2px;overflow:hidden;}
+.sg-bar-fill{height:100%;border-radius:2px;}
+
+/* ─── CONDITIONS ─── */
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.cond-card{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:11px 10px;}
+.cond-label{font-family:'Courier Prime',monospace;font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.cond-value{font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:2px;}
+.cond-note{font-size:10px;color:var(--muted);line-height:1.4;}
+
+/* ─── FOOTER ─── */
+.card-footer{text-align:center;padding:20px 16px 8px;font-family:'Courier Prime',monospace;font-size:8px;color:rgba(232,240,216,0.2);letter-spacing:0.16em;text-transform:uppercase;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-title">📋 Caddie Card</div>
+    <div class="topbar-sub">The Scratch Project</div>
+  </div>
+  <a class="home-btn" href="index.html">⌂ All Guides</a>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPanel('wedge')">⛳ Wedges</button>
+  <button class="tab" onclick="showPanel('wind')">🌬 Wind</button>
+  <button class="tab" onclick="showPanel('dispersion')">📊 Dispersion</button>
+  <button class="tab" onclick="showPanel('rules')">🎯 On-Course</button>
+  <button class="tab" onclick="showPanel('sg')">📈 SG Targets</button>
+</div>
+
+<!-- ═══ WEDGE MATRIX ═══ -->
+<div class="panel active" id="wedge">
+
+  <p class="sec-head">Your Personal Wedge Matrix (carry yards)</p>
+  <div class="matrix-note">
+    All distances = carry yards (not total) · Verified on launch monitor · Update every 6 months or after any swing change
+  </div>
+
+  <table class="matrix">
+    <thead>
+      <tr>
+        <th>Swing</th>
+        <th>PW</th>
+        <th>GW (50°)</th>
+        <th>SW (54°)</th>
+        <th>LW (58°)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Full</td>
+        <td><input type="number" placeholder="—" id="pw_full" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="gw_full" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="sw_full" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="lw_full" min="0" max="200"></td>
+      </tr>
+      <tr>
+        <td>¾ (9 o'clock)</td>
+        <td><input type="number" placeholder="—" id="pw_3q" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="gw_3q" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="sw_3q" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="lw_3q" min="0" max="200"></td>
+      </tr>
+      <tr>
+        <td>½ (8 o'clock)</td>
+        <td><input type="number" placeholder="—" id="pw_half" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="gw_half" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="sw_half" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="lw_half" min="0" max="200"></td>
+      </tr>
+      <tr>
+        <td>¼ (7 o'clock)</td>
+        <td><input type="number" placeholder="—" id="pw_qtr" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="gw_qtr" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="sw_qtr" min="0" max="200"></td>
+        <td><input type="number" placeholder="—" id="lw_qtr" min="0" max="200"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sec-head">Key Iron Carries</p>
+  <table class="matrix">
+    <thead>
+      <tr><th>Club</th><th>Carry (yds)</th><th>Club</th><th>Carry (yds)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>4-iron / 4H</td>
+        <td><input type="number" placeholder="—" id="iron4" min="0" max="300"></td>
+        <td>7-iron</td>
+        <td><input type="number" placeholder="—" id="iron7" min="0" max="300"></td>
+      </tr>
+      <tr>
+        <td>5-iron / 5H</td>
+        <td><input type="number" placeholder="—" id="iron5" min="0" max="300"></td>
+        <td>8-iron</td>
+        <td><input type="number" placeholder="—" id="iron8" min="0" max="300"></td>
+      </tr>
+      <tr>
+        <td>6-iron</td>
+        <td><input type="number" placeholder="—" id="iron6" min="0" max="300"></td>
+        <td>9-iron</td>
+        <td><input type="number" placeholder="—" id="iron9" min="0" max="300"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sec-head">Driver &amp; Fairway Woods</p>
+  <table class="matrix">
+    <thead>
+      <tr><th>Club</th><th>Carry (yds)</th><th>Club</th><th>Carry (yds)</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Driver</td>
+        <td><input type="number" placeholder="—" id="driver" min="0" max="400"></td>
+        <td>5-wood</td>
+        <td><input type="number" placeholder="—" id="fw5" min="0" max="300"></td>
+      </tr>
+      <tr>
+        <td>3-wood</td>
+        <td><input type="number" placeholder="—" id="fw3" min="0" max="350"></td>
+        <td>7-wood</td>
+        <td><input type="number" placeholder="—" id="fw7" min="0" max="280"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="matrix-note" style="margin-top:8px;">
+    📅 Last verified: <span id="last-verified" style="color:var(--lime);">Not set</span> &nbsp;·&nbsp;
+    <span id="save-status" style="color:var(--muted);">Tap Save to store</span>
+    <br><br>
+    <button class="calc-btn" onclick="saveDistances()" style="width:100%;margin-top:6px;">💾 Save All Distances to Device</button>
+  </div>
+
+</div>
+
+<!-- ═══ WIND CALCULATOR ═══ -->
+<div class="panel" id="wind">
+
+  <p class="sec-head">Live Wind Calculator</p>
+  <div class="calc-box">
+    <div class="calc-row">
+      <span class="calc-label">Base Yardage</span>
+      <input class="calc-input" type="number" id="base-yardage" placeholder="150" min="0" max="300">
+    </div>
+    <div class="calc-row">
+      <span class="calc-label">Wind Speed</span>
+      <input class="calc-input" type="number" id="wind-speed" placeholder="mph" min="0" max="50">
+    </div>
+    <div class="calc-row">
+      <span class="calc-label">Direction</span>
+      <select class="calc-select" id="wind-dir">
+        <option value="into">Into (headwind)</option>
+        <option value="down">Downwind</option>
+        <option value="cross">Crosswind (50%)</option>
+      </select>
+    </div>
+    <button class="calc-btn" onclick="calcWind()">Calculate Adjusted Yardage</button>
+    <div class="calc-result" id="wind-result" style="display:none;">
+      <div class="calc-result-num" id="wind-result-num">—</div>
+      <div class="calc-result-label" id="wind-result-label">Adjusted carry required</div>
+    </div>
+  </div>
+
+  <p class="sec-head">Wind Reference Table — Tour Caddie Formula</p>
+  <table class="wind-table">
+    <thead>
+      <tr><th>Wind</th><th class="into">Into (+)</th><th class="down">Down (−)</th><th>@ 150 yds</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>10 mph</td><td class="into">+10%</td><td class="down">−5%</td><td class="example">+15 / −8 yds</td></tr>
+      <tr><td>15 mph</td><td class="into">+15%</td><td class="down">−7.5%</td><td class="example">+23 / −11 yds</td></tr>
+      <tr><td>20 mph</td><td class="into">+20%</td><td class="down">−10%</td><td class="example">+30 / −15 yds</td></tr>
+      <tr><td>25 mph</td><td class="into">+25%</td><td class="down">−12.5%</td><td class="example">+38 / −19 yds</td></tr>
+      <tr><td>30 mph</td><td class="into">+30%</td><td class="down">−15%</td><td class="example">+45 / −23 yds</td></tr>
+    </tbody>
+  </table>
+
+  <p class="sec-head">Other Conditions Adjustments</p>
+  <div class="cond-grid">
+    <div class="cond-card">
+      <div class="cond-label">Temperature</div>
+      <div class="cond-value">±1–2 yds</div>
+      <div class="cond-note">Per 10°F from 70°F baseline. Cold UK day (45°F) = −5 yds approx.</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">Altitude</div>
+      <div class="cond-value">+2% / 1,000 ft</div>
+      <div class="cond-note">UK courses: negligible. Links at sea level = no adjustment.</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">Uphill</div>
+      <div class="cond-value">+1 yd / ft gain</div>
+      <div class="cond-note">Add slope elevation change to required yardage.</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">Downhill</div>
+      <div class="cond-value">−0.5 yd / ft drop</div>
+      <div class="cond-note">Subtract half the elevation drop from required yardage.</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">From Rough</div>
+      <div class="cond-value">−10–20%</div>
+      <div class="cond-note">Deep rough: −20%. Light rough: −10%. Less spin = more roll.</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">Firm Ground</div>
+      <div class="cond-value">+5–8 yds roll</div>
+      <div class="cond-note">Firm, dry conditions in summer. Aim short of flag — let it run.</div>
+    </div>
+  </div>
+
+  <div class="matrix-note">
+    Rule: Apply wind formula on EVERY approach when wind exceeds 10 mph — no exceptions. Guessing costs strokes. The formula takes 5 seconds.
+  </div>
+
+</div>
+
+<!-- ═══ DISPERSION ═══ -->
+<div class="panel" id="dispersion">
+
+  <p class="sec-head">Your Dispersion Profile (enter your own numbers)</p>
+
+  <div class="disp-grid">
+    <div class="cond-card">
+      <div class="cond-label">Driver L/R</div>
+      <div class="cond-value" style="color:var(--lime-hi);">±<input type="number" id="disp_driver" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;width:42px;text-align:center;outline:none;" placeholder="25"> yds</div>
+      <div class="cond-note">Aim to edge of fairway — allow full cone</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">7-iron L/R</div>
+      <div class="cond-value" style="color:var(--lime-hi);">±<input type="number" id="disp_7i" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;width:42px;text-align:center;outline:none;" placeholder="20"> yds</div>
+      <div class="cond-note">Aim based on cone — not the flag</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">PW L/R</div>
+      <div class="cond-value" style="color:var(--lime-hi);">±<input type="number" id="disp_pw" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;width:42px;text-align:center;outline:none;" placeholder="12"> yds</div>
+      <div class="cond-note">Always aim centre unless flag is fully open</div>
+    </div>
+    <div class="cond-card">
+      <div class="cond-label">Short Game</div>
+      <div class="cond-value" style="color:var(--lime-hi);"><input type="number" id="disp_sg" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;width:42px;text-align:center;outline:none;" placeholder="15"> ft prox</div>
+      <div class="cond-note">Target average proximity from &lt;50 yds</div>
+    </div>
+  </div>
+
+  <p class="sec-head">Aim Point Protocol</p>
+  <div class="rule-card">
+    <div class="rule-card-label">Driver</div>
+    <p>Aim to the edge of the fairway in the direction of your miss. If you miss right, aim right-centre of the fairway — never left rough to play a draw. The dispersion cone is your constraint.</p>
+  </div>
+  <div class="rule-card teal">
+    <div class="rule-card-label">Iron Approaches</div>
+    <p>Middle of the green unless the flag is in the open half AND you have at least 15 yards of green between flag and hazard. Tucked pins: always play to the fat side. Sucker pins: never attack.</p>
+  </div>
+  <div class="rule-card gold">
+    <div class="rule-card-label">Scoring Zone (&lt;100 yds)</div>
+    <p>Choose the matrix distance that matches your required yardage. No improvised swings. If the required distance falls between two matrix entries, play the shorter one and allow for run.</p>
+  </div>
+
+  <p class="sec-head">Pin Categories</p>
+  <table class="wind-table">
+    <thead>
+      <tr><th>Category</th><th>Description</th><th>Target</th></tr>
+    </thead>
+    <tbody>
+      <tr><td style="color:#7ec87e;">Open</td><td class="example">15+ yds of green beyond flag</td><td class="down">Attack — aim at flag</td></tr>
+      <tr><td style="color:var(--gold-hi);">Neutral</td><td class="example">8–15 yds behind flag</td><td class="example">Aim at flag, accept centre miss</td></tr>
+      <tr><td style="color:var(--rust-hi);">Tucked</td><td class="example">&lt;8 yds behind flag or side hazard</td><td class="into">Aim fat side of green</td></tr>
+      <tr><td style="color:var(--rust-hi);">Sucker</td><td class="example">Flag near hazard with no bail</td><td class="into">Never attack — centre green only</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- ═══ ON-COURSE RULES ═══ -->
+<div class="panel" id="rules">
+
+  <p class="sec-head">Decision Framework</p>
+  <div class="rule-card">
+    <div class="rule-card-label">Step 1 — Assess</div>
+    <p>Lie → distance → wind → pin category → slope. Complete this in the same order every shot. Missing a step costs shots — usually wind or lie assessment.</p>
+  </div>
+  <div class="rule-card gold">
+    <div class="rule-card-label">Step 2 — Select</div>
+    <p>Use your matrix for wedge shots. Apply wind formula for approaches above 10 mph. Select aim point based on your dispersion cone, not the flag. Always take one more club than instinct says — you almost certainly under-club.</p>
+  </div>
+  <div class="rule-card teal">
+    <div class="rule-card-label">Step 3 — Commit</div>
+    <p>Pre-shot routine. Full commitment. Trust the number. The club selected after a complete assessment process is always the right club — don't second-guess at address.</p>
+  </div>
+
+  <p class="sec-head">Never Do These</p>
+  <ul class="rule-list">
+    <li><span class="rule-icon">🚫</span><div><strong>Attack a sucker pin.</strong> <span>One hero shot per round erases 3 good shots. Always take the fat side.</span></div></li>
+    <li><span class="rule-icon">🚫</span><div><strong>Under-club to a green with carry trouble.</strong> <span>Take the club that gets you to the BACK of the green. Balls short of the green lose more strokes than balls over.</span></div></li>
+    <li><span class="rule-icon">🚫</span><div><strong>Skip the wind adjustment when it's "not that windy".</strong> <span>10 mph into adds 15 yards at 150. Always apply the formula.</span></div></li>
+    <li><span class="rule-icon">🚫</span><div><strong>Change the club selection at address.</strong> <span>If you need to change clubs, step away and restart the routine. Never change at address.</span></div></li>
+    <li><span class="rule-icon">🚫</span><div><strong>Play a recovery shot heroically.</strong> <span>From trouble, the target is: back in play, in the best possible position. Not birdies. Bogey elimination wins more shots than birdie attempts.</span></div></li>
+    <li><span class="rule-icon">🚫</span><div><strong>Skip the pre-shot routine when nervous.</strong> <span>The routine exists specifically for when you are nervous. Abbreviating it under pressure is the most common cause of competition blow-ups.</span></div></li>
+  </ul>
+
+  <p class="sec-head">Always Do These</p>
+  <ul class="rule-list">
+    <li><span class="rule-icon">✅</span><div><strong>Aim using your dispersion cone.</strong> <span>Not the flag. The flag is a reference point. Your aim point is where the centre of your cone needs to be.</span></div></li>
+    <li><span class="rule-icon">✅</span><div><strong>Apply the wind formula above 10 mph.</strong> <span>Every single time. Build it as automatic habit by Round 20.</span></div></li>
+    <li><span class="rule-icon">✅</span><div><strong>Complete the pre-shot routine.</strong> <span>On every shot. Including tap-ins. The routine is the protection against the unconscious shortcut that produces double bogeys.</span></div></li>
+    <li><span class="rule-icon">✅</span><div><strong>Accept the shot you just hit.</strong> <span>Move forward in your routine immediately. Carrying the previous shot into the next decision contaminates the assessment process.</span></div></li>
+    <li><span class="rule-icon">✅</span><div><strong>Hit the percentage shot from trouble.</strong> <span>Sideways or backwards to a good lie is always the right play. Calculate the expected score from both options if needed — the conservative option wins.</span></div></li>
+  </ul>
+
+  <p class="sec-head">Double-Bogey Elimination Protocol</p>
+  <div class="rule-card rust">
+    <div class="rule-card-label">When in Trouble</div>
+    <p>Ask: <strong>what shot makes a double bogey impossible?</strong> Not what shot makes birdie possible — what removes the worst outcome? Execute that shot. At 10 HCP, 3.2 double bogeys per round are the single biggest scoring leak. Eliminate one per round and your handicap drops immediately.</p>
+  </div>
+
+</div>
+
+<!-- ═══ SG TARGETS ═══ -->
+<div class="panel" id="sg">
+
+  <p class="sec-head">SG Benchmarks by Handicap</p>
+
+  <div style="margin-bottom:4px;">
+    <div class="sg-row">
+      <div>
+        <div class="sg-cat">SG: Off-Tee</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">Fairways · Driver distance</div>
+      </div>
+      <div class="sg-meta">
+        <div>
+          <div style="text-align:right;margin-bottom:3px;">
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);">10HCP </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--rust-hi);">−0.9</span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);"> → </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--lime);">SCR 0.0</span>
+          </div>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar-fill" style="width:40%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-row">
+      <div>
+        <div class="sg-cat">SG: Approach</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">GIR · Proximity</div>
+      </div>
+      <div class="sg-meta">
+        <div>
+          <div style="text-align:right;margin-bottom:3px;">
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);">10HCP </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--rust-hi);">−1.8</span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);"> → </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--lime);">SCR 0.0</span>
+          </div>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar-fill" style="width:75%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-row">
+      <div>
+        <div class="sg-cat">SG: Around-Green</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">U&amp;D · Bunkers</div>
+      </div>
+      <div class="sg-meta">
+        <div>
+          <div style="text-align:right;margin-bottom:3px;">
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);">10HCP </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--rust-hi);">−2.5</span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);"> → </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--lime);">SCR 0.0</span>
+          </div>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar-fill" style="width:95%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sg-row">
+      <div>
+        <div class="sg-cat">SG: Putting</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">3-putts · 5-ft make rate</div>
+      </div>
+      <div class="sg-meta">
+        <div>
+          <div style="text-align:right;margin-bottom:3px;">
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);">10HCP </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--rust-hi);">−2.4</span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--muted);"> → </span>
+            <span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--lime);">SCR 0.0</span>
+          </div>
+          <div class="sg-bar-wrap">
+            <div class="sg-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="sec-head">Key Stats Targets by Phase</p>
+  <table class="wind-table">
+    <thead>
+      <tr><th>Metric</th><th>10 HCP</th><th>5 HCP</th><th>Scratch</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>GIR %</td><td class="example">28–35%</td><td class="example">38–45%</td><td class="down">55–60%</td></tr>
+      <tr><td>Proximity 150 yds</td><td class="example">&gt;40 ft</td><td class="example">&lt;30 ft</td><td class="down">&lt;25 ft</td></tr>
+      <tr><td>U&amp;D %</td><td class="example">~25%</td><td class="example">36–38%</td><td class="down">40%+</td></tr>
+      <tr><td>Bunker save %</td><td class="example">~15%</td><td class="example">25%+</td><td class="down">35%+</td></tr>
+      <tr><td>3-Putt rate</td><td class="example">~18%</td><td class="example">&lt;10%</td><td class="down">&lt;5%</td></tr>
+      <tr><td>5-ft make rate</td><td class="example">~55%</td><td class="example">78%+</td><td class="down">85%+</td></tr>
+      <tr><td>Fairways hit %</td><td class="example">~45%</td><td class="example">50%+</td><td class="down">60%+</td></tr>
+    </tbody>
+  </table>
+
+  <p class="sec-head">My Current Numbers</p>
+  <table class="matrix" style="margin-bottom:8px;">
+    <thead>
+      <tr><th>Metric</th><th>My Number</th><th>Target</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Handicap</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">0.0</td></tr>
+      <tr><td>GIR %</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">55%+</td></tr>
+      <tr><td>Proximity</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">&lt;25 ft</td></tr>
+      <tr><td>U&amp;D %</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">40%+</td></tr>
+      <tr><td>3-Putt rate</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">&lt;5%</td></tr>
+      <tr><td>5-ft make</td><td><input type="text" placeholder="—" style="background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--lime-hi);font-family:'Courier Prime',monospace;font-size:13px;font-weight:700;width:56px;text-align:center;outline:none;"></td><td style="color:var(--lime);font-family:'Courier Prime',monospace;font-size:11px;">85%+</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="card-footer">
+  The Scratch Project · Caddie Reference Card · asbremner-ai.github.io/mg-playbooks
+</div>
+
+<script>
+// ── Tab switching
+function showPanel(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.currentTarget.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ── Wind calculator
+function calcWind() {
+  const base = parseFloat(document.getElementById('base-yardage').value);
+  const speed = parseFloat(document.getElementById('wind-speed').value);
+  const dir = document.getElementById('wind-dir').value;
+  const result = document.getElementById('wind-result');
+  const resultNum = document.getElementById('wind-result-num');
+  const resultLabel = document.getElementById('wind-result-label');
+
+  if (isNaN(base) || isNaN(speed)) {
+    result.style.display = 'block';
+    resultNum.textContent = '—';
+    resultLabel.textContent = 'Enter yardage and wind speed';
+    return;
+  }
+
+  let pct = speed / 100;
+  let adj = 0;
+  let label = '';
+
+  if (dir === 'into') {
+    adj = Math.round(base * pct);
+    label = `Play ${adj} yards longer than pin · Select ${Math.round(base + adj)} yd carry`;
+    result.style.background = 'rgba(216,96,48,0.12)';
+    result.style.borderColor = 'var(--rust)';
+    resultNum.style.color = 'var(--rust-hi)';
+  } else if (dir === 'down') {
+    adj = Math.round(base * pct * 0.5);
+    label = `Play ${adj} yards shorter than pin · Select ${Math.round(base - adj)} yd carry`;
+    result.style.background = 'rgba(72,176,168,0.10)';
+    result.style.borderColor = 'var(--teal)';
+    resultNum.style.color = 'var(--teal-hi)';
+  } else {
+    // crosswind — half penalty applies but as lateral aim adjustment not yardage
+    adj = Math.round(base * pct * 0.5);
+    label = `Aim ${adj} yards into wind · Yardage approx ${Math.round(base + adj * 0.3)} yd carry`;
+    result.style.background = 'rgba(224,184,64,0.10)';
+    result.style.borderColor = 'var(--gold)';
+    resultNum.style.color = 'var(--gold-hi)';
+  }
+
+  resultNum.textContent = (dir === 'into') ? `+${adj} yds` : (dir === 'down') ? `−${adj} yds` : `±${adj} yds`;
+  resultLabel.textContent = label;
+  result.style.display = 'block';
+}
+
+// ── Save distances to localStorage
+function saveDistances() {
+  const fields = ['pw_full','gw_full','sw_full','lw_full','pw_3q','gw_3q','sw_3q','lw_3q','pw_half','gw_half','sw_half','lw_half','pw_qtr','gw_qtr','sw_qtr','lw_qtr','iron4','iron5','iron6','iron7','iron8','iron9','driver','fw3','fw5','fw7'];
+  const data = {};
+  fields.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.value) data[id] = el.value;
+  });
+  data.saved = new Date().toLocaleDateString('en-GB');
+  try {
+    localStorage.setItem('scratch_caddie_distances', JSON.stringify(data));
+    document.getElementById('last-verified').textContent = data.saved;
+    document.getElementById('save-status').textContent = '✓ Saved to this device';
+    document.getElementById('save-status').style.color = 'var(--lime)';
+  } catch(e) {
+    document.getElementById('save-status').textContent = 'Storage unavailable — note distances manually';
+  }
+}
+
+// ── Load saved distances on page open
+function loadDistances() {
+  try {
+    const saved = localStorage.getItem('scratch_caddie_distances');
+    if (!saved) return;
+    const data = JSON.parse(saved);
+    Object.keys(data).forEach(id => {
+      if (id === 'saved') return;
+      const el = document.getElementById(id);
+      if (el) el.value = data[id];
+    });
+    if (data.saved) {
+      document.getElementById('last-verified').textContent = data.saved;
+      document.getElementById('save-status').textContent = '✓ Loaded from device';
+      document.getElementById('save-status').style.color = 'var(--lime)';
+    }
+  } catch(e) {}
+}
+
+loadDistances();
+</script>
+</body>
+</html>
