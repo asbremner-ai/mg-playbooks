@@ -97,6 +97,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('matchplay',this)">Matchplay</button>
   <button class="tab" onclick="show('formats',this)">Team Formats</button>
   <button class="tab" onclick="show('handicap',this)">Handicap</button>
+  <button class="tab" onclick="show('bogey',this)">Medal & Bogey</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -372,6 +373,65 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <span class="ico">💡</span>
       <p><strong>Managing expectations:</strong> Expecting to play to handicap every round is statistically unrealistic. Expecting to play to handicap in 4 out of 10 competitive rounds is accurate. Use this data to manage post-round analysis — a round 3 over handicap is statistically normal and does not indicate a deteriorating game.</p>
     </div>
+  </div>
+</div>
+
+<!-- MEDAL & BOGEY -->
+<div class="sec" id="bogey">
+  <h2 class="sec-title">Medal & Bogey Competition</h2>
+  <p class="sec-desc">Medal (stroke play with handicap) and Bogey competition (match play against a fixed score) are the two formats that dominate UK club golf — yet both receive minimal attention in golf strategy guides. Understanding the specific strategic differences between them and from standard Stableford is worth 1–2 strokes per round in the right context.</p>
+  <span class="badge badge-gold">🏅 UK Club Golf Formats</span>
+  <div class="card card-gold">
+    <span class="card-tag">Medal Competition — The Club Championship Format</span>
+    <h3>Stroke Play With Full Handicap</h3>
+    <p style="margin-bottom:12px;">Medal competition is net stroke play — your gross score minus your full handicap allowance (typically 100% in club medal). Every stroke counts. There are no safety nets. Unlike Stableford (where a blow-up hole simply scores zero points), a quadruple bogey in medal costs you four shots against the field.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The cardinal rule — no blow-up holes:</strong> In Stableford, the strategic response to a difficult situation is often to accept zero points and move on. In medal, the correct response to the same situation is usually more conservative — pick up zero strokes of unnecessary risk. The difference: a double bogey in Stableford costs two points. In medal, it may cost you the competition.</div></li>
+      <li><span class="step-n">2</span><div><strong>The maximum score rule (WHS):</strong> Under World Handicap System rules, you may pick up at the maximum hole score (net double bogey) without it affecting your handicap. However, in a competition, you must complete every hole for your score to count unless local rules specify otherwise. In medal, picking up on a hole disqualifies the round unless the competition specifically permits net double bogey pick-ups.</div></li>
+      <li><span class="step-n">3</span><div><strong>Handicap stroke allocation strategy:</strong> In medal, your handicap strokes are allocated based on the stroke index table. On your stroke index holes (the holes where your handicap grants you a shot), par becomes net birdie — a hole you should be targeting rather than playing defensively. This changes the strategic priority of specific holes depending on your current handicap.</div></li>
+      <li><span class="step-n">4</span><div><strong>Medal vs. Stableford course management difference:</strong> In Stableford, high-risk flag positions are sometimes worth attacking (high upside, limited downside). In medal, the same flag is usually avoided — the downside (double bogey or worse) is now a full competition-threatening score. Default to centre-green targets 15–20% more often in medal than Stableford.</div></li>
+    </ul>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Situation</th><th>Stableford Decision</th><th>Medal Decision</th></tr>
+      <tr><td>Flag tucked, danger left</td><td class="warn">Consider attacking — max downside is 0 pts</td><td class="good">Centre green — medal cannot afford a 6</td></tr>
+      <tr><td>Fairway bunker, 170 yards out</td><td class="warn">Go for it — 0 pts is survivable</td><td class="good">Punch out conservatively — protect the score</td></tr>
+      <tr><td>Already 2 over on hole</td><td class="good">Pick up (0 points) — preserve energy</td><td class="bad">Must complete — every shot counts</td></tr>
+      <tr><td>Stroke index hole</td><td class="warn">Standard play — you have a shot</td><td class="good">Attack mode — net birdie opportunity</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sec-title">Bogey Competition</h2>
+  <p class="sec-desc">Bogey competition is the most misunderstood format in UK club golf. It is match play — but against the course (or more precisely, against a fixed score on each hole). Understanding it correctly changes strategy on every hole.</p>
+  <div class="card">
+    <span class="card-tag">How Bogey Competition Works</span>
+    <h3>Match Play Against the Card — Hole by Hole</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The format:</strong> Each hole is played as a match against par (adjusted for your handicap strokes). On holes where your handicap grants you a shot, your target is par (which becomes the adjusted score). Where you receive no shot, your target is also par. If you make the target or better — you win the hole (+1). If you exceed the target — you lose the hole (−1). If you match the target — the hole is halved (0).</div></li>
+      <li><span class="step-n">2</span><div><strong>The strategic implication — once you lose a hole, it is gone:</strong> Unlike stroke play where a bad hole costs you net shots against the field, in bogey competition a hole you lose scores −1 regardless of whether you made 5 or 8. A quintuple bogey and a bogey (one over target on a non-stroke index hole) are identical: both score −1. This is the critical strategic difference.</div></li>
+      <li><span class="step-n">3</span><div><strong>Maximum aggression once a hole is lost:</strong> If you are already in a position where losing the hole is almost certain, there is zero strategic downside to attempting a recovery shot that might save the hole. A failed recovery attempt and a safe punch-out both score −1. Only the recovery attempt has upside.</div></li>
+      <li><span class="step-n">4</span><div><strong>The running score changes everything:</strong> Unlike Stableford where each hole is independent, bogey competition's running total (e.g. "2 up" after 9 holes) should influence your aggression level. If you are significantly up (4 up through 12), you can afford to play conservatively on the final six. If you are down (3 down through 12), you must make birdies — which requires attacking flags rather than playing to the centre.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Bogey Competition Decision Rules</span>
+    <h3>Situation-Specific Strategy</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Decision</th><th>Why</th></tr>
+      <tr><td>1 up through 15 holes</td><td class="good">Slightly conservative — protect the lead</td><td>Winning is more valuable than birdies at this point</td></tr>
+      <tr><td>2 down through 15 holes</td><td class="warn">Attack — must win holes, not halve them</td><td>Halving the remaining holes loses; must birdie to win holes</td></tr>
+      <tr><td>Already losing a hole mid-hole</td><td class="good">Maximum aggression on recovery</td><td>No downside to attempting — −1 is −1 regardless</td></tr>
+      <tr><td>Stroke index hole you're halving</td><td class="warn">Consider attack — this is your birdie opportunity</td><td>A birdie here wins the hole; par only halves it</td></tr>
+      <tr><td>Severe lie, can't reach green</td><td class="good">Best position for next shot — not best direction</td><td>Must still give yourself a chance at the hole</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Common Bogey Competition Errors</span>
+    <h3>The Mistakes Most Players Make</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Playing bogey competition like stroke play:</strong> The most common error. In stroke play, the damage from a blow-up hole is proportional to the score. In bogey competition, a −1 is a −1. Players who understand this stop "damage limiting" once a hole is lost — and start attacking recovery shots.</div></li>
+      <li><span class="step-n">2</span><div><strong>Not tracking the running score:</strong> Bogey competition requires positional awareness throughout the round. "Am I up or down, and by how much?" determines aggression level for the next hole. Playing every hole with identical strategy regardless of the match position is leaving strokes on the card.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ignoring the stroke index allocation:</strong> On stroke index holes (where you receive a handicap shot), your adjusted target is one better than par — this is your birdie hole in bogey terms. Most players treat these exactly like non-index holes. An aggressive approach to these holes (attacking accessible flags, accepting more risk on approach) is statistically justified because the downside is only losing a hole you had a shot on.</div></li>
+    </ul>
   </div>
 </div>
 

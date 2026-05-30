@@ -177,6 +177,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('shortgame',this)">Short Game &amp; Putting</button>
   <button class="tab" onclick="show('firsttee',this)">First Tee</button>
   <button class="tab" onclick="show('card',this)">Strategy Card</button>
+  <button class="tab" onclick="show('postround',this)">Post-Round</button>
 </div>
 
 <div class="sec active" id="overview">
@@ -494,6 +495,84 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li>Strategy card reviewed — pin positions updated if available</li>
       <li>Mode switch completed — analysis done, execution begins</li>
     </ul>
+  </div>
+</div>
+
+<!-- POST-ROUND -->
+<div class="sec" id="postround">
+  <h2 class="sec-title">Post-Round Debrief</h2>
+  <p class="sec-desc">The post-round debrief is the most underused 20 minutes in amateur golf. The round has just provided a full dataset of real competitive performance — every decision, every execution, every mental response. Without a structured review, most of this information evaporates within hours. With it, every round accelerates improvement.</p>
+  <span class="badge badge-gold">📋 The Immediate Review</span>
+  <div class="card card-gold">
+    <span class="card-tag">Timing — The 30-Minute Window</span>
+    <h3>When to Do the Debrief</h3>
+    <p style="margin-bottom:12px;">Wait at least 20–30 minutes after completing the round before beginning the debrief. Immediately post-round, emotional salience distorts analysis — the 3-putt on 17 dominates disproportionately; the excellent recovery on 11 is forgotten. Allow the emotional temperature to settle, then review with data rather than feeling.</p>
+    <div class="info-box elite">
+      <span class="ico">⭐</span>
+      <p><strong>The golden rule:</strong> The post-round debrief is distinct from the progress journal entry (Guide 17). The debrief is immediate — same day, focusing on course-specific tactical intelligence. The journal entry is reflective — completed in the evening, focusing on patterns, mental game, and programme direction. Both are required; they serve different functions.</p>
+    </div>
+  </div>
+
+  <h2 class="sec-title">The 4-Part Debrief Protocol</h2>
+  <p class="sec-desc">Four focused questions, answered in writing (not in your head), taking 15–20 minutes. The written record compounds over time — patterns invisible in a single round become undeniable across 10.</p>
+  <div class="card">
+    <span class="card-tag">Part 1 — Shot Quality Audit</span>
+    <h3>Where Did Strokes Actually Go?</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify the 3 shots that cost you most:</strong> Not three bad shots — the three shots where the outcome most differed from what the situation required. A 3-putt from 8 feet costs more than a 3-putt from 40 feet. A pulled approach into a bunker from 150 yards costs more than the same miss from 200 yards. Quantify by context, not by outcome alone.</div></li>
+      <li><span class="step-n">2</span><div><strong>Category them — execution error or decision error:</strong> For each of the three shots, ask: was the correct decision made but poorly executed? Or was the wrong decision made well? These are different problems requiring different solutions. Execution errors go to practice. Decision errors go to strategy review.</div></li>
+      <li><span class="step-n">3</span><div><strong>Identify the 1–2 shots that saved strokes:</strong> The positive inventory matters. Record specific shots where your technique, decision, or mental response was above your normal standard. This evidence builds the confidence inventory (see Guide 21) and reveals what is genuinely working.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Part 2 — Strategy Review</span>
+    <h3>Did the Game Plan Work?</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Review your strategy card against actual decisions:</strong> How many holes did you follow the pre-planned strategy? Where did you deviate? For each deviation, record: was the deviation justified by course conditions or a better in-round read? Or was it a pressure-driven abandonment of the pre-committed plan?</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify 1–2 holes where the strategy card needs updating:</strong> Over repeated rounds on the same course, specific holes consistently reveal that your pre-planned strategy was suboptimal. The post-round debrief is when these updates are made — while the evidence is fresh. Update the strategy card before the next round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Note any new course information:</strong> Pin positions you hadn't considered, a new back-left pin that requires a different approach target, a fairway area that was firmer than expected producing extra run. This intelligence is only useful if it is written down and available before the next round.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Part 3 — Mental Game Pattern</span>
+    <h3>One Pattern — No More</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify one mental pattern from the round:</strong> Not a list of mental failures — one dominant pattern. "I rushed the pre-shot routine after the bogey on 7." "I tried to steer the driver on three holes in a row after the OB on 2." "I lost focus between shots on the back nine." One pattern, clearly named.</div></li>
+      <li><span class="step-n">2</span><div><strong>Trace the trigger:</strong> What caused the pattern to begin? A specific shot, a score milestone, a competitor's reaction, a slow play situation? Understanding the trigger allows you to address it in the pre-round mental plan before the next competition rather than reacting to it mid-round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set one process commitment for next round:</strong> Based on the mental pattern, commit to one specific behavioural response. "Next round: if I make bogey, I will complete the full between-shot routine before walking to the next tee — no exceptions." Specific and actionable, not general and aspirational.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Part 4 — Course Intelligence Update</span>
+    <h3>Building Your Personal Course Database</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Green speed and conditions:</strong> Record the stimp reading if known, or your subjective feel (slow/medium/fast vs. your norm). Note which greens were firmer, softer, or wetter than the rest. This data, accumulated over 10+ rounds, reveals seasonal patterns that allow you to adjust your putting pace before you have hit a single putt.</div></li>
+      <li><span class="step-n">2</span><div><strong>Wind patterns by hole:</strong> Most courses have predictable wind tunnel effects on specific holes — a valley that channels wind differently from the general direction, a tree line that creates turbulence, a plateau that amplifies wind. Note any hole where the wind behaved unexpectedly. After 5+ rounds under various conditions, reliable patterns emerge.</div></li>
+      <li><span class="step-n">3</span><div><strong>Scoring hole confirmation:</strong> Confirm which holes gave you scoring opportunities and which produced damage. Over time, your personal scoring holes (not the general ones listed on the card) will differ from the typical expectation — based on your specific game. Your strategy card should reflect your personal scoring pattern, not a generic one.</div></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">The Debrief Handoff</h2>
+  <p class="sec-desc">The debrief is only valuable if its outputs are acted on. Two handoffs ensure the intelligence converts to improvement.</p>
+  <div class="card card-teal">
+    <span class="card-tag">Handoff 1 — To the Progress Journal</span>
+    <h3>Transfer the Key Insights Before End of Day</h3>
+    <p style="margin-bottom:10px;">The debrief produces immediate tactical intelligence. The progress journal (Guide 17) converts it into long-term patterns. Before the end of the day, transfer the following to the journal entry:</p>
+    <ul class="steps">
+      <li><span class="step-n">→</span><div>The 3 costly shots and their category (execution vs. decision)</div></li>
+      <li><span class="step-n">→</span><div>The 1–2 positive shots for the confidence inventory</div></li>
+      <li><span class="step-n">→</span><div>The one mental pattern and its trigger</div></li>
+      <li><span class="step-n">→</span><div>The one process commitment for next round</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Handoff 2 — To Next Round's Warm-Up</span>
+    <h3>Close the Loop Before the Next Round</h3>
+    <p style="margin-bottom:10px;">The morning of the next round, before range warm-up begins, review the one process commitment from the last debrief. This takes 2 minutes and ensures the mental game intelligence from the previous round directly informs the next one. Without this step, the debrief insight is logged but never applied.</p>
+    <div class="info-box tip">
+      <span class="ico">💡</span>
+      <p><strong>The compound effect:</strong> A player who conducts a structured post-round debrief after every round and applies one process improvement to the next round will accumulate 30–40 specific mental and tactical improvements per year. Over 24 months, this is the equivalent of a professional-level mental game coaching programme — built entirely from their own real competitive data.</p>
+    </div>
   </div>
 </div>
 

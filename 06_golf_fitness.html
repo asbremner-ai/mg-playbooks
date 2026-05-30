@@ -184,6 +184,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('library',this)">Exercise Library</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
   <button class="tab" onclick="show('postround',this)">Post-Round</button>
+  <button class="tab" onclick="show('hrvsleep',this)">HRV & Sleep</button>
 </div>
 
 <div class="sec active" id="overview">
@@ -496,6 +497,92 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">▸</span><div><strong>20-minute gentle walk:</strong> Maintains circulation and prevents the "post-round stiffness day" that most amateur golfers experience. Brisk enough to feel like exercise, not so hard as to add load.</div></li>
       <li><span class="step-n">▸</span><div><strong>No strength training the day after a round:</strong> The swing is a high-force, high-repetition activity. Your musculoskeletal system needs one full day before being loaded again. Respect this or accumulate the injuries that cut handicap progress short.</div></li>
     </ul>
+  </div>
+</div>
+
+<!-- HRV & SLEEP -->
+<div class="sec" id="hrvsleep">
+  <h2 class="sec-title">HRV & Sleep</h2>
+  <p class="sec-desc">Heart Rate Variability (HRV) is the most reliable daily readiness metric available without lab testing. It tells you whether your nervous system has recovered sufficiently to train hard, or whether pushing today will extend fatigue and increase injury risk. Combined with sleep quality tracking, it allows the programme to adapt in real time rather than following a fixed calendar regardless of your body's actual state.</p>
+  <span class="badge badge-teal">📊 The Adaptive Training System</span>
+  <div class="card card-teal">
+    <span class="card-tag">What HRV Measures</span>
+    <h3>The Science in Plain Language</h3>
+    <p style="margin-bottom:12px;">HRV measures the variation in time between consecutive heartbeats, expressed in milliseconds. A higher number means greater variability — which sounds counterintuitive, but is the sign of a healthy, well-recovered nervous system that can respond flexibly to demands. Lower variability means the nervous system is under stress (from training, poor sleep, illness, or life stress) and is operating in a more rigid, less adaptable state.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>HRV reflects the balance between sympathetic and parasympathetic nervous systems:</strong> High HRV indicates parasympathetic dominance (recovery mode, low stress). Low HRV indicates sympathetic dominance (fight-or-flight, high stress). For golf performance — which requires fine motor control, emotional regulation, and clear decision-making — parasympathetic dominance is what you want.</div></li>
+      <li><span class="step-n">2</span><div><strong>Your baseline is everything — absolute numbers are meaningless:</strong> An HRV of 65 is excellent for one person and poor for another. The only meaningful comparison is your own recent history. Track for 4+ weeks to establish your personal baseline range before acting on individual readings.</div></li>
+      <li><span class="step-n">3</span><div><strong>Measure immediately upon waking — before getting up:</strong> HRV is most consistent when measured before any activity, stress, or caffeine. A 60-second reading lying down, taken first thing each morning, gives the most reproducible baseline.</div></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">HRV-Led Training Decisions</h2>
+  <p class="sec-desc">The core principle: let HRV guide session intensity on any given day, rather than always following a fixed plan. The programme structure remains the same — what changes is how hard you push within each session.</p>
+  <div class="card">
+    <span class="card-tag">The Four-Zone Response Protocol</span>
+    <h3>What to Do Based on Today's Reading</h3>
+    <table class="tbl">
+      <tr><th>HRV vs. 7-Day Baseline</th><th>Training Response</th><th>Golf Practice Response</th><th>Speed Training</th></tr>
+      <tr><td class="good">+10% or above (Green)</td><td>Push hard — strength and power sessions at full load</td><td>Deliberate, high-intensity practice. Random, competitive drills.</td><td class="good">Go — full protocol</td></tr>
+      <tr><td class="good">Within ±10% (Amber-Green)</td><td>Normal session as planned</td><td>Standard practice — scheduled structure</td><td class="good">Go — normal</td></tr>
+      <tr><td class="warn">−10% to −20% (Amber)</td><td>Reduce intensity by 20–30%. Technical and skill work only — no heavy lifting.</td><td>Short game and putting focus. No pressure drills. Technique refinement.</td><td class="warn">Reduce to Level 1 or skip</td></tr>
+      <tr><td class="bad">−20%+ or 3 consecutive days low (Red)</td><td>Active recovery only — walking, mobility, light stretching</td><td>Putting only or full rest day</td><td class="bad">Skip entirely</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Why Low HRV Before Speed Training Is Critical</span>
+    <h3>The Speed-Recovery Conflict</h3>
+    <p style="margin-bottom:12px;">Speed training (SuperSpeed, Rypstick) places high demands on the central nervous system — more than most strength training. Performing overspeed work when CNS recovery is incomplete produces two problems:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>No speed gain:</strong> The neurological adaptation (the primary mechanism of overspeed training) only occurs when the CNS is in a recovered state. Training fatigued ingrains the fatigued speed pattern — not the improved one. You are reinforcing a slower ceiling, not raising it.</div></li>
+      <li><span class="step-n">2</span><div><strong>Extended recovery:</strong> Pushing speed work on a red HRV day extends the recovery period significantly — often adding 48–72 hours to what would have been a 24-hour recovery. Net result: fewer quality training days per week.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The elite principle:</strong> Tour players and elite athletes don't add more training when they're fatigued — they recover faster so they can train harder tomorrow. A red HRV day spent in active recovery produces more improvement than a red HRV day spent pushing through a session.</p>
+    </div>
+  </div>
+
+  <h2 class="sec-title">Sleep Quality & Fitness Adaptation</h2>
+  <p class="sec-desc">Sleep is when physical adaptation from training actually occurs. Without sufficient deep sleep (slow-wave sleep), the hormonal processes that build muscle, consolidate motor patterns, and repair tissue are incomplete. You can train perfectly and sleep poorly and get almost no benefit from that training.</p>
+  <div class="card">
+    <span class="card-tag">Sleep and Physical Adaptation</span>
+    <h3>What Happens During Deep Sleep</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Growth hormone release (slow-wave sleep):</strong> 70–80% of daily growth hormone secretion occurs during slow-wave sleep (the deep, restorative stage). Growth hormone drives muscle protein synthesis and tissue repair — the physical gains from your gym sessions. Cutting sleep short cuts growth hormone production proportionally.</div></li>
+      <li><span class="step-n">2</span><div><strong>Motor pattern consolidation (REM sleep):</strong> Swing changes, new movement patterns, and technique improvements practised during the day are consolidated into long-term motor memory during REM sleep. This is why a skill that feels uncertain the evening after a lesson often feels more stable the following morning — and why sleep loss prevents that consolidation from occurring.</div></li>
+      <li><span class="step-n">3</span><div><strong>Testosterone and cortisol balance:</strong> Sleep deprivation lowers testosterone by 10–15% after a single week of sub-7-hour sleep (University of Chicago, 2011). It simultaneously raises cortisol — a catabolic hormone that breaks down muscle tissue. Under-sleeping creates the worst possible hormonal environment for strength gains: less testosterone building, more cortisol breaking down.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Sleep Targets for the Three Training Phases</span>
+    <h3>Sleep Load Should Match Training Load</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Training Intensity</th><th>Sleep Target</th><th>Nap Use</th></tr>
+      <tr><td>Phase 1 — Foundations</td><td>Moderate (3 sessions/wk)</td><td class="good">7.5–8 hours</td><td>Optional — 20 min if needed</td></tr>
+      <tr><td>Phase 2 — Strength</td><td>High (3 sessions + speed)</td><td class="good">8–8.5 hours</td><td>Recommended on speed days</td></tr>
+      <tr><td>Phase 3 — Power</td><td>Very high (explosive work)</td><td class="good">8.5–9 hours</td><td>Recommended — 20 min post-session</td></tr>
+      <tr><td>Competition week</td><td>Reduced (taper)</td><td class="good">8+ hours</td><td>Not needed — reduced training load</td></tr>
+      <tr><td>Red HRV / Fatigue days</td><td>Active recovery only</td><td class="good">8.5–9 hours priority</td><td>Yes — if opportunity allows</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sec-title">Practical Sleep Improvement Protocol</h2>
+  <p class="sec-desc">The behaviours most reliably associated with better sleep quality, ranked by evidence strength. Implement top-down — the first three produce the largest effects.</p>
+  <div class="card">
+    <span class="card-tag">The Non-Negotiable Habits</span>
+    <h3>Ranked by Evidence Strength</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Consistent wake time — every day including weekends:</strong> The strongest single intervention for sleep quality. The body's circadian rhythm is anchored to wake time. Variable wake times (sleeping in at weekends) desynchronise the circadian clock — the equivalent of mild weekly jet lag. Set one wake time and maintain it ±30 minutes every day.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cold room (16–19°C):</strong> Core body temperature must drop 1°C for sleep initiation and deep sleep. A cool bedroom is the most evidence-backed environmental change available. If you cannot cool the room, cool extremities: cold feet or hands signal the brain to begin the core temperature drop.</div></li>
+      <li><span class="step-n">3</span><div><strong>No alcohol within 4 hours of sleep:</strong> Alcohol sedates rather than induces sleep. The sedation suppresses REM and reduces deep sleep quality — you sleep more hours but wake less restored. In a training block, this compounds training fatigue rather than resolving it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Morning light exposure within 30 minutes of waking:</strong> Direct outdoor light (or a 10,000 lux light therapy lamp) in the first 30 minutes anchors your circadian rhythm and accelerates the onset of evening sleepiness. 10 minutes outside, ideally without sunglasses, is sufficient on bright UK mornings.</div></li>
+      <li><span class="step-n">5</span><div><strong>Caffeine cutoff at 2pm:</strong> Caffeine has a half-life of 5–6 hours. A 3pm coffee still has 50% of its caffeine present at 9pm. This blocks adenosine receptors — the chemical that drives evening sleepiness — and delays sleep onset even when you feel tired. Move the cutoff to 2pm and notice the difference within 3 days.</div></li>
+    </ul>
+  </div>
+  <div class="info-box tip" style="margin-top:4px;">
+    <span class="ico">💡</span>
+    <p><strong>Track it in the Tracker:</strong> Log your sleep hours and HRV every morning in the Performance Tracker. After 4 weeks of data, the correlation between your sleep quality and HRV, and between HRV and your practice/round performance, will become clearly visible. The data motivates the behaviour change better than any single recommendation.</p>
   </div>
 </div>
 
