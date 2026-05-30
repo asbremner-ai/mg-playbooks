@@ -61,6 +61,10 @@ GUIDES = {
     'tracking_app_v2.html':        ('Performance Tracker',        '📊', '#5ecb3e'),
     '31_on_course_notes.html':     ('On-Course Notes',            '🗺️', '#5ecb3e'),
     '32_putting_green_reading.html':('Green Reading Deep Dive',   '📐', '#5ecb3e'),
+    '33_competitive_pathway.html': ('UK Competitive Pathway',     '🏆', '#5ecb3e'),
+    '34_coaching_relationship.html':('The Coaching Relationship', '🎓', '#2ec4b6'),
+    '35_links_travel_golf.html':   ('Links & Travel Golf',        '🌊', '#5ecb3e'),
+    '36_playing_partners.html':    ('Playing Partners',           '🤝', '#2ec4b6'),
 }
 
 # ── Related guides map: filename → [related filenames in priority order]
@@ -105,6 +109,10 @@ RELATED = {
     'tracking_app_v2.html':        ['17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html'],
     '31_on_course_notes.html':     ['20_course_management.html','08_pro_round_prep.html','caddie_card.html','17_progress_journal.html','26_stats_interpretation.html'],
     '32_putting_green_reading.html':['01_putting_pro.html','31_on_course_notes.html','23_weather_conditions.html','20_course_management.html','caddie_card.html'],
+    '33_competitive_pathway.html': ['24_competitive_strategy.html','10_scratch_plan.html','16_solo_pressure_round.html','21_mental_game.html','26_stats_interpretation.html'],
+    '34_coaching_relationship.html':['09_golf_coach_ai.html','14_video_analysis.html','mevo_gen2_playbook.html','17_progress_journal.html','hackmotion_playbook.html'],
+    '35_links_travel_golf.html':   ['23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','21_mental_game.html','caddie_card.html'],
+    '36_playing_partners.html':    ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','33_competitive_pathway.html'],
 }
 
 # Files that use the paper/ink design (not the dark green theme)

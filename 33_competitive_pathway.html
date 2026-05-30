@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-05-30 · 33_competitive_pathway.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>UK Competitive Pathway — The Scratch Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.ladder{display:flex;flex-direction:column;gap:0;}
+.ladder-step{display:flex;gap:14px;align-items:stretch;padding:14px 16px;background:var(--surface2);border:1px solid var(--border);border-bottom:none;position:relative;}
+.ladder-step:first-child{border-radius:var(--r) var(--r) 0 0;}
+.ladder-step:last-child{border-bottom:1px solid var(--border);border-radius:0 0 var(--r) var(--r);}
+.ladder-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:var(--r-sm);min-width:32px;height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.ladder-body{flex:1;}
+.ladder-title{font-size:13px;font-weight:600;color:var(--white);margin-bottom:3px;}
+.ladder-meta{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.ladder-desc{font-size:12px;color:var(--muted);line-height:1.65;}
+.connector{width:2px;height:12px;background:linear-gradient(180deg,var(--border),var(--lime-dim));margin-left:30px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body>
+
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 33</p>
+  <h1>UK Competitive<br><em>Pathway</em></h1>
+  <p class="hero-sub">The complete amateur competitive ladder in England — WHS qualifying scores, club competitions, open amateur events, county golf, England Golf structure, and how to build a competition schedule that accelerates your handicap and exposes you to the right level of pressure at each phase.</p>
+  <div class="hero-tags">
+    <span class="htag">🏆 WHS Rules</span>
+    <span class="htag">📋 Qualifying Scores</span>
+    <span class="htag">🗺️ County Golf</span>
+    <span class="htag">📅 Competition Calendar</span>
+    <span class="htag">🎯 Open Events</span>
+    <span class="htag">⬆️ Pathway Map</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('whs',this)">WHS & Scores</button>
+  <button class="tab" onclick="show('club',this)">Club Competitions</button>
+  <button class="tab" onclick="show('open',this)">Open Events</button>
+  <button class="tab" onclick="show('county',this)">County Golf</button>
+  <button class="tab" onclick="show('calendar',this)">Your Calendar</button>
+  <button class="tab" onclick="show('ladder',this)">The Ladder</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The UK Amateur Competitive Structure</h2>
+  <p class="sec-desc">The English amateur competitive structure is a defined ladder with clear entry points at every handicap level. Most improving players know the bottom rung (club competitions) and the top rung (county golf, national events) but have no map of the middle — where the most useful pressure practice actually lives.</p>
+  <span class="badge badge-gold">🗺️ The Full Picture</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Competition Volume Is Non-Negotiable</span>
+    <h3>The Pressure Gap That Only Competition Closes</h3>
+    <p style="margin-bottom:12px;">Practice rounds, solo pressure rounds, and consequence-based drills all develop competitive resilience. But they cannot replicate the specific physiological state of a competitive round with a real scorecard, real opponents, and real consequences. The player who enters one competition per month develops competitive robustness fundamentally faster than the player who practices twice as much but competes half as often.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Cortisol and adrenaline cannot be simulated:</strong> The hormonal state of a real competition — elevated cortisol, adrenaline-driven muscle tension, narrowed attention — is only produced by genuine competitive situations. Your pre-shot routine, your between-shot routine, and your decision-making under real pressure can only be trained in real competition.</div></li>
+      <li><span class="step-n">2</span><div><strong>WHS handicap requires competition scores to be accurate:</strong> Your handicap index is calculated from qualifying scores. Without a regular stream of competitive rounds, your handicap drifts away from your actual playing ability — you either carry a handicap that is too high (protecting it) or too low (not entered enough events to reflect recent improvement). An inaccurate handicap produces inaccurate SG benchmarks and inaccurate programme feedback.</div></li>
+      <li><span class="step-n">3</span><div><strong>The competitive calendar structures your training:</strong> Having a competition every 3–4 weeks creates natural training blocks with a defined peak, a taper, and a post-competition review cycle. Without the competition calendar, practice lacks structure and intensity naturally drifts downward over time.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- WHS & SCORES -->
+<div class="sec" id="whs">
+  <h2 class="sec-title">WHS — How Your Handicap Actually Works</h2>
+  <p class="sec-desc">The World Handicap System (adopted by England Golf in 2020) replaced CONGU and introduced a globally consistent calculation method. Understanding exactly how it works — and how to use it strategically — is practical knowledge that directly affects how you track improvement.</p>
+  <span class="badge badge-teal">📊 The Calculation</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Handicap Index Calculation</span>
+    <h3>Best 8 of Most Recent 20</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Score differential, not gross score:</strong> Each qualifying round produces a Score Differential = (Adjusted Gross Score − Course Rating) × (113 ÷ Slope Rating). This normalises scores across different course difficulties. A 78 on a difficult course (Course Rating 74, Slope 135) produces a smaller differential than a 78 on an easy course (Course Rating 70, Slope 113).</div></li>
+      <li><span class="step-n">2</span><div><strong>Best 8 of most recent 20:</strong> Your Handicap Index = Average of your best 8 differentials from the most recent 20 qualifying rounds, multiplied by 0.96. The 0.96 adjustment assumes a player performs at their best approximately 50% of the time. This is why your handicap will always trail slightly behind your best performance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Daily updates:</strong> England Golf's GOLF GENIUS system updates handicaps daily. A strong qualifying round submitted before 11pm will typically update your index overnight. This means a sequence of strong competitive performances reduces your handicap faster than the old CONGU system allowed.</div></li>
+      <li><span class="step-n">4</span><div><strong>Maximum Hole Score (Net Double Bogey):</strong> Under WHS, any hole score above net double bogey (par + 2 + handicap strokes on that hole) is recorded as net double bogey for handicap calculation purposes. This limits the damage from one disastrous hole on your handicap index — but does not change your competition score.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Qualifying vs. Non-Qualifying Rounds</span>
+    <h3>What Counts and What Doesn't</h3>
+    <table class="tbl">
+      <tr><th>Round Type</th><th>Counts for WHS?</th><th>Notes</th></tr>
+      <tr><td>Club medal (strokeplay)</td><td class="good">Yes</td><td>Must be registered competition at affiliated club</td></tr>
+      <tr><td>Club Stableford</td><td class="good">Yes</td><td>Converted to strokeplay equivalent for differential</td></tr>
+      <tr><td>Club bogey/par competition</td><td class="good">Yes</td><td>Converted to strokeplay equivalent</td></tr>
+      <tr><td>General play round (solo)</td><td class="good">Yes — with conditions</td><td>Must be submitted via approved app (GOLF GENIUS, 18Birdies, etc.) on an affiliated course, with a marker or playing partner who confirms the score</td></tr>
+      <tr><td>Open amateur event</td><td class="good">Yes</td><td>If hosted by affiliated club — check event details</td></tr>
+      <tr><td>Practice round</td><td class="bad">No</td><td>Even if scored — not submitted, doesn't count</td></tr>
+      <tr><td>Casual round with friends</td><td class="bad">No</td><td>Unless submitted as general play round with correct procedure</td></tr>
+      <tr><td>Matchplay (single match)</td><td class="good">Yes</td><td>If affiliated club matchplay event</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>General play rounds — maximise your data:</strong> You can submit general play rounds via the GOLF GENIUS app or your club's approved system. This means every solo practice round on your home course can count toward your handicap index and your 20-round calculation window. At 3+ rounds per week, this produces a handicap that updates frequently and reflects your current ability accurately. Submit every round that qualifies.</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">How Many Rounds to Establish a Handicap</span>
+    <h3>Initial and Ongoing Requirements</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Initial handicap establishment:</strong> Under WHS, an initial Handicap Index can be established from as few as 3 18-hole qualifying rounds (or 6 9-hole rounds). The initial index is calculated from those scores with a more conservative multiplier. After 20 rounds are logged, the full best-8-of-20 calculation applies.</div></li>
+      <li><span class="step-n">2</span><div><strong>Inactive handicap:</strong> If you have not submitted a qualifying score within 12 months, your handicap is marked inactive. It does not expire — it reactivates immediately on the next qualifying submission. Your existing differentials remain in the system.</div></li>
+      <li><span class="step-n">3</span><div><strong>Handicap review cycles:</strong> England Golf runs an annual handicap review in October/November. Handicaps may be adjusted if your playing pattern differs significantly from your index (e.g. consistently performing much better than your index in casual play). Submitting general play rounds ensures your active playing pattern is reflected in your formal index.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CLUB COMPETITIONS -->
+<div class="sec" id="club">
+  <h2 class="sec-title">Club Competitions</h2>
+  <p class="sec-desc">Your home club's competition calendar is the foundation of your competitive programme. Understanding how to navigate it strategically — which events to prioritise, how to build your schedule around key events, and how to use it as deliberate pressure training rather than just score submission — transforms the club competition calendar from an obligation into an asset.</p>
+  <span class="badge badge-lime">🏌️ Home Club Foundation</span>
+  <div class="card">
+    <span class="card-tag">The Standard UK Club Competition Calendar</span>
+    <h3>What Most Clubs Offer and When</h3>
+    <table class="tbl">
+      <tr><th>Competition</th><th>Typical Timing</th><th>Format</th><th>Priority</th></tr>
+      <tr><td>Monthly Medal</td><td>First or second weekend of month</td><td>Strokeplay — full handicap</td><td class="good">High — enter every month</td></tr>
+      <tr><td>Monthly Stableford</td><td>Various Saturdays/Sundays</td><td>Stableford — full handicap</td><td class="good">High — enter every month</td></tr>
+      <tr><td>Club Championship</td><td>July–August typically</td><td>Strokeplay — scratch or HCP</td><td class="good">Essential — enter every year</td></tr>
+      <tr><td>Club Matchplay</td><td>Drawn throughout season</td><td>Matchplay — HCP adjusted</td><td class="warn">High — develops match play skills</td></tr>
+      <tr><td>Order of Merit</td><td>Season-long points series</td><td>Points across all comps</td><td class="warn">Automatic if entering comps</td></tr>
+      <tr><td>Seniors/Ladies specific</td><td>Varies</td><td>Various</td><td class="warn">If applicable</td></tr>
+      <tr><td>Charity/Captain's Day</td><td>Ad hoc</td><td>Various fun formats</td><td class="bad">Low priority — minimal competitive value</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Building Your Club Competition Schedule</span>
+    <h3>Minimum and Target Entry Rates by Phase</h3>
+    <table class="tbl">
+      <tr><th>Programme Phase</th><th>HCP Range</th><th>Minimum/Month</th><th>Target/Month</th></tr>
+      <tr><td>Phase 1 (Months 1–2)</td><td>10–8</td><td class="warn">1 competition</td><td class="good">2 competitions</td></tr>
+      <tr><td>Phase 2 (Months 3–6)</td><td>8–5</td><td class="warn">2 competitions</td><td class="good">3 competitions</td></tr>
+      <tr><td>Phase 3 (Months 7–12)</td><td>5–2</td><td class="warn">2 competitions</td><td class="good">3–4 competitions</td></tr>
+      <tr><td>Phase 4 (Months 13–24)</td><td>2–scratch</td><td class="warn">3 competitions</td><td class="good">4+ including open events</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The club championship is mandatory:</strong> Whatever your handicap, enter your club championship every year. The competitive intensity of a multi-round strokeplay event against your club's best players is irreplaceable. It is the single highest-quality competition available in most players' schedules and the most direct test of your programme's progress.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Don't Protect Your Handicap</span>
+    <h3>The Most Expensive Mistake in Club Golf</h3>
+    <p style="margin-bottom:12px;">Handicap protection — deliberately playing below your capability in qualifying rounds to maintain a higher handicap index — is extremely common, genuinely counterproductive for improvement, and a breach of the integrity expected under WHS.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Your handicap should reflect your playing ability:</strong> A handicap that is higher than your actual ability feels advantageous in competitions but produces misleading SG data, inaccurate programme benchmarks, and reduces the quality of pressure you face in competitions. You win against weaker fields — and learn nothing from it.</div></li>
+      <li><span class="step-n">2</span><div><strong>A reducing handicap is evidence of improvement — celebrate it:</strong> Every time your handicap index drops, the programme is working. The correct response to a reducing handicap is to increase the competition level, not to play more carefully to slow the reduction.</div></li>
+      <li><span class="step-n">3</span><div><strong>The programme requires honest numbers throughout:</strong> Your 24-month scratch plan is built on SG benchmarks derived from your actual ability. Distorted handicap data produces distorted benchmarks produces a distorted programme. Submit every qualifying score. Always.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- OPEN EVENTS -->
+<div class="sec" id="open">
+  <h2 class="sec-title">Open Amateur Events</h2>
+  <p class="sec-desc">Open amateur events — competitions hosted by a club but open to members of other affiliated clubs — are the most underused competitive resource available to serious improving players. They offer field pressure (playing against unknown opponents of varying abilities from multiple clubs), new course challenges, and qualifying scores — all while remaining accessible to any handicap level.</p>
+  <span class="badge badge-teal">🏆 The Step Up</span>
+  <div class="card card-teal">
+    <span class="card-tag">What Open Events Offer That Club Competitions Don't</span>
+    <h3>The Pressure Difference</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Anonymous field — higher pressure:</strong> In your home club competition, you know everyone in the field and the relative expectation of your performance. In an open event, nobody knows your name or your history. The psychological pressure is measurably different — more similar to a county or national event than any club competition.</div></li>
+      <li><span class="step-n">2</span><div><strong>Unfamiliar course — full course management required:</strong> Playing a qualifying round on an unfamiliar course without course notes tests all of your real-time course management skills in a way that home-course competitions do not. This is one of the highest-quality pressure tests available outside county golf.</div></li>
+      <li><span class="step-n">3</span><div><strong>Better competition at every level:</strong> Open events attract serious players from multiple clubs. At 5 HCP and below, the field quality in an open strokeplay event significantly exceeds most home club competitions. Playing against better players creates competitive context that home club fields rarely provide.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">How to Find Open Events</span>
+    <h3>Practical Sources for the UK Competition Calendar</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>England Golf website (englandgolf.org):</strong> The Competitions section lists affiliated club open events by county. Filter by your county and the current season. Updated regularly as clubs publish their open event dates, typically in January–February for the full season.</div></li>
+      <li><span class="step-n">2</span><div><strong>Your county golf union website:</strong> Every county has a golf union (e.g. Bedfordshire Golf Union, Surrey Golf, Yorkshire Golf) that publishes county-level competition calendars including open events, county championships, and county qualifier dates. Search "[your county] golf union" to find the relevant body.</div></li>
+      <li><span class="step-n">3</span><div><strong>Nearby club noticeboards and websites:</strong> Clubs typically publish their open event schedule on their own website 3–6 months in advance. If you have 3–5 clubs within 30 miles, check each of their websites in January and build your annual open event calendar from those dates.</div></li>
+      <li><span class="step-n">4</span><div><strong>Golf Genius (now Golf Net Scotland / HowDidiDo for England):</strong> HowDidiDo.co.uk is the England Golf results portal where most club competitions are published. Many open events also list results here — searching a club's name will show their recent and upcoming open events.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Types of Open Events — What to Enter and When</span>
+    <h3>Matching Event Type to Your Development Phase</h3>
+    <table class="tbl">
+      <tr><th>Event Type</th><th>Handicap Range</th><th>Typical Format</th><th>Best Phase</th></tr>
+      <tr><td>Open Stableford</td><td>Any — full HCP</td><td>18 holes, Stableford</td><td class="good">Phase 1–2 — lower stakes, WHS qualifying</td></tr>
+      <tr><td>Open Medal (HCP)</td><td>Any — full HCP</td><td>18 holes, stroke</td><td class="good">Phase 2–3 — medal format pressure</td></tr>
+      <tr><td>Open Scratch Medal</td><td>0–4 typically</td><td>18 holes, scratch score</td><td class="warn">Phase 4 — scratch-level pressure</td></tr>
+      <tr><td>Scratch Trophy / Cup</td><td>0–6 typically</td><td>36 holes, stroke</td><td class="warn">Phase 4 — multi-round endurance</td></tr>
+      <tr><td>County Qualifier</td><td>Varies by event</td><td>Strokeplay</td><td class="gold">Phase 3–4 — county pathway entry</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- COUNTY GOLF -->
+<div class="sec" id="county">
+  <h2 class="sec-title">County Golf</h2>
+  <p class="sec-desc">County golf is the first rung of representative golf in England — playing for your county against other counties at the same level. It is the competitive environment where scratch and plus-handicap players test themselves beyond the club, and where the programme's final phase naturally leads.</p>
+  <span class="badge badge-gold">🏅 Representative Golf</span>
+  <div class="card card-gold">
+    <span class="card-tag">England Golf's County Structure</span>
+    <h3>How County Golf Is Organised</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>County Golf Unions:</strong> England is divided into 41 county golf unions, each affiliated to England Golf. Each county union runs its own competition programme — county championships, county team matches, county opens — and selects teams for inter-county competitions (the equivalent of county cricket or county rugby at the amateur level).</div></li>
+      <li><span class="step-n">2</span><div><strong>England Golf Regions:</strong> Counties are grouped into 9 England Golf regions. County teams compete against each other within their region and in national inter-county events. Regions include the Midland, Northern, Southern, East of England, and others.</div></li>
+      <li><span class="step-n">3</span><div><strong>The county card:</strong> To play in county competitions, you need a county card from your county union. This is typically applied for directly with your county union once you meet the handicap threshold. Most counties accept applications from any club member with a current WHS handicap — scratch or better typically qualifies for the full county programme.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Accessing County Golf — The Practical Steps</span>
+    <h3>How to Get Involved From 3 HCP Downward</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Play county open events (3–5 HCP):</strong> County unions run open competitions — county medals, county matchplay qualifiers, scratch trophies — that any affiliated club member can enter. These are the correct entry point at 3–5 HCP. They expose you to county-level fields without requiring team selection. Enter 2–3 per year from Phase 3 onward.</div></li>
+      <li><span class="step-n">2</span><div><strong>Play the county championship (2 HCP or below):</strong> Most county championships are open to any member of an affiliated club within the county with a handicap index below a threshold (typically 2–3 for men's scratch, or category-based for women). This is the most direct path to playing against the county's best players. Enter as soon as you qualify — typically around Month 15–18 of the programme.</div></li>
+      <li><span class="step-n">3</span><div><strong>Apply for county card at scratch (0 HCP):</strong> Contact your county golf union directly (typically in October or January — before the season) and apply for a county card. You will need your WHS handicap confirmation. The application process is straightforward — most counties are actively looking for new talent at scratch level.</div></li>
+      <li><span class="step-n">4</span><div><strong>County team selection (scratch to plus):</strong> County teams are selected by the county team manager, typically based on county championship performance, inter-county qualifier results, and general competition record. Being visible in county open events from scratch onward puts you on the selector's radar. There is no formal application — selection is by invitation after performance.</div></li>
+    </ul>
+    <div class="info-box elite">
+      <span class="ico">⭐</span>
+      <p><strong>Finding your county union:</strong> Search "[your county] golf union" or visit englandgolf.org/county-unions for a complete list. Most county unions have websites with their competition calendar, handicap thresholds for county events, and contact details for the county secretary or team manager.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">National Amateur Events — The Horizon</span>
+    <h3>England Golf National Competition Structure</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>England Golf National Amateur Championship:</strong> Open to England Golf members with a handicap index of 2.4 or better. Stroke play qualifying, then matchplay. The national championship — directly accessible to scratch and near-scratch players. Entry via England Golf's competition portal (englandgolf.org/competitions).</div></li>
+      <li><span class="step-n">2</span><div><strong>The Brabazon Trophy (English Men's Open Amateur Strokeplay):</strong> Open to players with a handicap index of 1.4 or better. 72-hole strokeplay. One of the most prestigious amateur events in England. This is a Year 2+ target for a player who achieves scratch and continues to improve.</div></li>
+      <li><span class="step-n">3</span><div><strong>R&A events (The Amateur Championship, etc.):</strong> Open to players with an index of 1.4 or better. These are the pinnacle of UK amateur golf. Accessible to anyone with the qualifying handicap — no invitation required. Application via The R&A's official website.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- YOUR CALENDAR -->
+<div class="sec" id="calendar">
+  <h2 class="sec-title">Building Your Competition Calendar</h2>
+  <p class="sec-desc">A structured annual competition calendar — built in January for the full year — creates the training periodisation structure that transforms your programme from reactive to planned. Every competition becomes a goal-post around which training blocks, tapers, and post-competition reviews are organised.</p>
+  <span class="badge badge-lime">📅 Annual Planning</span>
+  <div class="card">
+    <span class="card-tag">The Annual Calendar Build — January Process</span>
+    <h3>How to Build Your Year's Competition Schedule</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Mark your home club's full competition calendar:</strong> Enter every medal, Stableford, and championship in your calendar immediately. These are your minimum competitive programme — non-negotiable entries at every phase.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify 6–8 open events within 45 minutes of home:</strong> Using englandgolf.org, your county union website, and nearby club websites, identify 6–8 open events that fit your phase requirements. Enter them in January — the best open events fill up quickly and close to entries in February–March.</div></li>
+      <li><span class="step-n">3</span><div><strong>Mark 2–3 "A competitions" — your priority events:</strong> These are the 2–3 competitions in the year that matter most for your development — typically the club championship, your best open stroke play event, and one county-level event. These receive a full peaking taper (see Guide 25 — Speed Training, Peaking tab). All other competitions are training.</div></li>
+      <li><span class="step-n">4</span><div><strong>Check spacing — no more than 3 weeks without a qualifying competition:</strong> Gaps longer than 3 weeks reduce competitive edge and allow the handicap calculation window to stagnate. Fill any gaps with a general play qualifying submission if no formal competition is available.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Phase-by-Phase Competition Targets</span>
+    <h3>What to Enter and When in the 24-Month Plan</h3>
+    <table class="tbl">
+      <tr><th>Months</th><th>HCP Target</th><th>Competition Type</th><th>Volume</th></tr>
+      <tr><td>1–3</td><td>10→7</td><td>Home club medal + Stableford monthly</td><td class="warn">2/month</td></tr>
+      <tr><td>4–6</td><td>7→5</td><td>Club comps + first open Stableford events</td><td class="warn">2–3/month</td></tr>
+      <tr><td>7–9</td><td>5→3</td><td>Club comps + open medals + club matchplay</td><td class="good">3/month</td></tr>
+      <tr><td>10–12</td><td>3→1</td><td>Above + first county open events</td><td class="good">3–4/month</td></tr>
+      <tr><td>13–18</td><td>1→scratch</td><td>Above + county championship entry</td><td class="good">4/month including one open</td></tr>
+      <tr><td>19–24</td><td>Scratch defence</td><td>Full county programme + national qualifiers</td><td class="good">4–5/month</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- THE LADDER -->
+<div class="sec" id="ladder">
+  <h2 class="sec-title">The Competitive Ladder</h2>
+  <p class="sec-desc">The complete competitive pathway from 10 HCP to national amateur golf, mapped as a sequential ladder. Each rung has a clear handicap entry point, a competition type, and a development purpose. Climb in order — skipping rungs removes the pressure exposure that builds competitive resilience.</p>
+  <span class="badge badge-lime">⬆️ Your Pathway</span>
+  <div class="ladder">
+    <div class="ladder-step">
+      <div class="ladder-num">1</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Months 1–4 · 10–7 HCP</div>
+        <div class="ladder-title">Home Club Stroke Play</div>
+        <div class="ladder-desc">Monthly medal and Stableford. The foundation. Establishes your WHS qualifying record, develops comfort with a competitive scorecard, and builds the habit of competition. Purpose: remove competition anxiety, establish baseline.</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="ladder-step">
+      <div class="ladder-num">2</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Months 3–8 · 8–5 HCP</div>
+        <div class="ladder-title">Home Club Matchplay + First Open Stablefords</div>
+        <div class="ladder-desc">Add the club matchplay competition and enter your first open Stableford events at nearby clubs. Purpose: introduce matchplay dynamics (hole-by-hole management) and anonymous field pressure for the first time.</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="ladder-step">
+      <div class="ladder-num">3</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Months 6–12 · 5–2 HCP</div>
+        <div class="ladder-title">Open Stroke Play Events + Club Championship</div>
+        <div class="ladder-desc">Enter 1–2 open medals per month on unfamiliar courses. Enter the club championship. Play every club competition. This is the highest-volume competitive phase. Purpose: build competitive robustness across different courses, formats, and field qualities.</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="ladder-step">
+      <div class="ladder-num">4</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Months 10–18 · 3–scratch</div>
+        <div class="ladder-title">County Open Events + Scratch Trophies</div>
+        <div class="ladder-desc">Enter county union open events, scratch trophies, and any open events restricted to low handicaps. Enter the county championship. Purpose: compete against the county's best players for the first time — the quality jump that tests whether your scratch capability is genuine or club-specific.</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="ladder-step">
+      <div class="ladder-num">5</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Month 18+ · Scratch and below</div>
+        <div class="ladder-title">County Card + County Team Golf</div>
+        <div class="ladder-desc">Apply for county card. Play the full county competition programme. Get selected for county team if performance justifies. Purpose: representative golf — the first level at which you are playing for something beyond your own score.</div>
+      </div>
+    </div>
+    <div class="connector"></div>
+    <div class="ladder-step">
+      <div class="ladder-num">6</div>
+      <div class="ladder-body">
+        <div class="ladder-meta">Month 20+ · 0–2 index</div>
+        <div class="ladder-title">National Amateur Events</div>
+        <div class="ladder-desc">England Golf National Amateur Championship (index 2.4 or below), Brabazon Trophy (1.4 or below), R&A Amateur Championship qualifying (1.4 or below). Purpose: the pinnacle of accessible amateur golf — open to any player who meets the handicap threshold.</div>
+      </div>
+    </div>
+  </div>
+  <div class="info-box elite" style="margin-top:16px;">
+    <span class="ico">⭐</span>
+    <p><strong>The key insight:</strong> Every rung of this ladder is accessible based solely on your handicap index — no invitations, no sponsorship, no connections required. The England Golf system is designed to be meritocratic. The only barrier between you and national amateur golf is your handicap index and the willingness to enter competitions. The programme provides the handicap. The calendar provides the entries.</p>
+  </div>
+</div>
+
+<div class="footer">UK COMPETITIVE PATHWAY · GUIDE 33 · THE SCRATCH PROJECT · WHS · COUNTY GOLF · ENGLAND GOLF</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏆</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Competitive Strategy</span></a>
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🗺️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">10 to Scratch Plan</span></a>
+    <a href="16_solo_pressure_round.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Solo Pressure Round</span></a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🧠</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game</span></a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks</a>
+  </div>
+</div>
+</body>
+</html>

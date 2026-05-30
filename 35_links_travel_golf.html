@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-05-30 · 35_links_travel_golf.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Links & Travel Golf — The Scratch Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:"Inter",sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:"";position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:"Playfair Display",serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:"Playfair Display",serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 35</p>
+  <h1>Links &amp; Travel<br><em>Golf</em></h1>
+  <p class="hero-sub">The complete system for links golf — bump-and-run as a primary weapon, reading wind off terrain, playing firm ground, target adjustment for run-out, managing links-specific mental demands — plus a travel golf preparation framework for Scotland, Ireland, and abroad.</p>
+  <div class="hero-tags">
+    <span class="htag">🌊 Links Technique</span><span class="htag">🏃 Bump and Run</span><span class="htag">💨 Wind Reading</span><span class="htag">🏌️ Firm Ground</span><span class="htag">🗺️ Travel Prep</span><span class="htag">🍀 Scotland/Ireland</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('bumprun',this)">Bump &amp; Run</button>
+  <button class="tab" onclick="show('wind',this)">Wind off Terrain</button>
+  <button class="tab" onclick="show('firm',this)">Firm Ground</button>
+  <button class="tab" onclick="show('mental',this)">Links Mental Game</button>
+  <button class="tab" onclick="show('travel',this)">Travel Prep</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Links Golf — A Different Game</h2>
+  <p class="sec-desc">Links golf is not harder than parkland golf — it is different. Players who treat it as a more difficult version of their home game consistently score worse than their ability warrants. Players who adapt their game to the links environment — embracing ground game, accepting unpredictability, reading terrain rather than air — score consistently better than their handicap predicts.</p>
+  <span class="badge badge-gold">🌊 The Mindset Shift</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Actually Changes on Links</span>
+    <h3>The Six Fundamental Differences</h3>
+    <table class="tbl">
+      <tr><th>Variable</th><th>Parkland</th><th>Links</th></tr>
+      <tr><td>Primary ball flight route</td><td>Air — carry to target</td><td>Ground — trajectory to landing area, then run</td></tr>
+      <tr><td>Wind effect</td><td>Predictable — affects carry</td><td>Unpredictable — amplified by terrain, changes direction hole to hole</td></tr>
+      <tr><td>Green surface</td><td>Bentgrass — soft, holds shots</td><td>Fescue — firm, fast, rejects high shots</td></tr>
+      <tr><td>Short game default</td><td>Lob/pitch — carry to flag</td><td>Bump-and-run — land short, roll to flag</td></tr>
+      <tr><td>Ball flight preference</td><td>High — stops quickly</td><td>Low — penetrates wind, more predictable in crosswind</td></tr>
+      <tr><td>Variance acceptance</td><td>Lower — grass is consistent</td><td>Higher — links bounces, bad lies, firm areas create variance</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The single most important shift:</strong> Accept that on links, a good shot can produce a bad result. A perfectly struck 7-iron that lands on the fairway can bounce sideways into a pot bunker. A slightly mis-hit chip can release perfectly into the hole. Variance is higher and results are less proportional to shot quality than on parkland. Emotional response to bad results must be lower — otherwise you spend the round fighting the course rather than navigating it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="bumprun">
+  <h2 class="sec-title">The Bump and Run</h2>
+  <p class="sec-desc">On links, the bump-and-run is not a limited-use alternative to the pitch — it is the primary scoring zone weapon. A player who can execute a bump-and-run from any distance between 5 and 50 yards with predictable distance control will score significantly better on links than a player who exclusively pitches.</p>
+  <span class="badge badge-lime">🏃 The Ground Game</span>
+  <div class="card card-teal">
+    <span class="card-tag">When to Use the Bump and Run</span>
+    <h3>The Links Shot Selection Hierarchy</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Default to ground game whenever the path is clear:</strong> If there is no significant obstacle between the ball and the hole (bunker, significant rough, steep bank), the bump-and-run is the first option. Only switch to a pitch when the path is genuinely blocked. This is the reverse of parkland shot selection — ground first, air second.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use a pitch only when you must carry an obstacle:</strong> A bunker between ball and flag, a large bank, or deep rough requiring height. Even then, land the pitch short of the flag and use the run — not directly at the flag as you would on parkland.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putt from well off the green:</strong> On links, a putt from 10 yards off the green is often more reliable than a chip. The fescue fringe is typically short and consistent. A putter used from off the green on a links course is not embarrassing — it is correct golf.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Bump and Run Technique</span>
+    <h3>The 7-8-9 Club System</h3>
+    <p style="margin-bottom:12px;">The bump-and-run can be played with any iron, but most experienced links players use a 7-, 8-, or 9-iron depending on the required carry-to-run ratio. Higher iron = more loft = more carry, less run. Lower iron = less loft = less carry, more run.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Setup: ball back, hands forward, weight forward:</strong> Ball position 2–3cm further back than normal. Hands ahead of the ball — shaft leaning forward. 60% weight on lead foot. This setup de-lofts the club, promotes a low launch, and ensures a descending strike that keeps the ball close to the ground.</div></li>
+      <li><span class="step-n">2</span><div><strong>The stroke: putting-style arms and shoulders, no wrist:</strong> The bump-and-run is effectively a long putt with a lofted club. Arms and shoulders drive the motion; wrists stay passive. This produces a low, smooth launch with consistent contact. Adding wrist action introduces loft and spin — the opposite of what is required.</div></li>
+      <li><span class="step-n">3</span><div><strong>Land the ball on the fairway or fringe, not the green:</strong> The target for a bump-and-run is a landing spot on firm, short grass — not the green surface itself. From there, the ball rolls predictably to the hole. A ball landing on the green from a bump-and-run has too much pace and will typically release past the hole.</div></li>
+      <li><span class="step-n">4</span><div><strong>The 1/3 carry to 2/3 run ratio as a starting point:</strong> For a 30-yard bump-and-run, land the ball 10 yards short of the green and allow 20 yards of roll. Adjust the ratio based on firmness — very firm ground produces more run. Check the practice green before the round for the day's carry-to-run ratio in current conditions.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="wind">
+  <h2 class="sec-title">Wind off Terrain</h2>
+  <p class="sec-desc">Links wind is not the same as the wind shown on your weather app. Dunes, valleys, ridges, and the shape of individual holes create local wind effects that can differ 30–45 degrees from the prevailing direction. Reading terrain wind is the most advanced skill in links golf — and the one that separates low-handicappers from scratch players on links courses.</p>
+  <span class="badge badge-teal">💨 Reading Links Wind</span>
+  <div class="card">
+    <span class="card-tag">Terrain Wind Effects</span>
+    <h3>How the Land Changes the Wind</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Valley funnelling:</strong> Wind is accelerated and directed along valleys — holes running between dune ridges will have a wind direction aligned with the valley, regardless of the prevailing wind. A valley running east-west creates an east-west wind on that hole even when the prevailing wind is from the southwest.</div></li>
+      <li><span class="step-n">2</span><div><strong>Dune sheltering:</strong> The tee shot may be sheltered by dunes, making the wind feel manageable — then the approach shot from the fairway is fully exposed. Never judge links wind from the tee. Walk to the high point of the fairway and check the wind from there before selecting your tee club.</div></li>
+      <li><span class="step-n">3</span><div><strong>Flag and grass reading:</strong> The flag at the green is your best real-time wind indicator for approach shots. Watch the direction and intensity of its movement for 10–15 seconds — not a single glance. Throw a few blades of grass into the air at the ball position and at the green. Compare the two. On links holes, the wind at the green can differ significantly from the wind at the ball.</div></li>
+      <li><span class="step-n">4</span><div><strong>Sea breeze vs. prevailing:</strong> Coastal links courses experience a sea breeze that builds through the morning and peaks in the early afternoon — often from a different direction from the overnight wind. If you are playing 36 holes, the wind for your afternoon round may be 90 degrees different from the morning. Note the sea breeze direction on arrival and track how it develops.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Wind Club Adjustments on Links</span>
+    <h3>Amplified Effects on Firm, Fast Fairways</h3>
+    <p style="margin-bottom:12px;">The standard wind adjustment formula (1 club per 10mph) underestimates the effect of wind on links courses because the ground game amplifies wind impact on ball trajectory and run-out. A headwind does not just reduce carry — it also reduces run. A tailwind does not just increase carry — it dramatically increases run on firm fairways.</p>
+    <table class="tbl">
+      <tr><th>Wind Condition</th><th>Parkland Adjustment</th><th>Links Adjustment</th></tr>
+      <tr><td>10mph headwind</td><td class="warn">1 club more</td><td class="bad">1.5 clubs more — also aim for more landing area depth</td></tr>
+      <tr><td>20mph headwind</td><td class="bad">2 clubs more</td><td class="bad">3 clubs more — ball-below-feet stance exaggerates effect</td></tr>
+      <tr><td>10mph tailwind</td><td class="warn">Half to 1 club less</td><td class="good">1–1.5 clubs less — firm ground dramatically increases run in tailwind</td></tr>
+      <tr><td>Strong crosswind left</td><td class="warn">Aim right — standard adjustment</td><td class="warn">Aim right AND select lower trajectory — high ball in crosswind creates unpredictable landing angle on firm ground</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="firm">
+  <h2 class="sec-title">Playing Firm Ground</h2>
+  <p class="sec-desc">Firm, fast links fairways and greens demand a different approach strategy from soft parkland. The ball behaves as a billiard ball rather than a dart — trajectory, landing angle, and roll direction all become factors that parkland golfers rarely need to calculate.</p>
+  <span class="badge badge-lime">🏌️ Ground Game Strategy</span>
+  <div class="card card-teal">
+    <span class="card-tag">Approach Strategy on Firm Links Greens</span>
+    <h3>Why Front-of-Green Targets Are Mandatory</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Every approach shot targets the front half of the green:</strong> On a firm links green, a ball landing past the flag has almost no chance of stopping near the hole — it will release through the back. Targeting the front quarter of the green and allowing the ball to release to the flag is the standard links approach strategy. This is the exact reverse of wet-condition parkland golf.</div></li>
+      <li><span class="step-n">2</span><div><strong>The crown and slope principle:</strong> Links greens are typically crowned (higher in the middle, sloping away on all sides) or terrace-cut (multiple levels). A ball landing on the top of a crown will release in the direction of the nearest slope — often sideways off the green. Land the ball on the approach ramp below the crown, not on the crown itself.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the slopes deliberately:</strong> Links course designers built slopes around greens to channel approach shots toward the flag. The classic links approach uses a bank or slope to redirect the ball to the hole. Look for the "backstop" — a bank or ridge behind the flag that will catch and redirect an overshoot — before attacking a pin position directly.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Driver Strategy on Firm Links Fairways</span>
+    <h3>Playing for Run-Out</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Target landing areas, not landing spots:</strong> On firm links fairways, a driver carry of 240 yards may produce a total distance of 280–300 yards with run. The specific landing spot matters less than the landing area — aim for a zone of fairway where the slope and firmness will direct the ball toward the optimal position. Read the fairway contours from the tee.</div></li>
+      <li><span class="step-n">2</span><div><strong>Aim for the firm, running areas:</strong> Most links fairways have areas of maximum run — typically the lowest, most exposed sections. A ball landing slightly left of your ideal line but bouncing into a valley that runs toward the green is a better result than a perfect carry that lands on a firm rise and bounces sideways into rough. Know the fairway terrain before the round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lower ball flight = more control on firm ground:</strong> A high, soft driver shot that lands steeply produces minimal run on a normal day but unpredictable bounces on firm links ground. A lower, penetrating ball flight lands at a shallower angle — it checks once and runs in a predictable direction. Tee the ball slightly lower and increase your focus on a lower, more boring trajectory into links headwinds.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="mental">
+  <h2 class="sec-title">Links Mental Game</h2>
+  <p class="sec-desc">The links mental game is a specific subset of competitive resilience. The combination of wind-induced variance, unfamiliar bounce patterns, and the higher incidence of bad-luck outcomes creates a distinctive psychological challenge that must be trained separately from standard pressure management.</p>
+  <span class="badge badge-gold">🧠 Links-Specific Psychology</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Variance Acceptance Framework</span>
+    <h3>Processing Bad Luck Without Losing Composure</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pre-commit to a higher variance budget:</strong> Before the first hole, explicitly decide: "On this course, I will receive more unjust outcomes than at home. I accept this as part of the game. My emotional response budget is adjusted accordingly." This pre-commitment prevents the anger response that depletes focus when a good shot receives a bad result.</div></li>
+      <li><span class="step-n">2</span><div><strong>Evaluate shots on execution, not outcome:</strong> On links, the decoupling between shot quality and result is significantly higher than on parkland. A ball that bounces into a pot bunker from a perfectly executed approach is still a perfectly executed approach. Evaluating shots by outcome on links produces either false confidence (lucky outcomes) or unwarranted self-criticism (unlucky outcomes). Evaluate the decision and execution. Accept the result.</div></li>
+      <li><span class="step-n">3</span><div><strong>The recovery mindset — every hole is a puzzle:</strong> Links golf rewards creative problem-solving more than technical precision. A ball in a rough lie behind a pot bunker with the pin on the far side of the green presents a puzzle. The player who enjoys solving the puzzle scores better than the player who resents being in the position. Adopt the puzzle mindset before you arrive at the course — not mid-round.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="travel">
+  <h2 class="sec-title">Travel Golf Preparation</h2>
+  <p class="sec-desc">A links trip to Scotland, Ireland, or abroad is a significant investment of time and money. A structured preparation programme — beginning 6 weeks before departure — produces measurably better scores and significantly more enjoyment than arriving without preparation.</p>
+  <span class="badge badge-teal">🗺️ The Pre-Trip Programme</span>
+  <div class="card card-teal">
+    <span class="card-tag">6 Weeks Before — Technical Preparation</span>
+    <h3>What to Practise Before a Links Trip</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Bump and run practice — 20 minutes per session:</strong> Dedicate one practice session per week entirely to bump-and-run from various distances (10, 20, 30, 40 yards) with various clubs (7, 8, 9-iron). Build your personal distance table — how far does a 7-iron bump-and-run travel from your 20-yard landing spot? This data becomes your links short game reference.</div></li>
+      <li><span class="step-n">2</span><div><strong>Low trajectory driver and iron shots:</strong> Practise the stinger — ball back, hands forward, abbreviated finish (see Guide 02 Scrambling tab for technique). Links play requires the ability to keep the ball under the wind on command. One session per week on trajectory control is sufficient preparation.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putting on faster greens:</strong> If your home course has slow greens and your destination course has fast links greens (stimp 12+), practise at a local links or fast-green course before departure. Pace recalibration takes 4–5 holes — if your trip is only 18–36 holes, you cannot afford to lose the first 4 holes to pace adjustment.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">On Arrival — The Pre-Round Links Recon</span>
+    <h3>The 90-Minute Preparation Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Walk the first 3 holes before teeing off:</strong> If the schedule allows, walk the opening holes without clubs to read the terrain, identify the wind direction and its terrain effects, and locate hazards that the course planner may not have drawn accurately on the scorecard. This is standard practice for serious links players.</div></li>
+      <li><span class="step-n">2</span><div><strong>Putting green speed calibration — extended:</strong> Spend 20 minutes on the putting green — not just hitting putts, but specifically calibrating bump-and-run landing distances for the day's green speed. A firm, fast links green accepts a much shorter landing spot than a soft parkland green.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ask a local:</strong> The greenkeeper, the starter, or any club member can tell you: the current wind pattern, which holes are most exposed, which greens are running fastest, and whether there are any temporary conditions (GUR, course repairs) to be aware of. This 3-minute conversation is worth more than 30 minutes of preparation at home.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Equipment Adjustments for Links</span>
+    <h3>What to Consider Bringing or Changing</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>A lower-spin ball if playing in strong wind:</strong> High-spin balls amplify the effects of sidespin and backspin — already pronounced in strong wind. If your normal ball is a Pro V1x or similar high-spin urethane, consider a Pro V1 or TP5 (both slightly lower spin) for links play in strong wind. The difference is measurable in 20mph+ crosswinds.</div></li>
+      <li><span class="step-n">2</span><div><strong>Extra gloves:</strong> Links golf in Scotland or Ireland often means wet conditions. Wet gloves grip poorly — bring 3 gloves minimum and rotate them. A rain glove (designed to grip better when wet) is worth considering if the forecast includes rain.</div></li>
+      <li><span class="step-n">3</span><div><strong>Waterproofs regardless of forecast:</strong> Links weather changes faster than any forecast can track. Arriving at a Scottish links without full waterproofs because the morning was clear is a beginner's mistake. Pack full waterproofs, waterproof shoes, and a dry towel in a plastic bag.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">LINKS &amp; TRAVEL GOLF · GUIDE 35 · THE SCRATCH PROJECT · BUMP AND RUN · WIND TERRAIN · FIRM GROUND</div>
+<script>
+function show(id,btn){document.querySelectorAll(".sec").forEach(s=>s.classList.remove("active"));document.querySelectorAll(".tab").forEach(b=>b.classList.remove("active"));document.getElementById(id).classList.add("active");btn.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});}
+</script>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="23_weather_conditions.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🌬️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Weather &amp; Conditions</span></a>
+    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">⚖️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Management</span></a>
+    <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🌊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Short Game Playbook</span></a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🧠</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks</a>
+  </div>
+</div>
+</body>
+</html>
