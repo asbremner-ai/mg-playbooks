@@ -56,6 +56,8 @@ GUIDES = {
     'practice_plan.html':          ('4-Week Programme',           '🗓️', '#2ec4b6'),
     'mevo_gen2_playbook.html':     ('Mevo Gen2 Data Mastery',     '📡', '#2ec4b6'),
     'hackmotion_playbook.html':    ('HackMotion Data Mastery',    '🖥️', '#2ec4b6'),
+    'golf_weekly_dashboard.html':  ('Weekly Practice Dashboard',  '📅', '#5ecb3e'),
+    'tracking_app.html':           ('Performance Tracker v1',     '📊', '#2ec4b6'),
 }
 
 # ── Related guides map: filename → [related filenames in priority order]
@@ -95,10 +97,12 @@ RELATED = {
     '29_months_13_18_plan.html':   ['10_scratch_plan.html','28_months_7_12_plan.html','30_months_19_24_plan.html','24_competitive_strategy.html','17_progress_journal.html'],
     '30_months_19_24_plan.html':   ['10_scratch_plan.html','29_months_13_18_plan.html','24_competitive_strategy.html','17_progress_journal.html','21_mental_game.html'],
     'caddie_card.html':            ['22_wedge_distances.html','23_weather_conditions.html','11_shot_dispersion.html','20_course_management.html'],
+    'golf_weekly_dashboard.html':  ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','10_scratch_plan.html'],
+    'tracking_app.html':           ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html'],
 }
 
 # Files that use the paper/ink design (not the dark green theme)
-PAPER_THEME = {'10_scratch_plan.html', 'scratch_plan.html', '27_six_month_plan.html', '28_months_7_12_plan.html', '29_months_13_18_plan.html', '30_months_19_24_plan.html'}
+PAPER_THEME = {'10_scratch_plan.html', '27_six_month_plan.html', '28_months_7_12_plan.html', '29_months_13_18_plan.html', '30_months_19_24_plan.html'}
 # Files to skip entirely
 SKIP = {'index.html'}
 
