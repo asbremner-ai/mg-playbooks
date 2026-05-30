@@ -15,6 +15,8 @@ What it does for every playbook HTML file:
 Safe to re-run — already-patched files are detected and skipped.
 """
 
+# <!-- version:v2.1 · 2026-05-30 · patch_playbooks.py -->
+
 import os, re
 
 # ── Guide registry: filename → (display title, emoji, accent colour)
@@ -46,6 +48,9 @@ GUIDES = {
     '26_stats_interpretation.html':('Stats & SG Interpretation',  '🔢', '#2ec4b6'),
     '27_six_month_plan.html':      ('Months 1–6 Plan',            '📅', '#e8b800'),
     '28_months_7_12_plan.html':    ('Months 7–12 Plan',           '📆', '#e8b800'),
+    '29_months_13_18_plan.html':   ('Months 13–18 Plan',          '🎯', '#c8921a'),
+    '30_months_19_24_plan.html':   ('Months 19–24 Plan',          '🏆', '#3a8a3a'),
+    'caddie_card.html':            ('Caddie Reference Card',       '📋', '#2ec4b6'),
     'swing_mechanics.html':        ('Swing Mechanics',            '⚙️', '#5ecb3e'),
     'golf_analysis.html':          ('Launch Monitor Analysis',    '📈', '#2ec4b6'),
     'practice_plan.html':          ('4-Week Programme',           '🗓️', '#2ec4b6'),
@@ -64,7 +69,7 @@ RELATED = {
     '07_golf_nutrition.html':      ['06_golf_fitness.html','08_pro_round_prep.html','13_injury_prevention.html','10_scratch_plan.html'],
     '08_pro_round_prep.html':      ['05_pre_shot_routine.html','20_course_management.html','07_golf_nutrition.html','21_mental_game.html','12_rules_of_golf.html'],
     '09_golf_coach_ai.html':       ['26_stats_interpretation.html','mevo_gen2_playbook.html','hackmotion_playbook.html','17_progress_journal.html'],
-    '10_scratch_plan.html':        ['27_six_month_plan.html','28_months_7_12_plan.html','06_golf_fitness.html','07_golf_nutrition.html','17_progress_journal.html'],
+    '10_scratch_plan.html':        ['27_six_month_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html','17_progress_journal.html'],
     '11_shot_dispersion.html':     ['03_longgame_pro.html','mevo_gen2_playbook.html','20_course_management.html','09_golf_coach_ai.html'],
     '12_rules_of_golf.html':       ['08_pro_round_prep.html','24_competitive_strategy.html','16_solo_pressure_round.html'],
     '13_injury_prevention.html':   ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html'],
@@ -80,17 +85,20 @@ RELATED = {
     '24_competitive_strategy.html':['21_mental_game.html','12_rules_of_golf.html','16_solo_pressure_round.html','08_pro_round_prep.html'],
     '25_speed_training.html':      ['06_golf_fitness.html','03_longgame_pro.html','mevo_gen2_playbook.html','13_injury_prevention.html'],
     '26_stats_interpretation.html':['09_golf_coach_ai.html','mevo_gen2_playbook.html','17_progress_journal.html','10_scratch_plan.html'],
-    '27_six_month_plan.html':      ['10_scratch_plan.html','28_months_7_12_plan.html','06_golf_fitness.html','17_progress_journal.html'],
-    '28_months_7_12_plan.html':    ['10_scratch_plan.html','27_six_month_plan.html','09_golf_coach_ai.html','17_progress_journal.html'],
+    '27_six_month_plan.html':      ['10_scratch_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
+    '28_months_7_12_plan.html':    ['10_scratch_plan.html','27_six_month_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
     'swing_mechanics.html':        ['03_longgame_pro.html','14_video_analysis.html','hackmotion_playbook.html','mevo_gen2_playbook.html'],
     'golf_analysis.html':          ['09_golf_coach_ai.html','mevo_gen2_playbook.html','11_shot_dispersion.html','10_scratch_plan.html'],
     'practice_plan.html':          ['10_scratch_plan.html','27_six_month_plan.html','18_training_aids_2.html','17_progress_journal.html'],
     'mevo_gen2_playbook.html':     ['hackmotion_playbook.html','09_golf_coach_ai.html','11_shot_dispersion.html','26_stats_interpretation.html'],
     'hackmotion_playbook.html':    ['mevo_gen2_playbook.html','09_golf_coach_ai.html','swing_mechanics.html','14_video_analysis.html'],
+    '29_months_13_18_plan.html':   ['10_scratch_plan.html','28_months_7_12_plan.html','30_months_19_24_plan.html','24_competitive_strategy.html','17_progress_journal.html'],
+    '30_months_19_24_plan.html':   ['10_scratch_plan.html','29_months_13_18_plan.html','24_competitive_strategy.html','17_progress_journal.html','21_mental_game.html'],
+    'caddie_card.html':            ['22_wedge_distances.html','23_weather_conditions.html','11_shot_dispersion.html','20_course_management.html'],
 }
 
 # Files that use the paper/ink design (not the dark green theme)
-PAPER_THEME = {'10_scratch_plan.html', 'scratch_plan.html'}
+PAPER_THEME = {'10_scratch_plan.html', 'scratch_plan.html', '27_six_month_plan.html', '28_months_7_12_plan.html', '29_months_13_18_plan.html', '30_months_19_24_plan.html'}
 # Files to skip entirely
 SKIP = {'index.html'}
 
