@@ -58,6 +58,7 @@ GUIDES = {
     'hackmotion_playbook.html':    ('HackMotion Data Mastery',    '🖥️', '#2ec4b6'),
     'golf_weekly_dashboard.html':  ('Weekly Practice Dashboard',  '📅', '#5ecb3e'),
     'tracking_app.html':           ('Performance Tracker v1',     '📊', '#2ec4b6'),
+    'tracking_app_v2.html':        ('Performance Tracker',        '📊', '#5ecb3e'),
 }
 
 # ── Related guides map: filename → [related filenames in priority order]
@@ -99,6 +100,7 @@ RELATED = {
     'caddie_card.html':            ['22_wedge_distances.html','23_weather_conditions.html','11_shot_dispersion.html','20_course_management.html'],
     'golf_weekly_dashboard.html':  ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','10_scratch_plan.html'],
     'tracking_app.html':           ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html'],
+    'tracking_app_v2.html':        ['17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html'],
 }
 
 # Files that use the paper/ink design (not the dark green theme)
