@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.3 · 2026-05-31 · 02_shortgame_pro.html -->
+<!-- version:v2.1 · 2026-05-30 · 02_shortgame_pro.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -148,10 +148,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -177,7 +173,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('pitching',this)">Pitching</button>
   <button class="tab" onclick="show('lob',this)">Lob Shot</button>
   <button class="tab" onclick="show('bunker',this)">Bunker</button>
-  <button class="tab" onclick="show('fairwaybunker',this)">Fairway Bunker</button>
   <button class="tab" onclick="show('spin',this)">Spin & Traj.</button>
   <button class="tab" onclick="show('wedgespin',this)">Adv. Wedge</button>
   <button class="tab" onclick="show('selection',this)">Shot Select.</button>
@@ -332,7 +327,49 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <p class="sec-desc">The bunker shot is unique: you never hit the ball. You hit the sand behind the ball, using the sand to propel the ball out. Understanding this physics changes everything.</p>
   <span class="badge badge-lime">🌊 Sand Mechanics</span>
   <div class="card">
-    <span class="card-tag">6-Step Setup Protocol</span>
+    <div style="margin:0 0 18px 0;padding:20px;background:rgba(5,12,5,0.5);border-radius:10px;border:1px solid rgba(160,200,80,0.18);">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(160,200,80,0.45);margin-bottom:14px;">Diagram — Bunker Address Position</div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+    <div style="flex:1;min-width:240px;max-width:440px;">
+      <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(160,200,80,0.15);">
+        <img src="https://web-prod.nyc3.digitaloceanspaces.com/wp-content/uploads/golf-player-ready-to-hit-bunker-shot.jpg"
+             alt="Golfer in correct bunker shot address position — open face, open stance, ball forward, feet dug in"
+             style="width:100%;height:auto;display:block;" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <div style="display:none;padding:22px;text-align:center;color:rgba(232,240,216,0.35);font-size:12px;background:rgba(10,22,10,0.8);">
+          📷 Image loads when online — sourced from HackMotion<br>
+          Correct bunker address position: open face, open stance, feet dug in
+        </div>
+        <div style="font-family:monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(160,200,80,0.28);padding:6px 10px;background:rgba(0,0,0,0.4);">Image: hackmotion.com · Bunker shot address position</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:180px;">
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(160,200,80,0.07);border:1px solid rgba(160,200,80,0.18);border-radius:6px;padding:10px;">
+          <span style="background:rgba(160,200,80,0.85);color:#05120a;font-family:monospace;font-size:9px;font-weight:700;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">1</span>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.55);line-height:1.6;"><strong style="color:rgba(232,240,216,0.8);">Open face first, then grip.</strong> Lay the face open 20–30° before taking your grip — gripping first then opening closes the face at impact.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(160,200,80,0.07);border:1px solid rgba(160,200,80,0.18);border-radius:6px;padding:10px;">
+          <span style="background:rgba(160,200,80,0.85);color:#05120a;font-family:monospace;font-size:9px;font-weight:700;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">2</span>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.55);line-height:1.6;"><strong style="color:rgba(232,240,216,0.8);">Open stance 30–40°.</strong> Align feet left of target. This creates the out-to-in path that allows the face to slide under the ball.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(160,200,80,0.07);border:1px solid rgba(160,200,80,0.18);border-radius:6px;padding:10px;">
+          <span style="background:rgba(160,200,80,0.85);color:#05120a;font-family:monospace;font-size:9px;font-weight:700;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">3</span>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.55);line-height:1.6;"><strong style="color:rgba(232,240,216,0.8);">Dig feet into sand.</strong> Lowers your arc and builds a stable base. Grip down the same amount you dug in.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(160,200,80,0.07);border:1px solid rgba(160,200,80,0.18);border-radius:6px;padding:10px;">
+          <span style="background:rgba(160,200,80,0.85);color:#05120a;font-family:monospace;font-size:9px;font-weight:700;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">4</span>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.55);line-height:1.6;"><strong style="color:rgba(232,240,216,0.8);">Ball forward (lead heel).</strong> Allows bounce to enter sand before the leading edge — prevents digging.</div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:8px;background:rgba(160,200,80,0.07);border:1px solid rgba(160,200,80,0.18);border-radius:6px;padding:10px;">
+          <span style="background:rgba(160,200,80,0.85);color:#05120a;font-family:monospace;font-size:9px;font-weight:700;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">5</span>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.55);line-height:1.6;"><strong style="color:rgba(232,240,216,0.8);">Entry point: 2" behind ball.</strong> This is your actual target — not the ball, not the flag.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<span class="card-tag">6-Step Setup Protocol</span>
     <h3>Build the Platform for Success</h3>
     <ul class="steps">
       <li><span class="step-n">1</span><div><strong>Open clubface before gripping:</strong> Aim face at the target, then open it 20–30°. Gripping first then opening closes the face at impact.</div></li>
@@ -521,68 +558,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="pull-quote">
     <p>"The player who knows when NOT to play the hero shot will always outscore the player who tries them regardless of outcome."</p>
     <span>— SG: Around-Green Research, PGA Tour</span>
-  </div>
-</div>
-
-<!-- FAIRWAY BUNKER -->
-<div class="sec" id="fairwaybunker">
-  <h2 class="sec-title">Fairway Bunker Play</h2>
-  <p class="sec-desc">Fairway bunkers are categorically different from greenside bunkers — the technique, priority order, and decision-making are almost opposite. The most costly error in fairway bunkers is applying greenside technique to a 150-yard shot. The governing principle is simple: ball first, always. Sand contact before ball means a thin, short shot that typically stays in or near the bunker.</p>
-  <span class="badge badge-gold">⚠️ Ball First — No Exceptions</span>
-  <div class="card card-gold">
-    <span class="card-tag">The Priority Decision — Before Anything Else</span>
-    <h3>Can You Get Out in One? Always Ask This First.</h3>
-    <p style="margin-bottom:12px;">Before selecting any club for a fairway bunker shot, identify the lip height between your ball and the target. This single variable determines everything else.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Check the lip height and your lie first:</strong> Stand behind the ball and sight the lip. Can you get a 6-iron out? A 7-iron? If the lip is steep and close, the answer may be "wedge only." Getting out in one stroke is always the priority — a perfect fairway bunker shot that catches the lip and drops back in costs two strokes and morale.</div></li>
-      <li><span class="step-n">2</span><div><strong>The loft minimum rule:</strong> Whatever club you want to hit, identify the minimum loft needed to clear the lip with 1–2 metres to spare. If your 6-iron clears the lip by exactly the right margin at normal trajectory — use it. If it is marginal, go to the 7-iron without ego. One club less costs you 10 yards of distance. Catching the lip costs you a stroke and position.</div></li>
-      <li><span class="step-n">3</span><div><strong>Buried or plugged lies — take your medicine:</strong> If the ball is buried or you have less than a full stance in the sand, the shot becomes a recovery. Take a lofted wedge, splash out to the fairway, and accept the position. A plugged fairway bunker lie that you try to advance 150 yards with a 6-iron almost always results in a worse outcome than a deliberate recovery wedge to 80 yards.</div></li>
-    </ul>
-  </div>
-  <div class="card card-teal">
-    <span class="card-tag">Setup — The Four Adjustments</span>
-    <h3>Everything That Changes From a Normal Fairway Shot</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Grip down 2–3cm:</strong> This is the single most important fairway bunker adjustment. Gripping down effectively shortens the club, raising the arc of the swing and reducing the chance of catching sand before ball. It also improves control in the confined stance. Do not skip this — it is the foundational adjustment the setup is built around.</div></li>
-      <li><span class="step-n">2</span><div><strong>Dig your feet in slightly, narrow the stance:</strong> Digging in provides stability in the sand — you are not trying to generate the hip clearance of a normal full shot. The narrowed stance reduces lateral movement, which is the enemy of ball-first contact from sand. Accept that you will lose 5–10% of swing speed as a consequence. This is correct.</div></li>
-      <li><span class="step-n">3</span><div><strong>Ball position: middle to slightly back of centre:</strong> Neutral to slightly back promotes a steeper descent that contacts the ball before the sand. Forward ball position encourages the shallow, sweeping arc that works on the fairway but creates fat contact in sand.</div></li>
-      <li><span class="step-n">4</span><div><strong>Weight slightly forward, stay still through impact:</strong> 55–60% weight on the lead foot at address, and keep it there. The most common fairway bunker error is the player shifting weight back through impact in an attempt to "help" the ball out — this creates the exact heavy contact you are trying to avoid. Stay forward, strike down, trust the loft.</div></li>
-    </ul>
-  </div>
-  <div class="card">
-    <span class="card-tag">The Swing — Three-Quarter, Quiet Lower Body</span>
-    <h3>Less Is More From Sand</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Three-quarter backswing — no more:</strong> A full shoulder turn with an active lower body in sand creates lateral movement that destroys the precision required for ball-first contact. Limit the backswing to approximately 10:30 (lead arm just above parallel). You will lose distance — that is the trade-off for reliable contact, and it is always the right trade.</div></li>
-      <li><span class="step-n">2</span><div><strong>Quiet lower body — rotate, don't slide:</strong> The hip action in a fairway bunker is rotation only, with no lateral drive toward the target. The feel is of turning through the ball in a fixed position rather than driving into it. This keeps the arc consistent and the contact reliable.</div></li>
-      <li><span class="step-n">3</span><div><strong>Accelerate through impact — no deceleration:</strong> The temptation in a fairway bunker is to guide the ball out carefully — which produces a decelerating swing and heavy contact. Commit to the shot fully. A firm, accelerating strike through the ball is what creates clean contact; a cautious, slowing swing is what produces the fat shot you are trying to avoid.</div></li>
-      <li><span class="step-n">4</span><div><strong>Focus: back of the ball — not the sand:</strong> Your visual focus at address and through impact should be the back of the ball. In a greenside bunker, you focus on the sand behind the ball. In a fairway bunker, you focus on the ball itself. This is the single most important technical distinction between the two shots.</div></li>
-    </ul>
-  </div>
-  <div class="card card-gold">
-    <span class="card-tag">Club Selection — The Distance Penalty Table</span>
-    <h3>What to Expect and How to Plan</h3>
-    <p style="margin-bottom:12px;">From a fairway bunker with a clean lie and a manageable lip, expect to lose approximately 10–15% of normal carry distance. This is the penalty for gripping down, narrowing the stance, and limiting the swing. Factor it into every club decision.</p>
-    <table class="tbl">
-      <tr><th>Situation</th><th>Club Adjustment</th><th>Expected Distance</th><th>Priority</th></tr>
-      <tr><td>Clean lie, low lip, full carry needed</td><td class="warn">One club more than normal distance</td><td>85–90% of normal carry</td><td class="warn">Distance — confirm lip clearance first</td></tr>
-      <tr><td>Clean lie, medium lip</td><td class="warn">Check minimum loft for lip, then club up once</td><td>80–85% of normal</td><td class="warn">Lip clearance first, then distance</td></tr>
-      <tr><td>Clean lie, high lip</td><td class="bad">Use minimum loft to clear lip — accept distance</td><td>Whatever the wedge carries</td><td class="bad">Position only — forget the green</td></tr>
-      <tr><td>Plugged or poor lie</td><td class="bad">Wedge — recovery only</td><td>Advance 50–80 yards max</td><td class="bad">Out of sand, period</td></tr>
-    </table>
-  </div>
-  <div class="card card-teal">
-    <span class="card-tag">Fairway Bunker Practice Protocol</span>
-    <h3>How to Build This Shot Into Your Game</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Monthly bunker session — 20 minutes on fairway bunker specifically:</strong> Most practice bunker sessions focus on greenside. Dedicate one session per month entirely to fairway bunker play from 80–150 yards. The technique is different enough that greenside bunker practice does not transfer. You need repetitions of the ball-first contact pattern to make it automatic under pressure.</div></li>
-      <li><span class="step-n">2</span><div><strong>The towel drill for ball-first contact:</strong> Place a folded towel 3cm behind the ball in the practice bunker. Your goal is to strike the ball without touching the towel. This enforces ball-first contact through constraint rather than conscious effort — the most effective way to build the pattern. 10 shots with towel, 10 without, alternating.</div></li>
-      <li><span class="step-n">3</span><div><strong>Calibrate your distance penalty with the Mevo:</strong> If your practice facility allows Mevo use in or near a bunker, record 5 shots with each of your mid-irons from sand. Build your personal distance penalty table — it may differ from the average above. Knowing your exact fairway bunker carry per club eliminates all guesswork under competition pressure.</div></li>
-    </ul>
-    <div class="info-box elite" style="margin-top:12px;">
-      <span class="ico">⭐</span>
-      <p><strong>The competitive perspective:</strong> Most amateurs fear fairway bunkers more than the shot warrants. A clean lie in a fairway bunker at 140 yards is a manageable shot — it requires adjusted technique and realistic distance expectations, but it is not a crisis. The players who score well from fairway bunkers have simply practised the shot enough that it feels routine. Monthly repetition, over a season, is enough to remove the fear entirely.</p>
-    </div>
   </div>
 </div>
 
@@ -811,14 +786,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

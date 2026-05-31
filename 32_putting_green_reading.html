@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.1 · 2026-05-31 · 32_putting_green_reading.html -->
+<!-- version:v1.0 · 2026-05-30 · 32_putting_green_reading.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -89,10 +89,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.break-row{grid-template-columns:1fr 1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 
@@ -363,7 +359,48 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <p class="sec-desc">Plumb-bobbing is the most misused technique in green reading. When used for its correct purpose — confirming which way the overall green tilts — it is a useful binary confirmation tool. When used to try to determine break amount or to replace a complete read, it produces misleading information and should be abandoned.</p>
   <span class="badge badge-rust">⚠️ Correct Use Only</span>
   <div class="card card-rust">
-    <span class="card-tag">What Plumb-Bobbing Actually Tells You</span>
+    <div style="margin:0 0 18px 0;padding:20px;background:rgba(5,12,5,0.5);border-radius:10px;border:1px solid rgba(72,176,168,0.2);">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(72,176,168,0.5);margin-bottom:14px;">Diagram — Plumb-Bob Technique</div>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;">
+    <div style="flex:1;min-width:240px;max-width:480px;">
+      <div style="border-radius:8px;overflow:hidden;border:1px solid rgba(160,200,80,0.15);">
+        <img src="https://cdn.mos.cms.futurecdn.net/BMHFgnYwuApEo9qvHDjdAL-1280-80.jpg"
+             alt="Rickie Fowler and Patrick Reed demonstrating the plumb-bob putting technique on the green"
+             style="width:100%;height:auto;display:block;" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+        <div style="display:none;padding:22px;text-align:center;color:rgba(232,240,216,0.35);font-size:12px;background:rgba(10,22,10,0.8);">
+          📷 Image loads when online — sourced from Golf Monthly<br>
+          Tour pros demonstrating correct plumb-bob position on the green
+        </div>
+        <div style="font-family:monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:rgba(160,200,80,0.28);padding:6px 10px;background:rgba(0,0,0,0.4);">Image: Golf Monthly · Rickie Fowler &amp; Patrick Reed — plumb-bob on tour</div>
+      </div>
+    </div>
+    <div style="flex:1;min-width:180px;">
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <div style="background:rgba(72,176,168,0.08);border:1px solid rgba(72,176,168,0.22);border-radius:7px;padding:11px;">
+          <div style="font-family:monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(72,176,168,0.88);margin-bottom:5px;">POSITION</div>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.5);line-height:1.6;">Stand 3–10 ft directly behind ball. You, ball, and hole must be in a straight line.</div>
+        </div>
+        <div style="background:rgba(72,176,168,0.08);border:1px solid rgba(72,176,168,0.22);border-radius:7px;padding:11px;">
+          <div style="font-family:monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(72,176,168,0.88);margin-bottom:5px;">DOMINANT EYE</div>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.5);line-height:1.6;">Close non-dominant eye only. Hold shaft loosely between thumb and forefinger so gravity hangs it vertical.</div>
+        </div>
+        <div style="background:rgba(72,176,168,0.08);border:1px solid rgba(72,176,168,0.22);border-radius:7px;padding:11px;">
+          <div style="font-family:monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(72,176,168,0.88);margin-bottom:5px;">READING THE RESULT</div>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.5);line-height:1.6;">
+            Hole appears <strong style="color:rgba(160,200,80,0.85);">left of shaft</strong> → green tilts left → ball breaks left<br>
+            Hole appears <strong style="color:rgba(224,184,64,0.85);">right of shaft</strong> → green tilts right → ball breaks right
+          </div>
+        </div>
+        <div style="background:rgba(216,96,48,0.08);border:1px solid rgba(216,96,48,0.22);border-radius:7px;padding:11px;">
+          <div style="font-family:monospace;font-size:8.5px;letter-spacing:.1em;color:rgba(216,96,48,0.8);margin-bottom:5px;">⚠ DIRECTION ONLY</div>
+          <div style="font-size:11.5px;color:rgba(232,240,216,0.5);line-height:1.6;">Plumb-bob tells you <em>which way</em> — never <em>how much</em>. Use after AimPoint, not instead of it.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<span class="card-tag">What Plumb-Bobbing Actually Tells You</span>
     <h3>The Method and Its Limits</h3>
     <ul class="steps">
       <li><span class="step-n">1</span><div><strong>What it measures:</strong> Plumb-bobbing uses gravity to establish a true vertical reference line. When you hold the putter shaft in front of one eye and look at the hole, the relationship between the hole and the vertical shaft tells you the overall tilt of the green between you and the hole. If the hole appears to the right of the shaft, the green tilts right. Left of the shaft — tilts left.</div></li>
@@ -549,14 +586,5 @@ function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.r
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

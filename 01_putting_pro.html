@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 01_putting_pro.html -->
+<!-- version:v2.1 · 2026-05-30 · 01_putting_pro.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -148,10 +148,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -424,7 +420,120 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <ul class="steps">
       <li><span class="step-n">▸</span><div><strong>Length:</strong> Correct length places eyes directly over ball. Too long = eyes outside → aim right. Too short = eyes inside → aim left.</div></li>
       <li><span class="step-n">▸</span><div><strong>Lie angle:</strong> Toe-up (heels down) causes pushes. Flat lie causes pulls. Must match your posture precisely.</div></li>
-      <li><span class="step-n">▸</span><div><strong>Head style:</strong> Arc strokes suit toe-hang putters. Straight strokes suit face-balanced models. Mismatched head style fights your natural stroke.</div></li>
+      <li><span class="step-n">▸</span><div><div style="margin:0 0 18px 0;padding:22px;background:rgba(5,12,5,0.5);border-radius:10px;border:1px solid rgba(160,200,80,0.18);">
+  <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(160,200,80,0.45);margin-bottom:16px;">Diagram — Stroke Arc vs. Putter Balance · Overhead View</div>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
+
+    <!-- STRAIGHT (face-balanced) -->
+    <div style="flex:1;min-width:140px;max-width:200px;">
+      <svg width="100%" viewBox="0 0 180 210">
+        <rect width="180" height="210" fill="rgba(8,18,8,0.95)" rx="8" stroke="rgba(160,200,80,0.2)" stroke-width="1"/>
+        <text x="90" y="14" fill="rgba(160,200,80,0.7)" font-size="9" font-family="monospace" text-anchor="middle" font-weight="700">STRAIGHT</text>
+        <text x="90" y="25" fill="rgba(160,200,80,0.45)" font-size="7.5" font-family="monospace" text-anchor="middle">Face-Balanced Mallet</text>
+
+        <!-- Target line -->
+        <line x1="90" y1="180" x2="90" y2="40" stroke="rgba(160,200,80,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="90" y="36" fill="rgba(160,200,80,0.45)" font-size="7" font-family="monospace" text-anchor="middle">HOLE</text>
+
+        <!-- Putter path: straight back, straight through -->
+        <!-- Back stroke path -->
+        <line x1="90" y1="110" x2="90" y2="155" stroke="rgba(72,176,168,0.7)" stroke-width="3" stroke-linecap="round"/>
+        <!-- Through stroke path -->
+        <line x1="90" y1="110" x2="90" y2="65" stroke="rgba(72,176,168,0.9)" stroke-width="3" stroke-linecap="round"/>
+        <polygon points="90,65 85,78 95,78" fill="rgba(72,176,168,0.9)"/>
+
+        <!-- Putter head at impact (face square) -->
+        <rect x="72" y="104" width="36" height="10" rx="2" fill="rgba(72,176,168,0.25)" stroke="rgba(72,176,168,0.8)" stroke-width="1.5"/>
+        <text x="90" y="113" fill="rgba(72,176,168,0.7)" font-size="7" font-family="monospace" text-anchor="middle">FACE ■</text>
+
+        <!-- Back position (same line) -->
+        <rect x="72" y="148" width="36" height="8" rx="2" fill="none" stroke="rgba(72,176,168,0.35)" stroke-width="1" stroke-dasharray="2 2"/>
+
+        <!-- Path label -->
+        <text x="90" y="190" fill="rgba(72,176,168,0.75)" font-size="8" font-family="monospace" text-anchor="middle">Path: straight</text>
+        <text x="90" y="200" fill="rgba(72,176,168,0.55)" font-size="7.5" font-family="monospace" text-anchor="middle">Face: stays square</text>
+      </svg>
+      <div style="text-align:center;margin-top:8px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(72,176,168,0.8);">Face-Balanced</div>
+        <div style="font-size:11px;color:rgba(232,240,216,0.45);margin-top:3px;">Mallet / double-bend shaft<br>Quiet hands, consistent face</div>
+      </div>
+    </div>
+
+    <!-- SLIGHT ARC (most common) -->
+    <div style="flex:1;min-width:140px;max-width:200px;">
+      <svg width="100%" viewBox="0 0 180 210">
+        <rect width="180" height="210" fill="rgba(8,18,8,0.95)" rx="8" stroke="rgba(224,184,64,0.3)" stroke-width="1.5"/>
+        <text x="90" y="14" fill="rgba(224,184,64,0.85)" font-size="9" font-family="monospace" text-anchor="middle" font-weight="700">SLIGHT ARC ★</text>
+        <text x="90" y="25" fill="rgba(224,184,64,0.5)" font-size="7.5" font-family="monospace" text-anchor="middle">Mid Toe-Hang · Most Common</text>
+
+        <!-- Target line -->
+        <line x1="90" y1="180" x2="90" y2="40" stroke="rgba(160,200,80,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="90" y="36" fill="rgba(160,200,80,0.45)" font-size="7" font-family="monospace" text-anchor="middle">HOLE</text>
+
+        <!-- Arc path back (curves inside on backstroke) -->
+        <path d="M90,110 Q78,135 74,155" stroke="rgba(224,184,64,0.6)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Arc path through (slight inside to out) -->
+        <path d="M90,110 Q100,85 96,65" stroke="rgba(224,184,64,0.9)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <polygon points="96,65 89,78 99,80" fill="rgba(224,184,64,0.9)"/>
+
+        <!-- Putter face at impact (slight rotation, still square to target at impact) -->
+        <rect x="72" y="104" width="36" height="10" rx="2" fill="rgba(224,184,64,0.2)" stroke="rgba(224,184,64,0.85)" stroke-width="1.5"/>
+        <text x="90" y="113" fill="rgba(224,184,64,0.7)" font-size="7" font-family="monospace" text-anchor="middle">FACE ■</text>
+
+        <!-- Back position (face slightly open) -->
+        <rect x="72" y="149" width="36" height="8" rx="2" fill="none" stroke="rgba(224,184,64,0.3)" stroke-width="1" stroke-dasharray="2 2" transform="rotate(-5,90,153)"/>
+
+        <!-- Path label -->
+        <text x="90" y="190" fill="rgba(224,184,64,0.75)" font-size="8" font-family="monospace" text-anchor="middle">Path: slight arc</text>
+        <text x="90" y="200" fill="rgba(224,184,64,0.55)" font-size="7.5" font-family="monospace" text-anchor="middle">Face: slight rotation</text>
+      </svg>
+      <div style="text-align:center;margin-top:8px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(224,184,64,0.85);">Mid Toe-Hang</div>
+        <div style="font-size:11px;color:rgba(232,240,216,0.45);margin-top:3px;">Blade / Anser / mid-mallet<br>Most tour pros · Natural arc</div>
+      </div>
+    </div>
+
+    <!-- STRONG ARC (toe-hang blade) -->
+    <div style="flex:1;min-width:140px;max-width:200px;">
+      <svg width="100%" viewBox="0 0 180 210">
+        <rect width="180" height="210" fill="rgba(8,18,8,0.95)" rx="8" stroke="rgba(216,96,48,0.2)" stroke-width="1"/>
+        <text x="90" y="14" fill="rgba(216,96,48,0.75)" font-size="9" font-family="monospace" text-anchor="middle" font-weight="700">STRONG ARC</text>
+        <text x="90" y="25" fill="rgba(216,96,48,0.45)" font-size="7.5" font-family="monospace" text-anchor="middle">Full Toe-Hang Blade</text>
+
+        <!-- Target line -->
+        <line x1="90" y1="180" x2="90" y2="40" stroke="rgba(160,200,80,0.2)" stroke-width="1" stroke-dasharray="4 3"/>
+        <text x="90" y="36" fill="rgba(160,200,80,0.45)" font-size="7" font-family="monospace" text-anchor="middle">HOLE</text>
+
+        <!-- Strong arc path back (well inside) -->
+        <path d="M90,110 Q62,138 58,158" stroke="rgba(216,96,48,0.6)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <!-- Through (inside then out) -->
+        <path d="M90,110 Q110,80 105,62" stroke="rgba(216,96,48,0.85)" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <polygon points="105,62 97,74 107,77" fill="rgba(216,96,48,0.85)"/>
+
+        <!-- Face at impact (square to target at impact despite path arc) -->
+        <rect x="72" y="104" width="36" height="10" rx="2" fill="rgba(216,96,48,0.15)" stroke="rgba(216,96,48,0.8)" stroke-width="1.5"/>
+        <text x="90" y="113" fill="rgba(216,96,48,0.7)" font-size="7" font-family="monospace" text-anchor="middle">FACE ■</text>
+
+        <!-- Back position (face more open) -->
+        <rect x="62" y="150" width="36" height="8" rx="2" fill="none" stroke="rgba(216,96,48,0.28)" stroke-width="1" stroke-dasharray="2 2" transform="rotate(-15,80,154)"/>
+
+        <!-- Path label -->
+        <text x="90" y="190" fill="rgba(216,96,48,0.7)" font-size="8" font-family="monospace" text-anchor="middle">Path: strong arc</text>
+        <text x="90" y="200" fill="rgba(216,96,48,0.5)" font-size="7.5" font-family="monospace" text-anchor="middle">Face: full rotation</text>
+      </svg>
+      <div style="text-align:center;margin-top:8px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:rgba(216,96,48,0.75);">Full Toe-Hang</div>
+        <div style="font-size:11px;color:rgba(232,240,216,0.45);margin-top:3px;">Heel-shaft blade<br>Active hands · Precise timing</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to test -->
+  <div style="margin-top:16px;padding:12px 15px;background:rgba(224,184,64,0.08);border-left:3px solid rgba(224,184,64,0.55);border-radius:5px;font-size:12.5px;color:rgba(232,240,216,0.55);line-height:1.65;">
+    <strong style="color:rgba(224,184,64,0.85);">Test your toe hang:</strong> Balance the putter shaft on one finger. If the toe drops toward the ground — toe hang present, suits an arc stroke. If the face stays level — face-balanced, suits a straight stroke. Most tour players use slight arc with mid-toe-hang (★).
+  </div>
+</div>
+<strong>Head style:</strong> Arc strokes suit toe-hang putters. Straight strokes suit face-balanced models. Mismatched head style fights your natural stroke.</div></li>
       <li><span class="step-n">▸</span><div><strong>Loft:</strong> Dynamic loft at impact should be 2–4°. Too little skids the ball; too much creates backspin bounce.</div></li>
     </ul>
   </div>
@@ -674,14 +783,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>
