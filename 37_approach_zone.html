@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-05-31 · 37_approach_zone.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The 100–175 Yard Zone — The Scratch Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 37</p>
+  <h1>The 100–175<br><em>Yard Zone</em></h1>
+  <p class="hero-sub">Where the SG: Approach gap actually lives. A dedicated system for partial and three-quarter iron play from 100–175 yards — distance matrix, clock system for mid-irons, lie and slope adjustments, wind calibration, and the deliberate practice protocol that closes the approach gap from 10 HCP to scratch.</p>
+  <div class="hero-tags">
+    <span class="htag">📐 Distance Matrix</span>
+    <span class="htag">🕐 Clock System</span>
+    <span class="htag">⛳ Lie Adjustments</span>
+    <span class="htag">💨 Wind Calibration</span>
+    <span class="htag">📊 SG: Approach</span>
+    <span class="htag">🎯 Practice Protocol</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('matrix',this)">Distance Matrix</button>
+  <button class="tab" onclick="show('clock',this)">Clock System</button>
+  <button class="tab" onclick="show('adjustments',this)">Lie & Slope</button>
+  <button class="tab" onclick="show('wind',this)">Wind</button>
+  <button class="tab" onclick="show('practice',this)">Practice Protocol</button>
+  <button class="tab" onclick="show('sg',this)">SG Benchmarks</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Most Important Distance Band in Your Game</h2>
+  <p class="sec-desc">SG: Approach data consistently shows that the 100–175 yard distance band produces the largest strokes-gained gap between 10 HCP and scratch players. Not driving. Not putting. Not wedges under 100 yards. The mid-iron approach — the shot you hit most frequently in competition — is where the improvement programme lives or dies in Phase 3 and 4.</p>
+  <span class="badge badge-gold">📊 The SG: Approach Gap</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Numbers</span>
+    <h3>Where 10 HCP vs Scratch Diverges on Approaches</h3>
+    <table class="tbl">
+      <tr><th>Distance Band</th><th>10 HCP Proximity</th><th>Scratch Proximity</th><th>SG Gap/Shot</th><th>Shots/Round</th></tr>
+      <tr><td class="bad">100–125 yards</td><td>38–45 ft</td><td>22–28 ft</td><td class="bad">−0.35</td><td>3–4</td></tr>
+      <tr><td class="bad">125–150 yards</td><td>42–50 ft</td><td>25–32 ft</td><td class="bad">−0.40</td><td>3–5</td></tr>
+      <tr><td class="bad">150–175 yards</td><td>48–58 ft</td><td>30–38 ft</td><td class="bad">−0.38</td><td>3–4</td></tr>
+      <tr><td class="warn">175–200 yards</td><td>55–65 ft</td><td>38–48 ft</td><td class="warn">−0.28</td><td>2–3</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The compound effect:</strong> Over 18 holes, you hit 9–13 approach shots in the 100–175 yard band. Closing the gap from 10 HCP to scratch proximity in just this band — without changing anything else — is worth approximately 2.0–2.5 SG: Approach per round. That is the difference between a 5 HCP and scratch. This one zone, done well, closes the programme.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Why This Zone Is Underpractised</span>
+    <h3>The Practice Habit That Creates the Gap</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Most range sessions hit full shots:</strong> The 150-yard 7-iron is the most-hit club on every driving range. But full-swing 7-irons account for a fraction of actual competitive approach shots. At 10–5 HCP, the majority of approaches in this band require either a partial swing with a shorter iron or a full swing with a longer iron than you would typically practise. The practice habit does not match the competition reality.</div></li>
+      <li><span class="step-n">2</span><div><strong>The "in-between yardage" problem:</strong> Players hit 150 yards with a full 7-iron in practice. But in competition they face 137 yards — between a full 8-iron and a full 7-iron. Without a calibrated partial swing in each club, this gap produces either a committed full shot with the wrong club or an uncommitted half-shot with no clear distance expectation. The solution is the clock system applied to mid-irons, not just wedges.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="matrix">
+  <h2 class="sec-title">Building Your Distance Matrix</h2>
+  <p class="sec-desc">A distance matrix for the 100–175 yard zone maps every 10-yard increment to a specific club and swing combination. Most players know their full-swing distance per club. Very few know their three-quarter distance per club. Building this matrix turns every "in-between" yardage from a guess into a known shot.</p>
+  <span class="badge badge-teal">📐 Your Personal Matrix</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Build Session — What You Need</span>
+    <h3>One Mevo Session to Complete Your Matrix</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Clubs: 9-iron, 8-iron, 7-iron, 6-iron (and 5-iron if needed):</strong> These typically cover 100–175 yards depending on your speed. Start from the shortest club and work up.</div></li>
+      <li><span class="step-n">2</span><div><strong>Three swing lengths for each club:</strong> Full (12 o'clock finish), three-quarter (10:30 finish — lead arm 45° above parallel), and half (9 o'clock finish — lead arm parallel). 5 shots per combination, record Mevo carry averages. Discard obvious mishits (bottom 20%).</div></li>
+      <li><span class="step-n">3</span><div><strong>What you are building:</strong> A 3×4 table (or larger) of known carry distances. 9-iron full = X yards. 9-iron three-quarter = Y yards. 8-iron three-quarter = Z yards. Etc. The goal is to cover every 10-yard band from 100 to 175 with at least one committed, calibrated shot.</div></li>
+      <li><span class="step-n">4</span><div><strong>Identify the gaps:</strong> After the session, plot the distances on a number line. Are there 10-yard windows with no coverage? Fill them with a different club/swing combination. Most players find 2–3 gaps after the initial build.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Sample Matrix — Adjust to Your Distances</span>
+    <h3>What a Completed 100–175 Zone Matrix Looks Like</h3>
+    <table class="tbl">
+      <tr><th>Yardage (carry)</th><th>Club</th><th>Swing Length</th><th>Shot Shape</th></tr>
+      <tr><td>100–105</td><td>9-iron</td><td>Half (9 o'clock)</td><td>Soft, landing short, roll to back</td></tr>
+      <tr><td>108–115</td><td>9-iron</td><td>Three-quarter (10:30)</td><td>Normal flight, predictable spin</td></tr>
+      <tr><td>115–122</td><td>9-iron</td><td>Full</td><td>Full flight, normal spin</td></tr>
+      <tr><td>118–125</td><td>8-iron</td><td>Three-quarter</td><td>Lower flight, better control in wind</td></tr>
+      <tr><td>125–132</td><td>8-iron</td><td>Full</td><td>Full flight — primary 125-yard shot</td></tr>
+      <tr><td>130–138</td><td>7-iron</td><td>Three-quarter</td><td>Knockdown option — good in wind</td></tr>
+      <tr><td>138–148</td><td>7-iron</td><td>Full</td><td>Full flight — primary 142-yard shot</td></tr>
+      <tr><td>145–155</td><td>6-iron</td><td>Three-quarter</td><td>Lower trajectory, more run</td></tr>
+      <tr><td>155–165</td><td>6-iron</td><td>Full</td><td>Full flight — primary 160-yard shot</td></tr>
+      <tr><td>162–172</td><td>5-iron</td><td>Three-quarter</td><td>Controlled, slightly lower</td></tr>
+      <tr><td>172–182</td><td>5-iron</td><td>Full</td><td>Full flight — primary 175-yard shot</td></tr>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">Build your own matrix from actual Mevo data — these are illustrative distances only. Every player is different.</p>
+  </div>
+</div>
+
+<div class="sec" id="clock">
+  <h2 class="sec-title">The Clock System for Mid-Irons</h2>
+  <p class="sec-desc">The clock system (swing length measured by lead arm position) is well-established for wedges. Its application to mid-irons is less common but equally valuable — it is the mechanism that produces reliable three-quarter and half swings in the 100–175 zone without guesswork or deceleration.</p>
+  <span class="badge badge-lime">🕐 Systematic Distance Control</span>
+  <div class="card">
+    <span class="card-tag">The Four Mid-Iron Swing Lengths</span>
+    <h3>Clock Positions Applied to 6–9 Iron</h3>
+    <table class="tbl">
+      <tr><th>Clock Position</th><th>Lead Arm</th><th>Distance*</th><th>Key Feel</th><th>When to Use</th></tr>
+      <tr><td class="good">Full (12 o'clock)</td><td>Full backswing, shoulder turn complete</td><td>100% carry</td><td>Normal tempo — do not add effort</td><td>Standard distance requirement, no adjustment needed</td></tr>
+      <tr><td class="good">10:30 (Three-quarter)</td><td>45° above parallel, partial shoulder turn</td><td>85–88% carry</td><td>Shoulder turn drives, arms follow — no rushing</td><td>Calm conditions, tight pin, need precision over distance</td></tr>
+      <tr><td class="warn">9 o'clock (Half)</td><td>Parallel to ground</td><td>72–75% carry</td><td>Smooth arms-and-body rotation — no wrist flipping</td><td>Into headwind, punch shot, need low trajectory</td></tr>
+      <tr><td class="warn">7:30 (Knockdown)</td><td>Below parallel, abbreviated</td><td>58–62% carry</td><td>Ultra-compact, firm through impact — stinger finish</td><td>Strong headwind, under tree branch, emergency control</td></tr>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:8px;">*Percentages are approximate — vary by player and wind. Build your actual percentages in the Mevo matrix session.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Symmetric Finish Rule — Applied to Mid-Irons</span>
+    <h3>The One Principle That Prevents Deceleration</h3>
+    <p style="margin-bottom:12px;">The most common error in partial mid-iron shots is a full backswing with a decelerated, shortened follow-through. This produces inconsistent contact, variable spin, and unpredictable distance. The fix is identical to wedges: the follow-through must mirror the backswing.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>10:30 backswing → 1:30 follow-through:</strong> If your lead arm goes to 45° above parallel in the backswing, it must go to 45° above parallel in the follow-through. This guarantees acceleration through impact — the ball cannot stop the club mid-swing at the correct speed.</div></li>
+      <li><span class="step-n">2</span><div><strong>Commit to the clock position before the shot:</strong> In your pre-shot routine, decide the swing length explicitly: "This is a 10:30 8-iron." Not "this is a comfortable 8-iron." The commitment to a specific position before the shot produces the deceleration-free swing. Vague swing intention produces vague results.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="adjustments">
+  <h2 class="sec-title">Lie & Slope Adjustments</h2>
+  <p class="sec-desc">The 100–175 zone presents more lie variability than any other segment of the game. You will rarely hit these distances from a perfectly flat, tight fairway in competition. Every common lie type requires a specific, rehearsed adjustment — the same swing on different lies produces dramatically different results.</p>
+  <span class="badge badge-teal">⛳ Lie-Specific Technique</span>
+  <div class="card card-gold">
+    <span class="card-tag">Fairway Rough at 125–175 Yards</span>
+    <h3>The Flyer Lie — The Most Costly Miscalculation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify the lie before selecting the club:</strong> Push the ball gently with your foot to feel whether it is sitting on top of the grass (flyer lie) or nestled into it. These are two completely different shots requiring different clubs. Getting this wrong at 150 yards produces a shot 15–25 yards past the target.</div></li>
+      <li><span class="step-n">2</span><div><strong>Flyer lie (ball sitting up): take one less club, aim short:</strong> Grass between the face and ball at impact kills spin and increases launch — the ball flies further with less stopping power. From a classic flyer lie at 150 yards, use your 8-iron (not 7-iron) and aim 5–8 yards short of the flag. Expect the ball to release rather than check.</div></li>
+      <li><span class="step-n">3</span><div><strong>Nestled lie (ball below grass level): take one more club, steeper swing:</strong> The thick grass contact reduces distance and demands a steeper attack angle. From a nestled lie, club up once and play ball slightly back of centre. Do not try to help the ball — steeper descent produces cleaner contact.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Uphill and Downhill Lies at Mid-Iron Distance</span>
+    <h3>The Slope-Carry Adjustment Table</h3>
+    <table class="tbl">
+      <tr><th>Lie Type</th><th>Effect on Ball</th><th>Club Adjustment</th><th>Setup Change</th></tr>
+      <tr><td>Upslope (body tilting back)</td><td class="good">Higher launch, shorter carry, more spin</td><td>1–2 clubs more</td><td>Tilt into slope, weight on lead foot, expect shorter carry</td></tr>
+      <tr><td>Downslope (body tilting forward)</td><td class="warn">Lower launch, more carry, less spin, more run</td><td>1–2 clubs less</td><td>Tilt into slope, aim for front of green, ball will release</td></tr>
+      <tr><td>Ball above feet (sidehill)</td><td class="warn">Natural draw — ball goes left</td><td>One less club (closer effective distance)</td><td>Grip down, stand more upright, aim right of target</td></tr>
+      <tr><td>Ball below feet (sidehill)</td><td class="warn">Natural fade — ball goes right, shorter</td><td>One more club</td><td>Flex knees extra, bend from hips, aim left of target</td></tr>
+    </table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Tight Lies at Mid-Iron Distance</span>
+    <h3>The Shot Most Amateurs Over-Complicate</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>A tight lie changes nothing in the full swing — only the partial:</strong> From a tight fairway lie, a full 7-iron is identical to a normal fairway shot. The tight lie only becomes a technical variable in partial swings, where a shallow attack can produce a thin. If the tight lie is from a partial swing position, move the ball back 1–2cm and add fractionally more shaft lean. The steeper attack guarantees the leading edge contacts the ball before the ground.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hardpan and bare dirt:</strong> Play ball back of centre, hands forward, weight forward. The goal is a steep enough descent to get the leading edge under the ball before the sole bounces. No bounce technique — this is a leading-edge-first strike. Expect lower launch and less spin than normal. Aim slightly shorter on the green.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="wind">
+  <h2 class="sec-title">Wind Calibration for Mid-Iron Approaches</h2>
+  <p class="sec-desc">Wind has proportionally more effect on mid-iron shots than on wedges, because mid-irons stay in the air longer. The standard "1 club per 10mph" formula is a starting point — the actual adjustment depends on trajectory, distance, and wind direction angle. This section gives you a calibrated reference for the 100–175 zone specifically.</p>
+  <span class="badge badge-lime">💨 Wind Adjustment Reference</span>
+  <div class="card">
+    <span class="card-tag">Headwind and Tailwind Adjustments — 100–175 Yards</span>
+    <h3>Calibrated by Distance and Wind Speed</h3>
+    <table class="tbl">
+      <tr><th>Distance</th><th>10mph Head</th><th>20mph Head</th><th>10mph Tail</th><th>20mph Tail</th></tr>
+      <tr><td>100–120 yards</td><td class="warn">+1 club or 3/4 swing up</td><td class="bad">+1.5 clubs</td><td class="good">−half club</td><td class="good">−1 club</td></tr>
+      <tr><td>120–150 yards</td><td class="warn">+1 club</td><td class="bad">+2 clubs</td><td class="good">−half to 1 club</td><td class="good">−1 club</td></tr>
+      <tr><td>150–175 yards</td><td class="bad">+1.5 clubs</td><td class="bad">+2.5 clubs</td><td class="good">−half to 1 club</td><td class="good">−1 to 1.5 clubs</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The asymmetry:</strong> Headwind additions are larger than tailwind subtractions at the same wind speed. Wind resistance on a longer-in-the-air shot scales non-linearly. A 20mph headwind costs more than a 20mph tailwind saves — always over-compensate for headwinds and under-compensate for tailwinds relative to your intuitive adjustment.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Knockdown — Your Wind Weapon</span>
+    <h3>Playing the 7:30 Swing in Wind</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When to use the knockdown:</strong> Any headwind above 15mph from 120–170 yards. A high-trajectory approach into a meaningful headwind balloons upward, increasing air time by 20–40% and adding significant wind exposure. The knockdown keeps the ball below the wind's most damaging zone.</div></li>
+      <li><span class="step-n">2</span><div><strong>Setup: ball 2cm back, hands more forward, weight 65% lead:</strong> This de-lofts the club by 2–3°, reduces launch angle, and produces a piercing, low-spin ball flight that cuts through wind rather than being pushed upward by it.</div></li>
+      <li><span class="step-n">3</span><div><strong>The finish: shaft points at target, hands finish at hip height:</strong> The abbreviated, firm finish is what keeps the trajectory down. If the follow-through is full and high, the ball launches high regardless of setup. Commit to the low finish — it is the single most important cue in the knockdown.</div></li>
+      <li><span class="step-n">4</span><div><strong>Club selection: typically 2 clubs more than normal at 150 yards in 20mph headwind:</strong> A 7-iron knockdown at 150 yards in a 20mph headwind produces approximately the same carry as a normal 8-iron in no wind. Use the table above as a reference; build your own numbers with the Mevo in cross-wind conditions.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="practice">
+  <h2 class="sec-title">Practice Protocol</h2>
+  <p class="sec-desc">One 45-minute dedicated practice session per week on the 100–175 yard zone, structured as described below, will close the approach gap faster than any other change to your practice schedule. The key is specificity — not general iron practice, but specific distance-band deliberate practice with consequence and data collection.</p>
+  <span class="badge badge-lime">🎯 Weekly Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">The 45-Minute Approach Zone Session</span>
+    <h3>Structure, Drills, and Data Collection</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Warm-up (5 min): full swings, each club in zone, 3 shots each:</strong> 9-iron full, 8-iron full, 7-iron full, 6-iron full. Purpose: establish your feel and today's carry distances. Note any club that feels off.</div></li>
+      <li><span class="step-n">2</span><div><strong>Matrix calibration (10 min): three-quarter swings, each club:</strong> 5 shots per club, three-quarter swing. Record Mevo carries. Compare to your matrix. Are you within 5 yards of your calibrated distance? If not, identify why — wind, temperature, fatigue — and adjust matrix mentally for today.</div></li>
+      <li><span class="step-n">3</span><div><strong>Random distance practice (20 min — the key block):</strong> Set an imaginary target for each shot chosen randomly from your yardage range. "147 yards." Select the correct club and swing length. Hit the shot. Record the carry. Do NOT hit the same distance twice in a row. This random practice produces the fastest transfer to on-course performance and should represent the majority of your approach zone session time.</div></li>
+      <li><span class="step-n">4</span><div><strong>Consequence game (10 min):</strong> Set three targets at specific distances. Hit 9 shots — 3 at each target. Score: 3 points if within 10 yards of target, 1 point if within 20 yards, 0 otherwise. This creates competition-level focus and exposes whether the practice is transferring under pressure. Track your score weekly — improvement is the target, not perfection.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Lie Variety Practice</span>
+    <h3>Practising From Conditions That Actually Occur</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Once per month: practise from the rough:</strong> Most ranges have rough areas adjacent to the fairway mat area. Spend 20 minutes hitting approach shots from light and medium rough. The flyer lie identification and adjustment cannot be trained from mat practice — it requires actual rough contact.</div></li>
+      <li><span class="step-n">2</span><div><strong>Slope practice on the course during solo rounds:</strong> When you have a sidehill lie in the 100–175 zone during a practice round, hit two balls — one with your intuitive adjustment and one with the calibrated table adjustment. Over 10 practice rounds, this builds the pattern recognition that produces automatic slope adjustments in competition.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="sg">
+  <h2 class="sec-title">SG: Approach Benchmarks for This Zone</h2>
+  <p class="sec-desc">Tracking your proximity by distance band in Arccos Air gives you the primary metric for this zone. These are the benchmarks at each phase of the programme — use them as monthly checkpoints, not daily targets.</p>
+  <span class="badge badge-teal">📊 Your Progress Map</span>
+  <div class="card card-teal">
+    <span class="card-tag">Average Proximity Benchmarks by Handicap</span>
+    <h3>What Progress Looks Like</h3>
+    <table class="tbl">
+      <tr><th>HCP Level</th><th>100–125 yd proximity</th><th>125–150 yd proximity</th><th>150–175 yd proximity</th></tr>
+      <tr><td class="bad">10 HCP</td><td>40–46 ft</td><td>44–52 ft</td><td>50–60 ft</td></tr>
+      <tr><td class="warn">7 HCP</td><td>33–39 ft</td><td>37–44 ft</td><td>42–50 ft</td></tr>
+      <tr><td class="warn">5 HCP</td><td>28–34 ft</td><td>32–38 ft</td><td>36–44 ft</td></tr>
+      <tr><td class="warn">3 HCP</td><td>24–30 ft</td><td>28–34 ft</td><td>32–40 ft</td></tr>
+      <tr><td class="good">Scratch</td><td>20–26 ft</td><td>24–32 ft</td><td>28–38 ft</td></tr>
+    </table>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>Tracking note:</strong> Pull these numbers monthly from Arccos Air. A 5-foot improvement in average proximity at 125–150 yards, across 15+ shots per month, is worth approximately 0.3 SG: Approach per round — the equivalent of 3 additional pars per 10 rounds. These are achievable gains from the practice protocol above, measured across 4–6 weeks.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">THE 100–175 YARD ZONE · GUIDE 37 · THE SCRATCH PROJECT · SG: APPROACH · DISTANCE MATRIX · CLOCK SYSTEM</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="03_longgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏌️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Long Game Playbook</span></a>
+    <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📐</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Wedge Distance Matrix</span></a>
+    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">⚖️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Management</span></a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG</span></a>
+    <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📡</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Data Mastery</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks</a>
+  </div>
+</div>
+</body>
+</html>

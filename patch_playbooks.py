@@ -65,6 +65,7 @@ GUIDES = {
     '34_coaching_relationship.html':('The Coaching Relationship', '🎓', '#2ec4b6'),
     '35_links_travel_golf.html':   ('Links & Travel Golf',        '🌊', '#5ecb3e'),
     '36_playing_partners.html':    ('Playing Partners',           '🤝', '#2ec4b6'),
+    '37_approach_zone.html':       ('The 100–175 Yard Zone',      '🎯', '#e8b800'),
 }
 
 # ── Related guides map: filename → [related filenames in priority order]
@@ -113,6 +114,7 @@ RELATED = {
     '34_coaching_relationship.html':['09_golf_coach_ai.html','14_video_analysis.html','mevo_gen2_playbook.html','17_progress_journal.html','hackmotion_playbook.html'],
     '35_links_travel_golf.html':   ['23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','21_mental_game.html','caddie_card.html'],
     '36_playing_partners.html':    ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','33_competitive_pathway.html'],
+    '37_approach_zone.html':       ['03_longgame_pro.html','22_wedge_distances.html','20_course_management.html','26_stats_interpretation.html','mevo_gen2_playbook.html'],
 }
 
 # Files that use the paper/ink design (not the dark green theme)

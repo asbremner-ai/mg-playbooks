@@ -173,6 +173,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('approach',this)">Approach</button>
   <button class="tab" onclick="show('layup',this)">Layup vs Attack</button>
   <button class="tab" onclick="show('scoring',this)">Scoring Zones</button>
+  <button class="tab" onclick="show('decade',this)">Target Optimisation</button>
   <button class="tab" onclick="show('conditions',this)">Conditions</button>
   <button class="tab" onclick="show('holetypes',this)">Hole Types</button>
   <button class="tab" onclick="show('missdir',this)">Approach Miss</button>
@@ -332,6 +333,53 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">1</span><div><strong>Inside 100 yards, pin is always accessible:</strong> This does not mean attack every flag. It means the distance is not the limiting factor — the pin position and your spin/trajectory control are. Always know your spin capability before attacking.</div></li>
       <li><span class="step-n">2</span><div><strong>Land zone first, flag second:</strong> From every scoring zone distance, identify your landing zone first. The flag is where you want the ball to finish — the landing zone is where you aim. Always separate these two targets.</div></li>
       <li><span class="step-n">3</span><div><strong>Short-side rule:</strong> From inside 100 yards, short-siding yourself is a 0.4–0.6 SG loss on average for an amateur. The worst miss is always the one that leaves the most difficult chip — identify that side before selecting your target.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- DECADE TARGET OPTIMISATION -->
+<div class="sec" id="decade">
+  <h2 class="sec-title">Target Optimisation — The Probability Approach</h2>
+  <p class="sec-desc">Scott Fawcett's Decade system, built on Mark Broadie's Strokes Gained research, shows that the standard amateur aim point — "middle of the green, work the miss" — significantly underperforms a probability-weighted target calculation. The insight: aim point should not be determined by where you want the ball to go, but by the expected score across your full shot distribution from that lie and distance. The two answers are rarely the same.</p>
+  <span class="badge badge-gold">📐 The Maths of Target Selection</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Intuitive Aim Points Underperform</span>
+    <h3>The Problem With "Middle of the Green"</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Green centre is only optimal when consequences are symmetrical:</strong> "Aim at the middle" assumes that a miss left and a miss right are equally costly. They almost never are. A miss into a bunker costs 0.6 expected strokes more than a miss onto the fringe. A short-side miss costs 0.4 strokes more than a long-side miss. When consequences are asymmetric — which is almost always — the optimal aim point shifts away from centre toward the lower-cost miss side.</div></li>
+      <li><span class="step-n">2</span><div><strong>Your dispersion cone is not centred on your aim point:</strong> Most amateur golfers have a systematic directional bias revealed by 20+ rounds of tracking data (Guide 11). A player who aims at the green centre but has a 65% miss-left pattern is effectively aiming left of centre. The optimal aim point starts from where the centre of your actual distribution lands — which for most players is not the same as their intended aim point.</div></li>
+      <li><span class="step-n">3</span><div><strong>Distance gapping is more important than lateral precision at most amateur distances:</strong> Strokes Gained research consistently shows that the single biggest decision error at amateur level is not left-right aim but short-long. Players systematically under-club, landing short of the green at rates far higher than landing long. The first correction to make is almost always one club more, targeting the back half of the green.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Decade Framework — Applied</span>
+    <h3>Calculating Your Optimal Aim Point in 4 Steps</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Step 1 — Know your total dispersion at this distance:</strong> From your Guide 11 dispersion mapping and Arccos Air SG: Approach data, identify your total lateral dispersion (in yards) at the distance of the shot. At 150 yards, a 10 HCP player has approximately 55–65 yards total lateral dispersion (±27–32 yards). This is your cone width.</div></li>
+      <li><span class="step-n">2</span><div><strong>Step 2 — Identify the consequences of each miss direction:</strong> For this specific flag position, what happens if you miss left vs. right vs. short vs. long? Assign a rough expected score to each miss quadrant: green fringe (best), rough but open (moderate), bunker or rough with obstacle (worse), water or OB (worst). You are building a consequence map, not just a green map.</div></li>
+      <li><span class="step-n">3</span><div><strong>Step 3 — Shift the aim point toward the lower-consequence side:</strong> If missing right puts you in a bunker (−0.6 strokes vs fringe) but missing left leaves a short pitch from thin rough (+0.1 strokes vs fringe), your optimal aim point shifts left of your natural instinct — even if that means a slightly longer putt on a well-struck shot. You are optimising the distribution, not the perfect outcome.</div></li>
+      <li><span class="step-n">4</span><div><strong>Step 4 — Club up by default:</strong> In all but the most specific circumstances (firm greens running away, water long), the shot that lands short of the green produces a worse expected score than the shot that lands long. Club up until you have a reason not to, not down until you have a reason to go more. This single habit, applied consistently over 18 holes, is typically worth 0.5–0.8 SG: Approach per round.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">The Flag Attack Decision — When to Go, When to Play Away</span>
+    <h3>A Probability Framework for Pin Decisions</h3>
+    <table class="tbl">
+      <tr><th>Pin Position</th><th>Accessible If...</th><th>Aim Point if Not Attacking</th><th>When to Never Attack</th></tr>
+      <tr><td>Front edge, tucked</td><td class="warn">Carry is precise AND green holds</td><td>Back-centre — accept longer putt</td><td>Into the wind, firm greens, any doubt on carry</td></tr>
+      <tr><td>Middle of green</td><td class="good">Almost always — optimise long vs. short</td><td>Back half of green</td><td>When bunkers surround — then play to best miss side</td></tr>
+      <tr><td>Back pin</td><td class="good">With correct club — aim at flag</td><td>Front-centre</td><td>Water long — club down 1, aim front half</td></tr>
+      <tr><td>Short-side pin (tight to bunker)</td><td class="bad">Only if ≥70% confident in precise carry</td><td>Away side — 20 feet away is better than sand</td><td>Always play away if SG: APP trend is negative</td></tr>
+      <tr><td>Diagonal pin (corner of green)</td><td class="warn">Never directly attack diagonal pins</td><td>Aim at the diagonal centre — gives equal miss room both ways</td><td>Always — this is the highest-risk flag category</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Applying This With Arccos Air</span>
+    <h3>Using Your Actual Data to Build Personal Aim Points</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pull your approach proximity by distance band:</strong> In Arccos, Analytics → Approach → Proximity by Distance. Your average proximity at 125–150 yards, 150–175 yards, 100–125 yards. This tells you how your dispersion translates to real approach proximity — the number you actually need for aim point calculations.</div></li>
+      <li><span class="step-n">2</span><div><strong>Check your miss pattern:</strong> Analytics → Approach → Miss Pattern. What percentage left, right, short, long? If 45% of your misses are short, the most impactful aim point adjustment is simply taking more club — no lateral recalculation needed. Most players are surprised by the short miss percentage.</div></li>
+      <li><span class="step-n">3</span><div><strong>Build 3 personal rules from the data:</strong> After 20+ rounds: (a) your default club adjustment ("always add 1 club at 150+ yards"), (b) your systematic miss direction adjustment ("aim 5 yards right of centre"), (c) your confidence threshold for attacking pins ("only attack pins with >6 yards of margin between target and hazard on my miss side"). Three rules, applied consistently, produce more improvement than complex hole-by-hole calculations.</div></li>
     </ul>
   </div>
 </div>
