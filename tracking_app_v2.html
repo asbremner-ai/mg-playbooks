@@ -240,6 +240,10 @@ input, select, textarea { background-color: #182818; color: #e8f0d8; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 
@@ -1759,5 +1763,14 @@ document.addEventListener('DOMContentLoaded', () => {
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
 </body>
 </html>

@@ -1,4 +1,8 @@
 <!-- version:v2.2 · 2026-05-31 · golf_weekly_dashboard.html -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -422,4 +426,14 @@ function resetWeek(){
 }
 
 render();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
 </script>

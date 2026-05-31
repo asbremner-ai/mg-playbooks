@@ -352,6 +352,10 @@
   }
   .path-desc strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 0.2rem; }
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -823,5 +827,14 @@
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
 </body>
 </html>

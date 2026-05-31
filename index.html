@@ -184,6 +184,10 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
   .card-desc{font-size:12px;}
 }
 </style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 
@@ -807,6 +811,15 @@ function showPillar(id, btn) {
   btn.classList.add('active');
   btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   window.scrollTo({top:document.querySelector('.pillar-nav').offsetTop - 1,behavior:'smooth'});
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
 }
 </script>
 </body>
