@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 14_video_analysis.html -->
+<!-- version:v2.2 · 2026-06-05 · 14_video_analysis.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -57,6 +57,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
 .card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust-hi);}
 .card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime-hi);}
+.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.25),transparent);}
 .tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
 .tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
@@ -105,10 +107,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -421,12 +419,23 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
 
   <div class="card card-teal">
-    <span class="card-tag">V1 Golf</span>
-    <h3>Premium Coach Communication Platform</h3>
-    <p>Used by a large number of professional instructors. If your coach uses V1, prioritise this — the coach-student communication tools are superior to Hudl Technique for remote lesson delivery.</p>
+    <span class="card-tag">V1 Golf / OnForm</span>
+    <h3>Premium Coach Communication Platforms</h3>
+    <p>Both are widely used by PGA and CPGA professionals. If your coach specifies one, use that. If not, OnForm has become the more widely adopted platform in the UK for remote coaching workflows as of 2025–26.</p>
     <ul class="steps" style="margin-top:12px;">
-      <li><span class="step-n">✓</span><div><strong>V1 Lessons feature:</strong> Send video to your registered coach; they return annotated video with voice commentary. This turns your self-filmed footage into a structured coaching interaction.</div></li>
-      <li><span class="step-n">✓</span><div><strong>Swing library:</strong> Store all sessions chronologically. Reviewing swing evolution over 6–12 months is one of the most motivating and instructive activities you can do.</div></li>
+      <li><span class="step-n">✓</span><div><strong>V1 Lessons / OnForm Lessons:</strong> Send video to your registered coach; they return annotated video with voice commentary. Turns self-filmed footage into a structured coaching interaction.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Swing library:</strong> Both store sessions chronologically. Reviewing swing evolution over 6–12 months is one of the most motivating and instructive activities available to an improving player.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-lime">
+    <span class="card-tag">Sportsbox AI — 3D Analysis from Your Phone</span>
+    <h3>Significant Addition Since 2024 — Recommended for Phase 3+</h3>
+    <p>Sportsbox AI uses a single smartphone camera to produce 3D swing analysis — measuring pelvis rotation, thorax rotation, arm plane, and kinematic sequence parameters that previously required a dedicated motion capture studio. Now used by thousands of PGA coaches globally.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">✓</span><div><strong>3D kinematic data from one camera:</strong> Pelvis/thorax separation, X-factor, hip-to-shoulder ratio, and early extension measurement — the metrics your TPI coach uses, now available in self-coaching mode.</div></li>
+      <li><span class="step-n">✓</span><div><strong>When to use:</strong> Most valuable from Month 5 onwards when approach play becomes the priority focus. Use in the monthly swing audit sessions alongside your HackMotion data.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Works alongside Hudl Technique:</strong> Hudl for the visual analysis your coach prescribes; Sportsbox for kinematic data verification. They serve different purposes.</div></li>
     </ul>
   </div>
 
@@ -437,7 +446,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <tr><th>Tool</th><th>Best For</th><th>Cost</th></tr>
       <tr><td>iPhone Slow-Mo Camera (built-in)</td><td class="good">240fps capture — free, no app needed</td><td class="good">Free</td></tr>
       <tr><td>GolfPad (camera attachment)</td><td class="warn">Hands-free filming without a tripod</td><td class="warn">~£30–50</td></tr>
-      <tr><td>TRAIL Cam App</td><td class="warn">AI-powered automatic swing analysis</td><td class="warn">Subscription</td></tr>
+      <tr><td>Sportsbox AI</td><td class="warn">3D kinematic analysis from single phone — Phase 3+</td><td class="warn">Subscription</td></tr>
       <tr><td>PhysiTrack</td><td class="warn">If your physio prescribes exercise tracking alongside swing work</td><td class="warn">Via physio</td></tr>
       <tr><td>iMovie / Photos (iOS)</td><td class="good">Basic slow-mo review if you have no app yet</td><td class="good">Free</td></tr>
     </table>
@@ -566,14 +575,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

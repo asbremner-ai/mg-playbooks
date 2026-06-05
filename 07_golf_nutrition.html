@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 07_golf_nutrition.html -->
+<!-- version:v2.2 · 2026-06-05 · 07_golf_nutrition.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -149,10 +149,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -220,7 +216,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <table class="tbl"><tr><th>Day</th><th>Activity</th><th>Calories</th><th>Priority</th></tr>
     <tr><td>Monday</td><td>Rest / Light Putting</td><td class="warn">1,650 kcal</td><td>Fat loss</td></tr>
     <tr><td>Tuesday</td><td>Range + Strength Session</td><td class="good">2,200 kcal</td><td>Muscle retention</td></tr>
-    <tr><td>Wednesday</td><td>Short Game + SuperSpeed</td><td>1,900 kcal</td><td>Performance</td></tr>
+    <tr><td>Wednesday</td><td>Short Game + Rypstick</td><td>1,900 kcal</td><td>Performance</td></tr>
     <tr><td>Thursday</td><td>Strength Session</td><td class="good">2,200 kcal</td><td>Muscle retention</td></tr>
     <tr><td>Friday</td><td>Range + Putting</td><td>1,900 kcal</td><td>Performance</td></tr>
     <tr><td>Saturday</td><td>Golf Round</td><td class="good">2,400 kcal</td><td>Performance + SG</td></tr>
@@ -309,7 +305,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 
 <div class="sec" id="speedday">
   <h2 class="sec-title">Mobility &amp; Speed Day — 1,900 kcal</h2>
-  <p class="sec-desc">SuperSpeed training and mobility work demand moderate fuelling. These are not rest days — overspeed training with insufficient carbohydrates produces sub-maximal effort and reduced neurological adaptation.</p>
+  <p class="sec-desc">Rypstick speed training and mobility work demand moderate fuelling. These are not rest days — overspeed training with insufficient carbohydrates produces sub-maximal effort and reduced neurological adaptation.</p>
   <span class="badge badge-teal">⚡ Moderate Fuelling</span>
   <div class="card">
     <span class="card-tag">Speed Day Meal Plan</span>
@@ -317,14 +313,14 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <table class="tbl"><tr><th>Meal</th><th>Content</th><th>Calories</th><th>Protein</th></tr>
     <tr><td>Breakfast</td><td>2 eggs + 50g oats + 1 piece fruit</td><td>420 kcal</td><td>25g</td></tr>
     <tr><td>Lunch</td><td>Large chicken salad + wholegrain bread + olive oil</td><td>550 kcal</td><td>40g</td></tr>
-    <tr><td>Pre-SuperSpeed snack</td><td>Rice cake + 20g almond butter + banana</td><td>280 kcal</td><td>8g</td></tr>
+    <tr><td>Pre-Rypstick snack</td><td>Rice cake + 20g almond butter + banana</td><td>280 kcal</td><td>8g</td></tr>
     <tr><td>Post-training</td><td>Protein shake + 200ml milk</td><td>200 kcal</td><td>30g</td></tr>
     <tr><td>Dinner</td><td>150g lean beef or tofu + 100g sweet potato + veg</td><td>450 kcal</td><td>35g</td></tr></table>
     <p style="margin-top:10px;font-size:12px;color:var(--muted);">Total: ~1,900 kcal · ~138g protein · ~185g carbs · ~55g fat</p>
   </div>
   <div class="info-box tip">
     <span class="ico">💡</span>
-    <p><strong>SuperSpeed nutrition timing:</strong> Eat the pre-training snack 30–45 minutes before your overspeed session. Maximum effort requires readily available blood glucose. If you attempt SuperSpeed training fasted or in a significant deficit, you will not achieve the maximal swing speeds required for neurological adaptation.</p>
+    <p><strong>Rypstick nutrition timing:</strong> Eat the pre-training snack 30–45 minutes before your overspeed session. Maximum effort requires readily available blood glucose. If you attempt Rypstick overspeed training fasted or in a significant deficit, you will not achieve the maximal swing speeds required for neurological adaptation.</p>
   </div>
 </div>
 
@@ -523,14 +519,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

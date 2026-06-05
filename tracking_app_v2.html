@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · tracking_app_v2.html -->
+<!-- version:v2.2 · 2026-06-05 · tracking_app_v2.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -240,10 +240,6 @@ input, select, textarea { background-color: #182818; color: #e8f0d8; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 
@@ -580,7 +576,7 @@ input, select, textarea { background-color: #182818; color: #e8f0d8; }
       <div class="seg-group" id="prac-tools-seg" style="flex-wrap:wrap;">
         <div class="seg" data-val="Mevo" onclick="toggleSeg(this,'active-teal')">Mevo</div>
         <div class="seg" data-val="HackMotion" onclick="toggleSeg(this,'active-teal')">HackMotion</div>
-        <div class="seg" data-val="SuperSpeed" onclick="toggleSeg(this,'active-teal')">SuperSpeed</div>
+        <div class="seg" data-val="Rypstick" onclick="toggleSeg(this,'active-teal')">Rypstick</div>
         <div class="seg" data-val="Impact Bag" onclick="toggleSeg(this,'active-teal')">Impact Bag</div>
         <div class="seg" data-val="Alignment Sticks" onclick="toggleSeg(this,'active-teal')">Align Sticks</div>
         <div class="seg" data-val="Video" onclick="toggleSeg(this,'active-teal')">Video</div>
@@ -613,7 +609,7 @@ input, select, textarea { background-color: #182818; color: #e8f0d8; }
 
 <div class="sec" id="speed">
   <h2 class="sec-title">Speed Session</h2>
-  <p class="sec-desc">Log every SuperSpeed / Rypstick session. Only train on High or Normal HRV days. Never do overspeed within 72 hours of competition.</p>
+  <p class="sec-desc">Log every Rypstick speed session. Only train on High or Normal HRV days. Never do overspeed within 72 hours of competition.</p>
 
   <div class="info-box elite">
     <span class="ico">⭐</span>
@@ -1310,7 +1306,7 @@ function emptyState(containerId, icon, label) {
 
 // ── HRV RECOMMENDATIONS ───────────────────────────────────────
 const HRV_RECS = {
-  H: { title: '🟢 High Readiness — Full Programme Today', body: 'Your nervous system is well-recovered. Full SuperSpeed protocol, progressive strength loading, and technique acquisition. New motor patterns encode best on high-HRV days.', links: [{href:'https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html',label:'⚡ Guide 25 · Full Speed Protocol',cls:''},{href:'https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html',label:'💪 Guide 06 · GRF Training',cls:'teal'},{href:'https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html',label:'🏌️ Guide 03 · Wrist Mech.',cls:'gold'}] },
+  H: { title: '🟢 High Readiness — Full Programme Today', body: 'Your nervous system is well-recovered. Full Rypstick speed protocol, progressive strength loading, and technique acquisition. New motor patterns encode best on high-HRV days.', links: [{href:'https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html',label:'⚡ Guide 25 · Full Speed Protocol',cls:''},{href:'https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html',label:'💪 Guide 06 · GRF Training',cls:'teal'},{href:'https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html',label:'🏌️ Guide 03 · Wrist Mech.',cls:'gold'}] },
   N: { title: '🟡 Normal Readiness — Standard Programme', body: 'Adequate recovery. Proceed at normal intensity. Consolidation and maintenance work is ideal — reduce speed work to 75% effort.', links: [{href:'https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html',label:'⏱ Guide 05 · Practice Structure',cls:''},{href:'https://asbremner-ai.github.io/mg-playbooks/02_shortgame_pro.html',label:'🌊 Guide 02 · Short Game',cls:'teal'}] },
   L: { title: '🔴 Low Readiness — Rest, Mobility or Putting Only', body: 'Do NOT do overspeed training today. Mobility, putting practice, or full rest. Review what caused the low reading: sleep, alcohol, training load.', links: [{href:'https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html',label:'🎯 Guide 01 · Putting — perfect for today',cls:''},{href:'https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html',label:'❤️ Guide 06 · HRV & Readiness',cls:'teal'},{href:'https://asbremner-ai.github.io/mg-playbooks/13_injury_prevention.html',label:'🛡️ Guide 13 · Injury Prevention',cls:'gold'}] }
 };
@@ -1763,14 +1759,5 @@ document.addEventListener('DOMContentLoaded', () => {
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

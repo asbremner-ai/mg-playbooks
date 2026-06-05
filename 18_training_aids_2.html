@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 18_training_aids_2.html -->
+<!-- version:v2.2 · 2026-06-05 · 18_training_aids_2.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -179,10 +179,6 @@ hr{border:none;border-top:1px solid var(--faint);margin:22px 0;}
   .phase-table{font-size:11px;}
 }
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -608,7 +604,7 @@ hr{border:none;border-top:1px solid var(--faint);margin:22px 0;}
       </ul>
 
       <div class="tool-section-label">Integration with Mevo Data</div>
-      <p style="font-size:13px;color:var(--muted);line-height:1.8;">Track clubhead speed on the Mevo every session after Rypstick work. Plot a weekly average. If speed is not increasing by week 4 of consistent 3× per week work, check: (1) are you actually swinging at maximum effort or just comfortable effort? (2) Is fatigue accumulating — reduce to 2× per week and increase rest. (3) Consider adding SuperSpeed protocol in alternating sessions for variety of stimulus.</p>
+      <p style="font-size:13px;color:var(--muted);line-height:1.8;">Track clubhead speed on the Mevo every session after Rypstick work. Plot a weekly average. If speed is not increasing by week 4 of consistent 3× per week work, check: (1) are you actually swinging at maximum effort or just comfortable effort? (2) Is fatigue accumulating — reduce to 2× per week and increase rest. (3) Consider alternating stimulus patterns for variety — see Guide 25 for alternatives.</p>
 
       <div class="freq-row">
         <span class="freq-label">Recommended Frequency</span>
@@ -854,14 +850,5 @@ function show(id, btn) {
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 25_speed_training.html -->
+<!-- version:v2.2 · 2026-06-05 · 25_speed_training.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -148,10 +148,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -164,9 +160,9 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <div class="hero">
   <p class="hero-label">Pro Playbook · Guide 25</p>
   <h1>Speed <em>Training</em></h1>
-  <p class="hero-sub">A structured overspeed protocol for adding 10–25+ mph of club speed over 12–24 months — SuperSpeed mechanics, sequencing with technique work, when not to train, and measuring real progress.</p>
+  <p class="hero-sub">A structured overspeed protocol for adding 10–25+ mph of club speed over 12–24 months — Rypstick & overspeed mechanics, sequencing with technique work, when not to train, and measuring real progress.</p>
   <div class="hero-tags">
-    <span class="htag">⚡ Overspeed</span><span class="htag">🔄 SuperSpeed</span>
+    <span class="htag">⚡ Overspeed</span><span class="htag">🔄 Rypstick</span>
     <span class="htag">📊 Benchmarking</span><span class="htag">🗓️ Periodisation</span>
     <span class="htag">🚫 When Not To</span><span class="htag">🏌️ Integration</span>
   </div>
@@ -238,9 +234,9 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <div class="sec" id="protocol">
   <h2 class="sec-title">The Training Protocol</h2>
   <p class="sec-desc">The SuperSpeed Golf protocol is the most researched and validated speed training system for golfers. The core mechanism is systematic overspeed training with three clubs of different weights, progressing through a defined sequence.</p>
-  <span class="badge badge-gold">🔄 SuperSpeed Protocol</span>
+  <span class="badge badge-gold">🔄 Rypstick & Overspeed Protocol</span>
   <div class="card card-gold">
-    <span class="card-tag">The SuperSpeed System</span>
+    <span class="card-tag">The Overspeed System</span>
     <h3>Equipment and Core Mechanics</h3>
     <p style="margin-bottom:8px;">SuperSpeed Golf uses three training clubs: green (lightest, ~20% lighter), blue (neutral, ~10% lighter), and red (slightly heavier, ~5% heavier than driver). The progression from lightest to heaviest within each session creates maximum neurological overload followed by a speed-transfer effect.</p>
     <ul class="steps">
@@ -283,11 +279,11 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Weekly Integration Template</span>
     <h3>Speed Training in the Full Programme</h3>
     <table class="tbl"><tr><th>Day</th><th>Golf Practice</th><th>Speed Training</th><th>Fitness</th></tr>
-    <tr><td>Monday</td><td>Technical range session</td><td class="good">Full SuperSpeed protocol</td><td>Strength Session A</td></tr>
+    <tr><td>Monday</td><td>Technical range session</td><td class="good">Full Rypstick protocol</td><td>Strength Session A</td></tr>
     <tr><td>Tuesday</td><td>Short game and putting</td><td class="bad">Rest (CNS recovery)</td><td>Mobility only</td></tr>
-    <tr><td>Wednesday</td><td>On-course or simulation</td><td class="good">Full SuperSpeed protocol</td><td>Strength Session B</td></tr>
+    <tr><td>Wednesday</td><td>On-course or simulation</td><td class="good">Full Rypstick protocol</td><td>Strength Session B</td></tr>
     <tr><td>Thursday</td><td>Short game and putting</td><td class="bad">Rest</td><td>Mobility only</td></tr>
-    <tr><td>Friday</td><td>Course simulation or range</td><td class="good">Full SuperSpeed protocol</td><td>Power/GRF session</td></tr>
+    <tr><td>Friday</td><td>Course simulation or range</td><td class="good">Full Rypstick protocol</td><td>Power/GRF session</td></tr>
     <tr><td>Saturday</td><td>Golf or competition</td><td class="bad">None</td><td>Rest</td></tr>
     <tr><td>Sunday</td><td>Rest</td><td class="bad">None</td><td>Rest or light mobility</td></tr></table>
   </div>
@@ -393,7 +389,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- ON-COURSE TRANSFER -->
 <div class="sec" id="transfer">
   <h2 class="sec-title">On-Course Speed Transfer</h2>
-  <p class="sec-desc">The most common frustration in speed training: significant gains on the SuperSpeed sticks or in benchmark sessions, but no corresponding increase in driver speed on the course. This is not a training failure — it is a transfer failure. The neurological pattern has been raised, but the on-course execution system is still running the old ceiling. This section fixes that.</p>
+  <p class="sec-desc">The most common frustration in speed training: significant gains in Rypstick sessions or benchmark sessions, but no corresponding increase in driver speed on the course. This is not a training failure — it is a transfer failure. The neurological pattern has been raised, but the on-course execution system is still running the old ceiling. This section fixes that.</p>
   <span class="badge badge-rust">🚨 The Transfer Problem</span>
   <div class="card card-rust">
     <span class="card-tag">Why Speed Doesn't Automatically Transfer</span>
@@ -505,14 +501,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

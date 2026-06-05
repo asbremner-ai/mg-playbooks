@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · index.html -->
+<!-- version:v2.2 · 2026-06-05 · index.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -184,10 +184,6 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
   .card-desc{font-size:12px;}
 }
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 
@@ -245,6 +241,21 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
             <span class="card-tag ct-lime">Round Log</span>
             <span class="card-tag ct-lime">Notion Journal</span>
             <span class="card-tag">10 Tabs</span>
+          </div>
+        </div>
+        <div class="card-arrow">›</div>
+      </a>
+      <a class="guide-card" href="golf_weekly_dashboard.html">
+        <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">📅</div>
+        <div class="card-body">
+          <div class="card-number">Weekly Dashboard · Daily Checklist</div>
+          <div class="card-title">Weekly Training Dashboard</div>
+          <div class="card-desc">Day-by-day checklist for the full programme week — nutrition, mobility, training aids, practice sessions, competition-day protocols, and weekly review. Tick off tasks as you go. State saves automatically.</div>
+          <div class="card-tags">
+            <span class="card-tag ct-lime">Daily Checklist</span>
+            <span class="card-tag ct-lime">Competition Day</span>
+            <span class="card-tag ct-lime">Nutrition</span>
+            <span class="card-tag ct-lime">Recovery</span>
           </div>
         </div>
         <div class="card-arrow">›</div>
@@ -573,8 +584,8 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
       <div class="card-body">
         <div class="card-number">Guide 25</div>
         <div class="card-title">Speed Training</div>
-        <div class="card-desc">Overspeed training protocols, SuperSpeed and Rypstick programming, neurological basis of speed gains, periodisation, when not to train, and tracking real progress over 12–24 months.</div>
-        <div class="card-tags"><span class="card-tag ct-lime">Overspeed</span><span class="card-tag">Rypstick</span><span class="card-tag">SuperSpeed</span><span class="card-tag">7 tabs</span></div>
+        <div class="card-desc">Overspeed training protocols, Rypstick programming and technique, neurological basis of speed gains, periodisation, when not to train, and tracking real progress over 12–24 months.</div>
+        <div class="card-tags"><span class="card-tag ct-lime">Overspeed</span><span class="card-tag">Rypstick</span><span class="card-tag">Rypstick</span><span class="card-tag">7 tabs</span></div>
       </div>
       <div class="card-arrow">›</div>
     </a>
@@ -684,7 +695,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
         <div class="card-number">Guide 06</div>
         <div class="card-title">Golf Fitness Plan</div>
         <div class="card-desc">TPI-based 6-month programme — mobility, strength, power, and pre-round activation. Phase-by-phase from base building to explosive power, with the daily 6-minute mobility protocol.</div>
-        <div class="card-tags"><span class="card-tag ct-rust">6-Month Plan</span><span class="card-tag">TPI</span><span class="card-tag">SuperSpeed</span><span class="card-tag">10 tabs</span></div>
+        <div class="card-tags"><span class="card-tag ct-rust">6-Month Plan</span><span class="card-tag">TPI</span><span class="card-tag">Rypstick</span><span class="card-tag">10 tabs</span></div>
       </div>
       <div class="card-arrow">›</div>
     </a>
@@ -801,7 +812,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 
 </div><!-- /index-wrap -->
 
-<div class="footer">GOLF PLAYBOOKS · 5 PILLARS · 43 GUIDES · 10 HCP → SCRATCH · STROKES GAINED · 24-MONTH PLAN</div>
+<div class="footer">GOLF PLAYBOOKS · 5 PILLARS · 37 GUIDES · 6 TOOLS · 10 HCP → SCRATCH · STROKES GAINED · 24-MONTH PLAN</div>
 
 <script>
 function showPillar(id, btn) {
@@ -811,15 +822,6 @@ function showPillar(id, btn) {
   btn.classList.add('active');
   btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   window.scrollTo({top:document.querySelector('.pillar-nav').offsetTop - 1,behavior:'smooth'});
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
 }
 </script>
 </body>

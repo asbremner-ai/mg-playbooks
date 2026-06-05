@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.1 · 2026-05-31 · 35_links_travel_golf.html -->
+<!-- version:v1.0 · 2026-05-30 · 35_links_travel_golf.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -59,10 +59,6 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .footer{text-align:center;padding:24px 16px;font-family:"JetBrains Mono",monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 @media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
@@ -251,14 +247,5 @@ function show(id,btn){document.querySelectorAll(".sec").forEach(s=>s.classList.r
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

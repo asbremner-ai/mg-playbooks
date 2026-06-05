@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-05-31 · 26_stats_interpretation.html -->
+<!-- version:v2.2 · 2026-06-05 · 26_stats_interpretation.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -148,10 +148,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -361,7 +357,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <tr><td>SG: PUTT — 5–10 feet</td><td>Start line accuracy</td><td>Guide 01 Direction tab</td><td>Alignment stick drill; chalk line gate drill</td></tr>
     <tr><td>SG: PUTT — lag putting</td><td>Pace control from distance</td><td>Guide 01 Pace tab</td><td>Clock drill; target-focus long putt protocol</td></tr>
     <tr><td>SG: OTT — penalty rate</td><td>Tee strategy, miss direction</td><td>Guide 20 Tee Strategy</td><td>Miss direction planning; tee box positioning</td></tr>
-    <tr><td>SG: OTT — distance loss</td><td>Speed, GRF, smash factor</td><td>Guide 25 + Guide 06 GRF</td><td>SuperSpeed protocol; GRF Phase 1–3 drills</td></tr></table>
+    <tr><td>SG: OTT — distance loss</td><td>Speed, GRF, smash factor</td><td>Guide 25 + Guide 06 GRF</td><td>Rypstick speed protocol; GRF Phase 1–3 drills</td></tr></table>
   </div>
 </div>
 
@@ -491,14 +487,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>

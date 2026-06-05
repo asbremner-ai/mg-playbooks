@@ -1,8 +1,4 @@
-<!-- version:v2.2 · 2026-05-31 · golf_weekly_dashboard.html -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
-
+<!-- version:v2.2 · 2026-06-05 · golf_weekly_dashboard.html -->
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -170,7 +166,7 @@ const TASK_DEFS = {
     {id:'fri_power_session',name:'Power / Rotation / Speed Session — 55 min',tag:'Strength',cls:'tag-gold'},
     {id:'fri_eccentric_wrist',name:'Eccentric wrist flexion 3×15 (injury prevention)',tag:'Injury Prev',cls:'tag-lime'},
     {id:'fri_single_leg_dl',name:'Single-leg deadlift 3×8 each (lower back + hip)',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'fri_superspeed',name:'SuperSpeed: light × 10, medium × 10, driver × 10 at MAX effort',tag:'Speed',cls:'tag-rust'},
+    {id:'fri_rypstick_speed',name:'Rypstick speed session: heavy warm-up 5 reps → lag 10 reps → max speed 15 reps',tag:'Speed',cls:'tag-rust'},
     {id:'fri_combo_range',name:'Post-gym range: 30 min — target focus + pressure simulation',tag:'Practice',cls:'tag-lime'},
     {id:'fri_putting',name:'Putting — 30 min: start-line gate drill + circle drill + course sim',tag:'Practice',cls:'tag-lime'},
     {id:'fri_mevo_transfer',name:'Mevo transfer shots (5 driver immediately after Rypstick) — record speeds',tag:'Training Aid',cls:'tag-blue'},
@@ -426,14 +422,4 @@ function resetWeek(){
 }
 
 render();
-</script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
 </script>

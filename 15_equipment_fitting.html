@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.3 · 2026-05-31 · 15_equipment_fitting.html -->
+<!-- version:v2.1 · 2026-05-30 · 15_equipment_fitting.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -98,10 +98,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#060c06">
-<link rel="apple-touch-icon" href="/icons/icon-192.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -543,37 +539,6 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <span class="ico">🏆</span>
     <p><strong>The scratch player's equipment philosophy:</strong> Equipment should be invisible during play — you should never be thinking about your clubs. When equipment is correctly fitted and well-maintained, it becomes transparent. When it is wrong, it creates conscious or unconscious compensation that corrupts both technique and decision-making. Invest in fitting once per milestone, maintain between milestones, and never change equipment within 8 weeks of an important competition.</p>
   </div>
-
-  <h2 class="sec-title" style="margin-top:32px;">The Ball Fitting Test Protocol</h2>
-  <p class="sec-desc">Selecting the right ball is not a one-time decision — it is a calibration that should be validated when your swing speed changes significantly (after a speed training block) or when a new ball model is released in your category. A 20-minute Mevo session eliminates guesswork and confirms whether your current ball is optimal for your specific numbers.</p>
-  <div class="card card-teal">
-    <span class="card-tag">The Head-to-Head Test — How to Run It</span>
-    <h3>Comparing Two Balls on the Same Day</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Test on the same day, same conditions, same clubs:</strong> Ball comparisons are only valid when all other variables are controlled. Never compare a range session with one ball to a round with another — wind, temperature, fatigue, and course surface all contaminate the comparison. Set up your Mevo on the range, warm up with your current ball, then alternate shots between the two balls: 5 with Ball A, 5 with Ball B, repeat 3 times per club.</div></li>
-      <li><span class="step-n">2</span><div><strong>The four metrics that matter for ball selection:</strong>
-        <br>— <strong>Driver ball speed and carry:</strong> Does one ball produce higher ball speed from the same swing? A 1 mph difference in ball speed = approximately 1.5 yards of carry. Over a full round this compounds.
-        <br>— <strong>Wedge spin rate (60–80% swing):</strong> The most important short game metric. Higher spin = more stopping power and tighter landing zones. Record spin rate with your gap wedge at three-quarter swing. A difference of 500+ rpm is meaningful.
-        <br>— <strong>7-iron carry consistency (standard deviation):</strong> Which ball produces tighter grouping across 10 shots? Lower standard deviation = more predictable distance control under pressure.
-        <br>— <strong>Smash factor at driver:</strong> Does one ball produce a consistently higher smash factor? This reflects energy transfer efficiency — the better-matched ball to your swing speed will typically show 0.01–0.02 higher smash factor.</div></li>
-      <li><span class="step-n">3</span><div><strong>Record and decide:</strong> After the session, the decision is almost always clear. If Ball A produces higher driver carry and equivalent or higher wedge spin — use Ball A. If Ball B produces equivalent driver carry but meaningfully higher wedge spin — use Ball B. The short game spin advantage is worth more than marginal distance gains at your handicap level, because approach proximity and scrambling are where the SG gap lives.</div></li>
-    </ul>
-  </div>
-  <div class="card">
-    <span class="card-tag">When to Run the Test</span>
-    <h3>Three Triggers for a Ball Validation Session</h3>
-    <table class="tbl">
-      <tr><th>Trigger</th><th>Why It Matters</th><th>Action</th></tr>
-      <tr><td>After a speed training block (+3 mph or more)</td><td class="warn">Higher swing speed may shift you into a different compression category</td><td>Re-test current ball vs. one compression category higher</td></tr>
-      <tr><td>New model released in your ball category</td><td class="warn">Manufacturers update cover formulations and core designs annually</td><td>Run head-to-head vs. current ball before switching</td></tr>
-      <tr><td>Significant scoring plateau with no technical explanation</td><td class="warn">Rarely the ball — but worth eliminating as a variable</td><td>Test ball + check grips + check lie angles before technical changes</td></tr>
-      <tr><td>At every major fitting milestone (10, 5, 2 HCP)</td><td class="good">Swing characteristics change with handicap — ball match should keep pace</td><td>Full ball test as part of milestone re-fit session</td></tr>
-    </table>
-    <div class="info-box tip" style="margin-top:10px;">
-      <span class="ico">💡</span>
-      <p><strong>The consistency rule overrides everything:</strong> A ball that tests marginally better in a controlled session but which you will play inconsistently — sometimes the premium version, sometimes a cheaper substitute when you lose a few — is worse than a good ball played 100% of the time. The neurological calibration of spin rates and feel across all clubs requires complete consistency. If you cannot commit to one ball every round, choose the one you can afford to play every round, and play it exclusively.</p>
-    </div>
-  </div>
 </div>
 
 <!-- SHAFT FITTING -->
@@ -696,14 +661,5 @@ function show(id,btn){
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
-<script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('[SW] Registered:', reg.scope))
-      .catch(err => console.warn('[SW] Registration failed:', err));
-  });
-}
-</script>
 </body>
 </html>
