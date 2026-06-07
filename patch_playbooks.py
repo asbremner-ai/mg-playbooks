@@ -15,7 +15,7 @@ What it does for every playbook HTML file:
 Safe to re-run — already-patched files are detected and skipped.
 """
 
-# <!-- version:v2.1 · 2026-05-30 · patch_playbooks.py -->
+# <!-- version:v2.2 · 2026-06-07 · patch_playbooks.py -->
 
 import os, re
 
