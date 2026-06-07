@@ -1,425 +1,504 @@
-<!-- version:v2.2 · 2026-06-05 · golf_weekly_dashboard.html -->
-
+<!DOCTYPE html>
+<!-- version:v3.0 · 2026-06-07 · golf_weekly_dashboard.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Weekly Training Dashboard — The Scratch Project</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
---gold:#c9a84c;--gold-light:#f0d080;--lime:#7ab648;--teal:#1d9e75;
---rust:#c94c1d;--bg:var(--color-background-primary);--bg2:var(--color-background-secondary);
---bg3:var(--color-background-tertiary);--border:var(--color-border-tertiary);
---border2:var(--color-border-secondary);--txt:var(--color-text-primary);
---txt2:var(--color-text-secondary);--txt3:var(--color-text-tertiary);
---rad:var(--border-radius-md);--radl:var(--border-radius-lg);
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:          #0a160a;
+  --surface:     #111e11;
+  --surface2:    #182818;
+  --surface3:    #1e321e;
+  --border:      rgba(160,200,80,0.16);
+  --border-hi:   rgba(160,200,80,0.36);
+  --lime:        #a0c850;
+  --lime-hi:     #c0e060;
+  --lime-dim:    rgba(160,200,80,0.09);
+  --gold:        #e0b840;
+  --gold-hi:     #f0d070;
+  --gold-dim:    rgba(224,184,64,0.09);
+  --teal:        #48b0a8;
+  --teal-hi:     #70ccc4;
+  --teal-dim:    rgba(72,176,168,0.09);
+  --rust:        #d86030;
+  --rust-hi:     #f08050;
+  --rust-dim:    rgba(216,96,48,0.09);
+  --blue:        #4888d8;
+  --blue-hi:     #6aaaf8;
+  --blue-dim:    rgba(72,136,216,0.09);
+  --white:       #e8f0d8;
+  --muted:       rgba(232,240,216,0.55);
+  --faint:       rgba(232,240,216,0.18);
+  --r:           12px;
+  --r-sm:        8px;
 }
-body{font-family:var(--font-sans);color:var(--txt);background:transparent;}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
 
-.dash{padding:0 0 2rem;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 10%,rgba(160,200,80,0.05) 0%,transparent 55%),radial-gradient(ellipse at 85% 85%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
 
-.header{padding:1.25rem 0 1rem;border-bottom:0.5px solid var(--border2);margin-bottom:1.25rem;}
-.header-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.header h1{font-size:20px;font-weight:500;letter-spacing:-0.02em;}
-.header-sub{font-size:12px;color:var(--txt3);margin-top:3px;}
-.week-badge{font-size:11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rad);padding:4px 10px;color:var(--txt2);}
+/* Top nav */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:color .2s;}
+.topbar a:hover{color:var(--lime-hi);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);}
 
-.prog-bar-wrap{margin:1rem 0 0.25rem;display:flex;align-items:center;gap:10px;}
-.prog-bar{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--lime),var(--teal));border-radius:3px;transition:width .4s ease;}
-.prog-label{font-size:12px;color:var(--txt2);min-width:40px;text-align:right;}
-.prog-txt{font-size:11px;color:var(--txt3);margin-bottom:.5rem;}
+/* Hero */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--teal),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:8px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:12.5px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:380px;margin:0 auto;}
+.hstat{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 10px;text-align:center;}
+.hstat-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:var(--lime);line-height:1;}
+.hstat-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
 
-.day-tabs{display:flex;gap:4px;margin-bottom:1.25rem;flex-wrap:wrap;}
-.day-tab{font-size:12px;padding:5px 10px;border-radius:var(--rad);border:0.5px solid var(--border2);background:var(--bg2);color:var(--txt2);cursor:pointer;transition:all .15s;font-family:var(--font-sans);}
-.day-tab:hover{background:var(--bg3);border-color:var(--border2);}
-.day-tab.active{background:var(--txt);color:var(--bg);border-color:var(--txt);}
-.day-tab.rest-day{border-color:rgba(90,150,255,.35);}
-.day-tab.rest-day.active{background:var(--teal);border-color:var(--teal);}
+/* Progress bar */
+.progress-wrap{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 20px;position:relative;z-index:2;}
+.progress-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+.progress-meta{flex:1;}
+.progress-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.progress-bar{height:6px;background:var(--surface3);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--lime),var(--teal));border-radius:3px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.progress-right{text-align:right;white-space:nowrap;}
+.progress-pct{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--lime);line-height:1;}
+.progress-tasks{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);margin-top:2px;}
 
-.section-label{font-size:10px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--txt3);margin:0 0 8px;display:block;}
-.section-gap{margin-top:1.5rem;}
+/* Main wrap */
+.main-wrap{max-width:720px;margin:0 auto;padding:0 16px 60px;position:relative;z-index:1;}
 
-.task-group{margin-bottom:1rem;}
-.task-group-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
-.group-icon{font-size:16px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:var(--rad);background:var(--bg2);}
-.group-title{font-size:13px;font-weight:500;}
-.group-count{font-size:11px;color:var(--txt3);margin-left:auto;}
-
-.task-item{display:flex;align-items:flex-start;gap:10px;padding:7px 10px;border-radius:var(--rad);border:0.5px solid var(--border);background:var(--bg);margin-bottom:4px;cursor:pointer;transition:background .12s,border-color .12s;user-select:none;}
-.task-item:hover{background:var(--bg2);border-color:var(--border2);}
-.task-item.done{opacity:.55;}
-.task-item.done .task-name{text-decoration:line-through;color:var(--txt3);}
-.task-cb{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.task-cb.checked{background:var(--lime);border-color:var(--lime);}
-.task-cb.checked::after{content:'';display:block;width:4px;height:8px;border:2px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
-.task-name{font-size:13px;color:var(--txt);line-height:1.4;flex:1;}
-.task-tag{font-size:10px;padding:2px 6px;border-radius:3px;flex-shrink:0;font-weight:500;margin-top:1px;}
-.tag-gold{background:rgba(201,168,76,.15);color:var(--gold);}
-.tag-lime{background:rgba(122,182,72,.15);color:var(--lime);}
-.tag-teal{background:rgba(29,158,117,.15);color:var(--teal);}
-.tag-rust{background:rgba(201,76,29,.15);color:var(--rust);}
-.tag-blue{background:rgba(55,138,221,.15);color:#3a8ad4;}
-.tag-gray{background:var(--bg3);color:var(--txt2);}
-
-.day-card{background:var(--bg);border:0.5px solid var(--border2);border-radius:var(--radl);padding:1.1rem 1.25rem;margin-bottom:1rem;}
-.day-card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--border);}
-.day-card-title{font-size:15px;font-weight:500;}
-.day-type-badge{font-size:10px;padding:3px 8px;border-radius:3px;font-weight:500;}
-.badge-strength{background:rgba(201,168,76,.15);color:var(--gold);}
-.badge-practice{background:rgba(122,182,72,.15);color:var(--lime);}
-.badge-round{background:rgba(29,158,117,.15);color:var(--teal);}
-.badge-rest{background:var(--bg3);color:var(--txt2);}
-.badge-power{background:rgba(201,76,29,.15);color:var(--rust);}
-
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
-
-.stat-card{background:var(--bg2);border-radius:var(--rad);padding:.875rem 1rem;}
-.stat-label{font-size:11px;color:var(--txt3);margin-bottom:3px;}
-.stat-val{font-size:22px;font-weight:500;}
-.stat-sub{font-size:11px;color:var(--txt3);margin-top:1px;}
-
-.reset-btn{font-size:12px;padding:5px 12px;border-radius:var(--rad);border:0.5px solid var(--border2);background:transparent;color:var(--txt2);cursor:pointer;font-family:var(--font-sans);}
-.reset-btn:hover{background:var(--bg2);}
-
-.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:1.25rem;}
-.wg-cell{border:0.5px solid var(--border);border-radius:var(--rad);padding:6px 4px;text-align:center;cursor:pointer;transition:all .12s;}
-.wg-cell:hover{border-color:var(--border2);}
-.wg-cell.wg-active{border-color:var(--txt);background:var(--txt);}
-.wg-cell.wg-active .wg-day{color:var(--bg);}
-.wg-cell.wg-active .wg-icon{color:var(--bg);}
-.wg-day{font-size:10px;font-weight:500;color:var(--txt2);display:block;margin-bottom:3px;}
-.wg-icon{font-size:15px;display:block;margin-bottom:3px;}
-.wg-pips{display:flex;justify-content:center;gap:2px;flex-wrap:wrap;}
-.pip{width:5px;height:5px;border-radius:50%;background:var(--border2);}
+/* Day selector grid */
+.day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:20px 0;}
+.dgcell{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 4px;text-align:center;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;}
+.dgcell:hover{border-color:var(--border-hi);background:var(--surface2);}
+.dgcell.active{background:var(--surface2);border-color:var(--lime);box-shadow:0 0 12px rgba(160,200,80,.12);}
+.dgcell.active::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--lime);}
+.dc-day{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
+.dgcell.active .dc-day{color:var(--lime-hi);}
+.dc-icon{font-size:15px;display:block;margin-bottom:3px;}
+.dc-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);}
+.dgcell.active .dc-count{color:var(--lime);}
+.dc-pips{display:flex;justify-content:center;gap:2px;margin-top:4px;flex-wrap:wrap;}
+.pip{width:5px;height:5px;border-radius:50%;background:var(--surface3);}
 .pip.done{background:var(--lime);}
 
-.note-area{width:100%;font-family:var(--font-sans);font-size:13px;color:var(--txt);background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rad);padding:10px 12px;resize:vertical;min-height:70px;margin-top:6px;}
-.note-area:focus{outline:none;border-color:var(--border2);}
-.note-area::placeholder{color:var(--txt3);}
+/* Day panel */
+.day-panel{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:14px;position:relative;overflow:hidden;}
+.day-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.day-panel-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);gap:12px;}
+.day-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:900;color:var(--white);line-height:1.1;}
+.day-done-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.day-type-badge{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+.bt-rest    {background:var(--surface3);color:var(--muted);border:1px solid var(--border);}
+.bt-practice{background:var(--lime-dim);color:var(--lime-hi);border:1px solid rgba(160,200,80,.25);}
+.bt-strength{background:var(--gold-dim);color:var(--gold-hi);border:1px solid rgba(224,184,64,.25);}
+.bt-round   {background:var(--teal-dim);color:var(--teal-hi);border:1px solid rgba(72,176,168,.25);}
+.bt-power   {background:var(--rust-dim);color:var(--rust-hi);border:1px solid rgba(216,96,48,.25);}
+.bt-comp    {background:var(--rust-dim);color:var(--rust-hi);border:1px solid rgba(216,96,48,.25);}
 
-.all-week-view{display:grid;grid-template-columns:1fr;gap:8px;}
+/* Task groups */
+.task-group{margin-bottom:14px;}
+.task-group-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.tg-icon{font-size:13px;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--surface3);border:1px solid var(--border);flex-shrink:0;}
+.tg-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex:1;}
+.tg-count{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);}
 
-.divider{height:0.5px;background:var(--border);margin:1.25rem 0;}
+.task-item{display:flex;align-items:flex-start;gap:10px;padding:9px 11px;border-radius:var(--r-sm);border:1px solid var(--border);background:rgba(10,22,10,.6);margin-bottom:4px;cursor:pointer;transition:background .12s,border-color .15s;user-select:none;}
+.task-item:hover{background:var(--surface2);border-color:var(--border-hi);}
+.task-item.done{opacity:.4;}
+.task-item.done .task-name{text-decoration:line-through;color:var(--faint);}
+.task-cb{width:16px;height:16px;border-radius:4px;border:1.5px solid rgba(160,200,80,.3);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.task-cb.checked{background:var(--lime);border-color:var(--lime);}
+.task-cb.checked::after{content:'';display:block;width:4px;height:7px;border:1.5px solid #0a160a;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px);}
+.task-name{font-size:13px;color:var(--white);line-height:1.5;flex:1;opacity:.88;}
+.task-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;padding:3px 7px;border-radius:3px;flex-shrink:0;margin-top:2px;}
+.tt-lime {background:var(--lime-dim);color:var(--lime-hi);border:1px solid rgba(160,200,80,.2);}
+.tt-teal {background:var(--teal-dim);color:var(--teal-hi);border:1px solid rgba(72,176,168,.2);}
+.tt-gold {background:var(--gold-dim);color:var(--gold-hi);border:1px solid rgba(224,184,64,.2);}
+.tt-rust {background:var(--rust-dim);color:var(--rust-hi);border:1px solid rgba(216,96,48,.2);}
+.tt-blue {background:var(--blue-dim);color:var(--blue-hi);border:1px solid rgba(72,136,216,.2);}
+.tt-gray {background:var(--surface3);color:var(--muted);border:1px solid var(--border);}
+
+/* Section heads */
+.section-head{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;margin:20px 0 10px;display:flex;align-items:center;gap:10px;color:var(--faint);}
+.section-head::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* Notes */
+.note-area{width:100%;font-family:'Inter',sans-serif;font-size:13px;color:var(--white);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;resize:vertical;min-height:72px;transition:border-color .2s;line-height:1.6;}
+.note-area:focus{outline:none;border-color:var(--lime);box-shadow:0 0 0 3px rgba(160,200,80,.08);}
+.note-area::placeholder{color:var(--faint);}
+
+/* Week at a glance */
+.week-glance{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:8px;}
+.wg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 8px;text-align:center;cursor:pointer;transition:all .18s;}
+.wg-card:hover{border-color:var(--border-hi);}
+.wg-card.wg-active{border-color:var(--lime);}
+.wg-day{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:3px;}
+.wg-nums{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px;}
+.wg-bar{height:3px;background:var(--surface3);border-radius:2px;overflow:hidden;}
+.wg-fill{height:100%;border-radius:2px;transition:width .4s;}
+
+/* Summary stats */
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.stat-card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.2),transparent);}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.stat-val{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--lime);line-height:1;}
+.stat-sub{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted);margin-top:3px;}
+
+/* Reset */
+.reset-btn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:6px 13px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .18s;}
+.reset-btn:hover{border-color:var(--border-hi);color:var(--white);background:var(--surface2);}
+
+/* Footer */
+.footer{text-align:center;padding:22px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+@keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.day-panel{animation:rise .25s ease;}
 </style>
+</head>
+<body>
 
-<h2 class="sr-only">Weekly golf performance dashboard — track daily tasks across nutrition, fitness, practice, and rounds</h2>
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="topbar-brand">The Scratch Project</span>
+</div>
 
-<div class="dash" id="app"></div>
+<div class="hero">
+  <p class="hero-label">Pro Playbook &middot; Dashboard</p>
+  <h1>Weekly <em>Training</em></h1>
+  <p class="hero-sub">Complete weekly task system — nutrition, fitness, practice, rounds, and recovery. Every session logged, every pillar tracked.</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-num" id="hs-done">0</div><div class="hstat-lbl">Done</div></div>
+    <div class="hstat"><div class="hstat-num" id="hs-pct" style="color:var(--gold);">0%</div><div class="hstat-lbl">Week</div></div>
+    <div class="hstat"><div class="hstat-num" id="hs-rem" style="color:var(--muted);">0</div><div class="hstat-lbl">Remain</div></div>
+  </div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-inner">
+    <div class="progress-meta">
+      <div class="progress-title" id="week-label">Week of —</div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="progress-right">
+      <div class="progress-pct" id="progress-pct">0%</div>
+      <div class="progress-tasks" id="progress-tasks">0 / 0 tasks</div>
+    </div>
+  </div>
+</div>
+
+<div class="main-wrap">
+  <div class="day-grid" id="day-grid"></div>
+  <div id="day-panel"></div>
+
+  <div class="section-head">Week at a glance</div>
+  <div class="week-glance" id="week-glance"></div>
+
+  <div class="section-head" style="margin-top:20px;">Summary</div>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-label">Week complete</div>
+      <div class="stat-val" id="sum-pct">0%</div>
+      <div class="stat-sub" id="sum-tasks">0 of 0 tasks</div>
+    </div>
+    <div class="stat-card" style="cursor:pointer;" id="today-card">
+      <div class="stat-label">Today</div>
+      <div class="stat-val" id="sum-today">—</div>
+      <div class="stat-sub" id="sum-today-label">—</div>
+    </div>
+  </div>
+
+  <div style="text-align:right;margin-top:16px;">
+    <button class="reset-btn" onclick="resetWeek()">&#8635; Reset week</button>
+  </div>
+</div>
+
+<div class="footer">THE SCRATCH PROJECT &middot; WEEKLY TRAINING DASHBOARD &middot; 10 HCP &rarr; SCRATCH &middot; 24-MONTH PLAN</div>
 
 <script>
-const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DAYS     = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const DAY_FULL = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const DAY_ICONS = ['<i class="ti ti-zzz"></i>','<i class="ti ti-target"></i>','<i class="ti ti-barbell"></i>','<i class="ti ti-golf"></i>','<i class="ti ti-barbell"></i>','<i class="ti ti-trophy"></i>','<i class="ti ti-target"></i>'];
-const DAY_TYPE = ['Rest','Practice','Strength','Round','Power','Comp Round','Practice'];
-const TYPE_CLASS = ['badge-rest','badge-practice','badge-strength','badge-round','badge-power','badge-round','badge-practice'];
+const DAY_ICONS  = ['😴','🎯','🏋️','⛳','⚡','🏆','🎯'];
+const DAY_TYPE   = ['Rest','Practice','Strength','Round','Power','Comp Round','Practice'];
+const TYPE_CLASS = ['bt-rest','bt-practice','bt-strength','bt-round','bt-power','bt-comp','bt-practice'];
 
 const TASK_DEFS = {
   daily: [
-    {id:'mob',name:'12-min daily mobility routine (TPI corrective)',tag:'Daily',cls:'tag-lime'},
-    {id:'hydrate',name:'Drink 2.5–3L water',tag:'Nutrition',cls:'tag-teal'},
-    {id:'protein',name:'Hit 180g protein target',tag:'Nutrition',cls:'tag-teal'},
-    {id:'sleep',name:'8 hours sleep (non-negotiable)',tag:'Recovery',cls:'tag-blue'},
-    {id:'supps',name:'Supplements: Vitamin D3, Omega-3, Creatine 5g, Magnesium (evening)',tag:'Nutrition',cls:'tag-gold'},
+    {id:'mob',    name:'12-min daily mobility routine (TPI corrective)',tag:'Daily',cls:'tt-lime'},
+    {id:'hydrate',name:'Drink 2.5–3L water',tag:'Nutrition',cls:'tt-teal'},
+    {id:'protein',name:'Hit 180g protein target',tag:'Nutrition',cls:'tt-teal'},
+    {id:'sleep',  name:'8 hours sleep (non-negotiable)',tag:'Recovery',cls:'tt-blue'},
+    {id:'supps',  name:'Supplements: Vitamin D3, Omega-3, Creatine 5g, Magnesium (evening)',tag:'Nutrition',cls:'tt-gold'},
   ],
   mon: [
-    {id:'mon_mob_extra',name:'Cat-cow + wall posture drill (TPI: setup posture)',tag:'TPI Red',cls:'tag-rust'},
-    {id:'mon_single_leg',name:'Single-leg balance × 45 sec each side',tag:'TPI Red',cls:'tag-rust'},
-    {id:'mon_light_range',name:'Light putting green only — lag putting + circle drill (no full swings)',tag:'Practice',cls:'tag-lime'},
-    {id:'mon_stats',name:'Review previous round stats — log to journal',tag:'Review',cls:'tag-gray'},
-    {id:'mon_video',name:'Weekly video review (20 min) — DTL + FO checkpoints',tag:'Video',cls:'tag-blue'},
+    {id:'mon_mob_extra',  name:'Cat-cow + wall posture drill (TPI: setup posture)',tag:'TPI Red',cls:'tt-rust'},
+    {id:'mon_single_leg', name:'Single-leg balance × 45 sec each side',tag:'TPI Red',cls:'tt-rust'},
+    {id:'mon_light_range',name:'Light putting green only — lag putting + circle drill (no full swings)',tag:'Practice',cls:'tt-lime'},
+    {id:'mon_stats',      name:'Review previous round stats — log to journal',tag:'Review',cls:'tt-gray'},
+    {id:'mon_video',      name:'Weekly video review (20 min) — DTL + FO checkpoints',tag:'Video',cls:'tt-blue'},
   ],
   tue: [
-    {id:'tue_trx_warmup',name:'TPI corrective warm-up 5 min before session',tag:'TPI',cls:'tag-rust'},
-    {id:'tue_trx_session',name:'Strength Session A: TRX Foundation (Squat, Row, Chest Press)',tag:'Strength',cls:'tag-gold'},
-    {id:'tue_core',name:'Core work: Dead bug 3×10, Pallof press 3×12',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'tue_range',name:'Range — 60 min (warm-up → routine groove → target focus → pressure sim)',tag:'Practice',cls:'tag-lime'},
-    {id:'tue_post_protein',name:'Post-training protein shake within 30 min (25–30g)',tag:'Nutrition',cls:'tag-teal'},
-    {id:'tue_hackmotion',name:'HackMotion on lead wrist — entire range session',tag:'Training Aid',cls:'tag-blue'},
-    {id:'tue_mevo',name:'Mevo Gen2 — minimum 15 shots captured',tag:'Training Aid',cls:'tag-blue'},
-    {id:'tue_trs_warmup',name:'TRS Rotation Stick — 5 min warm-up before ball striking',tag:'Training Aid',cls:'tag-blue'},
+    {id:'tue_trx_warmup', name:'TPI corrective warm-up 5 min before session',tag:'TPI',cls:'tt-rust'},
+    {id:'tue_trx_session',name:'Strength Session A: TRX Foundation (Squat, Row, Chest Press)',tag:'Strength',cls:'tt-gold'},
+    {id:'tue_core',       name:'Core work: Dead bug 3×10, Pallof press 3×12',tag:'Injury Prev',cls:'tt-lime'},
+    {id:'tue_range',      name:'Range — 60 min (warm-up → routine groove → target focus → pressure sim)',tag:'Practice',cls:'tt-lime'},
+    {id:'tue_post_prot',  name:'Post-training protein shake within 30 min (25–30g)',tag:'Nutrition',cls:'tt-teal'},
+    {id:'tue_hackmotion', name:'HackMotion on lead wrist — entire range session',tag:'Training Aid',cls:'tt-blue'},
+    {id:'tue_mevo',       name:'Mevo Gen2 — minimum 15 shots captured',tag:'Training Aid',cls:'tt-blue'},
+    {id:'tue_trs_warmup', name:'TRS Rotation Stick — 5 min warm-up before ball striking',tag:'Training Aid',cls:'tt-blue'},
   ],
   wed: [
-    {id:'wed_warmup',name:'Pre-session: 5 min brisk walk + hip hinges + lateral band walks',tag:'Warm-up',cls:'tag-lime'},
-    {id:'wed_strength_b',name:'Strength Session B: Dumbbell Hip Hinge + Core (50 min)',tag:'Strength',cls:'tag-gold'},
-    {id:'wed_inj_prev',name:'Injury prevention: Band ext. rotation 3×15, Band pull-apart 3×20',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'wed_hip_thrust',name:'Hip thrust 3×12, Lateral band walk 3×15 each',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'wed_short_game',name:'Short game session — 45 min (landing spot, shot variety, up-and-down game)',tag:'Practice',cls:'tag-lime'},
-    {id:'wed_exputt',name:'ExPutt — 20 min minimum (Make 100 drill or speed ladder)',tag:'Training Aid',cls:'tag-blue'},
-    {id:'wed_post_protein',name:'Post-training protein shake within 30 min',tag:'Nutrition',cls:'tag-teal'},
-    {id:'wed_coach_send',name:'Send weekly video + 3-sentence journal note to coach',tag:'Coaching',cls:'tag-gold'},
+    {id:'wed_warmup',     name:'Pre-session: 5 min brisk walk + hip hinges + lateral band walks',tag:'Warm-up',cls:'tt-lime'},
+    {id:'wed_strength_b', name:'Strength Session B: Dumbbell Hip Hinge + Core (50 min)',tag:'Strength',cls:'tt-gold'},
+    {id:'wed_inj_prev',   name:'Injury prevention: Band ext. rotation 3×15, Band pull-apart 3×20',tag:'Injury Prev',cls:'tt-lime'},
+    {id:'wed_hip_thrust', name:'Hip thrust 3×12, Lateral band walk 3×15 each',tag:'Injury Prev',cls:'tt-lime'},
+    {id:'wed_short_game', name:'Short game session — 45 min (landing spot, shot variety, up-and-down game)',tag:'Practice',cls:'tt-lime'},
+    {id:'wed_exputt',     name:'ExPutt — 20 min minimum (Make 100 drill or speed ladder)',tag:'Training Aid',cls:'tt-blue'},
+    {id:'wed_post_prot',  name:'Post-training protein shake within 30 min',tag:'Nutrition',cls:'tt-teal'},
+    {id:'wed_coach_send', name:'Send weekly video + 3-sentence journal note to coach',tag:'Coaching',cls:'tt-gold'},
   ],
   thu: [
-    {id:'thu_premeal',name:'Pre-round meal 2 hrs before (low-GI: oats/eggs/rice — no high-sugar)',tag:'Nutrition',cls:'tag-teal'},
-    {id:'thu_prewater',name:'500ml water in the hour before tee',tag:'Hydration',cls:'tag-teal'},
-    {id:'thu_caffeine',name:'Caffeine 100–200mg, 45 min before round',tag:'Nutrition',cls:'tag-gold'},
-    {id:'thu_dynamic_mob',name:'Dynamic mobility warm-up (10 min) — thoracic, hip 90/90, hip flexor, shoulder CARs',tag:'Warm-up',cls:'tag-lime'},
-    {id:'thu_putt_warmup',name:'Pre-round putting: green speed calibration → break calibration → confidence 4-ft makes',tag:'Pre-Round',cls:'tag-lime'},
-    {id:'thu_sg_warmup',name:'Short game warm-up: 3 bunker shots + chip feel + trajectory calibration',tag:'Pre-Round',cls:'tag-lime'},
-    {id:'thu_range_warmup',name:'Range warm-up: progressive wedges → irons → driver (30 min)',tag:'Pre-Round',cls:'tag-lime'},
-    {id:'thu_oncourse',name:'On-course snack: banana/bar (25g carb) at holes 5–6 and 10–12',tag:'Nutrition',cls:'tag-teal'},
-    {id:'thu_stats',name:'Track: FIR direction, GIR, approach proximity, U&D, putts, decision quality (1–5)',tag:'Stats',cls:'tag-blue'},
-    {id:'thu_routine',name:'Grade pre-shot routine quality (1–5) every shot',tag:'Mental',cls:'tag-gold'},
-    {id:'thu_10sec',name:'Apply 10-second bad shot rule throughout round',tag:'Mental',cls:'tag-gold'},
-    {id:'thu_post_recovery',name:'Post-round: protein + carbs within 30 min, 500ml electrolyte water',tag:'Recovery',cls:'tag-teal'},
+    {id:'thu_premeal',     name:'Pre-round meal 2 hrs before (low-GI: oats/eggs/rice — no high-sugar)',tag:'Nutrition',cls:'tt-teal'},
+    {id:'thu_prewater',    name:'500ml water in the hour before tee',tag:'Hydration',cls:'tt-teal'},
+    {id:'thu_caffeine',    name:'Caffeine 100–200mg, 45 min before round',tag:'Nutrition',cls:'tt-gold'},
+    {id:'thu_dynamic_mob', name:'Dynamic mobility warm-up (10 min) — thoracic, hip 90/90, hip flexor, shoulder CARs',tag:'Warm-up',cls:'tt-lime'},
+    {id:'thu_putt_warmup', name:'Pre-round putting: green speed calibration → break calibration → confidence 4-ft makes',tag:'Pre-Round',cls:'tt-lime'},
+    {id:'thu_sg_warmup',   name:'Short game warm-up: 3 bunker shots + chip feel + trajectory calibration',tag:'Pre-Round',cls:'tt-lime'},
+    {id:'thu_range_warmup',name:'Range warm-up: progressive wedges → irons → driver (30 min)',tag:'Pre-Round',cls:'tt-lime'},
+    {id:'thu_oncourse',    name:'On-course snack: banana/bar (25g carb) at holes 5–6 and 10–12',tag:'Nutrition',cls:'tt-teal'},
+    {id:'thu_stats',       name:'Track: FIR direction, GIR, approach proximity, U&D, putts, decision quality (1–5)',tag:'Stats',cls:'tt-blue'},
+    {id:'thu_routine',     name:'Grade pre-shot routine quality (1–5) every shot',tag:'Mental',cls:'tt-gold'},
+    {id:'thu_10sec',       name:'Apply 10-second bad shot rule throughout round',tag:'Mental',cls:'tt-gold'},
+    {id:'thu_post_rec',    name:'Post-round: protein + carbs within 30 min, 500ml electrolyte water',tag:'Recovery',cls:'tt-teal'},
   ],
   fri: [
-    {id:'fri_rypstick',name:'Rypstick speed session — 10 min (heavy warm-up → lag 10 reps → max speed 15 reps)',tag:'Speed',cls:'tag-rust'},
-    {id:'fri_power_session',name:'Power / Rotation / Speed Session — 55 min',tag:'Strength',cls:'tag-gold'},
-    {id:'fri_eccentric_wrist',name:'Eccentric wrist flexion 3×15 (injury prevention)',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'fri_single_leg_dl',name:'Single-leg deadlift 3×8 each (lower back + hip)',tag:'Injury Prev',cls:'tag-lime'},
-    {id:'fri_rypstick_speed',name:'Rypstick speed session: heavy warm-up 5 reps → lag 10 reps → max speed 15 reps',tag:'Speed',cls:'tag-rust'},
-    {id:'fri_combo_range',name:'Post-gym range: 30 min — target focus + pressure simulation',tag:'Practice',cls:'tag-lime'},
-    {id:'fri_putting',name:'Putting — 30 min: start-line gate drill + circle drill + course sim',tag:'Practice',cls:'tag-lime'},
-    {id:'fri_mevo_transfer',name:'Mevo transfer shots (5 driver immediately after Rypstick) — record speeds',tag:'Training Aid',cls:'tag-blue'},
-    {id:'fri_foot_pedal',name:'Foot Pedal — ground force + sequence drills (integrate with irons)',tag:'Training Aid',cls:'tag-blue'},
-    {id:'fri_smash_bag',name:'Smash Bag — shaft lean + forward press drills (2× per week)',tag:'Training Aid',cls:'tag-blue'},
-    {id:'fri_gforce',name:'G-Force Wedge — wedge pivot, hinge, shaft angle drills',tag:'Training Aid',cls:'tag-blue'},
-    {id:'fri_post_protein',name:'Post-training protein shake within 30 min',tag:'Nutrition',cls:'tag-teal'},
+    {id:'fri_rypstick',    name:'Rypstick speed session — 10 min (heavy warm-up → lag 10 reps → max speed 15 reps)',tag:'Speed',cls:'tt-rust'},
+    {id:'fri_power',       name:'Power / Rotation / Speed Session — 55 min',tag:'Strength',cls:'tt-gold'},
+    {id:'fri_ecc_wrist',   name:'Eccentric wrist flexion 3×15 (injury prevention)',tag:'Injury Prev',cls:'tt-lime'},
+    {id:'fri_sl_dl',       name:'Single-leg deadlift 3×8 each (lower back + hip)',tag:'Injury Prev',cls:'tt-lime'},
+    {id:'fri_combo_range', name:'Post-gym range: 30 min — target focus + pressure simulation',tag:'Practice',cls:'tt-lime'},
+    {id:'fri_putting',     name:'Putting — 30 min: start-line gate drill + circle drill + course sim',tag:'Practice',cls:'tt-lime'},
+    {id:'fri_mevo',        name:'Mevo transfer shots (5 driver immediately after Rypstick) — record speeds',tag:'Training Aid',cls:'tt-blue'},
+    {id:'fri_foot_pedal',  name:'Foot Pedal — ground force + sequence drills (integrate with irons)',tag:'Training Aid',cls:'tt-blue'},
+    {id:'fri_smash_bag',   name:'Smash Bag — shaft lean + forward press drills (2× per week)',tag:'Training Aid',cls:'tt-blue'},
+    {id:'fri_gforce',      name:'G-Force Wedge — wedge pivot, hinge, shaft angle drills',tag:'Training Aid',cls:'tt-blue'},
+    {id:'fri_post_prot',   name:'Post-training protein shake within 30 min',tag:'Nutrition',cls:'tt-teal'},
   ],
   sat: [
-    {id:'sat_premeal',name:'Pre-round meal 2 hrs before (low-GI, moderate protein)',tag:'Nutrition',cls:'tag-teal'},
-    {id:'sat_prewater',name:'500ml water 1 hr before tee',tag:'Hydration',cls:'tag-teal'},
-    {id:'sat_caffeine',name:'Caffeine 100–200mg, 45 min before round',tag:'Nutrition',cls:'tag-gold'},
-    {id:'sat_strategy_review',name:'Review strategy card — pin positions, 3 key hole visualisations',tag:'Strategy',cls:'tag-gold'},
-    {id:'sat_dynamic_mob',name:'Dynamic mobility warm-up — NOT static stretching',tag:'Warm-up',cls:'tag-lime'},
-    {id:'sat_full_warmup',name:'Full pre-round protocol: mobility → putting calibration → short game → range',tag:'Pre-Round',cls:'tag-lime'},
-    {id:'sat_end_on_make',name:'End putting warm-up on a make — leave the green on confidence',tag:'Mental',cls:'tag-gold'},
-    {id:'sat_pressure',name:'Competitive / pressure round — medal, stableford, or money match',tag:'Competitive',cls:'tag-rust'},
-    {id:'sat_snacks',name:'On-course fuelling: carbs every 5–6 holes, 200ml water per 4–5 holes',tag:'Nutrition',cls:'tag-teal'},
-    {id:'sat_no_alcohol',name:'No alcohol during or night before round',tag:'Recovery',cls:'tag-rust'},
-    {id:'sat_stats',name:'Full stat tracking: FIR, GIR, proximity, U&D, putts, routine grade',tag:'Stats',cls:'tag-blue'},
-    {id:'sat_post_review',name:'Post-round: log scores, 3-putt count, U&D %, decision quality rating',tag:'Review',cls:'tag-gray'},
+    {id:'sat_premeal',     name:'Pre-round meal 2 hrs before (low-GI, moderate protein)',tag:'Nutrition',cls:'tt-teal'},
+    {id:'sat_prewater',    name:'500ml water 1 hr before tee',tag:'Hydration',cls:'tt-teal'},
+    {id:'sat_caffeine',    name:'Caffeine 100–200mg, 45 min before round',tag:'Nutrition',cls:'tt-gold'},
+    {id:'sat_strategy',    name:'Review strategy card — pin positions, 3 key hole visualisations',tag:'Strategy',cls:'tt-gold'},
+    {id:'sat_mob',         name:'Dynamic mobility warm-up — NOT static stretching',tag:'Warm-up',cls:'tt-lime'},
+    {id:'sat_full_warmup', name:'Full pre-round protocol: mobility → putting calibration → short game → range',tag:'Pre-Round',cls:'tt-lime'},
+    {id:'sat_end_make',    name:'End putting warm-up on a make — leave the green on confidence',tag:'Mental',cls:'tt-gold'},
+    {id:'sat_pressure',    name:'Competitive / pressure round — medal, stableford, or money match',tag:'Competitive',cls:'tt-rust'},
+    {id:'sat_snacks',      name:'On-course fuelling: carbs every 5–6 holes, 200ml water per 4–5 holes',tag:'Nutrition',cls:'tt-teal'},
+    {id:'sat_no_alc',      name:'No alcohol during or night before round',tag:'Recovery',cls:'tt-rust'},
+    {id:'sat_stats',       name:'Full stat tracking: FIR, GIR, proximity, U&D, putts, routine grade',tag:'Stats',cls:'tt-blue'},
+    {id:'sat_post_review', name:'Post-round: log scores, 3-putt count, U&D %, decision quality rating',tag:'Review',cls:'tt-gray'},
   ],
   sun: [
-    {id:'sun_data_review',name:'Review week\'s round data — identify biggest SG gaps for next week',tag:'Review',cls:'tag-gray'},
-    {id:'sun_exputt',name:'ExPutt session — 30 min (address what putting data from rounds revealed)',tag:'Training Aid',cls:'tag-blue'},
-    {id:'sun_trs',name:'TRS system: Slider (chip/pitch angle) + Ball (strike quality) + Rotation Stick',tag:'Training Aid',cls:'tag-blue'},
-    {id:'sun_short_game',name:'Short game practice — based on week\'s data: proximity gaps, bunker, pitching',tag:'Practice',cls:'tag-lime'},
-    {id:'sun_putting',name:'Putting — 40 min: distance control → gate drill → circle drill → course sim',tag:'Practice',cls:'tag-lime'},
-    {id:'sun_journal',name:'Write progress journal entry: drill results, pass/fail, coach focus, next session plan',tag:'Journal',cls:'tag-gray'},
-    {id:'sun_equip_check',name:'Equipment check: clean grooves, check grips, note anything to review',tag:'Equipment',cls:'tag-gold'},
-    {id:'sun_week_plan',name:'Plan next week — confirm sessions, note priority areas from this week',tag:'Planning',cls:'tag-gray'},
+    {id:'sun_data_review', name:"Review week's round data — identify biggest SG gaps for next week",tag:'Review',cls:'tt-gray'},
+    {id:'sun_exputt',      name:'ExPutt session — 30 min (address what putting data from rounds revealed)',tag:'Training Aid',cls:'tt-blue'},
+    {id:'sun_trs',         name:'TRS system: Slider (chip/pitch angle) + Ball (strike quality) + Rotation Stick',tag:'Training Aid',cls:'tt-blue'},
+    {id:'sun_short_game',  name:"Short game practice — based on week's data: proximity gaps, bunker, pitching",tag:'Practice',cls:'tt-lime'},
+    {id:'sun_putting',     name:'Putting — 40 min: distance control → gate drill → circle drill → course sim',tag:'Practice',cls:'tt-lime'},
+    {id:'sun_journal',     name:'Write progress journal entry: drill results, pass/fail, coach focus, next session plan',tag:'Journal',cls:'tt-gray'},
+    {id:'sun_equip',       name:'Equipment check: clean grooves, check grips, note anything to review',tag:'Equipment',cls:'tt-gold'},
+    {id:'sun_plan',        name:'Plan next week — confirm sessions, note priority areas from this week',tag:'Planning',cls:'tt-gray'},
   ]
 };
 
 const dayTasks = [
-  [...TASK_DEFS.daily, ...TASK_DEFS.mon],
-  [...TASK_DEFS.daily, ...TASK_DEFS.tue],
-  [...TASK_DEFS.daily, ...TASK_DEFS.wed],
-  [...TASK_DEFS.daily, ...TASK_DEFS.thu],
-  [...TASK_DEFS.daily, ...TASK_DEFS.fri],
-  [...TASK_DEFS.daily, ...TASK_DEFS.sat],
-  [...TASK_DEFS.daily, ...TASK_DEFS.sun],
+  [...TASK_DEFS.daily,...TASK_DEFS.mon],
+  [...TASK_DEFS.daily,...TASK_DEFS.tue],
+  [...TASK_DEFS.daily,...TASK_DEFS.wed],
+  [...TASK_DEFS.daily,...TASK_DEFS.thu],
+  [...TASK_DEFS.daily,...TASK_DEFS.fri],
+  [...TASK_DEFS.daily,...TASK_DEFS.sat],
+  [...TASK_DEFS.daily,...TASK_DEFS.sun],
 ];
 
-const todayIdx = (new Date().getDay() + 6) % 7;
-let activeDay = todayIdx;
+const GROUPS = [
+  {id:'daily',   label:'Daily non-negotiables', icon:'⭐', filter:t=>TASK_DEFS.daily.some(x=>x.id===t.id)},
+  {id:'warmup',  label:'Warm-up & mobility',    icon:'🏃', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&(t.tag==='Warm-up'||t.tag==='Pre-Round'||t.tag==='TPI Red'||t.tag==='TPI')},
+  {id:'fitness', label:'Fitness & strength',     icon:'🏋️', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&(t.tag==='Strength'||t.tag==='Speed'||t.tag==='Injury Prev')},
+  {id:'practice',label:'Golf practice',          icon:'🎯', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&t.tag==='Practice'},
+  {id:'tools',   label:'Training aids',          icon:'🛠️', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&t.tag==='Training Aid'},
+  {id:'nutrition',label:'Nutrition & fuelling',  icon:'🥗', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&(t.tag==='Nutrition'||t.tag==='Hydration')},
+  {id:'mental',  label:'Mental & competitive',   icon:'🧠', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&(t.tag==='Mental'||t.tag==='Strategy'||t.tag==='Competitive')},
+  {id:'stats',   label:'Stats, review & admin',  icon:'📊', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&(t.tag==='Stats'||t.tag==='Review'||t.tag==='Journal'||t.tag==='Coaching'||t.tag==='Video'||t.tag==='Planning'||t.tag==='Equipment')},
+  {id:'recovery',label:'Recovery',               icon:'💤', filter:t=>!TASK_DEFS.daily.some(x=>x.id===t.id)&&t.tag==='Recovery'},
+];
 
-const STORAGE_KEY = 'golf_dash_v3';
-function loadState(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){return{};}}
-function saveState(s){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(s));}catch(e){}}
+const STORAGE_KEY='scratch_dash_v3';
+let state=loadState();
+if(!state.checks) state.checks={};
+if(!state.notes)  state.notes={};
 
-let state = loadState();
-if(!state.checks) state.checks = {};
-if(!state.notes) state.notes = {};
-if(!state.week) state.week = getCurrentWeekKey();
+const todayIdx=(new Date().getDay()+6)%7;
+let activeDay=todayIdx;
 
 function getCurrentWeekKey(){
-  const d = new Date(); d.setHours(0,0,0,0);
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  const mon = new Date(d.setDate(diff));
+  const d=new Date();d.setHours(0,0,0,0);
+  const day=d.getDay();
+  const diff=d.getDate()-day+(day===0?-6:1);
+  const mon=new Date(d);mon.setDate(diff);
   return mon.toISOString().split('T')[0];
 }
+function wk(){return getCurrentWeekKey()+'_';}
+function loadState(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{};}catch(e){return{};}}
+function saveState(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}}
+function getCheck(d,id){return !!state.checks[wk()+d+'_'+id];}
+function setCheck(d,id,v){state.checks[wk()+d+'_'+id]=v;saveState();}
+function getNote(d){return state.notes[wk()+d]||'';}
+function setNote(d,v){state.notes[wk()+d]=v;saveState();}
+function getDayProg(d){const t=dayTasks[d];return{done:t.filter(i=>getCheck(d,i.id)).length,total:t.length};}
+function getWeekProg(){let done=0,total=0;for(let d=0;d<7;d++){const p=getDayProg(d);done+=p.done;total+=p.total;}return{done,total};}
 
-function weekKey(){return state.week + '_';}
-
-function getCheck(dayIdx, taskId){return !!state.checks[weekKey() + dayIdx + '_' + taskId];}
-function setCheck(dayIdx, taskId, val){
-  state.checks[weekKey() + dayIdx + '_' + taskId] = val;
-  saveState(state);
+function renderAll(){
+  renderProgress();
+  renderDayGrid();
+  renderDayPanel();
+  renderWeekGlance();
+  renderSummary();
 }
-function getNote(dayIdx){return state.notes[weekKey() + dayIdx] || '';}
-function setNote(dayIdx, val){state.notes[weekKey() + dayIdx] = val; saveState(state);}
 
-function getWeekProgress(){
-  let total = 0, done = 0;
+function renderProgress(){
+  const {done,total}=getWeekProg();
+  const pct=total?Math.round((done/total)*100):0;
+  document.getElementById('week-label').textContent='Week of '+getCurrentWeekKey();
+  document.getElementById('progress-fill').style.width=pct+'%';
+  document.getElementById('progress-pct').textContent=pct+'%';
+  document.getElementById('progress-tasks').textContent=done+' / '+total+' tasks';
+  document.getElementById('hs-done').textContent=done;
+  document.getElementById('hs-pct').textContent=pct+'%';
+  document.getElementById('hs-rem').textContent=total-done;
+}
+
+function renderDayGrid(){
+  let html='';
   for(let d=0;d<7;d++){
-    dayTasks[d].forEach(t=>{
-      total++;
-      if(getCheck(d, t.id)) done++;
-    });
-  }
-  return {total, done};
-}
-
-function getDayProgress(dayIdx){
-  const tasks = dayTasks[dayIdx];
-  const done = tasks.filter(t => getCheck(dayIdx, t.id)).length;
-  return {done, total:tasks.length};
-}
-
-function render(){
-  const app = document.getElementById('app');
-  const {done:wDone, total:wTotal} = getWeekProgress();
-  const wPct = Math.round((wDone/wTotal)*100);
-  const weekLabel = getCurrentWeekKey();
-
-  let html = `
-  <div class="header">
-    <div class="header-top">
-      <div>
-        <h1><i class="ti ti-golf" aria-hidden="true" style="font-size:18px;vertical-align:-2px;margin-right:6px;"></i>Weekly Golf Performance Dashboard</h1>
-        <p class="header-sub">10 HCP → Scratch · All 18 guides consolidated</p>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span class="week-badge">Week of ${weekLabel}</span>
-        <button class="reset-btn" onclick="resetWeek()">Reset week</button>
-      </div>
-    </div>
-    <div class="prog-bar-wrap">
-      <div class="prog-bar"><div class="prog-fill" style="width:${wPct}%"></div></div>
-      <span class="prog-label">${wDone}/${wTotal}</span>
-    </div>
-    <p class="prog-txt">${wDone} tasks completed this week &mdash; ${wTotal - wDone} remaining &middot; ${wPct}%</p>
-  </div>`;
-
-  html += `<div class="week-grid">`;
-  for(let d=0;d<7;d++){
-    const {done,total} = getDayProgress(d);
-    const tasks = dayTasks[d];
-    const pips = tasks.slice(0,6).map((_,i) => `<span class="pip${getCheck(d,tasks[i].id)?' done':''}"></span>`).join('');
-    const isActive = d === activeDay;
-    html += `<div class="wg-cell${isActive?' wg-active':''}" onclick="setDay(${d})">
-      <span class="wg-day">${DAYS[d]}</span>
-      <span class="wg-icon">${DAY_ICONS[d]}</span>
-      <div style="font-size:10px;color:${isActive?'var(--bg)':'var(--txt3)'};">${done}/${total}</div>
+    const {done,total}=getDayProg(d);
+    const tasks=dayTasks[d];
+    const pc=Math.min(tasks.length,8);
+    const pips=tasks.slice(0,pc).map((_,i)=>`<span class="pip${getCheck(d,tasks[i].id)?' done':''}"></span>`).join('');
+    const isA=d===activeDay;
+    html+=`<div class="dgcell${isA?' active':''}" onclick="setDay(${d})">
+      <span class="dc-day">${DAYS[d]}</span>
+      <span class="dc-icon">${DAY_ICONS[d]}</span>
+      <span class="dc-count">${done}/${total}</span>
+      <div class="dc-pips">${pips}</div>
     </div>`;
   }
-  html += `</div>`;
+  document.getElementById('day-grid').innerHTML=html;
+}
 
-  const tasks = dayTasks[activeDay];
-  const {done:dDone, total:dTotal} = getDayProgress(activeDay);
-
-  html += `<div class="day-card">
-    <div class="day-card-hdr">
+function renderDayPanel(){
+  const tasks=dayTasks[activeDay];
+  const {done:dDone,total:dTotal}=getDayProg(activeDay);
+  let html=`<div class="day-panel">
+    <div class="day-panel-hdr">
       <div>
-        <span class="day-card-title">${DAY_FULL[activeDay]}</span>
-        &nbsp;&nbsp;<span class="day-type-badge ${TYPE_CLASS[activeDay]}">${DAY_TYPE[activeDay]}</span>
+        <div class="day-title">${DAY_FULL[activeDay]}</div>
+        <div class="day-done-label">${dDone} of ${dTotal} tasks complete</div>
       </div>
-      <span style="font-size:12px;color:var(--txt3);">${dDone} of ${dTotal} done</span>
+      <span class="day-type-badge ${TYPE_CLASS[activeDay]}">${DAY_TYPE[activeDay]}</span>
     </div>`;
 
-  const groups = [
-    {id:'daily', label:'Daily non-negotiables', icon:'ti-star', filter: t => TASK_DEFS.daily.some(x=>x.id===t.id)},
-    {id:'nutrition', label:'Nutrition & hydration', icon:'ti-salad', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && (t.cls==='tag-teal'||t.cls==='tag-gold'&&(t.name.toLowerCase().includes('protein')||t.name.toLowerCase().includes('caffeine')||t.name.toLowerCase().includes('snack')||t.name.toLowerCase().includes('meal')||t.name.toLowerCase().includes('water')||t.name.toLowerCase().includes('fuel')))},
-    {id:'warmup', label:'Warm-up & mobility', icon:'ti-run', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && (t.tag==='Warm-up'||t.tag==='Pre-Round'||t.tag==='TPI Red'||t.tag==='TPI'||t.id.includes('warmup')||t.id.includes('prewater')||t.id.includes('premeal'))&&!t.name.toLowerCase().includes('protein')&&!t.name.toLowerCase().includes('caffeine')&&!t.name.toLowerCase().includes('meal')},
-    {id:'fitness', label:'Fitness & strength', icon:'ti-barbell', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && (t.tag==='Strength'||t.tag==='Speed'||t.tag==='Injury Prev')},
-    {id:'practice', label:'Golf practice', icon:'ti-target', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && t.tag==='Practice'},
-    {id:'tools', label:'Training aids', icon:'ti-device-gamepad-2', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && t.tag==='Training Aid'},
-    {id:'mental', label:'Mental & competitive', icon:'ti-brain', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && (t.tag==='Mental'||t.tag==='Strategy'||t.tag==='Competitive')},
-    {id:'stats', label:'Stats, review & admin', icon:'ti-chart-bar', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && (t.tag==='Stats'||t.tag==='Review'||t.tag==='Journal'||t.tag==='Coaching'||t.tag==='Video'||t.tag==='Planning'||t.tag==='Equipment'||t.cls==='tag-gray')},
-    {id:'recovery', label:'Recovery', icon:'ti-heart', filter: t => !TASK_DEFS.daily.some(x=>x.id===t.id) && t.tag==='Recovery'},
-  ];
-
-  const assigned = new Set();
-  for(const g of groups){
-    const gtasks = tasks.filter(t => g.filter(t) && !assigned.has(t.id));
-    gtasks.forEach(t => assigned.add(t.id));
-    if(!gtasks.length) continue;
-    const gDone = gtasks.filter(t=>getCheck(activeDay,t.id)).length;
-    html += `<div class="task-group">
+  const assigned=new Set();
+  for(const g of GROUPS){
+    const gt=tasks.filter(t=>g.filter(t)&&!assigned.has(t.id));
+    gt.forEach(t=>assigned.add(t.id));
+    if(!gt.length) continue;
+    const gd=gt.filter(t=>getCheck(activeDay,t.id)).length;
+    html+=`<div class="task-group">
       <div class="task-group-hdr">
-        <div class="group-icon"><i class="ti ${g.icon}" aria-hidden="true" style="font-size:14px;"></i></div>
-        <span class="group-title">${g.label}</span>
-        <span class="group-count">${gDone}/${gtasks.length}</span>
+        <div class="tg-icon">${g.icon}</div>
+        <span class="tg-label">${g.label}</span>
+        <span class="tg-count">${gd}/${gt.length}</span>
       </div>`;
-    gtasks.forEach(t => {
-      const checked = getCheck(activeDay, t.id);
-      html += `<div class="task-item${checked?' done':''}" onclick="toggle(${activeDay},'${t.id}')">
-        <div class="task-cb${checked?' checked':''}"></div>
+    gt.forEach(t=>{
+      const chk=getCheck(activeDay,t.id);
+      html+=`<div class="task-item${chk?' done':''}" onclick="toggle(${activeDay},'${t.id}')">
+        <div class="task-cb${chk?' checked':''}"></div>
         <span class="task-name">${t.name}</span>
         <span class="task-tag ${t.cls}">${t.tag}</span>
       </div>`;
     });
-    const rem = tasks.filter(t => !assigned.has(t.id));
-    html += `</div>`;
+    html+=`</div>`;
   }
 
-  const leftover = tasks.filter(t => !assigned.has(t.id));
+  const leftover=tasks.filter(t=>!assigned.has(t.id));
   if(leftover.length){
-    html += `<div class="task-group"><div class="task-group-hdr"><div class="group-icon"><i class="ti ti-dots" aria-hidden="true" style="font-size:14px;"></i></div><span class="group-title">Other</span></div>`;
+    html+=`<div class="task-group"><div class="task-group-hdr"><div class="tg-icon">&#8943;</div><span class="tg-label">Other</span></div>`;
     leftover.forEach(t=>{
-      const checked = getCheck(activeDay, t.id);
-      html += `<div class="task-item${checked?' done':''}" onclick="toggle(${activeDay},'${t.id}')">
-        <div class="task-cb${checked?' checked':''}"></div>
+      const chk=getCheck(activeDay,t.id);
+      html+=`<div class="task-item${chk?' done':''}" onclick="toggle(${activeDay},'${t.id}')">
+        <div class="task-cb${chk?' checked':''}"></div>
         <span class="task-name">${t.name}</span>
         <span class="task-tag ${t.cls}">${t.tag}</span>
       </div>`;
     });
-    html += `</div>`;
+    html+=`</div>`;
   }
 
-  html += `<div style="margin-top:12px;">
-    <span class="section-label">Session notes</span>
-    <textarea class="note-area" id="note-area" placeholder="Log your session: drill results, feel cues, things to address next time…" onchange="saveNote(this.value)">${getNote(activeDay)}</textarea>
+  html+=`<div class="section-head" style="margin-top:16px;">Session notes</div>
+    <textarea class="note-area" id="note-area" placeholder="Log your session: drill results, feel cues, things to address next time…" oninput="saveNote(this.value)">${getNote(activeDay)}</textarea>
   </div>`;
+  document.getElementById('day-panel').innerHTML=html;
+}
 
-  html += `</div>`;
-
-  html += `<div class="section-gap">
-    <span class="section-label">Week at a glance</span>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;">`;
+function renderWeekGlance(){
+  let html='';
   for(let d=0;d<7;d++){
-    const {done,total} = getDayProgress(d);
-    const pct = Math.round((done/total)*100);
-    html += `<div class="stat-card" style="cursor:pointer;" onclick="setDay(${d})">
-      <div class="stat-label">${DAYS[d]} &middot; ${DAY_TYPE[d]}</div>
-      <div class="stat-val" style="font-size:18px;">${done}<span style="font-size:13px;color:var(--txt3);">/${total}</span></div>
-      <div style="margin-top:6px;height:4px;background:var(--bg3);border-radius:2px;"><div style="width:${pct}%;height:100%;background:${pct===100?'var(--lime)':pct>60?'var(--teal)':'var(--border2)'};border-radius:2px;"></div></div>
+    const {done,total}=getDayProg(d);
+    const pct=total?Math.round((done/total)*100):0;
+    const fc=pct===100?'var(--lime)':pct>60?'var(--teal)':'var(--surface3)';
+    const isA=d===activeDay;
+    html+=`<div class="wg-card${isA?' wg-active':''}" onclick="setDay(${d})">
+      <span class="wg-day">${DAYS[d]}</span>
+      <div class="wg-nums">${done}<span style="font-size:.75rem;font-family:'JetBrains Mono',monospace;color:var(--muted);">/${total}</span></div>
+      <div class="wg-bar"><div class="wg-fill" style="width:${pct}%;background:${fc};"></div></div>
     </div>`;
   }
-  html += `</div></div>`;
-
-  html += `<div class="divider"></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-    <div class="stat-card">
-      <div class="stat-label">Week complete</div>
-      <div class="stat-val">${wPct}%</div>
-      <div class="stat-sub">${wDone} of ${wTotal} tasks</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Today</div>
-      <div class="stat-val">${dDone}<span style="font-size:14px;color:var(--txt3);">/${dTotal}</span></div>
-      <div class="stat-sub">${DAY_FULL[activeDay]}</div>
-    </div>
-  </div>`;
-
-  app.innerHTML = html;
+  document.getElementById('week-glance').innerHTML=html;
 }
 
-function toggle(dayIdx, taskId){
-  const current = getCheck(dayIdx, taskId);
-  setCheck(dayIdx, taskId, !current);
-  render();
+function renderSummary(){
+  const {done:wDone,total:wTotal}=getWeekProg();
+  const wPct=wTotal?Math.round((wDone/wTotal)*100):0;
+  const {done:dDone,total:dTotal}=getDayProg(activeDay);
+  document.getElementById('sum-pct').textContent=wPct+'%';
+  document.getElementById('sum-tasks').textContent=wDone+' of '+wTotal+' tasks';
+  document.getElementById('sum-today').textContent=dDone+'/'+dTotal;
+  document.getElementById('sum-today-label').textContent=DAY_FULL[activeDay];
 }
 
-function setDay(idx){
-  activeDay = idx;
-  render();
-}
-
-function saveNote(val){
-  setNote(activeDay, val);
-}
-
+function toggle(d,id){setCheck(d,id,!getCheck(d,id));renderAll();}
+function setDay(idx){activeDay=idx;renderAll();document.getElementById('day-panel').scrollIntoView({behavior:'smooth',block:'nearest'});}
+function saveNote(v){setNote(activeDay,v);}
 function resetWeek(){
   if(!confirm('Reset all checkboxes and notes for this week? This cannot be undone.')) return;
-  const pre = weekKey();
+  const pre=wk();
   Object.keys(state.checks).forEach(k=>{if(k.startsWith(pre)) delete state.checks[k];});
   Object.keys(state.notes).forEach(k=>{if(k.startsWith(pre)) delete state.notes[k];});
-  saveState(state);
-  render();
+  saveState();renderAll();
 }
 
-render();
+document.getElementById('today-card').onclick=()=>setDay(todayIdx);
+renderAll();
 </script>
+</body>
+</html>
