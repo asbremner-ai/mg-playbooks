@@ -5,7 +5,7 @@
 //           Network-first for external APIs (Golf Coach AI)
 // ─────────────────────────────────────────────────────────
 
-const CACHE_NAME = 'scratch-project-v2-3';
+const CACHE_NAME = 'scratch-project-v2-4';
 
 // All HTML files to cache on install
 const STATIC_FILES = [
@@ -56,6 +56,8 @@ const STATIC_FILES = [
   '/swing_mechanics.html',
   '/tracking_app.html',
   '/tracking_app_v2.html',
+  '/motivation.html',
+  '/on_course_reference_A5_8pp.html',
   '/manifest.json'
 ];
 
