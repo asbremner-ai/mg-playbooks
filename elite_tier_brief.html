@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · elite_tier_brief.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Tier — Master Content Brief · The Scratch Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Core palette — inherited from playbook system */
+  --bg:        #0a120a;
+  --surface:   #111e11;
+  --surface2:  #182818;
+  --border:    rgba(160,200,80,0.16);
+  --border-hi: rgba(160,200,80,0.35);
+  --white:     #e8f0d8;
+  --muted:     rgba(232,240,216,0.50);
+  --faint:     rgba(232,240,216,0.18);
+
+  /* Standard accent colours */
+  --lime:      #a0c850;
+  --lime-hi:   #c0e060;
+  --lime-dim:  rgba(160,200,80,0.09);
+  --gold:      #e0b840;
+  --gold-hi:   #f0d070;
+  --gold-dim:  rgba(224,184,64,0.08);
+  --teal:      #48b0a8;
+  --teal-hi:   #70ccc4;
+  --teal-dim:  rgba(72,176,168,0.08);
+  --rust:      #d86030;
+  --rust-hi:   #f08050;
+  --rust-dim:  rgba(216,96,48,0.07);
+  --violet:    #9b72f5;
+  --violet-dim:rgba(155,114,245,0.08);
+
+  /* Elite accent — platinum/silver */
+  --elite:     #c8d8e8;
+  --elite-hi:  #e8f4ff;
+  --elite-dim: rgba(200,216,232,0.07);
+  --elite-border: rgba(200,216,232,0.22);
+
+  --r:    12px;
+  --r-sm: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── HERO ───────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(160deg, #0a120a 0%, #0d1a1f 50%, #0a120a 100%);
+  border-bottom: 1px solid var(--elite-border);
+  padding: 48px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(200,216,232,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 70% 20%, rgba(224,184,64,0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--elite), var(--gold), var(--elite), transparent);
+}
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--elite);
+  margin-bottom: 14px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 8vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero h1 em { color: var(--elite-hi); font-style: italic; }
+.hero-sub {
+  font-size: 13.5px;
+  color: var(--muted);
+  max-width: 520px;
+  margin: 0 auto 22px;
+  font-weight: 300;
+  line-height: 1.75;
+  position: relative;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.htag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 4px;
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  color: var(--elite);
+}
+
+/* ── NAV ────────────────────────────────────────────────── */
+.nav {
+  display: flex;
+  overflow-x: auto;
+  background: rgba(4,10,4,.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 12px;
+  scrollbar-width: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav::-webkit-scrollbar { display: none; }
+.tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 13px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .2s;
+}
+.tab:hover { color: var(--elite-hi); }
+.tab.active { color: var(--elite); border-bottom-color: var(--elite); }
+
+/* ── SECTIONS ───────────────────────────────────────────── */
+.sec {
+  display: none;
+  padding: 28px 16px 80px;
+  max-width: 760px;
+  margin: 0 auto;
+  animation: rise .3s ease;
+}
+.sec.active { display: block; }
+@keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* ── TYPOGRAPHY ─────────────────────────────────────────── */
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--white);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+.sec-desc {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 22px;
+  line-height: 1.75;
+  padding-left: 12px;
+  border-left: 2px solid var(--elite);
+  font-weight: 300;
+}
+
+/* ── BADGES ─────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.badge-elite { background: var(--elite-dim); border: 1px solid var(--elite-border); color: var(--elite-hi); }
+.badge-gold  { background: var(--gold-dim);  border: 1px solid rgba(224,184,64,.25); color: var(--gold-hi); }
+.badge-teal  { background: var(--teal-dim);  border: 1px solid rgba(72,176,168,.25);  color: var(--teal-hi); }
+.badge-lime  { background: var(--lime-dim);  border: 1px solid rgba(160,200,80,.2);   color: var(--lime-hi); }
+.badge-rust  { background: var(--rust-dim);  border: 1px solid rgba(216,96,48,.25);   color: var(--rust-hi); }
+
+/* ── CARDS ──────────────────────────────────────────────── */
+.card {
+  background: linear-gradient(145deg, var(--surface2) 0%, var(--surface) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 18px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(160,200,80,0.2), transparent);
+}
+.card-elite {
+  border-color: var(--elite-border);
+  background: linear-gradient(145deg, rgba(200,216,232,0.05) 0%, var(--surface) 100%);
+}
+.card-elite::before {
+  background: linear-gradient(90deg, transparent, var(--elite-border), transparent);
+}
+.card-gold  { border-color: rgba(224,184,64,.28); }
+.card-teal  { border-color: rgba(72,176,168,.28); }
+.card-lime  { border-color: rgba(160,200,80,.28); }
+.card-rust  { border-color: rgba(216,96,48,.28); }
+
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--elite);
+  display: block;
+  margin-bottom: 8px;
+}
+.card-gold  .card-tag { color: var(--gold); }
+.card-teal  .card-tag { color: var(--teal); }
+.card-lime  .card-tag { color: var(--lime); }
+.card-rust  .card-tag { color: var(--rust); }
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+.card p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+
+/* ── STEPS ──────────────────────────────────────────────── */
+.steps { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.steps li { display: flex; gap: 10px; align-items: flex-start; }
+.step-n {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--elite);
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  border-radius: 4px;
+  min-width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.card-gold  .step-n { color: var(--gold); background: var(--gold-dim); border-color: rgba(224,184,64,.25); }
+.card-teal  .step-n { color: var(--teal); background: var(--teal-dim); border-color: rgba(72,176,168,.25); }
+.card-lime  .step-n { color: var(--lime); background: var(--lime-dim); border-color: rgba(160,200,80,.2); }
+.steps li div { font-size: 13px; color: var(--muted); line-height: 1.65; }
+.steps li strong { color: var(--white); }
+
+/* ── TABLES ─────────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+.tbl th {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--elite);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+.tbl td { padding: 8px 10px; color: var(--muted); border-bottom: 1px solid var(--faint); vertical-align: top; line-height: 1.55; }
+.tbl td:first-child { color: var(--white); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: none; }
+.good { color: #80c870; }
+.warn { color: var(--gold); }
+.elite-cell { color: var(--elite-hi); font-weight: 600; }
+
+/* ── GUIDE CARD ─────────────────────────────────────────── */
+.guide-block {
+  background: var(--surface2);
+  border: 1px solid var(--elite-border);
+  border-radius: var(--r);
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.guide-header {
+  background: linear-gradient(135deg, rgba(200,216,232,0.08) 0%, transparent 100%);
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--elite-border);
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.guide-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--elite);
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  border-radius: var(--r-sm);
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+.guide-meta { flex: 1; }
+.guide-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+.guide-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--elite);
+  margin-bottom: 6px;
+}
+.guide-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+.guide-body { padding: 16px 18px; }
+
+/* ── TABS SPEC LIST ─────────────────────────────────────── */
+.tab-spec { display: flex; flex-direction: column; gap: 8px; }
+.tab-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: rgba(200,216,232,0.03);
+  border: 1px solid rgba(200,216,232,0.09);
+  border-radius: var(--r-sm);
+}
+.tab-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--elite);
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  border-radius: 3px;
+  padding: 3px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tab-content { flex: 1; }
+.tab-name { font-size: 12.5px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+.tab-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ── UPGRADE CARDS ──────────────────────────────────────── */
+.upgrade-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.upgrade-header {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.upgrade-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.upgrade-title { font-size: 13.5px; font-weight: 600; color: var(--white); }
+.upgrade-guide {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--elite);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.upgrade-body { padding: 12px 16px; }
+.upgrade-tab { margin-bottom: 10px; }
+.upgrade-tab-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--elite-hi);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.upgrade-tab-name::before {
+  content: '+';
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--elite);
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  border-radius: 3px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.upgrade-tab-detail { font-size: 12px; color: var(--muted); line-height: 1.6; padding-left: 26px; }
+
+/* ── INFO BOX ───────────────────────────────────────────── */
+.info-box {
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+  margin: 14px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.info-box p { font-size: 12.5px; line-height: 1.7; }
+.info-box strong { display: block; margin-bottom: 2px; }
+.elite-box { background: var(--elite-dim); border: 1px solid var(--elite-border); }
+.elite-box p { color: rgba(200,216,232,0.85); }
+.elite-box strong { color: var(--elite-hi); }
+.gold-box  { background: var(--gold-dim); border: 1px solid rgba(224,184,64,.22); }
+.gold-box p { color: rgba(240,208,112,.9); }
+.gold-box strong { color: var(--gold-hi); }
+.ico { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+
+/* ── PATCH TABLE ────────────────────────────────────────── */
+.patch-row {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--faint);
+}
+.patch-row:last-child { border-bottom: none; }
+.patch-file {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--lime);
+  word-break: break-all;
+  line-height: 1.5;
+}
+.patch-detail { font-size: 12px; color: var(--muted); line-height: 1.6; }
+.patch-detail strong { color: var(--white); }
+.patch-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--elite);
+  background: var(--elite-dim);
+  border: 1px solid var(--elite-border);
+  border-radius: 4px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+/* ── SECTION DIVIDER ────────────────────────────────────── */
+.sec-divider {
+  border: none;
+  border-top: 1px solid var(--faint);
+  margin: 24px 0;
+}
+
+/* ── PILLAR STRIP ───────────────────────────────────────── */
+.pillar-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 16px 0 24px;
+}
+.pillar-cell {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px 12px;
+  text-align: center;
+}
+.pillar-cell.elite-pillar { border-color: var(--elite-border); }
+.pillar-icon { font-size: 1.5rem; margin-bottom: 6px; display: block; }
+.pillar-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--elite);
+  margin-bottom: 3px;
+}
+.pillar-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+
+/* ── PRICING STRIP ──────────────────────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+.price-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 14px;
+  text-align: center;
+}
+.price-card.active-tier {
+  border-color: var(--elite-border);
+  background: linear-gradient(145deg, rgba(200,216,232,0.05) 0%, var(--surface) 100%);
+}
+.price-tier {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.active-tier .price-tier { color: var(--elite); }
+.price-amount {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.price-note { font-size: 11px; color: var(--muted); margin-bottom: 10px; line-height: 1.5; }
+.price-items { text-align: left; font-size: 11.5px; color: var(--muted); line-height: 2; }
+.price-items span { display: block; }
+.price-items span::before { content: '✓ '; color: var(--lime); }
+.active-tier .price-items span::before { color: var(--elite); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 24px 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--faint);
+  letter-spacing: .2em;
+  border-top: 1px solid var(--border);
+}
+
+@media(max-width: 480px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .patch-row { grid-template-columns: 1fr; gap: 4px; }
+  .tbl { font-size: 11px; }
+  .tbl th, .tbl td { padding: 6px 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">The Scratch Project · Internal Build Document · 2026-06-08</p>
+  <h1>Elite Tier —<br><em>Master Brief</em></h1>
+  <p class="hero-sub">Complete specification for the Elite tier expansion: 6 new guides (38–43), upgrade tabs for 7 existing guides, updated patch_playbooks.py entries, product structure, and pricing framework. Scratch → +3 and beyond.</p>
+  <div class="hero-tags">
+    <span class="htag">⭐ Guides 38–43</span>
+    <span class="htag">🔧 7 Existing Upgrades</span>
+    <span class="htag">💰 Pricing Logic</span>
+    <span class="htag">🔁 Upsell Sequence</span>
+    <span class="htag">🐍 patch_playbooks.py</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('new',this)">New Guides 38–43</button>
+  <button class="tab" onclick="show('upgrades',this)">Existing Upgrades</button>
+  <button class="tab" onclick="show('product',this)">Product Structure</button>
+  <button class="tab" onclick="show('patch',this)">patch_playbooks.py</button>
+  <button class="tab" onclick="show('sequence',this)">Build Sequence</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     OVERVIEW
+══════════════════════════════════════════════════ -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">What Elite Is</h2>
+  <p class="sec-desc">Elite is not a third product competing for cold traffic — it is a structured continuation for players who complete the 24-month Standard/Pro journey. The target is scratch to +3, county and national amateur competition, and the performance disciplines that separate club champions from representative golfers.</p>
+
+  <span class="badge badge-elite">⭐ Tier Definition</span>
+  <div class="card card-elite">
+    <span class="card-tag">Who Elite Is For</span>
+    <h3>The Post-Scratch Player</h3>
+    <p>The Standard/Pro system takes a 5–18 handicapper to scratch over 24 months. Elite begins where that journey ends. The audience is players who have reached scratch or are within 2 shots of it and want to continue improving — not restart. These are not beginners to data-driven training. They understand SG, they have tracking data, they have a coaching relationship. Elite gives them the next layer of depth.</p>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Handicap range: 0 to +3</strong> — county-eligible, entering scratch trophies and national qualifying events, seeking Brabazon Trophy or R&A Amateur qualification at the upper end.</p>
+    </div>
+  </div>
+
+  <div class="pillar-strip">
+    <div class="pillar-cell">
+      <span class="pillar-icon">🎯</span>
+      <div class="pillar-name">Score</div>
+      <div class="pillar-desc">Plus-handicap SG targets, national event strategy</div>
+    </div>
+    <div class="pillar-cell">
+      <span class="pillar-icon">🏌️</span>
+      <div class="pillar-name">Strike</div>
+      <div class="pillar-desc">Sportsbox AI, advanced D-Plane, shot-shape programming</div>
+    </div>
+    <div class="pillar-cell">
+      <span class="pillar-icon">🔢</span>
+      <div class="pillar-name">Measure</div>
+      <div class="pillar-desc">Golfmetrics deep-dive, multi-season trend analysis</div>
+    </div>
+    <div class="pillar-cell">
+      <span class="pillar-icon">💪</span>
+      <div class="pillar-name">Prepare</div>
+      <div class="pillar-desc">Tournament week periodisation, peak performance protocols</div>
+    </div>
+    <div class="pillar-cell elite-pillar">
+      <span class="pillar-icon">🏆</span>
+      <div class="pillar-name" style="color:var(--elite);">Compete</div>
+      <div class="pillar-desc">County team, national circuit, representative golf strategy</div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">📊 Scope at a Glance</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Gets Built</span>
+    <h3>Total Elite Deliverable</h3>
+    <table class="tbl">
+      <tr><th>Component</th><th>Count</th><th>Detail</th></tr>
+      <tr><td>New guides</td><td class="elite-cell">6</td><td>Guides 38–43 — built from scratch, no existing analogue</td></tr>
+      <tr><td>Existing guide upgrades</td><td class="elite-cell">7</td><td>One Elite tab added per guide — surgical, no rebuild required</td></tr>
+      <tr><td>Index update</td><td class="elite-cell">1</td><td>New Elite pillar section in index.html</td></tr>
+      <tr><td>patch_playbooks.py</td><td class="elite-cell">1</td><td>GUIDES + RELATED entries for all 6 new files</td></tr>
+      <tr><td>Gumroad add-on product</td><td class="elite-cell">1</td><td>Separate SKU — upsell from checkout + email sequence</td></tr>
+      <tr><td>Post-purchase email</td><td class="elite-cell">3</td><td>Day 1 welcome, Day 7 usage nudge, Day 30 upsell check-in</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box gold-box" style="margin-top:4px;">
+    <span class="ico">💡</span>
+    <p><strong>Design principle:</strong> Elite buyers already own the Standard/Pro system. Elite adds depth, not infrastructure. No new tracker, caddie card, or checkout flow is needed — just the content layer that makes the existing tools work at a higher level of specificity.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     NEW GUIDES 38–43
+══════════════════════════════════════════════════ -->
+<div class="sec" id="new">
+  <h2 class="sec-title">New Guides 38–43</h2>
+  <p class="sec-desc">Six guides that do not exist at any level in the current system. Each addresses a domain that only matters once a player is at or near scratch — content that would confuse or overwhelm a 12-handicapper but is immediately actionable for a 0–2 index.</p>
+
+  <!-- GUIDE 38 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 38</div>
+      <div class="guide-meta">
+        <div class="guide-title">Plus-Handicap SG Targets</div>
+        <div class="guide-sub">Elite · Measure Pillar · SG Analytics</div>
+        <div class="guide-desc">The specific strokes gained benchmarks that separate scratch from +1, +2, and +3 — with category-by-category gap analysis and the practice priorities that close them.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">6 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">The Plus-Handicap Benchmarks</div>
+            <div class="tab-detail">Full SG target table for scratch, +1, +2, and +3 across all five categories (OTT, APP, ARG, Putting, Total). Derived from Broadie's dataset and Mark Sweeney's proximity data. Shows exactly which categories differentiate each step of the plus-handicap journey. Anchor card: the four categories where scratch players still bleed strokes vs. +2.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">The SG: APP Deep Dive at Elite Level</div>
+            <div class="tab-detail">At scratch, approach play from 125–175 yards is typically the largest remaining gap. At Elite, the focus shifts to proximity compression — the difference between 20-foot and 14-foot average approaches from every distance band. Complete proximity target table by yardage zone for +1/+2/+3 standard. Includes the concept of "approach efficiency" — not just proximity, but shot quality per attempt.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">SG: OTT — Width vs. Distance at Plus Level</div>
+            <div class="tab-detail">Tour data shows plus-handicap amateurs lose more to width than distance off the tee. This tab addresses the lateral dispersion problem specifically — dispersion targets by club for +1/+2/+3 standard, the fairway width strategy for different hole types, and how to use Arccos data to identify which tee shot patterns cost the most strokes in context (not raw accuracy).</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">Putting at Plus Level — The Remaining Gains</div>
+            <div class="tab-detail">For a scratch player, the putting gains are in the 6–10 foot range — not 30-footers. This tab covers the specific make% targets for each distance bracket at +1/+2/+3 standard, AimPoint Advanced refinements beyond Express (using feet as a unit rather than half-feet), and the stroke average from inside 8 feet that separates county-level players from club champions.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">Short Game at Plus Level — Save % vs. Proximity</div>
+            <div class="tab-detail">The plus-handicap short game metric that matters is not scrambling percentage — it is how close you are getting the ball from non-standard lies (tight lies, rough, slopes) at Elite save distances (15–30 feet). Complete save % target table and the practice priority framework for improving from scratch-standard to +2-standard around the green.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">The Gap Closer — Translating SG Data to a Plus-Handicap Practice Plan</div>
+            <div class="tab-detail">A structured 12-week practice cycle built specifically for scratch-to-+2 improvement — derived from the player's own SG data. Includes the decision tree: which category to prioritise first (the one with the largest gap per session-hour invested), how to weight competitive rounds vs. deliberate practice when data is available, and how to re-benchmark every 12 weeks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE 39 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 39</div>
+      <div class="guide-meta">
+        <div class="guide-title">National Amateur Circuit</div>
+        <div class="guide-sub">Elite · Compete Pillar · UK Amateur Structure</div>
+        <div class="guide-desc">The full picture of UK national amateur golf — how to enter, what to expect, how to prepare, and how to use national event results to accelerate handicap improvement and county selection.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">7 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">The National Amateur Landscape</div>
+            <div class="tab-detail">Complete map of UK national amateur events accessible to scratch-and-below players. England Golf National Amateur Championship, Brabazon Trophy, R&A Amateur qualifying, EG Order of Merit events, Kolven Trophy, and county inter-union events. Entry requirements, qualification routes, and handicap thresholds for each. Which events feed into which selections.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">The Brabazon Trophy — Specific Preparation</div>
+            <div class="tab-detail">72-hole strokeplay preparation protocol. How the Brabazon field compares to county-level competition (the quality jump is significant — typical winning score 10–14 under). Course recon approach for an unfamiliar venue, the three rounds of practice that elite amateurs use before a major 72-hole event, and how to manage the psychological reality of playing a four-round event for the first time.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">R&A Amateur Qualifying</div>
+            <div class="tab-detail">The qualifier structure for The Amateur Championship — regional qualifying, venues, and the score requirements that typically advance. How to approach an R&A qualifying round differently from a club strokeplay event (the field quality, the venue conditions, the pressure environment). Practical entry guide via The R&A's competition portal.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">The EG Order of Merit</div>
+            <div class="tab-detail">England Golf's ranking system for amateur golfers. How Order of Merit points are accumulated, which events carry the most points, and how a structured annual programme of open amateur events builds a ranking that opens doors to invitation events and county team selection. The minimum viable season for a player targeting a meaningful OoM ranking.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">Matchplay at County and National Level</div>
+            <div class="tab-detail">Matchplay strategy at elite amateur level differs fundamentally from strokeplay. Hole-by-hole aggression calibration (when to attack, when to take par and move on), opponent management (reading their body language without being distracted by it), the psychological dynamics of being 2 down vs. 2 up in a county team match, and the specific situations where aggression is statistically correct in matchplay that would be wrong in stroke.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">Building Your National Competition Calendar</div>
+            <div class="tab-detail">A structured annual calendar framework for a player targeting national events. Which months contain which events, when to peak, how to taper before major events, and how to manage the psychological load of a full competitive season. Includes the England Golf competition portal walkthrough for entering national events and tracking results.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 7</div>
+          <div class="tab-content">
+            <div class="tab-name">What Elite Competition Teaches You</div>
+            <div class="tab-detail">The feedback loop from national-level competition is uniquely valuable — the data you collect on your game under maximum pressure reveals weaknesses that club competition never exposes. How to use national event rounds as diagnostic data, what to look for in your SG data after a national event vs. a county event, and how to integrate that data into the next training block.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE 40 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 40</div>
+      <div class="guide-meta">
+        <div class="guide-title">Caddie Preparation & Yardage Books</div>
+        <div class="guide-sub">Elite · Score Pillar · On-Course Execution</div>
+        <div class="guide-desc">How elite amateur players prepare for competition venues — building yardage books, mapping wind corridors, identifying bail-out zones, and the caddie communication frameworks used by county and national-level players.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">6 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">The Elite Venue Preparation System</div>
+            <div class="tab-detail">The structured approach that county and national-level amateurs use before a competition at an unfamiliar venue. The three-visit sequence (recon, practice, competitive), what to record on each visit, and how to convert raw observations into a actionable game plan. Includes the information hierarchy — what must be known vs. what is useful vs. what is detail noise.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">Building a Personal Yardage Book</div>
+            <div class="tab-detail">Step-by-step guide to creating a functional yardage book for any course. What to measure (front, middle, back of each green; specific pin position zones; cross-hazard carries; lay-up yardages), how to record it (annotated sketches, GPS measurements), and how to use it in combination with Arccos during a competitive round. Includes a printable template for the book format used by many county players.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">Wind Corridor Mapping</div>
+            <div class="tab-detail">Courses have predictable wind patterns based on their orientation and local geography. How to identify these patterns during a recon visit — which holes funnel wind, which are sheltered, where the wind swirls. Combines with Guide 23 wind adjustment principles but at a venue-specific level. Includes how to adjust your game plan when the wind is atypical vs. the prevailing pattern.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">Green Mapping at Elite Level</div>
+            <div class="tab-detail">Beyond slope percentages — the specific pin position analysis that elite players do on greens they don't know. Identifying the three zones (attack, conservative, avoid) for each green based on slopes, run-off areas, and approach angles. How to map these in a practice round without it consuming too much of the round. The list of questions to ask the greenkeeper that gives you the most useful information fastest.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">Caddie Communication for Amateur Competition</div>
+            <div class="tab-detail">Most elite amateurs compete without a full-time caddie — but when carrying a caddie in county or national events, the communication framework is critical. What the caddie is responsible for, what the player is responsible for, the specific language that avoids confusion under pressure ("that's the number to the front, carry is 5 more"), and how to structure the pre-shot conversation so decisions are made behind the ball, not over it.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">Self-Caddying at National Level</div>
+            <div class="tab-detail">The cognitive load management system for when you're carrying your own bag in a 36-hole or 72-hole event. Decision-making frameworks that prevent information overload, the simplified on-course reference system (condensed from Guide 31 to a single card for elite events), and how to maintain the yardage book / decision quality through the back nine of round three when fatigue degrades judgement.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE 41 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 41</div>
+      <div class="guide-meta">
+        <div class="guide-title">Motor Learning & Practice Design</div>
+        <div class="guide-sub">Elite · Strike Pillar · Practice Science</div>
+        <div class="guide-desc">The graduate-level practice science that separates elite improvement from amateur plateau — how the nervous system actually encodes motor skills, and how to structure practice to maximise long-term retention and competition transfer.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">7 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">How Skills Are Actually Encoded</div>
+            <div class="tab-detail">The neuroscience of motor learning — why blocked practice produces fast short-term gains but poor retention, why variability and challenge accelerate long-term encoding, and the specific mechanisms (myelin sheath thickening, synaptic strengthening) that determine whether a skill becomes automatic. Actionable framework: the difference between "training" and "practising" and why most golfers spend their range time in the wrong mode.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">Blocked vs. Random vs. Interleaved Practice</div>
+            <div class="tab-detail">The three practice structures and when each is appropriate. Blocked (same shot repeatedly) for initial motor pattern acquisition only. Random (changing target/club every shot) for competition transfer. Interleaved (structured variety within a session) as the primary approach for elite-level maintenance and refinement. Research-derived time allocations for each type at different stages of skill development.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">Deliberate Practice Design for Elite Players</div>
+            <div class="tab-detail">Ericsson's deliberate practice framework applied specifically to golf — the four elements (focused effort, immediate feedback, working at the edge of ability, coaching guidance) and how to build each into a practice session. The common failures: comfortable practice masquerading as deliberate practice, over-reliance on blocked repetition for skills already acquired, and insufficient feedback loops.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">Constraint-Led and Differential Learning</div>
+            <div class="tab-detail">Two elite practice methods: constraint-led (using physical constraints to create motor exploration — hitting off slopes, restricted backswings, impact bag work) and differential learning (deliberately introducing errors to force the nervous system to self-organise). Why these methods produce better long-term retention than technically-directed practice. Specific drill protocols for each approach applicable to putting, wedges, and full swing.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">Mental Representation and Self-Coaching</div>
+            <div class="tab-detail">The elite player's ability to detect and self-correct errors is largely determined by the quality of their mental representation — the internal model they hold of what a correct swing or stroke feels like. How to build a more accurate mental representation using video, Sportsbox AI, HackMotion data, and structured self-observation. The difference between verbal and kinaesthetic mental representations and which is more useful for competition.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">Periodising Practice at Elite Level</div>
+            <div class="tab-detail">A 12-week practice periodisation model for a competitive season — building from acquisition (blocked, new patterns) through consolidation (mixed, higher variability) to competition readiness (random, high pressure simulation). How to taper practice in the final week before a major event and why. Integration with HRV data to schedule high-intensity deliberate practice on high-readiness days only.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 7</div>
+          <div class="tab-content">
+            <div class="tab-name">The Transfer Problem — Bridging Practice and Competition</div>
+            <div class="tab-detail">Why players who hit the ball brilliantly in practice score far worse in competition — and the specific interventions that close the gap. Pressure simulation at Elite level (financial consequences, audience, consequence scoring), the pre-competition practice protocol that maximises transfer (not warm-up — a specific activation sequence), and how to use round data to identify which practice elements are and aren't transferring.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE 42 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 42</div>
+      <div class="guide-meta">
+        <div class="guide-title">Golfmetrics Deep-Dive</div>
+        <div class="guide-sub">Elite · Measure Pillar · Advanced Analytics</div>
+        <div class="guide-desc">The most granular SG tracking method available to amateur golfers — manual shot-by-shot data entry that produces research-grade proximity and SG analytics. For players with 12+ months of Arccos data who want the next level of analytical precision.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">6 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">Why Golfmetrics, and When</div>
+            <div class="tab-detail">The case for manual tracking at Elite level — what Arccos misses (lie quality, specific shot type, partial vs. full swing classification, actual proximity-to-hole rather than estimated) and what Golfmetrics captures. Not a replacement for Arccos — a quarterly supplement that reveals patterns invisible to automatic tracking. The decision point: if your Arccos data has plateaued in revealing new weaknesses, Golfmetrics is the next step.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">The Golfmetrics Data Collection System</div>
+            <div class="tab-detail">Complete setup guide — account creation, data entry format, how to record shots without slowing pace of play. The three-number system: starting position, lie quality (1–5 scale), and shot result. How to record partial shots (specifically wedge yardages), bunker shots, and chipped shots with enough precision to produce meaningful analytics. Average entry time per round once the system is learned: 12–15 minutes post-round.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">Reading the Golfmetrics Dashboard</div>
+            <div class="tab-detail">The specific reports that are most actionable at Elite level — proximity by distance band, SG per shot by lie type, approach SG by direction (left/right/straight of target), and the proximity scatter plot that shows whether your misses are random or systematic. How to interpret the benchmark comparisons (Golfmetrics benchmarks against its entire user database, which skews toward serious amateurs and low handicappers).</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">Lie Quality as an Analytical Variable</div>
+            <div class="tab-detail">Golfmetrics is unique in tracking lie quality as a variable — most platforms don't. This tab covers how to use lie quality data to separate skill from luck (a player who loses 0.4 SG per round from rough but consistently plays well from tight lies is a different player than one who loses from both), and how to identify whether your weak SG numbers come from poor ballstriking or poor decision-making (both look the same in Arccos).</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">The Quarterly Golfmetrics Audit</div>
+            <div class="tab-detail">A structured 4-round quarterly data collection protocol — same courses where possible for comparability, full manual entry, and a post-audit analysis template. The 12-question quarterly audit that extracts maximum insight: which patterns are consistent across all 4 rounds (real weaknesses), which are noise (sample variance), and what changed vs. the prior quarter. How to export data and cross-reference with Arccos season totals.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">Multi-Season Trend Analysis</div>
+            <div class="tab-detail">For players with 2+ years of data — how to identify long-term improvement patterns, seasonal performance cycles, and which training blocks produced measurable SG improvements vs. which didn't. The specific metrics that plateau first (often ARG and Putting plateau before APP at Elite level), why plateaus happen, and how to use historical data to identify the practice investment that produced the best SG return. A data visualisation template for tracking 8+ quarters of SG history.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDE 43 -->
+  <div class="guide-block">
+    <div class="guide-header">
+      <div class="guide-num">Guide 43</div>
+      <div class="guide-meta">
+        <div class="guide-title">Sportsbox AI Integration</div>
+        <div class="guide-sub">Elite · Strike Pillar · 3D Motion Analysis</div>
+        <div class="guide-desc">Using Sportsbox AI's 3D motion analysis to move beyond 2D video — understanding pelvis and thorax rotation data, kinematic sequencing at Elite level, and how to integrate Sportsbox feedback with your coaching relationship.</div>
+      </div>
+    </div>
+    <div class="guide-body">
+      <span class="badge badge-elite">6 Tabs</span>
+      <div class="tab-spec">
+        <div class="tab-item">
+          <div class="tab-label">Tab 1</div>
+          <div class="tab-content">
+            <div class="tab-name">What Sportsbox AI Measures That 2D Cannot</div>
+            <div class="tab-detail">The specific 3D variables Sportsbox captures: pelvis sway and thrust, thorax side-bend, lead arm rotation rate, wrist bow/cup in 3D (vs. HackMotion's 2D plane measurement). Why these matter at Elite level — the kinematic sequence differences between scratch and +2 players are subtle and largely invisible on 2D video. Which Sportsbox metrics correlate most strongly with ball-striking consistency at sub-scratch handicaps.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 2</div>
+          <div class="tab-content">
+            <div class="tab-name">Setting Up and Capturing Data</div>
+            <div class="tab-detail">Complete setup protocol: camera angle requirements (Sportsbox is more sensitive to camera position than 2D apps), lighting conditions, distance from camera, and the club speed range where Sportsbox produces most accurate data. How to capture a proper baseline session — the minimum number of swings per club for statistical reliability, and how to set up a comparison session that makes improvement measurable.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 3</div>
+          <div class="tab-content">
+            <div class="tab-name">Reading the Sportsbox Dashboard</div>
+            <div class="tab-detail">The key metrics to prioritise vs. which are secondary noise. Pelvis-thorax separation angle at the top of backswing (the "X-factor") and its correlation to power. Lead arm rotation rate through impact and its correlation to consistency. The sequencing graph — how to read the timing of peak velocities in each body segment and identify out-of-sequence patterns. Benchmarks for each metric at scratch vs. +1/+2 standard.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 4</div>
+          <div class="tab-content">
+            <div class="tab-name">Integrating with Your Coach</div>
+            <div class="tab-detail">Sportsbox is most valuable as a coach communication tool — it gives your coach data they cannot see from 2D video. How to share Sportsbox sessions with your coach before a lesson (the specific export format that coaches find most useful), which metrics to highlight, and how to structure the coaching conversation around Sportsbox data without it overwhelming a lesson. The coaches who are certified Sportsbox users and how to find one if your current coach is not.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 5</div>
+          <div class="tab-content">
+            <div class="tab-name">Sportsbox + HackMotion: Combined Protocol</div>
+            <div class="tab-detail">HackMotion measures lead wrist position (face control); Sportsbox measures body motion (sequencing and power). Used together, they provide a complete picture of why specific shot patterns occur. The combined protocol: Sportsbox session first (identify body pattern), HackMotion session second (identify club face response to that pattern), coaching session third (address root cause). This is the Elite measurement stack.</div>
+          </div>
+        </div>
+        <div class="tab-item">
+          <div class="tab-label">Tab 6</div>
+          <div class="tab-content">
+            <div class="tab-name">Monthly Sportsbox Benchmark Protocol</div>
+            <div class="tab-detail">A structured monthly Sportsbox session that tracks 3D movement benchmarks alongside the existing Mevo and HackMotion monthly protocol. Same conditions, same camera position, same club selection — 8 driver swings, 8 7-iron swings. The four metrics to track monthly: peak pelvis velocity, peak thorax velocity, X-factor at top, and lead arm rotation rate at impact. How to cross-reference with Mevo smash factor data to identify when a movement change has transferred to ball data.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     EXISTING UPGRADES
+══════════════════════════════════════════════════ -->
+<div class="sec" id="upgrades">
+  <h2 class="sec-title">Existing Guide Upgrades</h2>
+  <p class="sec-desc">Seven existing guides each receive one new Elite tab. The tab is additive — it does not replace existing content and requires no restructuring of the guide. Each tab is clearly labelled with an Elite badge in the nav, consistent with the existing gold/teal badge pattern.</p>
+
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>Implementation note:</strong> Each Elite tab is gated in the commercial product — visible but locked for Standard/Pro buyers, unlocked for Elite buyers. In the personal system (Andrew's own playbooks), all tabs are open.</p>
+  </div>
+
+  <hr class="sec-divider">
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🔢</span>
+      <div class="upgrade-title">Guide 26 — Stats & SG Interpretation</div>
+      <span class="upgrade-guide">Guide 26</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">Multi-Season Trend Analysis</div>
+        <div class="upgrade-tab-detail">A structured framework for analysing 8+ quarters of SG data — identifying which categories improve first, which plateau, which are correlated (e.g. OTT and APP often move together when course management improves), and how to build a forward practice plan from backward-looking trend data. Includes a rolling 12-month SG visualisation template and the specific questions to ask at each quarterly review that reveal long-term patterns invisible in monthly snapshots.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🧘</span>
+      <div class="upgrade-title">Guide 21 — Mental Game Mastery</div>
+      <span class="upgrade-guide">Guide 21</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">Elite Competition Psychology</div>
+        <div class="upgrade-tab-detail">The psychological demands of county team matchplay and national strokeplay events differ qualitatively from club competition — the gap between your best performance and competition performance tends to narrow as the competitive standard rises (you can't hide). Covers: managing the identity shift from "best in the club" to "ordinary at county level", the specific anxiety pattern of playing for a team rather than yourself, decision-making under accumulated competitive pressure (round 3 of 4 of the Brabazon), and what the sport psychology research says about performance under elite amateur conditions specifically.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🗺️</span>
+      <div class="upgrade-title">Guide 08 — Pro Round Preparation</div>
+      <span class="upgrade-guide">Guide 08</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">Tournament Week Periodisation</div>
+        <div class="upgrade-tab-detail">The structured approach to the 7 days before a major amateur event — not just the day-of protocol already in the guide but the full week. Monday: final technical session (not too close to the event — 6 days out). Tuesday: competition simulation round. Wednesday: short game only, high volume. Thursday: rest or very light play only. Friday: pre-competition activation (30 minutes, no new technical work). Saturday: event. How to adjust if the event is a weekday or multi-day. The specific metrics to track during tournament week to confirm you're peaking at the right time.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🔧</span>
+      <div class="upgrade-title">Guide 15 — Equipment Fitting</div>
+      <span class="upgrade-guide">Guide 15</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">Elite Equipment Optimisation</div>
+        <div class="upgrade-tab-detail">At plus-handicap level, equipment optimisation shifts from getting the basics right to marginal gains — the specific shaft weight and flex combinations that reduce dispersion in high-stress situations (fatigue, cold, wet), dynamic loft optimisation per club across conditions (the tour caddie approach of having 2–3 loft settings available on adjustable clubs), and the ball selection protocol at Elite level including how to test a new ball release using Mevo + Golfmetrics data before committing to it for competition. Also covers: wedge bounce and grind selection for Elite players who play a variety of course types within a single season.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🏌️</span>
+      <div class="upgrade-title">Guide 03 — Long Game Playbook</div>
+      <span class="upgrade-guide">Guide 03</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">Advanced Shot-Shape Programming</div>
+        <div class="upgrade-tab-detail">Beyond the D-Plane introduction already in the guide — the Elite player's approach to intentional shot shape selection and execution. Covers: building a reliable 5-yard draw and 5-yard fade on demand (the minimum shot library for county-level play), how to programme a specific shape into a practice session using the constraint-led method from Guide 41, the wind-shape interaction matrix (when a fade into a left-to-right wind produces more consistent results than a straight ball), and how to use Sportsbox AI data to identify the specific movement change that reliably produces each shape.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🎯</span>
+      <div class="upgrade-title">Guide 01 — Putting Playbook</div>
+      <span class="upgrade-guide">Guide 01</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">AimPoint Advanced & Elite Putting Standards</div>
+        <div class="upgrade-tab-detail">Moving beyond AimPoint Express (half-feet) to the full AimPoint method (feet as a unit, fractional feet for longer putts) — the system used by most tour caddies. Covers: why Express is sufficient for most amateur use but Advanced produces more consistent results on severely sloped greens and greens above 12 on the Stimpmeter, the practice protocol for learning the Advanced system without disrupting an established Express routine, and the Elite putting benchmark table — make percentages by distance that define +1/+2/+3 standard including the 6–10 foot range where the biggest remaining gains are typically found at Elite level.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="upgrade-block">
+    <div class="upgrade-header">
+      <span class="upgrade-icon">🏆</span>
+      <div class="upgrade-title">Guide 33 — UK Competitive Pathway</div>
+      <span class="upgrade-guide">Guide 33</span>
+    </div>
+    <div class="upgrade-body">
+      <div class="upgrade-tab">
+        <div class="upgrade-tab-name">County Team Golf — Selection to Representation</div>
+        <div class="upgrade-tab-detail">A step-by-step guide to getting selected for, preparing for, and performing in county team matches. How county selectors make decisions (results in county events, attitude, coachability — in that order), what to do in the 12 months before applying for a county card to maximise selection likelihood, the specific preparation for an inter-county match (how it differs from individual event prep — the team dynamic, the matchplay format, playing for a cumulative result), and what representative golf actually teaches you about your own game that individual competition does not.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PRODUCT STRUCTURE
+══════════════════════════════════════════════════ -->
+<div class="sec" id="product">
+  <h2 class="sec-title">Product Structure</h2>
+  <p class="sec-desc">Elite works as a Gumroad add-on — not a standalone product competing for cold traffic, but a natural continuation sold to existing buyers at checkout and via a post-purchase email sequence.</p>
+
+  <span class="badge badge-gold">💰 Pricing</span>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Standard</div>
+      <div class="price-amount">£X</div>
+      <div class="price-note">Current price<br>(assessed underpriced)</div>
+      <div class="price-items">
+        <span>Full guide hub (37 guides)</span>
+        <span>Tracking app</span>
+        <span>Caddie card</span>
+        <span>Practice planner</span>
+        <span>24-month plan</span>
+      </div>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Pro Bundle</div>
+      <div class="price-amount">£X</div>
+      <div class="price-note">Standard + Pro-edition<br>content upgrade</div>
+      <div class="price-items">
+        <span>Everything in Standard</span>
+        <span>Pro-edition guide tabs</span>
+        <span>Extended SG analytics</span>
+        <span>Advanced tool protocols</span>
+      </div>
+    </div>
+    <div class="price-card active-tier">
+      <div class="price-tier">Elite Add-On</div>
+      <div class="price-amount">£45</div>
+      <div class="price-note">Requires Standard or Pro.<br>Suggested: £40–60 range.</div>
+      <div class="price-items">
+        <span>Guides 38–43 (6 new)</span>
+        <span>Elite tabs on 7 guides</span>
+        <span>National circuit guide</span>
+        <span>Motor learning system</span>
+        <span>Golfmetrics deep-dive</span>
+        <span>Sportsbox AI integration</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box gold-box">
+    <span class="ico">💡</span>
+    <p><strong>Pricing rationale:</strong> £40–60 is appropriate because the audience is pre-qualified (existing buyers who have completed the programme), the content addresses a real and specific need (what happens after scratch), and the emotional willingness-to-pay is high — players who reach scratch after a 24-month structured programme are invested and motivated to continue. The add-on framing also removes the cold-traffic conversion problem — no landing page rewrite, no new acquisition channel, just a checkout upsell and an email sequence.</p>
+  </div>
+
+  <hr class="sec-divider">
+
+  <span class="badge badge-teal">📧 Post-Purchase Email Sequence</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">3-Email Welcome Sequence for Elite Buyers</span>
+    <h3>What Gets Sent and When</h3>
+    <table class="tbl">
+      <tr><th>Email</th><th>Timing</th><th>Content</th><th>Goal</th></tr>
+      <tr>
+        <td>Day 1 — Welcome</td>
+        <td>Immediate post-purchase</td>
+        <td>Access link, suggested starting point (Guide 38 first, then Guide 41), what Elite is designed to achieve. Short — 200 words max.</td>
+        <td>First activation</td>
+      </tr>
+      <tr>
+        <td>Day 7 — Usage Nudge</td>
+        <td>7 days post-purchase</td>
+        <td>Prompt to complete the Guide 38 benchmark audit and record their current SG benchmarks as an Elite starting point. Includes the specific data collection checklist.</td>
+        <td>First meaningful use</td>
+      </tr>
+      <tr>
+        <td>Day 30 — Check-in</td>
+        <td>30 days post-purchase</td>
+        <td>One question: which Elite guide has had the most immediate impact? Invite reply. Builds qualitative feedback for product improvement and creates a testimonial pipeline.</td>
+        <td>Feedback + social proof</td>
+      </tr>
+    </table>
+  </div>
+
+  <hr class="sec-divider">
+
+  <span class="badge badge-lime">📢 Soft Launch</span>
+  <div class="card card-lime">
+    <span class="card-tag">Launch Sequence — No Paid Advertising</span>
+    <h3>How Elite Goes to Market</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Existing buyer email:</strong> First announcement goes to Standard/Pro buyers only. Subject: "You asked what comes after scratch — here's the answer." This is your warmest possible audience and requires no acquisition cost.</div></li>
+      <li><span class="step-n">2</span><div><strong>Checkout upsell:</strong> Add Elite as a Gumroad upsell on the Standard and Pro checkout pages. "Already a serious golfer? Add the Elite tier for £45 at checkout." Upsell conversion from motivated buyers at checkout is typically 15–25%.</div></li>
+      <li><span class="step-n">3</span><div><strong>Reddit / golf forums:</strong> A post structured as "I built a scratch programme and reached scratch — here's what I wish existed for the next phase" — authentic, data-driven, with a natural link to the Elite tier. Same channel strategy as the original product launch.</div></li>
+      <li><span class="step-n">4</span><div><strong>YouTube affiliate outreach:</strong> Target golf improvement YouTubers covering low-handicap content specifically — "golf under par", "scratch golf academy" adjacent channels. Elite is a more natural fit for those audiences than the original product, which targets mid-handicappers.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     PATCH_PLAYBOOKS.PY
+══════════════════════════════════════════════════ -->
+<div class="sec" id="patch">
+  <h2 class="sec-title">patch_playbooks.py Updates</h2>
+  <p class="sec-desc">All new Elite guide filenames, display titles, emojis, and accent colours for the GUIDES dictionary — plus RELATED entries for each new guide and the 7 existing guides that receive Elite tabs.</p>
+
+  <span class="badge badge-lime">🐍 GUIDES Dictionary — New Entries</span>
+  <div class="card card-lime">
+    <span class="card-tag">Add After Guide 37 Entry</span>
+    <h3>New Elite Filenames → GUIDES</h3>
+    <pre style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#a0c850;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;overflow-x:auto;line-height:1.8;white-space:pre-wrap;">'38_plus_hcp_sg_targets.html':     ('Plus-HCP SG Targets',        '⭐', '#c8d8e8'),
+'39_national_amateur_circuit.html': ('National Amateur Circuit',    '🏆', '#c8d8e8'),
+'40_caddie_preparation.html':       ('Caddie Prep & Yardage Books', '📖', '#c8d8e8'),
+'41_motor_learning.html':           ('Motor Learning & Practice',   '🧠', '#c8d8e8'),
+'42_golfmetrics_deepdive.html':     ('Golfmetrics Deep-Dive',       '🔬', '#c8d8e8'),
+'43_sportsbox_ai.html':             ('Sportsbox AI Integration',    '🎬', '#c8d8e8'),</pre>
+  </div>
+
+  <span class="badge badge-teal">🔗 RELATED Dictionary — New Entries</span>
+  <div class="card card-teal">
+    <span class="card-tag">Add New Guide RELATED Entries</span>
+    <h3>Cross-Reference Map for Guides 38–43</h3>
+    <pre style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#48b0a8;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;overflow-x:auto;line-height:1.8;white-space:pre-wrap;">'38_plus_hcp_sg_targets.html':     ['26_stats_interpretation.html','42_golfmetrics_deepdive.html','39_national_amateur_circuit.html','17_progress_journal.html','09_golf_coach_ai.html'],
+'39_national_amateur_circuit.html': ['33_competitive_pathway.html','40_caddie_preparation.html','21_mental_game.html','24_competitive_strategy.html','38_plus_hcp_sg_targets.html'],
+'40_caddie_preparation.html':       ['08_pro_round_prep.html','39_national_amateur_circuit.html','22_wedge_distances.html','23_weather_conditions.html','20_course_management.html'],
+'41_motor_learning.html':           ['18_training_aids_2.html','43_sportsbox_ai.html','hackmotion_playbook.html','34_coaching_relationship.html','14_video_analysis.html'],
+'42_golfmetrics_deepdive.html':     ['26_stats_interpretation.html','38_plus_hcp_sg_targets.html','17_progress_journal.html','09_golf_coach_ai.html','mevo_gen2_playbook.html'],
+'43_sportsbox_ai.html':             ['hackmotion_playbook.html','41_motor_learning.html','14_video_analysis.html','34_coaching_relationship.html','mevo_gen2_playbook.html'],</pre>
+  </div>
+
+  <span class="badge badge-gold">🔄 RELATED Dictionary — Updated Existing Entries</span>
+  <div class="card card-gold">
+    <span class="card-tag">Existing Guide RELATED Updates</span>
+    <h3>Add New Elite Guides to Relevant Existing Entries</h3>
+    <p style="margin-bottom:12px;">For each of these existing guides, append the most relevant new Elite guide to the end of their RELATED list (keeping max 5 entries — drop the least-relevant existing entry if at 5):</p>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">26_stats_interpretation.html</div>
+      <div class="patch-detail">Add <strong>'38_plus_hcp_sg_targets.html'</strong> and <strong>'42_golfmetrics_deepdive.html'</strong> — these are the natural Elite continuations of stats work</div>
+      <div class="patch-count">+2</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">21_mental_game.html</div>
+      <div class="patch-detail">Add <strong>'39_national_amateur_circuit.html'</strong> — county/national psychology is the Elite mental game application</div>
+      <div class="patch-count">+1</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">08_pro_round_prep.html</div>
+      <div class="patch-detail">Add <strong>'40_caddie_preparation.html'</strong> — Elite venue prep is the direct continuation of round prep</div>
+      <div class="patch-count">+1</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">15_equipment_fitting.html</div>
+      <div class="patch-detail">Add <strong>'43_sportsbox_ai.html'</strong> — Sportsbox data is referenced in the Elite fitting tab</div>
+      <div class="patch-count">+1</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">18_training_aids_2.html</div>
+      <div class="patch-detail">Add <strong>'41_motor_learning.html'</strong> — training aids are governed by motor learning principles</div>
+      <div class="patch-count">+1</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">33_competitive_pathway.html</div>
+      <div class="patch-detail">Add <strong>'39_national_amateur_circuit.html'</strong> — the Elite continuation of the competitive ladder</div>
+      <div class="patch-count">+1</div>
+    </div>
+    <div class="patch-row" style="font-size:12px;">
+      <div class="patch-file">hackmotion_playbook.html</div>
+      <div class="patch-detail">Add <strong>'43_sportsbox_ai.html'</strong> — the two tools form the Elite measurement stack together</div>
+      <div class="patch-count">+1</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     BUILD SEQUENCE
+══════════════════════════════════════════════════ -->
+<div class="sec" id="sequence">
+  <h2 class="sec-title">Build Sequence</h2>
+  <p class="sec-desc">A phased build that allows each component to be tested before the next is started — and produces a launchable product at the end of Phase 3 without waiting for everything to be complete.</p>
+
+  <span class="badge badge-elite">Phase 1 — Core Content</span>
+  <div class="card card-elite">
+    <span class="card-tag">Weeks 1–4</span>
+    <h3>Build the 6 New Guides</h3>
+    <p>Build Guides 38–43 as standalone HTML files in the existing playbook design system. Prioritised build order:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Guide 38 (Plus-HCP SG Targets)</strong> — builds on existing SG data the buyer already has; immediately actionable. This is the hook that justifies the Elite purchase.</div></li>
+      <li><span class="step-n">2</span><div><strong>Guide 41 (Motor Learning)</strong> — the practice science layer that applies across all other Elite content. Readers of any other guide will reference this one.</div></li>
+      <li><span class="step-n">3</span><div><strong>Guide 42 (Golfmetrics)</strong> — the analytical depth layer; strong content with specific, actionable protocols.</div></li>
+      <li><span class="step-n">4</span><div><strong>Guide 43 (Sportsbox AI)</strong> — the technical measurement layer; completes the Elite tool stack alongside HackMotion.</div></li>
+      <li><span class="step-n">5</span><div><strong>Guide 39 (National Amateur Circuit)</strong> — the competitive pathway layer; strong aspiration-setting content.</div></li>
+      <li><span class="step-n">6</span><div><strong>Guide 40 (Caddie Preparation)</strong> — the on-course execution layer; highly practical for county-level players.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">Phase 2 — Upgrades & Integration</span>
+  <div class="card card-gold">
+    <span class="card-tag">Weeks 5–6</span>
+    <h3>Add Elite Tabs to 7 Existing Guides + Update Index</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Add Elite tabs to Guide 26, 21, 08, 15, 03, 01, 33 — one tab each, clearly badged as Elite in the nav.</div></li>
+      <li><span class="step-n">2</span><div>Update index.html with the Elite pillar section — new colour (#c8d8e8 platinum), new icon (⭐), listing all 6 Elite guides plus a note about the 7 guide upgrades.</div></li>
+      <li><span class="step-n">3</span><div>Run patch_playbooks.py with the updated GUIDES and RELATED dictionaries to add nav and related panels to all 6 new files.</div></li>
+      <li><span class="step-n">4</span><div>Version stamp all modified files as v1.0-elite · 2026-xx-xx.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">Phase 3 — Product & Launch</span>
+  <div class="card card-teal">
+    <span class="card-tag">Week 7</span>
+    <h3>Gumroad Add-On + Email Sequence</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Create Gumroad add-on product: "The Scratch Project — Elite Tier". Price at £45. Add as upsell on Standard and Pro checkout pages.</div></li>
+      <li><span class="step-n">2</span><div>Write and schedule 3-email ConvertKit sequence for Elite buyers (Day 1, Day 7, Day 30).</div></li>
+      <li><span class="step-n">3</span><div>Send announcement email to existing Standard/Pro buyers — the warmest possible launch audience.</div></li>
+      <li><span class="step-n">4</span><div>Upload full zip to GitHub Pages. Deploy. Test all 6 new guide links from index.html and from existing Related Guides panels.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite-box" style="margin-top:8px;">
+    <span class="ico">⭐</span>
+    <p><strong>Minimum viable launch:</strong> If only Guides 38 and 41 are complete plus the 7 existing guide upgrades, that is already a credible Elite tier — enough content to justify £45 and to deliver immediate value. The remaining 4 guides can be delivered as "coming soon" with a committed timeline, which also creates an email reason to re-engage buyers.</p>
+  </div>
+</div>
+
+
+<div class="footer">ELITE TIER MASTER BRIEF · THE SCRATCH PROJECT · GUIDES 38–43 · 7 EXISTING UPGRADES · SCRATCH → +3 · 2026-06-08</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
