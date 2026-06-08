@@ -1,274 +1,333 @@
 #!/usr/bin/env python3
 """
-Golf Playbooks — Navigation & Tier Patch Script
-=================================================
-Run inside your local GitHub repository folder:
+Golf Playbooks — Navigation Patch & Tier Distribution Builder
+==============================================================
+Generates clean per-tier distribution folders from a single source.
 
-    # Generate both distributions:
-    python3 patch_playbooks.py --tier standard --out dist/standard
-    python3 patch_playbooks.py --tier pro      --out dist/pro
+Usage
+-----
+  # Build all three tiers at once:
+  python3 patch_playbooks.py --tier standard --out dist/standard
+  python3 patch_playbooks.py --tier pro      --out dist/pro
+  python3 patch_playbooks.py --tier elite    --out dist/elite
 
-    # Patch in-place (existing behaviour, defaults to standard):
-    python3 patch_playbooks.py
+  # Or patch in-place (no --out) — default tier is standard:
+  python3 patch_playbooks.py
 
-What it does for every playbook HTML file:
-  1. Adds a "⌂ All Playbooks" Home nav bar at the very top.
-  2. Adds a "Related Playbooks" panel at the very bottom.
-  3. In --tier pro mode: sets TIER = 'pro' in the inline script constant,
-     which causes all data-tier="pro" elements to render.
-  4. In --tier standard mode (default): sets TIER = 'standard',
-     which causes all data-tier="pro" elements to be removed on load.
-  5. Skips index.html (standard) and index_pro.html (pro has its own).
-  6. Safe to re-run — already-patched files are detected by tier marker.
+What it does per file
+---------------------
+  1. Injects a TIER constant + DOM-removal init block into every HTML file.
+     TIER = 'standard' | 'pro' | 'elite' — controls which data-tier elements render.
+  2. Adds a "⌂ All Playbooks" home nav bar at the very top.
+  3. Adds a "Related Playbooks" panel at the very bottom.
+  4. Excludes Pro-only guides from the Standard build.
+  5. Excludes Elite-only guides from Standard and Pro builds.
+  6. Copies index_pro.html  → index.html in the Pro output folder.
+  7. Copies index_elite.html → index.html in the Elite output folder.
+  8. Copies non-HTML assets (sw.js, manifest.json, icons/) automatically.
 
-The TIER constant approach:
-  Each playbook that contains advanced content has this near the top of
-  its <script> block (inserted by this script if not present):
+Tier gating in HTML source files
+---------------------------------
+  Advanced Pro tabs/sections carry:      data-tier="pro"
+  Advanced Elite tabs/sections carry:    data-tier="elite"
 
-      const TIER = 'standard'; // patched by patch_playbooks.py
+  The injected TIER script removes elements that exceed the buyer's tier:
+    - Standard build:  removes data-tier="pro" AND data-tier="elite"
+    - Pro build:       removes data-tier="elite" only
+    - Elite build:     removes nothing — all content visible
 
-  And a tiny init block:
-      document.querySelectorAll('[data-tier="pro"]').forEach(el => {
-        if (TIER !== 'pro') el.remove();
-      });
-
-  Advanced tabs carry:  <button class="tab" data-tier="pro" ...>
-  Advanced sections:    <div class="sec" data-tier="pro" id="...">
-  Advanced sub-sections within existing tabs carry:
-                        <div class="pro-section" data-tier="pro">
+Safe to re-run — existing tier markers are detected and replaced cleanly.
 """
 
-# <!-- version:v3.0 · 2026-06-07 · patch_playbooks.py -->
+# <!-- version:v3.1 · 2026-06-08 · patch_playbooks.py — Elite tier added -->
 
 import os, re, shutil, argparse
 
-# ── Guide registry: filename → (display title, emoji, accent colour)
+# ── Guide registry ────────────────────────────────────────────────────────
+# filename → (display title, emoji, accent colour)
 GUIDES = {
-    '01_putting_pro.html':         ('Putting Playbook',           '🎯', '#e8b800'),
-    '02_shortgame_pro.html':       ('Short Game Playbook',        '🌊', '#2ec4b6'),
-    '03_longgame_pro.html':        ('Long Game Playbook',         '🏌️', '#5ecb3e'),
-    '04_complete_golfer.html':     ('The Complete Golfer',        '🧭', '#ff6b35'),
-    '05_pre_shot_routine.html':    ('Pre-Shot Routine',           '🔁', '#5ecb3e'),
-    '06_golf_fitness.html':        ('Golf Fitness Plan',          '💪', '#ff6b35'),
-    '07_golf_nutrition.html':      ('Golf Nutrition Plan',        '🍎', '#5ecb3e'),
-    '08_pro_round_prep.html':      ('Pro Round Prep',             '🗺️', '#e8b800'),
-    '09_golf_coach_ai.html':       ('Golf Coach AI',              '🤖', '#5ecb3e'),
-    '10_scratch_plan.html':        ('24-Month Scratch Plan',      '🏆', '#e8b800'),
-    '11_shot_dispersion.html':     ('Shot Dispersion Mapping',    '📊', '#5ecb3e'),
-    '12_rules_of_golf.html':       ('Rules of Golf',              '📜', '#e8b800'),
-    '13_injury_prevention.html':   ('Injury Prevention',          '🩺', '#ff6b35'),
-    '14_video_analysis.html':      ('Video Analysis',             '🎥', '#2ec4b6'),
-    '15_equipment_fitting.html':   ('Equipment Fitting',          '🔧', '#e8b800'),
-    '16_solo_pressure_round.html': ('Solo Pressure Round',        '🔥', '#ff6b35'),
-    '17_progress_journal.html':    ('Progress Journal',           '📓', '#9b72f5'),
-    '18_training_aids_2.html':     ('Training Arsenal',           '🛠️', '#5ecb3e'),
-    '20_course_management.html':   ('Course Management',          '⚖️', '#e8b800'),
-    '21_mental_game.html':         ('Mental Game Mastery',        '🧘', '#9b72f5'),
-    '22_wedge_distances.html':     ('Wedge Distance Matrix',      '📏', '#e8b800'),
-    '23_weather_conditions.html':  ('Weather & Conditions',       '🌬️', '#2ec4b6'),
-    '24_competitive_strategy.html':('Competitive Strategy',       '🏆', '#e8b800'),
-    '25_speed_training.html':      ('Speed Training',             '⚡', '#5ecb3e'),
-    '26_stats_interpretation.html':('Stats & SG Interpretation',  '🔢', '#2ec4b6'),
-    '27_six_month_plan.html':      ('Months 1–6 Plan',            '📅', '#e8b800'),
-    '28_months_7_12_plan.html':    ('Months 7–12 Plan',           '📆', '#e8b800'),
-    '29_months_13_18_plan.html':   ('Months 13–18 Plan',          '🎯', '#c8921a'),
-    '30_months_19_24_plan.html':   ('Months 19–24 Plan',          '🏆', '#3a8a3a'),
-    'caddie_card.html':            ('Caddie Reference Card',       '📋', '#2ec4b6'),
-    'swing_mechanics.html':        ('Swing Mechanics',            '⚙️', '#5ecb3e'),
-    'golf_analysis.html':          ('Launch Monitor Analysis',    '📈', '#2ec4b6'),
-    'practice_plan.html':          ('4-Week Programme',           '🗓️', '#2ec4b6'),
-    'mevo_gen2_playbook.html':     ('Mevo Gen2 Data Mastery',     '📡', '#2ec4b6'),
-    'hackmotion_playbook.html':    ('HackMotion Data Mastery',    '🖥️', '#2ec4b6'),
-    'golf_weekly_dashboard.html':  ('Weekly Practice Dashboard',  '📅', '#5ecb3e'),
-    'motivation.html':             ('The Honest Case for Scratch', '🔥', '#a0c850'),
-    'on_course_reference_A5_8pp.html': ('On-Course Reference A5', '📄', '#48b0a8'),
-    'tracking_app.html':           ('Performance Tracker v1',     '📊', '#2ec4b6'),
-    'tracking_app_v2.html':        ('Performance Tracker',        '📊', '#5ecb3e'),
-    '31_on_course_notes.html':     ('On-Course Notes',            '🗺️', '#5ecb3e'),
-    '32_putting_green_reading.html':('Green Reading Deep Dive',   '📐', '#5ecb3e'),
-    '33_competitive_pathway.html': ('UK Competitive Pathway',     '🏆', '#5ecb3e'),
-    '34_coaching_relationship.html':('The Coaching Relationship', '🎓', '#2ec4b6'),
-    '35_links_travel_golf.html':   ('Links & Travel Golf',        '🌊', '#5ecb3e'),
-    '36_playing_partners.html':    ('Playing Partners',           '🤝', '#2ec4b6'),
-    '37_approach_zone.html':       ('The 100–175 Yard Zone',      '🎯', '#e8b800'),
-    # Pro-only stubs
-    '38_practice_structure.html':  ('Practice Structure Science', '🔬', '#c8922a'),
-    '39_ground_reaction_force.html':('Ground Reaction Force',     '⚡', '#c8922a'),
-    '40_decision_architecture.html':('Decision Architecture & EV','🎯', '#c8922a'),
+    # ── Core guides (Standard + Pro + Elite) ──────────────────────────────
+    '01_putting_pro.html':              ('Putting Playbook',              '🎯', '#e8b800'),
+    '02_shortgame_pro.html':            ('Short Game Playbook',           '🌊', '#2ec4b6'),
+    '03_longgame_pro.html':             ('Long Game Playbook',            '🏌️', '#5ecb3e'),
+    '04_complete_golfer.html':          ('The Complete Golfer',           '🧭', '#ff6b35'),
+    '05_pre_shot_routine.html':         ('Pre-Shot Routine',              '🔁', '#5ecb3e'),
+    '06_golf_fitness.html':             ('Golf Fitness Plan',             '💪', '#ff6b35'),
+    '07_golf_nutrition.html':           ('Golf Nutrition Plan',           '🍎', '#5ecb3e'),
+    '08_pro_round_prep.html':           ('Pro Round Prep',                '🗺️', '#e8b800'),
+    '09_golf_coach_ai.html':            ('Golf Coach AI',                 '🤖', '#5ecb3e'),
+    '10_scratch_plan.html':             ('24-Month Scratch Plan',         '🏆', '#e8b800'),
+    '11_shot_dispersion.html':          ('Shot Dispersion Mapping',       '📊', '#5ecb3e'),
+    '12_rules_of_golf.html':            ('Rules of Golf',                 '📜', '#e8b800'),
+    '13_injury_prevention.html':        ('Injury Prevention',             '🩺', '#ff6b35'),
+    '14_video_analysis.html':           ('Video Analysis',                '🎥', '#2ec4b6'),
+    '15_equipment_fitting.html':        ('Equipment Fitting',             '🔧', '#e8b800'),
+    '16_solo_pressure_round.html':      ('Solo Pressure Round',           '🔥', '#ff6b35'),
+    '17_progress_journal.html':         ('Progress Journal',              '📓', '#9b72f5'),
+    '18_training_aids_2.html':          ('Training Arsenal',              '🛠️', '#5ecb3e'),
+    '20_course_management.html':        ('Course Management',             '⚖️', '#e8b800'),
+    '21_mental_game.html':              ('Mental Game Mastery',           '🧘', '#9b72f5'),
+    '22_wedge_distances.html':          ('Wedge Distance Matrix',         '📏', '#e8b800'),
+    '23_weather_conditions.html':       ('Weather & Conditions',          '🌬️', '#2ec4b6'),
+    '24_competitive_strategy.html':     ('Competitive Strategy',          '🏆', '#e8b800'),
+    '25_speed_training.html':           ('Speed Training',                '⚡', '#5ecb3e'),
+    '26_stats_interpretation.html':     ('Stats & SG Interpretation',     '🔢', '#2ec4b6'),
+    '27_six_month_plan.html':           ('Months 1–6 Plan',               '📅', '#e8b800'),
+    '28_months_7_12_plan.html':         ('Months 7–12 Plan',              '📆', '#e8b800'),
+    '29_months_13_18_plan.html':        ('Months 13–18 Plan',             '🎯', '#c8921a'),
+    '30_months_19_24_plan.html':        ('Months 19–24 Plan',             '🏆', '#3a8a3a'),
+    'caddie_card.html':                 ('Caddie Reference Card',         '📋', '#2ec4b6'),
+    'swing_mechanics.html':             ('Swing Mechanics',               '⚙️', '#5ecb3e'),
+    'golf_analysis.html':               ('Launch Monitor Analysis',       '📈', '#2ec4b6'),
+    'practice_plan.html':               ('4-Week Programme',              '🗓️', '#2ec4b6'),
+    'mevo_gen2_playbook.html':          ('Mevo Gen2 Data Mastery',        '📡', '#2ec4b6'),
+    'hackmotion_playbook.html':         ('HackMotion Data Mastery',       '🖥️', '#2ec4b6'),
+    'golf_weekly_dashboard.html':       ('Weekly Practice Dashboard',     '📅', '#5ecb3e'),
+    'motivation.html':                  ('The Honest Case for Scratch',   '🔥', '#a0c850'),
+    'on_course_reference_A5_8pp.html':  ('On-Course Reference A5',        '📄', '#48b0a8'),
+    'tracking_app.html':                ('Performance Tracker v1',        '📊', '#2ec4b6'),
+    'tracking_app_v2.html':             ('Performance Tracker',           '📊', '#5ecb3e'),
+    '31_on_course_notes.html':          ('On-Course Notes',               '🗺️', '#5ecb3e'),
+    '32_putting_green_reading.html':    ('Green Reading Deep Dive',       '📐', '#5ecb3e'),
+    '33_competitive_pathway.html':      ('UK Competitive Pathway',        '🏆', '#5ecb3e'),
+    '34_coaching_relationship.html':    ('The Coaching Relationship',     '🎓', '#2ec4b6'),
+    '35_links_travel_golf.html':        ('Links & Travel Golf',           '🌊', '#5ecb3e'),
+    '36_playing_partners.html':         ('Playing Partners',              '🤝', '#2ec4b6'),
+    '37_approach_zone.html':            ('The 100–175 Yard Zone',         '🎯', '#e8b800'),
+    # ── Pro-only guides (Pro + Elite) ────────────────────────────────────
+    '38_practice_structure.html':       ('Practice Structure Science',    '🧬', '#c8d870'),
+    '39_ground_reaction_force.html':    ('Ground Reaction Force',         '⚡', '#c8d870'),
+    '40_decision_architecture.html':    ('Decision Architecture & EV',    '🎲', '#c8d870'),
+    # ── Elite-only guides ────────────────────────────────────────────────
+    '41_plus_hcp_sg_targets.html':      ('Plus-HCP SG Targets',           '⭐', '#c8d8e8'),
+    '42_national_amateur_circuit.html': ('National Amateur Circuit',      '🏆', '#c8d8e8'),
+    '43_caddie_preparation.html':       ('Caddie Prep & Yardage Books',   '📖', '#c8d8e8'),
+    '44_golfmetrics_deepdive.html':     ('Golfmetrics Deep-Dive',         '🔬', '#c8d8e8'),
+    '45_sportsbox_ai.html':             ('Sportsbox AI Integration',      '🎬', '#c8d8e8'),
+    '46_county_team_golf.html':         ('County Team & Rep Golf',        '🏅', '#c8d8e8'),
 }
 
-# ── Pro-only files (not included in standard distribution)
+# ── Related guides map ────────────────────────────────────────────────────
+# filename → [related filenames in priority order, max 5]
+RELATED = {
+    '01_putting_pro.html':              ['02_shortgame_pro.html','18_training_aids_2.html','05_pre_shot_routine.html','17_progress_journal.html','09_golf_coach_ai.html'],
+    '02_shortgame_pro.html':            ['01_putting_pro.html','22_wedge_distances.html','18_training_aids_2.html','05_pre_shot_routine.html','15_equipment_fitting.html'],
+    '03_longgame_pro.html':             ['swing_mechanics.html','11_shot_dispersion.html','25_speed_training.html','14_video_analysis.html','39_ground_reaction_force.html'],
+    '04_complete_golfer.html':          ['10_scratch_plan.html','21_mental_game.html','05_pre_shot_routine.html','17_progress_journal.html','26_stats_interpretation.html'],
+    '05_pre_shot_routine.html':         ['21_mental_game.html','16_solo_pressure_round.html','08_pro_round_prep.html','04_complete_golfer.html'],
+    '06_golf_fitness.html':             ['25_speed_training.html','07_golf_nutrition.html','13_injury_prevention.html','10_scratch_plan.html'],
+    '07_golf_nutrition.html':           ['06_golf_fitness.html','08_pro_round_prep.html','13_injury_prevention.html','10_scratch_plan.html'],
+    '08_pro_round_prep.html':           ['05_pre_shot_routine.html','20_course_management.html','07_golf_nutrition.html','21_mental_game.html','43_caddie_preparation.html'],
+    '09_golf_coach_ai.html':            ['26_stats_interpretation.html','mevo_gen2_playbook.html','hackmotion_playbook.html','17_progress_journal.html'],
+    '10_scratch_plan.html':             ['27_six_month_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html','17_progress_journal.html'],
+    '11_shot_dispersion.html':          ['03_longgame_pro.html','mevo_gen2_playbook.html','20_course_management.html','09_golf_coach_ai.html'],
+    '12_rules_of_golf.html':            ['08_pro_round_prep.html','24_competitive_strategy.html','16_solo_pressure_round.html'],
+    '13_injury_prevention.html':        ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html'],
+    '14_video_analysis.html':           ['swing_mechanics.html','03_longgame_pro.html','hackmotion_playbook.html','09_golf_coach_ai.html'],
+    '15_equipment_fitting.html':        ['01_putting_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html','45_sportsbox_ai.html'],
+    '16_solo_pressure_round.html':      ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','17_progress_journal.html'],
+    '17_progress_journal.html':         ['26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html','16_solo_pressure_round.html'],
+    '18_training_aids_2.html':          ['mevo_gen2_playbook.html','hackmotion_playbook.html','01_putting_pro.html','02_shortgame_pro.html','38_practice_structure.html'],
+    '20_course_management.html':        ['08_pro_round_prep.html','11_shot_dispersion.html','24_competitive_strategy.html','40_decision_architecture.html'],
+    '21_mental_game.html':              ['05_pre_shot_routine.html','16_solo_pressure_round.html','08_pro_round_prep.html','24_competitive_strategy.html','42_national_amateur_circuit.html'],
+    '22_wedge_distances.html':          ['02_shortgame_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html'],
+    '23_weather_conditions.html':       ['20_course_management.html','08_pro_round_prep.html','03_longgame_pro.html'],
+    '24_competitive_strategy.html':     ['21_mental_game.html','12_rules_of_golf.html','16_solo_pressure_round.html','40_decision_architecture.html'],
+    '25_speed_training.html':           ['06_golf_fitness.html','03_longgame_pro.html','mevo_gen2_playbook.html','13_injury_prevention.html'],
+    '26_stats_interpretation.html':     ['09_golf_coach_ai.html','mevo_gen2_playbook.html','17_progress_journal.html','41_plus_hcp_sg_targets.html','44_golfmetrics_deepdive.html'],
+    '27_six_month_plan.html':           ['10_scratch_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
+    '28_months_7_12_plan.html':         ['10_scratch_plan.html','27_six_month_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
+    '29_months_13_18_plan.html':        ['10_scratch_plan.html','28_months_7_12_plan.html','30_months_19_24_plan.html','24_competitive_strategy.html','17_progress_journal.html'],
+    '30_months_19_24_plan.html':        ['10_scratch_plan.html','29_months_13_18_plan.html','24_competitive_strategy.html','17_progress_journal.html','21_mental_game.html'],
+    'caddie_card.html':                 ['22_wedge_distances.html','23_weather_conditions.html','11_shot_dispersion.html','20_course_management.html'],
+    'swing_mechanics.html':             ['03_longgame_pro.html','14_video_analysis.html','hackmotion_playbook.html','mevo_gen2_playbook.html'],
+    'golf_analysis.html':               ['09_golf_coach_ai.html','mevo_gen2_playbook.html','11_shot_dispersion.html','10_scratch_plan.html'],
+    'practice_plan.html':               ['10_scratch_plan.html','27_six_month_plan.html','18_training_aids_2.html','17_progress_journal.html'],
+    'mevo_gen2_playbook.html':          ['hackmotion_playbook.html','09_golf_coach_ai.html','11_shot_dispersion.html','26_stats_interpretation.html'],
+    'hackmotion_playbook.html':         ['mevo_gen2_playbook.html','09_golf_coach_ai.html','swing_mechanics.html','14_video_analysis.html','45_sportsbox_ai.html'],
+    'golf_weekly_dashboard.html':       ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','10_scratch_plan.html'],
+    'motivation.html':                  ['10_scratch_plan.html','04_complete_golfer.html','27_six_month_plan.html','21_mental_game.html'],
+    'on_course_reference_A5_8pp.html':  ['caddie_card.html','22_wedge_distances.html','23_weather_conditions.html','20_course_management.html'],
+    'tracking_app.html':                ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html'],
+    'tracking_app_v2.html':             ['17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html'],
+    '31_on_course_notes.html':          ['20_course_management.html','08_pro_round_prep.html','caddie_card.html','17_progress_journal.html','26_stats_interpretation.html'],
+    '32_putting_green_reading.html':    ['01_putting_pro.html','31_on_course_notes.html','23_weather_conditions.html','20_course_management.html','caddie_card.html'],
+    '33_competitive_pathway.html':      ['24_competitive_strategy.html','10_scratch_plan.html','16_solo_pressure_round.html','21_mental_game.html','42_national_amateur_circuit.html'],
+    '34_coaching_relationship.html':    ['09_golf_coach_ai.html','14_video_analysis.html','mevo_gen2_playbook.html','17_progress_journal.html','hackmotion_playbook.html'],
+    '35_links_travel_golf.html':        ['23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','21_mental_game.html','caddie_card.html'],
+    '36_playing_partners.html':         ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','33_competitive_pathway.html'],
+    '37_approach_zone.html':            ['03_longgame_pro.html','22_wedge_distances.html','20_course_management.html','26_stats_interpretation.html','mevo_gen2_playbook.html'],
+    # ── Pro-only guides ───────────────────────────────────────────────────
+    '38_practice_structure.html':       ['05_pre_shot_routine.html','26_stats_interpretation.html','18_training_aids_2.html','17_progress_journal.html'],
+    '39_ground_reaction_force.html':    ['03_longgame_pro.html','06_golf_fitness.html','25_speed_training.html','mevo_gen2_playbook.html'],
+    '40_decision_architecture.html':    ['20_course_management.html','11_shot_dispersion.html','26_stats_interpretation.html','24_competitive_strategy.html'],
+    # ── Elite-only guides ────────────────────────────────────────────────
+    '41_plus_hcp_sg_targets.html':      ['26_stats_interpretation.html','44_golfmetrics_deepdive.html','42_national_amateur_circuit.html','17_progress_journal.html','09_golf_coach_ai.html'],
+    '42_national_amateur_circuit.html': ['33_competitive_pathway.html','43_caddie_preparation.html','21_mental_game.html','24_competitive_strategy.html','41_plus_hcp_sg_targets.html'],
+    '43_caddie_preparation.html':       ['08_pro_round_prep.html','42_national_amateur_circuit.html','22_wedge_distances.html','23_weather_conditions.html','20_course_management.html'],
+    '44_golfmetrics_deepdive.html':     ['26_stats_interpretation.html','41_plus_hcp_sg_targets.html','17_progress_journal.html','09_golf_coach_ai.html','mevo_gen2_playbook.html'],
+    '45_sportsbox_ai.html':             ['hackmotion_playbook.html','14_video_analysis.html','34_coaching_relationship.html','mevo_gen2_playbook.html','38_practice_structure.html'],
+    '46_county_team_golf.html':         ['33_competitive_pathway.html','42_national_amateur_circuit.html','21_mental_game.html','24_competitive_strategy.html','08_pro_round_prep.html'],
+}
+
+# ── Tier membership sets ──────────────────────────────────────────────────
+# Files that only appear in Pro and Elite builds (excluded from Standard)
 PRO_ONLY_FILES = {
     '38_practice_structure.html',
     '39_ground_reaction_force.html',
     '40_decision_architecture.html',
     'index_pro.html',
+    'index_elite.html',
 }
 
-# ── Files to skip entirely (no patching)
-SKIP = {'index.html', 'index_pro.html', 'sw.js', 'manifest.json', 'patch_playbooks.py'}
-
-# ── Paper-theme files (light background)
-PAPER_THEME = {'on_course_reference_A5_8pp.html'}
-
-# ── Related guides map (unchanged from v2.2)
-RELATED = {
-    '01_putting_pro.html':         ['02_shortgame_pro.html','18_training_aids_2.html','05_pre_shot_routine.html','17_progress_journal.html','09_golf_coach_ai.html'],
-    '02_shortgame_pro.html':       ['01_putting_pro.html','22_wedge_distances.html','18_training_aids_2.html','05_pre_shot_routine.html','15_equipment_fitting.html'],
-    '03_longgame_pro.html':        ['swing_mechanics.html','11_shot_dispersion.html','25_speed_training.html','14_video_analysis.html','mevo_gen2_playbook.html'],
-    '04_complete_golfer.html':     ['10_scratch_plan.html','21_mental_game.html','05_pre_shot_routine.html','17_progress_journal.html','26_stats_interpretation.html'],
-    '05_pre_shot_routine.html':    ['21_mental_game.html','16_solo_pressure_round.html','08_pro_round_prep.html','04_complete_golfer.html'],
-    '06_golf_fitness.html':        ['25_speed_training.html','07_golf_nutrition.html','13_injury_prevention.html','10_scratch_plan.html'],
-    '07_golf_nutrition.html':      ['06_golf_fitness.html','08_pro_round_prep.html','13_injury_prevention.html','10_scratch_plan.html'],
-    '08_pro_round_prep.html':      ['05_pre_shot_routine.html','20_course_management.html','07_golf_nutrition.html','21_mental_game.html','12_rules_of_golf.html'],
-    '09_golf_coach_ai.html':       ['26_stats_interpretation.html','mevo_gen2_playbook.html','hackmotion_playbook.html','17_progress_journal.html'],
-    '10_scratch_plan.html':        ['27_six_month_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html','17_progress_journal.html'],
-    '11_shot_dispersion.html':     ['03_longgame_pro.html','mevo_gen2_playbook.html','20_course_management.html','09_golf_coach_ai.html'],
-    '12_rules_of_golf.html':       ['08_pro_round_prep.html','24_competitive_strategy.html','16_solo_pressure_round.html'],
-    '13_injury_prevention.html':   ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html'],
-    '14_video_analysis.html':      ['swing_mechanics.html','03_longgame_pro.html','hackmotion_playbook.html','09_golf_coach_ai.html'],
-    '15_equipment_fitting.html':   ['01_putting_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html','09_golf_coach_ai.html'],
-    '16_solo_pressure_round.html': ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','17_progress_journal.html'],
-    '17_progress_journal.html':    ['26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html','16_solo_pressure_round.html'],
-    '18_training_aids_2.html':     ['mevo_gen2_playbook.html','hackmotion_playbook.html','01_putting_pro.html','02_shortgame_pro.html','03_longgame_pro.html'],
-    '20_course_management.html':   ['08_pro_round_prep.html','11_shot_dispersion.html','24_competitive_strategy.html','23_weather_conditions.html'],
-    '21_mental_game.html':         ['05_pre_shot_routine.html','16_solo_pressure_round.html','08_pro_round_prep.html','24_competitive_strategy.html'],
-    '22_wedge_distances.html':     ['02_shortgame_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html'],
-    '23_weather_conditions.html':  ['20_course_management.html','08_pro_round_prep.html','03_longgame_pro.html'],
-    '24_competitive_strategy.html':['21_mental_game.html','12_rules_of_golf.html','16_solo_pressure_round.html','08_pro_round_prep.html'],
-    '25_speed_training.html':      ['06_golf_fitness.html','03_longgame_pro.html','mevo_gen2_playbook.html','13_injury_prevention.html'],
-    '26_stats_interpretation.html':['09_golf_coach_ai.html','mevo_gen2_playbook.html','17_progress_journal.html','10_scratch_plan.html'],
-    '27_six_month_plan.html':      ['10_scratch_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
-    '28_months_7_12_plan.html':    ['10_scratch_plan.html','27_six_month_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
-    'swing_mechanics.html':        ['03_longgame_pro.html','14_video_analysis.html','hackmotion_playbook.html','mevo_gen2_playbook.html'],
-    'golf_analysis.html':          ['09_golf_coach_ai.html','mevo_gen2_playbook.html','11_shot_dispersion.html','10_scratch_plan.html'],
-    'practice_plan.html':          ['10_scratch_plan.html','27_six_month_plan.html','18_training_aids_2.html','17_progress_journal.html'],
-    'mevo_gen2_playbook.html':     ['hackmotion_playbook.html','09_golf_coach_ai.html','11_shot_dispersion.html','26_stats_interpretation.html'],
-    'hackmotion_playbook.html':    ['mevo_gen2_playbook.html','09_golf_coach_ai.html','swing_mechanics.html','14_video_analysis.html'],
-    '29_months_13_18_plan.html':   ['10_scratch_plan.html','28_months_7_12_plan.html','30_months_19_24_plan.html','24_competitive_strategy.html','17_progress_journal.html'],
-    '30_months_19_24_plan.html':   ['10_scratch_plan.html','29_months_13_18_plan.html','24_competitive_strategy.html','17_progress_journal.html','21_mental_game.html'],
-    'caddie_card.html':            ['22_wedge_distances.html','23_weather_conditions.html','11_shot_dispersion.html','20_course_management.html'],
-    'golf_weekly_dashboard.html':  ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','10_scratch_plan.html'],
-    'motivation.html':             ['10_scratch_plan.html','04_complete_golfer.html','27_six_month_plan.html','21_mental_game.html'],
-    'on_course_reference_A5_8pp.html': ['caddie_card.html','22_wedge_distances.html','23_weather_conditions.html','20_course_management.html'],
-    'tracking_app.html':           ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html'],
-    'tracking_app_v2.html':        ['17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html'],
-    '31_on_course_notes.html':     ['20_course_management.html','08_pro_round_prep.html','caddie_card.html','17_progress_journal.html','26_stats_interpretation.html'],
-    '32_putting_green_reading.html':['01_putting_pro.html','31_on_course_notes.html','23_weather_conditions.html','20_course_management.html','caddie_card.html'],
-    '33_competitive_pathway.html': ['24_competitive_strategy.html','10_scratch_plan.html','16_solo_pressure_round.html','21_mental_game.html','26_stats_interpretation.html'],
-    '34_coaching_relationship.html':['09_golf_coach_ai.html','14_video_analysis.html','mevo_gen2_playbook.html','17_progress_journal.html','hackmotion_playbook.html'],
-    '35_links_travel_golf.html':   ['23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','21_mental_game.html','caddie_card.html'],
-    '36_playing_partners.html':    ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','33_competitive_pathway.html'],
-    '37_approach_zone.html':       ['03_longgame_pro.html','22_wedge_distances.html','11_shot_dispersion.html','mevo_gen2_playbook.html','26_stats_interpretation.html'],
-    # Pro-only stubs link back to related core guides
-    '38_practice_structure.html':  ['05_pre_shot_routine.html','26_stats_interpretation.html','18_training_aids_2.html','17_progress_journal.html'],
-    '39_ground_reaction_force.html':['03_longgame_pro.html','06_golf_fitness.html','25_speed_training.html','mevo_gen2_playbook.html'],
-    '40_decision_architecture.html':['20_course_management.html','11_shot_dispersion.html','26_stats_interpretation.html','24_competitive_strategy.html'],
+# Files that only appear in the Elite build
+ELITE_ONLY_FILES = {
+    '41_plus_hcp_sg_targets.html',
+    '42_national_amateur_circuit.html',
+    '43_caddie_preparation.html',
+    '44_golfmetrics_deepdive.html',
+    '45_sportsbox_ai.html',
+    '46_county_team_golf.html',
+    'index_elite.html',
 }
 
+# Files that use the paper/ink design (not the dark green theme)
+PAPER_THEME = {
+    '10_scratch_plan.html',
+    '27_six_month_plan.html',
+    '28_months_7_12_plan.html',
+    '29_months_13_18_plan.html',
+    '30_months_19_24_plan.html',
+}
 
-# ── TIER INJECTION ──────────────────────────────────────────────────────────
+# Files to skip entirely in all builds
+SKIP = {'index.html', 'index_pro.html', 'index_elite.html'}
 
-TIER_SCRIPT_MARKER = '/* tier-init */'
+# Non-HTML assets to copy into every dist folder
+ASSET_FILES = {'sw.js', 'manifest.json'}
+ASSET_DIRS  = {'icons'}
+
+
+# ── Tier script injection ─────────────────────────────────────────────────
+
+TIER_MARKER = '/* tier-init */'
 
 def make_tier_script(tier: str) -> str:
-    """Returns the inline script block that controls tier rendering."""
-    return f"""<script>
-/* tier-init */
-const TIER = '{tier}'; // 'standard' | 'pro' — set by patch_playbooks.py
-(function() {{
-  document.addEventListener('DOMContentLoaded', function() {{
-    document.querySelectorAll('[data-tier="pro"]').forEach(function(el) {{
-      if (TIER !== 'pro') {{
-        el.remove();
-      }} else {{
-        // Pro elements: ensure they display and carry the pro visual marker
-        el.setAttribute('data-pro-active', '1');
-      }}
-    }});
-  }});
-}})();
-</script>"""
+    """
+    Returns the inline <script> block that controls tier rendering.
+
+    Logic:
+      - Standard: removes data-tier="pro" AND data-tier="elite"
+      - Pro:      removes data-tier="elite" only
+      - Elite:    removes nothing — all content visible
+
+    Elements marked data-tier="pro" carry pro-active visual marker in pro/elite.
+    Elements marked data-tier="elite" carry elite-active visual marker in elite.
+    """
+    return (
+        '<script>\n'
+        f'/* tier-init */\n'
+        f"const TIER = '{tier}'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py\n"
+        '(function() {\n'
+        '  document.addEventListener(\'DOMContentLoaded\', function() {\n'
+        '    document.querySelectorAll(\'[data-tier]\').forEach(function(el) {\n'
+        '      var t = el.getAttribute(\'data-tier\');\n'
+        '      if (t === \'pro\'   && TIER === \'standard\') { el.remove(); return; }\n'
+        '      if (t === \'elite\' && TIER !== \'elite\')    { el.remove(); return; }\n'
+        '      // Element is visible for this tier — mark it active for styling\n'
+        '      el.setAttribute(\'data-tier-active\', t);\n'
+        '    });\n'
+        '  });\n'
+        '})();\n'
+        '</script>'
+    )
 
 
 def inject_tier(html: str, tier: str) -> str:
-    """Injects or replaces the TIER constant script block."""
+    """
+    Injects or replaces the TIER constant script block in an HTML file.
+    If a tier-init block already exists it is replaced in-place.
+    Otherwise the new block is inserted immediately before </head>.
+    """
     new_script = make_tier_script(tier)
-    # Replace existing tier block if present
-    if TIER_SCRIPT_MARKER in html:
-        # Remove entire existing tier script block
-        html = re.sub(
-            r'<script>\s*/\* tier-init \*/.*?</script>',
-            '',
-            html,
-            flags=re.DOTALL
-        )
-    # Inject before closing </head>
+
+    # Replace existing tier-init block (handles re-runs and tier changes)
+    existing = re.search(
+        r'<script>\s*/\* tier-init \*/.*?</script>',
+        html, re.DOTALL
+    )
+    if existing:
+        return html[:existing.start()] + new_script + html[existing.end():]
+
+    # First injection — insert before </head>
     if '</head>' in html:
-        html = html.replace('</head>', new_script + '\n</head>', 1)
-    return html
+        return html.replace('</head>', new_script + '\n</head>', 1)
+
+    # Fallback — insert before </body>
+    return html.replace('</body>', new_script + '\n</body>', 1)
 
 
-# ── NAV BUILDERS ────────────────────────────────────────────────────────────
+# ── Home nav bar ──────────────────────────────────────────────────────────
 
-def make_home_nav(is_paper: bool, tier: str = 'standard') -> str:
-    if tier == 'pro':
-        index_file = 'index_pro.html'
-        badge = (
-            '<span style="font-family:\'JetBrains Mono\',monospace;font-size:8px;'
-            'letter-spacing:0.18em;text-transform:uppercase;color:#e8b050;'
-            'background:rgba(200,146,42,0.12);border:1px solid rgba(200,146,42,0.35);'
-            'padding:3px 8px;border-radius:3px;">⬡ Pro Edition</span>'
-        )
-    else:
-        index_file = 'index.html'
-        badge = (
-            '<span style="font-family:\'Courier New\',monospace;font-size:9px;'
-            'letter-spacing:0.18em;text-transform:uppercase;'
-            'color:rgba(232,240,216,0.2);">The Scratch Project</span>'
-        )
-
+def make_home_nav(is_paper: bool) -> str:
     if is_paper:
-        return (
-            f'<!-- HOME NAV -->\n'
-            f'<div style="background:#f5f0e8;border-bottom:1px solid rgba(120,100,60,0.2);'
-            f'padding:10px 20px;display:flex;align-items:center;justify-content:space-between;">\n'
-            f'  <a href="{index_file}" style="font-family:\'Courier Prime\',\'Courier New\',monospace;'
-            f'font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(60,50,30,0.55);'
-            f'text-decoration:none;display:inline-flex;align-items:center;gap:8px;">'
-            f'<span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>\n'
-            f'  {badge}\n'
-            f'</div>\n'
-        )
+        bg     = '#3d2e1a'
+        border = 'rgba(26,18,8,0.3)'
+        text   = 'rgba(245,239,228,0.55)'
+        sub    = 'rgba(245,239,228,0.2)'
     else:
-        return (
-            f'<!-- HOME NAV -->\n'
-            f'<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);'
-            f'padding:10px 20px;display:flex;align-items:center;justify-content:space-between;'
-            f'position:relative;z-index:200;">\n'
-            f'  <a href="{index_file}" style="font-family:\'Courier New\',monospace;font-size:10px;'
-            f'letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);'
-            f'text-decoration:none;display:inline-flex;align-items:center;gap:8px;">'
-            f'<span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>\n'
-            f'  {badge}\n'
-            f'</div>\n'
-        )
+        bg     = '#111e11'
+        border = 'rgba(160,200,80,0.2)'
+        text   = 'rgba(232,240,216,0.55)'
+        sub    = 'rgba(232,240,216,0.2)'
+    return (
+        '<!-- HOME NAV -->\n'
+        f'<div style="background:{bg};border-bottom:1px solid {border};padding:10px 20px;'
+        'display:flex;align-items:center;justify-content:space-between;'
+        'position:relative;z-index:200;">\n'
+        f'  <a href="index.html" style="font-family:\'Courier New\',monospace;font-size:10px;'
+        f'letter-spacing:0.22em;text-transform:uppercase;color:{text};text-decoration:none;'
+        'display:inline-flex;align-items:center;gap:8px;">\n'
+        '    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks\n'
+        '  </a>\n'
+        f'  <span style="font-family:\'Courier New\',monospace;font-size:9px;'
+        f'letter-spacing:0.18em;text-transform:uppercase;color:{sub};">The Scratch Project</span>\n'
+        '</div>\n'
+    )
 
 
-def make_related_panel(fname: str, is_paper: bool) -> str:
-    rels = RELATED.get(fname, [])
+# ── Related guides panel ──────────────────────────────────────────────────
+
+def make_related_panel(filename: str, is_paper: bool, tier: str) -> str:
+    """
+    Builds the Related Playbooks panel for a given file.
+    Filters out related guides that aren't available in the current tier.
+    """
+    rels_raw = RELATED.get(filename, [])
+    if not rels_raw:
+        return ''
+
+    # Filter related guides to only those present in this tier's build
+    def guide_in_tier(fname: str) -> bool:
+        if fname in ELITE_ONLY_FILES:
+            return tier == 'elite'
+        if fname in PRO_ONLY_FILES:
+            return tier in ('pro', 'elite')
+        return True
+
+    rels = [r for r in rels_raw if r in GUIDES and guide_in_tier(r)]
     if not rels:
         return ''
 
     if is_paper:
-        outer_bg   = '#f5f0e8'
-        outer_bdr  = 'rgba(120,100,60,0.2)'
-        label_col  = 'rgba(120,100,60,0.6)'
-        card_bg    = 'rgba(0,0,0,0.04)'
-        card_bdr   = 'rgba(0,0,0,0.1)'
-        card_text  = '#2a2010'
-        footer_col = 'rgba(60,50,30,0.4)'
-        font_body  = "'Courier Prime','Courier New',monospace"
+        outer_bg   = '#ede5d4'
+        outer_bdr  = 'rgba(26,18,8,0.12)'
+        label_col  = '#b54a22'
+        card_bg    = '#f5efe4'
+        card_bdr   = 'rgba(26,18,8,0.12)'
+        card_text  = '#1a1208'
+        footer_col = 'rgba(26,18,8,0.32)'
+        font_body  = "'Libre Baskerville',Georgia,serif"
         font_mono  = "'Courier Prime','Courier New',monospace"
     else:
         outer_bg   = '#0d180d'
@@ -283,8 +342,6 @@ def make_related_panel(fname: str, is_paper: bool) -> str:
 
     cards_html = ''
     for r in rels:
-        if r not in GUIDES:
-            continue
         title, emoji, colour = GUIDES[r]
         cards_html += (
             f'    <a href="{r}" style="display:flex;align-items:center;gap:12px;'
@@ -315,10 +372,14 @@ def make_related_panel(fname: str, is_paper: bool) -> str:
     )
 
 
-# ── FILE PROCESSOR ──────────────────────────────────────────────────────────
+# ── Per-file patch ────────────────────────────────────────────────────────
 
 def patch_file(src_path: str, dst_path: str, tier: str) -> str:
-    fname = os.path.basename(src_path)
+    """
+    Reads src_path, applies all patches, writes to dst_path.
+    Returns 'patched' or 'copied' (no changes needed).
+    """
+    fname    = os.path.basename(src_path)
     is_paper = fname in PAPER_THEME
 
     with open(src_path, 'r', encoding='utf-8', errors='replace') as f:
@@ -326,35 +387,29 @@ def patch_file(src_path: str, dst_path: str, tier: str) -> str:
 
     changed = False
 
-    # 1. Inject/update TIER constant
-    html_new = inject_tier(html, tier)
-    if html_new != html:
-        html = html_new
+    # 1. Inject / update TIER script
+    new_html = inject_tier(html, tier)
+    if new_html != html:
+        html    = new_html
         changed = True
 
-    # 2. Add Home nav
+    # 2. Add home nav bar (after <body>) if not already present
     if 'All Playbooks' not in html and '<!-- HOME NAV -->' not in html:
-        nav = make_home_nav(is_paper, tier)
+        nav = make_home_nav(is_paper)
         new_html = html.replace('<body>\n', '<body>\n' + nav, 1)
         if new_html == html:
             new_html = html.replace('<body>', '<body>\n' + nav, 1)
         if new_html != html:
-            html = new_html
-            changed = True
-    elif '<!-- HOME NAV -->' in html and tier == 'pro':
-        # Update home nav link to point to index_pro.html
-        html_new = html.replace('href="index.html"', 'href="index_pro.html"', 1)
-        if html_new != html:
-            html = html_new
+            html    = new_html
             changed = True
 
-    # 3. Add Related Guides panel
+    # 3. Add Related Guides panel (before </body>) if not already present
     if 'Related Playbooks' not in html and '<!-- RELATED GUIDES PANEL -->' not in html:
-        panel = make_related_panel(fname, is_paper)
+        panel = make_related_panel(fname, is_paper, tier)
         if panel:
             new_html = html.replace('</body>', panel + '</body>', 1)
             if new_html != html:
-                html = new_html
+                html    = new_html
                 changed = True
 
     os.makedirs(os.path.dirname(dst_path) or '.', exist_ok=True)
@@ -364,55 +419,88 @@ def patch_file(src_path: str, dst_path: str, tier: str) -> str:
     return 'patched' if changed else 'copied'
 
 
-# ── MAIN ────────────────────────────────────────────────────────────────────
+# ── Main ──────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='Golf Playbooks tier patch and distribution builder'
+        description='Golf Playbooks — tier patch and distribution builder'
     )
     parser.add_argument(
         '--tier',
-        choices=['standard', 'pro'],
+        choices=['standard', 'pro', 'elite'],
         default='standard',
-        help="Output tier: 'standard' (default) or 'pro'"
+        help="Output tier: 'standard' (default), 'pro', or 'elite'"
     )
     parser.add_argument(
         '--out',
         default=None,
-        help="Output directory (default: patch in-place in cwd)"
+        help='Output directory (default: patch in-place in source dir)'
     )
     parser.add_argument(
         '--src',
         default=None,
-        help="Source directory (default: current working directory)"
+        help='Source directory (default: current working directory)'
     )
     args = parser.parse_args()
 
-    src_dir = args.src or os.getcwd()
-    out_dir = args.out or src_dir
+    src_dir = os.path.abspath(args.src or os.getcwd())
+    out_dir = os.path.abspath(args.out or src_dir)
     tier    = args.tier
 
     os.makedirs(out_dir, exist_ok=True)
 
-    html_files = [f for f in os.listdir(src_dir) if f.endswith('.html') and f not in SKIP]
-    html_files.sort()
+    # ── Collect HTML files to process ────────────────────────────────────
+    all_html = sorted(f for f in os.listdir(src_dir)
+                      if f.endswith('.html') and f not in SKIP)
 
-    # Filter pro-only files for standard tier
+    # Standard: exclude Pro-only and Elite-only files
     if tier == 'standard':
-        html_files = [f for f in html_files if f not in PRO_ONLY_FILES]
-    
-    # For pro tier, copy index_pro.html as index.html in output
-    if tier == 'pro':
-        pro_index_src = os.path.join(src_dir, 'index_pro.html')
-        if os.path.exists(pro_index_src):
-            shutil.copy2(pro_index_src, os.path.join(out_dir, 'index.html'))
-            print(f"Copied index_pro.html → {out_dir}/index.html")
+        html_files = [f for f in all_html
+                      if f not in PRO_ONLY_FILES and f not in ELITE_ONLY_FILES]
 
-    print(f"\nGolf Playbooks Navigation & Tier Patch")
-    print(f"Tier:      {tier.upper()}")
-    print(f"Source:    {src_dir}")
-    print(f"Output:    {out_dir}")
-    print(f"Files:     {len(html_files)}\n")
+    # Pro: exclude Elite-only files
+    elif tier == 'pro':
+        html_files = [f for f in all_html if f not in ELITE_ONLY_FILES]
+
+    # Elite: include everything except the SKIP set
+    else:
+        html_files = all_html
+
+    # ── Copy correct index into output ───────────────────────────────────
+    def copy_index(src_name: str, msg: str) -> None:
+        src_index = os.path.join(src_dir, src_name)
+        dst_index = os.path.join(out_dir, 'index.html')
+        if os.path.exists(src_index):
+            shutil.copy2(src_index, dst_index)
+            print(f'  {msg}')
+
+    if tier == 'pro' and out_dir != src_dir:
+        copy_index('index_pro.html', 'index_pro.html → index.html (pro)')
+    elif tier == 'elite' and out_dir != src_dir:
+        copy_index('index_elite.html', 'index_elite.html → index.html (elite)')
+    elif tier == 'standard' and out_dir != src_dir:
+        copy_index('index.html', 'index.html → index.html (standard)')
+
+    # ── Copy non-HTML assets ──────────────────────────────────────────────
+    if out_dir != src_dir:
+        for asset in ASSET_FILES:
+            src_asset = os.path.join(src_dir, asset)
+            if os.path.exists(src_asset):
+                shutil.copy2(src_asset, os.path.join(out_dir, asset))
+        for asset_dir in ASSET_DIRS:
+            src_adir = os.path.join(src_dir, asset_dir)
+            dst_adir = os.path.join(out_dir, asset_dir)
+            if os.path.exists(src_adir):
+                if os.path.exists(dst_adir):
+                    shutil.rmtree(dst_adir)
+                shutil.copytree(src_adir, dst_adir)
+
+    # ── Process files ─────────────────────────────────────────────────────
+    print(f'\nGolf Playbooks — Tier Distribution Builder')
+    print(f'  Tier:    {tier.upper()}')
+    print(f'  Source:  {src_dir}')
+    print(f'  Output:  {out_dir}')
+    print(f'  Files:   {len(html_files)}\n')
 
     patched = []
     copied  = []
@@ -424,7 +512,6 @@ if __name__ == '__main__':
 
         if fname not in GUIDES and fname not in PAPER_THEME:
             unknown.append(fname)
-            # Still copy even if not in registry
             shutil.copy2(src_path, dst_path)
             continue
 
@@ -434,31 +521,24 @@ if __name__ == '__main__':
         else:
             copied.append(fname)
 
-    # Copy non-HTML assets (sw.js, manifest, icons etc.)
-    for f in os.listdir(src_dir):
-        if not f.endswith('.html') and f not in ('patch_playbooks.py',):
-            src = os.path.join(src_dir, f)
-            dst = os.path.join(out_dir, f)
-            if os.path.isfile(src):
-                shutil.copy2(src, dst)
-
-    print(f"✅ Patched ({len(patched)}):")
+    # ── Report ────────────────────────────────────────────────────────────
+    print(f'✅ Patched ({len(patched)}):')
     for f in patched:
-        print(f"   {f}")
+        print(f'   {f}')
 
     if copied:
-        print(f"\n📋 Copied unchanged ({len(copied)}):")
+        print(f'\n⏭  Already up-to-date ({len(copied)}):')
         for f in copied:
-            print(f"   {f}")
+            print(f'   {f}')
 
     if unknown:
-        print(f"\n❓ Unrecognised — copied raw ({len(unknown)}):")
+        print(f'\n❓ Unrecognised — copied as-is ({len(unknown)}):')
         for f in unknown:
-            print(f"   {f}")
+            print(f'   {f}')
 
-    print(f"\nDone.")
-    print(f"→ {tier.upper()} build in: {out_dir}")
-    if tier == 'standard':
-        print(f"  Zip {out_dir}/ and upload to Gumroad as Product A.")
+    print(f'\nDone.')
+    if out_dir != src_dir:
+        print(f'→ {tier.upper()} build in: {out_dir}')
+        print(f'  Zip {out_dir}/ and upload to Gumroad as the {tier.capitalize()} product.')
     else:
-        print(f"  Zip {out_dir}/ and upload to Gumroad as Product B (Pro Edition).")
+        print('→ Files patched in-place.')

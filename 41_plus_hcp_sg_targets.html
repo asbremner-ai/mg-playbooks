@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · 41_plus_hcp_sg_targets.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Plus-Handicap SG Targets — The Scratch Project Elite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--elite-border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--elite-hi);}.tab.active{color:var(--elite);border-bottom-color:var(--elite);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--elite);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-elite{background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.card-elite{border-color:var(--elite-border);}.card-elite .card-tag{color:var(--elite);}
+.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--elite);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}.ev{color:var(--elite-hi);font-weight:600;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--elite);background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite-box{background:var(--elite-dim);border:1px solid var(--elite-border);}.elite-box p{color:rgba(200,216,232,.85);}.elite-box strong{color:var(--elite-hi);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}.gold-box p{color:rgba(240,208,112,.9);}.gold-box strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--elite);padding:14px 18px;margin:18px 0;background:var(--elite-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--elite-hi);line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}</style>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(200,216,232,0.18);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,216,232,0.3);">The Scratch Project · Elite</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Elite Playbook · Guide 41</p>
+  <h1>Plus-Handicap<br><em>SG Targets</em></h1>
+  <p class="hero-sub">The precise strokes gained benchmarks that separate scratch from +1, +2, and +3 — category-by-category gap analysis, proximity compression targets, and the 12-week practice cycle that closes each gap systematically.</p>
+  <div class="hero-tags"><span class="htag">⭐ Plus-HCP Benchmarks</span><span class="htag">📊 APP Compression</span><span class="htag">🎯 Proximity Targets</span><span class="htag">🏌️ OTT Width</span><span class="htag">⛳ Putting Standards</span><span class="htag">🔄 12-Week Cycle</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('benchmarks',this)">Benchmarks</button>
+  <button class="tab" onclick="show('app',this)">SG: APP</button>
+  <button class="tab" onclick="show('ott',this)">SG: OTT</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('arg',this)">Short Game</button>
+  <button class="tab" onclick="show('cycle',this)">12-Week Cycle</button>
+</div>
+
+<div class="sec active" id="benchmarks">
+  <h2 class="sec-title">The Plus-Handicap Benchmarks</h2>
+  <p class="sec-desc">Scratch is not the end of the journey — it is the beginning of a different one. The gaps between scratch and +1/+2/+3 are smaller in aggregate than the gaps that got you here, but they sit in specific, high-difficulty areas that require targeted work to close.</p>
+  <span class="badge badge-elite">⭐ SG Targets by Level</span>
+  <div class="card card-elite">
+    <span class="card-tag">Broadie Dataset — Serious Amateur Benchmarks</span>
+    <h3>Full SG Target Table: Scratch → +3</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>Scratch (0)</th><th>+1</th><th>+2</th><th>+3</th></tr>
+      <tr><td>SG: OTT</td><td>0.0</td><td class="warn">+0.25</td><td class="warn">+0.45</td><td class="good">+0.65</td></tr>
+      <tr><td>SG: APP</td><td>0.0</td><td class="warn">+0.35</td><td class="warn">+0.65</td><td class="good">+0.90</td></tr>
+      <tr><td>SG: ARG</td><td>0.0</td><td class="warn">+0.15</td><td class="warn">+0.25</td><td class="good">+0.40</td></tr>
+      <tr><td>SG: Putting</td><td>0.0</td><td class="warn">+0.10</td><td class="warn">+0.20</td><td class="good">+0.30</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>0.0</strong></td><td class="warn"><strong>+0.85</strong></td><td class="warn"><strong>+1.55</strong></td><td class="good"><strong>+2.25</strong></td></tr>
+    </table>
+    <p>All figures are strokes gained per round relative to scratch baseline (0.0). A +1 player gains approximately 0.85 strokes per round over scratch — the majority in SG: APP and SG: OTT.</p>
+  </div>
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>Key insight:</strong> APP is the largest single gap at every step of the plus journey. A player who reaches scratch typically has SG: APP near 0.0. The fastest route to +1 is almost always approach play — specifically proximity compression from 125–175 yards.</p>
+  </div>
+  <span class="badge badge-gold">📊 Category Contribution to Plus Journey</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Drives Handicap Reduction at Plus Level</span>
+    <h3>% of Total SG Gain by Category</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>Scratch → +1</th><th>+1 → +2</th><th>+2 → +3</th></tr>
+      <tr><td>SG: APP</td><td class="ev">41%</td><td class="ev">45%</td><td class="ev">44%</td></tr>
+      <tr><td>SG: OTT</td><td>29%</td><td>26%</td><td>29%</td></tr>
+      <tr><td>SG: ARG</td><td>18%</td><td>13%</td><td>18%</td></tr>
+      <tr><td>SG: Putting</td><td>12%</td><td>16%</td><td>9%</td></tr>
+    </table>
+    <p>Approach play dominates at every step. This is consistent with Broadie's research — iron play from 50–200 yards is the single largest differentiator between handicap levels in serious amateur golf.</p>
+  </div>
+  <span class="badge badge-teal">🔢 How to Use This Data</span>
+  <div class="card card-teal">
+    <span class="card-tag">Diagnostic Protocol</span>
+    <h3>Finding Your Biggest Gap</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Pull your Arccos season SG averages for all four categories. Use the last 20 competitive rounds minimum for a reliable baseline.</div></li>
+      <li><span class="step-n">2</span><div>Compare each category against the scratch baseline (0.0). A negative SG: APP of −0.3 means you are losing 0.3 strokes per round vs. scratch standard.</div></li>
+      <li><span class="step-n">3</span><div>Convert to a plus target: if your goal is +1, you need to gain +0.35 in APP, +0.25 in OTT, +0.15 in ARG, and +0.10 in Putting above your current scratch baseline.</div></li>
+      <li><span class="step-n">4</span><div>Prioritise the category with the largest gap per session-hour invested — almost always APP for scratch-level players. See the 12-Week Cycle tab for the full practice plan.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="app">
+  <h2 class="sec-title">SG: APP — Proximity Compression</h2>
+  <p class="sec-desc">At plus-handicap level, the approach metric that matters is not hitting more greens — it is hitting closer when you do. The difference between scratch and +2 is approximately 5–9 feet of average proximity from the 125–175 yard zone.</p>
+  <span class="badge badge-elite">📐 Proximity Targets by Yardage</span>
+  <div class="card card-elite">
+    <span class="card-tag">Average Proximity to Hole — Elite Benchmarks</span>
+    <h3>Proximity Targets: Scratch → +3</h3>
+    <table class="tbl">
+      <tr><th>Distance Zone</th><th>Scratch</th><th>+1</th><th>+2</th><th>+3</th></tr>
+      <tr><td>50–75 yards</td><td>14 ft</td><td class="warn">12 ft</td><td class="warn">11 ft</td><td class="good">10 ft</td></tr>
+      <tr><td>75–100 yards</td><td>18 ft</td><td class="warn">16 ft</td><td class="warn">14 ft</td><td class="good">13 ft</td></tr>
+      <tr><td>100–125 yards</td><td>22 ft</td><td class="warn">19 ft</td><td class="warn">17 ft</td><td class="good">15 ft</td></tr>
+      <tr><td>125–150 yards</td><td>27 ft</td><td class="warn">23 ft</td><td class="warn">20 ft</td><td class="good">18 ft</td></tr>
+      <tr><td>150–175 yards</td><td>34 ft</td><td class="warn">29 ft</td><td class="warn">25 ft</td><td class="good">22 ft</td></tr>
+      <tr><td>175–200 yards</td><td>42 ft</td><td class="warn">36 ft</td><td class="warn">31 ft</td><td class="good">28 ft</td></tr>
+    </table>
+  </div>
+  <div class="pull-quote"><p>"The scratch player hits 62% of greens. The +2 player hits 67%. That 5% difference matters — but the 6-foot proximity difference from 150 yards matters three times as much."</p></div>
+  <span class="badge badge-gold">🎯 Approach Efficiency — The Elite Metric</span>
+  <div class="card card-gold">
+    <span class="card-tag">Beyond GIR</span>
+    <h3>Proximity Compression Model</h3>
+    <p>Approach efficiency is the ratio of your actual proximity to your expected proximity given starting yardage. A player who consistently hits to 20 feet from 150 yards when the benchmark is 27 feet has efficiency above 1.0 — outperforming distance expectations.</p>
+    <p>Elite targets: approach efficiency ≥ 1.15 from 100–150 yards, ≥ 1.10 from 150–175 yards. Use Arccos proximity data (Approach section) and cross-reference with the table above to identify your weakest zone.</p>
+  </div>
+  <span class="badge badge-teal">🔬 125–175 Yard Focus Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">Highest SG Leverage Zone</span>
+    <h3>Training the Key Distance Band</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify your worst zone:</strong> Pull Arccos proximity data by 25-yard band. The band where your proximity most exceeds the benchmark is your primary training focus.</div></li>
+      <li><span class="step-n">2</span><div><strong>Trace to a technical cause:</strong> Excess proximity in a specific zone traces to either distance control (right number, wrong shape) or direction (correct distance, wrong line). Use Mevo carry data to identify which.</div></li>
+      <li><span class="step-n">3</span><div><strong>Build a zone-specific drill block:</strong> 20-minute deliberate practice sessions focused solely on one distance band, with proximity feedback using a target circle or measured flag.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="ott">
+  <h2 class="sec-title">SG: OTT — Width vs Distance</h2>
+  <p class="sec-desc">Tour data consistently shows plus-handicap amateurs lose more strokes through lateral dispersion than through distance deficiency. Being 10 yards shorter than benchmark costs far less than being 15 yards off-line. Elite tee play is a width problem, not a distance problem.</p>
+  <span class="badge badge-elite">📏 Dispersion Targets</span>
+  <div class="card card-elite">
+    <span class="card-tag">Lateral Dispersion Standards</span>
+    <h3>Width Targets: Scratch → +2</h3>
+    <table class="tbl">
+      <tr><th>Club</th><th>Scratch (total width)</th><th>+1</th><th>+2</th></tr>
+      <tr><td>Driver</td><td>±32 yards</td><td class="warn">±26 yards</td><td class="good">±22 yards</td></tr>
+      <tr><td>3-wood</td><td>±24 yards</td><td class="warn">±20 yards</td><td class="good">±17 yards</td></tr>
+      <tr><td>3–4 iron / hybrid</td><td>±18 yards</td><td class="warn">±15 yards</td><td class="good">±13 yards</td></tr>
+    </table>
+    <p>Total width = span from leftmost to rightmost shot across 15+ shots per club, removing the single worst miss each direction. This represents your 85th-percentile performance envelope.</p>
+  </div>
+  <span class="badge badge-gold">🗺️ Hole-Type Tee Strategy</span>
+  <div class="card card-gold">
+    <span class="card-tag">Width-Adjusted Targeting</span>
+    <h3>Strategy by Hole Profile</h3>
+    <table class="tbl">
+      <tr><th>Hole Type</th><th>Elite Approach</th></tr>
+      <tr><td>Wide open (no OB)</td><td>Aim at edge of miss zone — maximise angle to pin</td></tr>
+      <tr><td>One-sided hazard</td><td>Aim to safe side of centre by half your miss width</td></tr>
+      <tr><td>Narrow corridor (&lt;30 yds)</td><td>Club down — distance cost is worth tighter dispersion</td></tr>
+      <tr><td>Dogleg</td><td>Calculate carry; if within 10% of max carry, use 3-wood</td></tr>
+      <tr><td>Reachable par 5</td><td>Only if fairway width ≥ 1.5× your dispersion envelope</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">🔬 Monthly Dispersion Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">Mevo Measurement Session</span>
+    <h3>Measuring Your True Envelope</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>15 driver shots at maximum effort, target at 250 yards. Record Mevo lateral offset for each shot using range balls (apply established correction factor).</div></li>
+      <li><span class="step-n">2</span><div>Remove the single worst miss in each direction. Calculate remaining range — this is your 85th-percentile envelope.</div></li>
+      <li><span class="step-n">3</span><div>Compare to benchmark table. If lateral dispersion exceeds target, check HackMotion face angle data — excess width at elite level almost always traces to face angle variance, not path variance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting at Plus Level</h2>
+  <p class="sec-desc">For a scratch player, the remaining putting gains are concentrated in the 6–10 foot range — not lag putting, not tap-ins. The make percentage from inside 8 feet is the clearest single separator between scratch and plus-handicap putters.</p>
+  <span class="badge badge-elite">⛳ Make % Benchmarks</span>
+  <div class="card card-elite">
+    <span class="card-tag">Make % by Distance — Plus-HCP Standards</span>
+    <h3>Putting Targets: Scratch → +3</h3>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Scratch</th><th>+1</th><th>+2</th><th>+3</th></tr>
+      <tr><td>4 feet</td><td>88%</td><td class="warn">91%</td><td class="warn">93%</td><td class="good">95%</td></tr>
+      <tr><td>5 feet</td><td>74%</td><td class="warn">79%</td><td class="warn">83%</td><td class="good">87%</td></tr>
+      <tr><td>6 feet</td><td>60%</td><td class="warn">66%</td><td class="warn">72%</td><td class="good">77%</td></tr>
+      <tr><td>8 feet</td><td>45%</td><td class="warn">51%</td><td class="warn">57%</td><td class="good">63%</td></tr>
+      <tr><td>10 feet</td><td>33%</td><td class="warn">38%</td><td class="warn">43%</td><td class="good">48%</td></tr>
+      <tr><td>15 feet</td><td>19%</td><td>22%</td><td>25%</td><td>28%</td></tr>
+      <tr><td>20+ feet</td><td>11%</td><td>13%</td><td>15%</td><td>16%</td></tr>
+    </table>
+    <p>The 6–10 foot range shows the steepest gradient between handicap levels. Lag putting (20 feet+) shows minimal differentiation at elite level — it is already near-optimal for serious amateurs.</p>
+  </div>
+  <div class="pull-quote"><p>"The difference between scratch and +2 on the greens is not reading — it is execution from 6–10 feet. Make% in that range is almost entirely a stroke-quality and pressure-management issue."</p></div>
+  <span class="badge badge-teal">🏋️ 6–10 Foot Practice Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">Weekly 100-Putt Protocol</span>
+    <h3>Closing the Plus-HCP Putting Gap</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Gate drill (6 feet):</strong> 25 putts with tee gates 1 putter-head-width either side. Target: 78%+ make rate. Gate drills train face angle precision — the dominant variable at 6 feet.</div></li>
+      <li><span class="step-n">2</span><div><strong>Circle drill (8 feet):</strong> 8 balls in a circle at 8 feet. Complete the full circle without missing — restart if you miss. Target: complete within 3 attempts consistently.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pressure drill (10 feet):</strong> 10 putts with a consequence for missing more than 4. Record actual vs. target make%. Pressure-specific execution is what distinguishes competition performance from practice performance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="arg">
+  <h2 class="sec-title">Short Game at Plus Level</h2>
+  <p class="sec-desc">The plus-handicap ARG metric is not scrambling percentage — it is proximity from non-standard lies. The jump from scratch to +2 in ARG is achieved primarily by improving saves from tight lies, rough, and slopes at 15–30 feet, not by converting easy chips more reliably.</p>
+  <span class="badge badge-elite">📐 Save % Targets</span>
+  <div class="card card-elite">
+    <span class="card-tag">ARG Performance Standards</span>
+    <h3>Short Game Benchmarks: Scratch → +2</h3>
+    <table class="tbl">
+      <tr><th>Shot Type</th><th>Scratch</th><th>+1</th><th>+2</th></tr>
+      <tr><td>Standard chip (fairway, &lt;20 ft)</td><td>72%</td><td class="warn">78%</td><td class="good">83%</td></tr>
+      <tr><td>Tight lie chip (15–25 ft)</td><td>54%</td><td class="warn">62%</td><td class="good">70%</td></tr>
+      <tr><td>Rough lie (15–25 ft)</td><td>48%</td><td class="warn">56%</td><td class="good">63%</td></tr>
+      <tr><td>Upslope (20–30 ft)</td><td>61%</td><td class="warn">68%</td><td class="good">74%</td></tr>
+      <tr><td>Downslope (20–30 ft)</td><td>42%</td><td class="warn">50%</td><td class="good">58%</td></tr>
+      <tr><td>Bunker (standard)</td><td>56%</td><td class="warn">64%</td><td class="good">70%</td></tr>
+    </table>
+    <p>The largest gaps are on downslopes and tight lies — the two lie types most frequently encountered on links and heathland courses where national amateur events are held.</p>
+  </div>
+  <span class="badge badge-gold">🏌️ Tight Lie Priority</span>
+  <div class="card card-gold">
+    <span class="card-tag">Technical Requirements</span>
+    <h3>Elite-Standard Tight Lie Execution</h3>
+    <p>A tight lie demands precise dynamic loft at impact — the margin for error is 2–3mm of strike relative to the arc's lowest point vs. 8–10mm from a normal fairway lie.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Lead wrist position:</strong> HackMotion data should show 5–10° of extension at impact — less than a normal chip. Most scratch players are too cupped on tight lies.</div></li>
+      <li><span class="step-n">2</span><div><strong>Ball position:</strong> Move 1 inch further back than a standard chip — raises the effective strike point relative to arc's lowest point.</div></li>
+      <li><span class="step-n">3</span><div><strong>Practice surface:</strong> Use a firm rubber mat or doormat for 15 minutes per session. Firm surface feedback trains ball-first contact in a way a soft mat insert cannot.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="cycle">
+  <h2 class="sec-title">The 12-Week Plus-HCP Cycle</h2>
+  <p class="sec-desc">A structured 12-week training block specifically for scratch-to-+2 improvement. Requires a current Arccos baseline before starting and a re-benchmark at week 12. Each phase addresses one primary category while maintaining the others.</p>
+  <span class="badge badge-elite">🔄 Phase Structure</span>
+  <div class="card card-elite">
+    <span class="card-tag">12-Week Block — Scratch to +1 Priority</span>
+    <h3>Phase Breakdown</h3>
+    <table class="tbl">
+      <tr><th>Weeks</th><th>Primary Focus</th><th>Session Split</th><th>Target Gain</th></tr>
+      <tr><td>1–4</td><td>SG: APP — 125–150 yard zone</td><td>50% APP, 30% Putting, 20% ARG</td><td class="warn">−0.15/round</td></tr>
+      <tr><td>5–8</td><td>SG: APP — 150–175 yard zone</td><td>45% APP, 30% Putting, 25% ARG</td><td class="warn">−0.12/round</td></tr>
+      <tr><td>9–12</td><td>SG: Putting — 6–10 foot zone</td><td>30% APP, 50% Putting, 20% ARG</td><td class="warn">−0.08/round</td></tr>
+    </table>
+    <p>Combined target: −0.35 SG: APP and −0.10 SG: Putting over 12 weeks. OTT and ARG are maintained, not improved, during this block.</p>
+  </div>
+  <span class="badge badge-gold">📅 Weekly Template</span>
+  <div class="card card-gold">
+    <span class="card-tag">5-Session Week</span>
+    <h3>Session Structure</h3>
+    <table class="tbl">
+      <tr><th>Day</th><th>Type</th><th>Duration</th><th>Content</th></tr>
+      <tr><td>Monday</td><td>Technical</td><td>60 min</td><td>Primary focus zone — blocked practice with Mevo</td></tr>
+      <tr><td>Tuesday</td><td>Simulation</td><td>9 holes</td><td>Track SG live; post-round Arccos review</td></tr>
+      <tr><td>Thursday</td><td>Mixed</td><td>45 min</td><td>20 min primary focus (random), 25 min putting protocol</td></tr>
+      <tr><td>Friday</td><td>Short game</td><td>45 min</td><td>ARG maintenance — lie variety, no drills</td></tr>
+      <tr><td>Weekend</td><td>Competitive</td><td>18 holes</td><td>Full Arccos; apply course management protocols</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">📊 Re-Benchmark at Week 12</span>
+  <div class="card card-teal">
+    <span class="card-tag">Quarterly SG Audit</span>
+    <h3>Measuring What Changed</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Pull last 20 competitive rounds from Arccos. Calculate SG averages for all four categories. Compare to Week 0 baseline.</div></li>
+      <li><span class="step-n">2</span><div>If APP improved by less than −0.15 over 12 weeks, technical work is not transferring — review with your coach whether the issue is execution or decision-making.</div></li>
+      <li><span class="step-n">3</span><div>Set the next 12-week focus based on the updated gap table. The category with the largest remaining gap becomes the next primary focus.</div></li>
+      <li><span class="step-n">4</span><div>Update Progress Journal (Guide 17) with the re-benchmark data. The compound record of quarterly SG deltas is your most valuable long-term training asset.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>Realistic expectations:</strong> −0.35 SG: APP in 12 weeks is achievable but demanding. Most scratch players see −0.15 to −0.25 in a focused cycle. If you hit the full target, the next cycle prioritises OTT. If you hit half, the next cycle stays in APP with a modified technical focus.</p>
+  </div>
+</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 41 · PLUS-HCP SG TARGETS · SCRATCH → +3 · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
