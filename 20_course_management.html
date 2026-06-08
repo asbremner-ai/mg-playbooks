@@ -177,6 +177,8 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('conditions',this)">Conditions</button>
   <button class="tab" onclick="show('holetypes',this)">Hole Types</button>
   <button class="tab" onclick="show('missdir',this)">Approach Miss</button>
+  <button class="tab" data-tier="pro" onclick="show('ev_scenarios',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ EV Scenarios</button>
+  <button class="tab" data-tier="pro" onclick="show('par5_layup',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Par 5 Layup</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -501,6 +503,188 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">1</span><div><strong>Your primary miss direction:</strong> Is your systematic miss left, right, short, or long? If 65% of your approach misses are left, your aim point should bias further right than the standard system suggests.</div></li>
       <li><span class="step-n">2</span><div><strong>Your miss by club category:</strong> Many players miss in different directions with irons vs. hybrids, or long irons vs. short irons. Build a per-club miss profile and adjust aim points accordingly.</div></li>
       <li><span class="step-n">3</span><div><strong>Review monthly:</strong> As your technique improves through this programme (particularly face control and wrist mechanics), your miss pattern will change. Recalibrate your aim points quarterly using the most recent 3 months of tracked approach data.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PRO: EV CALCULATION — WORKED SCENARIOS -->
+<div class="sec" id="ev_scenarios" data-tier="pro">
+  <h2 class="sec-title">EV Calculation — Worked Scenarios</h2>
+  <p class="sec-desc">Eight fully worked expected value calculations covering the most common decision types in competitive golf. Each scenario shows the actual arithmetic — dispersion inputs, consequence mapping, EV for each option — so you can run the same logic on your own course.</p>
+  <span class="badge badge-gold">⬡ Pro Depth · Decade System Applied</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">How to Read These Scenarios</span>
+    <h3>The EV Calculation Structure</h3>
+    <div class="formula">
+      <div class="formula-lbl">EV Framework</div>
+      <div class="formula-main">EV(option) = Σ P(outcome i) × E(strokes from outcome i)
+
+Lower EV = better option (fewer expected strokes to hole out)
+The option with the lowest EV is always the correct play,
+regardless of how it feels emotionally.</div>
+      <div class="formula-note">All scenarios use a 10 HCP dispersion profile: ±25 yards lateral at 150 yards, ±18 yards at 100 yards. Adjust the probabilities for your personal dispersion data from Guide 11.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Scenario 01 — Approach: Flag Tight to Left Bunker, 150 Yards</span>
+    <h3>Where Does the Optimal Aim Point Sit?</h3>
+    <p style="margin-bottom:10px;">Flag is 12 yards from left edge, 28 yards from right edge. Bunker left, rough right. 10 HCP lateral dispersion: ±25 yards at this distance.</p>
+    <table class="tbl">
+      <tr><th>Aim Point</th><th>P(left bunker)</th><th>P(green)</th><th>P(right rough)</th><th>EV</th></tr>
+      <tr><td>At the flag</td><td class="bad">28%</td><td class="warn">44%</td><td class="warn">28%</td><td class="bad">3.18 strokes</td></tr>
+      <tr><td>8 yards right of flag</td><td class="warn">16%</td><td class="good">52%</td><td class="warn">32%</td><td class="warn">3.07 strokes</td></tr>
+      <tr><td class="good">Centre of green (18 yds right)</td><td class="good">6%</td><td class="good">58%</td><td class="warn">36%</td><td class="good">2.97 strokes</td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">🎯</span><p><strong>Verdict:</strong> Aiming at the centre of the green — 18 yards right of the flag — produces 0.21 fewer expected strokes than attacking the flag. Over 18 holes, players who always aim at sucker pins lose approximately 1.5–2 strokes per round to this single decision error.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Scenario 02 — Approach: Water Short, Flag Back, 155 Yards</span>
+    <h3>Does Clubbing Up Cost or Save Strokes?</h3>
+    <p style="margin-bottom:10px;">Water short, 5 yards in front of the green. Flag is at the back. Rough long — safe. A 10 HCP's average distance error is −8 yards (short bias).</p>
+    <table class="tbl">
+      <tr><th>Club Choice</th><th>P(water)</th><th>P(on green)</th><th>P(long rough)</th><th>EV</th></tr>
+      <tr><td class="bad">One club short (natural instinct)</td><td class="bad">22%</td><td class="warn">55%</td><td class="warn">23%</td><td class="bad">3.24 strokes</td></tr>
+      <tr><td class="good">Correct club for back pin</td><td class="warn">12%</td><td class="good">63%</td><td class="warn">25%</td><td class="warn">3.09 strokes</td></tr>
+      <tr><td class="good">One club over (back pin, firm greens)</td><td class="good">5%</td><td class="good">58%</td><td class="warn">37%</td><td class="good">3.04 strokes</td></tr>
+    </table>
+    <div class="info-box tip"><span class="ico">💡</span><p><strong>Verdict:</strong> Taking one club more saves 0.20 expected strokes vs. the instinctive shorter club. The reason is asymmetric consequences — water costs 2+ strokes, long rough costs ~0.5 strokes. The maths always favour the longer club when water is short.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Scenario 03 — Tee Shot: OOB Right, 40-Yard Fairway</span>
+    <h3>Driver vs. 3-Wood — The Exact Break-Even Point</h3>
+    <p style="margin-bottom:10px;">Hole: 420 yards. OOB right 25 yards from centre. Fairway 40 yards wide. Driver dispersion cone: ±35 yards. 3-wood dispersion: ±25 yards. Driver OOB rate from centre aim: 18%. 3-wood OOB rate: 6%.</p>
+    <table class="tbl">
+      <tr><th>Club</th><th>OOB Rate</th><th>Fairway Rate</th><th>Avg Position if Safe</th><th>EV</th></tr>
+      <tr><td class="bad">Driver (aim centre)</td><td class="bad">18%</td><td class="warn">54%</td><td>275 yards</td><td class="bad">4.42 strokes</td></tr>
+      <tr><td class="warn">Driver (aim left 15 yds)</td><td class="warn">8%</td><td class="warn">58%</td><td>265 yards</td><td class="warn">4.28 strokes</td></tr>
+      <tr><td class="good">3-wood (aim centre)</td><td class="good">6%</td><td class="good">72%</td><td>245 yards</td><td class="good">4.18 strokes</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Verdict:</strong> The 3-wood saves 0.24 expected strokes despite being 30 yards shorter. The OOB penalty is so severe (+2 strokes) that driver requires an OOB rate below 8% to be EV-positive over a 3-wood. Most 10 HCPs exceed this threshold on tight driving holes.</p></div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Scenario 04 — Par 5: Reachable in Two, Water Front-Left</span>
+    <h3>When Does Going for It Become Correct?</h3>
+    <p style="margin-bottom:10px;">Par 5, 510 yards. Reached in 2 with a fairway wood. Water front-left (covers 60% of the approach zone). Green is accessible from the right side. Carry confidence: 65%.</p>
+    <table class="tbl">
+      <tr><th>Decision</th><th>P(make green)</th><th>P(water)</th><th>P(safe miss)</th><th>EV</th></tr>
+      <tr><td class="bad">Go for it (65% confidence)</td><td class="warn">65%</td><td class="bad">22%</td><td class="warn">13%</td><td class="bad">4.71 strokes</td></tr>
+      <tr><td class="good">Lay up to 90 yards</td><td>—</td><td class="good">0%</td><td class="good">100% (fairway)</td><td class="good">4.52 strokes</td></tr>
+    </table>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">The Break-Even Confidence Threshold</div>
+      <div class="formula-main">For this specific scenario (water covering 60% of approach zone):
+Go for it only when carry confidence ≥ 82%
+
+At 65% confidence: lay up saves 0.19 expected strokes
+At 82% confidence: the options are exactly equal in EV
+Above 82%: going for it becomes EV-positive</div>
+      <div class="formula-note">The threshold changes with every hole — more water exposure raises it, less raises it. This calculation is a one-minute exercise that replaces years of gut-feel decision-making with a single defensible number.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Scenario 05 — Recovery: Ball in Rough Behind Trees</span>
+    <h3>Punch Out vs. Hero Shot — The Maths Are Brutal</h3>
+    <p style="margin-bottom:10px;">Ball in semi-rough, 170 yards out, tree line requires threading a 15-yard window. Distance to green: 170 yards. Thread success rate (honest): 35%. Punch out to 90 yards: 100% success.</p>
+    <table class="tbl">
+      <tr><th>Option</th><th>Success Rate</th><th>If Success</th><th>If Fail</th><th>EV</th></tr>
+      <tr><td class="bad">Hero shot through trees</td><td class="bad">35%</td><td>On green (~20 ft): 2.1 to hole</td><td>Worse lie, 50+ yards: 3.8 to hole</td><td class="bad">3.20 strokes</td></tr>
+      <tr><td class="good">Punch out to 90 yards</td><td class="good">100%</td><td>90 yards, fairway: 2.65 to hole</td><td>—</td><td class="good">2.65 strokes</td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Verdict:</strong> The punch out saves 0.55 expected strokes — more than half a shot. Even if you could thread the trees 50% of the time (which is generous), the punch out is still better. Hero shots from trouble are almost never the correct EV play for amateur golfers.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Scenario 06 — Short Par 4: Drive the Green Decision</span>
+    <h3>When Aggression Off the Tee Is Correct</h3>
+    <p style="margin-bottom:10px;">Short par 4, 295 yards. Green is driveable with driver but has a bunker fronting 40% of the approach and rough long. Safe tee shot to 230 yards leaves 65-yard pitch. Driver carry confidence to green: 50%.</p>
+    <table class="tbl">
+      <tr><th>Option</th><th>P(drive green)</th><th>P(bunker/trouble)</th><th>EV</th></tr>
+      <tr><td>Driver — go for it</td><td class="warn">50%</td><td class="bad">30%</td><td class="warn">3.48 strokes</td></tr>
+      <tr><td class="good">Iron to 65-yard pitch zone</td><td>—</td><td class="good">5%</td><td class="good">3.28 strokes</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Going for the green requires 70%+ confidence before the aggressive play becomes EV-positive on this hole type. At 50% it costs 0.20 strokes. This changes if the green fronting bunker is removed — always map the specific hole, not a generic short-par-4 template.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Scenario 07 — Late in a Round: One Ahead, 18th Hole Decision</span>
+    <h3>How Scoring Context Should Change the EV Inputs</h3>
+    <p style="margin-bottom:10px;">Standard EV treats all strokes equally. In competition — particularly stroke play near the end of a round — the value of avoiding a high score on a single hole differs depending on your position. This scenario shows how to adjust the framework for context.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>When leading or near the cut line:</strong> Double bogeys are disproportionately costly relative to their face value. The EV threshold for risky plays should be raised by 10–15% — require higher confidence before attacking any hazard.</div></li>
+      <li><span class="step-n">2</span><div><strong>When trailing and needing birdies:</strong> The asymmetry inverts — a bogey is nearly as bad as a double, while a birdie has outsized value. Raise aggression, lower the confidence threshold slightly for flag attacks.</div></li>
+      <li><span class="step-n">3</span><div><strong>In Stableford:</strong> Once you have scored zero points on a hole (double bogey), additional damage is worth zero. Pick up immediately and protect the next hole. The EV logic changes entirely once you cannot score points on the current hole.</div></li>
+    </ul>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The Decade principle:</strong> Scott Fawcett's core insight is that the EV-optimal play in stroke play — regardless of position — is almost always the conservative one. The situations where aggression is EV-positive are rarer than most golfers believe. Build the conservative habit first; selectively add aggression where the maths genuinely support it.</p></div>
+  </div>
+</div>
+
+<!-- PRO: PAR 5 LAYUP ZONE OPTIMISATION -->
+<div class="sec" id="par5_layup" data-tier="pro">
+  <h2 class="sec-title">Par 5 Layup Zone Optimisation</h2>
+  <p class="sec-desc">Laying up "short of the bunker" is not a strategy — it is an avoidance reflex. The correct layup zone is specific: the precise yardage from which your personal wedge matrix produces your best proximity to the hole. Getting this right is worth 0.3–0.5 SG per round on courses with reachable par 5s.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Why Layup Zone Matters More Than Layup vs. Attack</span>
+    <h3>The Decision Within the Decision</h3>
+    <p style="margin-bottom:12px;">Most course management discussion focuses on whether to lay up. The more impactful question for a 10 HCP player is <em>where</em> to lay up. Two players who both decide to lay up can produce dramatically different outcomes based solely on the yardage they choose. Research shows that arriving at your personal best wedge distance versus an awkward distance is worth 0.2–0.4 SG on the resulting approach.</p>
+    <div class="formula">
+      <div class="formula-lbl">Layup Zone Calculation</div>
+      <div class="formula-main">Step 1: Pull your proximity data from Arccos / Shot Scope
+        → Average proximity at 80–100 yards: __ ft
+        → Average proximity at 100–120 yards: __ ft
+        → Average proximity at 60–80 yards: __ ft
+
+Step 2: Identify your best proximity distance band
+        → This is your target layup zone
+
+Step 3: On each par 5, work backwards
+        → Remaining distance after tee shot: __ yards
+        → Subtract your target zone: __ yards
+        → This is the exact carry your layup shot needs to achieve</div>
+      <div class="formula-note">Most players find their best proximity zone at their calibrated full-wedge distance — typically 85–110 yards. Partial swings from awkward distances produce 30–50% worse proximity than full swings from the preferred distance.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Awkward Distance Problem</span>
+    <h3>Why 55–70 Yards Is the Scoring Zone Killer</h3>
+    <p style="margin-bottom:12px;">The 55–70 yard range is the most difficult distance in golf for most amateurs. It requires a partial swing with a high-loft wedge — a swing length that is neither instinctive nor calibrated for most players. Tour pros practise partial wedge shots specifically because of this. The fix for an amateur is not practising 60-yard shots endlessly; it is <em>avoiding</em> 60-yard shots through deliberate layup positioning.</p>
+    <table class="tbl">
+      <tr><th>Layup Distance</th><th>10 HCP Avg Proximity</th><th>Equivalent SG vs. 100-yard avg</th></tr>
+      <tr><td>100–110 yards (calibrated full wedge)</td><td class="good">~22 ft</td><td class="good">Baseline</td></tr>
+      <tr><td>85–95 yards (¾ wedge)</td><td class="warn">~28 ft</td><td class="warn">−0.12 SG</td></tr>
+      <tr><td>65–75 yards (partial — awkward)</td><td class="bad">~38 ft</td><td class="bad">−0.28 SG</td></tr>
+      <tr><td>50–60 yards (very partial)</td><td class="bad">~45 ft</td><td class="bad">−0.38 SG</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The discipline:</strong> When laying up, choose a club that carries the ball to your target zone precisely. If that means laying up to 95 yards instead of 110 yards (using a shorter club on the layup), do it. A 10-yard shorter layup at your best wedge distance is always superior to being at 70 yards — even though 70 yards feels closer.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Lie Quality Trumps Distance</span>
+    <h3>The Variable Most Players Ignore</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Flat fairway beats optimal distance in rough:</strong> A layup that leaves the ball in a divot, on a sidehill lie, or in thick rough is inferior to a layup 20 yards shorter on a perfect flat lie. The club you can swing freely from a perfect lie produces 40–60% better proximity than the same distance from rough.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify the "clean zone" on every par 5:</strong> Before the round or on the walk to your tee shot, identify where the fairway is widest and flattest at your target distance. That is your landing zone, not the abstract yardage number.</div></li>
+      <li><span class="step-n">3</span><div><strong>The front-of-green layup:</strong> On par 5s with a false front or run-off area, laying up to 30–40 yards in front of the green — short of the trouble — gives you a simple pitch on a known distance. This is often superior to a full wedge from 100 yards if the 100-yard zone is guarded by a cross-bunker or lies in semi-rough.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Worked Par 5 Example</span>
+    <h3>Applying the Framework Hole by Hole</h3>
+    <p style="margin-bottom:10px;"><strong>Hole:</strong> 520-yard par 5. Tee shot to 250 yards (fairway). 270 yards remaining. Water hazard at 210 yards from current position. Beyond water: flat fairway to 240 yards, then green.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Can I reach in two?</strong> 270 yards to green, 240 yards to carry water + land on green. Carry confidence at 240 yards: 40%. Below 80% threshold → lay up.</div></li>
+      <li><span class="step-n">2</span><div><strong>Where should I lay up?</strong> Best proximity zone is 95–105 yards. 270 yards remaining − 100 yards target zone = 170 yards carry on the layup. Beyond the water at 210 yards → target 60 yards past the water hazard (210 + 60 = 270 − 100 = 170 yard carry ✓).</div></li>
+      <li><span class="step-n">3</span><div><strong>What club carries 170 yards and can I be precise?</strong> 5-iron or hybrid. Aim for the flat section of fairway just past the water. Do not aim to maximise distance — aim to a specific landing zone in the clean fairway.</div></li>
+      <li><span class="step-n">4</span><div><strong>Result:</strong> 100-yard approach from flat fairway → average proximity ~22 feet → birdie attempt. Compared to 60-yard approach from rough → average proximity ~42 feet → likely par attempt. The layup zone choice is worth ~0.3 SG on this single hole.</div></li>
     </ul>
   </div>
 </div>

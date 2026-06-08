@@ -180,6 +180,9 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('drills',this)">Drills</button>
   <button class="tab" onclick="show('plans',this)">Plans</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+  <button class="tab" data-tier="pro" onclick="show('adv_spin',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Adv. Spin</button>
+  <button class="tab" data-tier="pro" onclick="show('plugged_lie',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Plugged Lies</button>
+  <button class="tab" data-tier="pro" onclick="show('updown_diag',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ U&D Diagnostics</button>
 </div>
 
 <!-- SG AROUND GREEN -->
@@ -701,6 +704,157 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Step 3 — Mental Switch</span>
     <h3>Transition to Play Mode</h3>
     <p>End the warmup with 3 shots that feel good using your full routine. Walk to the first tee trusting your feel calibration. Never think about mechanics on the course — only landing spots, trajectories, and outcomes.</p>
+  </div>
+</div>
+
+<!-- PRO: ADVANCED SPIN CONTROL -->
+<div class="sec" id="adv_spin" data-tier="pro">
+  <h2 class="sec-title">Spin Control Advanced</h2>
+  <p class="sec-desc">The physics behind why shots stop — landing angle, ball construction, groove condition, and trajectory choice. Understanding these allows deliberate spin management rather than hoping for the best.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Landing Angle Physics</span>
+    <h3>Why Trajectory Determines Whether Spin Actually Works</h3>
+    <p style="margin-bottom:12px;">Backspin only arrests ball movement if the ball lands at sufficient angle. A ball landing at 38° has a gentler contact with the turf and skids forward before spin can engage. A ball landing at 52° hits the turf more vertically, and spin arrests motion almost immediately. This is why high-trajectory wedge shots stop better than low ones — even at identical spin rates.</p>
+    <div class="formula">
+      <div class="formula-lbl">Landing Angle and Spin Effectiveness</div>
+      <div class="formula-main">Landing angle &lt;35°:  Spin rarely arrests — ball skids then rolls
+Landing angle 35–45°: Spin partially engages — one bounce, check
+Landing angle 45–55°: Spin fully engages — lands and stops
+Landing angle &gt;55°:  Maximum stop — may even spin back</div>
+      <div class="formula-note">A player who hits a lower-trajectory wedge (due to delofting at impact or punching the shot) can generate high spin rates and still see the ball run out — because the landing angle is too shallow for spin to engage before the ball has already bounced forward. Trajectory and spin must work together.</div>
+    </div>
+    <table class="tbl">
+      <tr><th>Shot Type</th><th>Typical Landing Angle</th><th>Spin Rate</th><th>Expected Behaviour</th></tr>
+      <tr><td>High lob (LW, open face)</td><td class="good">52–60°</td><td class="good">8,000–11,000 rpm</td><td>Lands soft, checks immediately</td></tr>
+      <tr><td>Standard pitch (SW, full)</td><td class="good">46–52°</td><td class="good">6,000–8,000 rpm</td><td>Lands, one bounce, checks</td></tr>
+      <tr><td>Mid pitch (GW, 3/4)</td><td class="warn">38–46°</td><td class="warn">4,000–6,000 rpm</td><td>One bounce, moderate run</td></tr>
+      <tr><td>Punch/knock-down (SW)</td><td class="bad">28–38°</td><td class="warn">4,500–7,000 rpm</td><td>Skids, spin barely engages — runs</td></tr>
+      <tr><td>Bump-and-run (PW)</td><td class="bad">22–32°</td><td class="bad">2,500–4,000 rpm</td><td>Designed to run — use deliberately</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Wet Lie Spin Loss by Ball Type</span>
+    <h3>Why Your Premium Ball Matters Most in the Short Game</h3>
+    <p style="margin-bottom:12px;">Water between the clubface and ball acts as a lubricant, reducing friction and therefore spin generation. The degree of loss depends on the ball's cover construction — urethane covers grip the face far better in wet conditions than Surlyn (ionomer) covers.</p>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Urethane Ball Spin Loss</th><th>Surlyn Ball Spin Loss</th><th>Practical Effect</th></tr>
+      <tr><td>Dry fairway</td><td class="good">0%</td><td class="warn">−20 to −30% vs urethane</td><td>Urethane already ahead in dry</td></tr>
+      <tr><td>Damp fairway (morning)</td><td class="warn">−8 to −12%</td><td class="bad">−35 to −40%</td><td>Expect more run on morning shots</td></tr>
+      <tr><td>Wet fairway</td><td class="warn">−15 to −20%</td><td class="bad">−45 to −55%</td><td>Land short of target to compensate</td></tr>
+      <tr><td>Wet rough</td><td class="bad">−25 to −35%</td><td class="bad">−55 to −65%</td><td>Almost no spin — play as bump-and-run</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The flyer from wet rough:</strong> Wet rough not only reduces spin — it also reduces dynamic loft, producing a lower, hotter ball flight that carries further than expected. The combination of further carry and reduced spin means the ball can land 15–25 yards further than a dry-lie shot with the same swing. Account for this on every shot from wet rough by taking one or even two clubs less.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Third-Bounce Principle</span>
+    <h3>Why Amateurs Chronically Underestimate Run-Out</h3>
+    <p style="margin-bottom:12px;">Most amateur golfers visualise a chip or pitch landing, taking one bounce, checking, and stopping near the hole. In reality, a shot at typical amateur spin rates will land, bounce twice with significant forward momentum, and only begin to slow meaningfully on the third contact. Planning for only one bounce systematically underestimates how far the ball will run.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>First bounce:</strong> The ball contacts the green and compresses slightly. The forward component of velocity is largely preserved — the ball bounces forward at approximately 60–70% of its arrival speed. This bounce travels 3–8 feet forward depending on landing angle and green firmness.</div></li>
+      <li><span class="step-n">2</span><div><strong>Second bounce:</strong> The ball is still moving at significant speed. Forward travel is 2–5 feet. Spin begins to engage slightly on firmer surfaces but is still largely overcome by forward momentum.</div></li>
+      <li><span class="step-n">3</span><div><strong>Third bounce and beyond:</strong> Forward momentum has dropped to the point where spin can engage. The ball slows and tracking begins. On a tour-spin shot, this is where the check happens. On an amateur-spin shot, the ball is still rolling.</div></li>
+    </ul>
+    <div class="info-box tip"><span class="ico">💡</span><p><strong>Practical adjustment:</strong> When selecting your landing zone for any chip or pitch, plan for three bounces worth of forward travel before the ball begins to track. For a low-spin amateur shot on a firm green, add 8–12 feet of forward travel from your planned landing zone before estimating where the ball will stop. Your landing zone should be further short of the hole than instinct suggests.</p></div>
+  </div>
+</div>
+
+<!-- PRO: PLUGGED LIE & ADVERSE BUNKER TECHNIQUES -->
+<div class="sec" id="plugged_lie" data-tier="pro">
+  <h2 class="sec-title">Plugged Lies &amp; Adverse Bunker Techniques</h2>
+  <p class="sec-desc">The standard bunker technique works in standard conditions. When the lie is plugged, the sand is wet and compacted, or the ball is on a severe downhill slope, different mechanics are required. These situations arise more than most players prepare for.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-rust">
+    <span class="card-tag">The Plugged Lie — Fried Egg</span>
+    <h3>Closed Face, Steep Attack, No Bounce</h3>
+    <p style="margin-bottom:12px;">A plugged lie requires the opposite technique to a standard bunker shot. Where the standard method uses an open face and shallow entry to use the bounce, the plugged lie requires a closed (square) face and a steep attack angle to drive the leading edge into the sand under the embedded ball.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Square or slightly closed face:</strong> An open face in a plugged lie will bounce off the compressed sand and skull the shot. The face must be square or slightly closed so the leading edge penetrates. The reduced loft means the ball will come out lower and run further than a standard bunker shot.</div></li>
+      <li><span class="step-n">2</span><div><strong>Narrow stance, steep attack:</strong> Narrow your stance slightly and play the ball further back (centre). This creates a steeper attack angle that drives the club under the ball rather than sliding along the surface.</div></li>
+      <li><span class="step-n">3</span><div><strong>Hit 2–3 inches behind:</strong> Same entry point as a standard bunker shot, but the steep attack means the club digs rather than glides. The ball will emerge with minimal spin — plan for significant run on landing.</div></li>
+      <li><span class="step-n">4</span><div><strong>Full follow-through:</strong> The sand resistance is higher on a plugged lie. Do not decelerate — commit to a full finish. Half-hearted swings leave the ball in the bunker.</div></li>
+    </ul>
+    <table class="tbl">
+      <tr><th>Variable</th><th>Standard Bunker Shot</th><th>Plugged Lie</th></tr>
+      <tr><td>Face angle</td><td class="good">Open (20–30°)</td><td class="warn">Square or 5° closed</td></tr>
+      <tr><td>Ball position</td><td class="good">Forward of centre</td><td class="warn">Centre or back</td></tr>
+      <tr><td>Entry point</td><td class="good">2" behind ball</td><td class="warn">2–3" behind ball</td></tr>
+      <tr><td>Attack angle</td><td class="good">Shallow — use bounce</td><td class="warn">Steep — dig under</td></tr>
+      <tr><td>Expected spin</td><td class="good">High — ball checks</td><td class="bad">Low — ball runs significantly</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Landing zone adjustment:</strong> A plugged lie shot will run 2–3× further than a standard bunker shot from the same distance. Aim to land the ball well short of the hole and allow for substantial run. On a plugged lie, getting out and on the green is the priority — precise proximity is secondary.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Wet &amp; Compacted Sand</span>
+    <h3>When the Standard Open-Face Technique Fails</h3>
+    <p style="margin-bottom:12px;">Wet or compacted sand is much harder than dry, fluffy sand. The standard wide-open face and shallow attack will bounce severely off compacted sand, producing a skulled shot. The technique must adapt.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Reduce face opening:</strong> Open only 10–15° rather than 20–30°. Less open face reduces bounce effect and allows better penetration of compacted sand.</div></li>
+      <li><span class="step-n">2</span><div><strong>Enter slightly closer to the ball:</strong> In dry sand, you can enter 2 inches behind. In wet sand, enter 1–1.5 inches behind. Closer entry reduces the risk of the club bouncing off the hard surface before reaching the ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>More controlled swing:</strong> Hard sand transfers more energy to the ball. The same swing that would travel 20 yards in dry sand may travel 30 yards in wet sand. Reduce swing length by 20% for wet bunker shots.</div></li>
+      <li><span class="step-n">4</span><div><strong>Consider the leading edge:</strong> In very wet, firm sand, playing with the leading edge rather than the bounce is sometimes appropriate. This is essentially a chip shot from sand — clean contact with the ball, minimal sand involvement.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The EV Decision on Unplayable Bunker Lies</span>
+    <h3>When the Penalty Drop Is the Correct Play</h3>
+    <p style="margin-bottom:12px;">Not every bad bunker lie should be attempted. A ball buried against the face of a steep lip, on a severe downhill slope toward water, or in a heel-deep plugged lie has a success rate that may not justify the attempt. Before swinging, run a quick EV check.</p>
+    <div class="formula">
+      <div class="formula-lbl">Penalty Drop EV Check</div>
+      <div class="formula-main">P(successful escape) × E(strokes from safe position)
+vs.
+1.0 × E(strokes from penalty drop position) + 1 penalty stroke
+
+If P(success) &lt; 50% on a severe lie:
+→ The penalty drop is almost always the lower EV option</div>
+      <div class="formula-note">Example: Ball plugged against steep face, 15 yards from hole. Success rate from this lie: ~30%. Expected strokes if successful: 2.8 (hole is close but ball will run). Expected strokes from penalty drop at 20 yards in fairway: 2.4 + 1 penalty = 3.4. But 70% failure rate produces average of 4.2 strokes. EV(attempt): 0.3×2.8 + 0.7×4.2 = 3.78. EV(drop): 3.4. Drop is better.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PRO: UP-AND-DOWN RATE DIAGNOSTICS -->
+<div class="sec" id="updown_diag" data-tier="pro">
+  <h2 class="sec-title">Up-and-Down Rate Diagnostics</h2>
+  <p class="sec-desc">A poor up-and-down rate can stem from three completely different causes — contact quality, landing zone targeting, or proximity from the wrong distances. Each has a different fix. Treating all three as a single "short game problem" wastes practice time.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Three Root Causes</span>
+    <h3>Diagnosing Which Problem You Actually Have</h3>
+    <table class="tbl">
+      <tr><th>Root Cause</th><th>Symptom</th><th>Arccos Signal</th><th>Fix</th></tr>
+      <tr><td>Contact quality</td><td>Good landing zone selection, poor proximity — ball goes where intended but distance is off</td><td>SG: ARG negative even from easy positions; high variance in proximity at same distances</td><td>Impact tape on wedges; low-point training; strike protocol</td></tr>
+      <tr><td>Landing zone targeting</td><td>Ball flies the right distance but wrong landing zone; runs through or stops short</td><td>Consistent proximity misses in one direction (all long, or all short from particular distances)</td><td>Landing zone visualisation drill; 3-bounce planning</td></tr>
+      <tr><td>Wrong approach leaving bad positions</td><td>Good short game technique, but starting from short-side positions or severe lies</td><td>SG: APP negative; high proportion of short-side misses; SG: ARG negative even with reasonable technique</td><td>Approach targeting — this is not a short game problem</td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The most common misdiagnosis:</strong> A poor up-and-down rate caused by approach play errors (being short-sided, in bunkers, or on severe slopes) is routinely attributed to poor short game technique. The player spends hours on chipping when the actual fix is approach targeting. Always check SG: APP first before concluding a short game problem.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Reading Your Arccos ARG Data</span>
+    <h3>The Three Diagnostic Questions</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>What is my up-and-down rate by lie type?</strong> Arccos logs shot positions. Compare your U&D rate from fairway-side misses vs. short-side misses vs. bunker. If short-side U&D is 15% but fairway-side is 42%, your problem is approach targeting, not short game. If all three are poor, it is technique.</div></li>
+      <li><span class="step-n">2</span><div><strong>What is my proximity trend over 20 rounds?</strong> Improving proximity (even slowly) with a stable U&D rate indicates a putting problem, not a short game problem. The chip is getting closer but the putts are not being converted. Check SG: PUTT before assuming you need more short game work.</div></li>
+      <li><span class="step-n">3</span><div><strong>What is my scrambling rate by distance?</strong> Break SG: ARG by distance: under 30 yards, 30–60 yards, 60+ yards. A player who scrambles well from under 30 yards but poorly from 30–60 yards has a specific partial-wedge problem — the distance band where technique breaks down most for amateurs.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Practice Protocol by Root Cause</span>
+    <h3>Fixing the Right Thing</h3>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Contact Issue Fix</span><h4>Impact Tape Sessions</h4><p>Weekly 20-minute sessions with impact tape on all wedges. Target: strike pattern tightens to a 10p-coin sized cluster on the sweet spot within 8 sessions.</p></div>
+      <div class="mini-card"><span class="mini-tag">Landing Zone Issue Fix</span><h4>Intermediate Target Drill</h4><p>Place a towel at your intended landing zone. The putt goes to the hole; the chip lands on the towel. Score: make rate from the resulting putt, not proximity. Forces proper landing zone thinking.</p></div>
+      <div class="mini-card"><span class="mini-tag">Approach Targeting Fix</span><h4>Aim Point Recalibration</h4><p>Revisit Guide 20 Target Optimisation. Map the three holes where you most frequently short-side yourself. On those holes specifically, shift aim point away from the dangerous side.</p></div>
+      <div class="mini-card"><span class="mini-tag">Mixed Issue Fix</span><h4>Staged Diagnostic</h4><p>Fix contact quality first (2 weeks), then landing zone (2 weeks), then review approach targeting. Fixing in order prevents one problem masking another.</p></div>
+    </div>
   </div>
 </div>
 

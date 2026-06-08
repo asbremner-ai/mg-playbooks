@@ -175,6 +175,8 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <button class="tab" onclick="show('practiceplan',this)">Practice Plan</button>
   <button class="tab" onclick="show('samplesize',this)">Sample Size</button>
   <button class="tab" onclick="show('synthesis',this)">Weekly Synthesis</button>
+  <button class="tab" data-tier="pro" onclick="show('bayesian',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Bayesian Updating</button>
+  <button class="tab" data-tier="pro" onclick="show('trend_analysis',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Trend Analysis</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -448,6 +450,100 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <tr><td>Average approach proximity</td><td>Arccos/Shot Scope</td><td>Feet, by distance band</td><td>Reducing (closer to flag)</td></tr>
     <tr><td>Up-and-down rate</td><td>Arccos/Shot Scope</td><td>Percentage</td><td>Increasing toward 35%+</td></tr></table>
     <div class="info-box elite"><span class="ico">⭐</span><p><strong>The longitudinal value:</strong> A single month of data tells you very little. Twelve months of consistent monthly data tells you everything — which training blocks produced speed gains, which technique changes improved spin axis, which practice structure changes improved SG: APP transfer, and whether HRV-guided training produced better adaptation than the prior fixed-schedule approach. The monthly review is the compound interest mechanism of the entire programme. Skipping it is the equivalent of investing without ever checking returns.</p></div>
+  </div>
+</div>
+
+<!-- PRO: BAYESIAN UPDATING FRAMEWORK -->
+<div class="sec" id="bayesian" data-tier="pro">
+  <h2 class="sec-title">Bayesian Updating Framework</h2>
+  <p class="sec-desc">The minimum sample size rules tell you when to trust the data fully. The Bayesian framework tells you how to act confidently on partial data while the sample is still accumulating — updating your beliefs round by round rather than waiting for certainty.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Bayesian Principle Applied to SG Data</span>
+    <h3>Starting With a Prior, Updating With Evidence</h3>
+    <p style="margin-bottom:12px;">A Bayesian approach starts with a prior belief — an estimate of your weaknesses before seeing any data from the current season — and then updates that belief as each round of data arrives. The prior comes from your handicap history, known technical weaknesses, and previous season data. Each new round shifts the posterior (your updated belief) toward the data.</p>
+    <div class="formula">
+      <div class="formula-lbl">Simplified Bayesian Update</div>
+      <div class="formula-main">Prior belief: "My main weakness is SG: Approach based on last season"
+Confidence: 60%
+
+Round 1 data: SG: APP = −1.8 (below average) → updates belief upward (65%)
+Round 2 data: SG: APP = −2.1 (below average) → belief now 72%
+Round 3 data: SG: APP = −0.4 (near average) → belief drops slightly (68%)
+Round 5 data: SG: APP = −1.9 (below average) → belief now 78%
+
+At 78% confidence after 5 rounds:
+→ Sufficient to adjust practice plan toward approach work
+→ Not sufficient to completely restructure the programme
+→ Continue collecting data while acting on current belief</div>
+      <div class="formula-note">The key difference from the minimum sample size rules: Bayesian updating lets you act before the sample is complete, with calibrated confidence. You are not ignoring small samples — you are weighting them appropriately against your prior knowledge.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Building Your Prior</span>
+    <h3>What to Use Before the Current Season's Data Arrives</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Previous season SG breakdown:</strong> Your strongest prior is your SG data from the previous season (or the last 20+ rounds in your tracking system). This gives you a handicap-level estimate of your weakness with meaningful confidence before the new season begins.</div></li>
+      <li><span class="step-n">2</span><div><strong>Technical coach assessment:</strong> If your coach has identified specific technical weaknesses — face angle inconsistency, attack angle problems, short game contact — these inform the prior. A technically confirmed weakness has a higher prior probability than a statistically identified one from a small sample.</div></li>
+      <li><span class="step-n">3</span><div><strong>Mevo/HackMotion baseline:</strong> Launch monitor data from your practice sessions provides high-quality prior information about ball flight tendencies that will likely translate to on-course SG patterns. A player showing F2P standard deviation &gt;4° on Mevo has a strong prior for SG: APP losses from dispersion.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Decision Thresholds by Confidence Level</span>
+    <h3>How to Act at Each Stage of Data Accumulation</h3>
+    <table class="tbl">
+      <tr><th>Posterior Confidence</th><th>Rounds of Evidence</th><th>Action</th></tr>
+      <tr><td class="warn">&lt;60%</td><td>0–3 rounds</td><td>Maintain current practice plan; note the pattern as a hypothesis</td></tr>
+      <tr><td class="warn">60–70%</td><td>3–6 rounds</td><td>Add 10–15% more practice time to the suspected weakness; no major restructure</td></tr>
+      <tr><td class="warn">70–80%</td><td>6–12 rounds</td><td>Shift practice plan toward the weakness; keep monitoring for reversal</td></tr>
+      <tr><td class="good">80–90%</td><td>12–20 rounds</td><td>Confident enough to restructure practice plan and coach sessions around this priority</td></tr>
+      <tr><td class="good">&gt;90%</td><td>20+ rounds</td><td>Full sample — act with confidence; this is the Standard Edition minimum sample threshold</td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The practical value:</strong> Without Bayesian thinking, a player with 6 rounds of data showing SG: APP problems either waits passively (losing weeks of practice to the wrong priorities) or restructures aggressively (risking a false positive). With Bayesian updating, they add some approach work at 70% confidence while continuing to build the sample — acting intelligently on partial information rather than in spite of it.</p></div>
+  </div>
+</div>
+
+<!-- PRO: MULTI-CYCLE TREND ANALYSIS -->
+<div class="sec" id="trend_analysis" data-tier="pro">
+  <h2 class="sec-title">Multi-Cycle Trend Analysis</h2>
+  <p class="sec-desc">The weekly review identifies what happened last week. Trend analysis identifies what is happening across multiple weeks — the genuine improvement signal emerging from the noise of individual round variation.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Three-Layer Review Structure</span>
+    <h3>Weekly, Monthly, and Seasonal Analysis</h3>
+    <table class="tbl">
+      <tr><th>Layer</th><th>Frequency</th><th>What to Review</th><th>Action Trigger</th></tr>
+      <tr><td>Weekly</td><td>After each round</td><td>Single-round SG by category; specific shots; technical observations</td><td>Identify focus for next week's practice</td></tr>
+      <tr><td>Monthly</td><td>After 4–5 rounds</td><td>4-round rolling average SG by category; month-over-month comparison; handicap movement</td><td>Adjust practice allocation if trend is clear (70%+ confidence)</td></tr>
+      <tr><td>Seasonal</td><td>Every 10–12 weeks</td><td>Full SG breakdown vs. season start baseline; all-tool synthesis; trajectory vs. plan</td><td>Major practice plan restructure if off-track; reinforce if on-track</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Rolling Average Construction</span>
+    <h3>How to Build and Read a Reliable SG Trend Chart</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Use a 4-round rolling average as the primary metric:</strong> A single round's SG value has high variance (±1.0 per category is normal). A 4-round rolling average smooths this to ±0.3–0.4, revealing genuine trends. The difference between a 4-round average of −1.8 and −1.2 in SG: APP is meaningful. A single round moving from −1.8 to −1.2 is not.</div></li>
+      <li><span class="step-n">2</span><div><strong>Maintain a simple tracking spreadsheet:</strong> Record each round's four SG categories. Calculate the 4-round rolling average after each round. Plot it — even a hand-drawn chart captures the direction of travel. A declining rolling average despite a good single round is the signal of a real negative trend.</div></li>
+      <li><span class="step-n">3</span><div><strong>Flag genuine reversals:</strong> A real trend reversal requires the rolling average to move in the new direction for at least 3 consecutive rounds. A single round spike in the other direction is noise — do not abandon a working practice focus based on one unexpected result.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Cross-Tool Trend Synthesis</span>
+    <h3>Connecting Mevo, HackMotion, and Arccos Trends</h3>
+    <p style="margin-bottom:12px;">The five-tool ecosystem (Arccos/SG, Mevo, HackMotion, Video, HRV) should show aligned trends when genuine improvement is happening. When they diverge, the divergence itself is diagnostic information.</p>
+    <table class="tbl">
+      <tr><th>Scenario</th><th>What It Means</th><th>Action</th></tr>
+      <tr><td>Mevo improving (F2P, smash factor) but SG: APP flat</td><td class="warn">Technical improvement not yet transferring to course</td><td>Continue — transfer lag is normal (2–4 weeks). Check course management decisions.</td></tr>
+      <tr><td>SG: APP improving but Mevo metrics flat</td><td class="good">Course management improvement driving SG gains</td><td>Valuable finding — reinforce the decision-making changes producing the gain</td></tr>
+      <tr><td>HackMotion flexion improving but SG: APP declining</td><td class="warn">Technical change causing temporary disruption</td><td>Normal interference period — persist with the change, allow 4–6 weeks for motor integration</td></tr>
+      <tr><td>All metrics declining simultaneously</td><td class="bad">Physical issue (HRV pattern), technique change disruption, or overtraining</td><td>Check HRV trend first. If HRV also suppressed: de-load immediately.</td></tr>
+    </table>
   </div>
 </div>
 
