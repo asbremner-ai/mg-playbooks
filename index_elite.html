@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · index_elite.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Scratch Project — Elite</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a120a;--surface:#111e11;--surface2:#182818;
+  --border:rgba(160,200,80,0.15);--border-hi:rgba(160,200,80,0.3);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.08);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.08);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.08);
+  --elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);
+  --elite-border:rgba(200,216,232,0.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.10);
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 15% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 85% 85%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* TOPBAR */
+.topbar{background:rgba(4,10,4,.97);border-bottom:1px solid var(--elite-border);padding:11px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+.topbar-logo{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--elite);text-decoration:none;display:flex;align-items:center;gap:8px;}
+.topbar-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);padding:3px 8px;border-radius:4px;}
+
+/* HERO */
+.hero{position:relative;z-index:2;padding:48px 18px 40px;text-align:center;border-bottom:1px solid var(--elite-border);background:linear-gradient(175deg,#040a04 0%,var(--surface) 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,7vw,2.9rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:8px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 22px;font-weight:300;line-height:1.7;}
+.stat-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.stat{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:6px 12px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+
+/* PILLAR NAV */
+.pillar-nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.95);border-bottom:1px solid var(--border);padding:0 10px;scrollbar-width:none;position:sticky;top:44px;z-index:100;}
+.pillar-nav::-webkit-scrollbar{display:none;}
+.pillar-btn{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:12px 11px;cursor:pointer;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:6px;-webkit-appearance:none;}
+.pillar-btn:hover{color:var(--elite-hi);}
+.pillar-btn.active{color:var(--elite);border-bottom-color:var(--elite);}
+.pillar-icon{font-size:1rem;}
+
+/* PILLAR SECTIONS */
+.pillar-sec{display:none;padding:24px 14px 60px;max-width:760px;margin:0 auto;animation:rise .25s ease;}
+.pillar-sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* SECTION HEADERS */
+.sec-hd{margin-bottom:18px;}
+.sec-hd h2{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--white);line-height:1.1;margin-bottom:5px;}
+.sec-hd p{font-size:12.5px;color:var(--muted);line-height:1.7;font-weight:300;padding-left:10px;border-left:2px solid var(--elite);}
+
+/* GUIDE CARDS */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:22px;}
+.guide-card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:14px 14px 12px;text-decoration:none;color:inherit;display:block;transition:all .2s;position:relative;overflow:hidden;}
+.guide-card:hover{border-color:var(--elite-border);transform:translateY(-1px);}
+.guide-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.2),transparent);transition:opacity .2s;}
+.guide-card:hover::before{opacity:2;}
+.gc-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;}
+.gc-emoji{font-size:1.4rem;flex-shrink:0;line-height:1;}
+.gc-num{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:4px;}
+.gc-name{font-size:13px;font-weight:600;color:var(--white);line-height:1.3;}
+.gc-desc{font-size:11.5px;color:var(--muted);line-height:1.55;}
+
+/* ELITE card variant */
+.guide-card.elite{border-color:var(--elite-border);}
+.guide-card.elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.guide-card.elite .gc-num{color:var(--elite);}
+.guide-card.elite:hover{border-color:rgba(200,216,232,.45);}
+
+/* PRO card variant */
+.guide-card.pro .gc-num{color:rgba(200,220,100,.8);}
+
+/* SECTION DIVIDER */
+.sec-divider{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);margin:20px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--faint);}
+
+/* UPGRADE BANNER */
+.upgrade-banner{background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:var(--r-sm);padding:14px 16px;margin:20px 0;display:flex;align-items:center;gap:12px;}
+.upgrade-banner p{font-size:12px;color:rgba(200,216,232,.8);line-height:1.6;}
+.upgrade-banner strong{color:var(--elite-hi);}
+.upgrade-ico{font-size:1.4rem;flex-shrink:0;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 14px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+.footer a{color:var(--elite);text-decoration:none;margin:0 10px;}
+
+@media(max-width:480px){
+  .guide-grid{grid-template-columns:1fr 1fr;}
+  .gc-desc{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="#" class="topbar-logo">⛳ The Scratch Project</a>
+  <span class="topbar-badge">⭐ Elite</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">The Scratch Project · Elite Edition</p>
+  <h1>Scratch to Plus —<br><em>The Full System</em></h1>
+  <p class="hero-sub">Nine Elite guides plus upgrades to every core pillar. The complete architecture for a plus-handicap game — analytics, psychology, physical performance, and national-level competition.</p>
+  <div class="stat-row">
+    <span class="stat">⭐ 9 Elite Guides</span>
+    <span class="stat">📚 49 Total Guides</span>
+    <span class="stat">🔧 7 Upgraded Guides</span>
+    <span class="stat">🏆 Scratch → +3</span>
+  </div>
+</div>
+
+<!-- PILLAR NAV -->
+<div class="pillar-nav">
+  <button class="pillar-btn active" onclick="showPillar('elite',this)"><span class="pillar-icon">⭐</span>Elite</button>
+  <button class="pillar-btn" onclick="showPillar('plan',this)"><span class="pillar-icon">📅</span>Plan</button>
+  <button class="pillar-btn" onclick="showPillar('score',this)"><span class="pillar-icon">🎯</span>Score</button>
+  <button class="pillar-btn" onclick="showPillar('strike',this)"><span class="pillar-icon">🏌️</span>Strike</button>
+  <button class="pillar-btn" onclick="showPillar('measure',this)"><span class="pillar-icon">🔢</span>Measure</button>
+  <button class="pillar-btn" onclick="showPillar('prepare',this)"><span class="pillar-icon">💪</span>Prepare</button>
+  <button class="pillar-btn" onclick="showPillar('compete',this)"><span class="pillar-icon">🏆</span>Compete</button>
+  <button class="pillar-btn" onclick="showPillar('tools',this)"><span class="pillar-icon">🛠️</span>Tools</button>
+</div>
+
+<!-- ═══ ELITE PILLAR ═══ -->
+<div class="pillar-sec active" id="sec-elite">
+  <div class="sec-hd">
+    <h2>Elite Tier</h2>
+    <p>Nine guides covering every discipline that matters at scratch and beyond. Start with Guide 41 (SG Targets) to establish your benchmark, then work through the system in any order based on your highest-priority gap.</p>
+  </div>
+
+  <div class="sec-divider">Analytics & Measurement</div>
+  <div class="guide-grid">
+    <a href="41_plus_hcp_sg_targets.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">⭐</span><div><div class="gc-num">Guide 41</div><div class="gc-name">Plus-HCP SG Targets</div></div></div>
+      <div class="gc-desc">Precise SG benchmarks from scratch to +3, proximity compression targets, and the coaching conversation framework.</div>
+    </a>
+    <a href="44_golfmetrics_deepdive.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🔬</span><div><div class="gc-num">Guide 44</div><div class="gc-name">Golfmetrics Deep-Dive</div></div></div>
+      <div class="gc-desc">Manual SG tracking with lie quality data — the quarterly audit protocol and multi-season trend analysis.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Technical Measurement</div>
+  <div class="guide-grid">
+    <a href="45_sportsbox_ai.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎬</span><div><div class="gc-num">Guide 45</div><div class="gc-name">Sportsbox AI Integration</div></div></div>
+      <div class="gc-desc">3D motion analysis, eight-fault library, and the combined Sportsbox + HackMotion + Mevo protocol.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Performance Sciences</div>
+  <div class="guide-grid">
+    <a href="47_elite_performance_psychology.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🧠</span><div><div class="gc-num">Guide 47</div><div class="gc-name">Elite Performance Psychology</div></div></div>
+      <div class="gc-desc">Identity, flow state engineering, choking anatomy with counter-protocols, advanced imagery, and full-season mental management.</div>
+    </a>
+    <a href="48_elite_physical_performance.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">💪</span><div><div class="gc-num">Guide 48</div><div class="gc-name">Elite Physical Performance</div></div></div>
+      <div class="gc-desc">Speed periodisation, HRV mastery, cognitive performance science, competition taper, and long-season durability.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Game Architecture</div>
+  <div class="guide-grid">
+    <a href="49_advanced_game_construction.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎯</span><div><div class="gc-num">Guide 49</div><div class="gc-name">Advanced Game Construction</div></div></div>
+      <div class="gc-desc">Shot library, miss management, wind game for UK courses, EV-based scoring mindset, and course-specific game plans.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Competition & Circuit</div>
+  <div class="guide-grid">
+    <a href="42_national_amateur_circuit.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 42</div><div class="gc-name">National Amateur Circuit</div></div></div>
+      <div class="gc-desc">Brabazon, R&A qualifying, EG Order of Merit, and the full UK national amateur calendar.</div>
+    </a>
+    <a href="43_caddie_preparation.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">📖</span><div><div class="gc-num">Guide 43</div><div class="gc-name">Caddie Prep & Yardage Books</div></div></div>
+      <div class="gc-desc">Venue preparation system, yardage book format, wind corridor mapping, and caddie communication framework.</div>
+    </a>
+    <a href="46_county_team_golf.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🏅</span><div><div class="gc-num">Guide 46</div><div class="gc-name">County Team & Rep Golf</div></div></div>
+      <div class="gc-desc">County selection pathway, match preparation, inter-county competition, and the England Golf performance pathway.</div>
+    </a>
+  </div>
+
+  <div class="upgrade-banner">
+    <span class="upgrade-ico">🔧</span>
+    <p><strong>7 Upgraded Core Guides</strong> — Guides 01, 03, 08, 15, 21, 26, and 33 each contain an additional Elite tab covering depth content unavailable in Standard and Pro. Look for the ⭐ tab in the guide navigation.</p>
+  </div>
+</div>
+
+<!-- ═══ PLAN PILLAR ═══ -->
+<div class="pillar-sec" id="sec-plan">
+  <div class="sec-hd">
+    <h2>Plan</h2>
+    <p>The 24-month scratch programme — phase plans, scratch blueprint, progress tracking, and the analytical tools that govern training decisions.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="10_scratch_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 10</div><div class="gc-name">24-Month Scratch Plan</div></div></div>
+      <div class="gc-desc">The complete blueprint — phase structure, monthly targets, and the path from current handicap to scratch.</div>
+    </a>
+    <a href="27_six_month_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📅</span><div><div class="gc-num">Guide 27</div><div class="gc-name">Months 1–6 Plan</div></div></div>
+      <div class="gc-desc">Phase 1 detail — weekly schedules, milestones, and first-phase practice priorities.</div>
+    </a>
+    <a href="28_months_7_12_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📆</span><div><div class="gc-num">Guide 28</div><div class="gc-name">Months 7–12 Plan</div></div></div>
+      <div class="gc-desc">Phase 2 — deepening technical work and increasing competition volume.</div>
+    </a>
+    <a href="29_months_13_18_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🎯</span><div><div class="gc-num">Guide 29</div><div class="gc-name">Months 13–18 Plan</div></div></div>
+      <div class="gc-desc">Phase 3 — consolidation and the approach to single figures.</div>
+    </a>
+    <a href="30_months_19_24_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 30</div><div class="gc-name">Months 19–24 Plan</div></div></div>
+      <div class="gc-desc">Phase 4 — the final push to scratch and what comes after.</div>
+    </a>
+    <a href="17_progress_journal.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📓</span><div><div class="gc-num">Guide 17</div><div class="gc-name">Progress Journal</div></div></div>
+      <div class="gc-desc">Structured session logging — the compounding record of your improvement.</div>
+    </a>
+    <a href="04_complete_golfer.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🧭</span><div><div class="gc-num">Guide 04</div><div class="gc-name">The Complete Golfer</div></div></div>
+      <div class="gc-desc">Framework for whole-game development — balancing technical, physical, and mental priorities.</div>
+    </a>
+    <a href="motivation.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔥</span><div><div class="gc-num">Reference</div><div class="gc-name">The Honest Case for Scratch</div></div></div>
+      <div class="gc-desc">Why scratch is achievable for a serious amateur — the evidence-based argument.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ SCORE PILLAR ═══ -->
+<div class="pillar-sec" id="sec-score">
+  <div class="sec-hd">
+    <h2>Score</h2>
+    <p>Course management, decision-making, competitive strategy, and the on-course execution systems that convert good ball-striking into low scores.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="20_course_management.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">⚖️</span><div><div class="gc-num">Guide 20</div><div class="gc-name">Course Management</div></div></div>
+      <div class="gc-desc">EV-based decision framework — tee strategy, approach targets, recovery decisions.</div>
+    </a>
+    <a href="40_decision_architecture.html" class="guide-card pro">
+      <div class="gc-top"><span class="gc-emoji">🎲</span><div><div class="gc-num">Guide 40 ✦ Pro</div><div class="gc-name">Decision Architecture & EV</div></div></div>
+      <div class="gc-desc">Advanced Decade framework — probability-weighted targeting and Bayesian on-course updating.</div>
+    </a>
+    <a href="49_advanced_game_construction.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎯</span><div><div class="gc-num">Guide 49 ⭐ Elite</div><div class="gc-name">Advanced Game Construction</div></div></div>
+      <div class="gc-desc">Shot library, miss management, wind game, and the EV mindset shift from scratch to plus.</div>
+    </a>
+    <a href="24_competitive_strategy.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 24</div><div class="gc-name">Competitive Strategy</div></div></div>
+      <div class="gc-desc">Strokeplay vs. matchplay strategy, in-round adjustment, and handling lead/deficit situations.</div>
+    </a>
+    <a href="08_pro_round_prep.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🗺️</span><div><div class="gc-num">Guide 08</div><div class="gc-name">Pro Round Prep</div></div></div>
+      <div class="gc-desc">Complete pre-round system — warmup, course walk, weather adaptation. ⭐ Elite tab: tournament week taper.</div>
+    </a>
+    <a href="31_on_course_notes.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🗺️</span><div><div class="gc-num">Guide 31</div><div class="gc-name">On-Course Notes</div></div></div>
+      <div class="gc-desc">Building a permanent, compounding course intelligence system.</div>
+    </a>
+    <a href="43_caddie_preparation.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">📖</span><div><div class="gc-num">Guide 43 ⭐ Elite</div><div class="gc-name">Caddie Prep & Yardage Books</div></div></div>
+      <div class="gc-desc">Elite venue preparation, wind mapping, and caddie communication frameworks.</div>
+    </a>
+    <a href="23_weather_conditions.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🌬️</span><div><div class="gc-num">Guide 23</div><div class="gc-name">Weather & Conditions</div></div></div>
+      <div class="gc-desc">Wind, rain, cold, heat — complete adjustment frameworks for all UK conditions.</div>
+    </a>
+    <a href="35_links_travel_golf.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🌊</span><div><div class="gc-num">Guide 35</div><div class="gc-name">Links & Travel Golf</div></div></div>
+      <div class="gc-desc">Adapting your game for unfamiliar courses and links conditions.</div>
+    </a>
+    <a href="12_rules_of_golf.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📜</span><div><div class="gc-num">Guide 12</div><div class="gc-name">Rules of Golf</div></div></div>
+      <div class="gc-desc">The rules that matter most for competitive play — with scenario-based applications.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ STRIKE PILLAR ═══ -->
+<div class="pillar-sec" id="sec-strike">
+  <div class="sec-hd">
+    <h2>Strike</h2>
+    <p>Ball-striking technique, shot shape, speed training, and the technical tools that produce consistent, high-quality contact.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="03_longgame_pro.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏌️</span><div><div class="gc-num">Guide 03</div><div class="gc-name">Long Game Playbook</div></div></div>
+      <div class="gc-desc">Full swing technique — sequencing, D-Plane, dispersion, driver through mid-iron. ⭐ Elite tab: advanced shot-shaping.</div>
+    </a>
+    <a href="02_shortgame_pro.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🌊</span><div><div class="gc-num">Guide 02</div><div class="gc-name">Short Game Playbook</div></div></div>
+      <div class="gc-desc">Chipping, pitching, bunker — six-trajectory wedge system with landing zone targeting.</div>
+    </a>
+    <a href="01_putting_pro.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🎯</span><div><div class="gc-num">Guide 01</div><div class="gc-name">Putting Playbook</div></div></div>
+      <div class="gc-desc">Stroke mechanics, AimPoint Express, pace control. ⭐ Elite tab: AimPoint Advanced &amp; plus-level make% targets.</div>
+    </a>
+    <a href="25_speed_training.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">⚡</span><div><div class="gc-num">Guide 25</div><div class="gc-name">Speed Training</div></div></div>
+      <div class="gc-desc">Rypstick overspeed protocol — the neurological basis of speed gains and transfer methodology.</div>
+    </a>
+    <a href="39_ground_reaction_force.html" class="guide-card pro">
+      <div class="gc-top"><span class="gc-emoji">⚡</span><div><div class="gc-num">Guide 39 ✦ Pro</div><div class="gc-name">Ground Reaction Force</div></div></div>
+      <div class="gc-desc">GRF physics and the trail leg drive system that underpins plus-handicap power.</div>
+    </a>
+    <a href="38_practice_structure.html" class="guide-card pro">
+      <div class="gc-top"><span class="gc-emoji">🧬</span><div><div class="gc-num">Guide 38 ✦ Pro</div><div class="gc-name">Practice Structure Science</div></div></div>
+      <div class="gc-desc">Blocked vs. random vs. interleaved — the motor learning science behind effective deliberate practice.</div>
+    </a>
+    <a href="swing_mechanics.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">⚙️</span><div><div class="gc-num">Reference</div><div class="gc-name">Swing Mechanics</div></div></div>
+      <div class="gc-desc">Technical reference — key positions, drills, and fault-correction library.</div>
+    </a>
+    <a href="22_wedge_distances.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📏</span><div><div class="gc-num">Guide 22</div><div class="gc-name">Wedge Distance Matrix</div></div></div>
+      <div class="gc-desc">Four-club × four-length matrix — calibrated carry distances for every wedge combination.</div>
+    </a>
+    <a href="11_shot_dispersion.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📊</span><div><div class="gc-num">Guide 11</div><div class="gc-name">Shot Dispersion Mapping</div></div></div>
+      <div class="gc-desc">Understanding and reducing your personal shot dispersion with Mevo data.</div>
+    </a>
+    <a href="14_video_analysis.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🎥</span><div><div class="gc-num">Guide 14</div><div class="gc-name">Video Analysis</div></div></div>
+      <div class="gc-desc">Self-coaching with video — camera angles, what to look for, and how to use it with your coach.</div>
+    </a>
+    <a href="45_sportsbox_ai.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎬</span><div><div class="gc-num">Guide 45 ⭐ Elite</div><div class="gc-name">Sportsbox AI Integration</div></div></div>
+      <div class="gc-desc">3D motion analysis, eight-fault library, and combined measurement stack protocol.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ MEASURE PILLAR ═══ -->
+<div class="pillar-sec" id="sec-measure">
+  <div class="sec-hd">
+    <h2>Measure</h2>
+    <p>Strokes gained analytics, launch monitor data, HackMotion, and the complete measurement stack that makes every practice session diagnostic.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="26_stats_interpretation.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔢</span><div><div class="gc-num">Guide 26</div><div class="gc-name">Stats & SG Interpretation</div></div></div>
+      <div class="gc-desc">Reading Arccos SG data — category priorities, seasonal patterns. ⭐ Elite tab: multi-season trend analysis.</div>
+    </a>
+    <a href="41_plus_hcp_sg_targets.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">⭐</span><div><div class="gc-num">Guide 41 ⭐ Elite</div><div class="gc-name">Plus-HCP SG Targets</div></div></div>
+      <div class="gc-desc">Precise benchmarks from scratch to +3 with the coaching conversation framework.</div>
+    </a>
+    <a href="44_golfmetrics_deepdive.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🔬</span><div><div class="gc-num">Guide 44 ⭐ Elite</div><div class="gc-name">Golfmetrics Deep-Dive</div></div></div>
+      <div class="gc-desc">Manual SG tracking, lie quality analysis, and quarterly audit protocol.</div>
+    </a>
+    <a href="mevo_gen2_playbook.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📡</span><div><div class="gc-num">Reference</div><div class="gc-name">Mevo Gen2 Data Mastery</div></div></div>
+      <div class="gc-desc">Complete Mevo protocol — ball data benchmarks, session workflows, and monthly tracking.</div>
+    </a>
+    <a href="hackmotion_playbook.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🖥️</span><div><div class="gc-num">Reference</div><div class="gc-name">HackMotion Data Mastery</div></div></div>
+      <div class="gc-desc">Lead wrist position benchmarks, fault identification, and integration with coaching.</div>
+    </a>
+    <a href="45_sportsbox_ai.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎬</span><div><div class="gc-num">Guide 45 ⭐ Elite</div><div class="gc-name">Sportsbox AI</div></div></div>
+      <div class="gc-desc">3D motion analysis completing the Elite measurement stack.</div>
+    </a>
+    <a href="09_golf_coach_ai.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🤖</span><div><div class="gc-num">Guide 09</div><div class="gc-name">Golf Coach AI</div></div></div>
+      <div class="gc-desc">Using AI to interpret SG data, generate practice plans, and assist coaching conversations.</div>
+    </a>
+    <a href="tracking_app_v2.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📊</span><div><div class="gc-num">App</div><div class="gc-name">Performance Tracker</div></div></div>
+      <div class="gc-desc">Session logging and SG tracking dashboard — the data backbone of the programme.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ PREPARE PILLAR ═══ -->
+<div class="pillar-sec" id="sec-prepare">
+  <div class="sec-hd">
+    <h2>Prepare</h2>
+    <p>Physical conditioning, nutrition, mental game, injury prevention, and the practice systems that build a competition-ready game.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="47_elite_performance_psychology.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🧠</span><div><div class="gc-num">Guide 47 ⭐ Elite</div><div class="gc-name">Elite Performance Psychology</div></div></div>
+      <div class="gc-desc">Identity, flow, choking counter-protocols, imagery, and full-season mental management.</div>
+    </a>
+    <a href="48_elite_physical_performance.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">💪</span><div><div class="gc-num">Guide 48 ⭐ Elite</div><div class="gc-name">Elite Physical Performance</div></div></div>
+      <div class="gc-desc">Speed periodisation, HRV mastery, cognitive performance, competition taper, durability.</div>
+    </a>
+    <a href="21_mental_game.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🧘</span><div><div class="gc-num">Guide 21</div><div class="gc-name">Mental Game Mastery</div></div></div>
+      <div class="gc-desc">Pre-shot routine, pressure management, between-shot system. ⭐ Elite tab: county &amp; national event psychology.</div>
+    </a>
+    <a href="06_golf_fitness.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">💪</span><div><div class="gc-num">Guide 06</div><div class="gc-name">Golf Fitness Plan</div></div></div>
+      <div class="gc-desc">TPI-based 6-month programme — mobility, strength, power, HRV, and sleep.</div>
+    </a>
+    <a href="07_golf_nutrition.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🍎</span><div><div class="gc-num">Guide 07</div><div class="gc-name">Golf Nutrition Plan</div></div></div>
+      <div class="gc-desc">On-course fuelling, pre-round protocol, and recovery nutrition.</div>
+    </a>
+    <a href="13_injury_prevention.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🩺</span><div><div class="gc-num">Guide 13</div><div class="gc-name">Injury Prevention</div></div></div>
+      <div class="gc-desc">PEACE & LOVE protocol, TPI screen, the annual physical framework.</div>
+    </a>
+    <a href="05_pre_shot_routine.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔁</span><div><div class="gc-num">Guide 05</div><div class="gc-name">Pre-Shot Routine</div></div></div>
+      <div class="gc-desc">Building an automatic, pressure-proof routine that holds under competition stress.</div>
+    </a>
+    <a href="16_solo_pressure_round.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔥</span><div><div class="gc-num">Guide 16</div><div class="gc-name">Solo Pressure Round</div></div></div>
+      <div class="gc-desc">Pressure inoculation protocol — structured scoring games that simulate competition stress.</div>
+    </a>
+    <a href="18_training_aids_2.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🛠️</span><div><div class="gc-num">Guide 18</div><div class="gc-name">Training Arsenal</div></div></div>
+      <div class="gc-desc">How to use every training aid in the system — HackMotion, Mevo, alignment sticks, and more.</div>
+    </a>
+    <a href="15_equipment_fitting.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔧</span><div><div class="gc-num">Guide 15</div><div class="gc-name">Equipment Fitting</div></div></div>
+      <div class="gc-desc">Fitting roadmap from 10 HCP to scratch. ⭐ Elite tab: loft optimisation, wedge grind, shaft loading at 108+ mph.</div>
+    </a>
+    <a href="practice_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🗓️</span><div><div class="gc-num">App</div><div class="gc-name">4-Week Programme</div></div></div>
+      <div class="gc-desc">Structured practice programme builder — session templates and drill library.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ COMPETE PILLAR ═══ -->
+<div class="pillar-sec" id="sec-compete">
+  <div class="sec-hd">
+    <h2>Compete</h2>
+    <p>The UK competitive pathway from club competition through county team to national circuit — entry routes, preparation, and performance frameworks.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="42_national_amateur_circuit.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 42 ⭐ Elite</div><div class="gc-name">National Amateur Circuit</div></div></div>
+      <div class="gc-desc">Brabazon, R&A qualifying, EG OoM, and the full UK national competition calendar.</div>
+    </a>
+    <a href="46_county_team_golf.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🏅</span><div><div class="gc-num">Guide 46 ⭐ Elite</div><div class="gc-name">County Team & Rep Golf</div></div></div>
+      <div class="gc-desc">Selection pathway, match preparation, inter-county competition, and England Golf pathways.</div>
+    </a>
+    <a href="33_competitive_pathway.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 33</div><div class="gc-name">UK Competitive Pathway</div></div></div>
+      <div class="gc-desc">The full ladder from club competition to county. ⭐ Elite tab: county team selection detail.</div>
+    </a>
+    <a href="24_competitive_strategy.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 24</div><div class="gc-name">Competitive Strategy</div></div></div>
+      <div class="gc-desc">Strokeplay vs. matchplay strategy frameworks and in-round adjustment protocols.</div>
+    </a>
+    <a href="16_solo_pressure_round.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🔥</span><div><div class="gc-num">Guide 16</div><div class="gc-name">Solo Pressure Round</div></div></div>
+      <div class="gc-desc">Competition simulation protocol — builds the pressure tolerance needed for national events.</div>
+    </a>
+    <a href="36_playing_partners.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🤝</span><div><div class="gc-num">Guide 36</div><div class="gc-name">Playing Partners</div></div></div>
+      <div class="gc-desc">Managing the social and psychological dynamics of competitive rounds.</div>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ TOOLS PILLAR ═══ -->
+<div class="pillar-sec" id="sec-tools">
+  <div class="sec-hd">
+    <h2>Tools & Reference</h2>
+    <p>Interactive apps, quick-reference cards, and coaching tools that support the full programme.</p>
+  </div>
+  <div class="guide-grid">
+    <a href="tracking_app_v2.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📊</span><div><div class="gc-num">App</div><div class="gc-name">Performance Tracker</div></div></div>
+      <div class="gc-desc">Session logging, SG tracking, and progress benchmarking dashboard.</div>
+    </a>
+    <a href="golf_weekly_dashboard.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📅</span><div><div class="gc-num">App</div><div class="gc-name">Weekly Dashboard</div></div></div>
+      <div class="gc-desc">Weekly practice planning and session scheduling tool.</div>
+    </a>
+    <a href="caddie_card.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📋</span><div><div class="gc-num">App</div><div class="gc-name">Caddie Reference Card</div></div></div>
+      <div class="gc-desc">Mobile caddie card — personal distances, wind adjustments, and on-course reference.</div>
+    </a>
+    <a href="on_course_reference_A5_8pp.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📄</span><div><div class="gc-num">Reference</div><div class="gc-name">On-Course Reference A5</div></div></div>
+      <div class="gc-desc">Printable A5 reference booklet — course management decisions and key stats.</div>
+    </a>
+    <a href="09_golf_coach_ai.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🤖</span><div><div class="gc-num">Guide 09</div><div class="gc-name">Golf Coach AI</div></div></div>
+      <div class="gc-desc">Structured AI-assisted coaching — SG analysis, drill generation, and lesson preparation.</div>
+    </a>
+    <a href="golf_analysis.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📈</span><div><div class="gc-num">App</div><div class="gc-name">Launch Monitor Analysis</div></div></div>
+      <div class="gc-desc">Mevo session analysis tool — interpret and act on your launch monitor data.</div>
+    </a>
+    <a href="practice_plan.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🗓️</span><div><div class="gc-num">App</div><div class="gc-name">4-Week Programme</div></div></div>
+      <div class="gc-desc">Structured 4-week practice programme builder with 28-drill library.</div>
+    </a>
+    <a href="32_putting_green_reading.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">📐</span><div><div class="gc-num">Guide 32</div><div class="gc-name">Green Reading Deep Dive</div></div></div>
+      <div class="gc-desc">AimPoint Express methodology and systematic green reading approach.</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  THE SCRATCH PROJECT · ELITE EDITION · 49 GUIDES · SCRATCH → PLUS
+  <br>
+  <a href="10_scratch_plan.html">Start Here</a>
+  <a href="41_plus_hcp_sg_targets.html">Elite Hub</a>
+  <a href="tracking_app_v2.html">Tracker</a>
+</div>
+
+<script>
+function showPillar(id, btn) {
+  document.querySelectorAll('.pillar-sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.pillar-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: document.querySelector('.pillar-nav').offsetTop, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

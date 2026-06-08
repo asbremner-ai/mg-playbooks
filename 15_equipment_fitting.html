@@ -98,6 +98,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:60px;text-align:right;}
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -131,6 +146,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="tab" onclick="show('ball',this)">Ball Fitting</button>
   <button class="tab" onclick="show('shaft',this)">Shaft Fitting</button>
   <button class="tab" onclick="show('cadence',this)">Review Cadence</button>
+  <button class="tab" data-tier="elite" onclick="show('elite_fitting',this)">⭐ Elite Fitting</button>
 </div>
 
 <!-- WHY FITTING -->
@@ -624,6 +640,73 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="footer">
   EQUIPMENT FITTING ROADMAP · GUIDE 15 · THE SCRATCH PROJECT<br>
   <span style="display:block;margin-top:6px;opacity:0.5;">Fit your equipment to your game · Review as you evolve · Let the data decide</span>
+</div>
+
+
+<!-- ELITE FITTING TAB -->
+<div class="sec" id="elite_fitting" data-tier="elite">
+  <h2 class="sec-title">Elite Equipment Optimisation</h2>
+  <p class="sec-desc">At scratch and beyond, fitting shifts from getting the basics right to marginal gains. The four decisions below only become relevant once your swing is at or near scratch — attempting them earlier produces confusion because the underlying patterns are still changing too rapidly.</p>
+
+  <span class="badge badge-lime">🔬 Iron Loft Optimisation at Plus Level</span>
+  <div class="card card-teal">
+    <span class="card-tag">Attack Angle Has Changed — Your Lofts May Have Too</span>
+    <h3>Loft Stack Audit for Scratch and Plus Players</h3>
+    <p>As your attack angle steepens through the programme (more negative degrees of attack for irons is the natural result of improved low-point control), the effective loft at impact changes. An iron fitted at 8 handicap with a shallower attack angle will now be playing stronger than specified — potentially closing yardage gaps between clubs and creating inconsistent distance distribution.</p>
+    <table class="tbl">
+      <tr><th>Attack Angle Change</th><th>Effect on Ball Flight</th><th>Fitting Response</th></tr>
+      <tr><td>2° more descending vs. at fitting</td><td>Lower launch, higher spin, shorter carry</td><td>Re-check loft gapping — may need 1° stronger loft throughout</td></tr>
+      <tr><td>3°+ more descending</td><td>Significant trajectory shift; distance gaps close</td><td>Full iron re-fit recommended — attack angle change is material</td></tr>
+      <tr><td>Less descending (shallower)</td><td>Higher launch, lower spin, longer carry</td><td>Check for thin contact pattern — may be a technique issue, not a loft issue</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Mevo diagnostic:</strong> Run 10 shots with your 7-iron on the Mevo. If launch angle has increased by more than 2° vs. your previous benchmark, or spin rate has dropped by more than 400 rpm, your attack angle has changed materially and a loft audit is warranted.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">🌬️ Wedge Grind Selection for National Event Courses</span>
+  <div class="card card-gold">
+    <span class="card-tag">Links, Heathland, and Firm Conditions</span>
+    <h3>The Grind Decision at Elite Level</h3>
+    <p>Standard wedge grind recommendations cover normal parkland conditions. At county and national level, you will regularly encounter firm turf, tight lies, and links conditions that reward different grind specifications. The principle: more bounce and more sole width protects against the fat shot in soft conditions; less bounce and sharper leading edge improves tight-lie performance in firm conditions.</p>
+    <table class="tbl">
+      <tr><th>Course Type</th><th>Recommended Grind</th><th>Why</th></tr>
+      <tr><td>Links (firm, fast)</td><td>Low bounce (6–8°), narrow sole, C-grind or S-grind</td><td>Minimal sole-ground interaction on tight lies; leading edge can get under the ball cleanly</td></tr>
+      <tr><td>Heathland (medium firmness)</td><td>Mid bounce (10–12°), W-grind or M-grind</td><td>Versatile across varying lie types; handles both tight and fluffy lies</td></tr>
+      <tr><td>Parkland (soft, lush)</td><td>High bounce (12–14°), full sole, D-grind</td><td>Prevents digging; sole slides through soft turf</td></tr>
+    </table>
+    <p>The practical solution for a player who competes across all three types: carry two gap wedges — a low-bounce version for links/heathland events and a standard bounce for home course play. The cost is marginal; the performance gain in the right conditions is not.</p>
+  </div>
+
+  <span class="badge badge-lime">⚡ Driver Shaft Loading Profile at 108+ mph</span>
+  <div class="card card-teal">
+    <span class="card-tag">What Changes at Elite Swing Speed</span>
+    <h3>Shaft Specification at Plus-HCP Speed</h3>
+    <p>At 108+ mph driver speed, the shaft loading dynamics change in two specific ways that affect the specification decisions made at lower speeds:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Kick point matters more:</strong> At high speeds, a mid or high kick point produces a lower, more penetrating ball flight that holds up in wind — the dominant condition in UK elite events. A low kick point shaft fitted at 95 mph for extra launch becomes a liability at 110 mph where launch angle is already sufficient.</div></li>
+      <li><span class="step-n">2</span><div><strong>Shaft weight optimisation:</strong> Research suggests that at 108+ mph, heavier shafts (70–80g) often outperform lighter shafts (50–60g) in dispersion terms — the additional weight reduces tip oscillation and stabilises the club face through impact. If your current shaft is 55–60g and your dispersion has worsened as speed increased, shaft weight is the first variable to audit.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Mevo audit trigger:</strong> If your Mevo smash factor has stayed static (or declined) while swing speed has increased, the shaft is not transferring the additional speed efficiently into ball speed. This is the primary indicator that a driver shaft re-fit is needed.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">🎱 Ball Selection Protocol Using Mevo Data</span>
+  <div class="card card-gold">
+    <span class="card-tag">Beyond Feel — Data-Driven Ball Fitting</span>
+    <h3>How to Test a New Ball Release Before Committing to It</h3>
+    <p>Tour players change ball models based on rigorous testing, not feel or brand loyalty. At elite amateur level, the same discipline is warranted — particularly when a new ball model is released or when conditions change significantly (e.g. moving from parkland to regular links play). A 20-ball Mevo test protocol provides statistically reliable data to make the decision.</p>
+    <table class="tbl">
+      <tr><th>Test Shot</th><th>Balls per Test</th><th>Key Metrics</th><th>Decision Trigger</th></tr>
+      <tr><td>Driver</td><td>10 per ball model</td><td>Ball speed, spin rate, lateral offset</td><td>Switch if new ball shows &gt;100 rpm lower spin or &gt;1 mph more ball speed</td></tr>
+      <tr><td>7-iron</td><td>10 per ball model</td><td>Carry distance, spin rate, launch angle</td><td>Switch if carry difference &gt;3 yards in same conditions</td></tr>
+      <tr><td>Wedge (50 yards)</td><td>5 per ball model</td><td>Spin rate, carry-to-roll ratio</td><td>Switch if spin difference &gt;500 rpm — affects short game distance control</td></tr>
+    </table>
+    <p>Run the test in the same session, alternating ball models every 5 shots to neutralise fatigue effects. Always use competition balls for the test — not range balls. Record results in your Progress Journal alongside the date and conditions. Re-test annually or when a significant new model is released.</p>
+  </div>
 </div>
 
 <script>
