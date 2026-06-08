@@ -39,7 +39,7 @@ Tier gating in HTML source files
 Safe to re-run — existing tier markers are detected and replaced cleanly.
 """
 
-# <!-- version:v3.1 · 2026-06-08 · patch_playbooks.py — Elite tier added -->
+# <!-- version:v3.2 · 2026-06-08 · patch_playbooks.py — Elite guides 47-49 + expanded 41/45 added -->
 
 import os, re, shutil, argparse
 
@@ -105,6 +105,9 @@ GUIDES = {
     '44_golfmetrics_deepdive.html':     ('Golfmetrics Deep-Dive',         '🔬', '#c8d8e8'),
     '45_sportsbox_ai.html':             ('Sportsbox AI Integration',      '🎬', '#c8d8e8'),
     '46_county_team_golf.html':         ('County Team & Rep Golf',        '🏅', '#c8d8e8'),
+    '47_elite_performance_psychology.html': ('Elite Performance Psychology', '🧠', '#c8d8e8'),
+    '48_elite_physical_performance.html':   ('Elite Physical Performance',   '💪', '#c8d8e8'),
+    '49_advanced_game_construction.html':   ('Advanced Game Construction',   '🎯', '#c8d8e8'),
 }
 
 # ── Related guides map ────────────────────────────────────────────────────
@@ -168,6 +171,9 @@ RELATED = {
     '44_golfmetrics_deepdive.html':     ['26_stats_interpretation.html','41_plus_hcp_sg_targets.html','17_progress_journal.html','09_golf_coach_ai.html','mevo_gen2_playbook.html'],
     '45_sportsbox_ai.html':             ['hackmotion_playbook.html','14_video_analysis.html','34_coaching_relationship.html','mevo_gen2_playbook.html','38_practice_structure.html'],
     '46_county_team_golf.html':         ['33_competitive_pathway.html','42_national_amateur_circuit.html','21_mental_game.html','24_competitive_strategy.html','08_pro_round_prep.html'],
+    '47_elite_performance_psychology.html': ['21_mental_game.html','16_solo_pressure_round.html','05_pre_shot_routine.html','42_national_amateur_circuit.html','48_elite_physical_performance.html'],
+    '48_elite_physical_performance.html':   ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html','47_elite_performance_psychology.html','13_injury_prevention.html'],
+    '49_advanced_game_construction.html':   ['20_course_management.html','40_decision_architecture.html','41_plus_hcp_sg_targets.html','43_caddie_preparation.html','22_wedge_distances.html'],
 }
 
 # ── Tier membership sets ──────────────────────────────────────────────────
@@ -188,6 +194,9 @@ ELITE_ONLY_FILES = {
     '44_golfmetrics_deepdive.html',
     '45_sportsbox_ai.html',
     '46_county_team_golf.html',
+    '47_elite_performance_psychology.html',
+    '48_elite_physical_performance.html',
+    '49_advanced_game_construction.html',
     'index_elite.html',
 }
 

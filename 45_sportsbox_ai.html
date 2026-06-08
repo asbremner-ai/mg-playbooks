@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.0 · 2026-06-08 · 45_sportsbox_ai.html -->
+<!-- version:v2.0 · 2026-06-08 · 45_sportsbox_ai.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -74,66 +74,66 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="hero">
   <p class="hero-label">Elite Playbook · Guide 45</p>
   <h1>Sportsbox AI<br><em>Integration</em></h1>
-  <p class="hero-sub">Using Sportsbox AI's 3D motion analysis to move beyond 2D video — pelvis and thorax rotation data, kinematic sequencing at elite level, and how to integrate Sportsbox feedback with HackMotion and your coaching relationship.</p>
-  <div class="hero-tags"><span class="htag">🎬 What It Measures</span><span class="htag">📱 Setup</span><span class="htag">📊 Dashboard</span><span class="htag">🎓 Coach Integration</span><span class="htag">🔗 Combined Protocol</span><span class="htag">📅 Monthly Benchmark</span></div>
+  <p class="hero-sub">Using Sportsbox AI's 3D motion analysis at elite level — setup, dashboard interpretation, coach integration, the combined HackMotion+Mevo protocol, and the eight-fault library for plus-handicap players.</p>
+  <div class="hero-tags"><span class="htag">🎬 What It Measures</span><span class="htag">📱 Setup</span><span class="htag">📊 Dashboard</span><span class="htag">🎓 Coach Integration</span><span class="htag">🔗 Combined Protocol</span><span class="htag">🔬 Fault Library</span><span class="htag">📅 Monthly Benchmark</span></div>
 </div>
 <div class="nav">
   <button class="tab active" onclick="show('what',this)">What It Measures</button>
-  <button class="tab" onclick="show('setup',this)">Setup & Capture</button>
+  <button class="tab" onclick="show('setup',this)">Setup</button>
   <button class="tab" onclick="show('dashboard',this)">Dashboard</button>
   <button class="tab" onclick="show('coach',this)">Coach Integration</button>
   <button class="tab" onclick="show('combined',this)">Combined Protocol</button>
+  <button class="tab" onclick="show('faultlibrary',this)">Fault Library</button>
   <button class="tab" onclick="show('monthly',this)">Monthly Benchmark</button>
 </div>
 
 <div class="sec active" id="what">
   <h2 class="sec-title">What Sportsbox AI Measures</h2>
-  <p class="sec-desc">Sportsbox AI converts a standard smartphone video into a 3D motion analysis of your swing — measuring variables that 2D video analysis cannot capture. At plus-handicap level, the movement differences that separate players are subtle and largely invisible to the naked eye. Sportsbox makes them quantifiable.</p>
-  <span class="badge badge-elite">🎬 3D Variables Sportsbox Captures</span>
+  <p class="sec-desc">Sportsbox AI converts smartphone video into 3D motion analysis — measuring variables that 2D video cannot capture. At plus-handicap level, the movement differences between players are subtle and largely invisible to the naked eye. Sportsbox makes them quantifiable.</p>
+  <span class="badge badge-elite">🎬 3D Variables</span>
   <div class="card card-elite">
-    <span class="card-tag">Beyond 2D Video</span>
-    <h3>Key Measurements at Elite Level</h3>
+    <span class="card-tag">Key Measurements at Elite Level</span>
+    <h3>What 3D Captures That 2D Cannot</h3>
     <table class="tbl">
       <tr><th>Metric</th><th>What It Measures</th><th>Why It Matters</th></tr>
-      <tr><td>Pelvis Sway / Thrust</td><td>Lateral and forward pelvis movement at transition and impact</td><td>Excess sway creates path variability; insufficient thrust reduces power transfer</td></tr>
-      <tr><td>Thorax Side-Bend</td><td>Lateral tilt of the upper body at impact</td><td>Elite players typically reach 35–45° side-bend; insufficient side-bend produces high shots and thin contact</td></tr>
-      <tr><td>X-Factor (Separation)</td><td>Pelvis-thorax rotation differential at top of backswing</td><td>Primary power source — elite amateurs average 45–55° separation</td></tr>
+      <tr><td>Pelvis Sway / Thrust</td><td>Lateral and forward pelvis movement</td><td>Excess sway creates path variability; insufficient thrust reduces power transfer</td></tr>
+      <tr><td>Thorax Side-Bend</td><td>Lateral tilt of upper body at impact</td><td>Elite amateurs reach 35–45°; insufficient side-bend produces high shots and thin contact</td></tr>
+      <tr><td>X-Factor</td><td>Pelvis-thorax rotation differential at top</td><td>Primary power source — elite amateurs average 45–55° separation</td></tr>
       <tr><td>Lead Arm Rotation Rate</td><td>Speed and timing of left arm internal rotation through impact</td><td>Governs face control and strike consistency</td></tr>
-      <tr><td>Kinematic Sequence Timing</td><td>Order and timing of peak velocities in pelvis → thorax → arm → club</td><td>Out-of-sequence players lose 15–25% of available clubhead speed</td></tr>
+      <tr><td>Kinematic Sequence</td><td>Order and timing of peak velocities: pelvis → thorax → arm → club</td><td>Out-of-sequence players lose 15–25% of available clubhead speed</td></tr>
     </table>
   </div>
   <div class="info-box elite-box">
     <span class="ico">⭐</span>
-    <p><strong>HackMotion comparison:</strong> HackMotion measures lead wrist position (face control). Sportsbox measures body motion (sequencing and power). They answer different questions — HackMotion tells you what the club face is doing; Sportsbox tells you why. Used together, they provide a complete picture of ball-striking patterns.</p>
+    <p><strong>HackMotion comparison:</strong> HackMotion measures lead wrist position (face control). Sportsbox measures body motion (sequencing and power). Together they answer: what is the club face doing, and why is it doing it?</p>
   </div>
 </div>
 
 <div class="sec" id="setup">
   <h2 class="sec-title">Setup and Data Capture</h2>
-  <p class="sec-desc">Sportsbox accuracy is more sensitive to camera position than 2D video apps. A correctly positioned phone produces research-grade 3D data. An incorrectly positioned phone produces plausible-looking but unreliable numbers. Follow the setup protocol exactly.</p>
-  <span class="badge badge-elite">📱 Camera Setup Protocol</span>
+  <p class="sec-desc">Sportsbox accuracy is more sensitive to camera position than 2D apps. A correctly positioned phone produces research-grade 3D data. Follow the setup protocol exactly — the numbers are only as reliable as the input.</p>
+  <span class="badge badge-elite">📱 Camera Setup</span>
   <div class="card card-elite">
-    <span class="card-tag">Position Requirements for Reliable Data</span>
-    <h3>Camera Position Specifications</h3>
+    <span class="card-tag">Position Requirements</span>
+    <h3>Camera Specifications</h3>
     <table class="tbl">
       <tr><th>Parameter</th><th>Specification</th></tr>
-      <tr><td>Camera angle (face-on)</td><td>Exactly perpendicular to target line — 0° deviation or data degrades significantly</td></tr>
-      <tr><td>Camera height</td><td>Hip height of the player being filmed (approximately 36–40 inches from ground)</td></tr>
-      <tr><td>Distance from player</td><td>12–15 feet — close enough to capture full body, far enough for limb tracking accuracy</td></tr>
-      <tr><td>Down-the-line angle</td><td>Directly behind the player's target line — not offset left or right</td></tr>
-      <tr><td>Lighting</td><td>Even natural light — avoid strong shadows across the player at impact position</td></tr>
-      <tr><td>Background</td><td>Plain or non-distracting — moving backgrounds (trees in wind) reduce tracking accuracy</td></tr>
+      <tr><td>Camera angle (face-on)</td><td>Exactly perpendicular to target line — 0° deviation</td></tr>
+      <tr><td>Camera height</td><td>Hip height of the player (~36–40 inches)</td></tr>
+      <tr><td>Distance from player</td><td>12–15 feet</td></tr>
+      <tr><td>Down-the-line angle</td><td>Directly behind the player's target line</td></tr>
+      <tr><td>Background</td><td>Plain or non-distracting — no moving elements</td></tr>
     </table>
   </div>
-  <span class="badge badge-gold">🔄 Baseline Capture Session</span>
+  <span class="badge badge-gold">🔄 Baseline Capture Protocol</span>
   <div class="card card-gold">
-    <span class="card-tag">First Session Protocol</span>
+    <span class="card-tag">First Session</span>
     <h3>Building Your Sportsbox Baseline</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Warm up thoroughly first:</strong> Sportsbox data from cold swings does not represent your competitive movement patterns. Hit 20–30 balls before beginning the capture session.</div></li>
-      <li><span class="step-n">2</span><div><strong>Driver — 8 swings:</strong> Full effort, target at 250 yards. This gives the platform data for power and sequence analysis. Upload all 8; use the Sportsbox average view, not individual swings, for your baseline numbers.</div></li>
-      <li><span class="step-n">3</span><div><strong>7-iron — 8 swings:</strong> Same protocol. The 7-iron data is more consistent and reveals technical patterns more clearly than driver data for most amateur players.</div></li>
-      <li><span class="step-n">4</span><div><strong>Record the session date and conditions:</strong> Temperature, wind, range surface. Sportsbox data is most useful when compared to prior sessions in similar conditions.</div></li>
+      <li><span class="step-n">1</span><div>Warm up thoroughly first — 20+ balls. Sportsbox data from cold swings does not represent competitive movement patterns.</div></li>
+      <li><span class="step-n">2</span><div>Driver: 8 swings at full effort. Use the average view (not individual swings) for baseline numbers.</div></li>
+      <li><span class="step-n">3</span><div>7-iron: 8 swings. Iron data is more consistent and reveals technical patterns more clearly than driver for most players.</div></li>
+      <li><span class="step-n">4</span><div>Record the session date and conditions. Sportsbox data is most useful when compared to prior sessions in similar conditions.</div></li>
     </ul>
   </div>
 </div>
@@ -141,112 +141,161 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <div class="sec" id="dashboard">
   <h2 class="sec-title">Reading the Dashboard</h2>
   <p class="sec-desc">The Sportsbox dashboard produces 20+ metrics. At elite level, four metrics provide the highest signal-to-noise ratio — focus on these before exploring secondary data.</p>
-  <span class="badge badge-elite">📊 The Four Priority Metrics</span>
+  <span class="badge badge-elite">📊 Four Priority Metrics</span>
   <div class="card card-elite">
-    <span class="card-tag">Elite-Level Sportsbox Focus</span>
-    <h3>Monthly Tracking Metrics</h3>
+    <span class="card-tag">Monthly Tracking Focus</span>
+    <h3>Elite Benchmarks and Intervention Triggers</h3>
     <table class="tbl">
-      <tr><th>Metric</th><th>Elite Amateur Benchmark</th><th>What to Do If Below Benchmark</th></tr>
-      <tr><td>X-Factor at top</td><td>45–55°</td><td>Hip mobility work (Guide 06 fitness section); coach session on backswing restriction</td></tr>
-      <tr><td>Peak pelvis velocity</td><td>400–500°/sec (driver)</td><td>Rypstick protocol — rotational speed training; GRF drills from Guide 39</td></tr>
-      <tr><td>Peak thorax velocity</td><td>500–620°/sec (driver)</td><td>Sequencing work — pelvis must peak before thorax; lead-arm release timing</td></tr>
-      <tr><td>Lead arm rotation rate</td><td>400–480°/sec through impact</td><td>HackMotion cross-reference — face angle at impact; forearm rotation drills</td></tr>
+      <tr><th>Metric</th><th>Elite Amateur Benchmark</th><th>Below Benchmark: Action</th></tr>
+      <tr><td>X-Factor at top</td><td>45–55°</td><td>Hip mobility work (Guide 06); coach session on backswing restriction</td></tr>
+      <tr><td>Peak pelvis velocity</td><td>400–500°/sec (driver)</td><td>Rypstick protocol; GRF work from Guide 39</td></tr>
+      <tr><td>Peak thorax velocity</td><td>500–620°/sec (driver)</td><td>Sequencing work — pelvis must peak before thorax</td></tr>
+      <tr><td>Lead arm rotation rate</td><td>400–480°/sec at impact</td><td>HackMotion cross-reference; forearm rotation drills</td></tr>
     </table>
   </div>
-  <span class="badge badge-gold">📈 The Sequencing Graph</span>
+  <span class="badge badge-gold">📈 Kinematic Sequence Interpretation</span>
   <div class="card card-gold">
     <span class="card-tag">The Most Diagnostic Single View</span>
-    <h3>How to Read Kinematic Sequence</h3>
-    <p>The sequencing graph shows four lines — pelvis, thorax, arm, club — each peaking in velocity at different points in the downswing. The ideal pattern has each segment peak after the one below it, in a fluid wave from ground to clubhead.</p>
+    <h3>Reading the Sequencing Graph</h3>
     <table class="tbl">
       <tr><th>Pattern</th><th>Diagnosis</th><th>Common Cause</th></tr>
-      <tr><td>Thorax peaks before pelvis</td><td>Over-the-top tendency; path problem</td><td>Transition too fast with upper body; insufficient hip lead</td></tr>
-      <tr><td>Arm peaks before thorax</td><td>Early release; thin/fat pattern</td><td>Casting — arm extension before body rotation completes</td></tr>
-      <tr><td>All segments bunched together</td><td>Poor separation — power leakage</td><td>Body rotation too slow overall; Rypstick protocol needed</td></tr>
-      <tr><td>Clean cascade, correct order</td><td>Optimal sequence</td><td>N/A — maintain and monitor</td></tr>
+      <tr><td>Thorax peaks before pelvis</td><td>Over-the-top tendency</td><td>Transition too fast with upper body</td></tr>
+      <tr><td>Arm peaks before thorax</td><td>Early release; thin/fat pattern</td><td>Casting — arm extension before rotation completes</td></tr>
+      <tr><td>All segments bunched</td><td>Poor separation — power leakage</td><td>Body rotation too slow overall; Rypstick needed</td></tr>
+      <tr><td>Clean cascade, correct order</td><td>Optimal sequence</td><td>Maintain and monitor monthly</td></tr>
     </table>
   </div>
 </div>
 
 <div class="sec" id="coach">
-  <h2 class="sec-title">Integration with Your Coach</h2>
-  <p class="sec-desc">Sportsbox is most valuable as a coach communication tool — it gives your coach data they cannot see from 2D video. The most effective use is to share Sportsbox data before a lesson, not during one.</p>
+  <h2 class="sec-title">Coach Integration</h2>
+  <p class="sec-desc">Sportsbox is most valuable as a coach communication tool. Share data before a lesson — not during — so the coach arrives with a hypothesis already formed and the lesson spends its time testing and fixing, not diagnosing.</p>
   <span class="badge badge-elite">🎓 Pre-Lesson Protocol</span>
   <div class="card card-elite">
-    <span class="card-tag">How to Use Sportsbox to Maximise Lesson Value</span>
-    <h3>The Pre-Lesson Sharing Process</h3>
+    <span class="card-tag">Maximising Lesson Value with Sportsbox Data</span>
+    <h3>Three Steps</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>3–5 days before the lesson:</strong> Capture a Sportsbox session. Export the session summary — Sportsbox allows PDF or link export from the app dashboard.</div></li>
-      <li><span class="step-n">2</span><div><strong>Send to your coach:</strong> Include the four priority metrics (X-Factor, pelvis velocity, thorax velocity, lead arm rotation rate) and the sequencing graph. One paragraph of context: "My ball-striking from 150 yards has been inconsistent — I'm hitting it 5 feet further right than I should be. Here is this week's Sportsbox data."</div></li>
-      <li><span class="step-n">3</span><div><strong>In the lesson:</strong> The coach arrives with data already reviewed. The lesson starts with a hypothesis ("I think your thorax is peaking before your pelvis") and spends 50 minutes testing and fixing it, not 15 minutes diagnosing it first.</div></li>
+      <li><span class="step-n">1</span><div><strong>3–5 days before the lesson:</strong> Capture a Sportsbox session. Export the PDF summary or shareable link.</div></li>
+      <li><span class="step-n">2</span><div><strong>Send with context:</strong> One paragraph: the SG problem you are trying to solve, plus the four priority metrics and sequencing graph from the session.</div></li>
+      <li><span class="step-n">3</span><div><strong>In the lesson:</strong> Arrive with a specific question: "The data shows my thorax is peaking before my pelvis — is that the root cause of my ball-striking inconsistency from 150 yards?" The lesson then tests and addresses that hypothesis.</div></li>
     </ul>
-  </div>
-  <span class="badge badge-gold">🔍 Finding a Sportsbox-Certified Coach</span>
-  <div class="card card-gold">
-    <span class="card-tag">Working with Data-Literate Coaches</span>
-    <h3>Sportsbox Coach Directory</h3>
-    <p>Sportsbox maintains a directory of coaches certified in their platform at sportsboxai.com/coaches. Certified coaches have completed Sportsbox's training programme and can interpret 3D data directly without requiring you to translate it for them.</p>
-    <p>If your current coach is not Sportsbox-certified, the most efficient approach is to share the four priority metrics and the sequencing graph image only — these are self-explanatory to any coach who understands biomechanics, regardless of platform familiarity.</p>
   </div>
 </div>
 
 <div class="sec" id="combined">
   <h2 class="sec-title">Sportsbox + HackMotion Protocol</h2>
-  <p class="sec-desc">HackMotion and Sportsbox together form the Elite measurement stack — the most complete picture of ball-striking causality available to an amateur golfer. Combined protocol sessions reveal cause-and-effect chains that neither tool can identify alone.</p>
-  <span class="badge badge-elite">🔗 Combined Data Architecture</span>
+  <p class="sec-desc">HackMotion and Sportsbox together form the Elite measurement stack. Combined sessions reveal cause-and-effect chains that neither tool identifies alone.</p>
+  <span class="badge badge-elite">🔗 The Combined Session Workflow</span>
   <div class="card card-elite">
-    <span class="card-tag">What Each Tool Contributes</span>
-    <h3>The Elite Measurement Stack</h3>
-    <table class="tbl">
-      <tr><th>Tool</th><th>Measures</th><th>Answers</th></tr>
-      <tr><td>HackMotion</td><td>Lead wrist flexion/extension and rotation through swing</td><td>What is the club face doing and when?</td></tr>
-      <tr><td>Sportsbox AI</td><td>Body rotation, separation, sequencing, pelvis/thorax velocities</td><td>Why is the club face in that position — what body movement drove it?</td></tr>
-      <tr><td>Mevo Gen2</td><td>Ball data — carry, spin, launch angle, smash factor</td><td>What was the ball flight outcome and was it consistent?</td></tr>
-    </table>
-  </div>
-  <span class="badge badge-gold">🔄 The Combined Session Workflow</span>
-  <div class="card card-gold">
     <span class="card-tag">Monthly Three-Tool Session</span>
     <h3>Sequenced Data Collection</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Sportsbox first (15 min):</strong> 8 driver, 8 7-iron with camera positioned correctly. Upload and note the four priority metrics and sequencing graph.</div></li>
-      <li><span class="step-n">2</span><div><strong>HackMotion second (15 min):</strong> 10 driver swings with HackMotion running. Note lead wrist position at the top and at impact. Cross-reference with the Sportsbox X-Factor and lead arm rotation rate — they should correlate predictably.</div></li>
-      <li><span class="step-n">3</span><div><strong>Mevo third (15 min):</strong> 10 driver shots with full Mevo data capture. Note smash factor, lateral offset, and spin rate. If lateral dispersion is outside target (Guide 41 OTT section), trace the cause using the HackMotion and Sportsbox data from steps 1 and 2.</div></li>
-      <li><span class="step-n">4</span><div><strong>Post-session synthesis:</strong> Write 3 sentences in your Progress Journal: what the data showed, what it suggests technically, and what coaching question it generates for your next lesson.</div></li>
+      <li><span class="step-n">1</span><div><strong>Sportsbox first (15 min):</strong> 8 driver, 8 7-iron. Note four priority metrics and sequencing graph.</div></li>
+      <li><span class="step-n">2</span><div><strong>HackMotion second (15 min):</strong> 10 driver swings. Note lead wrist position at top and impact. Cross-reference with Sportsbox X-Factor and lead arm rotation rate — they should correlate predictably.</div></li>
+      <li><span class="step-n">3</span><div><strong>Mevo third (15 min):</strong> 10 driver shots with full data. Note smash factor, lateral offset, spin rate. If dispersion exceeds Guide 41 OTT targets, trace cause using Sportsbox (path) and HackMotion (face).</div></li>
+      <li><span class="step-n">4</span><div><strong>Synthesis (5 min):</strong> Three sentences in Progress Journal: what the data showed, what it suggests technically, what coaching question it generates.</div></li>
     </ul>
+  </div>
+</div>
+
+<div class="sec" id="faultlibrary">
+  <h2 class="sec-title">Fault Library</h2>
+  <p class="sec-desc">The eight most common movement patterns seen in plus-handicap amateur Sportsbox data — what they look like in the metrics, what they produce in ball flight, and the interventions that address each. This is the diagnostic reference that converts raw Sportsbox data into actionable training priorities.</p>
+  <span class="badge badge-elite">🔬 The Elite Fault Library</span>
+  <div class="card card-elite">
+    <span class="card-tag">Fault 1 — Insufficient Hip Separation (Low X-Factor)</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> X-Factor below 40° at top of backswing. Pelvis and thorax rotating at similar rates throughout the backswing.</p>
+    <p><strong>Ball flight signature:</strong> Loss of distance (5–15 yards below expectation for swing speed). Occasional blocked shots right due to insufficient hip lead in downswing.</p>
+    <p><strong>Root cause:</strong> Usually thoracic or hip mobility restriction rather than a swing fault. The body cannot create separation it physically cannot achieve.</p>
+    <p><strong>Intervention:</strong> TPI physical screen first — identify whether restriction is thoracic rotation, hip internal rotation, or lead hip mobility. Guide 06 mobility programme addresses all three. Technical work on separation before physical restriction is resolved produces minimal results.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 2 — Early Pelvis Stall (Loss of Sequence)</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Pelvis velocity peaks early in the downswing (before P6 — the impact position), then decelerates. Thorax velocity peaks simultaneously with or after the pelvis rather than creating a lag-then-release pattern.</p>
+    <p><strong>Ball flight signature:</strong> Inconsistent strike quality — some thin shots, some fats. Loss of distance. Occasional pull or pull-hook as the arms dominate through impact.</p>
+    <p><strong>Intervention:</strong> Step drill (Guide 03) — this forces the pelvis to continue driving through impact. Ground Reaction Force work (Guide 39) — specifically the trail heel pressure drill that trains sustained hip thrust. The correction is felt as the hips "staying open longer" through impact.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fault 3 — Insufficient Thorax Side-Bend at Impact</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Thorax side-bend below 25° at impact. Thorax remains relatively upright through the hitting zone rather than tilting toward the target.</p>
+    <p><strong>Ball flight signature:</strong> High ball flight with reduced spin control. Thin contact pattern. Loss of compression — shots feel "floaty" rather than penetrating.</p>
+    <p><strong>Intervention:</strong> The side-bend drill: place a headcover under the lead armpit and make half-swings without dropping it. This promotes the tilting motion required. Combine with HackMotion — insufficient side-bend often correlates with excess lead wrist extension through impact as the player unconsciously compensates.</p>
+  </div>
+  <div class="card card-elite">
+    <span class="card-tag">Fault 4 — Excess Lead Shoulder Elevation at Impact</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Lead shoulder rising through impact rather than remaining stable. Often accompanied by insufficient side-bend (Fault 3).</p>
+    <p><strong>Ball flight signature:</strong> Inconsistent strike — thin shots on well-struck swings; toe contact from compensatory shallowing. Loss of low point control.</p>
+    <p><strong>Intervention:</strong> Wall drill — stand with trail shoulder touching a wall, make slow-motion swings feeling the trail shoulder pushing into the wall through impact. This promotes the compression of the trail side that keeps the lead shoulder down. HackMotion cross-reference: excess shoulder elevation often produces lead wrist cupping at impact.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 5 — High Pelvis Sway (Lateral Drift)</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Pelvis lateral displacement exceeding 3–4 inches toward the target during the downswing, without the corresponding thrust component. Sway and thrust are different — sway moves laterally without rotation; thrust moves laterally with rotation.</p>
+    <p><strong>Ball flight signature:</strong> Inconsistent face angle — shots go both left and right with similar swing feel. Distance loss. Fat shots when sway is excessive.</p>
+    <p><strong>Intervention:</strong> Trail foot against a wall drill — feel the trail hip rotating around and through rather than moving sideways. GRF work (Guide 39) specifically targeting the trail leg push pattern. This fault is physical as much as technical — trail glute strength often insufficient to provide rotational drive without lateral movement.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fault 6 — Arms-Dominant Sequence (Early Extension)</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Peak arm velocity occurring before peak thorax velocity. Body sequence inverted — arms driving ahead of the body rather than following it.</p>
+    <p><strong>Ball flight signature:</strong> Pulls and pull-hooks from well-struck swings. Early extension (standing up through impact). Loss of depth at impact. High handicap version of this produces shanks; at elite level it produces loss of consistent face control.</p>
+    <p><strong>Intervention:</strong> Slow-motion sequencing drills — practise the transition feeling the pelvis fire first, then thorax, then arms. The "pump drill": pause at the top, consciously move the pelvis toward the target before starting the arm downswing. Takes 4–8 weeks to internalise at competitive speed.</p>
+  </div>
+  <div class="card card-elite">
+    <span class="card-tag">Fault 7 — Insufficient Lead Arm Rotation Rate</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Lead arm rotation rate below 350°/sec through impact. Arm rotating too slowly relative to body rotation — face arriving late and open.</p>
+    <p><strong>Ball flight signature:</strong> Consistent push or push-fade. Face feels open at impact. Players with this fault typically have worked extensively on "holding the face off" and have overcorrected into insufficient rotation.</p>
+    <p><strong>Intervention:</strong> HackMotion cross-reference first — confirm lead wrist extension at impact (the likely cause). Forearm rotation drills with a short iron: feel the lead forearm rolling over the trail forearm through impact. Do not attempt to add arm rotation before confirming the wrist position cause — addressing the symptom without addressing the cause produces inconsistency.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 8 — Reverse Spine Angle</span>
+    <h3>What the Data Shows</h3>
+    <p><strong>Sportsbox reading:</strong> Thorax tilting toward the target at the top of the backswing (rather than away from target). X-Factor present but created through an anatomically compromised position.</p>
+    <p><strong>Ball flight signature:</strong> Inconsistent results with occasional excellent shots — the fault creates swing compensation chains that are unpredictable. Associated with lower back discomfort or pain (this fault is the primary biomechanical cause of amateur golfer lower back injury).</p>
+    <p><strong>Intervention:</strong> Requires coach and physio collaboration — this is simultaneously a swing fault and a health risk. TPI screen recommended before technical intervention. The correction involves learning to coil the upper body away from the target rather than over it — a fundamental pattern change that takes 6–12 weeks minimum. Guide 13 (Injury Prevention) should be reviewed concurrently.</p>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Priority note:</strong> If Sportsbox reveals Fault 8, address it before any other technical work. A reverse spine angle that produces occasional good ball-striking is not a performance tradeoff — it is a structural issue that compounds over thousands of swings. The injury risk alone justifies prioritising this correction above all other technical goals.</p>
+    </div>
   </div>
 </div>
 
 <div class="sec" id="monthly">
   <h2 class="sec-title">Monthly Benchmark Protocol</h2>
-  <p class="sec-desc">A structured monthly Sportsbox benchmark session — same conditions, same camera position, same clubs — that allows meaningful month-on-month comparison of your 3D movement patterns alongside the Mevo and HackMotion monthly protocols.</p>
-  <span class="badge badge-elite">📅 Monthly Session Specification</span>
+  <p class="sec-desc">A structured monthly Sportsbox session — same conditions, same camera position, same clubs — that tracks 3D movement benchmarks alongside the Mevo and HackMotion monthly protocols.</p>
+  <span class="badge badge-elite">📅 Monthly Session Format</span>
   <div class="card card-elite">
     <span class="card-tag">Consistent Conditions for Reliable Comparison</span>
-    <h3>Monthly Benchmark Format</h3>
+    <h3>Specifications</h3>
     <table class="tbl">
       <tr><th>Parameter</th><th>Specification</th></tr>
       <tr><td>Frequency</td><td>Once per month, same week of month</td></tr>
-      <tr><td>Timing</td><td>After warmup (20+ balls), mid-session — not at the start or end</td></tr>
+      <tr><td>Timing</td><td>After warmup (20+ balls), mid-session — not at start or end</td></tr>
       <tr><td>Clubs</td><td>Driver (8 swings) + 7-iron (8 swings) only</td></tr>
-      <tr><td>Camera position</td><td>Identical marked position each month — use a tee or mat mark for consistency</td></tr>
-      <tr><td>Effort level</td><td>Full competitive effort — not "controlled" swings</td></tr>
+      <tr><td>Camera position</td><td>Marked position — use a tee or mat mark for consistency</td></tr>
+      <tr><td>Effort level</td><td>Full competitive effort</td></tr>
     </table>
   </div>
-  <span class="badge badge-gold">📈 The Four Tracking Metrics</span>
+  <span class="badge badge-gold">📈 Monthly Log</span>
   <div class="card card-gold">
-    <span class="card-tag">Monthly Log</span>
-    <h3>Sportsbox Monthly Benchmark Log</h3>
+    <span class="card-tag">Four Tracking Metrics</span>
+    <h3>Sportsbox Monthly Benchmark Table</h3>
     <table class="tbl">
-      <tr><th>Month</th><th>X-Factor</th><th>Pelvis Vel.</th><th>Thorax Vel.</th><th>Lead Arm Rate</th><th>Notes</th></tr>
+      <tr><th>Month</th><th>X-Factor</th><th>Pelvis Vel.</th><th>Thorax Vel.</th><th>Lead Arm Rate</th><th>Fault Flag</th></tr>
       <tr><td>Jun 2026</td><td>—°</td><td>—°/s</td><td>—°/s</td><td>—°/s</td><td>Baseline</td></tr>
       <tr><td>Jul 2026</td><td></td><td></td><td></td><td></td><td></td></tr>
       <tr><td>Aug 2026</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Sep 2026</td><td></td><td></td><td></td><td></td><td></td></tr>
     </table>
-    <p>Cross-reference monthly Sportsbox trends with Mevo smash factor data. If X-Factor increases but smash factor does not improve, the additional separation is not transferring to the strike — sequencing efficiency needs work, not more rotation.</p>
+    <p>The "Fault Flag" column — note which fault (1–8) from the fault library is most prominent this month. A fault appearing in 3+ consecutive months is a structural pattern requiring a dedicated coaching block, not a self-correction attempt.</p>
   </div>
 </div>
-<div class="footer">ELITE PLAYBOOK · GUIDE 45 · SPORTSBOX AI INTEGRATION · 3D MOTION ANALYSIS · THE SCRATCH PROJECT</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 45 v2.0 · SPORTSBOX AI INTEGRATION · FAULT LIBRARY ADDED · THE SCRATCH PROJECT</div>
 <script>
 function show(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
