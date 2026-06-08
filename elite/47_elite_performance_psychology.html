@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · 47_elite_performance_psychology.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Elite Performance Psychology — The Scratch Project Elite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--elite-border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--elite-hi);}.tab.active{color:var(--elite);border-bottom-color:var(--elite);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--elite);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-elite{background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.card-elite{border-color:var(--elite-border);}.card-elite .card-tag{color:var(--elite);}
+.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--elite);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}.ev{color:var(--elite-hi);font-weight:600;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--elite);background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite-box{background:var(--elite-dim);border:1px solid var(--elite-border);}.elite-box p{color:rgba(200,216,232,.85);}.elite-box strong{color:var(--elite-hi);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}.gold-box p{color:rgba(240,208,112,.9);}.gold-box strong{color:var(--gold-hi);}
+.rust-box{background:var(--rust-dim);border:1px solid rgba(216,96,48,.22);}.rust-box p{color:rgba(240,128,80,.9);}.rust-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--elite);padding:14px 18px;margin:18px 0;background:var(--elite-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--elite-hi);line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(200,216,232,0.18);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,216,232,0.3);">The Scratch Project · Elite</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Elite Playbook · Guide 47</p>
+  <h1>Elite Performance<br><em>Psychology</em></h1>
+  <p class="hero-sub">The sport psychology disciplines that separate plus-handicap amateurs from club champions — identity and self-concept, flow state engineering, choking anatomy with specific counter-protocols, advanced imagery, between-shot management, and full season psychological periodisation.</p>
+  <div class="hero-tags"><span class="htag">🧠 Identity & Self-Concept</span><span class="htag">🌊 Flow State</span><span class="htag">⚡ Choking</span><span class="htag">🎬 Imagery</span><span class="htag">⏱️ Between Shots</span><span class="htag">📅 Full Season</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('identity',this)">Identity</button>
+  <button class="tab" onclick="show('flow',this)">Flow State</button>
+  <button class="tab" onclick="show('choking',this)">Choking</button>
+  <button class="tab" onclick="show('imagery',this)">Imagery</button>
+  <button class="tab" onclick="show('between',this)">Between Shots</button>
+  <button class="tab" onclick="show('season',this)">Full Season</button>
+</div>
+
+<div class="sec active" id="identity">
+  <h2 class="sec-title">Identity & Self-Concept</h2>
+  <p class="sec-desc">The transition from club golfer to competitive amateur athlete is not primarily a technical challenge — it is a psychological one. The beliefs you hold about who you are as a golfer govern what you allow yourself to achieve. This is the first and most important work of the Elite tier.</p>
+  <span class="badge badge-elite">🧠 The Identity Shift</span>
+  <div class="card card-elite">
+    <span class="card-tag">From Improver to Competitor</span>
+    <h3>Why Self-Concept Precedes Performance</h3>
+    <p>Bob Rotella's work identifies a consistent pattern in players who stall at low handicap: they have improved their technique to a level their self-concept does not yet accept as "theirs." They play well in practice and poorly under observation because part of them does not believe they are the kind of player who performs at that standard when it counts.</p>
+    <p>The technical intervention for this is not more practice — it is identity work. You must explicitly adopt the identity of a competitive amateur athlete, not a club golfer who is improving. These are different people with different habits, different standards, and different automatic responses to adversity.</p>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Practical exercise:</strong> Write two paragraphs — one describing how a club golfer with your handicap thinks and behaves on the course; one describing how a county-level competitive amateur thinks and behaves. The gap between those two paragraphs is the identity work to do. Act from the second description, starting in your next practice session.</p>
+    </div>
+  </div>
+  <span class="badge badge-gold">📊 Confidence Architecture</span>
+  <div class="card card-gold">
+    <span class="card-tag">How Plus-Handicap Players Build and Maintain Confidence</span>
+    <h3>The Four Confidence Sources — Ranked by Durability</h3>
+    <table class="tbl">
+      <tr><th>Source</th><th>Durability</th><th>How to Build It</th></tr>
+      <tr><td>Mastery experiences</td><td class="ev">Highest</td><td>Rounds and shots where you proved to yourself you can perform under pressure. Deliberately catalogue these.</td></tr>
+      <tr><td>Vicarious learning</td><td class="warn">High</td><td>Watching players at your target level and recognising that their game is not categorically different from yours — just more consistent.</td></tr>
+      <tr><td>Verbal persuasion</td><td class="warn">Moderate</td><td>Coach feedback, trusted playing partner validation. Useful but fragile — one bad round can erase it.</td></tr>
+      <tr><td>Physiological state</td><td class="bad">Lowest</td><td>Feeling good physically. Useful as a contributor but unreliable as a primary confidence source.</td></tr>
+    </table>
+    <p>The practical implication: stop trying to feel confident before you play well. Build mastery experiences deliberately — pressure practice, solo rounds with scoring consequences, county events entered before you feel "ready." The confidence follows the evidence.</p>
+  </div>
+  <span class="badge badge-teal">🔄 Recovering Confidence After a Bad Run</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Protocol for Serial Underperformance</span>
+    <h3>When Results Have Eroded Your Self-Belief</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Separate performance from identity:</strong> "I played poorly" is information. "I am a poor player" is fiction. Distinguish between the two explicitly — write it down if necessary. Performance is variable; identity is chosen.</div></li>
+      <li><span class="step-n">2</span><div><strong>Return to mastery experiences:</strong> Pull your Progress Journal and review rounds where you performed at your best. Re-read them in detail. These are evidence that the capability exists — the current run is variance, not a new reality.</div></li>
+      <li><span class="step-n">3</span><div><strong>Reset competition volume temporarily:</strong> If competitive pressure is amplifying a technical issue, reduce competition rounds for 2–3 weeks and increase deliberate practice. Return to competition with a fresh baseline, not a history of recent failure.</div></li>
+      <li><span class="step-n">4</span><div><strong>Coach conversation:</strong> A bad run lasting more than 6 competitive rounds warrants a coaching session — not to rebuild the swing, but to identify whether the issue is technical, strategic, or psychological. Most coaches can differentiate these with a single range session and a conversation about your round management.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="flow">
+  <h2 class="sec-title">Flow State Engineering</h2>
+  <p class="sec-desc">Flow — Csikszentmihalyi's term for the psychological state of complete absorption and effortless performance — is not an accident. It has specific preconditions that can be deliberately engineered. Elite amateur players who understand these conditions can create them more reliably than those who simply "hope to get in the zone."</p>
+  <span class="badge badge-elite">🌊 The Flow Conditions</span>
+  <div class="card card-elite">
+    <span class="card-tag">Csikszentmihalyi's Flow Model Applied to Golf</span>
+    <h3>The Eight Preconditions — and How to Create Them</h3>
+    <table class="tbl">
+      <tr><th>Precondition</th><th>What It Means in Golf</th><th>How to Engineer It</th></tr>
+      <tr><td>Clear goals</td><td>Process goals per shot, not outcome goals per hole</td><td>Set one process focus before the round — one word or phrase only</td></tr>
+      <tr><td>Immediate feedback</td><td>Knowing immediately whether a shot was well struck</td><td>Develop your strike feedback sensitivity in deliberate practice</td></tr>
+      <tr><td>Challenge-skill balance</td><td>Course difficulty matched to current capability</td><td>Choose courses and tees that produce 50–60% GIR — not too easy, not overwhelming</td></tr>
+      <tr><td>Merging of action and awareness</td><td>Not thinking about the swing — just doing it</td><td>Pre-shot routine ends with an external image, not a mechanical thought</td></tr>
+      <tr><td>Loss of self-consciousness</td><td>Not monitoring how you look or what others think</td><td>Focus completely on a specific target — the smaller, the better</td></tr>
+      <tr><td>Distorted time sense</td><td>Rounds that pass without awareness of time</td><td>Full pre-shot routine creates natural between-shot recovery periods</td></tr>
+      <tr><td>Sense of control</td><td>Confidence in your ability to produce intended shots</td><td>Accept your current shot library — only attempt shots you own</td></tr>
+      <tr><td>Intrinsic reward</td><td>Playing for the pleasure of the game, not the result</td><td>Set goals around quality of execution, not score</td></tr>
+    </table>
+  </div>
+  <div class="pull-quote"><p>"The flow state is not achieved by trying harder. It is achieved by removing the obstacles to it — principally, the habit of self-monitoring and outcome-thinking that adult learners bring to everything they do."</p></div>
+  <span class="badge badge-gold">🎯 Pre-Round Flow Preparation</span>
+  <div class="card card-gold">
+    <span class="card-tag">The 30-Minute Pre-Round Protocol for Flow</span>
+    <h3>Engineering the Conditions Before You Tee Off</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Choose a single process focus (5 min before leaving for the course):</strong> One word or short phrase that describes how you want to play today — not what score, not what technique. Examples: "balanced finish," "commit to the line," "trust the read." This word becomes your reset cue between shots.</div></li>
+      <li><span class="step-n">2</span><div><strong>Warm up with target focus only (on the range):</strong> Every warmup shot has a specific target — not "down the range." A distant flag, a specific yardage marker, a tree in the distance. Target specificity during warmup trains the attention toward external focus that flow requires.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set a challenge-appropriate expectation:</strong> Before the round, set a process-based expectation — not a score. "I want to commit fully to every pre-shot routine" is a flow-compatible goal. "I want to shoot under par" is a flow-incompatible goal before the first shot.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="choking">
+  <h2 class="sec-title">Choking — Anatomy & Counter-Protocols</h2>
+  <p class="sec-desc">Choking is not weakness — it is a predictable neurological phenomenon that affects every athlete, including tour professionals. Understanding the precise mechanism allows you to intervene at the correct point, rather than applying generic "stay calm" advice that does nothing to address the underlying process.</p>
+  <span class="badge badge-rust">⚡ The Explicit Processing Mechanism</span>
+  <div class="card card-rust">
+    <span class="card-tag">Beilock's Research — Why Skills Break Down Under Pressure</span>
+    <h3>What Actually Happens When You Choke</h3>
+    <p>Dr. Sian Beilock's research at the University of Chicago identifies the precise mechanism: under pressure, players shift from automatic, procedural processing (the brain's motor system running the swing unconsciously) to explicit, declarative processing (the prefrontal cortex consciously monitoring every movement). This shift is catastrophic for golf, because the prefrontal cortex is too slow and too imprecise to govern a 0.2-second swing.</p>
+    <table class="tbl">
+      <tr><th>Processing Mode</th><th>Brain Region</th><th>Speed</th><th>Golf Performance</th></tr>
+      <tr><td>Automatic (procedural)</td><td>Basal ganglia, cerebellum</td><td class="good">Milliseconds</td><td class="good">Fluid, consistent, fast</td></tr>
+      <tr><td>Explicit (declarative)</td><td>Prefrontal cortex</td><td class="bad">Seconds</td><td class="bad">Mechanical, inconsistent, slow</td></tr>
+    </table>
+    <p>The trigger for the shift is perceived threat — any situation where the outcome feels important. Your brain interprets the club championship or the county qualifier as a threat in the same way it would a physical danger, and routes motor control through the slower, more conscious system.</p>
+  </div>
+  <span class="badge badge-gold">🛡️ Counter-Protocol Arsenal</span>
+  <div class="card card-gold">
+    <span class="card-tag">Specific Interventions That Work — Evidence-Based</span>
+    <h3>Five Counter-Protocols Ranked by Evidence Strength</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Dual-task loading (strongest evidence):</strong> Occupy the prefrontal cortex with a simple, unrelated task so it cannot monitor the swing. Humming a single note through the swing, counting backwards from 100 in threes, or focusing on a specific sensory input (the feel of the grip, the sound of the wind). The PFC gets busy with the secondary task; the motor system runs automatically. This works even on a first attempt.</div></li>
+      <li><span class="step-n">2</span><div><strong>Externalise attention completely:</strong> Focus on the target, not the body. Research by Gabriele Wulf shows that external attentional focus (what the club or ball is doing) produces better performance than internal focus (what the body is doing) in every sport studied. Under pressure, force attention outward: pick the smallest possible target and look at only that.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pre-shot routine adherence:</strong> A well-trained pre-shot routine occupies the mind with a structured sequence, leaving no space for outcome monitoring. The routine must be trained to the point of automaticity before it provides protection under pressure — a rushed or modified routine under pressure is not a counter-protocol, it is the choke itself.</div></li>
+      <li><span class="step-n">4</span><div><strong>Acceptance-based refocusing:</strong> Accept the pressure rather than trying to suppress it. Suppression of anxiety ("don't be nervous") paradoxically increases it. Labelling it — "I'm nervous, that's normal, my brain thinks this matters" — reduces the amygdala response measurably within seconds.</div></li>
+      <li><span class="step-n">5</span><div><strong>Pressure inoculation training:</strong> The most durable counter-protocol, but requires consistent investment. Deliberately creating high-pressure conditions in practice — financial consequences, audience, strict performance standards — exposes the nervous system to the threat response in a controlled setting. Over weeks, the amygdala response reduces through habituation.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="imagery">
+  <h2 class="sec-title">Advanced Imagery & Mental Rehearsal</h2>
+  <p class="sec-desc">Mental rehearsal at elite level goes far beyond basic visualisation. A structured imagery programme — targeting specific situations, specific shots, and specific emotional states — produces neurological changes measurable on fMRI and performance improvements documented across every sport studied.</p>
+  <span class="badge badge-elite">🎬 The Neuroscience of Imagery</span>
+  <div class="card card-elite">
+    <span class="card-tag">Why Mental Rehearsal Produces Real Performance Gains</span>
+    <h3>The Neural Basis</h3>
+    <p>fMRI studies show that vivid first-person imagery of a physical movement activates the same motor cortex regions as actually executing that movement — at 65–80% of the activation level. This means mental rehearsal is a genuine training stimulus, not a motivational technique. It builds neural pathways, reduces anxiety responses to specific situations, and consolidates motor patterns that have been learned physically.</p>
+    <table class="tbl">
+      <tr><th>Imagery Type</th><th>Primary Effect</th><th>When to Use</th><th>Duration</th></tr>
+      <tr><td>First-person kinesthetic</td><td>Motor cortex activation — movement encoding</td><td>Shot visualisation, pre-shot routine</td><td>3–5 seconds per shot</td></tr>
+      <tr><td>First-person visual</td><td>Pattern recognition — trajectory planning</td><td>Reading putts, approach shot planning</td><td>5–10 seconds</td></tr>
+      <tr><td>Pressure scenario rehearsal</td><td>Amygdala habituation — reduces anxiety</td><td>Weekly mental training sessions</td><td>10–15 minutes</td></tr>
+      <tr><td>Course walk imagery</td><td>Cognitive map construction</td><td>Night before competition</td><td>20–30 minutes</td></tr>
+      <tr><td>Shot library recall</td><td>Confidence via mastery memory access</td><td>Before difficult shots</td><td>3–5 seconds</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🗺️ Pre-Competition Imagery Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Night Before a Major Event</span>
+    <h3>Course Walk Imagery — Step by Step</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Environment (2 min):</strong> Lie down in a quiet, dark room. Two minutes of slow diaphragmatic breathing to lower arousal. You want a relaxed but focused state — not drowsy, not anxious.</div></li>
+      <li><span class="step-n">2</span><div><strong>Arrival imagery (2 min):</strong> See yourself arriving at the venue — the car park, the clubhouse, the changing room. Feel the emotions as they are, not as you want them to be. Normalise the experience. You have been here before.</div></li>
+      <li><span class="step-n">3</span><div><strong>Hole-by-hole mental round (20 min):</strong> Play each hole mentally in first person. See the tee shot, the approach, the chip or putt. Use your yardage book as a reference if needed. Focus on good execution — not on avoiding errors. Every hole should produce at least one shot that feels executed correctly in your imagination.</div></li>
+      <li><span class="step-n">4</span><div><strong>Adversity scenarios (5 min):</strong> Mentally play 2–3 scenarios where things go wrong — a bogey, a bad bounce, a lost hole in matchplay. Rehearse your recovery routine: between-shot protocol, reset, full commitment to the next shot. The goal is to have already experienced these scenarios before they happen on the course.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-teal">📚 Shot Library Construction</span>
+  <div class="card card-teal">
+    <span class="card-tag">Building Your Personal Confidence Archive</span>
+    <h3>How to Catalogue Mastery Experiences</h3>
+    <p>Elite players access a mental "shot library" under pressure — vivid memories of specific shots they have executed well. When facing a 150-yard shot to a tight pin, they recall a specific instance of executing that exact shot. This recall serves as both a neural reference (this is how the swing should feel) and a confidence anchor (I have done this before).</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>After every excellent shot — anchor it immediately:</strong> Take 5 seconds to close your eyes. Feel the swing sensation. See the ball flight in first person. Attach an emotion — satisfaction, confidence, ease. This anchoring process accelerates the encoding into long-term memory.</div></li>
+      <li><span class="step-n">2</span><div><strong>Write it in your Progress Journal within 24 hours:</strong> The shot type, the distance, the conditions, and crucially — what it felt like. The written description extends the memory's durability and allows you to re-access it during pre-competition imagery.</div></li>
+      <li><span class="step-n">3</span><div><strong>Build by category:</strong> Aim to have at least 3 strong library entries per major shot type — driver under pressure, 150-yard iron to a tight pin, 8-foot putt to win a hole, bunker save. When you have entries in all categories, the library is functional for pre-competition use.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="between">
+  <h2 class="sec-title">Between-Shot Management</h2>
+  <p class="sec-desc">The 3–5 minutes between shots in a competitive round is where most amateurs haemorrhage performance. Without a structured between-shot system, the mind defaults to outcome thinking, shot rumination, and future worry. Elite players have systematic protocols that fill this time productively.</p>
+  <span class="badge badge-elite">⏱️ The 50-Second System</span>
+  <div class="card card-elite">
+    <span class="card-tag">Structure for the Time Between Shots</span>
+    <h3>From Last Shot to Next Shot — The Full Protocol</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Timing</th><th>Activity</th><th>Purpose</th></tr>
+      <tr><td>Release</td><td>0–10 sec after shot</td><td>Brief, contained emotional reaction — then physically move away</td><td>Healthy emotional processing; triggers transition</td></tr>
+      <tr><td>Neutral walk</td><td>10 sec – 1 min before ball</td><td>Administrative tasks: yardage, lie, wind observation</td><td>Practical; occupies mind constructively</td></tr>
+      <tr><td>Decision</td><td>30–60 sec behind ball</td><td>Full read and club commitment; pre-shot routine begins</td><td>All analysis happens here — not over the ball</td></tr>
+      <tr><td>Execution</td><td>Approaching ball to finish</td><td>Routine triggers, external focus, commit and swing</td><td>Automatic processing — no conscious oversight</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🧘 The 10-Second Rule</span>
+  <div class="card card-gold">
+    <span class="card-tag">Post-Shot Emotional Management</span>
+    <h3>Why 10 Seconds Is the Evidence-Based Window</h3>
+    <p>Dr. Gio Valiante's research with tour players shows that elite performers physically move away from a bad shot within 10 seconds — walking away, taking a practice swing, starting the walk to the next position. This movement physically interrupts the rumination process before it becomes a performance-degrading spiral.</p>
+    <p>The 10-second rule is not suppression — you are allowed a genuine reaction within those 10 seconds. A muttered expletive, a shake of the head, a brief acknowledgement of frustration. After 10 seconds, the door closes. What matters is what you do from here, not what just happened.</p>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Training this in practice:</strong> Use a stopwatch in deliberate practice sessions. After every shot, start the timer. At 10 seconds, physically walk to your next position regardless of emotional state. The behaviour must be trained until it is automatic — it will not appear under competitive pressure unless it has been practised.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="season">
+  <h2 class="sec-title">Full Season Psychology</h2>
+  <p class="sec-desc">Managing your psychological state across a full competitive season — 30+ competitive rounds, multiple major events, inevitable runs of poor form — requires a system, not just in-round techniques. Elite amateur athletes manage their mental performance as deliberately as their physical performance.</p>
+  <span class="badge badge-elite">📅 Annual Psychological Periodisation</span>
+  <div class="card card-elite">
+    <span class="card-tag">Mental Performance Across the Season</span>
+    <h3>Psychological Load by Season Phase</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Psychological Priority</th><th>Key Risk</th><th>Management Tool</th></tr>
+      <tr><td>Off-season (Nov–Feb)</td><td>Identity reinforcement; technical confidence building</td><td>Motivation loss; drift from competitive identity</td><td>Progress Journal review; goal-setting session</td></tr>
+      <tr><td>Pre-season (Mar–Apr)</td><td>Confidence building through competition volume</td><td>Premature outcome focus</td><td>Process-only goals; category 3 events only</td></tr>
+      <tr><td>Peak events (May–Jun)</td><td>Optimal arousal management; flow engineering</td><td>Choking; outcome anxiety</td><td>Pre-competition imagery; dual-task protocols</td></tr>
+      <tr><td>Mid-season (Jul–Aug)</td><td>Maintaining motivation after setbacks</td><td>Identity erosion after poor results</td><td>Mastery experience review; coach check-in</td></tr>
+      <tr><td>Post-season (Sep–Oct)</td><td>Honest performance review; goal updating</td><td>Over-criticism; attributing poor results to fixed traits</td><td>SG-based review (data, not narrative)</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">📓 The Weekly Mental Performance Log</span>
+  <div class="card card-teal">
+    <span class="card-tag">Tracking Psychological Patterns Across the Season</span>
+    <h3>Five Questions — Weekly After Competition</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Where did my pre-shot routine hold, and where did it deviate? What triggered the deviation?</div></li>
+      <li><span class="step-n">2</span><div>Which shots did I commit to fully vs. which did I hit without full commitment? What was the outcome difference?</div></li>
+      <li><span class="step-n">3</span><div>What was my between-shot state on the holes where I performed best?</div></li>
+      <li><span class="step-n">4</span><div>Did I experience any explicit processing intrusion — conscious swing thoughts over the ball? What triggered it?</div></li>
+      <li><span class="step-n">5</span><div>What is the single psychological habit I want to reinforce in the next round?</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Pattern detection:</strong> After 10 weeks of logs, the patterns become visible. Most players discover they have 2–3 recurring psychological failure modes — specific triggers that reliably produce deterioration. Once identified, these can be targeted with specific counter-protocols rather than generic advice.</p>
+    </div>
+  </div>
+</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 47 · ELITE PERFORMANCE PSYCHOLOGY · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+    <a href="16_solo_pressure_round.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔥</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Solo Pressure Round</span>
+    </a>
+    <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+    </a>
+    <a href="42_national_amateur_circuit.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">National Amateur Circuit</span>
+    </a>
+    <a href="48_elite_physical_performance.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Elite Physical Performance</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · 46_county_team_golf.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>County Team & Representative Golf — The Scratch Project Elite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--elite-border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--elite-hi);}.tab.active{color:var(--elite);border-bottom-color:var(--elite);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--elite);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-elite{background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.card-elite{border-color:var(--elite-border);}.card-elite .card-tag{color:var(--elite);}
+.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--elite);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}.ev{color:var(--elite-hi);font-weight:600;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--elite);background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite-box{background:var(--elite-dim);border:1px solid var(--elite-border);}.elite-box p{color:rgba(200,216,232,.85);}.elite-box strong{color:var(--elite-hi);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}.gold-box p{color:rgba(240,208,112,.9);}.gold-box strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--elite);padding:14px 18px;margin:18px 0;background:var(--elite-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--elite-hi);line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(200,216,232,0.18);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,216,232,0.3);">The Scratch Project · Elite</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Elite Playbook · Guide 46</p>
+  <h1>County Team &<br><em>Representative Golf</em></h1>
+  <p class="hero-sub">How to get selected for county team golf, prepare for inter-county competition, and navigate the England Golf performance pathway — from first county cap to national circuit and beyond.</p>
+  <div class="hero-tags"><span class="htag">🏅 Selection Pathway</span><span class="htag">📖 Match Prep</span><span class="htag">🧠 Performance</span><span class="htag">🏆 Inter-County</span><span class="htag">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England Golf</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('pathway',this)">Selection Pathway</button>
+  <button class="tab" onclick="show('preparation',this)">Match Prep</button>
+  <button class="tab" onclick="show('performance',this)">Performance</button>
+  <button class="tab" onclick="show('intercounty',this)">Inter-County</button>
+  <button class="tab" onclick="show('england',this)">England Pathways</button>
+</div>
+
+<div class="sec active" id="pathway">
+  <h2 class="sec-title">The County Selection Pathway</h2>
+  <p class="sec-desc">County team selection is the formal recognition that you are one of the best amateur golfers in your county — a significant threshold that opens inter-county competition, England Golf pathways, and the competitive environment that accelerates improvement most effectively.</p>
+  <span class="badge badge-elite">🏅 How County Selection Works</span>
+  <div class="card card-elite">
+    <span class="card-tag">Selection Criteria and Process</span>
+    <h3>What County Selectors Look For</h3>
+    <table class="tbl">
+      <tr><th>Factor</th><th>Weight</th><th>How to Demonstrate It</th></tr>
+      <tr><td>Competition results in county events</td><td class="ev">Primary</td><td>Top-10 finishes in county championships; consistent sub-par rounds in county opens</td></tr>
+      <tr><td>Handicap index trajectory</td><td class="warn">High</td><td>Actively improving index over the prior 12 months; plus territory strongly preferred</td></tr>
+      <tr><td>Attitude and coachability</td><td class="warn">High</td><td>Visible effort at county events; engagement with county coaching days if offered</td></tr>
+      <tr><td>Availability for fixtures</td><td>Moderate</td><td>Communicate fixture availability to county team manager proactively</td></tr>
+      <tr><td>Equipment and presentation</td><td>Low</td><td>Professional equipment standard; appropriate dress at county events</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">📋 The 12-Month Selection Plan</span>
+  <div class="card card-gold">
+    <span class="card-tag">Building Your County Profile Over One Season</span>
+    <h3>Month-by-Month Actions</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Register with your county union:</strong> If you are not already affiliated, register at the start of the season. County unions (e.g. Beds Golf, Bucks &amp; Oxon Golf, Northants County Golf) have their own membership portals — typically £20–40/year.</div></li>
+      <li><span class="step-n">2</span><div><strong>Enter every accessible county event:</strong> County individual championships, county opens, matchplay events. Enter all of them. You cannot be selected for events you did not play in.</div></li>
+      <li><span class="step-n">3</span><div><strong>Attend county coaching days:</strong> Most counties run 1–3 coaching days per season for players at scratch or below. These are selection opportunities as well as coaching sessions — selectors often attend.</div></li>
+      <li><span class="step-n">4</span><div><strong>Contact the team manager:</strong> Introduce yourself directly — this is not presumptuous at county level. Express interest, confirm your handicap index, and ask what the selection process and timeline looks like for the coming season.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="preparation">
+  <h2 class="sec-title">Preparing for a County Match</h2>
+  <p class="sec-desc">A county team match is a different preparation challenge from an individual stroke or matchplay event. You are preparing for a specific venue against a specific opponent pool — with team performance as the metric, not your own score.</p>
+  <span class="badge badge-elite">📖 Match Preparation Protocol</span>
+  <div class="card card-elite">
+    <span class="card-tag">72-Hour Pre-Match Window</span>
+    <h3>What Elite County Players Do Before a Team Fixture</h3>
+    <table class="tbl">
+      <tr><th>Timing</th><th>Activity</th></tr>
+      <tr><td>72 hours before</td><td>Review yardage book and notes for the venue. Check forecast. Identify the 3 holes most likely to decide your individual match.</td></tr>
+      <tr><td>48 hours before</td><td>Technical practice only — no new thoughts, no experiments. Short game and putting volume session.</td></tr>
+      <tr><td>24 hours before</td><td>9 holes or range activation only. Confirmation session — not improvement session.</td></tr>
+      <tr><td>Morning of match</td><td>Full warmup routine (Guide 08). Identify your pre-shot trigger word. Brief team strategy meeting if the captain holds one.</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🔬 Opponent Research</span>
+  <div class="card card-gold">
+    <span class="card-tag">How Much to Know About Your Opponent</span>
+    <h3>The Right Level of Opponent Awareness</h3>
+    <p>County matchplay pairings are typically published 24–48 hours before the fixture. The right level of opponent research is one layer deep — name, handicap index, any notable recent results. No more.</p>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>The danger of deep research:</strong> Players who research opponents extensively tend to play against the opponent's reputation rather than their own game plan. If you know your opponent won the county championship last year, you will unconsciously alter your strategy in ways that undermine your own strengths. Know who you are playing; do not know how they play. Your game plan is independent of them.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="performance">
+  <h2 class="sec-title">Performing in Team Matches</h2>
+  <p class="sec-desc">The performance demands of county team matchplay are qualitatively different from individual competition. You are accountable to teammates in a way that has no analogue in strokeplay — and that accountability can be your greatest asset or your biggest liability.</p>
+  <span class="badge badge-elite">🧠 Team Performance Psychology</span>
+  <div class="card card-elite">
+    <span class="card-tag">Managing the Team Dynamic</span>
+    <h3>The Three Performance Principles for Team Golf</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Your only job is to win your match:</strong> The team score takes care of itself if every individual wins their match. Do not monitor the board to adjust your strategy. Do not play more or less aggressively based on what teammates are doing. Play your best golf, all 18 holes.</div></li>
+      <li><span class="step-n">2</span><div><strong>Adversity is shared, not amplified:</strong> When you make a bad shot in a team match, the appropriate response is identical to an individual event — pre-shot routine, next shot, no post-shot processing. The difference is that your teammates need to see composure from you, not reactive emotion. Composure is contagious in both directions.</div></li>
+      <li><span class="step-n">3</span><div><strong>Celebrate teammate performance:</strong> When you see a teammate make a critical putt or hole out, allow yourself to feel genuine pleasure. This is one of the few things in competitive golf that costs nothing and returns enormously in team cohesion and your own motivational state.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-gold">📊 Post-Match Analysis in a Team Context</span>
+  <div class="card card-gold">
+    <span class="card-tag">What to Analyse and What to Leave Alone</span>
+    <h3>The Team Match Review Protocol</h3>
+    <p>Post-match analysis for a team fixture should be kept brief — a longer review can undermine your readiness for the next fixture. The framework:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>What you do within 2 hours:</strong> Write 3 sentences in your Progress Journal. One sentence on what cost you strokes. One sentence on what you did well. One sentence on the single technical or strategic change you would make. Nothing more.</div></li>
+      <li><span class="step-n">2</span><div><strong>What you do not do:</strong> Analyse the team result. Discuss what teammates should have done differently. Compare your score to your opponent's score. None of this information helps you play better in the next match.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="intercounty">
+  <h2 class="sec-title">Inter-County Competition</h2>
+  <p class="sec-desc">Inter-county competition — the County Championship, the Anglian League, and equivalent regional inter-county structures — represents the highest level of team amateur golf below England representative level. The standard is significantly higher than club or county individual events.</p>
+  <span class="badge badge-elite">🏆 Inter-County Competition Structure</span>
+  <div class="card card-elite">
+    <span class="card-tag">UK Inter-County Amateur Structure</span>
+    <h3>The County Championship Hierarchy</h3>
+    <table class="tbl">
+      <tr><th>Competition</th><th>Format</th><th>Standard</th></tr>
+      <tr><td>County Championship (men's)</td><td>2-day matchplay team</td><td>Top 8–12 players per county; scratch to +3 field</td></tr>
+      <tr><td>English County Championship</td><td>Annual team event</td><td>County champions; top national amateur standard</td></tr>
+      <tr><td>Regional leagues (Anglian, Midlands etc.)</td><td>Season-long fixtures</td><td>8–10 matches per county per season; represents consistent volume</td></tr>
+    </table>
+    <p>Inter-county competition is where the most accelerated improvement happens — the combination of high-quality opponents, consistent competitive exposure, and team accountability creates the ideal environment for elite amateur development.</p>
+  </div>
+  <span class="badge badge-gold">📈 What Inter-County Competition Teaches</span>
+  <div class="card card-gold">
+    <span class="card-tag">Accelerated Development at Team Level</span>
+    <h3>Why Inter-County Is the Best Elite Amateur Training Environment</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Opponent quality as diagnostic data:</strong> Playing against county-standard +1 and +2 players reveals exactly which parts of your game are sub-standard at that level. You cannot get this feedback from any other source.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pressure consistency:</strong> Playing 8–10 inter-county matches per season creates consistent high-pressure exposure. The psychological adaptation to elite-level pressure requires volume — county fixtures provide it in a way that individual events cannot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Technical observation:</strong> Watching how plus-handicap players approach decisions, manage the course, and respond to adversity is the best free coaching available. Every inter-county fixture is a masterclass in elite amateur decision-making.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="england">
+  <h2 class="sec-title">England Golf Pathways</h2>
+  <p class="sec-desc">For players who reach the top tier of county competition and national events, England Golf operates a national performance pathway that can lead to England representative golf. Understanding this pathway helps you set realistic long-term targets and structure your development accordingly.</p>
+  <span class="badge badge-elite">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England Golf Performance Pathway</span>
+  <div class="card card-elite">
+    <span class="card-tag">From County to National Representation</span>
+    <h3>England Golf Amateur Pathway Structure</h3>
+    <table class="tbl">
+      <tr><th>Level</th><th>Entry Route</th><th>Standard Required</th></tr>
+      <tr><td>County team</td><td>County selection</td><td>Scratch to +1; consistent county event results</td></tr>
+      <tr><td>England Golf Performance Days</td><td>Invitation / application</td><td>+1 or better; top-50 EG OoM ranking assists</td></tr>
+      <tr><td>EG Emerging Player Programme</td><td>Selection by regional coaches</td><td>+2 or better; national event results</td></tr>
+      <tr><td>England Junior/Men's squad</td><td>National squad selection</td><td>+3 or better; elite national circuit results</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">🎯 Setting Realistic Pathway Goals</span>
+  <div class="card card-teal">
+    <span class="card-tag">Long-Term Target Setting</span>
+    <h3>Where the Scratch Project Programme Leads</h3>
+    <p>The Scratch Project programme is designed to deliver scratch handicap in 24 months. The Elite tier extends that work toward plus territory. In the context of England Golf pathways:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Months 24–36 (post-programme):</strong> Consolidate scratch, begin county competition entry. Target: first county team selection.</div></li>
+      <li><span class="step-n">2</span><div><strong>Months 36–48:</strong> Achieve plus index. Enter national circuit events. Target: Brabazon Trophy appearance and EG OoM top-200 ranking.</div></li>
+      <li><span class="step-n">3</span><div><strong>Months 48+:</strong> Sustained plus performance in national events. Eligibility for England Golf Performance Days. EG OoM top-100 is the target that opens the next pathway tier.</div></li>
+    </ul>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Long-term perspective:</strong> The players who reach England-level amateur golf almost always spent 3–6 years in county competition first. The pathway is not fast — it is consistent. The Scratch Project gives you the analytical and technical foundation. The county circuit gives you the competitive experience. Both are required.</p>
+    </div>
+  </div>
+</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 46 · COUNTY TEAM & REPRESENTATIVE GOLF · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="33_competitive_pathway.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">UK Competitive Pathway</span>
+    </a>
+    <a href="42_national_amateur_circuit.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">National Amateur Circuit</span>
+    </a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Competitive Strategy</span>
+    </a>
+    <a href="08_pro_round_prep.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🗺️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pro Round Prep</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

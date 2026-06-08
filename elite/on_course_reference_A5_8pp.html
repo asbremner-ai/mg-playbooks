@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<!-- version:v1.1 · 2026-06-07 · on_course_reference_A5_8pp.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>On-Course Reference A5 · 8pp — The Scratch Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
+
+:root {
+  --ink:     #0d1a0d;
+  --paper:   #f5f0e8;
+  --paper2:  #ece8dc;
+  --paper3:  #e2dcd0;
+  --gold:    #9a6e0a;
+  --gold-l:  #c49a08;
+  --green:   #1a4a1a;
+  --green-m: #2d6a2d;
+  --red:     #8b1a1a;
+  --teal:    #1a4a4a;
+  --muted:   #5a5a4a;
+  --rule:    #ccc4aa;
+  --rule-h:  #9a9080;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #777;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  color: var(--ink);
+  padding: 20px 14px;
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; padding: 0; }
+  .page { box-shadow: none; margin: 0; page-break-after: always; }
+  .page:last-child { page-break-after: avoid; }
+  .no-print { display: none; }
+  @page { size: A5 portrait; margin: 0; }
+}
+
+.no-print {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.no-print button {
+  background: var(--green);
+  color: var(--paper);
+  border: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 11px 26px;
+  cursor: pointer;
+  border-radius: 2px;
+  margin: 0 5px;
+}
+.no-print button:hover { background: var(--green-m); }
+.no-print p {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #ddd;
+  margin-top: 8px;
+  letter-spacing: 0.05em;
+}
+
+/* ── A5 PAGE ── */
+.page {
+  background: var(--paper);
+  width: 148mm;
+  min-height: 210mm;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 28px rgba(0,0,0,0.45);
+  padding: 8mm 8mm 10mm;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── PAGE HEADER ── */
+.ph {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2.5px solid var(--ink);
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+}
+.ph-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 2px;
+}
+.ph-title {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+.ph-right { text-align: right; }
+.ph-page {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+}
+.ph-phase {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+/* ── SECTION LABEL ── */
+.slbl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: var(--ink);
+  display: inline-block;
+  padding: 2px 8px;
+  margin-bottom: 6px;
+}
+.slbl.g    { background: var(--green); }
+.slbl.t    { background: var(--teal); }
+.slbl.r    { background: var(--red); }
+.slbl.gold { background: var(--gold); }
+
+/* ── TABLES ── */
+table { width: 100%; border-collapse: collapse; }
+th {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 5px;
+  text-align: center;
+}
+td {
+  padding: 4px 5px;
+  border-bottom: 1px solid var(--rule);
+  font-size: 9px;
+  text-align: center;
+  line-height: 1.3;
+}
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) td { background: var(--paper2); }
+.tl  { text-align: left; font-weight: 700; }
+.tg  { color: var(--green-m); font-weight: 700; }
+.ta  { color: var(--gold); font-weight: 700; }
+.tr  { color: var(--red); font-weight: 700; }
+.fi  {
+  color: var(--green-m);
+  font-style: italic;
+  font-size: 8.5px;
+  font-weight: 400;
+}
+.fr td {
+  font-size: 8px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── BLOCK ── */
+.blk {
+  border: 1px solid var(--rule);
+  padding: 7px 8px;
+  background: var(--paper);
+  margin-bottom: 7px;
+}
+.blk-t {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3px;
+  margin-bottom: 5px;
+}
+
+/* ── FORMULA BOX ── */
+.fm {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 9px 11px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  line-height: 1.7;
+  margin-bottom: 7px;
+}
+.fm strong { color: #e8c84a; }
+.fm .eg {
+  font-size: 8.5px;
+  color: rgba(245,240,232,0.65);
+  margin-top: 3px;
+  display: block;
+}
+
+/* ── GRID ── */
+.g2  { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 7px; }
+.g3  { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; margin-bottom: 7px; }
+.full { grid-column: 1 / -1; }
+
+/* ── CONDITIONS CELLS ── */
+.cg {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 7px;
+}
+.cc {
+  background: var(--paper2);
+  border: 1px solid var(--rule);
+  padding: 6px 5px;
+  text-align: center;
+}
+.cv {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--green-m);
+  display: block;
+  line-height: 1;
+}
+.cl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 6.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  display: block;
+  margin-top: 2px;
+}
+.cn {
+  font-size: 7px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.35;
+  display: block;
+}
+
+/* ── ROUTINE STEPS ── */
+.rs {
+  display: flex;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: flex-start;
+}
+.rs:last-child { border-bottom: none; }
+.rsn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gold-l);
+  flex-shrink: 0;
+  width: 16px;
+  line-height: 1.1;
+}
+.rst {
+  font-weight: 700;
+  font-size: 9px;
+  line-height: 1.2;
+}
+.rsd {
+  font-size: 8px;
+  color: var(--muted);
+  line-height: 1.4;
+  margin-top: 1px;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--paper2);
+  border-left: 3px solid var(--gold);
+  padding: 6px 8px;
+  font-size: 8px;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+.callout.rd  { border-color: var(--red); }
+.callout.gr  { border-color: var(--green); }
+.callout.tl  { border-color: var(--teal); }
+.callout-lbl {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* ── RULE LIST ── */
+.rl { list-style: none; }
+.rl li {
+  display: flex;
+  gap: 6px;
+  font-size: 8.5px;
+  line-height: 1.35;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.rl li:last-child { border-bottom: none; }
+.ri { font-size: 9px; flex-shrink: 0; width: 13px; }
+
+/* ── WEDGE MATRIX SPECIFIC ── */
+.wm-table th { font-size: 8px; padding: 5px 4px; }
+.wm-table td { font-size: 10px; padding: 6px 4px; }
+.wm-table .tl { font-size: 8.5px; }
+.wm-table .fi { font-size: 9.5px; }
+.wm-sub { font-size: 7px; color: rgba(245,240,232,0.6); font-weight: 400; display: block; }
+
+/* ── NOTE STRIP ── */
+.note-strip {
+  background: var(--paper3);
+  border-top: 1px solid var(--rule);
+  padding: 5px 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  margin-top: 5px;
+}
+
+/* ── PAGE FOOTER ── */
+.pf {
+  position: absolute;
+  bottom: 5mm;
+  left: 8mm;
+  right: 8mm;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--rule);
+  padding-top: 3px;
+}
+.pft {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 6px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── DIVIDER ── */
+.hr { border: none; border-top: 1px solid var(--rule); margin: 7px 0; }
+.hr-h { border: none; border-top: 1.5px solid var(--rule-h); margin: 8px 0; }
+
+/* ── PHASE BADGE ── */
+.pb {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  display: inline-block;
+  padding: 2px 7px;
+  margin-bottom: 6px;
+}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+
+<!-- HOME NAV -->
+<div class="no-print" style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+
+<div class="no-print">
+  <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+  <p>Set paper to A5 · Margins to None · Scale to Fit · Print double-sided for a pocket booklet</p>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 1 — WEDGE MATRIX
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">WEDGE MATRIX</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 1 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="pb">⚠️ Fill in YOUR Mevo-verified carry distances only</div>
+
+  <div class="slbl gold">4 × 4 Scoring Zone — Carry Distances (yds)</div>
+  <div class="blk">
+    <table class="wm-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;width:28%;">Swing Length</th>
+          <th>PW (46°)<br><span class="wm-sub">Pitching</span></th>
+          <th>GW (50°)<br><span class="wm-sub">Gap</span></th>
+          <th>SW (54–56°)<br><span class="wm-sub">Sand</span></th>
+          <th>LW (58–60°)<br><span class="wm-sub">Lob</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tl">
+            Full (100%)<br>
+            <span style="font-size:7.5px;color:var(--muted);font-weight:400;">Lead arm fully extended</span>
+          </td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+        </tr>
+        <tr>
+          <td class="tl">
+            ¾ swing (9 o'clock)<br>
+            <span style="font-size:7.5px;color:var(--muted);font-weight:400;">Lead arm parallel to ground</span>
+          </td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+        </tr>
+        <tr>
+          <td class="tl">
+            ½ swing (8 o'clock)<br>
+            <span style="font-size:7.5px;color:var(--muted);font-weight:400;">Hands at hip height</span>
+          </td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+        </tr>
+        <tr>
+          <td class="tl">
+            ¼ swing (7 o'clock)<br>
+            <span style="font-size:7.5px;color:var(--muted);font-weight:400;">Hands below hip height</span>
+          </td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+          <td class="fi">___ yds</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="note-strip">
+    All distances = CARRY only — not total. Verified on Mevo Gen2 with your competition ball under calm conditions.
+    Average 5+ shots per data point. Rebuild this matrix every 6 months or after any coach-directed swing change.
+  </div>
+
+  <div class="callout gr" style="margin-top:8px;">
+    <span class="callout-lbl">How to use this matrix on-course</span>
+    Know your distance → pick the row (swing length) and column (club) that matches. Always carry — 
+    never guess total. From rough, reduce carry by 10–20% before entering the matrix.
+  </div>
+
+  <div class="callout rd" style="margin-top:5px;">
+    <span class="callout-lbl">The 40–70 yard danger zone</span>
+    This is the hardest distance band in golf. Never lay up into it. Your lay-up target 
+    should always land outside this zone — either inside 40 yds or beyond 80 yds.
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 1 — Wedge Matrix</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 2 — IRON DISTANCES + SHOT SELECTOR + LAYUP
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">DISTANCES & DECISIONS</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 2 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="g2">
+
+    <!-- IRON DISTANCES -->
+    <div>
+      <div class="slbl g">Iron Carry Distances</div>
+      <div class="blk">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Club</th>
+              <th>My carry</th>
+              <th>Typical 10 HCP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="tl">4-iron</td><td class="fi">___ yds</td><td class="tg">~195</td></tr>
+            <tr><td class="tl">5-iron</td><td class="fi">___ yds</td><td class="tg">~185</td></tr>
+            <tr><td class="tl">6-iron</td><td class="fi">___ yds</td><td class="tg">~175</td></tr>
+            <tr><td class="tl">7-iron</td><td class="fi">___ yds</td><td class="tg">~165</td></tr>
+            <tr><td class="tl">8-iron</td><td class="fi">___ yds</td><td class="tg">~155</td></tr>
+            <tr><td class="tl">9-iron</td><td class="fi">___ yds</td><td class="tg">~140</td></tr>
+            <tr><td class="tl">PW</td><td class="fi">___ yds</td><td class="tg">~125</td></tr>
+            <tr><td class="tl">3-wood</td><td class="fi">___ yds</td><td class="tg">~215</td></tr>
+            <tr><td class="tl">Driver</td><td class="fi">___ yds</td><td class="tg">~240</td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:7px;color:var(--muted);font-style:italic;margin-top:4px;">
+          Carry only. Your Mevo numbers override the typical column entirely.
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- SHOT TYPE SELECTOR -->
+      <div class="slbl t">Short Game Shot Selector</div>
+      <div class="blk" style="margin-bottom:7px;">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Shot</th>
+              <th style="text-align:left;">When to use</th>
+              <th>Club</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tl">Bump & run</td>
+              <td style="text-align:left;font-size:8px;">Tight lie · firm ground · plenty of green</td>
+              <td>7–PW</td>
+            </tr>
+            <tr>
+              <td class="tl">Chip</td>
+              <td style="text-align:left;font-size:8px;">Short grass · moderate green</td>
+              <td>PW, GW</td>
+            </tr>
+            <tr>
+              <td class="tl">Pitch</td>
+              <td style="text-align:left;font-size:8px;">Need height · soft landing needed</td>
+              <td>SW, LW</td>
+            </tr>
+            <tr>
+              <td class="tl">Flop</td>
+              <td style="text-align:left;font-size:8px;">Tight pin · must stop quickly</td>
+              <td>LW 60°+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- LAYUP VS GO -->
+      <div class="slbl gold">Layup vs. Attack</div>
+      <div class="blk">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Scenario</th>
+              <th>Go if</th>
+              <th>Lay up if</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tl">Par-5 in 2, no penalty</td>
+              <td class="tg">75%+</td>
+              <td class="tr">&lt;75%</td>
+            </tr>
+            <tr>
+              <td class="tl">Par-5 in 2, water</td>
+              <td class="tg">90%+</td>
+              <td class="tr">&lt;90%</td>
+            </tr>
+            <tr>
+              <td class="tl">Dogleg carry cut</td>
+              <td class="tg">80%+</td>
+              <td class="tr">&lt;80%</td>
+            </tr>
+            <tr>
+              <td class="tl">Approach over water</td>
+              <td class="tg">85%+</td>
+              <td class="tr">&lt;85%</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout rd" style="margin-top:5px;">
+          Gut feel overestimates confidence by 15–25%. When in any doubt — lay up.
+          Lay up to your best proximity distance, never to a random iron.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 2 — Distances & Decisions</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 3 — WIND FORMULA + WIND TABLE
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">WIND</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 3 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="slbl t">Tour Caddie Wind Formula</div>
+
+  <div class="fm">
+    <strong>INTO WIND:</strong>&nbsp; Add the wind speed as a percentage to yardage<br>
+    <span class="eg">20 mph headwind · 150 yds needed → +20% → play <strong style="color:#fff;">180 yds</strong></span>
+    <span class="eg">10 mph headwind · 130 yds needed → +10% → play <strong style="color:#fff;">143 yds</strong></span>
+    <br>
+    <strong>DOWNWIND:</strong>&nbsp; Subtract half the headwind percentage<br>
+    <span class="eg">20 mph tailwind · 150 yds needed → −10% → play <strong style="color:#fff;">135 yds</strong></span>
+    <span class="eg">10 mph tailwind · 160 yds needed → −5% → play <strong style="color:#fff;">152 yds</strong></span>
+    <br>
+    <strong>CROSSWIND:</strong>&nbsp; Apply ~50% of equivalent headwind adjustment<br>
+    <span class="eg">20 mph crosswind → treat as ~10 mph headwind = +10%</span>
+  </div>
+
+  <div class="slbl t">Wind Adjustment Table — At Common Yardages</div>
+  <div class="blk">
+    <table>
+      <thead>
+        <tr>
+          <th>Wind</th>
+          <th>INTO<br>adjustment</th>
+          <th>DOWN<br>adjustment</th>
+          <th>At 130 yds</th>
+          <th>At 150 yds</th>
+          <th>At 175 yds</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>10 mph</strong></td>
+          <td class="tr">+10%</td>
+          <td class="tg">−5%</td>
+          <td>+13 / −7</td>
+          <td>+15 / −8</td>
+          <td>+18 / −9</td>
+        </tr>
+        <tr>
+          <td><strong>15 mph</strong></td>
+          <td class="tr">+15%</td>
+          <td class="tg">−7.5%</td>
+          <td>+20 / −10</td>
+          <td>+23 / −11</td>
+          <td>+26 / −13</td>
+        </tr>
+        <tr>
+          <td><strong>20 mph</strong></td>
+          <td class="tr">+20%</td>
+          <td class="tg">−10%</td>
+          <td>+26 / −13</td>
+          <td>+30 / −15</td>
+          <td>+35 / −18</td>
+        </tr>
+        <tr>
+          <td><strong>25 mph</strong></td>
+          <td class="tr">+25%</td>
+          <td class="tg">−12.5%</td>
+          <td>+33 / −16</td>
+          <td>+38 / −19</td>
+          <td>+44 / −22</td>
+        </tr>
+        <tr>
+          <td><strong>30 mph</strong></td>
+          <td class="tr">+30%</td>
+          <td class="tg">−15%</td>
+          <td>+39 / −20</td>
+          <td>+45 / −23</td>
+          <td>+53 / −26</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout rd">
+    <span class="callout-lbl">Non-negotiable rule</span>
+    Apply the wind formula on <strong>every approach over 100 yards</strong> when wind exceeds 10 mph.
+    No exceptions. The formula must become automatic by Round 20.
+  </div>
+
+  <div class="callout tl" style="margin-top:5px;">
+    <span class="callout-lbl">Key principle</span>
+    Headwinds cost more than tailwinds save. Always over-compensate into wind.
+    Under-compensating into a headwind is the most common amateur mistake in windy conditions.
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 3 — Wind</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 4 — MID-IRON WIND ZONE + CONDITIONS
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">CONDITIONS</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 4 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="slbl g">Mid-Iron Wind — 100–175 Yard Zone</div>
+  <div class="blk" style="margin-bottom:9px;">
+    <table>
+      <thead>
+        <tr>
+          <th style="text-align:left;">Distance</th>
+          <th>10 mph Head</th>
+          <th>20 mph Head</th>
+          <th>10 mph Tail</th>
+          <th>20 mph Tail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="tl">100–120 yds</td>
+          <td class="tr">+1 club<br><span style="font-size:7.5px;color:var(--muted);">or ¾ up</span></td>
+          <td class="tr">+1.5 clubs</td>
+          <td class="tg">−½ club</td>
+          <td class="tg">−1 club</td>
+        </tr>
+        <tr>
+          <td class="tl">120–150 yds</td>
+          <td class="tr">+1 club</td>
+          <td class="tr">+2 clubs</td>
+          <td class="tg">−½ to 1</td>
+          <td class="tg">−1 club</td>
+        </tr>
+        <tr>
+          <td class="tl">150–175 yds</td>
+          <td class="tr">+1.5 clubs</td>
+          <td class="tr">+2.5 clubs</td>
+          <td class="tg">−½ to 1</td>
+          <td class="tg">−1 to 1.5</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size:7.5px;color:var(--muted);font-style:italic;margin-top:4px;">
+      This zone is your highest strokes-gained loss area. Prioritise wind adjustment here above any other yardage band.
+    </div>
+  </div>
+
+  <div class="slbl t">Other Conditions Adjustments</div>
+  <div class="cg">
+    <div class="cc">
+      <span class="cv">±1–2 yds</span>
+      <span class="cl">🌡️ Temperature</span>
+      <span class="cn">Per 10°F from 70°F. UK average 50°F = approximately −5 yds on carry.</span>
+    </div>
+    <div class="cc">
+      <span class="cv">+1 yd / ft</span>
+      <span class="cl">⬆️ Uphill</span>
+      <span class="cn">Add the elevation gain in feet directly to required yardage.</span>
+    </div>
+    <div class="cc">
+      <span class="cv">−0.5 yd / ft</span>
+      <span class="cl">⬇️ Downhill</span>
+      <span class="cn">Subtract half the elevation drop from required yardage.</span>
+    </div>
+    <div class="cc">
+      <span class="cv">−10 to −20%</span>
+      <span class="cl">🌿 From Rough</span>
+      <span class="cn">Deep rough −20%, light rough −10%. Less spin, more roll on landing.</span>
+    </div>
+    <div class="cc">
+      <span class="cv">+5–8 yds</span>
+      <span class="cl">🏖️ Firm / Dry</span>
+      <span class="cn">Land short, let it run. Aim back of green, not at flag.</span>
+    </div>
+    <div class="cc">
+      <span class="cv">Fly to flag</span>
+      <span class="cl">🌧️ Soft / Wet</span>
+      <span class="cn">Greens hold on landing. Aim directly at flag. Take one extra club.</span>
+    </div>
+  </div>
+
+  <div class="callout gr" style="margin-top:2px;">
+    <span class="callout-lbl">Combining adjustments</span>
+    Wind + elevation + lie all stack. In a 20 mph headwind, playing uphill to a soft green:
+    add wind (+20%) + add elevation, then land at flag. Work through each factor in order.
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 4 — Conditions</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 5 — PRE-SHOT + PUTTING ROUTINES
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">ROUTINES</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 5 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="slbl gold">Pre-Shot Routine — Every Full Shot</div>
+  <div class="blk" style="margin-bottom:9px;">
+    <div class="rs">
+      <span class="rsn">1</span>
+      <div>
+        <div class="rst">Read &amp; Decide — behind the ball</div>
+        <div class="rsd">Assess lie · wind · yardage · shot shape. Pick ONE precise target. All analytical thinking stops the moment you leave this spot.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">2</span>
+      <div>
+        <div class="rst">Trigger Breath</div>
+        <div class="rsd">One slow, deliberate exhale. This is the neurological switch from analytical to athletic mode. Non-negotiable on all pressure shots.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">3</span>
+      <div>
+        <div class="rst">One Purpose Practice Swing</div>
+        <div class="rsd">Rehearse the exact feel required — tempo and sensation only, not mechanics. Smooth and confident. One swing only.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">4</span>
+      <div>
+        <div class="rst">Approach &amp; Align</div>
+        <div class="rsd">Walk in from behind on target line. Set club face first → feet → hips → shoulders. One look to confirm.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">5</span>
+      <div>
+        <div class="rst">One Trigger Word → Execute</div>
+        <div class="rsd">Single cue word: "smooth" / "target" / "tempo". Pull trigger within 2–3 seconds. No new thoughts.</div>
+      </div>
+    </div>
+    <div class="callout rd" style="margin-top:4px;">
+      <span class="callout-lbl">Abort Rule</span>
+      If you feel uncommitted at address — step away completely and restart the routine from Step 1. 
+      An uncommitted swing produces a poor shot more than 90% of the time.
+    </div>
+  </div>
+
+  <div class="slbl t">Putting Routine — Every Putt</div>
+  <div class="blk">
+    <div class="rs">
+      <span class="rsn">1</span>
+      <div>
+        <div class="rst">Read from the Low Side</div>
+        <div class="rsd">Walk the low side first. Read break from behind the hole, then from behind the ball. Commit fully to a read before approaching.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">2</span>
+      <div>
+        <div class="rst">Set an Intermediate Target</div>
+        <div class="rsd">Pick a spot 6–12 inches in front of the ball on your chosen start line. Aim your putter face there, not at the hole.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">3</span>
+      <div>
+        <div class="rst">Two Practice Strokes — Eyes on Hole</div>
+        <div class="rsd">Take two rehearsal strokes while looking directly at the hole. Calibrates feel naturally, like throwing a ball.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">4</span>
+      <div>
+        <div class="rst">Sole · Look · Go</div>
+        <div class="rsd">Set up to the ball · one look at the hole · eyes back to ball · stroke within 2–3 seconds. Never hesitate.</div>
+      </div>
+    </div>
+    <div class="callout tl" style="margin-top:4px;">
+      <span class="callout-lbl">Speed Rule</span>
+      On slippery or fast greens: 80% of focus on pace, 20% on line. A miss on the correct 
+      line is always a good putt. A miss on the wrong pace is never recoverable.
+    </div>
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 5 — Routines</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 6 — SHORT GAME ROUTINE + HOLE TYPE RULES
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">SHORT GAME & STRATEGY</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 6 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="slbl g">Short Game Routine — Every Greenside Shot</div>
+  <div class="blk" style="margin-bottom:10px;">
+    <div class="rs">
+      <span class="rsn">1</span>
+      <div>
+        <div class="rst">Assess All Variables</div>
+        <div class="rsd">Lie (tight / fluffy / buried / slope) · landing zone available · green to work with. Decide shot type first, then select the club for that shot. Never the other way around.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">2</span>
+      <div>
+        <div class="rst">Pick a Precise Landing Spot</div>
+        <div class="rsd">Not a zone — a specific mark on the green where the ball must land. A blade of grass, a discolouration, a pitch mark. This is your target, not the hole.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">3</span>
+      <div>
+        <div class="rst">Feel-Based Practice Swings (2–3)</div>
+        <div class="rsd">Take practice swings while looking at your landing spot, not the ball. Feel the exact length and pace of the swing required to reach that spot.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">4</span>
+      <div>
+        <div class="rst">Visualise the Full Shot</div>
+        <div class="rsd">See the ball flight, the landing, and the roll all the way to the hole. Complete visualisation primes commitment and prevents deceleration at impact.</div>
+      </div>
+    </div>
+    <div class="rs">
+      <span class="rsn">5</span>
+      <div>
+        <div class="rst">Walk In and Execute With Conviction</div>
+        <div class="rsd">Set up and go without hesitation. Deceleration is always caused by doubt, never by technique. Commit fully or restart the routine.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slbl gold">Hole Type — Quick Strategy Rules</div>
+  <div class="g3">
+    <div class="blk" style="margin-bottom:0;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;margin-bottom:5px;color:var(--ink);">PAR 3</div>
+      <ul class="rl">
+        <li><span class="ri">▸</span>Aim fat side — never attack a tucked pin</li>
+        <li><span class="ri">▸</span>Always take enough club — par 3s play long</li>
+        <li><span class="ri">▸</span>Identify your bail-out zone before hitting</li>
+        <li><span class="ri">▸</span>Bogey is acceptable. Double bogey is not.</li>
+      </ul>
+    </div>
+    <div class="blk" style="margin-bottom:0;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;margin-bottom:5px;color:var(--ink);">PAR 4</div>
+      <ul class="rl">
+        <li><span class="ri">▸</span>Long par-4: plan for bogey from the tee</li>
+        <li><span class="ri">▸</span>Keep tee shot in play above everything else</li>
+        <li><span class="ri">▸</span>Aim using dispersion cone, not the flag</li>
+        <li><span class="ri">▸</span>Short par-4: only attack if short game is sharp</li>
+      </ul>
+    </div>
+    <div class="blk" style="margin-bottom:0;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;margin-bottom:5px;color:var(--ink);">PAR 5</div>
+      <ul class="rl">
+        <li><span class="ri">▸</span>Lay up to your best proximity distance</li>
+        <li><span class="ri">▸</span>Birdies come from wedges, not hero shots</li>
+        <li><span class="ri">▸</span>Conservative long game, aggressive short game</li>
+        <li><span class="ri">▸</span>Never lay up to the 40–70 yd danger zone</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 6 — Short Game & Strategy</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 7 — NEVER / ALWAYS RULES
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">NEVER &amp; ALWAYS</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 7 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div>
+      <div class="slbl r">🚫 Never Do These</div>
+      <div class="blk" style="margin-bottom:0;">
+        <ul class="rl">
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Attack a sucker pin.</strong> One hero shot erases three good shots. Always take the fat side of the green.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Under-club to a green with carry trouble.</strong> 65% of amateur misses are short. Club to the back of the green.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Skip the wind adjustment.</strong> 10 mph into = +15 yds at 150. Always apply the formula above 10 mph.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Change your club at address.</strong> If a new thought arrives — step away, restart the routine completely.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Play heroically from trouble.</strong> Target from any trouble shot is: back in play, best possible position. Not birdies.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Shorten the pre-shot routine when nervous.</strong> The routine exists precisely for when you are nervous. Never abbreviate it.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Lay up to the 40–70 yard zone.</strong> The hardest distance band in golf. Lay up inside 40 or beyond 80 yards.</div>
+          </li>
+          <li>
+            <span class="ri">✗</span>
+            <div><strong>Carry a bad shot into the next one.</strong> Accept it, move forward, and start the next routine completely fresh.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="slbl g">✅ Always Do These</div>
+      <div class="blk" style="margin-bottom:0;">
+        <ul class="rl">
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Aim using your dispersion cone.</strong> The flag is a reference, not your target. Aim where the centre of your cone lands safely.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Apply the wind formula above 10 mph.</strong> On every approach over 100 yards. Automate this until it requires no thought.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Complete the pre-shot routine.</strong> Every shot. Including tap-ins. The routine is your protection against double bogeys.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Hit the percentage shot from trouble.</strong> Sideways or backwards to a good lie is always correct. Bogey is the target.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Club up as your default.</strong> Until Mevo distances are fully verified, add one club to whatever feels right.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Pre-select your miss direction.</strong> Before every approach — which side of the green is the safe miss? Aim slightly toward it.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Count and classify your doubles.</strong> After every round: decision error, execution error, or bad break? Target under 3 per round.</div>
+          </li>
+          <li>
+            <span class="ri">✓</span>
+            <div><strong>Trust the number and the read.</strong> The club and line chosen after a complete routine is always correct. Never second-guess at address.</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 7 — Never & Always</span>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════
+     PAGE 8 — JUNE TARGETS + DRILLS + AUDIT + WEEK
+     ════════════════════════════════════════ -->
+<div class="page">
+  <div class="ph">
+    <div>
+      <span class="ph-kicker">The Scratch Project · On-Course Reference</span>
+      <span class="ph-title">JUNE TARGETS</span>
+    </div>
+    <div class="ph-right">
+      <span class="ph-page">Page 8 of 8</span>
+      <span class="ph-phase">Phase 1 · June 2026</span>
+    </div>
+  </div>
+
+  <div class="g2" style="margin-bottom:0;">
+    <div>
+      <!-- JUNE TARGETS -->
+      <div class="slbl gold">Month 1 Targets</div>
+      <div class="blk" style="margin-bottom:7px;">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Metric</th>
+              <th>Target</th>
+              <th>Day 1</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="tl">6-ft make rate</td><td class="tg">75%+</td><td class="fi">___</td></tr>
+            <tr><td class="tl">20-ft lag — past hole</td><td class="tg">&lt;18 in</td><td class="fi">___</td></tr>
+            <tr><td class="tl">Chips inside 8 ft (10)</td><td class="ta">6 / 10+</td><td class="fi">___</td></tr>
+            <tr><td class="tl">Double bogeys / round</td><td class="ta">&lt;3</td><td class="fi">___</td></tr>
+            <tr><td class="tl">Routine compliance</td><td class="tg">100%</td><td class="fi">___</td></tr>
+            <tr><td class="tl">HCP end of June</td><td class="tg">~9</td><td class="fi">10</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- JUNE DRILLS -->
+      <div class="slbl g">June Drill Focus</div>
+      <div class="blk">
+        <ul class="rl">
+          <li><span class="ri">▸</span><strong>Make 100 putts at 4 ft</strong> — three times per week, every week in June</li>
+          <li><span class="ri">▸</span><strong>Clock Drill at 6 ft</strong> — both weekly sessions, without exception</li>
+          <li><span class="ri">▸</span><strong>Shot selection hierarchy</strong> — apply Guide 02 on every greenside shot</li>
+          <li><span class="ri">▸</span><strong>Phase 1 rule:</strong> Don't try to fix anything. Capture Arccos data only and let it show you where the leaks are.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <!-- MODEL WEEK -->
+      <div class="slbl t">Model Week — Phase 1</div>
+      <div class="blk" style="margin-bottom:7px;">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left;">Day</th>
+              <th style="text-align:left;">Session</th>
+              <th style="text-align:left;">Focus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="tl">Mon</td><td style="text-align:left;font-size:8px;">Short game</td><td style="text-align:left;font-size:8px;">Putting · chipping · clock drill</td></tr>
+            <tr><td class="tl">Tue</td><td style="text-align:left;font-size:8px;">Range session</td><td style="text-align:left;font-size:8px;">Iron strike · PSR · driver</td></tr>
+            <tr><td class="tl">Wed</td><td style="text-align:left;font-size:8px;">Rest / mobility</td><td style="text-align:left;font-size:8px;">6-min morning mobility only</td></tr>
+            <tr><td class="tl">Thu</td><td style="text-align:left;font-size:8px;">18 holes scored</td><td style="text-align:left;font-size:8px;">Full tracking · full routine</td></tr>
+            <tr><td class="tl">Fri</td><td style="text-align:left;font-size:8px;">Rest + review</td><td style="text-align:left;font-size:8px;">SG data · double bogey audit</td></tr>
+            <tr><td class="tl">Sat</td><td style="text-align:left;font-size:8px;">18 holes — comp</td><td style="text-align:left;font-size:8px;">No mulligans · commit shapes</td></tr>
+            <tr><td class="tl">Sun</td><td style="text-align:left;font-size:8px;">Full rest</td><td style="text-align:left;font-size:8px;">Recovery after two rounds</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- DOUBLE BOGEY AUDIT -->
+      <div class="slbl r">Post-Round Double Bogey Audit</div>
+      <div class="blk">
+        <div style="font-size:7.5px;color:var(--muted);margin-bottom:5px;">
+          Complete after every round. D = Decision error &nbsp;|&nbsp; E = Execution error &nbsp;|&nbsp; B = Bad break
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Hole</th>
+              <th style="text-align:left;">What happened</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="fr">
+              <td>____</td>
+              <td style="text-align:left;">________________________________</td>
+              <td>D / E / B</td>
+            </tr>
+            <tr class="fr">
+              <td>____</td>
+              <td style="text-align:left;">________________________________</td>
+              <td>D / E / B</td>
+            </tr>
+            <tr class="fr">
+              <td>____</td>
+              <td style="text-align:left;">________________________________</td>
+              <td>D / E / B</td>
+            </tr>
+            <tr class="fr">
+              <td>____</td>
+              <td style="text-align:left;">________________________________</td>
+              <td>D / E / B</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="pf">
+    <span class="pft">The Scratch Project · Phase 1 · June 2026</span>
+    <span class="pft">Page 8 — Targets & Week</span>
+  </div>
+</div>
+
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="caddie_card.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📋</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Caddie Reference Card</span>
+    </a>
+    <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📏</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Wedge Distance Matrix</span>
+    </a>
+    <a href="23_weather_conditions.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🌬️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Weather & Conditions</span>
+    </a>
+    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚖️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Management</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

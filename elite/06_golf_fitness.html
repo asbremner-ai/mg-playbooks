@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-06-05 · 06_golf_fitness.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Golf Fitness — 6-Month Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+
+/* VIDEO LINKS */
+.yt-link{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#ff4444;background:rgba(255,68,68,.08);border:1px solid rgba(255,68,68,.25);border-radius:4px;padding:3px 8px;text-decoration:none;transition:all .2s;}
+.yt-link:hover{background:rgba(255,68,68,.18);border-color:rgba(255,68,68,.5);color:#ff6666;}
+.yt-link svg{flex-shrink:0;}
+.yt-link.tpi{color:#e0b840;background:rgba(224,184,64,.08);border-color:rgba(224,184,64,.28);}
+.yt-link.tpi:hover{background:rgba(224,184,64,.18);border-color:rgba(224,184,64,.55);}
+</style>
+
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Golf Longevity · 6-Month Fitness Plan</p>
+  <h1>Golf Fitness<br><em>Playbook</em></h1>
+  <p class="hero-sub">TPI-based 6-month programme — mobility, strength, speed, and longevity. Built around your training schedule and golf calendar.</p>
+  <div class="hero-tags">
+    <span class="htag">📋 6-Month Roadmap</span><span class="htag">🧘 Daily Mobility</span>
+    <span class="htag">💪 Phase 1: Foundations</span><span class="htag">🔥 Phase 2: Strength</span>
+    <span class="htag">⚡ Phase 3: Power</span><span class="htag">⛳ Pre &amp; Post Round</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('mobility',this)">Daily Mobility</button>
+  <button class="tab" onclick="show('phase1',this)">Phase 1</button>
+  <button class="tab" onclick="show('phase2',this)">Phase 2</button>
+  <button class="tab" onclick="show('phase3',this)">Phase 3</button>
+  <button class="tab" onclick="show('library',this)">Exercise Library</button>
+  <button class="tab" onclick="show('preround',this)">Pre-Round</button>
+  <button class="tab" onclick="show('postround',this)">Post-Round</button>
+  <button class="tab" onclick="show('hrvsleep',this)">HRV & Sleep</button>
+  <button class="tab" data-tier="pro" onclick="show('inseason',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ In-Season</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Your 6-Month Roadmap</h2>
+  <p class="sec-desc">TPI research shows 80% of swing faults have a direct physical cause. This plan addresses the five physical pillars that drive golf longevity and performance.</p>
+  <span class="badge badge-lime">📋 The Five Pillars</span>
+  <div class="card">
+    <span class="card-tag">Why Physical Training Accelerates Golf Improvement</span>
+    <h3>The Physical-Technical Link</h3>
+    <table class="tbl"><tr><th>Physical Attribute</th><th>Golf Impact</th><th>SG Gain</th><th>Timeline</th></tr>
+    <tr><td>Thoracic rotation</td><td>Shoulder turn, clubhead speed</td><td class="good">+0.3/round</td><td>4–6 weeks</td></tr>
+    <tr><td>Hip mobility</td><td>Downswing power, attack angle</td><td class="good">+0.4/round</td><td>4–8 weeks</td></tr>
+    <tr><td>Glute strength</td><td>Rotation, back-nine stamina</td><td class="good">+0.3/round</td><td>8–12 weeks</td></tr>
+    <tr><td>Core stability</td><td>Low point control, consistency</td><td class="warn">+0.2/round</td><td>6–10 weeks</td></tr>
+    <tr><td>Rotational power</td><td>Clubhead speed, distance</td><td class="good">+0.3/round</td><td>8–16 weeks</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">6-Month Phase Structure</span>
+    <h3>The Progressive Plan</h3>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Months 1–2</span><h4>Phase 1: Foundations</h4><p>Restore mobility, activate dormant muscles, build baseline strength. Unlock tight hips and thoracic spine. 3 sessions/week, 40–50 min.</p></div>
+      <div class="mini-card"><span class="mini-tag">Months 3–4</span><h4>Phase 2: Strength</h4><p>Increase load and complexity. Single-leg work, heavier movements. Track weights for progressive overload. 3 sessions/week, 50 min.</p></div>
+      <div class="mini-card"><span class="mini-tag">Months 5–6</span><h4>Phase 3: Power</h4><p>Convert strength base into rotational speed. Explosive movements, power endurance, back-nine conditioning. 3 sessions/week, 55 min.</p></div>
+      <div class="mini-card"><span class="mini-tag">Daily — Always</span><h4>Mobility Routine</h4><p>6 minutes every day. Non-negotiable. Thoracic rotation, hip 90/90, hip flexor, wrist mobility. Before training or on waking.</p></div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Weekly Training Template</span>
+    <h3>The Minimum Effective Dose</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Duration</th><th>Priority</th></tr>
+    <tr><td>Monday</td><td>Strength Session A (TRX + Lower)</td><td>45–55 min</td><td>Primary training</td></tr>
+    <tr><td>Tuesday</td><td>Daily Mobility Only</td><td>6 min</td><td>Maintenance</td></tr>
+    <tr><td>Wednesday</td><td>Strength Session B (Dumbbell + Core)</td><td>40–55 min</td><td>Primary training</td></tr>
+    <tr><td>Thursday</td><td>Daily Mobility Only</td><td>6 min</td><td>Maintenance</td></tr>
+    <tr><td>Friday</td><td>Power / Rotation / Speed Session</td><td>45–55 min</td><td>Primary training</td></tr>
+    <tr><td>Sat/Sun</td><td>Rest or Golf</td><td>—</td><td>Recovery / Performance</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Rypstick Protocol — Add to Friday sessions from Phase 2:</strong> 3× per week, 10 minutes. Heavy warm-up 5 reps → lag training 10 reps → max speed 15 reps. Produces 4–8% speed gains in 4–6 weeks. Every 1 mph = ~2.5 yards of carry distance.</p>
+  </div>
+</div>
+
+<div class="sec" id="mobility">
+  <h2 class="sec-title">Daily Mobility Routine</h2>
+  <p class="sec-desc">6 minutes. Every single day. This directly addresses the 4 physical areas most responsible for swing faults. Do it before training, before a round, or first thing in the morning.</p>
+  <span class="badge badge-teal">🧘 6 Minutes, Every Day</span>
+  <div class="card">
+    <span class="card-tag">Movement 1 — Thoracic Rotation</span>
+    <h3>Unlock Shoulder Turn &amp; Clubhead Speed</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>How:</strong> Seated on a chair or floor, place hands on opposite shoulders (arms crossed). Rotate your torso fully left, then fully right. Hold each end range for 1 second.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Reps:</strong> 10 rotations each direction. Approximately 90 seconds total.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Why it matters:</strong> A restricted thoracic spine forces the lower back to rotate instead — causing both swing faults and back injury. This is the single most important mobility for golfers.</div></li>
+    </ul>
+    <a class="yt-link tpi" href="https://www.youtube.com/watch?v=XhZXOtZNXIA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Thoracic Spine Mobility (90/90/90 Oblique Stretch)</a>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Movement 2 — Hip 90/90 Stretch</span>
+    <h3>Unlock Hip Rotation for Downswing Power</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>How:</strong> Sit on the floor with both legs bent at 90° (front shin perpendicular to body, rear shin parallel). Lean slowly forward over the front leg, keeping a straight spine.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Reps:</strong> Hold 30 seconds each side. 2 minutes total.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Why it matters:</strong> Tight hips prevent proper rotation in the backswing, creating a reverse pivot or early extension in the downswing. Both destroy low-point control and clubhead speed.</div></li>
+    </ul>
+    <a class="yt-link tpi" href="https://www.youtube.com/watch?v=TOnRNqlZXOM" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Hip Mobility Exercises for Golfers (90/90)</a>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Movement 3 — Hip Flexor Stretch</span>
+    <h3>Restore Address Position &amp; Pelvic Tilt</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>How:</strong> Kneeling lunge position — one knee on floor, other foot forward. Tuck your pelvis under and press the hips forward slowly until you feel a stretch in the front of the trailing hip. Keep the torso upright.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Reps:</strong> 30 seconds each side. 1 minute total.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Why it matters:</strong> Tight hip flexors restrict the forward hip tilt at address, causing golfers to stand too upright — which then forces a swing plane that is too upright and produces pulls and over-the-top moves.</div></li>
+    </ul>
+    <a class="yt-link tpi" href="https://www.youtube.com/watch?v=iEvlDq3rOVk" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Level 3 Coach — Best Golf Hip Flexor Stretch</a>
+  </div>
+  <div class="card">
+    <span class="card-tag">Movement 4 — Wrist Mobility</span>
+    <h3>Protect Face Angle at Impact</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>How:</strong> Extend both arms forward. Make full clockwise and anticlockwise wrist circles, then flex and extend the wrists fully through their complete range.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Reps:</strong> 10 circles each direction + 10 flex/extend. 90 seconds total.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Why it matters:</strong> Lead wrist mobility affects face angle at impact. Restricted wrists create compensatory impact patterns that destroy shot consistency.</div></li>
+    </ul>
+    <a class="yt-link tpi" href="https://www.youtube.com/watch?v=eUpZbja1-00" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Screening — Wrist Flexion &amp; Extension Range of Motion</a>
+  </div>
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Stack it with your morning:</strong> Do this routine immediately upon waking — before coffee, before your phone. It takes exactly 6 minutes and sets up your body for the day. After 3 weeks it becomes automatic. After 6 weeks you will notice the difference in your swing.</p>
+  </div>
+</div>
+
+<div class="sec" id="phase1">
+  <h2 class="sec-title">Phase 1 — Foundations</h2>
+  <p class="sec-desc">Months 1–2. Restore mobility, activate dormant muscles, build baseline strength. Build the movement patterns first — load comes later. 3 sessions per week, 40–50 minutes each.</p>
+  <span class="badge badge-lime">💪 Move Freely</span>
+  <div class="card">
+    <span class="card-tag">Phase 1 Weekly Schedule</span>
+    <h3>3 Sessions + Daily Mobility</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Duration</th></tr>
+    <tr><td>Monday</td><td>TRX Foundation (Squat + Row + Push)</td><td>45 min</td></tr>
+    <tr><td>Tuesday</td><td>Daily Mobility Only</td><td>6 min</td></tr>
+    <tr><td>Wednesday</td><td>Dumbbell Hip Hinge + Core</td><td>40 min</td></tr>
+    <tr><td>Thursday</td><td>Daily Mobility Only</td><td>6 min</td></tr>
+    <tr><td>Friday</td><td>TRX Rotation + Footwork</td><td>45 min</td></tr>
+    <tr><td>Sat/Sun</td><td>Rest or Golf</td><td>—</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Monday — TRX Foundation Session</span>
+    <h3>Building the Base</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>TRX Squat:</strong> 3 × 12 reps. Feet shoulder-width, hold TRX for balance and depth assistance. Focus on controlled descent and driving through heels. Rest 60 seconds.<br><a class="yt-link" href="https://www.youtube.com/watch?v=oawE3Eo47RY" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Exercise Tutorial: TRX Squat &amp; Row</a></div></li>
+      <li><span class="step-n">B</span><div><strong>TRX Row:</strong> 3 × 10 reps. Feet forward, body at 45° incline. Pull chest to handles, squeeze shoulder blades at top. Builds the pulling strength that counteracts the forward-hunched posture common in golfers.<br><a class="yt-link" href="https://www.youtube.com/watch?v=oawE3Eo47RY" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Exercise Tutorial: TRX Squat &amp; Row</a></div></li>
+      <li><span class="step-n">C</span><div><strong>TRX Chest Press:</strong> 3 × 10 reps. Face away from anchor, press handles away from chest. Activates the pressing pattern that contributes to lead arm strength through impact.<br><a class="yt-link" href="https://www.youtube.com/watch?v=-vPgHzuRI7I" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TRX® Chest Press — Director of Human Performance Demo</a></div></li>
+      <li><span class="step-n">D</span><div><strong>TRX Hip Hinge (Romanian Deadlift):</strong> 3 × 10 reps. Push hips back while maintaining a neutral spine, lower until mild hamstring tension, drive hips forward to stand. The most important movement pattern in golf fitness.<br><a class="yt-link" href="https://www.youtube.com/watch?v=8nGZRJokl9I" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Exercise Tutorial: TRX Hip Hinge &amp; Press</a></div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Wednesday — Dumbbell Hip Hinge + Core</span>
+    <h3>Build the Posterior Chain</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>Dumbbell Romanian Deadlift:</strong> 3 × 10. Hold a dumbbell in each hand in front of thighs. Hinge at hips pushing them back, lower weights down legs, return to standing. Start with 8–10 kg and increase as strength improves.<br><a class="yt-link" href="https://www.youtube.com/watch?v=IJdUtnxAmNo" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Dumbbell Romanian Deadlift — Exercise Technique Library</a></div></li>
+      <li><span class="step-n">B</span><div><strong>Dumbbell Hip Thrust (Glute Bridge):</strong> 3 × 12. Lie on back, feet flat on floor, dumbbell on hips. Drive hips upward squeezing glutes hard at top, hold 1 second, lower slowly. This directly trains the hip extension power that generates swing speed.<br><a class="yt-link" href="https://www.youtube.com/watch?v=29OfN4ztW_g" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Dumbbell Hip Thrust — Full Tutorial</a></div></li>
+      <li><span class="step-n">C</span><div><strong>Dead Bug:</strong> 3 × 8 each side. Lie on back, arms pointing to ceiling, knees bent at 90°. Slowly lower opposite arm and leg toward the floor without letting the lower back leave the ground. Return and repeat. Builds the deep core stability that maintains posture through the swing.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=k5D7KnUW-6g" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf — Unlock Core Power: Dead Bug with Stability Ball</a></div></li>
+      <li><span class="step-n">D</span><div><strong>Pallof Press:</strong> 3 × 10 each side. Standing perpendicular to a band anchor (or cable), press both hands away from chest directly in front — resist the rotational pull. The anti-rotation demand directly trains the core stabilisation required for consistent low point.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=SybGNKSCfEo" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf — Pallof Press Core Strength</a></div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Friday — TRX Rotation + Footwork</span>
+    <h3>Golf-Specific Movement Patterns</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>TRX Golf Rotation:</strong> 3 × 8 each direction. Face the TRX anchor, extend arms forward. Rotate your torso (not just arms) against the resistance to one side, then the other. Directly trains the rotational power and deceleration control used in the golf swing.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=BnA7rqLlje0" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TRX Fitness Friday — TRX Golf Rotation</a></div></li>
+      <li><span class="step-n">B</span><div><strong>Lateral Shuffle (Footwork):</strong> 3 × 20 seconds. Quick lateral steps maintaining athletic posture. Builds the lower body coordination and fast-twitch muscle activation that contributes to downswing speed and balance.<br><a class="yt-link" href="https://www.youtube.com/watch?v=FvykRh7kTN8" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Lateral Shuffle — Proper Form &amp; Athletic Posture Guide</a></div></li>
+      <li><span class="step-n">C</span><div><strong>Single-Leg Romanian Deadlift (bodyweight):</strong> 3 × 8 each leg. Stand on one leg, hinge forward at the hip with the free leg extending behind you. Builds single-leg stability critical for the impact position and balance through the swing.<br><a class="yt-link" href="https://www.youtube.com/watch?v=EIkm8Plbx3w" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Exercise Tutorial: TRX Single-Leg Hip Hinge</a></div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="phase2">
+  <h2 class="sec-title">Phase 2 — Strength</h2>
+  <p class="sec-desc">Months 3–4. Increase load and complexity. Add single-leg work, heavier dumbbell movements, and increased TRX intensity. Begin tracking weights to ensure progressive overload.</p>
+  <span class="badge badge-gold">🔥 Build the Engine</span>
+  <div class="card">
+    <span class="card-tag">Phase 2 Schedule</span>
+    <h3>3 Sessions + Daily Mobility + Rypstick</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Duration</th></tr>
+    <tr><td>Monday</td><td>TRX Strength (Upper + Pull)</td><td>50 min</td></tr>
+    <tr><td>Tuesday</td><td>Daily Mobility + Rypstick (optional)</td><td>16 min</td></tr>
+    <tr><td>Wednesday</td><td>Dumbbell Lower Body + Core</td><td>50 min</td></tr>
+    <tr><td>Thursday</td><td>Daily Mobility + Rypstick (optional)</td><td>16 min</td></tr>
+    <tr><td>Friday</td><td>Punch Bag Power + TRX Rotation</td><td>50 min</td></tr>
+    <tr><td>Sat/Sun</td><td>Rest or Golf</td><td>—</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Key Phase 2 Exercises</span>
+    <h3>Increased Intensity</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>TRX Single-Leg Squat (Pistol Prep):</strong> 3 × 8 reps each leg. Use TRX for assistance — the goal is depth and control, not unassisted. This builds the single-leg stability that eliminates lateral sway in the swing.<br><a class="yt-link" href="https://www.youtube.com/watch?v=KIrUJgESwUg" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TRX Single-Leg Squat Row — Tutorial</a></div></li>
+      <li><span class="step-n">B</span><div><strong>Dumbbell Romanian Deadlift (heavier):</strong> 3 × 8 reps. Increase to 14–20 kg. Add 2 kg every 2 weeks if 8 reps feels controlled. Track the weight every session.<br><a class="yt-link" href="https://www.youtube.com/watch?v=hQgFixeXdZo" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Dumbbell RDL — Technique for Beginners &amp; Advanced</a></div></li>
+      <li><span class="step-n">C</span><div><strong>Weighted Hip Thrust:</strong> 3 × 10 reps. Add heavier dumbbell (12–20 kg). Drive hips explosively on the way up — power not just strength. The glutes are the primary power generator in the golf swing.<br><a class="yt-link" href="https://www.youtube.com/watch?v=29OfN4ztW_g" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Dumbbell Hip Thrust — Full Tutorial</a></div></li>
+      <li><span class="step-n">D</span><div><strong>Rotational Dumbbell Chop (Wood Chop):</strong> 3 × 10 each direction. Hold one dumbbell with both hands, rotate from high to low (or low to high) in a diagonal chopping pattern. Directly trains the diagonal rotational pattern of the golf downswing.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=i-Sv98Dki6M" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Level 3 Coach — Golf Rotational Wood Chop Variations</a></div></li>
+      <li><span class="step-n">E</span><div><strong>Punch Bag Rotational Strikes:</strong> 3 × 30 seconds per side. Drive rotational strikes into the bag using full body rotation — hips first, then torso, then arms. Trains explosive rotational power under load. Disguised as boxing, this is one of the best golf fitness exercises available.<br><a class="yt-link" href="https://www.youtube.com/watch?v=KW-xxHs1J4A" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Top 10 Rotational Power Exercises for the Punching Bag</a></div></li>
+    </ul>
+  </div>
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Begin Rypstick training in Phase 2:</strong> Add overspeed training to 2 non-training days per week. Heavy warm-up 5 reps → lag training 10 reps → max speed 15 reps, all one direction, then repeat mirrored. Takes 10 minutes. Speed gains typically begin appearing in weeks 3–4.</p>
+  </div>
+</div>
+
+<div class="sec" id="phase3">
+  <h2 class="sec-title">Phase 3 — Power &amp; Longevity</h2>
+  <p class="sec-desc">Months 5–6. Convert your strength base into rotational speed and stamina. Add explosive movements, power endurance, and the final conditioning layer for back-nine performance.</p>
+  <span class="badge badge-rust">⚡ Peak Performance</span>
+  <div class="card">
+    <span class="card-tag">Phase 3 Schedule</span>
+    <h3>Power, Speed, Conditioning</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Duration</th></tr>
+    <tr><td>Monday</td><td>Explosive Power + Punch Bag HIIT</td><td>55 min</td></tr>
+    <tr><td>Tuesday</td><td>Daily Mobility + Rypstick</td><td>16 min</td></tr>
+    <tr><td>Wednesday</td><td>Heavy Dumbbell Strength</td><td>55 min</td></tr>
+    <tr><td>Thursday</td><td>Daily Mobility + Rypstick</td><td>16 min</td></tr>
+    <tr><td>Friday</td><td>TRX Power + Golf Conditioning Circuit</td><td>55 min</td></tr>
+    <tr><td>Sat/Sun</td><td>Rest or Golf</td><td>—</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Phase 3 Key Exercises</span>
+    <h3>Explosive Power Development</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>Dumbbell Jump Squat:</strong> 4 × 6 reps with light dumbbells (4–8 kg). Squat to parallel then explode off the ground — land softly and absorb. Builds fast-twitch muscle and neurological speed that transfers directly to clubhead speed.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=7qPVEUQ6vE8" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> How To: Dumbbell Jump Squat — Form &amp; Technique</a></div></li>
+      <li><span class="step-n">B</span><div><strong>Punch Bag HIIT (Rotational Strikes):</strong> 4 rounds × 30 seconds maximum effort / 30 seconds rest. Full rotational body strikes from both sides. This is the highest-intensity golf-specific conditioning available outside of actual speed training.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=OODMD0S6QBE" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Top 5 Boxing Drills on the Punching Bag — Rotational Power</a></div></li>
+      <li><span class="step-n">C</span><div><strong>Single-Leg Hip Thrust (explosive):</strong> 3 × 8 each leg. Drive through one heel only, pushing hips up explosively. Builds the unilateral glute power that drives the downswing from the lead foot.<br><a class="yt-link" href="https://www.youtube.com/watch?v=7FFobXHbMbU" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Single-Leg Explosive Hip Thrust Tutorial</a></div></li>
+      <li><span class="step-n">D</span><div><strong>Golf Conditioning Circuit (4 exercises, 3 rounds):</strong> Lateral shuffle 20 sec → TRX rotation 10 each side → Jump squat × 5 → Dead bug × 8 each side. No rest between exercises; 90 seconds between rounds. Builds golf-specific endurance for back-nine performance.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=FVBH6IVfYq4" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Golf Workout for Swing Speed &amp; Conditioning</a></div></li>
+    </ul>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>The back-nine dividend:</strong> Tour research shows amateur scores rise 0.4 strokes per hole on holes 14–18 from fatigue. Completing Phase 3 builds the physical and cardiovascular base that eliminates this pattern. Your opponents fade; you don't.</p>
+  </div>
+</div>
+
+<div class="sec" id="library">
+  <h2 class="sec-title">Supplemental Exercise Library</h2>
+  <p class="sec-desc">Additional golf-specific movements to rotate into your programme from Phase 2 onwards. Add 1–2 of these per week to address weak areas and keep training varied.</p>
+  <span class="badge badge-teal">📚 Exercise Reference</span>
+  <div class="card">
+    <span class="card-tag">Core & Stability</span>
+    <h3>Low Point Control &amp; Consistency</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Dumbbell Goblet Squat with Rotation:</strong> 3 × 10. Hold dumbbell at chest, squat to parallel, at bottom rotate torso right as far as possible — elbow pointing up — return to centre, then rotate left. Combines hip mobility and thoracic rotation under load.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=03ZUpaG94Yo" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Goblet Squat with Rotation — Exercise Tutorial</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Copenhagen Side Plank:</strong> 3 × 20 sec each side. Lie on your side, rest upper shin on a bench or chair, lift hips off the floor into a straight line. Builds lateral hip stability that prevents sliding in the backswing.<br><a class="yt-link" href="https://www.youtube.com/watch?v=A6QYMcLQOZs" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Copenhagen Side Plank — Hip Stability &amp; Core Tutorial</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Bird Dog:</strong> 3 × 8 each side. On hands and knees, extend opposite arm and leg simultaneously, hold 2 seconds, return. Builds the anti-rotation core stability required for maintaining spine angle through the swing.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=bGsxrp2RaAg" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — Bird Dog (Arms Only)</a></div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Rotational Power</span>
+    <h3>Speed Generators</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Medicine Ball Rotational Throw (wall or partner):</strong> 3 × 8 each side. Stand side-on to a wall, rotate and throw the ball into the wall using full body rotation — hips first. The most direct simulation of the golf downswing pattern available.<br><a class="yt-link" href="https://www.youtube.com/watch?v=NP2e1Szrj28" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Medicine Ball Rotational Throw Against Wall</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Cable Rotation (golf plane):</strong> 3 × 10 each direction. Set a cable at hip height. Stand perpendicular to the stack, pull the cable across your body using hip and torso rotation — not just arms. Mimics the exact downswing force production pattern.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=URyw8o1mDDs" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — Golf Swing Cable Chop</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Landmine Press + Rotation:</strong> 3 × 8. Hold the end of a barbell in one hand, press it in a diagonal arc from hip to shoulder while rotating through the hips. This trains the coordinated power transfer from lower body to upper body that creates clubhead speed.<br><a class="yt-link" href="https://www.youtube.com/watch?v=KxgPHC8WBlQ" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Landmine Rotational RDL to Press — Tutorial</a></div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Flexibility &amp; Recovery</span>
+    <h3>Longevity Movements</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Thread the Needle:</strong> On hands and knees, slide one arm under your body along the floor, rotating the thoracic spine — "threading" your arm through the gap. This is one of the most effective thoracic mobility exercises for golfers.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=XhZXOtZNXIA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Thoracic Spine Mobility (90/90/90 Oblique / Thread the Needle)</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Figure-4 Glute Stretch:</strong> Lie on back, cross one ankle over the opposite knee, pull the bent knee toward your chest until you feel the glute stretch. Hold 30 seconds. Maintains hip mobility as strength training increases hip muscle tension.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=wHZqROhyRto" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — Supine Glute Stretch (Figure-4)</a></div></li>
+      <li><span class="step-n">▸</span><div><strong>Cat-Cow Spinal Mobility:</strong> On hands and knees, alternate between arching the back up (cat) and dropping it toward the floor (cow) × 10 slow repetitions. Maintains lumbar spine mobility and counteracts the compressive effects of the golf swing on the lower back.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=eI6m92QLYVA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — How to Do the Cat Cow</a></div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="preround">
+  <h2 class="sec-title">Pre-Round Activation</h2>
+  <p class="sec-desc">15–20 minutes as soon as you arrive at the course. Purpose: wake up your movement system — not train it. Research shows a proper warm-up adds 1.5–2 mph swing speed in the first 3 holes and prevents cold-start errors.</p>
+  <span class="badge badge-lime">⏱ 20 Minutes — Never Skip</span>
+  <div class="card">
+    <span class="card-tag">T-minus 20 Minutes — Arrival</span>
+    <h3>Joint Lubrication Walk</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Walk briskly for 2 minutes — from car to clubhouse and back. Swing your arms freely. This initiates circulation and begins joint lubrication before any specific movements.</div></li>
+      <li><span class="step-n">2</span><div>5 ankle circles each direction. 10 leg swings front-to-back and side-to-side (hold onto a cart or fence). These prime the lower body kinetic chain from the ground up.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">T-minus 18 Minutes — Dynamic Mobility</span>
+    <h3>Golf-Specific Activation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Thoracic rotation × 10 each way:</strong> Seated on bag trolley, hands on shoulders. This directly primes the shoulder turn you'll use on every full swing.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=XhZXOtZNXIA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Thoracic Spine Mobility Exercise</a></div></li>
+      <li><span class="step-n">2</span><div><strong>Hip 90/90 × 20 sec each side:</strong> Sit on the ground (or approximate standing version with a club). Unlocks the hip mobility needed for a proper downswing sequence.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=TOnRNqlZXOM" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Hip Mobility Exercises for Golfers</a></div></li>
+      <li><span class="step-n">3</span><div><strong>Standing hip circles × 10 each direction:</strong> Hands on hips, feet shoulder-width. Large slow circles. Warms the hip capsule which is typically compressed after a car journey to the course.</div></li>
+      <li><span class="step-n">4</span><div><strong>Wrist circles × 10 each direction:</strong> Both wrists simultaneously. Lead wrist specifically — restricted wrist mobility creates compensatory impact patterns that show up immediately in the first few holes.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=F0MI6tV3zHQ" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> Wrist Exercises All Golfers Must Do</a></div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">T-minus 12 Minutes — Swing Activation</span>
+    <h3>Neural Priming</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Two-club slow swing × 10:</strong> Cross two clubs behind your head, rotate slowly through the full backswing and follow-through. The resistance warms golf-specific muscles without fatiguing them. Primes the kinematic sequence.</div></li>
+      <li><span class="step-n">2</span><div><strong>One-arm shadow swing × 5 each arm:</strong> Trail arm only, then lead arm only — slow practice swings through full range. Identifies any restriction or tightness before you're on the range.</div></li>
+      <li><span class="step-n">3</span><div><strong>Single-leg balance × 20 sec (lead leg):</strong> Stand on your lead foot. This activates the stabilising muscles of the lead leg — critical for consistent impact position and balance through the finish.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Tour standard:</strong> Tour players arrive 45–60 minutes before their tee time. 15–20 minutes of this is physical preparation. Never arrive with less than 30 minutes to tee time. The physical arousal from rushing takes 8–12 minutes to subside — long enough to ruin your first 2 holes.</p>
+  </div>
+</div>
+
+<div class="sec" id="postround">
+  <h2 class="sec-title">Post-Round Recovery</h2>
+  <p class="sec-desc">What you do in the 20 minutes after your round determines how your body feels for the next 48 hours — and how quickly you can play again at full capability. Most amateur golfers skip this entirely. That is a mistake.</p>
+  <span class="badge badge-teal">🔄 20 Minutes — Builds Longevity</span>
+  <div class="card">
+    <span class="card-tag">Why This Matters</span>
+    <h3>The Post-Round State of Your Body</h3>
+    <p>After 4–5 hours of walking, rotating, and repetitive loading: your hip flexors are shortened, your thoracic spine is compressed, your glutes have switched off, and your nervous system is fatigued. Without active recovery, these imbalances accumulate round after round — leading to the stiffness, back pain, and deteriorating swing mechanics that end amateur golf careers early.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Minutes 1–5 — Immediately After</span>
+    <h3>Walk &amp; Breathe — Don't Sit Down Yet</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Walk at a gentle pace for 2 minutes — around the 18th green or back toward the clubhouse. Swing your arms freely. Do not immediately sit down — your blood is pooled in your legs and your spine is compressed.</div></li>
+      <li><span class="step-n">2</span><div>Take 5 long, slow deep breaths: 4 seconds in through the nose, hold 2 seconds, 6 seconds out through the mouth. This activates your parasympathetic nervous system, beginning the transition from performance to recovery mode.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Minutes 5–12 — Targeted Stretching</span>
+    <h3>Address What the Swing Compresses</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Hip flexor stretch × 45 sec each side:</strong> Kneeling lunge. The hip flexors are dramatically shortened after 18 holes and will remain so unless stretched immediately. This also decompresses the lumbar spine.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=iEvlDq3rOVk" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Level 3 Coach — Best Golf Hip Flexor Stretch</a></div></li>
+      <li><span class="step-n">2</span><div><strong>Figure-4 glute stretch × 30 sec each side:</strong> Lie on back. The glutes switch off after hours of walking — this stretch maintains their length and prepares them to re-engage for the next session.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=wHZqROhyRto" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — Supine Glute Stretch</a></div></li>
+      <li><span class="step-n">3</span><div><strong>Thoracic rotation × 10 each way:</strong> Seated, hands on shoulders. The thoracic spine absorbs rotational forces over 70+ swings — gentle rotation decompresses it and maintains mobility for your next round.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=XhZXOtZNXIA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI — Thoracic Spine Mobility Exercise</a></div></li>
+      <li><span class="step-n">4</span><div><strong>Cat-cow × 10 slow reps:</strong> On hands and knees if possible, or substitute with standing hip circles. Restores lumbar spine mobility after the repetitive rotational loading of a full round.<br><a class="yt-link tpi" href="https://www.youtube.com/watch?v=eI6m92QLYVA" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg> TPI Golf Fitness — How to Do the Cat Cow</a></div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Minutes 12–20 — Recovery Nutrition</span>
+    <h3>The Recovery Window</h3>
+    <p>Within 60 minutes of finishing your round, consume a recovery meal or shake: 40–50g protein (chicken, salmon, Greek yogurt, or a whey shake), 200g sweet potato or 150g wholegrain rice (replenish glycogen), and 500ml water with electrolytes if you walked the course. This window is when muscle protein synthesis is highest — missing it significantly slows recovery for the next 24 hours.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Day After — Active Recovery</span>
+    <h3>Keeping the System Moving</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Daily mobility routine (6 min):</strong> Same as every day. Particularly important the day after a round when stiffness is most likely.</div></li>
+      <li><span class="step-n">▸</span><div><strong>20-minute gentle walk:</strong> Maintains circulation and prevents the "post-round stiffness day" that most amateur golfers experience. Brisk enough to feel like exercise, not so hard as to add load.</div></li>
+      <li><span class="step-n">▸</span><div><strong>No strength training the day after a round:</strong> The swing is a high-force, high-repetition activity. Your musculoskeletal system needs one full day before being loaded again. Respect this or accumulate the injuries that cut handicap progress short.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HRV & SLEEP -->
+<div class="sec" id="hrvsleep">
+  <h2 class="sec-title">HRV & Sleep</h2>
+  <p class="sec-desc">Heart Rate Variability (HRV) is the most reliable daily readiness metric available without lab testing. It tells you whether your nervous system has recovered sufficiently to train hard, or whether pushing today will extend fatigue and increase injury risk. Combined with sleep quality tracking, it allows the programme to adapt in real time rather than following a fixed calendar regardless of your body's actual state.</p>
+  <span class="badge badge-teal">📊 The Adaptive Training System</span>
+  <div class="card card-teal">
+    <span class="card-tag">What HRV Measures</span>
+    <h3>The Science in Plain Language</h3>
+    <p style="margin-bottom:12px;">HRV measures the variation in time between consecutive heartbeats, expressed in milliseconds. A higher number means greater variability — which sounds counterintuitive, but is the sign of a healthy, well-recovered nervous system that can respond flexibly to demands. Lower variability means the nervous system is under stress (from training, poor sleep, illness, or life stress) and is operating in a more rigid, less adaptable state.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>HRV reflects the balance between sympathetic and parasympathetic nervous systems:</strong> High HRV indicates parasympathetic dominance (recovery mode, low stress). Low HRV indicates sympathetic dominance (fight-or-flight, high stress). For golf performance — which requires fine motor control, emotional regulation, and clear decision-making — parasympathetic dominance is what you want.</div></li>
+      <li><span class="step-n">2</span><div><strong>Your baseline is everything — absolute numbers are meaningless:</strong> An HRV of 65 is excellent for one person and poor for another. The only meaningful comparison is your own recent history. Track for 4+ weeks to establish your personal baseline range before acting on individual readings.</div></li>
+      <li><span class="step-n">3</span><div><strong>Measure immediately upon waking — before getting up:</strong> HRV is most consistent when measured before any activity, stress, or caffeine. A 60-second reading lying down, taken first thing each morning, gives the most reproducible baseline.</div></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">HRV-Led Training Decisions</h2>
+  <p class="sec-desc">The core principle: let HRV guide session intensity on any given day, rather than always following a fixed plan. The programme structure remains the same — what changes is how hard you push within each session.</p>
+  <div class="card">
+    <span class="card-tag">The Four-Zone Response Protocol</span>
+    <h3>What to Do Based on Today's Reading</h3>
+    <table class="tbl">
+      <tr><th>HRV vs. 7-Day Baseline</th><th>Training Response</th><th>Golf Practice Response</th><th>Speed Training</th></tr>
+      <tr><td class="good">+10% or above (Green)</td><td>Push hard — strength and power sessions at full load</td><td>Deliberate, high-intensity practice. Random, competitive drills.</td><td class="good">Go — full protocol</td></tr>
+      <tr><td class="good">Within ±10% (Amber-Green)</td><td>Normal session as planned</td><td>Standard practice — scheduled structure</td><td class="good">Go — normal</td></tr>
+      <tr><td class="warn">−10% to −20% (Amber)</td><td>Reduce intensity by 20–30%. Technical and skill work only — no heavy lifting.</td><td>Short game and putting focus. No pressure drills. Technique refinement.</td><td class="warn">Reduce to Level 1 or skip</td></tr>
+      <tr><td class="bad">−20%+ or 3 consecutive days low (Red)</td><td>Active recovery only — walking, mobility, light stretching</td><td>Putting only or full rest day</td><td class="bad">Skip entirely</td></tr>
+    </table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Why Low HRV Before Speed Training Is Critical</span>
+    <h3>The Speed-Recovery Conflict</h3>
+    <p style="margin-bottom:12px;">Speed training (Rypstick overspeed protocol) places high demands on the central nervous system — more than most strength training. Performing overspeed work when CNS recovery is incomplete produces two problems:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>No speed gain:</strong> The neurological adaptation (the primary mechanism of overspeed training) only occurs when the CNS is in a recovered state. Training fatigued ingrains the fatigued speed pattern — not the improved one. You are reinforcing a slower ceiling, not raising it.</div></li>
+      <li><span class="step-n">2</span><div><strong>Extended recovery:</strong> Pushing speed work on a red HRV day extends the recovery period significantly — often adding 48–72 hours to what would have been a 24-hour recovery. Net result: fewer quality training days per week.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>The elite principle:</strong> Tour players and elite athletes don't add more training when they're fatigued — they recover faster so they can train harder tomorrow. A red HRV day spent in active recovery produces more improvement than a red HRV day spent pushing through a session.</p>
+    </div>
+  </div>
+
+  <h2 class="sec-title">Sleep Quality & Fitness Adaptation</h2>
+  <p class="sec-desc">Sleep is when physical adaptation from training actually occurs. Without sufficient deep sleep (slow-wave sleep), the hormonal processes that build muscle, consolidate motor patterns, and repair tissue are incomplete. You can train perfectly and sleep poorly and get almost no benefit from that training.</p>
+  <div class="card">
+    <span class="card-tag">Sleep and Physical Adaptation</span>
+    <h3>What Happens During Deep Sleep</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Growth hormone release (slow-wave sleep):</strong> 70–80% of daily growth hormone secretion occurs during slow-wave sleep (the deep, restorative stage). Growth hormone drives muscle protein synthesis and tissue repair — the physical gains from your gym sessions. Cutting sleep short cuts growth hormone production proportionally.</div></li>
+      <li><span class="step-n">2</span><div><strong>Motor pattern consolidation (REM sleep):</strong> Swing changes, new movement patterns, and technique improvements practised during the day are consolidated into long-term motor memory during REM sleep. This is why a skill that feels uncertain the evening after a lesson often feels more stable the following morning — and why sleep loss prevents that consolidation from occurring.</div></li>
+      <li><span class="step-n">3</span><div><strong>Testosterone and cortisol balance:</strong> Sleep deprivation lowers testosterone by 10–15% after a single week of sub-7-hour sleep (University of Chicago, 2011). It simultaneously raises cortisol — a catabolic hormone that breaks down muscle tissue. Under-sleeping creates the worst possible hormonal environment for strength gains: less testosterone building, more cortisol breaking down.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Sleep Targets for the Three Training Phases</span>
+    <h3>Sleep Load Should Match Training Load</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Training Intensity</th><th>Sleep Target</th><th>Nap Use</th></tr>
+      <tr><td>Phase 1 — Foundations</td><td>Moderate (3 sessions/wk)</td><td class="good">7.5–8 hours</td><td>Optional — 20 min if needed</td></tr>
+      <tr><td>Phase 2 — Strength</td><td>High (3 sessions + speed)</td><td class="good">8–8.5 hours</td><td>Recommended on speed days</td></tr>
+      <tr><td>Phase 3 — Power</td><td>Very high (explosive work)</td><td class="good">8.5–9 hours</td><td>Recommended — 20 min post-session</td></tr>
+      <tr><td>Competition week</td><td>Reduced (taper)</td><td class="good">8+ hours</td><td>Not needed — reduced training load</td></tr>
+      <tr><td>Red HRV / Fatigue days</td><td>Active recovery only</td><td class="good">8.5–9 hours priority</td><td>Yes — if opportunity allows</td></tr>
+    </table>
+  </div>
+
+  <h2 class="sec-title">Practical Sleep Improvement Protocol</h2>
+  <p class="sec-desc">The behaviours most reliably associated with better sleep quality, ranked by evidence strength. Implement top-down — the first three produce the largest effects.</p>
+  <div class="card">
+    <span class="card-tag">The Non-Negotiable Habits</span>
+    <h3>Ranked by Evidence Strength</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Consistent wake time — every day including weekends:</strong> The strongest single intervention for sleep quality. The body's circadian rhythm is anchored to wake time. Variable wake times (sleeping in at weekends) desynchronise the circadian clock — the equivalent of mild weekly jet lag. Set one wake time and maintain it ±30 minutes every day.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cold room (16–19°C):</strong> Core body temperature must drop 1°C for sleep initiation and deep sleep. A cool bedroom is the most evidence-backed environmental change available. If you cannot cool the room, cool extremities: cold feet or hands signal the brain to begin the core temperature drop.</div></li>
+      <li><span class="step-n">3</span><div><strong>No alcohol within 4 hours of sleep:</strong> Alcohol sedates rather than induces sleep. The sedation suppresses REM and reduces deep sleep quality — you sleep more hours but wake less restored. In a training block, this compounds training fatigue rather than resolving it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Morning light exposure within 30 minutes of waking:</strong> Direct outdoor light (or a 10,000 lux light therapy lamp) in the first 30 minutes anchors your circadian rhythm and accelerates the onset of evening sleepiness. 10 minutes outside, ideally without sunglasses, is sufficient on bright UK mornings.</div></li>
+      <li><span class="step-n">5</span><div><strong>Caffeine cutoff at 2pm:</strong> Caffeine has a half-life of 5–6 hours. A 3pm coffee still has 50% of its caffeine present at 9pm. This blocks adenosine receptors — the chemical that drives evening sleepiness — and delays sleep onset even when you feel tired. Move the cutoff to 2pm and notice the difference within 3 days.</div></li>
+    </ul>
+  </div>
+  <div class="info-box tip" style="margin-top:4px;">
+    <span class="ico">💡</span>
+    <p><strong>Track it in the Tracker:</strong> Log your sleep hours and HRV every morning in the Performance Tracker. After 4 weeks of data, the correlation between your sleep quality and HRV, and between HRV and your practice/round performance, will become clearly visible. The data motivates the behaviour change better than any single recommendation.</p>
+  </div>
+
+  <!-- PRO: HRV-GUIDED TRAINING DECISIONS -->
+  <div data-tier="pro" style="margin-top:20px;">
+    <span class="badge badge-gold">⬡ Pro Depth — HRV Decision Framework</span>
+    <div class="card card-gold" style="margin-top:12px;">
+      <span class="card-tag">HRV Decision Thresholds — Your Personal Training Guide</span>
+      <h3>When to Train Hard, When to Reduce, When to Rest</h3>
+      <p style="margin-bottom:12px;">HRV alone is not actionable. What makes it actionable is comparing today's reading to your personal 7-day rolling average. A reading 10% below average means something very different for one person versus another — the percentage change from baseline is what matters, not the absolute number.</p>
+      <div class="formula">
+        <div class="formula-lbl">HRV Decision Rules</div>
+        <div class="formula-main">HRV within 5% of 7-day average:  → Train as planned (green zone)
+HRV 5–10% below average:          → Reduce intensity by 20% (amber zone)
+                                      Skip Rypstick; keep strength session
+HRV 10–15% below average:         → Reduce to mobility + short game only (red zone)
+                                      No strength, no speed, no GRF work
+HRV &gt;15% below average:            → Rest day (recovery mode)
+                                      Light walk acceptable; no golf practice</div>
+        <div class="formula-note">Build your 7-day baseline over the first 2–3 weeks of consistent morning measurement. Single-day anomalies (poor sleep, alcohol, illness) will show as sharp drops. Sustained low readings (3+ days below average) indicate genuine accumulated fatigue requiring a de-load. See In-Season Periodisation tab.</div>
+      </div>
+    </div>
+    <div class="card card-teal">
+      <span class="card-tag">Distinguishing Noise from Signal</span>
+      <h3>When to Trust the HRV and When to Override It</h3>
+      <table class="tbl">
+        <tr><th>Scenario</th><th>HRV Reading</th><th>Decision</th><th>Why</th></tr>
+        <tr><td>Competition day (nervous energy)</td><td class="warn">Often elevated above baseline</td><td>Train as pre-planned</td><td>Elevated HRV before competition is normal arousal — not a training stimulus</td></tr>
+        <tr><td>Poor sleep (single night)</td><td class="warn">10–15% below average</td><td>Reduce intensity; do not cancel</td><td>Single-night sleep disruption recovers quickly — train light rather than skip</td></tr>
+        <tr><td>3+ consecutive low readings</td><td class="bad">Sustained 10%+ below baseline</td><td>De-load week immediately</td><td>Sustained suppression indicates systemic fatigue — training through it extends recovery</td></tr>
+        <tr><td>Illness recovery</td><td class="bad">Often very low</td><td>Rest until within 5% of baseline</td><td>Training during illness recovery suppresses immune response</td></tr>
+        <tr><td>Travel (competition away)</td><td class="warn">Variable — often low day 1</td><td>Day 1: mobility only. Day 2+: normal if HRV recovers</td><td>Travel disrupts circadian rhythm; HRV settles after first night</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PRO: IN-SEASON PERIODISATION -->
+<div class="sec" id="inseason" data-tier="pro">
+  <h2 class="sec-title">In-Season Periodisation</h2>
+  <p class="sec-desc">The 6-month linear fitness plan builds the base. In-season periodisation maintains it during competition season without the volume that built it — and prevents training from disrupting performance at critical moments.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Training-Performance Interference Period</span>
+    <h3>Why New Fitness Gains Can Temporarily Hurt Your Game</h3>
+    <p style="margin-bottom:12px;">When a new physical quality is gained — increased rotational power, improved hip mobility, higher clubhead speed — the nervous system requires 2–4 weeks to integrate it into the existing motor programme. During this integration window, the new physical capacity may actually disrupt timing, tempo, and ball striking before it improves them. This is the training-performance interference period.</p>
+    <div class="formula">
+      <div class="formula-lbl">Timing the Interference Period</div>
+      <div class="formula-main">Week 1–2 of new training stimulus: Potential disruption to motor patterns
+Week 3–4: Integration begins — disruption fades
+Week 5–6+: New physical quality improves performance
+
+Implication: Never start a new, high-intensity fitness phase
+within 4 weeks of an important competition.
+Plan training phases to complete their interference period
+before the competition window opens.</div>
+    </div>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Practical rule:</strong> Schedule any significant fitness phase change — starting Phase 2 Strength, beginning speed work, changing to a new exercise programme — at least 4 weeks before your next important competition. If a major competition is within 3 weeks, maintain current training levels rather than introducing new stimuli.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">In-Season Maintenance Protocol</span>
+    <h3>Preserving the Fitness Base Without Building Volume</h3>
+    <p style="margin-bottom:12px;">Research on training maintenance shows that a physical quality built over months can be maintained with as little as 30–40% of the training volume that built it, provided intensity is preserved. In-season training reduces volume, keeps intensity, and prioritises recovery around competition.</p>
+    <table class="tbl">
+      <tr><th>Off-Season Volume</th><th>In-Season Maintenance Volume</th><th>Frequency</th><th>Priority</th></tr>
+      <tr><td>3 × 50-min strength sessions/week</td><td class="good">2 × 35-min sessions/week</td><td>Mon + Wed (not Fri before weekend golf)</td><td>Maintain strength — reduce sets by 30%</td></tr>
+      <tr><td>3 × Rypstick speed sessions/week</td><td class="warn">2 × sessions/week</td><td>Avoid within 72hrs of competition</td><td>Maintain neurological ceiling</td></tr>
+      <tr><td>Daily mobility (6 min)</td><td class="good">Daily mobility (6 min)</td><td>Non-negotiable throughout</td><td>Never reduce mobility work</td></tr>
+      <tr><td>Phase 3 power sessions</td><td class="warn">1 × session/week maximum</td><td>At least 5 days before competition</td><td>Maintain but do not build</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Competition Week Structure</span>
+    <h3>The 7-Day Countdown Protocol</h3>
+    <table class="tbl">
+      <tr><th>Days Before Competition</th><th>Training</th><th>Rationale</th></tr>
+      <tr><td>7 days (Mon)</td><td class="good">Full strength session + Rypstick</td><td>Full week for recovery — no restriction</td></tr>
+      <tr><td>6 days (Tue)</td><td class="good">Mobility + short game practice</td><td>Active recovery</td></tr>
+      <tr><td>5 days (Wed)</td><td class="warn">Light strength (60% intensity, no speed work)</td><td>Last training day — keep light</td></tr>
+      <tr><td>4 days (Thu)</td><td class="good">Mobility only</td><td>CNS recovery begins</td></tr>
+      <tr><td>3 days (Fri)</td><td class="good">On-course practice or range only — no gym</td><td>Motor pattern consolidation</td></tr>
+      <tr><td>2 days (Sat)</td><td class="good">Pre-round warmup protocol only</td><td>Activation, not training</td></tr>
+      <tr><td>1 day (Sun — Competition)</td><td class="good">Pre-round warmup protocol</td><td>Performance day</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">De-Load Week Structure</span>
+    <h3>Planned Recovery for Multi-Competition Seasons</h3>
+    <p style="margin-bottom:12px;">After any block of 4–6 competition weeks, a planned de-load week restores CNS freshness, reduces accumulated fatigue, and allows soft tissue recovery. De-loading is not rest — it is reduced-intensity training that preserves movement patterns while allowing the system to recover.</p>
+    <ul class="steps">
+      <li><span class="step-n">M</span><div><strong>Monday:</strong> Mobility routine only (6 min). No strength, no speed work.</div></li>
+      <li><span class="step-n">W</span><div><strong>Wednesday:</strong> Light movement session — bodyweight exercises, gentle stretching, putting practice. 20 minutes maximum. No loading.</div></li>
+      <li><span class="step-n">F</span><div><strong>Friday:</strong> Light range session — 9-iron and putter only. 30 minutes. Process focus, not performance focus.</div></li>
+      <li><span class="step-n">+</span><div><strong>After de-load:</strong> Return to full training volume and begin the next competition preparation cycle. Most players find a de-load week produces noticeably better swing feel in the following week.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">GOLF FITNESS PLAN · 6-MONTH PROGRAMME · TPI-BASED METHODOLOGY</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+    </a>
+    <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
+    </a>
+    <a href="13_injury_prevention.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🩺</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Injury Prevention</span>
+    </a>
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

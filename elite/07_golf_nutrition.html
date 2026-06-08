@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-06-05 · 07_golf_nutrition.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Golf Nutrition Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Golf Performance Nutrition</p>
+  <h1>Golf Nutrition<br><em>Playbook</em></h1>
+  <p class="hero-sub">Fat loss + strength maintenance — structured around your training schedule and golf calendar. Lose 14 lbs without sacrificing power, endurance, or on-course decision quality.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 Calorie Blueprint</span><span class="htag">⛳ Golf Day</span>
+    <span class="htag">💪 Strength Day</span><span class="htag">⚡ Speed Day</span>
+    <span class="htag">🛌 Rest Day</span><span class="htag">💊 Supplements</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('blueprint',this)">Blueprint</button>
+  <button class="tab" onclick="show('golfday',this)">Golf Day</button>
+  <button class="tab" onclick="show('strengthday',this)">Strength Day</button>
+  <button class="tab" onclick="show('speedday',this)">Speed Day</button>
+  <button class="tab" onclick="show('restday',this)">Rest Day</button>
+  <button class="tab" onclick="show('principles',this)">Principles</button>
+  <button class="tab" onclick="show('progress',this)">Progress</button>
+  <button class="tab" onclick="show('inround',this)">In-Round Energy</button>
+</div>
+
+<div class="sec active" id="blueprint">
+  <h2 class="sec-title">The Blueprint</h2>
+  <p class="sec-desc">Structured calorie cycling — higher calories on training and golf days to fuel performance and protect muscle; a modest deficit on rest days to drive fat loss. Non-negotiable: eating too little on active days blunts strength and impairs the fine motor control your game depends on.</p>
+  <span class="badge badge-gold">📊 The Core Strategy</span>
+  <div class="card">
+    <span class="card-tag">Calorie Targets by Day Type</span>
+    <h3>The Cycling Framework</h3>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Based on a 10 HCP male golfer, moderate activity (adjust ±200 kcal if notably lighter/heavier than ~185 lbs). Track for 3 weeks and adjust if fat loss stalls or strength declines.</p>
+    <div class="bar-group">
+      <div class="bar-title">Daily Calorie Targets by Activity Type</div>
+      <div class="bar-row"><span class="bar-lbl">Golf Day</span><div class="bar-track"><div class="bar-fill gold" style="width:88%"></div></div><span class="bar-val">~2,400 kcal</span></div>
+      <div class="bar-row"><span class="bar-lbl">Strength Day</span><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><span class="bar-val">~2,200 kcal</span></div>
+      <div class="bar-row"><span class="bar-lbl">Mobility/Speed Day</span><div class="bar-track"><div class="bar-fill teal" style="width:70%"></div></div><span class="bar-val">~1,900 kcal</span></div>
+      <div class="bar-row"><span class="bar-lbl">Rest Day</span><div class="bar-track"><div class="bar-fill red" style="width:60%"></div></div><span class="bar-val">~1,650 kcal</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Weekly average ~2,030 kcal/day vs. estimated TDEE of ~2,550 kcal = ~520 kcal/day deficit = ~1.0–1.1 lbs fat loss per week.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Macro Framework</span>
+    <h3>The Three Pillars</h3>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Protein — Daily</span><h4>180g / Day</h4><p>0.8–1.0g per lb of bodyweight. Preserves lean muscle during deficit. Non-negotiable on every day type.</p></div>
+      <div class="mini-card"><span class="mini-tag">Carbohydrates</span><h4>Cycled by Day</h4><p>High on golf days and strength days. Low on rest days. Timing beats restriction — eat carbs when you need energy.</p></div>
+      <div class="mini-card"><span class="mini-tag">Fat</span><h4>55–75g / Day</h4><p>Supports hormone production, joint health, and fat-soluble vitamin absorption. Never reduce below 55g on any day.</p></div>
+      <div class="mini-card"><span class="mini-tag">Fibre</span><h4>30g+ / Day</h4><p>Supports gut health, satiety, and sustained energy — critical during a calorie deficit to prevent hunger interfering with focus.</p></div>
+    </div>
+  </div>
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>Never sacrifice performance for the scale:</strong> Sleep deprivation reduces fine motor precision by 20–30% and decision quality by 25% — both of which your golf game directly depends on. Under-fuelling produces the same effects. If you arrive on the first tee in an energy deficit, you have already cost yourself strokes. Fat loss happens on rest days. Performance days are fuelled.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Weekly Schedule</span>
+    <h3>How the Plan Maps to Your Training Week</h3>
+    <table class="tbl"><tr><th>Day</th><th>Activity</th><th>Calories</th><th>Priority</th></tr>
+    <tr><td>Monday</td><td>Rest / Light Putting</td><td class="warn">1,650 kcal</td><td>Fat loss</td></tr>
+    <tr><td>Tuesday</td><td>Range + Strength Session</td><td class="good">2,200 kcal</td><td>Muscle retention</td></tr>
+    <tr><td>Wednesday</td><td>Short Game + Rypstick</td><td>1,900 kcal</td><td>Performance</td></tr>
+    <tr><td>Thursday</td><td>Strength Session</td><td class="good">2,200 kcal</td><td>Muscle retention</td></tr>
+    <tr><td>Friday</td><td>Range + Putting</td><td>1,900 kcal</td><td>Performance</td></tr>
+    <tr><td>Saturday</td><td>Golf Round</td><td class="good">2,400 kcal</td><td>Performance + SG</td></tr>
+    <tr><td>Sunday</td><td>Golf or Rest</td><td>2,400/1,650</td><td>Performance/Recovery</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="golfday">
+  <h2 class="sec-title">Golf Day — 2,400 kcal</h2>
+  <p class="sec-desc">A round of golf burns 1,200–1,800 kcal walking and demands 4+ hours of sustained cognitive effort. Even mild dehydration (1.5% body weight) reduces cognitive function by 10–15% — enough to impair club selection. Fuel this day fully.</p>
+  <span class="badge badge-gold">⛳ Playing Day Protocol</span>
+  <div class="card">
+    <span class="card-tag">2–3 Hours Before Tee Time</span>
+    <h3>The Foundation Meal — ~650–700 kcal</h3>
+    <ul class="steps">
+      <li><span class="step-n">🥚</span><div><strong>3 scrambled eggs or 200g Greek yogurt</strong> — protein anchor (25–30g). Stabilises blood sugar for hours 1–5 of the round.</div></li>
+      <li><span class="step-n">🌾</span><div><strong>80g rolled oats / porridge with berries</strong> — slow-release carbs providing sustained blood sugar for holes 1–9.</div></li>
+      <li><span class="step-n">🍞</span><div><strong>1 slice wholegrain toast</strong> with almond butter or avocado — additional slow-release energy and healthy fat for satiety.</div></li>
+      <li><span class="step-n">🍌</span><div><strong>1 banana</strong> — potassium for muscle function, quick-access carbohydrate for the final push before the round.</div></li>
+    </ul>
+    <div class="info-box warn-box" style="margin-top:12px;">
+      <span class="ico">⚠️</span>
+      <p>Avoid high-sugar breakfasts (pastries, cereal, juice). These produce a blood sugar spike that crashes by holes 4–7, impairing decision-making and concentration at exactly the point when momentum is set.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">45 Minutes Before Tee</span>
+    <h3>Coffee &amp; Final Prep — ~80 kcal</h3>
+    <ul class="steps">
+      <li><span class="step-n">☕</span><div><strong>1–2 espressos or black coffees</strong> — 100–200mg caffeine total. Improves fine motor control and focus for the round. Drink this 45 minutes before the first tee for peak effect.</div></li>
+      <li><span class="step-n">💧</span><div><strong>500ml water</strong> — pre-hydration load. Mild dehydration impairs decision quality long before you feel thirsty.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Critical dose:</strong> 100–200mg caffeine. More than 300mg produces anxiety and hand tremor that measurably impairs putting. If you are caffeine-sensitive, stay at 100mg (one espresso).</p>
+    </div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">On-Course Nutrition — Holes 1–18</span>
+    <h3>The Fuelling Timeline</h3>
+    <table class="tbl"><tr><th>When</th><th>What</th><th>Calories</th><th>Why</th></tr>
+    <tr><td>Every 4–5 holes</td><td>200–250ml water</td><td>0</td><td>Prevents cognitive impairment from dehydration</td></tr>
+    <tr><td>Holes 4–6</td><td>Banana or 25g mixed nuts</td><td>200 kcal</td><td>Maintains blood sugar before the turn</td></tr>
+    <tr><td>The Turn (hole 9)</td><td>Half wrap + 30g trail mix + 400ml water</td><td>300–350 kcal</td><td>Mid-round refuel — prevents holes 14–18 collapse</td></tr>
+    <tr><td>Holes 13–15</td><td>Banana or 2 Medjool dates</td><td>150 kcal</td><td>Fast-release carbs for the final push</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Holes 16–18 are where most 10 HCP rounds fall apart through mental fatigue. Research shows amateur scores rise 0.4 strokes per hole on holes 14–18 from cognitive and physical fatigue. Consistent fuelling is the direct countermeasure.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Within 60 Minutes Post-Round</span>
+    <h3>Recovery Meal — ~600–650 kcal</h3>
+    <ul class="steps">
+      <li><span class="step-n">🍗</span><div><strong>40–50g protein:</strong> Grilled chicken breast, salmon, lean beef, or cottage cheese. Muscle protein synthesis is elevated for 2 hours after exercise — this window matters.</div></li>
+      <li><span class="step-n">🍠</span><div><strong>200g sweet potato or 150g wholegrain rice:</strong> Replenishes glycogen for your next session. Golf + walking depletes both muscle and liver glycogen significantly.</div></li>
+      <li><span class="step-n">🥦</span><div><strong>Large portion of vegetables:</strong> Broccoli, spinach, mixed greens. Micronutrients and fibre support recovery and gut health.</div></li>
+      <li><span class="step-n">💧</span><div><strong>500ml water with electrolytes</strong> if you walked the course. Replace sodium lost through sweat to enable proper cellular hydration.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="strengthday">
+  <h2 class="sec-title">Strength Day — 2,200 kcal</h2>
+  <p class="sec-desc">Strength sessions are your primary muscle-retention stimulus. They must be fuelled adequately — chronic under-fuelling on training days is the fastest route to losing the hard-earned swing speed gains from your fitness programme.</p>
+  <span class="badge badge-lime">💪 Fuel the Engine</span>
+  <div class="card">
+    <span class="card-tag">Strength Day Meal Plan</span>
+    <h3>Moderate Deficit, Full Performance</h3>
+    <table class="tbl"><tr><th>Meal</th><th>Content</th><th>Calories</th><th>Protein</th></tr>
+    <tr><td>Breakfast (7–8am)</td><td>3 eggs + 60g oats + berries + milk</td><td>500 kcal</td><td>35g</td></tr>
+    <tr><td>Pre-training snack (60 min before)</td><td>Banana + 25g peanut butter</td><td>220 kcal</td><td>7g</td></tr>
+    <tr><td>Post-training (within 30 min)</td><td>Whey protein shake + 150ml milk</td><td>200 kcal</td><td>35g</td></tr>
+    <tr><td>Lunch (1–2 hours post)</td><td>150g chicken + 120g rice + vegetables</td><td>500 kcal</td><td>45g</td></tr>
+    <tr><td>Afternoon snack</td><td>200g Greek yogurt + 30g mixed nuts</td><td>280 kcal</td><td>20g</td></tr>
+    <tr><td>Dinner</td><td>200g salmon + 150g sweet potato + salad</td><td>500 kcal</td><td>38g</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Total: ~2,200 kcal · ~180g protein · ~200g carbs · ~65g fat</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Peri-Training Nutrition</span>
+    <h3>The Timing Windows That Matter</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>60–90 min before training:</strong> A small, low-fibre carbohydrate snack (banana, rice cakes, oat bar). Provides fast-access fuel without causing digestive discomfort during heavy lifting.</div></li>
+      <li><span class="step-n">▸</span><div><strong>During training (if over 60 min):</strong> Water only unless the session extends beyond 75 minutes, in which case 200ml isotonic drink provides electrolytes without meaningfully affecting calorie targets.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Within 30 minutes post-training:</strong> Protein + carbohydrate combination. Whey protein shake (25–30g protein) with banana or rice. This window is when muscle protein synthesis is at its peak — missing it reduces the training adaptation by up to 30%.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="speedday">
+  <h2 class="sec-title">Mobility &amp; Speed Day — 1,900 kcal</h2>
+  <p class="sec-desc">Rypstick speed training and mobility work demand moderate fuelling. These are not rest days — overspeed training with insufficient carbohydrates produces sub-maximal effort and reduced neurological adaptation.</p>
+  <span class="badge badge-teal">⚡ Moderate Fuelling</span>
+  <div class="card">
+    <span class="card-tag">Speed Day Meal Plan</span>
+    <h3>Moderate Calorie, Performance Focused</h3>
+    <table class="tbl"><tr><th>Meal</th><th>Content</th><th>Calories</th><th>Protein</th></tr>
+    <tr><td>Breakfast</td><td>2 eggs + 50g oats + 1 piece fruit</td><td>420 kcal</td><td>25g</td></tr>
+    <tr><td>Lunch</td><td>Large chicken salad + wholegrain bread + olive oil</td><td>550 kcal</td><td>40g</td></tr>
+    <tr><td>Pre-Rypstick snack</td><td>Rice cake + 20g almond butter + banana</td><td>280 kcal</td><td>8g</td></tr>
+    <tr><td>Post-training</td><td>Protein shake + 200ml milk</td><td>200 kcal</td><td>30g</td></tr>
+    <tr><td>Dinner</td><td>150g lean beef or tofu + 100g sweet potato + veg</td><td>450 kcal</td><td>35g</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Total: ~1,900 kcal · ~138g protein · ~185g carbs · ~55g fat</p>
+  </div>
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Rypstick nutrition timing:</strong> Eat the pre-training snack 30–45 minutes before your overspeed session. Maximum effort requires readily available blood glucose. If you attempt Rypstick overspeed training fasted or in a significant deficit, you will not achieve the maximal swing speeds required for neurological adaptation.</p>
+  </div>
+</div>
+
+<div class="sec" id="restday">
+  <h2 class="sec-title">Rest Day — 1,650 kcal</h2>
+  <p class="sec-desc">Rest days carry the larger calorie deficit that drives fat loss. This is where the weight loss work happens — so active days can be fuelled for performance. The discipline is eating less on the days you exercise least.</p>
+  <span class="badge badge-rust">🛌 Fat Loss Day</span>
+  <div class="card">
+    <span class="card-tag">Rest Day Strategy</span>
+    <h3>Low-Carb, High-Protein, High-Volume</h3>
+    <p>The key to surviving rest-day calorie restriction without hunger: prioritise high-volume, high-fibre, high-protein foods that are naturally filling. Vegetables, lean proteins, and water are your tools.</p>
+    <table class="tbl"><tr><th>Meal</th><th>Content</th><th>Calories</th><th>Protein</th></tr>
+    <tr><td>Breakfast</td><td>3-egg omelette + spinach + mushrooms + coffee</td><td>320 kcal</td><td>25g</td></tr>
+    <tr><td>Lunch</td><td>Large salad + 150g grilled chicken + olive oil dressing</td><td>420 kcal</td><td>40g</td></tr>
+    <tr><td>Afternoon</td><td>200g Greek yogurt + 15g nuts</td><td>230 kcal</td><td>20g</td></tr>
+    <tr><td>Dinner</td><td>200g white fish + large portion of roasted vegetables</td><td>400 kcal</td><td>40g</td></tr>
+    <tr><td>Evening (if hungry)</td><td>Herbal tea + 1 rice cake + cottage cheese</td><td>100 kcal</td><td>10g</td></tr></table>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Total: ~1,470–1,650 kcal · ~135g protein · ~90g carbs · ~50g fat</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Practical Strategies for the Low-Calorie Day</span>
+    <h3>Managing Hunger Without Compromising</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Volume eating:</strong> Fill half your plate with non-starchy vegetables at every meal. They add volume, fibre, and micronutrients with minimal calorie cost.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Protein first:</strong> Eat your protein before anything else at each meal. Protein is the most satiating macronutrient — starting with it significantly reduces total consumption.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Stay hydrated:</strong> Drink 2.5–3L of water throughout the day. Hunger and thirst signals overlap significantly — what feels like hunger is often dehydration.</div></li>
+      <li><span class="step-n">▸</span><div><strong>No liquid calories:</strong> Reserve all calories for solid food on rest days. Drinks (except protein shakes post-training) add calories without triggering satiety signals.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="principles">
+  <h2 class="sec-title">Key Principles &amp; Supplements</h2>
+  <p class="sec-desc">The non-negotiable nutritional principles that underpin the entire plan — plus the evidence-based supplements worth considering.</p>
+  <span class="badge badge-gold">💊 The Foundations</span>
+  <div class="card">
+    <span class="card-tag">Protein — The Non-Negotiable</span>
+    <h3>The Foundation of Everything</h3>
+    <p>High protein intake during a deficit is the primary mechanism that preserves lean muscle mass. Research consistently shows 0.8–1.0g per lb of bodyweight at target weight as the optimal range during active fat loss combined with resistance training. <strong style="color:var(--white);">This number does not change based on calorie target.</strong> On rest days, get your 180g protein even within 1,650 calories.</p>
+    <div class="bar-group">
+      <div class="bar-title">Daily Protein Target — 180g</div>
+      <div class="bar-row"><span class="bar-lbl">Breakfast</span><div class="bar-track"><div class="bar-fill gold" style="width:18%"></div></div><span class="bar-val">~30g</span></div>
+      <div class="bar-row"><span class="bar-lbl">Lunch</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">~45g</span></div>
+      <div class="bar-row"><span class="bar-lbl">Post-training</span><div class="bar-track"><div class="bar-fill teal" style="width:18%"></div></div><span class="bar-val">~30g</span></div>
+      <div class="bar-row"><span class="bar-lbl">Dinner</span><div class="bar-track"><div class="bar-fill" style="width:25%"></div></div><span class="bar-val">~45g</span></div>
+      <div class="bar-row"><span class="bar-lbl">Snacks</span><div class="bar-track"><div class="bar-fill gold" style="width:18%"></div></div><span class="bar-val">~30g</span></div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Carbohydrate Timing Beats Restriction</span>
+    <h3>When You Eat Carbs Matters More Than How Many</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Pre-training/golf:</strong> Eat slow-release carbs (oats, wholegrain, sweet potato) 2–3 hours before. Provides sustained blood glucose for the full session.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Post-training:</strong> Fast-release carbs (banana, white rice, sports drink) within 30 minutes. Replenishes glycogen when uptake is fastest.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Evening (rest days):</strong> Minimise carbohydrates. Evening carbs on inactive days are the primary driver of fat storage — this is where calorie cycling creates its effect.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Evidence-Based Supplements</span>
+    <h3>What is Worth Taking</h3>
+    <table class="tbl"><tr><th>Supplement</th><th>Dose</th><th>Timing</th><th>Evidence Level</th></tr>
+    <tr><td>Whey protein</td><td>25–30g</td><td>Post-training</td><td class="good">Strong — fills protein gap efficiently</td></tr>
+    <tr><td>Creatine monohydrate</td><td>5g daily</td><td>Any time</td><td class="good">Strong — increases power output 5–10%</td></tr>
+    <tr><td>Vitamin D3</td><td>2,000–4,000 IU</td><td>With fat-containing meal</td><td class="good">Strong — most UK residents are deficient, affects muscle function</td></tr>
+    <tr><td>Omega-3 (fish oil)</td><td>2–3g EPA/DHA</td><td>With meals</td><td class="warn">Moderate — supports joint health and inflammation management</td></tr>
+    <tr><td>Magnesium glycinate</td><td>200–400mg</td><td>Evening</td><td class="warn">Moderate — improves sleep quality and muscle recovery</td></tr>
+    <tr><td>Caffeine</td><td>100–200mg</td><td>45 min pre-round</td><td class="good">Strong — proven performance enhancer at correct dose</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Alcohol — The Silent Saboteur</span>
+    <h3>What It Actually Costs</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Sleep quality:</strong> Even 2 units reduce REM sleep by 20–30% — the sleep stage where motor skill consolidation occurs. Your range session the night before becomes less effective.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Recovery:</strong> Alcohol inhibits muscle protein synthesis for up to 24 hours post-training. A post-round pint significantly reduces the adaptation from the session.</div></li>
+      <li><span class="step-n">▸</span><div><strong>The rule if you drink:</strong> Never on the night before a round or training day. On rest day evenings only, and maximum 2 units. More than this measurably impairs next-day performance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="progress">
+  <h2 class="sec-title">Tracking Progress</h2>
+  <p class="sec-desc">The plan works through consistent implementation and honest adjustment. Track weekly, adjust monthly. The goal is fat loss without performance sacrifice — if either is compromised, the plan needs adjustment.</p>
+  <span class="badge badge-rust">📊 Calibrate &amp; Adapt</span>
+  <div class="card">
+    <span class="card-tag">Phase 1 — Weeks 1–3: Establish &amp; Calibrate</span>
+    <h3>Build the Tracking Habit</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Weigh yourself every morning (same time, after toilet, before eating). Record daily. Use the weekly average — not individual readings — for trend analysis.</div></li>
+      <li><span class="step-n">2</span><div>Log food intake using MyFitnessPal or Cronometer for the first 3 weeks. You do not need to log forever — but the initial period builds accurate portion awareness that persists without logging.</div></li>
+      <li><span class="step-n">3</span><div>Track energy levels (1–10), sleep quality (hours + rating), and training performance (weights used, reps achieved) alongside body weight. These tell you whether the deficit is affecting performance.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Phase 2 — Weeks 4 Onwards: Adapt as You Lose</span>
+    <h3>Adjust When Progress Stalls</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>If fat loss stalls for 2+ weeks:</strong> Reduce rest-day calories by 100–150 kcal. Do not reduce active day calories — maintain performance fuelling at all costs.</div></li>
+      <li><span class="step-n">▸</span><div><strong>If strength declines or energy crashes:</strong> Increase active day calories by 100–200 kcal. You are under-fuelling training. Fat loss target may take slightly longer — that is the correct trade-off.</div></li>
+      <li><span class="step-n">▸</span><div><strong>If golf performance declines:</strong> Specifically increase golf-day calories to 2,500–2,600 kcal. On-course performance is non-negotiable — if your handicap is climbing while your weight is dropping, the balance is wrong.</div></li>
+      <li><span class="step-n">▸</span><div><strong>After losing 7+ lbs:</strong> Recalculate your TDEE (it reduces as you lose weight) and adjust calorie targets downward by 100–200 kcal across the board to maintain the same deficit.</div></li>
+    </ul>
+  </div>
+  <div class="pull-quote">
+    <p>"The goal is not to eat as little as possible. The goal is to eat as much as possible while still losing fat — because more food means more performance, more recovery, and more muscle retention."</p>
+    <span>— Sports nutrition principle: minimum effective deficit</span>
+  </div>
+</div>
+
+<!-- IN-ROUND ENERGY -->
+<div class="sec" id="inround">
+  <h2 class="sec-title">In-Round Energy Management</h2>
+  <p class="sec-desc">Amateur scores increase by an average of 1.3 strokes on the back nine versus the front nine. The primary drivers are not technical — they are physiological: blood glucose decline, cortisol accumulation, and progressive decision-quality deterioration from mental fatigue. All three are addressable with specific nutritional and movement protocols applied during the round.</p>
+  <span class="badge badge-gold">⚡ The Back Nine Problem</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Scores Deteriorate After Hole 10</span>
+    <h3>The Three Physiological Mechanisms</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Blood glucose decline — the primary cause:</strong> The brain uses glucose as its primary fuel. After 2–2.5 hours of sustained concentration (holes 1–9), blood glucose drops measurably, reducing prefrontal cortex activity — the area responsible for decision-making, risk assessment, and impulse control. This is not motivational weakness. You literally have less cognitive resource available on hole 13 than hole 4, without nutritional intervention.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cortisol accumulation:</strong> Competitive rounds maintain cortisol at elevated levels throughout play. Sustained cortisol suppresses serotonin and dopamine, increasing irritability, reducing emotional regulation, and narrowing attentional focus. By hole 14–15, the emotional response to a bad shot is physiologically amplified compared to the same shot on hole 4 — not because you care more, but because the cortisol balance has shifted.</div></li>
+      <li><span class="step-n">3</span><div><strong>Physical fatigue in the swing:</strong> 5+ hours of walking (approximately 8–10km), combined with 70–90 swings of progressive muscular loading, produces measurable hip flexor shortening, glute inhibition, and thoracic compression. The physical swing on hole 17 is biomechanically less efficient than hole 1 without an active recovery protocol. This manifests as timing errors, loss of distance, and increased dispersion.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The In-Round Nutrition Protocol</span>
+    <h3>What to Eat, When, and Why</h3>
+    <table class="tbl">
+      <tr><th>Timing</th><th>What</th><th>Why</th></tr>
+      <tr><td class="good">Holes 4–5</td><td>First snack: banana + handful of nuts, or energy bar (30–40g carb)</td><td>Blood glucose begins dropping ~90 min after pre-round meal. Replenish before the decline, not after.</td></tr>
+      <tr><td class="good">Holes 9–10 (turn)</td><td>Substantial snack: sandwich/wrap (30–50g carb + protein), water + electrolyte</td><td>The most important nutritional moment. Glucose for holes 10–18. Protein slows glucose release. Skip this and notice the back nine difference.</td></tr>
+      <tr><td class="warn">Holes 13–14</td><td>Second small snack: fruit/cereal bar, banana, or gel if needed</td><td>Final glucose top-up for the closing holes. Optional but beneficial on hot days or for 5-hour rounds.</td></tr>
+      <tr><td class="good">Throughout</td><td>400–500ml water per 90 minutes minimum, electrolyte in warm conditions</td><td>2% dehydration reduces cognitive performance by 10–20%. Decision quality, not swing mechanics, goes first.</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>The turn rule:</strong> If you eat nothing at the turn, you will feel fine for holes 10–12 and then deteriorate holes 13–18. If you eat at the turn, the deterioration largely does not happen. The effect is real enough that most tour caddies treat the turn nutrition as mandatory rather than optional regardless of how the player feels. You may not feel hungry at the turn — eat anyway.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Caffeine Strategy — Timing Matters</span>
+    <h3>One Coffee Can Save or Cost You 3 Holes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Caffeine peaks at 45–60 minutes post-ingestion:</strong> A coffee consumed at the turn peaks during holes 13–15 — exactly when you need it. This is not coincidental; it is the correct application of caffeine's pharmacokinetics to an 18-hole round.</div></li>
+      <li><span class="step-n">2</span><div><strong>Maximum dose: 100–150mg (1 espresso or strong coffee):</strong> Above 200mg, caffeine-induced hand tremor measurably impairs putting at close range. The precision-to-arousal curve peaks lower than most people expect. One coffee, not two.</div></li>
+      <li><span class="step-n">3</span><div><strong>Not if you haven't used it in practice:</strong> If caffeine is not already in your normal game preparation, do not introduce it for the first time in competition. Caffeine sensitivity varies significantly — an unfamiliar dose in a competitive situation can increase anxiety rather than arousal. Test it in solo rounds first.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Between-Hole Physical Reset — The Back Nine Supplement</span>
+    <h3>3 Minutes Per 9 That Maintain Physical Quality</h3>
+    <p style="margin-bottom:12px;">Physical fatigue in the golf swing is addressable during the round with targeted movement. Three exercises, done between holes 9 and 10, maintain hip mobility and thoracic mobility through the back nine.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Thoracic rotation (30 seconds):</strong> Take your normal address posture, cross arms on your chest, and rotate fully left and right 10 times. This counters thoracic compression from 9 holes of forward-flexed walking and swing accumulation. Your shoulder turn on hole 13 will be noticeably fuller if you do this at the turn.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hip flexor stretch (30 seconds each side):</strong> A lunge position held for 15–20 seconds each side. Walking 8–10km shortens the hip flexors progressively — this prevents the early-extension and sway compensations that appear in the swing on holes 14–18.</div></li>
+      <li><span class="step-n">3</span><div><strong>Glute activation (30 seconds):</strong> Clam shells or standing hip abduction against resistance. Glutes inhibit under sustained walking load. Without reactivation, the lower body becomes passive in the swing, throwing load onto the lower back and reducing power transfer.</div></li>
+    </ul>
+    <div class="info-box elite">
+      <span class="ico">⭐</span>
+      <p><strong>The compound effect:</strong> Pre-round foundation meal + hole 5 snack + turn meal + caffeine + 3-minute mobility reset produces a measurably different back nine than no protocol. The science behind each element is established. The players who close rounds strongly have almost universally developed these habits — not as discipline, but because they noticed the difference once and never reverted.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">GOLF NUTRITION PLAN · FAT LOSS + STRENGTH MAINTENANCE · PERFORMANCE-FIRST APPROACH</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Fitness Plan</span>
+  </a>
+  <a href="08_pro_round_prep.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🗺️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pro Round Prep</span>
+  </a>
+  <a href="13_injury_prevention.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🩺</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Injury Prevention</span>
+  </a>
+  <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

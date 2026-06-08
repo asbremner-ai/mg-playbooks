@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-06-05 · 30_months_19_24_plan.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Months 19–24 Practice Plan — December 2027 to May 2028</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:#f5efe4;
+    --paper-dark:#ede5d4;
+    --ink:#1a1208;
+    --ink-mid:#3d2e1a;
+    --ink-light:#6b5540;
+    --rust:#b54a22;
+    --rust-light:#d4724a;
+    --rust-pale:#f0c8b0;
+    --teal:#1e6464;
+    --teal-light:#3a9090;
+    --teal-pale:#b0d8d8;
+    --gold:#c8921a;
+    --gold-light:#e8b84a;
+    --gold-pale:#f8e8b8;
+    --muted:rgba(26,18,8,0.5);
+    --faint:rgba(26,18,8,0.2);
+    --lime:#3a8a3a;
+    --lime-pale:#c8e8c8;
+    --violet:#5a30b8;
+    --violet-pale:#ddd0f8;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:'Libre Baskerville',Georgia,serif;min-height:100vh;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.6;}
+
+  .hero{position:relative;z-index:2;background:var(--ink);color:var(--paper);padding:64px 30px 52px;text-align:center;overflow:hidden;}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--lime),var(--gold),var(--lime),var(--teal),var(--lime));}
+  .hero-lines{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+  .hero-lines::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;background-image:repeating-linear-gradient(-45deg,transparent,transparent 38px,rgba(245,239,228,0.02) 38px,rgba(245,239,228,0.02) 40px);}
+  .hero-overline{font-family:'Courier Prime',monospace;font-size:0.65rem;letter-spacing:0.3em;color:#7ec87e;text-transform:uppercase;margin-bottom:20px;position:relative;display:inline-flex;align-items:center;gap:12px;}
+  .hero-overline::before,.hero-overline::after{content:'';width:32px;height:1px;background:#7ec87e;opacity:0.6;}
+  .hero h1{font-family:'Archivo',sans-serif;font-size:clamp(2.2rem,7vw,4.8rem);font-weight:900;line-height:0.95;color:var(--paper);letter-spacing:-0.02em;position:relative;margin-bottom:14px;}
+  .hero h1 .ruled{display:block;font-family:'Libre Baskerville',serif;font-style:italic;font-weight:400;font-size:0.42em;color:#7ec87e;letter-spacing:0.05em;margin-top:8px;}
+  .hero-deck{font-family:'Archivo',sans-serif;font-size:0.9rem;font-weight:300;color:rgba(245,239,228,0.6);max-width:520px;margin:0 auto 24px;line-height:1.7;position:relative;}
+  .hero-topics{display:flex;justify-content:center;gap:0;flex-wrap:wrap;position:relative;}
+  .hero-topic{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(245,239,228,0.45);padding:4px 14px;border-right:1px solid rgba(245,239,228,0.15);}
+  .hero-topic:last-child{border-right:none;}
+
+  .nav-tabs{display:flex;overflow-x:auto;background:var(--ink-mid);border-bottom:3px solid var(--lime);padding:0 16px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+  .nav-tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(245,239,228,0.4);background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-3px;padding:13px 15px;cursor:pointer;white-space:nowrap;transition:all 0.2s;}
+  .tab-btn:hover{color:rgba(245,239,228,0.8);}
+  .tab-btn.active{color:#7ec87e;border-bottom-color:var(--lime);}
+
+  .section{display:none;padding:44px 22px 70px;max-width:760px;margin:0 auto;position:relative;z-index:1;animation:appear 0.3s ease;}
+  .section.active{display:block;}
+  @keyframes appear{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .section-label{font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;display:block;}
+  .section-title{font-family:'Archivo',sans-serif;font-size:2.2rem;font-weight:900;color:var(--ink);margin-bottom:8px;line-height:1;letter-spacing:-0.02em;}
+  .section-desc{font-family:'Libre Baskerville',serif;font-size:0.95rem;color:var(--ink-light);margin-bottom:28px;line-height:1.8;padding-left:16px;border-left:3px solid var(--lime);font-style:italic;}
+
+  .card{background:var(--paper-dark);border:1px solid var(--faint);border-radius:4px;padding:24px;margin-bottom:16px;position:relative;overflow:hidden;transition:box-shadow 0.2s;}
+  .card:hover{box-shadow:0 4px 20px rgba(26,18,8,0.1);}
+  .card::before{content:'';position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--lime);}
+  .card.rust-card::before{background:var(--rust);}
+  .card.teal-card::before{background:var(--teal);}
+  .card.gold-card::before{background:var(--gold);}
+  .card-kicker{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;display:block;}
+  .card.rust-card .card-kicker{color:var(--rust);}
+  .card.teal-card .card-kicker{color:var(--teal);}
+  .card.gold-card .card-kicker{color:var(--gold);}
+  .card h3{font-family:'Archivo',sans-serif;font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.2;}
+  .card p{font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.85;}
+
+  .steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+  .steps li{display:flex;gap:14px;align-items:flex-start;font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.75;}
+  .sn{font-family:'Courier Prime',monospace;font-size:0.6rem;color:var(--lime);background:var(--lime-pale);border-radius:2px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+  .sn.rs{color:var(--rust);background:var(--rust-pale);}
+  .sn.tl{color:var(--teal);background:var(--teal-pale);}
+  .sn.gd{color:var(--gold);background:var(--gold-pale);}
+
+  .callout,.insight,.warning,.success{border-radius:4px;padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;}
+  .callout{background:var(--rust-pale);border-left:3px solid var(--rust);}
+  .callout p,.insight p,.warning p,.success p{font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--ink-mid);line-height:1.7;}
+  .callout strong{color:var(--rust);}
+  .insight{background:var(--teal-pale);border-left:3px solid var(--teal);}
+  .insight strong{color:var(--teal);}
+  .warning{background:var(--gold-pale);border-left:3px solid var(--gold);}
+  .warning strong{color:var(--gold);}
+  .success{background:var(--lime-pale);border-left:3px solid var(--lime);}
+  .success p{color:var(--ink-mid);}
+  .success strong{color:var(--lime);}
+  .cicon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+
+  .dtable{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.85rem;}
+  .dtable th{font-family:'Courier Prime',monospace;font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);padding:9px 12px;text-align:left;border-bottom:2px solid var(--faint);background:var(--paper-dark);}
+  .dtable td{padding:8px 12px;color:var(--ink-mid);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;font-family:'Libre Baskerville',serif;font-size:0.87rem;}
+  .dtable tr:last-child td{border-bottom:none;}
+  .dtable td:first-child{font-family:'Courier Prime',monospace;color:var(--ink);font-weight:700;font-size:0.8rem;}
+  .good{color:#2a6e2a;} .warn{color:#8a5a0a;} .bad{color:#8a2a1a;}
+
+  .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:14px 0;}
+  .day-cell{border-radius:3px;padding:10px 4px;text-align:center;}
+  .day-cell .day-name{font-family:'Courier Prime',monospace;font-size:0.48rem;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
+  .day-cell .day-icon{font-size:1.1rem;display:block;margin-bottom:4px;}
+  .day-cell .day-label{font-family:'Courier Prime',monospace;font-size:0.42rem;letter-spacing:0.08em;text-transform:uppercase;display:block;line-height:1.3;}
+  .day-cell.play{background:rgba(181,74,34,0.12);border:1px solid rgba(181,74,34,0.3);}
+  .day-cell.play .day-name{color:var(--rust-light);}
+  .day-cell.play .day-label{color:var(--rust);}
+  .day-cell.practice{background:rgba(58,138,58,0.12);border:1px solid rgba(58,138,58,0.3);}
+  .day-cell.practice .day-name{color:#6ab86a;}
+  .day-cell.practice .day-label{color:var(--lime);}
+  .day-cell.gym{background:rgba(200,146,26,0.12);border:1px solid rgba(200,146,26,0.3);}
+  .day-cell.gym .day-name{color:var(--gold-light);}
+  .day-cell.gym .day-label{color:var(--gold);}
+  .day-cell.rest{background:rgba(26,18,8,0.05);border:1px solid var(--faint);}
+  .day-cell.rest .day-name{color:var(--muted);}
+  .day-cell.rest .day-label{color:var(--muted);}
+  .day-cell.review{background:rgba(30,100,100,0.12);border:1px solid rgba(30,100,100,0.3);}
+  .day-cell.review .day-name{color:var(--teal-light);}
+  .day-cell.review .day-label{color:var(--teal);}
+  .day-cell.comp{background:rgba(58,138,58,0.20);border:2px solid rgba(58,138,58,0.5);}
+  .day-cell.comp .day-name{color:#6ab86a;}
+  .day-cell.comp .day-label{color:var(--lime);}
+
+  .month-block{position:relative;padding-left:52px;margin-bottom:32px;}
+  .month-block::before{content:'';position:absolute;left:18px;top:38px;bottom:-20px;width:2px;background:var(--faint);}
+  .month-block:last-child::before{display:none;}
+  .month-num{position:absolute;left:0;top:0;width:38px;height:38px;background:var(--lime);color:var(--ink);font-family:'Courier Prime',monospace;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.1;}
+  .month-num .ph-label{font-size:0.4rem;color:rgba(26,18,8,0.6);letter-spacing:0.2em;text-transform:uppercase;}
+  .month-title{font-family:'Archivo',sans-serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:2px;}
+  .month-sub{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:block;}
+
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
+  .checklist li{display:flex;gap:12px;align-items:flex-start;font-family:'Libre Baskerville',serif;font-size:0.9rem;color:var(--ink-mid);line-height:1.7;}
+  .check{font-family:'Courier Prime',monospace;font-size:0.6rem;min-width:20px;height:20px;border-radius:2px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+  .check.teal{color:var(--teal);background:var(--teal-pale);}
+  .check.rust{color:var(--rust);background:var(--rust-pale);}
+  .check.gold{color:var(--gold);background:var(--gold-pale);}
+  .check.lime{color:var(--lime);background:var(--lime-pale);}
+
+  .session-block{background:var(--ink);border-radius:4px;padding:18px 20px;margin:12px 0;}
+  .session-title{font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#7ec87e;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .session-title::after{content:'';flex:1;height:1px;background:rgba(245,239,228,0.1);}
+  .session-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(245,239,228,0.06);}
+  .session-row:last-child{border-bottom:none;}
+  .s-pct{font-family:'Courier Prime',monospace;font-size:0.62rem;font-weight:700;min-width:36px;}
+  .s-pct.rs{color:var(--rust-light);}
+  .s-pct.tl{color:var(--teal-light);}
+  .s-pct.gd{color:var(--gold-light);}
+  .s-pct.lm{color:#7ec87e;}
+  .s-bar{flex:1;height:4px;background:rgba(245,239,228,0.06);border-radius:2px;overflow:hidden;}
+  .s-bar-fill{height:100%;border-radius:2px;}
+  .s-label{font-family:'Libre Baskerville',serif;font-size:0.82rem;color:rgba(245,239,228,0.7);}
+
+  .comp-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--faint);}
+  .comp-row:last-child{border-bottom:none;}
+  .comp-month{font-family:'Courier Prime',monospace;font-size:0.62rem;font-weight:700;min-width:76px;color:var(--lime);text-transform:uppercase;letter-spacing:0.1em;padding-top:2px;}
+  .comp-detail{flex:1;}
+  .comp-detail strong{font-family:'Archivo',sans-serif;font-size:0.92rem;color:var(--ink);display:block;margin-bottom:2px;}
+  .comp-detail span{font-family:'Libre Baskerville',serif;font-size:0.85rem;color:var(--ink-light);}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+  .mini-card{background:var(--paper-dark);border:1px solid var(--faint);border-radius:4px;padding:18px 16px;}
+  .mini-card.teal{border-color:rgba(30,100,100,0.3);background:rgba(30,100,100,0.05);}
+  .mini-card.gold{border-color:rgba(200,146,26,0.3);background:rgba(200,146,26,0.05);}
+  .mini-card.rust{border-color:rgba(181,74,34,0.3);background:rgba(181,74,34,0.05);}
+  .mini-card.lime{border-color:rgba(58,138,58,0.3);background:rgba(58,138,58,0.05);}
+  .mini-kicker{font-family:'Courier Prime',monospace;font-size:0.54rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:6px;}
+  .mini-card.rust .mini-kicker{color:var(--rust);}
+  .mini-card.teal .mini-kicker{color:var(--teal);}
+  .mini-card.gold .mini-kicker{color:var(--gold);}
+  .mini-card h4{font-family:'Archivo',sans-serif;font-size:0.95rem;font-weight:700;color:var(--ink);margin-bottom:6px;}
+  .mini-card p{font-family:'Libre Baskerville',serif;font-size:0.84rem;color:var(--ink-mid);line-height:1.7;}
+
+  .pull-quote{font-family:'Libre Baskerville',serif;font-style:italic;font-size:1.05rem;color:var(--ink-mid);line-height:1.7;padding:22px 28px;border-left:4px solid var(--lime);margin:22px 0;background:var(--paper-dark);}
+  .pull-quote span{display:block;font-style:normal;font-family:'Courier Prime',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;}
+
+  .badge{display:inline-block;font-family:'Courier Prime',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border-radius:2px;margin-bottom:16px;}
+  .b-teal{background:var(--teal-pale);color:var(--teal);}
+  .b-rust{background:var(--rust-pale);color:var(--rust);}
+  .b-gold{background:var(--gold-pale);color:var(--gold);}
+  .b-lime{background:var(--lime-pale);color:var(--lime);}
+
+  .finish-banner{background:linear-gradient(135deg,var(--ink) 0%,#0d2e0d 100%);border:2px solid var(--lime);border-radius:6px;padding:32px 28px;margin:24px 0;text-align:center;}
+  .finish-banner h2{font-family:'Archivo',sans-serif;font-size:2rem;font-weight:900;color:var(--paper);margin-bottom:8px;}
+  .finish-banner p{font-family:'Libre Baskerville',serif;font-size:0.9rem;color:rgba(245,239,228,0.65);line-height:1.7;max-width:480px;margin:0 auto;}
+  .finish-banner .finish-icon{font-size:3rem;margin-bottom:12px;display:block;}
+
+  .footer{text-align:center;padding:28px 20px;font-family:'Courier Prime',monospace;font-size:0.58rem;color:var(--muted);letter-spacing:0.18em;border-top:1px solid var(--faint);position:relative;z-index:1;background:var(--paper-dark);}
+
+  @media(max-width:480px){
+    .two-col{grid-template-columns:1fr;}
+    .hero h1{font-size:2.2rem;}
+    .week-grid{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<div class="hero">
+  <div class="hero-lines"></div>
+  <p class="hero-overline">The Scratch Project</p>
+  <h1>PHASE 5<span class="ruled">Months 19–24 · December 2027 – May 2028 · Defend the Standard</span></h1>
+  <p class="hero-deck">You arrive here with a confirmed scratch index. Phase 5 is not improvement — it is consolidation, defence, and the pursuit of consistency across every condition, format, and competitive environment the game provides.</p>
+  <div class="hero-topics">
+    <span class="hero-topic">📅 Dec 2027–May 2028</span>
+    <span class="hero-topic">🏆 Defend Scratch</span>
+    <span class="hero-topic">🎯 Plus Handicap Option</span>
+    <span class="hero-topic">⛳ 3× Monthly Comps</span>
+    <span class="hero-topic">📊 Final Benchmarks</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('phase5start')">Phase 5 Launch</button>
+  <button class="tab-btn" onclick="showTab('schedule')">Weekly Template</button>
+  <button class="tab-btn" onclick="showTab('calendar')">Month-by-Month</button>
+  <button class="tab-btn" onclick="showTab('sessions')">Session Templates</button>
+  <button class="tab-btn" onclick="showTab('competition')">Competition Plan</button>
+  <button class="tab-btn" onclick="showTab('targets')">Final Benchmarks</button>
+  <button class="tab-btn" onclick="showTab('tracker')">Progress Tracker</button>
+  <button class="tab-btn" onclick="showTab('beyond')">Beyond Scratch</button>
+</div>
+
+<!-- ═══ TAB 1 — PHASE 5 LAUNCH ═══ -->
+<div class="section active" id="phase5start">
+  <span class="section-label">1 December 2027</span>
+  <h2 class="section-title">PHASE 5 LAUNCH</h2>
+  <p class="section-desc">Phase 5 opens with one question: is your scratch handicap confirmed across multiple competitive rounds, or was it a temporary peak? The answer determines whether this phase is consolidation or a final push. Either is valid — the response is different.</p>
+
+  <div class="pull-quote">
+    "Reaching scratch is the first confirmation. Staying scratch across a full season — in competition, in all conditions, without the intensity of a structured improvement programme — is the real achievement."
+    <span>— The Scratch Project · Phase 5 Framework</span>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Week 1 — December 1–7 · The 18-Month Reckoning</span>
+    <h3>The Phase 4 Audit</h3>
+    <p>Before setting Phase 5's direction, pull the full 18-month picture. SG averages across all four categories from June 2026 to November 2027. This is the complete record of where you started, where you are, and what remains between you and a fully defended scratch standard.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn">1</span><strong>Pull the 18-month SG trend.</strong> Month-by-month improvement in each category. Which category improved most? Which has the narrowest remaining gap to scratch benchmark? Which is still below the required standard? The answer to the last question is Phase 5's first priority.</li>
+      <li><span class="sn">2</span><strong>Review your competition vs. practice SG differential from Phase 4.</strong> If any category shows a gap wider than 0.5 strokes between competition and practice, that is Phase 5's primary target — not technical improvement, but pressure execution in that specific skill.</li>
+      <li><span class="sn">3</span><strong>Coach audit — write the Phase 5 brief.</strong> Your coach should review your 18-month SG data and set specific targets for months 19–24. This brief is your governing document. If any element of your technique has drifted under high competition volume, this audit identifies and resets it.</li>
+      <li><span class="sn">4</span><strong>Establish your 24-month final targets.</strong> From this month forward, you are building the data set that will define your programme's outcome. Set the specific handicap, GIR%, proximity, and SG targets that you will measure at Month 24 (May 2028).</li>
+      <li><span class="sn">5</span><strong>Decide: consolidation or plus?</strong> If all Phase 4 targets were met and your index is stable at scratch, Phase 5 can target a plus handicap. If any category is below benchmark, Phase 5 remains focused on closing that gap first. Do not pursue plus until scratch is fully defended.</li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card lime">
+      <span class="mini-kicker">If Phase 4 Targets Were Met</span>
+      <h4>Defend &amp; Extend</h4>
+      <p>Confirmed scratch index, all four SG categories within benchmark range. Phase 5 maintains competition volume, refines the one remaining gap, and optionally targets plus. The programme has delivered.</p>
+    </div>
+    <div class="mini-card rust">
+      <span class="mini-kicker">If Phase 4 Targets Were Missed</span>
+      <h4>Close the Final Gap</h4>
+      <p>If handicap is 1–2 rather than scratch, identify the single SG category creating the gap. Run December–January as a focused Phase 4 extension on that skill alone. The programme timeline extends by 2 months. Scratch remains achievable — the timeline shifts, not the destination.</p>
+    </div>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">What Changes in Phase 5</span>
+    <h3>From Building to Defending</h3>
+    <table class="dtable">
+      <tr><th>Element</th><th>Phase 4</th><th>Phase 5</th></tr>
+      <tr><td>Primary goal</td><td>Reach scratch index</td><td>Defend &amp; sustain scratch across all conditions</td></tr>
+      <tr><td>Practice orientation</td><td>Consequence games, competitive simulation</td><td>Maintenance drills + specific gap work only</td></tr>
+      <tr><td>Competition</td><td>3× per month</td><td>3× per month — wider variety of formats</td></tr>
+      <tr><td>Coach contact</td><td>Every 6 weeks</td><td>Every 8 weeks — maintenance check, not rebuild</td></tr>
+      <tr><td>Video review</td><td>After every competition round</td><td>Monthly — looking for drift, not faults</td></tr>
+      <tr><td>Fitness</td><td>Maintain Phase 3–4 protocol</td><td>Maintain — add endurance for 36-hole days</td></tr>
+      <tr><td>Session structure</td><td>Two full structured sessions</td><td>One structured + one course play or free practice</td></tr>
+      <tr><td>SG focus</td><td>Competition vs. practice gap</td><td>Sustain all categories within benchmark simultaneously</td></tr>
+    </table>
+  </div>
+
+  <div class="insight">
+    <span class="cicon">📌</span>
+    <p><strong>The Phase 5 paradox:</strong> The temptation after 18 months of structured improvement is to relax the discipline. This is the most dangerous moment in the programme. Scratch is not a permanent state — it requires active defence. The Monday SG review, the competition volume, and the consequence practice sessions must continue through Month 24 and beyond.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 2 — WEEKLY TEMPLATE ═══ -->
+<div class="section" id="schedule">
+  <span class="section-label">Repeating Structure</span>
+  <h2 class="section-title">PHASE 5 MODEL WEEK</h2>
+  <p class="section-desc">Phase 5 reduces one structured practice session per week and replaces it with either an additional competitive round or a course play session. The goal is sustained performance in real conditions — not more range time.</p>
+
+  <div class="card">
+    <span class="card-kicker">Phase 5 — Weekly Template</span>
+    <h3>December 2027 – May 2028</h3>
+    <div class="week-grid" style="margin-top:16px;">
+      <div class="day-cell review">
+        <span class="day-name">Mon</span>
+        <span class="day-icon">📊</span>
+        <span class="day-label">SG Review</span>
+      </div>
+      <div class="day-cell practice">
+        <span class="day-name">Tue</span>
+        <span class="day-icon">🎯</span>
+        <span class="day-label">Practice · Gap Focus</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Wed</span>
+        <span class="day-icon">💪</span>
+        <span class="day-label">Gym + Mobility</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Thu</span>
+        <span class="day-icon">⛳</span>
+        <span class="day-label">Course Play / Free</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Fri</span>
+        <span class="day-icon">💪</span>
+        <span class="day-label">Gym + Activation</span>
+      </div>
+      <div class="day-cell comp">
+        <span class="day-name">Sat</span>
+        <span class="day-icon">🏆</span>
+        <span class="day-label">Competition Round</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Sun</span>
+        <span class="day-icon">⛳</span>
+        <span class="day-label">Round 2</span>
+      </div>
+    </div>
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--ink-light);margin-top:14px;line-height:1.7;">Thursday transitions from a structured session to course play. Play without a target or drill in mind — let the round reveal the current state of your game. Monday's SG review then converts those observations into Tuesday's practice focus. The feedback loop tightens in Phase 5.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Monday Protocol — Phase 5</span>
+    <h3>The 20-Minute Maintenance Review</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><strong>Check the 10-round rolling SG average (5 min).</strong> Any category drifting more than 0.3 strokes below its Phase 4 average triggers Tuesday as a targeted session for that skill. No drift = Tuesday is free practice or course simulation.</li>
+      <li><span class="sn">2</span><strong>Review competition vs. Thursday course play SG differential (5 min).</strong> At scratch level, Thursday course play should approximate competitive performance. A widening gap means competitive pressure management needs reinforcing — increase consequence drills in Tuesday's session.</li>
+      <li><span class="sn">3</span><strong>Check equipment (3 min).</strong> Wedge grooves, grip condition, and ball selection remain active variables at scratch. Monthly check — not obsessive, but deliberate.</li>
+      <li><span class="sn">4</span><strong>Set one specific Tuesday priority (2 min).</strong> Maintenance if data is stable. Targeted gap work if one category is drifting. Never more than one priority per week — specificity is what got you here.</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══ TAB 3 — MONTH-BY-MONTH ═══ -->
+<div class="section" id="calendar">
+  <span class="section-label">December 2027 – May 2028</span>
+  <h2 class="section-title">MONTH-BY-MONTH PLAN</h2>
+  <p class="section-desc">Phase 5 months each carry a theme that responds to the season, the competition calendar, and the specific remaining gap identified in the Phase 4 audit. The final month is a celebration and a full programme review.</p>
+
+  <!-- DECEMBER -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">Dec</span>19</div>
+    <p class="month-title">Phase 4 Audit &amp; Winter Foundation</p>
+    <span class="month-sub">1–31 December 2027 · Week 79–82 · HCP Target: Confirmed Scratch</span>
+    <ul class="checklist">
+      <li><span class="check lime">□</span><strong>18-month audit complete by December 7.</strong> Full SG trend reviewed, Phase 5 brief written with coach, final 6-month priorities set. This document governs the rest of the programme.</li>
+      <li><span class="check lime">□</span><strong>Winter maintenance protocol active.</strong> December conditions in the UK mean reduced carry distances, wet lies, and compact practice windows. Adjust carry distances for current conditions. Do not use summer Mevo data in December competition.</li>
+      <li><span class="check lime">□</span><strong>Introduce the "defend par" practice game.</strong> On the range, simulate a sequence of 9 holes where par is the minimum acceptable outcome. For each simulated hole, the pass standard is: approach inside 30 ft or short game up-and-down. Track the percentage. Pass standard: 75%+ of holes reach the standard.</li>
+      <li><span class="check lime">□</span><strong>Minimum 3 competitive rounds.</strong> Winter medals remain important — they are the data source for the 24-month review and they prevent handicap drift during reduced play conditions.</li>
+    </ul>
+  </div>
+
+  <!-- JANUARY -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">Jan</span>20</div>
+    <p class="month-title">Closing the Final Gap</p>
+    <span class="month-sub">1–31 January 2028 · Week 83–86 · HCP Target: Scratch + Stable</span>
+    <ul class="checklist">
+      <li><span class="check lime">□</span><strong>Execute the Phase 5 brief's primary gap target.</strong> Whatever the Phase 4 audit identified as the narrowest remaining margin to scratch benchmark — this month is its dedicated focus. No other technical theme competes for Tuesday session time.</li>
+      <li><span class="check lime">□</span><strong>Maintain fitness protocol.</strong> January is the month fitness discipline most commonly slips. Two gym sessions per week, daily mobility, 7–9 hours sleep. At scratch level, a 4-week fitness lapse will appear in your SG data by February.</li>
+      <li><span class="check lime">□</span><strong>Indoor putting and short game.</strong> January weather in the UK limits outdoor practice. Use indoor putting work productively — 5-ft gate drill, lag putting into a basin from 15–20 ft, AimPoint practice indoors with a flat mat. Maintain the skill, even if outdoor conditions prevent normal session volume.</li>
+      <li><span class="check lime">□</span><strong>Minimum 2 competitive rounds.</strong> Winter reduces competition availability — 2 is the Phase 5 minimum in January.</li>
+    </ul>
+  </div>
+
+  <!-- FEBRUARY -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">Feb</span>21</div>
+    <p class="month-title">Spring Sharpening</p>
+    <span class="month-sub">1–29 February 2028 · Week 87–90 · HCP Target: Scratch — Ready for Peak Season</span>
+    <ul class="checklist">
+      <li><span class="check gold">□</span><strong>Full LM re-verification as winter conditions ease.</strong> February typically marks the transition from winter to spring distances. Re-verify all irons and wedges on the launch monitor. Update your yardage card for current conditions before March competition season begins.</li>
+      <li><span class="check gold">□</span><strong>Rebuild competition readiness.</strong> February is preparation month for spring peak season. Increase practice session intensity — sharpen consequence games, raise the pass standards on all drills, and treat every Thursday course play round as a competitive rehearsal.</li>
+      <li><span class="check gold">□</span><strong>Coach audit — spring preparation session.</strong> Review the winter SG data. Confirm technique is holding under reduced winter practice volume. Set the spring competition targets — which events in March–May represent the season's primary objectives?</li>
+      <li><span class="check gold">□</span><strong>Minimum 2–3 competitive rounds.</strong> February competition availability improves in the second half of the month. Target 3 if the calendar allows.</li>
+    </ul>
+  </div>
+
+  <!-- MARCH -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">Mar</span>22</div>
+    <p class="month-title">Spring Competition Season Opens</p>
+    <span class="month-sub">1–31 March 2028 · Week 91–94 · HCP Target: Scratch — Competing at Standard</span>
+    <ul class="checklist">
+      <li><span class="check lime">□</span><strong>Full 3× competition month resumes.</strong> Spring competition season opens in March. Minimum 3 competitive rounds. At least one away or open event — unfamiliar course execution is a final scratch-level skill to confirm.</li>
+      <li><span class="check lime">□</span><strong>Apply the wind system on every approach above 10 mph.</strong> Spring weather in England means variable and strong winds. The wind percentage system must be automatic — any lapse in its application is an unnecessary bogey at scratch level.</li>
+      <li><span class="check lime">□</span><strong>Track 5-ft make rate in competition.</strong> Spring greens are typically faster and truer than winter surfaces. Short putting confidence may need resetting on faster greens — practice on the course, not just the putting green mat.</li>
+      <li><span class="check lime">□</span><strong>Revisit the pre-shot routine.</strong> 24 months of competition means the routine may have picked up shortcuts. One session each month observing the full routine on video — confirm it is intact, not abbreviated.</li>
+    </ul>
+  </div>
+
+  <!-- APRIL -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">Apr</span>23</div>
+    <p class="month-title">Peak Season — Maximum Competitive Exposure</p>
+    <span class="month-sub">1–30 April 2028 · Week 95–98 · HCP Target: Scratch — Performing Consistently</span>
+    <ul class="checklist">
+      <li><span class="check lime">□</span><strong>4+ competitive rounds if the calendar allows.</strong> April is peak UK golf season. Enter every available event. Competitive volume at this stage converts maintained technique into deeply reliable execution. No event is too small — the pressure exposure is the variable.</li>
+      <li><span class="check lime">□</span><strong>Spring scoring benchmark session.</strong> On a high-HRV day in April, run the same benchmark session used throughout the programme: 50 6-ft putts, 10 bunker saves, 10-shot iron proximity game. Compare to your best results from Phase 3 and 4. This is the 23-month performance check.</li>
+      <li><span class="check lime">□</span><strong>Identify the 24-month final target.</strong> With one month remaining, set the exact metric you will record at the programme's end: your handicap index, your SG average in each category, and your best 10 competition scores. These are the numbers you will carry forward as the programme's permanent record.</li>
+      <li><span class="check lime">□</span><strong>Begin writing the 24-month review.</strong> Guide 17. Start capturing the narrative while it is vivid — the hardest month, the breakthrough moment, the competition you remember most.</li>
+    </ul>
+  </div>
+
+  <!-- MAY -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">May</span>24</div>
+    <p class="month-title">The Finish Line — 24-Month Review</p>
+    <span class="month-sub">1–31 May 2028 · Week 99–104 · Programme Complete</span>
+    <ul class="checklist">
+      <li><span class="check lime">□</span><strong>Complete the 24-month SG review.</strong> Pull the full programme data. Calculate the total SG improvement in each category from Month 1 to Month 24. Write the final entry in your Progress Journal. This is the permanent record of the work you did.</li>
+      <li><span class="check lime">□</span><strong>Final benchmark session.</strong> One high-HRV session: all four benchmark drills run in sequence. Record the numbers. These are your permanent programme-end benchmarks.</li>
+      <li><span class="check lime">□</span><strong>Final coach session — post-programme review.</strong> Review the 24-month journey with your coach. Set the next 12-month targets — whether that is defending scratch, pursuing plus, targeting county golf, or simply maintaining the standard you have built.</li>
+      <li><span class="check lime">□</span><strong>Compete in the May medal.</strong> The programme ends where it began — in competition. Enter the May medal. Play your pre-shot routine on every shot. Trust every number you have verified. Execute the plan you have built over 24 months.</li>
+      <li><span class="check lime">□</span><strong>Complete the 24-month Progress Journal entry.</strong> Guide 17. The questions: Where did you start? Where did you finish? What was the hardest month? What surprised you most? What would you tell yourself in Month 1? What is next?</li>
+    </ul>
+    <div class="finish-banner">
+      <span class="finish-icon">🏆</span>
+      <h2>THE SCRATCH PROJECT</h2>
+      <p>24 months. 2 rounds and 2 practice sessions per week. Structured, data-driven, and relentlessly honest. This is what the plan was always designed to produce — not a lucky round, but a confirmed standard, built deliberately and defended completely.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 4 — SESSION TEMPLATES ═══ -->
+<div class="section" id="sessions">
+  <span class="section-label">Exact Protocols</span>
+  <h2 class="section-title">PHASE 5 SESSION TEMPLATES</h2>
+  <p class="section-desc">Phase 5 has one structured session and one free session per week. The structured session targets the current gap identified by Monday's SG review. The free session is course play or open range work — no drill, no consequence game, just golf.</p>
+
+  <div class="card">
+    <span class="card-kicker">Tuesday Session — Maintenance + Gap (60 min)</span>
+    <h3>Targeted Maintenance Session</h3>
+    <div class="session-block">
+      <p class="session-title">Default Allocation — Adjust Based on Monday SG Review</p>
+      <div class="session-row">
+        <span class="s-pct tl">25%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:25%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="s-label">Putting — Gate drill + lag + one consequence game</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct rs">25%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:25%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="s-label">Short Game — Variety of lies, U&amp;D tracking</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct lm">35%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:35%;background:linear-gradient(90deg,#3a8a3a,#6ab86a);"></div></div>
+        <span class="s-label">Gap Focus — Whatever Monday's SG review identified as the current deficit</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct gd">15%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:15%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="s-label">Driver — Shape control + course simulation off tee</span>
+      </div>
+    </div>
+    <p style="font-family:'Libre Baskerville',serif;font-size:0.88rem;color:var(--ink-light);margin-top:14px;line-height:1.7;font-style:italic;">If Monday's SG review shows all categories within benchmark — shift the Gap Focus 35% to any skill you enjoy working on. Phase 5 earns the right to some free exploration. If any category is drifting — every Tuesday percentage shifts to close that gap until the data recovers.</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Thursday Session — Free Play (18 holes or short game)</span>
+    <h3>Observation Round — No Drills</h3>
+    <p>Thursday in Phase 5 is observation. Play 9 or 18 holes with no technical focus — just your pre-shot routine on every shot and your course management decisions applied correctly. After the round, note three things: the shot you were most satisfied with, the decision you would make differently, and whether your pre-shot routine held for all 18 holes. These three questions feed Monday's review more reliably than any drill.</p>
+    <div class="insight" style="margin-top:16px;">
+      <span class="cicon">📌</span>
+      <p><strong>Why free play matters in Phase 5:</strong> After 18 months of structured practice, the risk is that the game becomes entirely analytical. Thursday's free play restores the instinctive, natural execution that competition ultimately requires. You cannot play the Monday SG review on the course. Thursday reconnects you to the game as it actually feels.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 5 — COMPETITION PLAN ═══ -->
+<div class="section" id="competition">
+  <span class="section-label">Competitive Calendar</span>
+  <h2 class="section-title">PHASE 5 COMPETITION PLAN</h2>
+  <p class="section-desc">Phase 5 maintains 3 competitive rounds per month and widens the variety of formats and venues. At scratch level, the competitive repertoire matters — stroke play, matchplay, foursomes, county events, and links golf all require slightly different strategic approaches.</p>
+
+  <div class="card">
+    <span class="card-kicker">Monthly Competition Requirements</span>
+    <h3>December 2027 – May 2028</h3>
+    <div class="comp-row">
+      <span class="comp-month">December</span>
+      <div class="comp-detail">
+        <strong>2–3 rounds — winter medals, stroke play priority</strong>
+        <span>December competition is primarily data generation for the 18-month review. Enter every available medal. Do not withdraw from competition due to poor weather — adverse conditions at scratch are part of the standard.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">January</span>
+      <div class="comp-detail">
+        <strong>2 rounds minimum — winter volume is reduced</strong>
+        <span>January is the lowest competition availability month. 2 qualifying rounds is the Phase 5 minimum. Use the limited competition to focus on executing the gap identified in the Phase 5 brief under real pressure.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">February</span>
+      <div class="comp-detail">
+        <strong>2–3 rounds — spring transition</strong>
+        <span>February competition accelerates spring readiness. If the Club Winter Series is available, this is a priority event. Stroke play in winter conditions tests distance management, decision-making, and patience — all scratch-level requirements.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">March</span>
+      <div class="comp-detail">
+        <strong>3 rounds — spring season opens, target an away event</strong>
+        <span>March marks the return of full competition volume. Include at least one away event or open competition. Playing an unfamiliar course at scratch level tests the pre-shot routine, course management, and distance verification discipline that the programme has built.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">April</span>
+      <div class="comp-detail">
+        <strong>3–4 rounds — county or regional events if available</strong>
+        <span>April is the prime month for county and regional competition. If you qualify for county events, enter. Playing against county-level scratch and plus golfers accelerates the final consolidation of competitive confidence. The standard you built this programme to achieve is tested against the standard others have built to a lifetime.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">May</span>
+      <div class="comp-detail">
+        <strong>3 rounds — programme conclusion events</strong>
+        <span>May closes the programme. The May medal, a spring open if available, and one final stroke play event with a full SG review. These three rounds generate the final data set for the 24-month review. Play them with the full commitment and pre-shot discipline of the best competitive round you have ever played.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="success">
+    <span class="cicon">🏆</span>
+    <p><strong>24-Month Target:</strong> Scratch handicap index confirmed and defended across a full competitive season. All four SG categories within scratch benchmark simultaneously. Minimum 55 competitive rounds played across 24 months. A documented record of the journey in the Progress Journal. This is the programme's definition of success.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 6 — FINAL BENCHMARKS ═══ -->
+<div class="section" id="targets">
+  <span class="section-label">The Final Numbers</span>
+  <h2 class="section-title">24-MONTH FINAL BENCHMARKS</h2>
+  <p class="section-desc">These are the definitive standards that confirm the programme has delivered. Fill in your actual numbers at Month 24. This is the permanent record of what the 24-month commitment produced.</p>
+
+  <span class="badge b-lime">🏆 24-Month Programme End — May 2028</span>
+
+  <div class="card">
+    <span class="card-kicker">Month 21 Checkpoint — February 2028</span>
+    <h3>Winter Maintenance Confirmed</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Scratch Benchmark</th><th>Month 21 Target</th><th>My Number</th></tr>
+      <tr><td>Handicap</td><td class="good">0.0</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>GIR % (winter rounds)</td><td class="good">55–60%</td><td class="warn">48%+ (winter conditions)</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="good">&lt;5%</td><td class="warn">&lt;6%</td><td></td></tr>
+      <tr><td>Approach prox (125–175 yds)</td><td class="good">&lt;25 ft</td><td class="warn">&lt;27 ft (winter)</td><td></td></tr>
+      <tr><td>Coach audit (Phase 5)</td><td class="good">✓</td><td class="good">1×</td><td></td></tr>
+      <tr><td>Distance verification updated</td><td class="good">✓</td><td class="good">✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card lime-card">
+    <span class="card-kicker">Month 24 — May 2028 · Programme End</span>
+    <h3>The Complete 24-Month Record</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Month 1 Start</th><th>Scratch Benchmark</th><th>Month 24 Result</th></tr>
+      <tr><td>Handicap</td><td class="bad">~10</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>SG: Off-Tee (avg)</td><td class="bad">~−0.9/rd</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>SG: Approach (avg)</td><td class="bad">~−1.8/rd</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>SG: Around-Green (avg)</td><td class="bad">~−2.5/rd</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>SG: Putting (avg)</td><td class="bad">~−2.4/rd</td><td class="good">0.0</td><td></td></tr>
+      <tr><td>GIR %</td><td class="bad">~25%</td><td class="good">55–60%</td><td></td></tr>
+      <tr><td>Approach prox (125–175 yds)</td><td class="bad">&gt;40 ft</td><td class="good">&lt;25 ft</td><td></td></tr>
+      <tr><td>U&amp;D %</td><td class="bad">~25%</td><td class="good">40%+</td><td></td></tr>
+      <tr><td>Bunker save %</td><td class="bad">~15%</td><td class="good">35%+</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="bad">~18%</td><td class="good">&lt;5%</td><td></td></tr>
+      <tr><td>5-ft make rate</td><td class="bad">~55%</td><td class="good">85%+</td><td></td></tr>
+      <tr><td>Driver speed</td><td></td><td class="good">108–115 mph</td><td></td></tr>
+      <tr><td>Competitive rounds played</td><td>0</td><td class="good">55+</td><td></td></tr>
+      <tr><td>Coach audits completed</td><td>0</td><td class="good">8–10</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="success">
+    <span class="cicon">🏆</span>
+    <p><strong>If all benchmarks are met:</strong> The programme has delivered. You started at 10. You arrived at scratch. The work — two rounds and two sessions per week, 24 months, structured and honest — has produced a standard that the vast majority of golfers never reach. What you do next is your choice. But you built the foundation to do anything the game demands.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 7 — PROGRESS TRACKER ═══ -->
+<div class="section" id="tracker">
+  <span class="section-label">Live Data</span>
+  <h2 class="section-title">PROGRESS TRACKER</h2>
+  <p class="section-desc">The final 6 months of data. Fill in after every round. The 24-month record is complete when May 2028 is filled in — and the comparison to Month 1 tells the story of the entire programme.</p>
+
+  <span class="badge b-lime">🗓️ Phase 5 Log — December 2027 to May 2028</span>
+
+  <div class="card">
+    <span class="card-kicker">Round Log — Fill After Every Round</span>
+    <h3>Key Stats — Phase 5</h3>
+    <table class="dtable">
+      <tr><th>Date</th><th>Type</th><th>HCP</th><th>Score</th><th>GIR%</th><th>U&amp;D%</th><th>3-Putts</th><th>Prox avg</th></tr>
+      <tr><td>Dec Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Dec Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Jan Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Jan Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Feb Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Feb Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Mar Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Mar Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Mar Comp 3</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Apr Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Apr Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>Apr Comp 3</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>May Comp 1</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>May Comp 2</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>May — Final</td><td>Comp</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Monthly SG Summary — Phase 5</span>
+    <h3>Strokes Gained — December to May</h3>
+    <table class="dtable">
+      <tr><th>Month</th><th>SG: OTT</th><th>SG: APP</th><th>SG: ARG</th><th>SG: PUTT</th><th>HCP</th></tr>
+      <tr><td>December</td><td></td><td></td><td></td><td></td><td class="good">0.0</td></tr>
+      <tr><td>January</td><td></td><td></td><td></td><td></td><td class="good">0.0</td></tr>
+      <tr><td>February</td><td></td><td></td><td></td><td></td><td class="good">0.0</td></tr>
+      <tr><td>March</td><td></td><td></td><td></td><td></td><td class="good">0.0</td></tr>
+      <tr><td>April</td><td></td><td></td><td></td><td></td><td class="good">0.0</td></tr>
+      <tr><td>May — Final</td><td></td><td></td><td></td><td></td><td class="good">0.0 Confirmed</td></tr>
+    </table>
+  </div>
+
+  <div class="pull-quote">
+    "They are the ones who tracked their data honestly, practised with structure, competed with courage, and did not quit when the improvement plateaued."
+    <span>— The Scratch Project</span>
+  </div>
+</div>
+
+<!-- ═══ TAB 8 — BEYOND SCRATCH ═══ -->
+<div class="section" id="beyond">
+  <span class="section-label">What Comes Next</span>
+  <h2 class="section-title">BEYOND SCRATCH</h2>
+  <p class="section-desc">The 24-month programme ends in May 2028. Scratch is not a destination — it is a platform. What you build from here depends on your ambitions. This tab sets out the options clearly.</p>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Option 1 — The Plus Handicap</span>
+    <h3>Targeting +1 or Better</h3>
+    <p>A plus handicap requires consistent scores below par across qualifying rounds. The SG benchmarks tighten: approach proximity target moves to &lt;20 ft from 150 yards, GIR% target rises to 60–65%, and 3-putt rate must reach &lt;3%. Speed training typically resumes — plus-handicappers generally carry 110+ mph driver speed. This requires a further 12–18 months of structured work beyond Month 24.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn gd">1</span><strong>Book a TPI-certified coach audit immediately after Month 24.</strong> Set the plus programme brief. The approach from scratch to plus is nearly identical in structure to the scratch programme — just with tighter benchmarks and higher competition volume.</li>
+      <li><span class="sn gd">2</span><strong>Enter county-level competition.</strong> County golf provides the competitive standard against which plus handicaps are built. Enter your county's qualifying events from June 2028.</li>
+      <li><span class="sn gd">3</span><strong>Resume Rypstick speed training.</strong> Speed is a primary plus-handicap differentiator. An additional 3–5 mph of driver speed, built over 6 months of structured overspeed training, adds approach advantage that translates directly into scoring.</li>
+    </ul>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Option 2 — Defend and Enjoy</span>
+    <h3>Sustaining Scratch Without a Structured Programme</h3>
+    <p>Scratch can be maintained without a full improvement programme — but it requires active, not passive, maintenance. The Monday SG review, minimum 2 competitive rounds per month, one structured practice session per week, and quarterly coach audits are the non-negotiable maintenance requirements. Below this floor, handicap drift is predictable within 6 months.</p>
+    <div class="insight" style="margin-top:14px;">
+      <span class="cicon">📌</span>
+      <p><strong>The maintenance floor:</strong> Two competitive rounds per month. One structured session per week. Quarterly coach check. Monthly SG review. These four habits, sustained without the intensity of the improvement programme, are sufficient to defend scratch indefinitely. Remove any one of them and drift begins.</p>
+    </div>
+  </div>
+
+  <div class="card rust-card">
+    <span class="card-kicker">Option 3 — Competitive Golf</span>
+    <h3>Club, County, and Amateur Competition</h3>
+    <p>Scratch opens doors that handicap golf closes. Club championship contention, county team selection, and open amateur events all become realistic objectives. If competitive golf beyond the club level is the ambition, the programme structure continues — higher competition volume, retained coaching relationship, and the disciplines of Phase 4 maintained permanently.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn rs">1</span><strong>Apply for county card.</strong> Most counties offer a handicap-based entry point. Scratch or better typically qualifies for county competition entry. Contact your county golf union in June 2028.</li>
+      <li><span class="sn rs">2</span><strong>Enter national open amateur events.</strong> The EG Order of Merit, regional amateur opens, and national qualifying events are available to scratch golfers. These events provide the highest-standard competitive environment available outside professional golf.</li>
+      <li><span class="sn rs">3</span><strong>Continue the programme structure.</strong> Competitive amateur golf at county or national level is essentially a perpetual Phase 4/5 — the programme never formally ends. The structure you have built is the structure that competitive amateurs use for their entire playing careers.</li>
+    </ul>
+  </div>
+
+  <div class="finish-banner" style="margin-top:28px;">
+    <span class="finish-icon">🏆</span>
+    <h2>24 MONTHS. 10 TO SCRATCH.</h2>
+    <p>The path from 10 to scratch is not a matter of talent. It is a matter of structure, discipline, and willingness to compete under pressure — across 24 months, two rounds and two sessions per week, every week. You built it. Now defend it.</p>
+  </div>
+</div>
+
+<div class="footer">
+  THE SCRATCH PROJECT · PHASE 5 · DECEMBER 2027 – MAY 2028 · DEFEND THE STANDARD<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">The 24-month programme ends in May 2028 · What you do next is your choice · The foundation is built</span>
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({top: document.querySelector('.nav-tabs').offsetTop - 2, behavior: 'smooth'});
+  }
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+    </a>
+    <a href="29_months_13_18_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Months 13–18 Plan</span>
+    </a>
+    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Competitive Strategy</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-05-30 · 31_on_course_notes.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>On-Course Notes & Course Knowledge — The Scratch Project</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.elite p{color:rgba(240,208,112,.9);}.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}.warn-box p{color:rgba(240,128,80,.9);}.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+.hole-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin-bottom:10px;}
+.hole-num{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:4px;}
+.hole-name{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.hole-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.hole-field{background:rgba(160,200,80,0.04);border:1px solid rgba(160,200,80,0.12);border-radius:6px;padding:8px 10px;}
+.field-lbl{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;}
+.field-val{font-size:12px;color:var(--muted);line-height:1.5;}
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:160px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;min-width:40px;text-align:right;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.hole-fields{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Pro Playbook · Guide 31</p>
+  <h1>On-Course Notes &<br><em>Course Knowledge</em></h1>
+  <p class="hero-sub">Building a permanent, compounding course intelligence system — recon methodology, hole-by-hole note structure, landing zone mapping, seasonal adjustments, and converting raw notes into a touring-caddie-standard yardage book.</p>
+  <div class="hero-tags">
+    <span class="htag">📋 Recon Protocol</span>
+    <span class="htag">🗺️ Hole Mapping</span>
+    <span class="htag">🎯 Landing Zones</span>
+    <span class="htag">📐 Green Reading</span>
+    <span class="htag">🔄 Seasonal Updates</span>
+    <span class="htag">🏆 Course Mastery</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('recon',this)">Recon Protocol</button>
+  <button class="tab" onclick="show('holes',this)">Hole Notes</button>
+  <button class="tab" onclick="show('greens',this)">Green Maps</button>
+  <button class="tab" onclick="show('seasonal',this)">Seasonal</button>
+  <button class="tab" onclick="show('digital',this)">Digital Setup</button>
+  <button class="tab" onclick="show('template',this)">Template</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Course Knowledge as Competitive Advantage</h2>
+  <p class="sec-desc">Tour caddies spend up to 40 hours building course notes before a tournament. Scratch amateur golfers who play their home course 30+ times a year often have no written notes at all — relying on memory that degrades, distorts, and fails precisely when precision is most needed: under competitive pressure.</p>
+  <span class="badge badge-gold">📋 The Knowledge Compound</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Written Notes Beat Memory Every Time</span>
+    <h3>The Four Failure Modes of Memory-Based Course Knowledge</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pressure degrades recall:</strong> The specific details you most need under competitive pressure — the exact carry to clear the bunker on 14, whether the green slopes left or right at the back — are precisely the details that become uncertain under cortisol-driven arousal. Memory and pressure are incompatible. Written notes are immune to pressure.</div></li>
+      <li><span class="step-n">2</span><div><strong>Memory updates overwrite correct data:</strong> A single bad experience on a hole — misjudging the wind once — can update your mental model of that hole incorrectly. Your notes record measured reality. Your memory records recent experience, which is not the same thing.</div></li>
+      <li><span class="step-n">3</span><div><strong>Seasonal changes are invisible without records:</strong> Summer carry distances, winter run-out, wet green stopping power — all vary by 10–30% across the year. Without documented seasonal baselines, you are re-learning the same information every season instead of referencing it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Course improvements are lost between seasons:</strong> Your notes improve every time you add to them. After 20 rounds with structured notes, your course intelligence is substantially more accurate and complete than it was after 5. Without notes, 20 rounds produces roughly the same memory-based knowledge as 5.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">What Complete Course Notes Contain</span>
+    <h3>The Seven Categories of Course Intelligence</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>What to Record</th><th>Update Frequency</th></tr>
+      <tr><td>Hole architecture</td><td>Exact carry distances to hazards, landing zones, dog-leg positions</td><td>Once — update if course changes</td></tr>
+      <tr><td>Tee strategy</td><td>Target, avoid zone, club selection by condition</td><td>Seasonally</td></tr>
+      <tr><td>Approach targets</td><td>Ideal approach angles, miss direction priorities, back/front green difference</td><td>Seasonally (firm vs. soft)</td></tr>
+      <tr><td>Green maps</td><td>Slope direction and severity by quadrant, grain direction, speed notes</td><td>Once — update if greens are renovated</td></tr>
+      <tr><td>Pin positions</td><td>Accessible vs. dangerous flags, required approach angle for each</td><td>Rolling — note after each round</td></tr>
+      <tr><td>Wind effects</td><td>Hole-by-hole wind tunnel effects, how this hole plays differently in prevailing wind</td><td>Rolling — note each round</td></tr>
+      <tr><td>Personal data</td><td>Historical scoring on the hole, club used for specific distances, recurring errors</td><td>After every round</td></tr>
+    </table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>The caddie standard:</strong> A tour caddie's yardage book is a working document — annotated, dog-eared, and updated after every practice round. It is the physical embodiment of accumulated course intelligence. Your digital equivalent should function the same way. The goal is not a perfect document — it is a living record that gets more accurate with every round.</p>
+  </div>
+</div>
+
+<!-- RECON PROTOCOL -->
+<div class="sec" id="recon">
+  <h2 class="sec-title">The Recon Protocol</h2>
+  <p class="sec-desc">Course reconnaissance is not just walking the course — it is a structured data-gathering exercise with specific objectives. Done properly, a single dedicated recon round produces more useful course intelligence than 20 casual rounds without a framework.</p>
+  <span class="badge badge-teal">🔍 The Reconnaissance Round</span>
+  <div class="card card-teal">
+    <span class="card-tag">When to Do a Dedicated Recon Round</span>
+    <h3>Four Triggers for Structured Reconnaissance</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>New course before a competition:</strong> Any course you are playing competitively that you have not played in the current conditions deserves a dedicated recon round. Even if you have played it 10 times, conditions change. A recon round the day before confirms current carry distances, green speeds, and pin position areas.</div></li>
+      <li><span class="step-n">2</span><div><strong>Your home course at the start of each season:</strong> Winter conditions (soft greens, limited run, different landing zones) versus summer conditions (firm ground, maximum run, different club requirements) are sufficiently different to warrant a fresh recon at the start of each season. Your summer notes are not valid for winter golf.</div></li>
+      <li><span class="step-n">3</span><div><strong>After course alterations:</strong> New bunkering, tree removal, bunker positions, green renovations — any structural change invalidates specific sections of your existing notes. A targeted recon of the affected holes updates the record.</div></li>
+      <li><span class="step-n">4</span><div><strong>When your scoring on specific holes is consistently worse than expected:</strong> If your SG data (Guide 26) shows you losing significantly more strokes than expected on 2–3 specific holes across multiple rounds, those holes require dedicated recon. The problem is usually a course knowledge gap — a hazard carry you are misjudging, a green slope you are misreading.</div></li>
+    </ul>
+  </div>
+
+  <h2 class="sec-title">The Recon Round Methodology</h2>
+  <p class="sec-desc">A recon round is played differently from a scoring round. You are collecting data, not competing. Bring a notebook or phone, play slowly, and measure everything.</p>
+  <div class="card">
+    <span class="card-tag">Tee Area — What to Measure and Record</span>
+    <h3>The Eight Data Points From Every Tee</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>GPS or laser measurement to all significant hazards:</strong> Carry distance to bunkers (front lip, not centre), water carries (minimum safe carry, not optimal), trees that require carry or navigation. Record the exact GPS number from the tee markers — not from a position halfway up the fairway. Tee distances are the ones you will use in competition.</div></li>
+      <li><span class="step-n">2</span><div><strong>Ideal landing zone boundaries:</strong> Where does the fairway widen? Where does it narrow? Where does a specific miss (left, right, short) go from bad to catastrophic? These boundaries define your target — not just the centre of the fairway.</div></li>
+      <li><span class="step-n">3</span><div><strong>Slope of the fairway at the landing zone:</strong> Does the fairway slope left, right, toward the green, or away from it at 230–260 yards? A fairway sloping left at the landing zone turns a left-centre tee shot into a worse position than a right-centre shot, regardless of where you aimed.</div></li>
+      <li><span class="step-n">4</span><div><strong>Wind funnel note:</strong> Does the hole create a wind tunnel effect? Are there trees that redirect or accelerate the wind? Note the prevailing wind direction on this hole and whether it differs from the general wind direction — hills, valleys, and tree corridors commonly produce local wind effects 20–30° different from the forecast direction.</div></li>
+      <li><span class="step-n">5</span><div><strong>Elevation change to landing zone:</strong> Does the tee sit above or below the fairway? A 10m elevation drop adds approximately 10% to effective carry (the ball flies further before landing). An elevated target (uphill hole) reduces effective carry by a similar amount. Note the elevation change and its approximate effect on required club.</div></li>
+      <li><span class="step-n">6</span><div><strong>Scoring category — personal:</strong> Based on your game and historical data, is this a scoring hole (opportunity), a neutral hole (par is fine), or a danger hole (bogey avoidance priority)? This classification determines your strategic approach before you leave the tee — not on the fairway where you can see the trouble.</div></li>
+      <li><span class="step-n">7</span><div><strong>Preferred miss direction:</strong> Which miss position is less damaging — left rough or right rough, short or long of the green? Identify the recoverable miss and aim so that your dispersion cone covers more of the recoverable zone than the dangerous one.</div></li>
+      <li><span class="step-n">8</span><div><strong>Firm conditions vs. soft conditions tee plan:</strong> In summer (firm, running), a shorter club may produce the same or better position due to roll-out. In winter (soft, no roll), carry-dependent distances change the club required. Document both conditions separately.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Approach Zone — What to Measure</span>
+    <h3>The Most Valuable Recon Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>GPS distance from ideal landing zone to flag:</strong> Walk to your ideal landing zone and record the GPS distance to the front, centre, and back of the green. Most players only record centre-of-green distance — but the front-to-back difference on approach clubs (often 15–25 yards) is the difference between hitting the green and missing short.</div></li>
+      <li><span class="step-n">2</span><div><strong>Best approach angle:</strong> Some greens are better attacked from the left of the fairway; some from the right. A green that slopes from right to left is accessed best from the right side of the fairway (putting downhill) or the left (putting into the slope — harder but safer). Note which approach angle gives you the most green to work with and the most forgiving miss.</div></li>
+      <li><span class="step-n">3</span><div><strong>Green surrounds — the miss priorities:</strong> Walk around the green and assess: which miss is worst (steep bank, tight lie, deep bunker, water)? Which miss is most recoverable (flat fringe, open chip angle, friendly rough)? The approach target should be set so that the edge of your dispersion cone falls into the recoverable miss zone, not the catastrophic one.</div></li>
+      <li><span class="step-n">4</span><div><strong>Carry to clear any front bunkers:</strong> Front bunkers are the most punishing approach hazard — they combine the difficulty of a bunker shot with a short approach. Measure the carry required from your expected distance to clear the front lip, not just the bunker face. A ball that lands in the back of the bunker is as costly as one in the front.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HOLE NOTES -->
+<div class="sec" id="holes">
+  <h2 class="sec-title">Hole Note Structure</h2>
+  <p class="sec-desc">The optimal hole note captures the essential data in a format that can be read quickly under competitive pressure. Every field earns its place — if it doesn't change a decision, it doesn't belong in the note.</p>
+  <span class="badge badge-lime">📝 The Standard Hole Template</span>
+  <div class="card">
+    <span class="card-tag">The Eight-Field Hole Note</span>
+    <h3>What to Record for Every Hole</h3>
+    <div class="hole-card">
+      <div class="hole-num">Hole 7 · Par 4 · 412 yards · SI 5</div>
+      <div class="hole-name">Example Annotated Note</div>
+      <div class="hole-fields">
+        <div class="hole-field">
+          <div class="field-lbl">Tee Target</div>
+          <div class="field-val">Driver — left-centre of fairway. Aim left edge of right bunker. Bunker carry: 210 yards. Fairway narrows at 265+.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Avoid Zone</div>
+          <div class="field-val">Right bunker (carries out left). Trees left at 280+ (only relevant in following wind). OB right beyond hedge.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Approach Target</div>
+          <div class="field-val">From left of fairway: 145 to centre, 132 to front. Right-centre of green always — bunker front-left. Never short.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Preferred Miss</div>
+          <div class="field-val">Long and right (open chip angle, friendly rough). Short-left into bunker is worst outcome. Never go at left pin.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Green Notes</div>
+          <div class="field-val">Slopes front-to-back, faster than it looks. Back pin: never above the hole. Front pin: ball releases to back from front edge.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Wind Effect</div>
+          <div class="field-val">Prevailing SW creates left-to-right crosswind. Adds 1 club on approach from left rough. Bunker less visible in strong left wind.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Scoring Category</div>
+          <div class="field-val">DANGER — SI 5 but consistent bogey risk. Priority: avoid double. Par is success. Only attack right-centre pin.</div>
+        </div>
+        <div class="hole-field">
+          <div class="field-lbl">Personal History</div>
+          <div class="field-val">Avg: +0.8 vs. target. Recurring error: driving right under pressure. Solution: aim 5 yards further left than feels comfortable.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Scoring Category Classification</span>
+    <h3>Classify Every Hole Before You Play It</h3>
+    <ul class="steps">
+      <li><span class="step-n">S</span><div><strong>Scoring hole:</strong> Your game gives you a genuine birdie or net birdie opportunity. Risk-reward justifies aggressive play. Attack accessible flags. Accept slightly higher variance for higher reward. Typically 3–5 holes per 18.</div></li>
+      <li><span class="step-n">N</span><div><strong>Neutral hole:</strong> Par (or net par) is the correct target. No meaningful scoring opportunity. No exceptional danger. Play conservatively, execute your standard process. Typically 8–10 holes per 18.</div></li>
+      <li><span class="step-n">D</span><div><strong>Danger hole:</strong> Significant risk of a costly score. Bogey avoidance is the primary objective. Conservative off the tee, centre-green on approach, lag putting. Never attack sucker pins. Typically 3–5 holes per 18.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Personalise your classification:</strong> The stroke index tells you what the committee thinks is difficult. Your personal classification tells you what is difficult <em>for your game</em>. A long par-4 (SI 1) might be neutral for a player hitting 270-yard drives but a danger hole for a 240-yard player. Classify based on your actual game, not the SI.</p>
+    </div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Personal History — The Most Valuable Field</span>
+    <h3>Building a Statistical Profile of Every Hole</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Record your score after every round:</strong> A simple running total of your scores on each hole, updated after every round. After 10 rounds, your average score per hole is your most honest assessment of where strokes are actually going — more reliable than any single-round memory.</div></li>
+      <li><span class="step-n">2</span><div><strong>Note the cause of every bogey or worse:</strong> Not "I played badly" — the specific cause. "Drove right into bunker." "3-putted from above the hole." "Tried to carry the bunker, came up short." After 5+ instances on the same hole, patterns emerge that directly inform your strategy note.</div></li>
+      <li><span class="step-n">3</span><div><strong>Record any shot that worked exceptionally well:</strong> The specific club, wind direction, and ball flight that produced your best result on a hole. This positive evidence is as valuable as the negative — it tells you the shot that works when it goes right, which is what you should be visualising in the pre-shot routine.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- GREEN MAPS -->
+<div class="sec" id="greens">
+  <h2 class="sec-title">Green Maps</h2>
+  <p class="sec-desc">Putting is the category where course knowledge provides the clearest, most immediate advantage. A player who knows the slope direction, the approximate gradient, the grain, and the speed variation of every green on their home course has a measurable putting advantage over a player who reads it fresh every time.</p>
+  <span class="badge badge-gold">⛳ The Green Intelligence System</span>
+  <div class="card card-gold">
+    <span class="card-tag">Building a Green Map</span>
+    <h3>The Four Elements of a Complete Green Profile</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Primary slope direction:</strong> Every green has a dominant slope — the direction water would run if poured on the surface. This is your macro read. Note the primary slope direction for each quadrant of the green (front-left, front-right, back-left, back-right). Most greens slope from back to front (toward the fairway) and from one side — often toward a nearby water feature or natural drainage point.</div></li>
+      <li><span class="step-n">2</span><div><strong>Gradient estimate:</strong> How steeply does the green slope? Greens are typically graded in three levels: gentle (less than 1%), moderate (1–2%), and steep (over 2%). A gentle slope requires a small break read. A steep slope on a fast green can require 4–5 feet of break on a 20-footer. Categorising each quadrant by gradient avoids the systematic under-reading of subtle slopes and over-reading of flat areas that costs most amateurs strokes.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain direction:</strong> Relevant primarily on UK links courses and bent/bermuda grass greens common in warmer climates. Grain runs in a consistent direction — typically toward the prevailing wind, toward the setting sun, or toward nearby water. Putting with the grain: ball rolls faster and breaks less. Against grain: slower, breaks more. On bent grass UK parkland greens, grain effect is usually minimal — note if it is significant on specific greens.</div></li>
+      <li><span class="step-n">4</span><div><strong>Speed variation across the green:</strong> Some greens are significantly faster in the back half than the front (common on elevated greens where the back falls away sharply). Others are fast on the perimeter and slower in the centre (hollow areas). If you have consistent 3-putt patterns from specific areas, a speed variation in that zone is likely the cause.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Quadrant Analysis — The Practical System</span>
+    <h3>Dividing Every Green Into Zones</h3>
+    <p style="margin-bottom:12px;">Rather than trying to read every individual putt fresh, map each green into four quadrants and record the dominant read from each zone. This gives you a baseline that is almost always faster to consult than re-reading from scratch.</p>
+    <table class="tbl">
+      <tr><th>Zone</th><th>Record</th><th>How to Capture</th></tr>
+      <tr><td>Front-left</td><td>Slope direction + gradient + typical break on 20-footer</td><td>Walk to zone during recon, observe drainage direction</td></tr>
+      <tr><td>Front-right</td><td>Slope direction + gradient + typical break on 20-footer</td><td>Note during recon; update after each missed read</td></tr>
+      <tr><td>Back-left</td><td>Slope direction + gradient + typical break on 20-footer</td><td>Often the fastest quadrant — note any speed difference</td></tr>
+      <tr><td>Back-right</td><td>Slope direction + gradient + typical break on 20-footer</td><td>Note whether the back falls away from the green (common)</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The confirmation loop:</strong> After every round, note any putt where the actual break differed significantly from your map prediction. Update the map. After 10+ rounds, your green maps will be accurate to the point where you rarely misread your home course by more than 10–15% — a significant advantage over a fresh read every time.</p>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Pin Position Intelligence</span>
+    <h3>The Most Tactically Useful Green Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Categorise every flag position as accessible or dangerous:</strong> An accessible flag is one where the approach angle and surrounding hazards allow you to attack with acceptable risk. A dangerous flag (sucker pin) requires approach precision that exceeds your realistic dispersion — it is only worth attacking when you need a birdie to win something specific.</div></li>
+      <li><span class="step-n">2</span><div><strong>Note the required approach angle for each pin area:</strong> The left-back flag might require an approach from the right side of the fairway for an acceptable angle. The right-front flag might be attackable from anywhere. This approach-angle intelligence is the link between your tee strategy and your pin position plan — and it can only be built through deliberate observation.</div></li>
+      <li><span class="step-n">3</span><div><strong>Record the "never go" zones:</strong> For every green, identify the one area that makes the subsequent shot longest and most difficult. "Never above the hole on 12." "Never right on 4 — the bank rejects everything to the rough." These are non-negotiables that should be in your hole note as unconditional rules.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SEASONAL ADJUSTMENTS -->
+<div class="sec" id="seasonal">
+  <h2 class="sec-title">Seasonal Adjustments</h2>
+  <p class="sec-desc">UK golf spans dramatic condition changes across a season. A course knowledge system that works for June is significantly wrong for November. Documenting seasonal baselines allows you to adjust automatically rather than re-learning the same lessons every winter.</p>
+  <span class="badge badge-teal">🌦️ UK Seasonal Framework</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Four UK Playing Seasons</span>
+    <h3>What Changes and When</h3>
+    <table class="tbl">
+      <tr><th>Season</th><th>Months</th><th>Ground Condition</th><th>Key Adjustment</th></tr>
+      <tr><td class="good">Summer</td><td>Jun–Aug</td><td>Firm, maximum run, fast greens</td><td>Club down on approaches; allow significant run; back of green targets dangerous</td></tr>
+      <tr><td class="warn">Autumn</td><td>Sep–Oct</td><td>Softening, morning dew, slower greens</td><td>Club up progressively; reduce run estimates; morning rounds play longer</td></tr>
+      <tr><td class="bad">Winter</td><td>Nov–Feb</td><td>Soft, no run, slow greens, preferred lies</td><td>Full carry distances only; no run budget; greens much slower — pace up significantly</td></tr>
+      <tr><td class="warn">Spring</td><td>Mar–May</td><td>Recovering, variable, unpredictable</td><td>Most variable season — measure rather than assume; greens speed up rapidly in April</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Documenting Seasonal Distance Changes</span>
+    <h3>Your Personal Summer vs. Winter Distance Table</h3>
+    <p style="margin-bottom:12px;">The most practical seasonal data you can build is your personal carry + total distance table for each club in summer conditions versus winter conditions. Most players know they lose distance in winter — very few know <em>exactly how much</em> per club, which causes systematic under-clubbing.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Measure in September and March:</strong> Use the Mevo (or Arccos real-world data) to establish your carry distances in early autumn (before significant softening) and early spring (before ground firms up). These two measurements bracket your winter distance loss and give you exact adjustment figures.</div></li>
+      <li><span class="step-n">2</span><div><strong>Record total distance (carry + run) separately from carry:</strong> In summer, a 7-iron that carries 155 yards might total 170 yards with run. In winter, that same 7-iron carries 150 yards and totals 152 yards. The 18-yard total distance difference requires a club and a half adjustment — significantly more than most players budget for.</div></li>
+      <li><span class="step-n">3</span><div><strong>Update the caddie card seasonally:</strong> Your caddie card (Guide — Caddie Reference Card) should have separate summer and winter distance matrices. If you are using a single matrix year-round, you are using the wrong numbers for at least 5 months of the year.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Seasonal Hole Strategy Changes</span>
+    <h3>Which Holes Change Most Between Seasons</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Long par-4s and par-5s:</strong> These change most dramatically. A reachable par-5 in summer (driver + long iron) may become a three-shot hole in winter (driver + fairway metal + approach). The strategy note for these holes must have explicit summer and winter variants — the decision tree at the tee is completely different.</div></li>
+      <li><span class="step-n">2</span><div><strong>Carry-over-water holes:</strong> In summer, your normal carry clears water hazards comfortably. In winter, reduced ball compression and cold air (approximately −1 yard per °C below 20°C) can make previously comfortable carries marginal. Note any water carries within 5% of your normal summer carry — these become club-up decisions in winter.</div></li>
+      <li><span class="step-n">3</span><div><strong>Elevated or exposed holes:</strong> Holes on high ground or exposed to prevailing wind experience greater temperature and wind variation between seasons. These holes are disproportionately affected by winter conditions and may require 2–3 clubs more in a cold headwind compared to a summer tailwind — a 5–6 club swing that completely changes the strategic approach.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- DIGITAL SETUP -->
+<div class="sec" id="digital">
+  <h2 class="sec-title">Digital Setup</h2>
+  <p class="sec-desc">Paper notes have the advantage of being available on the course without a phone. Digital notes have the advantage of being searchable, updatable, and shareable. The optimal system uses both — digital as the master record, a printed or PDF summary as the on-course reference.</p>
+  <span class="badge badge-lime">📱 Tools & Workflow</span>
+  <div class="card">
+    <span class="card-tag">Recommended Digital Tools</span>
+    <h3>The Two-Layer System</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Notion (Master Record):</strong> Create a database with one entry per hole. Each entry has all eight fields from the hole note template, plus a photo of the green map, and a rolling score history. The database view allows you to filter by scoring category (see all danger holes at once), by recent updates, or by holes where your score is below target. Link it from the Progress Journal (Guide 17) as your course intelligence hub.</div></li>
+      <li><span class="step-n">2</span><div><strong>Notes app + screenshots (On-Course Reference):</strong> Before a competition round, screenshot the key pages of your Notion database and save to your phone's camera roll. You now have all hole notes available offline, without requiring connectivity on the course. This takes 3 minutes before the round.</div></li>
+      <li><span class="step-n">3</span><div><strong>GPS app annotation (Arccos/Shot Scope):</strong> Both Arccos and Shot Scope allow custom notes on holes. Use these for the 2–3 most important data points per hole — the ones that change decisions on every visit. Full notes stay in Notion; decision-critical notes go in the GPS app.</div></li>
+      <li><span class="step-n">4</span><div><strong>Video walkthroughs (optional):</strong> For complex greens, a 60-second video walkthrough during a recon round — narrating the slope, the speed variation, and the approach angle — is searchable and more memorable than text alone. Store in the Notion entry alongside the written notes.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Update Workflow</span>
+    <h3>Keeping Notes Current Without It Becoming a Burden</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Voice notes during the round:</strong> After a hole that revealed new course intelligence — a putt that broke more than your map predicted, a landing zone that was firmer than noted — record a 10-second voice note on your phone. Transcribe to Notion that evening. This is faster than writing mid-round and captures the insight while it is fresh.</div></li>
+      <li><span class="step-n">2</span><div><strong>Post-round debrief → notes update (Guide 08):</strong> As part of the post-round debrief, spend 3–5 minutes updating any hole notes that the round revealed were incorrect or incomplete. This becomes automatic after a few rounds and takes very little time.</div></li>
+      <li><span class="step-n">3</span><div><strong>Seasonal refresh:</strong> At the start of summer and winter, review the notes for the 5 holes that changed most. Update distance data, ground condition notes, and tee strategy where conditions have made the previous notes inaccurate. This takes 20–30 minutes twice a year.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- TEMPLATE -->
+<div class="sec" id="template">
+  <h2 class="sec-title">Blank Template</h2>
+  <p class="sec-desc">A complete blank hole note template for all 18 holes. Copy this structure into Notion or your preferred notes system. Fill in during recon rounds and update after each competitive round.</p>
+  <span class="badge badge-lime">📋 Copy & Use</span>
+  <div class="card">
+    <span class="card-tag">The 18-Hole Master Template</span>
+    <h3>Fields to Complete for Every Hole</h3>
+    <table class="tbl">
+      <tr><th>Field</th><th>What to Write</th><th>Example</th></tr>
+      <tr><td>Hole number, par, distance, SI</td><td>Basic card data</td><td>Hole 3 · Par 5 · 510 yds · SI 11</td></tr>
+      <tr><td>Scoring category</td><td>S / N / D + brief reason</td><td>S — reachable in 2 with driver + 3-wood</td></tr>
+      <tr><td>Tee club & target</td><td>Club, landmark target, reason</td><td>Driver — aim right edge of left bunker (clears at 215)</td></tr>
+      <tr><td>Avoid zone</td><td>What goes wrong and why</td><td>Left rough behind trees (blocked approach); OB right</td></tr>
+      <tr><td>Hazard carries</td><td>Measured GPS distances to all hazards</td><td>Left bunker: 215. Right OB fence: 280. Greenside bunker front: 42 from pin</td></tr>
+      <tr><td>Landing zone quality</td><td>Slope, run, firmness notes</td><td>Left-centre fairway slopes right — ball feeds right. Right-centre flat. Avoid under trees left.</td></tr>
+      <tr><td>Ideal approach angle</td><td>Left/right/centre + reason</td><td>From right-centre: 170 in. Left of green open. Right: bunker front. Always front-half.</td></tr>
+      <tr><td>Preferred miss</td><td>Least harmful miss + reason</td><td>Long left — open chip angle. Short-right into bunker worst case.</td></tr>
+      <tr><td>Green slope (4 quadrants)</td><td>Direction + gradient + typical break</td><td>FL: left-to-right, gentle. FR: falls away, fast. BL: into slope, slow. BR: severe right-to-left.</td></tr>
+      <tr><td>"Never go" zone</td><td>The unconditional avoid</td><td>Never above the hole — putts from back-left are 3-putt territory</td></tr>
+      <tr><td>Accessible pin positions</td><td>Flags worth attacking</td><td>Front-right (open approach, uphill putt). Middle-centre (any angle)</td></tr>
+      <tr><td>Dangerous pin positions</td><td>Sucker pins — never attack</td><td>Back-left (downhill, tight, recovery impossible). Right (bunker direct)</td></tr>
+      <tr><td>Wind effect</td><td>Prevailing wind impact + adjustment</td><td>SW = downwind. Adds 15-20 yards — club down off tee, let it run. N wind = headwind — 2 clubs extra on approach.</td></tr>
+      <tr><td>Summer vs. winter notes</td><td>Distance and strategy differences</td><td>Summer: 3-wood to 140 approach. Winter: 3-wood to 155, no run — extra club on approach.</td></tr>
+      <tr><td>Personal history</td><td>Avg score, recurring error, solution</td><td>Avg +0.4. Recurring: pull-hook off tee in headwind. Solution: aim 10 yards right, trust the draw.</td></tr>
+    </table>
+  </div>
+  <div class="info-box elite" style="margin-top:4px;">
+    <span class="ico">⭐</span>
+    <p><strong>The long game:</strong> A complete 18-hole note set takes 3–4 dedicated recon rounds to build properly. After that, it requires 3–5 minutes of updates per round to maintain. The return is a permanent, compounding course intelligence advantage that makes every subsequent competitive round on that course more precisely managed than any player relying on memory alone.</p>
+  </div>
+</div>
+
+<div class="footer">ON-COURSE NOTES & COURSE KNOWLEDGE · GUIDE 31 · THE SCRATCH PROJECT · COURSE MASTERY SYSTEM</div>
+<script>
+function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚖️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Management</span>
+    </a>
+    <a href="08_pro_round_prep.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🗺️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pro Round Prep</span>
+    </a>
+    <a href="caddie_card.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📋</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Caddie Reference Card</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

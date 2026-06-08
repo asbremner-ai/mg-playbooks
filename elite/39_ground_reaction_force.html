@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<!-- version:v2.0 · 2026-06-08 · 39_ground_reaction_force.html · PRO EDITION -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ground Reaction Force — Pro Edition · Guide 39</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;}
+.pro-badge-nav{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);background:rgba(200,146,42,0.1);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#050d05 0%,#0f1e0e 60%,var(--surface) 100%);padding:44px 20px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:8px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto;font-weight:300;line-height:1.65;}
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);padding:0 4px;scrollbar-width:none;position:relative;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:14px 14px 12px;cursor:pointer;transition:color .2s,border-color .2s;white-space:nowrap;}
+.tab.active{color:var(--lime-hi);border-bottom-color:var(--lime);}
+.tab:hover{color:var(--white);}
+.sec{display:none;padding:24px 16px 60px;max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.sec.active{display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,6vw,2.2rem);font-weight:900;line-height:1.1;margin-bottom:8px;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.4);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.4);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,0.4);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,0.4);color:var(--rust-hi);}
+.card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.card-gold::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.card-teal::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+.card-lime::before{background:linear-gradient(90deg,transparent,var(--lime),transparent);}
+.card-rust::before{background:linear-gradient(90deg,transparent,var(--rust),transparent);}
+.card-gold{border-color:rgba(224,184,64,0.25);}
+.card-teal{border-color:rgba(72,176,168,0.25);}
+.card-lime{border-color:rgba(160,200,80,0.25);}
+.card-rust{border-color:rgba(216,96,48,0.25);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;line-height:1.25;}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.steps li{display:flex;gap:12px;align-items:flex-start;}
+.step-n{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--lime-dim);border:1px solid rgba(160,200,80,0.3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--lime-hi);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.formula{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.formula-main{font-size:11.5px;color:var(--lime-hi);line-height:1.8;white-space:pre-wrap;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:8px;font-style:italic;font-family:'Inter',sans-serif;}
+.tbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;}
+.tbl th{background:var(--surface);padding:8px 10px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
+.tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(232,240,216,0.82);vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.good{color:#78d080;}
+.warn{color:#d0a840;}
+.bad{color:#d06050;}
+.info-box{display:flex;gap:10px;padding:14px 14px;border-radius:var(--r-sm);margin:14px 0;font-size:12.5px;line-height:1.7;}
+.info-box .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.tip{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.25);color:var(--teal-hi);}
+.elite{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.25);color:var(--gold-hi);}
+.warn-box{background:var(--rust-dim);border:1px solid rgba(216,96,48,0.25);color:var(--rust-hi);}
+.drill{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin-bottom:12px;}
+.drill-hdr{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
+.drill-icon{font-size:1.4rem;flex-shrink:0;}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:2px;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+.mini-card{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
+.mini-card h4{font-size:12.5px;font-weight:600;margin-bottom:4px;}
+.mini-card p{font-size:11.5px;color:var(--muted);line-height:1.55;}
+.footer{background:var(--surface);border-top:1px solid var(--border);padding:20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_pro.html">&#8962; Pro Playbooks</a>
+  <span class="pro-badge-nav">⬡ Guide 39 · Pro Edition</span>
+</div>
+
+<div class="hero">
+  <div class="hero-label">Guide 39 · Speed Science</div>
+  <h1>Ground <em>Reaction</em><br>Force</h1>
+  <p class="hero-sub">The largest untapped speed source in most amateur swings. GRF accounts for 30–35% of all clubhead speed — more than any single technical element above the ground.</p>
+</div>
+
+<div class="nav" id="nav">
+  <button class="tab active" onclick="show('physics',this)">The Physics</button>
+  <button class="tab" onclick="show('phase1',this)">Phase 1: Load</button>
+  <button class="tab" onclick="show('phase2',this)">Phase 2: Drive</button>
+  <button class="tab" onclick="show('phase3',this)">Phase 3: Brake</button>
+  <button class="tab" onclick="show('assess',this)">Self-Assessment</button>
+  <button class="tab" onclick="show('drills',this)">Drills</button>
+  <button class="tab" onclick="show('rypstick',this)">Rypstick Synergy</button>
+  <button class="tab" onclick="show('faults',this)">Fault Table</button>
+  <button class="tab" onclick="show('fitness',this)">Fitness Integration</button>
+</div>
+
+<!-- THE PHYSICS -->
+<div class="sec active" id="physics">
+  <h2 class="sec-title">The Physics of Ground Reaction Force</h2>
+  <p class="sec-desc">Newton's third law applied to the golf swing: every force you apply to the ground produces an equal and opposite force from the ground into your body. Understanding which direction to push and when transforms how you generate speed.</p>
+  <span class="badge badge-gold">⬡ Guide 39 · Pro Edition</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Newton's Third Law in the Swing</span>
+    <h3>Why the Ground Is Your Primary Speed Source</h3>
+    <p style="margin-bottom:12px;">Clubhead speed originates with the body, not the arms or hands. And the body cannot generate speed without something to push against. That something is the ground. The force the ground exerts back into your feet — the ground reaction force — is the raw input that, when correctly channelled through the kinematic chain, drives clubhead speed.</p>
+    <div class="formula">
+      <div class="formula-lbl">GRF Speed Contribution (Tour Data)</div>
+      <div class="formula-main">Average tour driver club speed: 113 mph
+
+Speed source breakdown (approximate):
+  Ground Reaction Force:        30–35% of total speed
+  Hip-to-shoulder separation:   25–30%
+  Wrist lag and release:        20–25%
+  Arm swing:                    15–20%
+
+A 10% improvement in GRF mechanics produces:
+  ~3–4 mph additional club speed
+  ~8–12 yards additional carry</div>
+      <div class="formula-note">Most amateur instruction focuses on arm swing and wrist release — the bottom 40% of the speed chain. GRF training addresses the top 30–35%. This is why players who have spent years on arm and hand mechanics can see immediate speed gains when GRF is introduced — they have been ignoring the largest source.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Force Plate Data</span>
+    <h3>What the Science Shows About Foot Pressure</h3>
+    <p style="margin-bottom:12px;">Force plate studies of tour players show a specific foot pressure sequence through the swing. This sequence is not random — it is the optimal pattern for maximising GRF input. Amateur players typically show a compressed or reversed version of this sequence.</p>
+    <table class="tbl">
+      <tr><th>Swing Phase</th><th>Tour Pressure Pattern</th><th>Amateur Average</th><th>Effect of Deviation</th></tr>
+      <tr><td>Address</td><td class="good">50/50 trail/lead (or slight trail bias)</td><td class="warn">Often forward-heavy (lead bias)</td><td>Reduces backswing loading</td></tr>
+      <tr><td>Top of backswing</td><td class="good">75–80% trail foot pressure</td><td class="bad">Often 55–60% trail (under-loaded)</td><td>Less vertical force available for Phase 1</td></tr>
+      <tr><td>Early downswing</td><td class="good">Rapid shift to lead — lateral bump</td><td class="bad">Often immediate rotation without lateral</td><td>Hip spin-out; over-the-top path</td></tr>
+      <tr><td>Impact</td><td class="good">80–90% lead foot; lead heel planted</td><td class="warn">Often 60–70% lead; heel passive</td><td>Reduced braking force; Phase 3 incomplete</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Three-Phase Model</span>
+    <h3>Load → Drive → Brake</h3>
+    <p style="margin-bottom:12px;">GRF in the golf swing operates in three distinct phases. Each has a specific foot pressure pattern, timing requirement, and consequence when missing. The tabs above cover each phase in detail.</p>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Phase 1</span><h4>Vertical Loading</h4><p>Trail foot pushes DOWN at the top of backswing. Creates stored energy. Often missing — manifests as a weak, arm-dominated backswing.</p></div>
+      <div class="mini-card"><span class="mini-tag">Phase 2</span><h4>Lateral Drive</h4><p>Hip SHIFT toward target before rotation. The most commonly missing phase. Absence produces hip spin-out and over-the-top path.</p></div>
+      <div class="mini-card"><span class="mini-tag">Phase 3</span><h4>Lead Side Braking</h4><p>Lead foot plants hard. Braking force drives upper body acceleration. Passive lead heel is the most common Phase 3 fault.</p></div>
+      <div class="mini-card"><span class="mini-tag">Sequence</span><h4>Phase 2 Before Phase 3</h4><p>Critical: lateral drive (Phase 2) must happen BEFORE rotation (Phase 3). Most players go straight from load to rotation — skipping the most important phase.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- PHASE 1: LOAD -->
+<div class="sec" id="phase1">
+  <h2 class="sec-title">Phase 1 — Vertical Loading</h2>
+  <p class="sec-desc">At the top of the backswing, the trail foot pushes vertically downward into the ground. The ground pushes back — loading the system with potential energy that will be released in the downswing.</p>
+  <span class="badge badge-teal">Backswing to Top</span>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Mechanism</span>
+    <h3>What Happens During Vertical Loading</h3>
+    <p style="margin-bottom:12px;">As the club reaches the top of the backswing, elite players apply downward force through the trail foot that equals 1.2–1.5 times their body weight. This is not a static balance — it is an active push into the ground. The ground's equal and opposite force loads the trail glute, hip flexor, and external rotator system with elastic potential energy that is available for the downswing.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The feel cue:</strong> At the top of the backswing, feel as if you are "screwing" the trail foot into the ground. Not lifting it, not rolling it — pushing it downward and slightly outward. This creates the braced, loaded position that makes Phase 2 available.</div></li>
+      <li><span class="step-n">2</span><div><strong>The position to reach:</strong> Trail knee should be slightly flexed (not locked) at the top. Trail hip should be behind the ball, not in front. This position loads the trail glute — the primary spring in the GRF system.</div></li>
+      <li><span class="step-n">3</span><div><strong>The posture requirement:</strong> Spine angle must be maintained from address through the top. A significant spine angle change (lifting, swaying back) prevents effective vertical loading because the body is no longer in the position to push the foot into the ground correctly.</div></li>
+    </ul>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The swaying fault:</strong> Many players who try to increase trail foot pressure inadvertently sway their hips away from the target in the backswing. This is counterproductive — it shifts weight laterally (sideways) rather than loading vertically (down). The trail hip should rotate back, not slide back.</p></div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Diagnosis</span>
+    <h3>Signs of Insufficient Phase 1 Loading</h3>
+    <table class="tbl">
+      <tr><th>Observable Sign</th><th>Mevo/Arccos Signal</th><th>What It Means</th></tr>
+      <tr><td>Backswing feels "light" or arm-dominated</td><td>Low club speed; high attack angle variance</td><td>No stored GRF energy to release</td></tr>
+      <tr><td>Early extension (early straightening of trail leg)</td><td>High F2P variance; thin contact</td><td>Trail leg released before Phase 2</td></tr>
+      <tr><td>Reverse pivot (weight on lead at top)</td><td>Positive attack angle with driver; slices</td><td>Completely absent Phase 1 loading</td></tr>
+    </table>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">⬇️</div><div><h4>The Pressure Stomp Drill</h4><div class="drill-meta">5 min · Daily · Phase 1 awareness</div></div></div>
+    <p>Without a club: take your backswing position. At the top, actively push the trail foot into the ground as hard as you can — literally stomp it down. Feel where the resistance is (trail glute, hip). Do this 10 times. Then make slow practice swings trying to replicate that loaded feeling at the top. The stomp creates proprioceptive awareness of what loaded feels like.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🪑</div><div><h4>The Chair Drill</h4><div class="drill-meta">5 min · Daily · Hip loading position</div></div></div>
+    <p>Place a chair or stool at trail hip height behind you. Take your backswing and feel the trail hip sit back against the chair at the top — not slide back (swaying) but rotate back into it. The chair gives instant feedback on whether you are loading (rotating) or swaying (sliding). Do not let the hip push the chair backwards — rotate into it.</p>
+  </div>
+</div>
+
+<!-- PHASE 2: DRIVE -->
+<div class="sec" id="phase2">
+  <h2 class="sec-title">Phase 2 — Lateral Drive</h2>
+  <p class="sec-desc">The most commonly missing phase in amateur golf. Phase 2 is the lateral hip shift toward the target at the very start of the downswing — before rotation begins. Without it, the club comes over the top.</p>
+  <span class="badge badge-rust">The Critical Phase</span>
+
+  <div class="card card-rust">
+    <span class="card-tag">Why This Phase Is Missing</span>
+    <h3>The Over-the-Top Epidemic and Its Root Cause</h3>
+    <p style="margin-bottom:12px;">The over-the-top swing path — the most common fault in amateur golf — is not primarily a shoulder, arm, or hand problem. It is a Phase 2 problem. When a player starts the downswing by rotating the hips immediately (without first shifting laterally), the trail shoulder has nowhere to go but forward and over the ball. The club path is set above the desired plane before the arms have moved.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Sequencing Failure</div>
+      <div class="formula-main">CORRECT SEQUENCE (Phase 2 present):
+  1. Trail foot pushes into ground (maintaining Phase 1 load)
+  2. Hips SHIFT laterally toward target (2–4 inches) — Phase 2
+  3. Hips BEGIN to rotate — Phase 3 braking loads
+  4. Shoulders follow — in-to-out or neutral club path
+
+INCORRECT SEQUENCE (Phase 2 absent):
+  1. Trail foot releases (early Phase 1 exit)
+  2. Hips rotate IMMEDIATELY (no lateral shift)
+  3. Trail shoulder thrown forward and over
+  4. Club path: outside-in → slice, pull, fade</div>
+      <div class="formula-note">The lateral shift in Phase 2 is typically 2–4 inches — small enough that many players have never felt it, but large enough to fundamentally change the club path. A player who has never moved their hips laterally will find this movement feels extreme — it is not. Video confirmation is essential.</div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Feel Cue</span>
+    <h3>How Phase 2 Should Feel</h3>
+    <p style="margin-bottom:12px;">The Phase 2 lateral drive feels like the lead knee bumping toward the target just before the hips open. Players who have never felt this often describe it as feeling like "sliding" — which is technically true but has a negative connotation. The slide is not a fault; the timing of the slide is what matters. If it comes before rotation, it is correct Phase 2. If it continues through impact (never rotating), it becomes an actual slide fault.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The bump thought:</strong> At the transition from backswing to downswing, think "bump lead knee toward target." Not "turn hips" — bump knee. This thought naturally produces the lateral drive without the over-rotation that "turn" produces.</div></li>
+      <li><span class="step-n">2</span><div><strong>The pause drill feel:</strong> Make a backswing and pause at the top for 2 seconds. Then start the downswing with the explicit intention of moving the lead knee toward the target first. This slow-motion pause allows the body to feel Phase 2 as a distinct move, not something that has to happen inside the flow of a full-speed swing.</div></li>
+      <li><span class="step-n">3</span><div><strong>The video check:</strong> On camera (face-on view), your lead hip should move toward the target 2–4 inches before the hips begin to open. If the hips open immediately with no lateral movement, Phase 2 is missing. This is one case where video is essential — feel alone is unreliable because the absent movement does not register as missing.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Mevo Confirmation</span>
+    <h3>The Data Signals of Phase 2 Introduction</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Before Phase 2</th><th>After Phase 2 Introduction</th></tr>
+      <tr><td>F2P (face to path)</td><td class="bad">Often high positive (4–10°)</td><td class="good">Moves toward 0–2° range</td></tr>
+      <tr><td>Club path</td><td class="bad">Out-to-in (negative)</td><td class="good">Moves toward in-to-out or neutral</td></tr>
+      <tr><td>Club speed</td><td class="warn">Plateau</td><td class="good">Immediate 2–4 mph increase</td></tr>
+      <tr><td>Smash factor</td><td class="warn">Inconsistent</td><td class="good">More consistent — better centring</td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The most reliable confirmation:</strong> F2P moving from +5–8° toward +1–2° while club path simultaneously moves from −2° toward +1–2° confirms Phase 2 is working. The double improvement — both face and path moving toward neutral — is characteristic of Phase 2 introduction. Path alone would change with a grip change. Both changing together indicates a fundamental movement change.</p></div>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">👣</div><div><h4>The Step Drill</h4><div class="drill-meta">10 min · Key Phase 2 drill · With and without ball</div></div></div>
+    <p>Start with feet together. Take a backswing. As you start the downswing, step the lead foot 12–18 inches toward the target before the hips open. Hit the ball from the stepped position. The exaggerated step forces the lateral drive of Phase 2 into a physical, tangible movement. Most players immediately feel the path change. Gradually reduce the step size over multiple sessions until the bump feeling remains with a normal stance width.</p>
+  </div>
+</div>
+
+<!-- PHASE 3: BRAKE -->
+<div class="sec" id="phase3">
+  <h2 class="sec-title">Phase 3 — Lead Side Braking</h2>
+  <p class="sec-desc">At impact, the lead foot plants aggressively into the ground. This braking action drives the upper body's rotational acceleration — like the handle end of a whip snapping forward as the heavy end stops.</p>
+  <span class="badge badge-lime">Impact Zone</span>
+
+  <div class="card card-lime">
+    <span class="card-tag">The Whip Analogy</span>
+    <h3>How Braking Produces Speed</h3>
+    <p style="margin-bottom:12px;">A whip accelerates its tip to supersonic speeds — not by moving the entire whip fast, but by sequentially stopping each segment. The handle stops; its momentum transfers to the shaft. The shaft stops; momentum transfers to the tip. The tip accelerates to maximum speed at the moment the previous segment has fully stopped.</p>
+    <p style="margin-bottom:10px;">The golf swing works identically. The lead foot plants (stops). Lower body momentum transfers to the torso. The torso decelerates. Momentum transfers to the lead arm, then the club. The clubhead accelerates as the upper body has already begun to decelerate. The critical input is the lead foot plant — without it, the whip sequence cannot begin.</p>
+    <div class="formula">
+      <div class="formula-lbl">Phase 3 Speed Chain</div>
+      <div class="formula-main">Lead heel plants (brakes) ← THIS is the Phase 3 trigger
+  ↓ momentum transfer
+Hips decelerate → torso accelerates
+  ↓ momentum transfer
+Torso decelerates → lead arm accelerates
+  ↓ momentum transfer
+Lead arm decelerates → clubhead reaches maximum speed at impact</div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Active Heel Plant</span>
+    <h3>Passive vs. Active Lead Heel — A Critical Distinction</h3>
+    <p style="margin-bottom:12px;">Most amateur players allow the lead heel to settle naturally — the heel lands because the foot has to land somewhere. This is a passive heel plant. Tour players show an actively aggressive heel plant — they drive the lead heel into the ground deliberately as a speed-generating action. The difference in timing is subtle (fractions of a second) but produces measurably different clubhead speeds.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The feel cue:</strong> Think of pressing the lead heel through the ground — not just letting it touch down, but actively stamping it. This active thought changes the timing of the plant and makes it earlier in the downswing, which amplifies the braking effect at impact.</div></li>
+      <li><span class="step-n">2</span><div><strong>The stacked lead side:</strong> At impact, the lead arm, lead hip, and lead heel should feel stacked vertically — a firm wall that the club is rotating around. If the lead side collapses (lead knee bending through impact, lead hip sliding), the braking effect is lost.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lead hip internal rotation:</strong> As the lead heel plants, the lead hip internally rotates (the lead glute fires, pulling the hip back and around). This internal rotation is what keeps the lead side "stacked" through impact rather than collapsing forward.</div></li>
+    </ul>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The blocking fault:</strong> Players who over-apply Phase 3 braking without proper Phase 2 lateral shift first will block shots right. The lead side firms up too early and stops the face from squaring. Phase 2 (lateral drive) must occur before Phase 3 (braking). The sequence is non-negotiable.</p></div>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">💪</div><div><h4>The Wall Drill</h4><div class="drill-meta">5 min · Phase 3 training · Lead hip bracing</div></div></div>
+    <p>Stand with your lead hip against a wall. Make a normal swing without moving the hip away from the wall through impact. The wall prevents lead hip slide and forces the lead side to brace and rotate correctly around a fixed point. Many players immediately gain 3–5 mph with this drill as the braking mechanism engages properly for the first time.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🦶</div><div><h4>The Stomp-Through Drill</h4><div class="drill-meta">5 min · Impact zone feel · Lead foot activation</div></div></div>
+    <p>In slow motion, practise the downswing focusing on the feel of the lead heel hitting the ground. Exaggerate the stomp — literally stamp the lead heel down as the first movement of the downswing (this is slightly exaggerated but builds the proprioceptive feel). Then gradually speed up while retaining the stamping feel. Players with a passive lead heel feel an immediate change in their impact position.</p>
+  </div>
+</div>
+
+<!-- SELF-ASSESSMENT -->
+<div class="sec" id="assess">
+  <h2 class="sec-title">Self-Assessment Protocol</h2>
+  <p class="sec-desc">Diagnosing which GRF phase is missing or weak — using Mevo data, video observation, and feel-based tests that don't require force plates.</p>
+  <span class="badge badge-gold">Diagnostic Framework</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The GRF Assessment Battery</span>
+    <h3>Four Tests — 20 Minutes With Your Mevo</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Baseline club speed test (5 swings):</strong> Hit 5 driver shots at comfortable effort. Record average club speed. This is your GRF baseline. All improvement from the following tests is GRF-attributable speed gain.</div></li>
+      <li><span class="step-n">2</span><div><strong>Step drill speed test (5 swings):</strong> Hit 5 driver shots using the Step Drill (Phase 2 tab). Record average speed. If step drill produces 2+ mph more than baseline, Phase 2 is missing and is your highest-leverage GRF target.</div></li>
+      <li><span class="step-n">3</span><div><strong>Wall drill speed test (5 swings):</strong> Hit 5 driver shots with lead hip against a wall. Record average speed. If wall drill produces 2+ mph more than baseline, Phase 3 is deficient and is your priority.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pause-at-top drill speed test (5 swings):</strong> Hit 5 driver shots with a deliberate 1-second pause at the top of the backswing (creates bracing time for Phase 1). If pause drill produces 2+ mph more than baseline, Phase 1 loading is insufficient.</div></li>
+    </ul>
+    <div class="info-box tip"><span class="ico">💡</span><p><strong>Interpretation:</strong> The drill that produces the largest speed gain reveals your priority GRF phase. Work that phase first for 4–6 sessions before moving to the next. This prevents GRF training from becoming another unfocused technical rabbit hole.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">F2P as a GRF Proxy</span>
+    <h3>Using Mevo Data to Track Phase 2 Progress</h3>
+    <table class="tbl">
+      <tr><th>F2P Average</th><th>GRF Interpretation</th><th>Priority Action</th></tr>
+      <tr><td class="bad">F2P &gt;+5° (face well right of path)</td><td>Phase 2 absent — hip spin-out producing extreme inside-out path with closed face compensation</td><td>Phase 2 step drill — immediate priority</td></tr>
+      <tr><td class="bad">F2P &lt;−5° (face well left of path)</td><td>Phase 2 missing — over-the-top path, open face</td><td>Phase 2 step drill — immediate priority</td></tr>
+      <tr><td class="warn">F2P +2° to +5° (slight push tendency)</td><td>Phase 2 present but incomplete; Phase 3 may be over-engaged without proper Phase 2 sequence</td><td>Sequence training — 2 before 3</td></tr>
+      <tr><td class="good">F2P 0° to +2° (near neutral)</td><td>Phase 2 functional — focus moves to Phase 3 braking for speed increase</td><td>Wall drill; stomp-through</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DRILLS -->
+<div class="sec" id="drills">
+  <h2 class="sec-title">GRF Drill Library</h2>
+  <p class="sec-desc">Eight drills targeting each phase — from barefoot feel-work to full swing integration. Each drill has a specific target phase and a measurable outcome.</p>
+  <span class="badge badge-teal">Drill Library</span>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">👣</div><div><h4>Step Drill — Phase 2</h4><div class="drill-meta">10 min · 3× per week · Key drill</div></div></div>
+    <p>Feet together, make backswing, step lead foot 12–18 inches toward target as the first downswing move. Hit the ball from the stepped position. Gradually reduce step size while retaining the bump feeling. The definitive Phase 2 training drill.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🧱</div><div><h4>Wall Drill — Phase 3</h4><div class="drill-meta">5 min · 2× per week · Phase 3 bracing</div></div></div>
+    <p>Lead hip against a wall, make normal swing without pushing off the wall through impact. Forces lead hip internal rotation and bracing. Measure speed with Mevo vs. free-swing baseline.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🦵</div><div><h4>Squat Jump Drill — Phase 1 Loading Feel</h4><div class="drill-meta">3 min · Warm-up · Proprioceptive activation</div></div></div>
+    <p>Without a club: perform 5 squat jumps before hitting. The squat activates the trail glute and hip loading mechanism. Many players find their Phase 1 loading immediately improves after squat jumps because the neuromuscular pathway for hip loading has been primed.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">⏸️</div><div><h4>Pause-and-Feel Drill — Sequencing</h4><div class="drill-meta">5 min · Daily · Sequence awareness</div></div></div>
+    <p>Make a full backswing and pause for 2 seconds at the top. During the pause, feel: (1) trail foot is loaded, (2) hips are behind the ball. Then begin the downswing with Phase 2 bump first. The pause isolates the transition and allows conscious application of the correct sequence before real-time speed is added.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">👟</div><div><h4>Barefoot Drill — Ground Pressure Feedback</h4><div class="drill-meta">5 min · Weekly · Proprioceptive training</div></div></div>
+    <p>Hit shots barefoot on grass (or in thin socks on a mat). Removing the shoe increases sensory feedback from the foot and ground interaction. Many players feel their foot pressure pattern clearly for the first time barefoot — which makes it much easier to modify. 10 barefoot swings with awareness of foot pressure sequence, then shoes on to replicate.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr"><div class="drill-icon">🏋️</div><div><h4>Lead Leg Press Drill — Phase 3 Strength</h4><div class="drill-meta">Off-course · 2× per week · Gym-based</div></div></div>
+    <p>Single-leg leg press on the lead leg only. Foot position: mimics the impact foot position (heel back, toes slightly open). 3 sets of 8–10 repetitions. This directly strengthens the lead leg's ability to brake at impact — the physical foundation of Phase 3. See Fitness Integration tab for full gym programme.</p>
+  </div>
+</div>
+
+<!-- RYPSTICK SYNERGY -->
+<div class="sec" id="rypstick">
+  <h2 class="sec-title">Rypstick Synergy</h2>
+  <p class="sec-desc">GRF training and Rypstick overspeed training address different links in the speed chain. Combining them intelligently produces speed gains that exceed what either produces alone.</p>
+  <span class="badge badge-gold">Compound Speed Training</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Two-Link Speed Chain</span>
+    <h3>GRF + Overspeed = Compound Gain</h3>
+    <div class="formula">
+      <div class="formula-lbl">Speed Chain Architecture</div>
+      <div class="formula-main">GRF (ground → body):
+  Increases raw force input to the kinematic chain
+  Does not directly change neurological speed ceiling
+  Produces power that overspeed training can then express
+
+Rypstick Overspeed (neurological ceiling):
+  Raises the maximum speed the nervous system allows
+  Does not increase the force available at the base
+  Requires sufficient GRF input to express the new ceiling
+
+Combined:
+  GRF raises force input → more power available
+  Rypstick raises neurological ceiling → more power expressed
+  Compound gain: 20–35% greater than either alone</div>
+    </div>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The analogy:</strong> GRF is like installing a larger engine. Rypstick is like tuning the engine management system to allow it to rev higher. A larger engine that is still limited by the old tune cannot reach its potential. The new tune with the old engine has limited new power to work with. Both together produce maximum output.</p></div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Weekly Programming</span>
+    <h3>Sequencing GRF and Rypstick Sessions</h3>
+    <table class="tbl">
+      <tr><th>Day</th><th>GRF Training</th><th>Rypstick</th><th>Notes</th></tr>
+      <tr><td>Monday</td><td class="good">Full GRF session — all three phases</td><td class="bad">Rest</td><td>GRF priority; CNS recovery needed before overspeed</td></tr>
+      <tr><td>Tuesday</td><td class="bad">Rest</td><td class="good">Full Rypstick protocol</td><td>Transfer window: GRF loading from Monday is available</td></tr>
+      <tr><td>Wednesday</td><td class="warn">Light GRF drill work only</td><td class="bad">Rest</td><td>Active recovery; reinforce GRF feel without heavy load</td></tr>
+      <tr><td>Thursday</td><td class="bad">Rest</td><td class="good">Rypstick + 10 max effort drivers</td><td>Speed transfer day — peak output window</td></tr>
+      <tr><td>Friday</td><td class="warn">GRF phase work — whichever is priority</td><td class="warn">Short Rypstick (15 swings)</td><td>Lower volume; maintain stimulus</td></tr>
+      <tr><td>Sat/Sun</td><td class="bad">No structured GRF training</td><td class="bad">No Rypstick</td><td>Play golf — express the gains</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>CNS overload risk:</strong> Both GRF training and Rypstick overspeed training are high neurological demand activities. Full sessions of both on the same day consistently produce worse results than separated sessions. The schedule above provides at least 24 hours between the main session of each type.</p></div>
+  </div>
+</div>
+
+<!-- FAULT TABLE -->
+<div class="sec" id="faults">
+  <h2 class="sec-title">GRF Fault Table</h2>
+  <p class="sec-desc">Systematic diagnosis of the most common GRF faults — observable signs, Mevo proxy data, root cause, and targeted fix for each.</p>
+  <span class="badge badge-rust">Diagnostic Reference</span>
+
+  <div class="card card-rust">
+    <span class="card-tag">The GRF Fault Diagnosis Matrix</span>
+    <h3>Eight Faults — Observable Signs and Fixes</h3>
+    <table class="tbl">
+      <tr><th>Fault</th><th>Observable Sign</th><th>Mevo Signal</th><th>Root Cause</th><th>Fix</th></tr>
+      <tr><td>Reverse pivot</td><td>Lead-heavy at top; falls toward trail on downswing</td><td class="bad">Positive attack angle, slices, very low club speed</td><td>Complete Phase 1 absence</td><td>Chair drill; pressure stomp drill</td></tr>
+      <tr><td>Early Phase 1 release</td><td>Trail knee straightens before the top</td><td class="bad">Inconsistent contact; thin shots</td><td>Trail leg extends too early</td><td>Maintain trail knee flex through backswing; wall behind knee</td></tr>
+      <tr><td>Hip spin-out (over-the-top)</td><td>Shoulders open first; club path steeply OTT</td><td class="bad">F2P &lt;−4°; pull/pull-fade pattern</td><td>Phase 2 absent — immediate rotation without lateral</td><td>Step drill; pause drill with Phase 2 cue</td></tr>
+      <tr><td>Hip slide through impact</td><td>Lead hip moves toward target through impact (no braking)</td><td class="bad">Blocks right; push pattern</td><td>Phase 2 lateral drive extends too long — no Phase 3 switch</td><td>Wall drill; lead hip internal rotation cue</td></tr>
+      <tr><td>Passive lead heel</td><td>Lead heel lifts and settles slowly; no deliberate plant</td><td class="warn">Club speed below potential; inconsistent timing</td><td>Phase 3 trigger absent</td><td>Stomp-through drill; lead single-leg press</td></tr>
+      <tr><td>Early Phase 3 bracing</td><td>Lead side stiffens too early in downswing; blocked shots</td><td class="bad">F2P strongly positive; blocks right</td><td>Phase 3 triggered before Phase 2 complete</td><td>Sequence drill; ensure bump before brace</td></tr>
+      <tr><td>Loss of spine angle (early extension)</td><td>Hips move toward ball through impact; standing up</td><td class="bad">High attack angle; fat/thin pattern</td><td>Lack of hip internal rotation strength; poor GRF stability</td><td>Hip 90/90 mobility; glute strengthening; wall drill</td></tr>
+      <tr><td>Excessive sway (lateral)</td><td>Trail hip moves laterally (rather than rotating) in backswing</td><td class="warn">Inconsistent contact; occasional blocks</td><td>Misapplication of Phase 1 loading — linear instead of rotational</td><td>Chair drill; "rotate into, not slide" cue</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- FITNESS INTEGRATION -->
+<div class="sec" id="fitness">
+  <h2 class="sec-title">Fitness Integration</h2>
+  <p class="sec-desc">The physical qualities that support GRF — and how to develop them in the gym to underpin on-course GRF improvement. Works alongside Guide 06 Golf Fitness.</p>
+  <span class="badge badge-lime">Gym Programme — GRF Focus</span>
+
+  <div class="card card-lime">
+    <span class="card-tag">The GRF Physical Requirements</span>
+    <h3>Four Qualities That Limit GRF Production</h3>
+    <div class="grid-2">
+      <div class="mini-card"><span class="mini-tag">Phase 1</span><h4>Trail Glute Strength</h4><p>The trail glute is the primary spring for Phase 1 loading. Weak trail glute = limited loading capacity = reduced Phase 1 energy storage. Priority exercise: single-leg RDL, trail leg.</p></div>
+      <div class="mini-card"><span class="mini-tag">Phase 2</span><h4>Hip Mobility (Internal/External)</h4><p>The lateral drive requires sufficient hip internal rotation range. Restricted hips cannot complete Phase 2 without compensations. Priority: 90/90 hip mobility daily.</p></div>
+      <div class="mini-card"><span class="mini-tag">Phase 3</span><h4>Lead Leg Braking Strength</h4><p>The lead leg must absorb 1.5–2× body weight at impact. Insufficient strength = passive, late heel plant. Priority: single-leg press and split squat, lead leg.</p></div>
+      <div class="mini-card"><span class="mini-tag">All Phases</span><h4>Hip-Spine Stability</h4><p>GRF forces travel through the hip-spine complex. Insufficient stability produces energy leak and compensations. Priority: pallof press, dead bug, anti-rotation core.</p></div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">GRF-Specific Gym Programme</span>
+    <h3>8-Week Foundation Phase — 2× per Week</h3>
+    <table class="tbl">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>GRF Phase</th><th>Progression</th></tr>
+      <tr><td>Single-leg RDL (trail leg)</td><td>3 × 10</td><td>Phase 1 loading</td><td>Add weight weekly; week 4 add pause at bottom</td></tr>
+      <tr><td>Single-leg press (lead leg)</td><td>3 × 10</td><td>Phase 3 braking</td><td>Add weight; explosive concentric phase from week 3</td></tr>
+      <tr><td>Lateral band walk</td><td>2 × 20 steps each direction</td><td>Phase 2 activation</td><td>Heavier band; then add forward lean position</td></tr>
+      <tr><td>90/90 hip mobility</td><td>2 × 60 sec each side</td><td>Phase 2 range</td><td>Add progressive stretching pressure weekly</td></tr>
+      <tr><td>Pallof press</td><td>3 × 12 each side</td><td>All phases — stability</td><td>Increase resistance; vary stance width</td></tr>
+      <tr><td>Split squat</td><td>3 × 8 each side</td><td>Phase 2–3 transition</td><td>Add weight; then explosive split squat jump</td></tr>
+      <tr><td>Dead bug</td><td>3 × 10</td><td>All phases — core anti-rotation</td><td>Add 2-second holds; then contralateral arm/leg</td></tr>
+    </table>
+    <div class="info-box tip"><span class="ico">💡</span><p><strong>Sequence with Rypstick:</strong> Complete gym sessions on GRF training days (Monday and Friday per the Rypstick Synergy schedule). Avoid gym on Rypstick priority days (Tuesday/Thursday). The gym work develops the physical qualities; the Rypstick expresses them as club speed.</p></div>
+  </div>
+</div>
+
+<div class="footer">GROUND REACTION FORCE · GUIDE 39 · PRO EDITION · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="03_longgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏌️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Long Game Playbook</span>
+    </a>
+    <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+    </a>
+    <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Fitness</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_pro.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

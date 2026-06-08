@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-05-31 · golf_analysis.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launch Monitor Analysis — Tuesday Session</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --surface: #111318;
+    --surface2: #181c24;
+    --border: #1e2330;
+    --green: #4ade80;
+    --green-dim: #166534;
+    --amber: #fbbf24;
+    --amber-dim: #78350f;
+    --red: #f87171;
+    --red-dim: #7f1d1d;
+    --blue: #60a5fa;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --accent: #c8f542;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .header h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .header-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  /* SECTION LABELS */
+  .section {
+    margin-bottom: 3rem;
+  }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* HEADLINE STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 1px;
+  }
+  .stat-box {
+    background: var(--surface);
+    padding: 1.4rem 1.2rem;
+    position: relative;
+  }
+  .stat-box:hover { background: var(--surface2); }
+  .stat-club {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    color: var(--text);
+  }
+  .stat-unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    margin-top: 0.3rem;
+  }
+  .stat-note {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .good { background: var(--green-dim); color: var(--green); }
+  .warn { background: var(--amber-dim); color: var(--amber); }
+  .bad  { background: var(--red-dim); color: var(--red); }
+  .info { background: #1e3a5f; color: var(--blue); }
+
+  /* CLUB ROWS */
+  .club-section { margin-bottom: 2rem; }
+  .club-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .club-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+  }
+  .club-shots {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  /* METRICS TABLE */
+  .metrics-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-bottom: 1px;
+  }
+  .metric {
+    background: var(--surface);
+    padding: 0.9rem 1rem;
+  }
+  .metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+  .metric-val {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .metric-dev {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+  }
+  .metric-dev span { color: var(--amber); }
+
+  /* COACHING CARDS */
+  .coaching-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .coaching-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    padding: 1.4rem 1.6rem;
+  }
+  .coaching-card.priority { border-left-color: var(--red); }
+  .coaching-card.secondary { border-left-color: var(--amber); }
+  .coaching-card.positive { border-left-color: var(--green); }
+  .card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.45rem;
+    border-radius: 2px;
+  }
+  .tag-fix { background: var(--red-dim); color: var(--red); }
+  .tag-work { background: var(--amber-dim); color: var(--amber); }
+  .tag-keep { background: var(--green-dim); color: var(--green); }
+  .card-body {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.7;
+  }
+  .card-body strong { color: var(--text); font-weight: 500; }
+  .card-data {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 0.7rem 1rem;
+    margin-top: 0.8rem;
+    color: var(--blue);
+    line-height: 1.8;
+  }
+
+  /* DISPERSION VIZ */
+  .dispersion-wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .dispersion-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.2rem;
+  }
+  .disp-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+  .disp-canvas {
+    position: relative;
+    height: 120px;
+    background: #0d1117;
+    border: 1px solid var(--border);
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+  }
+  .disp-target {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: var(--border);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .disp-dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .disp-avg {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid white;
+  }
+  .disp-legend {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.65rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* VERDICT */
+  .verdict {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .verdict h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .verdict-body {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .verdict-body strong { color: var(--text); font-weight: 500; }
+  .scratch-path {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+  .path-step {
+    background: var(--surface2);
+    padding: 1rem 1.2rem;
+  }
+  .path-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .path-desc {
+    font-size: 0.78rem;
+    color: #94a3b8;
+    line-height: 1.5;
+  }
+  .path-desc strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 0.2rem; }
+</style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="container">
+
+  <div class="header">
+    <div class="header-label">Launch Monitor Report</div>
+    <h1>Tuesday <em>Session</em></h1>
+    <div class="header-meta">54 shots · 4 clubs · Driver / 5 Iron / 7 Iron / 9 Iron / PW · Outdoor · 78.7 ft altitude</div>
+  </div>
+
+  <!-- HEADLINE NUMBERS -->
+  <div class="section">
+    <div class="section-label">At a Glance</div>
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-club">Driver</div>
+        <div class="stat-label">Avg Carry</div>
+        <div class="stat-value">238.7</div>
+        <div class="stat-unit">yards</div>
+        <div class="stat-note good">+Tour Avg Range</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-club">Driver</div>
+        <div class="stat-label">Club Speed</div>
+        <div class="stat-value">105.1</div>
+        <div class="stat-unit">mph avg</div>
+        <div class="stat-note good">Scratch territory</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-club">Driver</div>
+        <div class="stat-label">Smash Factor</div>
+        <div class="stat-value">1.40</div>
+        <div class="stat-unit">avg</div>
+        <div class="stat-note good">Solid contact</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-club">Driver</div>
+        <div class="stat-label">Carry Dispersion</div>
+        <div class="stat-value">±19.8</div>
+        <div class="stat-unit">yds std dev</div>
+        <div class="stat-note warn">High variance</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-club">5 Iron</div>
+        <div class="stat-label">Avg Carry</div>
+        <div class="stat-value">163.3</div>
+        <div class="stat-unit">yards</div>
+        <div class="stat-note warn">Inconsistent</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-club">PW</div>
+        <div class="stat-label">Avg Carry</div>
+        <div class="stat-value">119.2</div>
+        <div class="stat-unit">yards</div>
+        <div class="stat-note info">Normal range</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLUB BY CLUB -->
+  <div class="section">
+    <div class="section-label">Club Breakdown</div>
+
+    <!-- DRIVER -->
+    <div class="club-section">
+      <div class="club-header">
+        <div class="club-name">Driver</div>
+        <div class="club-shots">16 shots</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-label">Ball Speed</div>
+          <div class="metric-val">147.0 mph</div>
+          <div class="metric-dev">±<span>2.3</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Club Speed</div>
+          <div class="metric-val">105.1 mph</div>
+          <div class="metric-dev">±<span>1.5</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Smash Factor</div>
+          <div class="metric-val">1.40</div>
+          <div class="metric-dev">±<span>0.02</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Carry</div>
+          <div class="metric-val">238.7 yds</div>
+          <div class="metric-dev">±<span>19.8</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Rate</div>
+          <div class="metric-val">2,736 rpm</div>
+          <div class="metric-dev">±<span>553</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Launch Angle</div>
+          <div class="metric-val">9.9°</div>
+          <div class="metric-dev">±<span>2.5</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Loft</div>
+          <div class="metric-val">5.7°</div>
+          <div class="metric-dev">±<span>3.0</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">AOA</div>
+          <div class="metric-val">+5.4°</div>
+          <div class="metric-dev">±<span>1.3</span></div>
+        </div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-label">Lateral (avg)</div>
+          <div class="metric-val">0.7R</div>
+          <div class="metric-dev">±<span>30.2 yds</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Axis</div>
+          <div class="metric-val">0.1L avg</div>
+          <div class="metric-dev">±<span>13.4°</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Club Path</div>
+          <div class="metric-val">1.4L</div>
+          <div class="metric-dev">±<span>1.3</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Best Carry</div>
+          <div class="metric-val">268.9 yds</div>
+          <div class="metric-dev">Shot 16</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Shot Types</div>
+          <div class="metric-val">Mixed</div>
+          <div class="metric-dev">Draw/Straight/Hook/Slice</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 IRON -->
+    <div class="club-section">
+      <div class="club-header">
+        <div class="club-name">5 Iron</div>
+        <div class="club-shots">18 shots</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-label">Ball Speed</div>
+          <div class="metric-val">118.0 mph</div>
+          <div class="metric-dev">±<span>6.0</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Club Speed</div>
+          <div class="metric-val">89.1 mph</div>
+          <div class="metric-dev">±<span>1.9</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Smash Factor</div>
+          <div class="metric-val">1.32</div>
+          <div class="metric-dev">±<span>0.07</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Carry</div>
+          <div class="metric-val">163.3 yds</div>
+          <div class="metric-dev">±<span>26.4</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Rate</div>
+          <div class="metric-val">5,151 rpm</div>
+          <div class="metric-dev">±<span>1,083</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Launch V</div>
+          <div class="metric-val">10.0°</div>
+          <div class="metric-dev">±<span>1.9</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">AOA</div>
+          <div class="metric-val">−4.0°</div>
+          <div class="metric-dev">±<span>2.1</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Lateral</div>
+          <div class="metric-val">3.3R avg</div>
+          <div class="metric-dev">±<span>24 yds</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 7 IRON -->
+    <div class="club-section">
+      <div class="club-header">
+        <div class="club-name">7 Iron</div>
+        <div class="club-shots">16 shots</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-label">Ball Speed</div>
+          <div class="metric-val">109.6 mph</div>
+          <div class="metric-dev">±<span>5.5</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Club Speed</div>
+          <div class="metric-val">87.5 mph</div>
+          <div class="metric-dev">±<span>1.4</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Smash Factor</div>
+          <div class="metric-val">1.25</div>
+          <div class="metric-dev">±<span>0.07</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Carry</div>
+          <div class="metric-val">144.3 yds</div>
+          <div class="metric-dev">±<span>29.8</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Rate</div>
+          <div class="metric-val">6,162 rpm</div>
+          <div class="metric-dev">±<span>1,061</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Launch V</div>
+          <div class="metric-val">13.5°</div>
+          <div class="metric-dev">±<span>5.3</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">AOA</div>
+          <div class="metric-val">−5.0°</div>
+          <div class="metric-dev">±<span>1.2</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Notable</div>
+          <div class="metric-val">3 thinned</div>
+          <div class="metric-dev">Shots 7, 9, 12</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PW -->
+    <div class="club-section">
+      <div class="club-header">
+        <div class="club-name">Pitching Wedge</div>
+        <div class="club-shots">18 shots</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metric">
+          <div class="metric-label">Ball Speed</div>
+          <div class="metric-val">96.5 mph</div>
+          <div class="metric-dev">±<span>5.0</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Club Speed</div>
+          <div class="metric-val">82.4 mph</div>
+          <div class="metric-dev">±<span>1.6</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Smash Factor</div>
+          <div class="metric-val">1.17</div>
+          <div class="metric-dev">±<span>0.06</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Carry</div>
+          <div class="metric-val">119.2 yds</div>
+          <div class="metric-dev">±<span>19.3</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Spin Rate</div>
+          <div class="metric-val">8,327 rpm</div>
+          <div class="metric-dev">±<span>926</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Launch V</div>
+          <div class="metric-val">17.8°</div>
+          <div class="metric-dev">±<span>3.9</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">AOA</div>
+          <div class="metric-val">−7.8°</div>
+          <div class="metric-dev">±<span>1.2</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Shot Types</div>
+          <div class="metric-val">Mixed</div>
+          <div class="metric-dev">Fade/Slice/Draw/Hook</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COACHING ANALYSIS -->
+  <div class="section">
+    <div class="section-label">Coaching Analysis</div>
+    <div class="coaching-grid">
+
+      <div class="coaching-card priority">
+        <div class="card-title">
+          Massive Lateral Dispersion — Your #1 Issue
+          <span class="card-tag tag-fix">Priority Fix</span>
+        </div>
+        <div class="card-body">
+          Your spin axis standard deviation is <strong>30.2° with the driver</strong> and the lateral yardage spread is enormous — shot 4 went 62L, shot 12 went 74R. That's a 136-yard wide spread. A scratch golfer needs roughly ±20 yards maximum. The root cause is <strong>inconsistent face-to-path relationship</strong>: your club path is actually quite consistent (1.4L ± 1.3°) but your face angle at impact swings wildly. Shot 12 shows 9.5R face-to-target vs shot 6 at 32.9L — that's the problem. The fix isn't swing path; it's face control through the hitting zone. Work on grip pressure consistency, and specifically drill <strong>face awareness with impact bags or slow-motion practice</strong>. With 105mph club speed you have the power to compete — but you'll spray drives all day until this tightens.
+        </div>
+        <div class="card-data">
+          Driver spin axis dev: ±13.4° (target: &lt;5°)<br>
+          Driver lateral spread: best 3.0R, worst 74.4R / 62.2L<br>
+          Club path: consistent 1.4L ± 1.3° ← this is fine<br>
+          Face angle: wildly inconsistent ← this is the issue
+        </div>
+      </div>
+
+      <div class="coaching-card priority">
+        <div class="card-title">
+          Thinned Ball-Striking — 7 Iron
+          <span class="card-tag tag-fix">Priority Fix</span>
+        </div>
+        <div class="card-body">
+          Shots 7 and 9 in the 7 iron carried only 79 and 62 yards respectively — these were skulled thin shots. Shot 12 at 126 yards was also sub-standard contact. A <strong>smash factor of 1.09–1.19</strong> on irons screams thin/heel contact (ideal is ~1.38 for a 7 iron). The thinned shots show massive roll and very low spin, confirming the leading edge is catching the ball. Your <strong>attack angle is a consistent -5°</strong> which is correct, but your low point appears to be inconsistent. Focus on ball position (slightly forward of centre) and keeping spine angle through the ball. Avoid early extension. Drills: <strong>towel behind ball drill</strong>, strike down on a tee to train consistent low point.
+        </div>
+        <div class="card-data">
+          7 Iron smash factor range: 1.09–1.33 (avg 1.25)<br>
+          Carry dev: ±29.8 yards (tour: ±8–10 yards)<br>
+          Shots 7, 9: 79 & 62 yards carry — thin contacts<br>
+          Ideal smash factor for 7 iron: ~1.36–1.38
+        </div>
+      </div>
+
+      <div class="coaching-card secondary">
+        <div class="card-title">
+          Driver Spin: High on Mishits
+          <span class="card-tag tag-work">Work On</span>
+        </div>
+        <div class="card-body">
+          Your best driver shots (shots 3, 5, 16) show <strong>2,194–2,558 rpm spin</strong> — that's excellent, right in the optimal 2,000–2,400 range for your speed. However, shots 12 and 15 balloon to <strong>3,678–4,078 rpm</strong>, which costs you ~25–40 yards of carry. This correlates directly with high dynamic loft (15.9°) on those shots. You're likely <strong>flipping at impact</strong> on mishits, adding loft through the zone. The solution is to maintain shaft lean through impact. Your average spin loft of 5.7° is fine — but the dev of ±3.0° needs to come down. Practice with <strong>impact tape</strong> to confirm centre strikes; heel hits add spin and loft.
+        </div>
+        <div class="card-data">
+          Good spin shots: 2,178–2,394 rpm (shots 1,2,3,5)<br>
+          High spin shots: 3,068–4,078 rpm (shots 12,13,14,15)<br>
+          Spin loft dev: ±3.0° — target &lt;1.5°<br>
+          Optimal spin for 105mph: ~2,000–2,500 rpm
+        </div>
+      </div>
+
+      <div class="coaching-card secondary">
+        <div class="card-title">
+          5 Iron Contact Inconsistency
+          <span class="card-tag tag-work">Work On</span>
+        </div>
+        <div class="card-body">
+          Your 5 iron smash factor ranges from <strong>1.13 to 1.39</strong> — that's the difference between a pure strike and a heel/toe miss. Shots 17 (84 yards) and 16 (116 yards) were clear mishits pulling your average down by ~15 yards. Your club speed of 89mph is consistent but ball speed is not, which means the strike point is moving. Lateral impact dev of ±0.48 inches confirms this. For a scratch golfer, <strong>±0.15 inches</strong> is the target. Focus on a quiet lower body at the start of the downswing — slides and dips move the arc. Drill: <strong>feet together drill</strong> for 5 minutes per session to feel centred rotation.
+        </div>
+        <div class="card-data">
+          5 Iron smash range: 1.13–1.39 (avg 1.32)<br>
+          Ball speed dev: ±6.0 mph (target: ±2.5 mph)<br>
+          Carry dev: ±26.4 yards (target: ±10–12 yards)<br>
+          Lateral impact dev: ±0.48 inches
+        </div>
+      </div>
+
+      <div class="coaching-card secondary">
+        <div class="card-title">
+          Wedge Direction Scatter
+          <span class="card-tag tag-work">Work On</span>
+        </div>
+        <div class="card-body">
+          The PW lateral average (+1.7R) is acceptable, but the <strong>standard deviation of ±13.2°</strong> in spin axis means you're spraying it left and right. Shot 2 went 11.6R, shot 17 went 25.2L. For scoring shots in the 120-yard range, a scratch player needs precision to <strong>±5 yards</strong>. The inconsistency comes from your varying face-to-target angle at delivery (FTP ranges from 18.6R to 12.9L — a 31° spread). Your attack angle (-7.8° avg) is solid for a wedge, but you're releasing the face inconsistently. Work on <strong>holding the face square through contact</strong> with a slightly weaker grip to reduce over-rotation.
+        </div>
+        <div class="card-data">
+          PW face-to-target spread: 18.6R to 12.9L (31° range!)<br>
+          PW lateral dev: ±13.2° spin axis<br>
+          PW carry dev: ±19.3 yards<br>
+          Scratch target for PW: ±5 yards lateral
+        </div>
+      </div>
+
+      <div class="coaching-card positive">
+        <div class="card-title">
+          What's Working: Speed & Attack Angle
+          <span class="card-tag tag-keep">Keep</span>
+        </div>
+        <div class="card-body">
+          <strong>105.1 mph driver club speed</strong> is legitimately scratch-level — the average scratch golfer swings at 100–106 mph. Your <strong>attack angle of +5.4° up</strong> on driver is textbook; this gives you the ascending blow needed to optimise launch and spin. Your <strong>smash factor of 1.40</strong> on average is very good — it shows you're finding the face often. On your best driver swings (3, 5, 16), you're carrying 251–268 yards, which is elite amateur distance. The <strong>iron AOA is also consistent</strong>: -4 to -5° down strike is exactly right for mid-irons. You have all the physical tools to reach scratch. The remaining gap is purely shot-to-shot consistency and face control.
+        </div>
+        <div class="card-data">
+          Club speed: 105.1 mph — top 10% of amateurs<br>
+          Driver AOA: +5.4° — optimal for high launch<br>
+          Best driver shots: 251–281 yard total distance<br>
+          Iron AOA: -4.0 to -5.5° — textbook descending blow
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRATCH ROADMAP -->
+  <div class="section">
+    <div class="section-label">Path to Scratch</div>
+    <div class="verdict">
+      <h2>The Honest Assessment</h2>
+      <div class="verdict-body">
+        You have <strong>scratch-level speed and above-average ball speed</strong> — that's the hardest thing to develop, and you already have it. The gap between your current game and scratch is almost entirely a <strong>consistency problem, not a power problem</strong>. Your standard deviations across every club are 2–3x what they need to be for scratch golf. A scratch player doesn't hit it further than you — they just have a much tighter pattern. The good news: consistency is trainable. Focus on the four priorities below in order.
+      </div>
+      <div class="scratch-path">
+        <div class="path-step">
+          <div class="path-num">01</div>
+          <div class="path-desc">
+            <strong>Face Control</strong>
+            Tighten spin axis dev from ±13° to ±5° with driver. This is the single biggest scoring move. Half your driver shots are currently unusable in competition.
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">02</div>
+          <div class="path-desc">
+            <strong>Eliminate Thins</strong>
+            Zero tolerance for the 60–80 yard irons. Work low-point drills until smash factor floor is 1.30+ on every iron shot, every time.
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">03</div>
+          <div class="path-desc">
+            <strong>Wedge Precision</strong>
+            Your scoring zone (100–130 yards) needs ±5 yard control. Currently it's ±20. This single change can drop 4–5 shots per round immediately.
+          </div>
+        </div>
+        <div class="path-step">
+          <div class="path-num">04</div>
+          <div class="path-desc">
+            <strong>Spin Optimisation</strong>
+            On quality strikes, reduce driver spin to 2,000–2,400 rpm consistently. You're already there on good shots — now make it every shot.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="09_golf_coach_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
+    </a>
+    <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
+    </a>
+    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📊</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion Mapping</span>
+    </a>
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>

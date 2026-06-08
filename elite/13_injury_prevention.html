@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<!-- version:v2.1 · 2026-05-30 · 13_injury_prevention.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Injury Prevention & Management — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}
+.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+
+.inj-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;}
+.inj-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.inj-icon{font-size:1.5rem;flex-shrink:0;}
+.inj-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.2;}
+.inj-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);margin-top:3px;}
+.risk-tag{display:inline-flex;align-items:center;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:3px;margin-bottom:10px;}
+.risk-high{background:var(--rust-dim);border:1px solid rgba(216,96,48,.3);color:var(--rust-hi);}
+.risk-med{background:var(--gold-dim);border:1px solid rgba(224,184,64,.3);color:var(--gold-hi);}
+.risk-low{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.inj-section{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin:10px 0 5px;}
+.inj-body{font-size:12.5px;color:var(--muted);line-height:1.8;}
+.inj-body strong{color:var(--white);}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+
+.traffic-light{display:flex;flex-direction:column;gap:6px;margin:12px 0;}
+.tl-row{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-radius:var(--r-sm);font-size:12.5px;line-height:1.7;}
+.tl-green{background:rgba(80,180,80,.08);border:1px solid rgba(80,180,80,.2);}
+.tl-amber{background:rgba(224,184,64,.08);border:1px solid rgba(224,184,64,.2);}
+.tl-red{background:rgba(216,96,48,.08);border:1px solid rgba(216,96,48,.2);}
+.tl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.tl-green .tl-dot{background:var(--good);}
+.tl-amber .tl-dot{background:var(--warn);}
+.tl-red .tl-dot{background:var(--bad);}
+.tl-row strong{color:var(--white);}
+.tl-row p{color:var(--muted);}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Injury Prevention · Guide 13</p>
+  <h1>Stay on<br><em>the Course</em></h1>
+  <p class="hero-sub">The most effective training programme is the one you can sustain without injury. Know the risks, recognise the warning signs, and protect the 24-month investment you are making in your game.</p>
+  <div class="hero-tags">
+    <span class="htag">🔴 Common Injuries</span>
+    <span class="htag">⚡ Warning Signs</span>
+    <span class="htag">🛡️ Prevention</span>
+    <span class="htag">🔄 Return to Play</span>
+    <span class="htag">🏥 When to See a Physio</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('lower_back',this)">Lower Back</button>
+  <button class="tab" onclick="show('elbow',this)">Elbow & Wrist</button>
+  <button class="tab" onclick="show('shoulder',this)">Shoulder</button>
+  <button class="tab" onclick="show('hip_knee',this)">Hip & Knee</button>
+  <button class="tab" onclick="show('neck',this)">Neck & Cervical</button>
+  <button class="tab" onclick="show('prevention',this)">Prevention Protocol</button>
+  <button class="tab" onclick="show('return',this)">Return to Play</button>
+  <button class="tab" onclick="show('physio',this)">Physio Framework</button>
+  <button class="tab" onclick="show('peacelove',this)">PEACE & LOVE</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Golf Injuries — The Honest Picture</h2>
+  <p class="sec-desc">Golf is not a low-injury sport. At the training volume required to reach scratch, musculoskeletal injury is a significant and manageable risk. The golfers who reach their goals are those who prevent, recognise, and manage injuries intelligently — not those who ignore them until breakdown occurs.</p>
+
+  <div class="pull-quote">
+    <p>"Almost every professional golfer has back issues. The question is not whether you'll get injured — it's whether you manage your body well enough to stay functional."</p>
+    <span>— Dr. Greg Rose, Co-founder TPI (Titleist Performance Institute)</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Injury Incidence in Amateur Golf</span>
+    <h3>The Numbers You Need to Know</h3>
+    <table class="tbl">
+      <tr><th>Injury Type</th><th>Prevalence (Amateur)</th><th>Primary Cause</th></tr>
+      <tr><td>Lower back pain</td><td class="bad">35–40% of golfers</td><td>Rotation load, poor hip mobility</td></tr>
+      <tr><td>Golfer's elbow (medial epicondylitis)</td><td class="warn">25–30%</td><td>Lead arm overload, grip, impact force</td></tr>
+      <tr><td>Tennis elbow (lateral epicondylitis)</td><td class="warn">10–15%</td><td>Trail arm deceleration forces</td></tr>
+      <tr><td>Rotator cuff issues</td><td class="warn">12–18%</td><td>Lead shoulder, over-rotation</td></tr>
+      <tr><td>Lead wrist (De Quervain's)</td><td class="warn">12–16%</td><td>Impact shock, grip pressure</td></tr>
+      <tr><td>Hip impingement / labral</td><td class="warn">10–14%</td><td>Trail hip, high swing volume</td></tr>
+      <tr><td>Knee (lead / trail)</td><td class="good">8–12%</td><td>Ground reaction forces, rotation</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Training Load Problem</span>
+    <h3>Why Injury Risk Is Highest in Your Improvement Phase</h3>
+    <p>Injury risk peaks when training volume increases faster than tissue adaptation. A golfer moving from occasional play to 2 rounds + 2 practice sessions per week has likely tripled their swing volume. Tendons and connective tissue adapt 3–5x more slowly than muscle and cardiovascular fitness — meaning you will feel capable of more than your connective tissue can currently absorb.</p>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">The 10% Rule — Load Increase Limit</div>
+      <div class="formula-main">Do not increase weekly swing volume by more than 10% per week.<br>If you practised 200 swings last week → max 220 swings this week.<br>Applies to both range sessions and round volume.</div>
+      <div class="formula-note">This is the most evidence-based single injury prevention rule across all sports. It feels conservative. It works.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Traffic Light Self-Assessment</span>
+    <h3>Daily Body Check Before Every Session</h3>
+    <div class="traffic-light" style="margin-top:12px;">
+      <div class="tl-row tl-green"><div class="tl-dot"></div><div><strong>Green — Train normally:</strong> No pain anywhere. Minor muscle soreness from previous sessions is acceptable. Full range of motion in hips, shoulders, and wrists. Mental and physical readiness is high.</div></div>
+      <div class="tl-row tl-amber"><div class="tl-dot"></div><div><strong>Amber — Modify training:</strong> Mild discomfort (2–4 out of 10) in any joint or tendon. Stiffness that does not warm up after 10 minutes. Previous injury site showing sensitivity. Reduce volume by 50%, avoid maximum-effort swings, prioritise short game and putting.</div></div>
+      <div class="tl-row tl-red"><div class="tl-dot"></div><div><strong>Red — Do not swing:</strong> Pain of 5/10 or higher. Sharp or stabbing pain at any point in swing. Pain that worsens during warm-up. Any numbness or tingling. Rest, ice, elevate, and book physio within 48 hours.</div></div>
+    </div>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The scratch golfer's greatest risk:</strong> Playing through pain that should require rest. Every week of playing through an injury extends the recovery time by 2–4 weeks. A 1-week rest taken early is almost always preferable to a 6-week forced layoff taken late.</p>
+  </div>
+</div>
+
+<!-- LOWER BACK -->
+<div class="sec" id="lower_back">
+  <h2 class="sec-title">Lower Back</h2>
+  <p class="sec-desc">The most common golf injury by a significant margin. The golf swing generates compressive and shear forces on the lumbar spine at 6–8x bodyweight. Poor hip mobility, tight thoracic spine, and weak core amplify these forces dramatically.</p>
+
+  <span class="risk-tag risk-high">⬆ Highest Risk Injury in Golf</span>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🔴</div>
+      <div>
+        <div class="inj-title">Lumbar Disc Irritation / Herniation</div>
+        <div class="inj-sub">Most Common · Potentially Season-Ending</div>
+      </div>
+    </div>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Central lower back pain that increases after sitting or lying down. Pain radiating into one or both buttocks. Any sensation of electric shock, numbness, or tingling down the leg — this is a red flag requiring immediate physiotherapy assessment, not management at home.</div>
+    <div class="inj-section">Primary Causes in Golfers</div>
+    <div class="inj-body"><strong>Hip mobility restriction</strong> is the #1 contributing factor. When the hips cannot rotate sufficiently in the backswing or downswing, the lumbar spine compensates by rotating beyond its functional range — under load. TPI research identifies limited lead hip internal rotation and limited trail hip external rotation as the two most predictive mobility deficits for lower back injury.</div>
+    <div class="inj-section">Prevention Protocol</div>
+    <div class="inj-body">
+      <strong>Daily:</strong> Hip 90/90 mobility drill (2 minutes each side), cat-cow stretching (20 reps), deep squat hold (30 seconds x3). These take 8 minutes total and represent the single highest-leverage injury prevention investment you can make.<br><br>
+      <strong>Strength:</strong> Dead bug (core anti-extension), Pallof press (anti-rotation), single-leg deadlift (hip hinge pattern). 2× per week minimum. A strong deep core reduces lumbar spine load during the swing by 15–25%.<br><br>
+      <strong>Swing mechanics:</strong> Have a TPI-certified coach assess your hip-to-thorax separation. Early extension (hips thrusting toward the ball at impact) is the swing pattern most commonly associated with lower back injury. Address it early.
+    </div>
+    <div class="inj-section">When to Stop Playing</div>
+    <div class="inj-body">Any pain with numbness or tingling — stop immediately. Pain above 5/10 that does not reduce within 10 minutes of warm-up — stop for the session. Pain that changes your swing pattern to compensate — stop, as compensations create secondary injury sites.</div>
+  </div>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🟡</div>
+      <div>
+        <div class="inj-title">Facet Joint Irritation</div>
+        <div class="inj-sub">Common · Manageable with Rest and Mobility</div>
+      </div>
+    </div>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">One-sided lower back pain (not central). Stiffness upon waking that eases with movement. Pain with extension (leaning backward) more than flexion. Generally worsens later in the day after sustained activity.</div>
+    <div class="inj-section">Management</div>
+    <div class="inj-body">Typically responds well to rest (2–5 days of no swinging), anti-inflammatory treatment (ice or NSAIDs under medical guidance), and progressive return to mobility work. A physio can perform joint mobilisation that accelerates recovery significantly. Cortisone injection is occasionally appropriate for persistent cases — requires GP or sports physician referral.</div>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>The single best lower back exercise for golfers:</strong> The "Dead Bug." Lie flat, arms up, knees at 90°. Slowly lower opposite arm and leg while maintaining a completely flat lower back against the floor. Return. Alternate. 3 sets of 10 reps, daily. This trains the deep stabilisers (transversus abdominis, multifidus) that protect the lumbar spine under rotational load — the exact stress pattern of the golf swing.</p>
+  </div>
+</div>
+
+<!-- ELBOW & WRIST -->
+<div class="sec" id="elbow">
+  <h2 class="sec-title">Elbow & Wrist Injuries</h2>
+  <p class="sec-desc">The second most prevalent injury category in amateur golfers. Overuse, incorrect grip pressure, and impact with the ground (fat shots) are the three primary causes. Gradual in onset, but slow to resolve if ignored.</p>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🔴</div>
+      <div>
+        <div class="inj-title">Medial Epicondylitis — "Golfer's Elbow"</div>
+        <div class="inj-sub">Lead Arm Inner Elbow · High Prevalence</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-high">⬆ High Risk</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Pain on the inside (medial) of the elbow — specifically the bony point. Pain that increases when you grip the club. Tenderness to touch on or just below the medial epicondyle. Pain radiating down the forearm toward the wrist. Weakness in grip strength.</div>
+    <div class="inj-section">Causes Specific to Golfers</div>
+    <div class="inj-body">Medial epicondylitis in golfers is primarily caused by: (1) <strong>Impact shock from fat shots</strong> — the single biggest cause; hitting turf before the ball transmits a massive shock load through the wrist flexors to the elbow. (2) <strong>Excessive grip pressure</strong> — squeezing creates sustained tension in the wrist flexors. Target grip pressure of 4–5/10 (enough to feel the club, not to control it through force). (3) <strong>High practice volume without adequate recovery</strong> — the cumulative load from 200+ range balls per session without rest exceeds the tendons' recovery capacity.</div>
+    <div class="inj-section">Prevention</div>
+    <div class="inj-body">
+      <strong>Eccentric wrist flexion exercise:</strong> Wrist curl with a light dumbbell, lowering slowly (3 seconds down, 1 second up). 3 sets of 15 reps, 3× per week. Eccentric loading is the most evidence-based tendinopathy prevention and treatment intervention.<br><br>
+      <strong>Grip pressure monitoring:</strong> During every practice session, check grip pressure every 20 shots. Fatigue causes unconscious tightening. If you cannot slide the club in your hands with a small pull, your grip is too tight.<br><br>
+      <strong>Strike quality first:</strong> Practising ball-first contact (aligned with the lower back prevention work) simultaneously eliminates the fat-shot impact shock that causes most medial elbow problems.
+    </div>
+    <div class="inj-section">Treatment Protocol (If Injury Occurs)</div>
+    <div class="inj-body">
+      Week 1–2: Protect — avoid swinging, limit load on the elbow. Elevate and compress if swollen. Do NOT routinely apply ice or take anti-inflammatories — they suppress the inflammatory repair process. Gentle pain-free range of motion only.<br>
+      Week 3–4: Eccentric wrist flexion exercises (pain-free range only). Gradual return to short game at 50% effort. Progressive loading is the treatment, not rest.<br>
+      Week 5–6: Progressive return to full swing. Address the cause (contact quality, grip pressure) before returning to volume.<br>
+      If not resolving by week 6: See a sports physiotherapist. Shockwave therapy has strong evidence for chronic tendinopathy and can accelerate recovery significantly.
+    </div>
+  </div>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🟡</div>
+      <div>
+        <div class="inj-title">De Quervain's Tenosynovitis — Lead Wrist</div>
+        <div class="inj-sub">Thumb-Side Wrist Pain · Common in High-Volume Golfers</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-med">⚡ Moderate Risk</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Pain on the thumb side of the lead wrist. Catching sensation when moving the wrist. Pain when making a fist or pinching motion. Swelling or thickening along the thumb tendon. Often diagnosed with the Finkelstein test — make a fist with the thumb inside, bend wrist toward the little finger; pain on the thumb side confirms the diagnosis.</div>
+    <div class="inj-section">Causes</div>
+    <div class="inj-body">Impact shock transmitted through the lead wrist at ball strike; combined with the rapid abduction-adduction movement of the wrist through the hitting zone. More common in golfers with a strong grip or those who actively "hit" with the hands rather than rotating through with the body.</div>
+    <div class="inj-section">Prevention & Management</div>
+    <div class="inj-body">Wrist mobility work pre-session. Wrist strengthening (rice bucket exercises — bury both hands to the wrist in a bucket of uncooked rice and make rotation movements for 2 minutes). Kinesiology tape applied to the wrist and thumb base during heavy practice sessions can reduce load by 15–20%. Rest is the primary treatment — cortisone injection is highly effective for persistent cases.</div>
+  </div>
+</div>
+
+<!-- SHOULDER -->
+<div class="sec" id="shoulder">
+  <h2 class="sec-title">Shoulder Injuries</h2>
+  <p class="sec-desc">The lead shoulder is subjected to extreme range of motion demands in the full swing — particularly in the backswing. Rotator cuff irritation and impingement are common in golfers who swing at high volume without adequate shoulder stability work.</p>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🔴</div>
+      <div>
+        <div class="inj-title">Rotator Cuff Tendinopathy / Impingement</div>
+        <div class="inj-sub">Lead Shoulder · High Risk at High Volume</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-high">⬆ High Risk at Volume</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Pain at the top of the lead shoulder or outer arm during the backswing. A painful arc between 60–120° of arm elevation. Pain when reaching overhead or behind your back. Night pain is a key indicator of rotator cuff involvement. Pain on the trail shoulder more commonly relates to the follow-through and is typically less serious.</div>
+    <div class="inj-section">Why Golfers Are Vulnerable</div>
+    <div class="inj-body">The full golf backswing requires 90° of shoulder external rotation in the lead shoulder — a range that far exceeds most people's functional mobility. When that range is not available, the shoulder joint compensates by elevating (shrugging) and internally rotating, which compresses the subacromial space and creates impingement of the supraspinatus tendon over many repetitions.</div>
+    <div class="inj-section">Prevention Protocol</div>
+    <div class="inj-body">
+      <strong>Band external rotation:</strong> Elbow at 90°, band attached at elbow height, rotate outward against resistance. 3 × 15 daily. This strengthens the infraspinatus and teres minor — the rotator cuff muscles most commonly weak in golfers.<br><br>
+      <strong>Scapular stability:</strong> Band pull-apart (hold a resistance band at shoulder width, pull to full extension — keep arms straight). 3 × 20 daily. Scapular instability is a primary driver of shoulder impingement.<br><br>
+      <strong>Thoracic rotation:</strong> A stiff thoracic spine forces the shoulder to contribute more rotation in the backswing, increasing stress. Daily thoracic rotation mobility work (thread-the-needle, open books) reduces shoulder demand significantly.
+    </div>
+    <div class="inj-section">When to See a Physio</div>
+    <div class="inj-body">Any night pain in the shoulder. Pain that has persisted for more than 2 weeks with rest. Loss of shoulder strength (difficulty lifting arm against light resistance). An MRI scan is the definitive diagnostic tool for rotator cuff tears and should be requested for persistent or severe cases.</div>
+  </div>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🟡</div>
+      <div>
+        <div class="inj-title">Acromioclavicular (AC) Joint Irritation</div>
+        <div class="inj-sub">Top of Shoulder · Common in Over-40 Golfers</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-med">⚡ Moderate Risk</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Point tenderness directly on top of the shoulder at the AC joint. Pain at the end range of backswing and follow-through. Often aggravated by crossing the arm across the body. Very common in golfers over 40 as AC joint degeneration is age-related.</div>
+    <div class="inj-section">Management</div>
+    <div class="inj-body">Reduce practice volume temporarily. Avoid full follow-through exercises. A sports physio can offer joint mobilisation, massage, and cortisone injection if conservative management does not resolve symptoms within 4–6 weeks. Surgery is rarely required.</div>
+  </div>
+</div>
+
+<!-- HIP & KNEE -->
+<div class="sec" id="hip_knee">
+  <h2 class="sec-title">Hip & Knee Injuries</h2>
+  <p class="sec-desc">Hip and knee injuries in golfers are often caused not by a single incident but by the cumulative load of repetitive rotation under resistance. The trail hip is particularly vulnerable during the downswing loading phase.</p>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🟡</div>
+      <div>
+        <div class="inj-title">Hip Impingement (FAI — Femoroacetabular Impingement)</div>
+        <div class="inj-sub">Trail Hip · Insidious Onset</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-med">⚡ Moderate Risk · Often Undiagnosed</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Groin pain or deep anterior hip pain — often described as deep within the joint rather than on the surface. Pain with sitting for long periods, then standing. Clicking or catching sensation in the hip. Pain at the end range of hip internal rotation — precisely the range required in the trail hip at the top of the backswing. The "C-sign" — golfers often cup their hand around the front of the hip to indicate the pain location, characteristic of intra-articular hip pain.</div>
+    <div class="inj-section">Why It Matters for Golfers</div>
+    <div class="inj-body">FAI creates a hard-end limitation to trail hip rotation in the backswing. When the hip impinges, the body compensates through lumbar spine over-rotation (back injury risk), reverse spine angle (swing fault), or early extension. It is simultaneously an injury problem and a swing problem — and addressing only the swing without the hip diagnosis makes the swing flaw unresolvable through coaching alone.</div>
+    <div class="inj-section">Prevention & Management</div>
+    <div class="inj-body">
+      Hip mobility work is primary prevention: 90/90 hip stretches, hip flexor stretching, deep squat holds, lateral band walks (gluteal strengthening). If impingement is suspected, seek a sports physician assessment — an X-ray can confirm the bony anatomy, and an MRI can identify labral involvement. Physiotherapy-directed hip strengthening and mobility often resolves mild-to-moderate cases; surgical intervention (arthroscopy) is reserved for persistent labral tears.
+    </div>
+  </div>
+
+  <div class="inj-card">
+    <div class="inj-header">
+      <div class="inj-icon">🟢</div>
+      <div>
+        <div class="inj-title">Lead Knee Stress (Medial Compartment)</div>
+        <div class="inj-sub">Lead Knee · Typically Manageable</div>
+      </div>
+    </div>
+    <span class="risk-tag risk-low">✓ Lower Risk · Manageable</span>
+    <div class="inj-section">Warning Signs</div>
+    <div class="inj-body">Medial (inner) knee pain in the lead leg. Pain with the full follow-through when the lead leg is straightened. Swelling after play. History of previous knee injury significantly increases risk.</div>
+    <div class="inj-section">Prevention</div>
+    <div class="inj-body">
+      <strong>Gluteal strength is the primary protector:</strong> Strong glutes absorb the rotation forces that would otherwise load the knee. Single-leg squats, lateral band walks, and hip thrusts directly protect the lead knee.<br><br>
+      <strong>Walking 18 holes:</strong> The consistent walking load actually benefits knee health compared to riding in carts, provided you don't already have significant knee degeneration. If you have existing knee pathology, discuss volume with your physio before increasing round frequency.
+    </div>
+  </div>
+</div>
+
+<!-- NECK & CERVICAL SPINE -->
+<div class="sec" id="neck">
+  <h2 class="sec-title">Neck & Cervical Spine</h2>
+  <p class="sec-desc">Neck and cervical spine issues are the third most common complaint among amateur golfers, after lower back and elbow. Yet they receive almost no attention in most fitness or injury prevention programmes. The prolonged flexed-forward address posture, repeated rotation through the swing, and extended periods looking down at the ball create a specific and very treatable pattern of dysfunction.</p>
+  <span class="badge badge-rust">🔴 Incidence</span>
+  <div class="card card-rust">
+    <span class="card-tag">Why Golfers Get Neck Problems</span>
+    <h3>The Address Posture Mechanism</h3>
+    <p style="margin-bottom:12px;">The golf address position — particularly for irons and short clubs — places the cervical spine in sustained forward flexion (chin toward chest) with mild right rotation (for right-handed players looking at the ball). A typical round involves this position for 2–3 hours, repeated over hundreds of rounds per year. The cumulative loading on the posterior cervical muscles, facet joints, and intervertebral discs is substantial.</p>
+    <div class="inj-card">
+      <div class="inj-header">
+        <div class="inj-icon">🔴</div>
+        <div>
+          <div class="inj-title">Sub-Occipital Muscle Tension</div>
+          <div class="inj-sub">Most common golf neck complaint</div>
+        </div>
+      </div>
+      <div class="inj-section">Cause</div>
+      <div class="inj-body">Sustained chin-down posture compresses the sub-occipital muscles (base of skull). Triggers tension headaches radiating from the base of the skull and behind the eyes — frequently misattributed to dehydration or eyestrain during rounds.</div>
+      <div class="inj-section">Symptoms</div>
+      <div class="inj-body">Tightness at the base of the skull, tension headaches during or after rounds, stiffness on waking, reduced neck rotation in the direction of the follow-through (left for right-handed players).</div>
+      <div class="inj-section">Management</div>
+      <div class="inj-body"><strong>Sub-occipital release (daily):</strong> Lie on your back, place fingertips at the base of the skull, apply gentle upward pressure for 60–90 seconds. Follow with chin tucks (10 reps). Usually resolves within 2–3 weeks with consistency.</div>
+    </div>
+    <div class="inj-card">
+      <div class="inj-header">
+        <div class="inj-icon">🟡</div>
+        <div>
+          <div class="inj-title">Facet Joint Irritation</div>
+          <div class="inj-sub">Rotation-related cervical pain</div>
+        </div>
+      </div>
+      <div class="inj-section">Cause</div>
+      <div class="inj-body">Repeated rotation through the swing — especially the high-speed follow-through extension — loads the posterior cervical facet joints. More common in players with existing cervical stiffness, those who have increased training volume rapidly, or those hitting off hard mats on indoor ranges.</div>
+      <div class="inj-section">Symptoms</div>
+      <div class="inj-body">Localized neck pain on one side (usually left for right-handed players post-impact), pain that worsens with rotation and extension, occasional referred pain into the shoulder or upper arm.</div>
+      <div class="inj-section">Management</div>
+      <div class="inj-body"><strong>Immediately:</strong> Reduce swing volume, avoid driving range mat practice. <strong>Short-term:</strong> Cervical rotation stretches in pain-free range only. Heat for muscle spasm, ice for acute inflammation. <strong>If not improving in 10 days:</strong> Physiotherapy assessment essential — facet irritation can refer into the arm and mimic disc pathology.</div>
+    </div>
+    <div class="inj-card">
+      <div class="inj-header">
+        <div class="inj-icon">🔴</div>
+        <div>
+          <div class="inj-title">Cervical Disc Pathology</div>
+          <div class="inj-sub">Requires professional assessment</div>
+        </div>
+      </div>
+      <div class="inj-section">Red Flags — Stop Immediately</div>
+      <div class="inj-body">Any neck pain accompanied by <strong>arm numbness, tingling, or weakness</strong> is a red flag requiring urgent physiotherapy or medical review. This pattern suggests neural involvement (disc prolapse with nerve root compression) and is not appropriate for self-management. Do not continue playing until assessed.</div>
+      <div class="inj-section">Non-Red Flag Disc Symptoms</div>
+      <div class="inj-body">Deep aching in the neck with restricted range of movement but no arm symptoms — often responds well to physiotherapy (manual therapy, McKenzie protocol, neck strengthening). Typically 4–8 weeks to meaningful resolution.</div>
+    </div>
+  </div>
+
+  <h2 class="sec-title">Neck Prevention Protocol</h2>
+  <p class="sec-desc">Three targeted exercises that address the specific postural and mobility demands of golf. Takes 5 minutes. Add to the daily mobility routine.</p>
+  <div class="card">
+    <span class="card-tag">Exercise 1 — Chin Tucks (Cervical Retraction)</span>
+    <h3>Reversing the Forward Head Posture</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Starting position:</strong> Sitting or standing tall, spine neutral. Look straight ahead.</div></li>
+      <li><span class="step-n">2</span><div><strong>The movement:</strong> Draw the chin straight back — not down — as if making a double chin. Hold 5 seconds. The back of the head moves backward and slightly up. You should feel a gentle stretch at the base of the skull and mild activation in the deep cervical flexors.</div></li>
+      <li><span class="step-n">3</span><div><strong>Prescription:</strong> 10 reps × 3 sets. Daily. This is the most important cervical exercise for golfers — it directly counteracts the forward head position of address and strengthens the muscles that hold the head in a neutral position during the swing.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Exercise 2 — Cervical Rotation Stretch</span>
+    <h3>Maintaining Full Rotation for the Backswing and Follow-Through</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The movement:</strong> Sitting tall, turn the head slowly to the right until you feel a comfortable stretch. Hold 20–30 seconds. Return to centre. Repeat left. Never force the range — this is a gentle end-range hold, not a forced rotation.</div></li>
+      <li><span class="step-n">2</span><div><strong>Golf relevance:</strong> Left rotation restriction (for right-handed players) directly limits follow-through and finish position. Regular right-side rotation restriction limits backswing turn. Both increase compensatory loading elsewhere in the kinematic chain — particularly the lower back.</div></li>
+      <li><span class="step-n">3</span><div><strong>Prescription:</strong> 3 reps each direction. Hold 20–30 seconds. Daily pre-round and post-round.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Exercise 3 — Levator Scapulae Stretch</span>
+    <h3>Releasing the Neck-Shoulder Connection</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The movement:</strong> Sit tall. Look down and to the right at approximately 45°. Gently add slight downward overpressure with the right hand on top of the head (do not force). You should feel the stretch running from the base of the skull down the left side of the neck to the left shoulder blade.</div></li>
+      <li><span class="step-n">2</span><div><strong>Why it matters for golf:</strong> The levator scapulae connects the cervical spine to the shoulder blade. Tightness here — extremely common in golfers — creates a pattern of neck-shoulder co-tension that degrades both shoulder turn and address posture. It is also a primary driver of the tension headaches described above.</div></li>
+      <li><span class="step-n">3</span><div><strong>Prescription:</strong> 45-second hold each side. Daily. This single stretch resolves the majority of sub-occipital tension complaints within 2–3 weeks.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">On-Course Neck Management</span>
+    <h3>Between-Hole Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The between-hole reset:</strong> After every 3 holes, lift your chin, roll the shoulders back, and perform 5 chin tucks while walking to the next tee. This interrupts the sustained sub-occipital compression before it accumulates into a headache. Takes 30 seconds — do it every time.</div></li>
+      <li><span class="step-n">2</span><div><strong>Check address posture at the range, not during the round:</strong> If you are developing a progressively chin-down posture across a season, address it at the range with video feedback (Guide 14) rather than thinking about it during the round. On-course posture adjustments during a competitive round introduce conscious processing at the wrong moment.</div></li>
+      <li><span class="step-n">3</span><div><strong>Indoor range mats — extra caution:</strong> Hard mats transmit impact shock upward through the arms, shoulders, and into the cervical spine in a way that grass does not. If your neck symptoms worsen in winter range sessions, the mat impact shock is likely contributing. Hitting off a grass mat or using a portable grass patch eliminates this variable.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PREVENTION PROTOCOL -->
+<div class="sec" id="prevention">
+  <h2 class="sec-title">The Prevention Protocol</h2>
+  <p class="sec-desc">A comprehensive, integrated injury prevention routine designed to protect every high-risk structure in the golf body. Takes 12–15 minutes daily. This is not optional — it is part of your training programme.</p>
+
+  <span class="badge badge-lime">🌅 Daily Mobility Routine (10 min)</span>
+  <div class="card">
+    <span class="card-tag">Morning Mobility — Every Day</span>
+    <h3>The Daily Non-Negotiable</h3>
+    <table class="tbl">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Target Structure</th></tr>
+      <tr><td>Hip 90/90 stretch — both sides</td><td class="good">2 min each</td><td>Hip internal/external rotation</td></tr>
+      <tr><td>Cat-cow</td><td class="good">2 × 15 reps</td><td>Thoracic/lumbar spine</td></tr>
+      <tr><td>Thread-the-needle</td><td class="good">2 × 10 each</td><td>Thoracic rotation</td></tr>
+      <tr><td>Deep squat hold</td><td class="good">3 × 30 seconds</td><td>Hip, ankle, thoracic</td></tr>
+      <tr><td>Shoulder CARs (Controlled Articular Rotations)</td><td class="good">3 × each arm</td><td>Glenohumeral joint</td></tr>
+      <tr><td>Wrist circles + extension stretch</td><td class="good">30 sec each</td><td>Wrist flexors/extensors</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">⚡ Pre-Session Warm-Up (8 min)</span>
+  <div class="card card-gold">
+    <span class="card-tag">Before Every Range Session or Round</span>
+    <h3>Tissue Preparation — Not Optional</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>5 minutes of brisk walking or light movement:</strong> Elevates core temperature and heart rate. Improves blood flow to tendons and joints. Cold tissues are injury-prone tissues. Never skip this.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hip hinges (10 reps):</strong> Stand, push hips back keeping spine neutral. Activates posterior chain and primes the hip hinge pattern central to the golf swing.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lateral band walks (15 steps each direction):</strong> Activates glutes. Underprepared glutes lead to early hip extension and knee stress in the swing.</div></li>
+      <li><span class="step-n">4</span><div><strong>Arm circles + cross-body shoulder stretches (30 sec each):</strong> Prepares the rotator cuff and AC joint for the rotation forces ahead.</div></li>
+      <li><span class="step-n">5</span><div><strong>Slow practice swings (10 reps, building to full speed):</strong> Start at 30% speed, build over 10 swings to full effort. Never take a full-speed swing as your first swing of a session.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">🏋️ Weekly Prevention Exercises (2× per week)</span>
+  <div class="card card-teal">
+    <span class="card-tag">Injury Prevention Strength Work</span>
+    <h3>The Eight Essential Exercises</h3>
+    <table class="tbl">
+      <tr><th>Exercise</th><th>Sets × Reps</th><th>Injury Prevented</th></tr>
+      <tr><td>Dead bug</td><td class="good">3 × 10</td><td>Lower back (core anti-extension)</td></tr>
+      <tr><td>Pallof press</td><td class="good">3 × 12 each</td><td>Lower back (anti-rotation)</td></tr>
+      <tr><td>Single-leg deadlift</td><td class="good">3 × 8 each</td><td>Lower back, hip, knee</td></tr>
+      <tr><td>Eccentric wrist flexion (light DB)</td><td class="good">3 × 15</td><td>Medial elbow (golfer's elbow)</td></tr>
+      <tr><td>Band external rotation</td><td class="good">3 × 15</td><td>Rotator cuff / impingement</td></tr>
+      <tr><td>Band pull-apart</td><td class="good">3 × 20</td><td>Shoulder impingement</td></tr>
+      <tr><td>Hip thrust</td><td class="good">3 × 12</td><td>Lead knee, lower back</td></tr>
+      <tr><td>Lateral band walk</td><td class="good">3 × 15 each</td><td>Lead knee, hip impingement</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Post-session protocol (PEACE & LOVE, not RICE):</strong> After high-volume sessions, the current evidence-based approach is not ice but <em>movement and load management</em>. Protect the area from aggravation, elevate if swollen, use compression to manage swelling, but avoid ice and anti-inflammatories — both suppress the inflammatory response your body needs to repair tissue. Instead, do 5 minutes of light, pain-free movement of the loaded area. This promotes blood flow and lymphatic drainage without blocking the repair cascade. See the PEACE & LOVE tab below for the full protocol.</p>
+  </div>
+</div>
+
+<!-- RETURN TO PLAY -->
+<div class="sec" id="return">
+  <h2 class="sec-title">Return to Play Protocol</h2>
+  <p class="sec-desc">Returning to full training too quickly after injury is the primary cause of re-injury. Follow this evidence-based protocol regardless of how good you feel — the absence of pain is not the same as tissue readiness.</p>
+
+  <div class="pull-quote">
+    <p>"The biggest mistake injured golfers make is returning to the volume they had before the injury, at the same speed. The tissue that just healed needs graduated re-loading — not a sudden return to stress."</p>
+    <span>— Sports Physiotherapist Standard Protocol</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Five-Stage Return Protocol</span>
+    <h3>Apply to All Overuse Injuries (Tendon, Muscle, Joint)</h3>
+    <table class="tbl">
+      <tr><th>Stage</th><th>Duration</th><th>Permitted Activity</th><th>Pain Threshold</th></tr>
+      <tr><td class="bad">Stage 1 — Rest</td><td>Until pain-free at rest</td><td>No swinging. Mobility work only.</td><td>0/10 at rest</td></tr>
+      <tr><td class="warn">Stage 2 — Light Loading</td><td>3–5 days</td><td>Putting and chipping only. 50% effort.</td><td>Max 3/10 during</td></tr>
+      <tr><td class="warn">Stage 3 — Graduated Swing</td><td>5–7 days</td><td>Half-swings at 50–60% speed. Irons only.</td><td>Max 3/10 during</td></tr>
+      <tr><td class="warn">Stage 4 — Near-Full Swing</td><td>5–7 days</td><td>Full swing at 70–80% effort. No driver.</td><td>Max 2/10 during</td></tr>
+      <tr><td class="good">Stage 5 — Full Return</td><td>Ongoing</td><td>All clubs. Normal volume, gradually increasing.</td><td>0/10</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p>If pain exceeds the threshold at any stage, return to the previous stage for 3 additional days. Never progress through pain. Any return of pain after Stage 5 means re-evaluation — do not attempt to "play through" a recurrence.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Volume Management After Return</span>
+    <h3>The First Four Weeks Back</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Week 1:</strong> Return at 50% of pre-injury weekly swing volume. Maximum one range session plus one short game session.</div></li>
+      <li><span class="step-n">2</span><div><strong>Week 2:</strong> 65% of pre-injury volume. Can add one 9-hole round if pain-free through week 1.</div></li>
+      <li><span class="step-n">3</span><div><strong>Week 3:</strong> 80% volume. Can add a second 9-hole round or one full round.</div></li>
+      <li><span class="step-n">4</span><div><strong>Week 4:</strong> 90% volume. Full programme if fully pain-free throughout weeks 1–3.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PHYSIO FRAMEWORK -->
+<div class="sec" id="physio">
+  <h2 class="sec-title">The Physiotherapy Framework</h2>
+  <p class="sec-desc">A relationship with a golf-literate sports physiotherapist is one of the highest-leverage professional relationships you can build on your scratch journey. Know when to use this resource — and use it early.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">When to See a Physio — Non-Negotiable Triggers</span>
+    <h3>These Situations Require Professional Assessment</h3>
+    <ul class="steps">
+      <li><span class="step-n">🔴</span><div><strong>Any numbness or tingling:</strong> Radiating into arms or legs — immediately. This indicates nerve involvement requiring urgent assessment.</div></li>
+      <li><span class="step-n">🔴</span><div><strong>Pain that does not improve with 2 weeks of rest:</strong> Persistent overuse injuries rarely resolve with rest alone at this stage; they require diagnosis and targeted treatment.</div></li>
+      <li><span class="step-n">🟡</span><div><strong>Any new joint pain before you start your improvement programme:</strong> Baseline assessment prevents a small problem from becoming a training-stopping one.</div></li>
+      <li><span class="step-n">🟡</span><div><strong>Swing change that creates new pain:</strong> A new swing pattern loading different structures requires early assessment, not trial and error.</div></li>
+      <li><span class="step-n">🟢</span><div><strong>Quarterly check-in (preventive):</strong> Even without symptoms, a quarterly physiotherapy check identifies mobility restrictions and asymmetries before they become injuries. Consider this a service item on your body, not a repair item.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Finding the Right Physiotherapist</span>
+    <h3>What to Look For</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>TPI certification (Titleist Performance Institute):</strong> The gold standard for golf-specific physiotherapy. A TPI-certified physio understands the biomechanical demands of the golf swing and can correlate your movement screen with your injury pattern. Find one at mytpi.com.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Sports physiotherapy background:</strong> General physiotherapy is useful; sports physio with a golf background is the appropriate level for an athlete training at your volume.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Bring your swing video to the first appointment:</strong> A physio who can see your swing alongside your body assessment will provide dramatically more targeted treatment than one working from description alone.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Annual Physical Framework</span>
+    <h3>Professional Support Schedule</h3>
+    <table class="tbl">
+      <tr><th>Cadence</th><th>Appointment Type</th><th>Purpose</th></tr>
+      <tr><td class="good">Quarterly</td><td>Sports Physio Check-In</td><td>Mobility screen, identify emerging restrictions, prevention treatment</td></tr>
+      <tr><td class="warn">As Needed</td><td>Sports Physio (Injury)</td><td>Diagnosis, treatment plan, return-to-play timeline</td></tr>
+      <tr><td class="good">Annual</td><td>GP / Sports Physician</td><td>Full health check, bloods (Vitamin D, iron, testosterone), cardiovascular</td></tr>
+      <tr><td class="good">Annual</td><td>TPI Screen (Coach or Physio)</td><td>Full TPI functional movement screen, identify swing-injury links</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The elite amateur's perspective:</strong> Every serious amateur golfer who successfully reaches scratch has, without exception, learned to treat their body as the primary piece of equipment in their game. Equipment can be replaced. Your lumbar discs, rotator cuff, and lead wrist cannot. The investment in physiotherapy and prevention costs a fraction of the lost practice time from a preventable injury — and a fraction of the lost momentum from a 6-week forced rest during a training block.</p>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Supplements — Evidence-Based Support</span>
+    <h3>What the Evidence Supports for Golf Athletes</h3>
+    <table class="tbl">
+      <tr><th>Supplement</th><th>Evidence</th><th>Dose</th><th>Purpose</th></tr>
+      <tr><td>Vitamin D3 + K2</td><td class="good">Strong</td><td>2000–4000 IU D3 + 100mcg K2 daily</td><td>Bone density, muscle function, immune health</td></tr>
+      <tr><td>Omega-3 (fish oil)</td><td class="good">Strong</td><td>2–3g EPA/DHA daily</td><td>Tendon health, joint inflammation reduction</td></tr>
+      <tr><td>Collagen + Vitamin C</td><td class="warn">Moderate</td><td>10–15g collagen + 50mg Vit C 30–60min pre-exercise</td><td>Tendon/ligament synthesis support</td></tr>
+      <tr><td>Magnesium glycinate</td><td class="warn">Moderate</td><td>300–400mg evening</td><td>Muscle recovery, sleep quality, cramp prevention</td></tr>
+      <tr><td>Creatine monohydrate</td><td class="good">Strong (for power)</td><td>5g daily</td><td>Strength training recovery, force production</td></tr>
+    </table>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Always confirm with your GP before adding supplements, particularly if taking any medication. These are supportive measures, not substitutes for adequate nutrition.</p>
+  </div>
+</div>
+
+<!-- PEACE & LOVE -->
+<div class="sec" id="peacelove">
+  <h2 class="sec-title">PEACE & LOVE — Current Injury Protocol</h2>
+  <p class="sec-desc">The RICE protocol (Rest, Ice, Compression, Elevation) has been the default soft-tissue injury response for 40 years. Sports medicine has moved on. The PEACE & LOVE framework, developed by Dubois & Esculier (2019, British Journal of Sports Medicine) and now widely adopted by sports physiotherapists worldwide, works with your body's natural repair process rather than suppressing it. The key change: ice and anti-inflammatories, previously considered essential, are now known to delay healing rather than accelerate it.</p>
+  <span class="badge badge-rust">🔬 Evidence-Based — Updated 2019</span>
+  <div class="card card-rust">
+    <span class="card-tag">Why RICE Is Outdated</span>
+    <h3>The Problem With Ice and Anti-Inflammatories</h3>
+    <p style="margin-bottom:12px;">When you injure soft tissue, your body triggers an inflammatory response — swelling, warmth, redness. This is not the enemy. It is your body's repair system activating. Immune cells flood the area, clearing damaged tissue and initiating healing. When we apply ice or take anti-inflammatory medications, we suppress exactly the response the body needs to heal efficiently.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Ice delays healing:</strong> The researcher who created RICE, Dr Gabe Mirkin, publicly revised his own position in 2012. His conclusion, supported by growing research: ice and prolonged rest may delay healing rather than help it. The inflammatory response is not a side-effect of injury — it is the repair mechanism.</div></li>
+      <li><span class="step-n">2</span><div><strong>NSAIDs (ibuprofen etc.) have the same problem:</strong> Anti-inflammatory medications suppress the prostaglandins and cytokines that signal tissue repair. Regular use post-injury reduces the quality of healed tissue and slows return to sport. They have a place for severe acute pain management, but not as a routine recovery tool.</div></li>
+      <li><span class="step-n">3</span><div><strong>Prolonged rest creates new problems:</strong> Extended immobilisation leads to muscle weakness, reduced blood flow, and collagen disorganisation — all of which produce scar tissue rather than functional repaired tissue. Graded load, introduced early, produces better healing outcomes than rest.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Phase 1 — PEACE (Immediate: Days 1–3)</span>
+    <h3>The First 72 Hours After Injury</h3>
+    <ul class="steps">
+      <li><span class="step-n">P</span><div><strong>Protect:</strong> Limit movement for 1–3 days to prevent further damage. This does NOT mean complete immobilisation — it means avoiding the specific movements that caused the injury. Keep the area from re-injury while allowing the inflammatory process to begin.</div></li>
+      <li><span class="step-n">E</span><div><strong>Elevate:</strong> Raise the injured limb higher than the heart to promote lymphatic drainage. Genuinely reduces swelling. Effective. No downside.</div></li>
+      <li><span class="step-n">A</span><div><strong>Avoid anti-inflammatories:</strong> Do not routinely take ibuprofen or apply ice. If pain is severe, a short course of NSAIDs is acceptable — but not as a standard recovery tool. Short-term ice application for pain relief only (not recovery) is acceptable if truly needed, but should not be routine.</div></li>
+      <li><span class="step-n">C</span><div><strong>Compress:</strong> Compression bandaging reduces swelling and provides proprioceptive feedback. Use for acute sprains and strains. Do not apply so tightly it restricts circulation.</div></li>
+      <li><span class="step-n">E</span><div><strong>Educate:</strong> Understand that the inflammatory process is working for you. An active, informed approach to recovery produces better outcomes than passive rest. Know what the injury is, how long recovery typically takes, and what the graded return looks like. This reduces anxiety and prevents nocebo effects (expecting slow recovery makes recovery slower).</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Phase 2 — LOVE (Subsequent: Days 4 onward)</span>
+    <h3>Moving From Protection to Rehabilitation</h3>
+    <ul class="steps">
+      <li><span class="step-n">L</span><div><strong>Load:</strong> Introduce progressive loading as soon as it is pain-free. This is the most counterintuitive but most important change from RICE. Graded mechanical stress stimulates the repair process, encourages organised collagen deposition, and prevents the muscle weakness that prolongs return to sport. Start with the lightest possible load — bodyweight range of motion — and progress daily.</div></li>
+      <li><span class="step-n">O</span><div><strong>Optimism:</strong> Psychological state directly affects physical recovery outcomes. A positive, realistic outlook with defined recovery milestones accelerates healing measurably. Fear of re-injury, catastrophising, or expecting slow recovery all produce slower recovery. This is not motivational — it is physiological.</div></li>
+      <li><span class="step-n">V</span><div><strong>Vascularisation:</strong> Cardiovascular activity that does not load the injured area — cycling for a lower-limb injury, upper body ergometer for a lower back issue — promotes blood flow, reduces pain, and maintains fitness during recovery. Begin within days 2–3 of most injuries.</div></li>
+      <li><span class="step-n">E</span><div><strong>Exercise:</strong> Specific rehabilitation exercises that progressively reload the injured tissue. Not just general movement — targeted strength and mobility work for the affected area. For golf injuries, this means returning to swinging with specific drills at reduced effort before returning to full practice volume.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Golf-Specific Application</span>
+    <h3>PEACE & LOVE for the Most Common Golf Injuries</h3>
+    <table class="tbl">
+      <tr><th>Injury</th><th>PEACE (Days 1–3)</th><th>LOVE (Day 4+)</th><th>Return to Golf</th></tr>
+      <tr><td>Medial elbow tendinopathy</td><td>Avoid full swings. Compress. No ice/NSAIDs routine.</td><td>Eccentric wrist curls Day 4. Chipping at 50% effort Day 7.</td><td>Graded return to full swing Day 14–21 if pain-free</td></tr>
+      <tr><td>Lower back strain</td><td>Move gently — walking is therapy. Avoid sitting for long periods.</td><td>Dead bug and bird-dog from Day 3. 9-hole walk with half-swings by Day 7.</td><td>Full practice Day 10–14. Monitor SG: OTT for any technical compensation.</td></tr>
+      <tr><td>Wrist/lead hand sprain</td><td>Compression splint. Finger range of motion maintained.</td><td>Grip strengthening exercises Day 5. Putting only Day 7.</td><td>Chip/pitch Day 14. Full irons Day 21 if pain-free.</td></tr>
+      <tr><td>Hip flexor strain</td><td>Protect rotation. Walking fine — avoid aggravating ranges.</td><td>Gentle hip 90/90 from Day 2. Hip flexor load Day 5.</td><td>Full swing Day 10–14 depending on severity.</td></tr>
+    </table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>The summary for golfers:</strong> After any soft-tissue injury or high-load session, move gently rather than rest completely, elevate if swollen, use compression for acute injuries, and avoid reaching for ice or ibuprofen as default tools. Your body's inflammatory response is the repair mechanism — protect it, don't suppress it. This is now the consensus position of sports physiotherapy globally.</p>
+  </div>
+</div>
+
+<div class="footer">
+  INJURY PREVENTION & MANAGEMENT · GUIDE 13 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Protect the programme · Train the body · Stay on the course</span>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: document.querySelector('.nav').offsetTop, behavior: 'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Fitness Plan</span>
+  </a>
+  <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+  </a>
+  <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

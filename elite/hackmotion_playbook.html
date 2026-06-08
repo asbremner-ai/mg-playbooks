@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<!-- version:v2.1 · 2026-05-30 · hackmotion_playbook.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackMotion — Data Mastery Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090b0e;--surface:#10141a;--surface2:#171c24;--border:rgba(255,255,255,.07);--white:#eef1f6;--muted:#7a8699;--faint:#2e3545;--gold:#f5c842;--teal:#3ecfb8;--rust:#e05a3a;--lime:#8fdc6a;--blue:#5b9cf6;--purple:#b07aff;--r:10px;--r-sm:6px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.65;min-height:100vh;}
+.hero{background:linear-gradient(155deg,#090d14 0%,#0b1218 55%,#0a0c10 100%);border-bottom:1px solid var(--border);padding:40px 20px 32px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 85% 40%,rgba(143,220,106,.06) 0%,transparent 55%),radial-gradient(ellipse 50% 60% at 15% 70%,rgba(62,207,184,.05) 0%,transparent 55%);pointer-events:none;}
+.hero-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.hero h1{font-family:'Space Mono',monospace;font-size:clamp(1.6rem,5vw,2.4rem);font-weight:700;line-height:1.15;color:var(--white);margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{color:var(--muted);font-size:13px;max-width:600px;margin-bottom:18px;line-height:1.7;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.htag{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted);}
+.nav{display:flex;overflow-x:auto;gap:2px;background:var(--surface);border-bottom:1px solid var(--border);padding:8px 12px;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{flex-shrink:0;padding:6px 14px;background:transparent;border:1px solid transparent;border-radius:var(--r-sm);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.tab:hover{color:var(--white);background:var(--surface2);}
+.tab.active{background:var(--surface2);border-color:var(--lime);color:var(--lime);}
+.sec{display:none;padding:20px 16px 40px;max-width:780px;margin:0 auto;}
+.sec.active{display:block;}
+.sec-title{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{color:var(--muted);font-size:13px;margin-bottom:20px;line-height:1.7;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.card-gold{border-color:rgba(245,200,66,.25);background:rgba(245,200,66,.04);}
+.card-teal{border-color:rgba(62,207,184,.2);background:rgba(62,207,184,.04);}
+.card-rust{border-color:rgba(224,90,58,.25);background:rgba(224,90,58,.04);}
+.card-lime{border-color:rgba(143,220,106,.2);background:rgba(143,220,106,.04);}
+.card-blue{border-color:rgba(91,156,246,.2);background:rgba(91,156,246,.04);}
+.card-purple{border-color:rgba(176,122,255,.2);background:rgba(176,122,255,.04);}
+.card-tag{display:inline-block;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;background:rgba(143,220,106,.1);padding:2px 7px;border-radius:3px;}
+.card-tag.gold{color:var(--gold);background:rgba(245,200,66,.1);}
+.card-tag.teal{color:var(--teal);background:rgba(62,207,184,.1);}
+.card-tag.rust{color:var(--rust);background:rgba(224,90,58,.1);}
+.card-tag.blue{color:var(--blue);background:rgba(91,156,246,.1);}
+.card-tag.purple{color:var(--purple);background:rgba(176,122,255,.1);}
+.card h3{font-size:.95rem;font-weight:600;color:var(--white);margin-bottom:8px;}
+.card p{color:var(--muted);font-size:13px;line-height:1.7;}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px;}
+.badge-lime{background:rgba(143,220,106,.1);color:var(--lime);border:1px solid rgba(143,220,106,.25);}
+.badge-teal{background:rgba(62,207,184,.12);color:var(--teal);border:1px solid rgba(62,207,184,.25);}
+.badge-gold{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.25);}
+.badge-rust{background:rgba(224,90,58,.1);color:var(--rust);border:1px solid rgba(224,90,58,.25);}
+.badge-blue{background:rgba(91,156,246,.1);color:var(--blue);border:1px solid rgba(91,156,246,.25);}
+.badge-purple{background:rgba(176,122,255,.1);color:var(--purple);border:1px solid rgba(176,122,255,.25);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
+.tbl th{background:var(--surface2);color:var(--muted);font-weight:500;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.05em;}
+.tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white);vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.good{color:var(--lime);} .warn{color:var(--gold);} .bad{color:var(--rust);}
+.formula{background:var(--surface2);border:1px solid rgba(143,220,106,.2);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'Space Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;font-family:'DM Sans',sans-serif;}
+.alert{display:flex;gap:12px;border-radius:var(--r);padding:14px 16px;margin-bottom:14px;}
+.alert-gold{background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.2);}
+.alert-rust{background:rgba(224,90,58,.07);border:1px solid rgba(224,90,58,.2);}
+.alert-teal{background:rgba(62,207,184,.07);border:1px solid rgba(62,207,184,.2);}
+.alert-lime{background:rgba(143,220,106,.07);border:1px solid rgba(143,220,106,.2);}
+.alert-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.alert-body{font-size:13px;color:var(--muted);line-height:1.65;}
+.alert-body strong{color:var(--white);}
+.steps{list-style:none;padding:0;margin:10px 0 0;}
+.steps li{display:flex;gap:10px;margin-bottom:10px;font-size:13px;color:var(--muted);}
+.step-n{flex-shrink:0;width:22px;height:22px;border-radius:50%;background:var(--surface2);border:1px solid var(--faint);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;color:var(--lime);margin-top:1px;}
+.steps li strong{color:var(--white);}
+.combo-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;}
+.combo-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.combo-pill{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--faint);color:var(--white);}
+.combo-plus{font-size:16px;color:var(--faint);font-family:'Space Mono',monospace;}
+.combo-name{font-size:.85rem;font-weight:600;color:var(--white);}
+.combo-priority{margin-left:auto;font-size:10px;padding:2px 8px;border-radius:10px;font-family:'Space Mono',monospace;}
+.p1{background:rgba(224,90,58,.15);color:var(--rust);border:1px solid rgba(224,90,58,.3);}
+.p2{background:rgba(245,200,66,.1);color:var(--gold);border:1px solid rgba(245,200,66,.25);}
+.p3{background:rgba(62,207,184,.1);color:var(--teal);border:1px solid rgba(62,207,184,.2);}
+.outcome-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px;}
+@media(max-width:540px){.outcome-row{grid-template-columns:1fr;}}
+.outcome-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;}
+.ob-label{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;color:var(--lime);}
+.ob-val{font-size:12px;color:var(--white);line-height:1.45;}
+.diag-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:8px;}
+@media(max-width:520px){.diag-row{grid-template-columns:1fr;}}
+.diag-cell{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;}
+.dc-label{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.dc-val{font-size:13px;font-weight:600;margin-bottom:4px;}
+.dc-note{font-size:11px;color:var(--muted);line-height:1.5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+.axis-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:14px;}
+.axis-header{display:flex;align-items:center;gap:12px;padding:14px 16px 10px;}
+.axis-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.axis-icon.lime{background:rgba(143,220,106,.15);}
+.axis-icon.teal{background:rgba(62,207,184,.15);}
+.axis-icon.gold{background:rgba(245,200,66,.15);}
+.axis-name{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--white);}
+.axis-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.axis-body{padding:0 16px 14px;}
+.axis-body p{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:10px;}
+hr{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'Space Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);}
+@media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 7px;}}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="hero">
+  <p class="hero-label">HackMotion · Wrist Sensor · Data Mastery</p>
+  <h1>HackMotion<br><em>Expert Playbook</em></h1>
+  <p class="hero-sub">Every wrist data point decoded — the three measurement axes, all five swing positions, tour benchmarks, key diagnostic combinations, fault finder, and session protocols for full swing, short game, and putting.</p>
+  <div class="hero-tags">
+    <span class="htag">🖥️ 3 Measurement Axes</span><span class="htag">📍 5 Swing Positions</span><span class="htag">🎯 Tour Benchmarks</span><span class="htag">⚡ Key Combinations</span><span class="htag">🛠 Fault Finder</span><span class="htag">⛳ Putting Mode</span><span class="htag">📊 Session Protocols</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('axes',this)">3 Axes</button>
+  <button class="tab" onclick="show('positions',this)">Swing Positions</button>
+  <button class="tab" onclick="show('benchmarks',this)">Benchmarks</button>
+  <button class="tab" onclick="show('trail',this)">Trail Wrist</button>
+  <button class="tab" onclick="show('combos',this)">Key Combos</button>
+  <button class="tab" onclick="show('mevo',this)">Mevo Link</button>
+  <button class="tab" onclick="show('diagnosis',this)">Fault Finder</button>
+  <button class="tab" onclick="show('shortgame',this)">Short Game</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('sessions',this)">Sessions</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Why Wrist Data Changes Everything</h2>
+  <p class="sec-desc">HackMotion measures what no video, mirror, or coach eye can reliably capture — the precise wrist angles occurring at speeds of 100+ mph through the impact zone. This is the closest thing to a direct readout of clubface position at impact.</p>
+  <div class="alert alert-lime"><span class="alert-icon">🎯</span><div class="alert-body"><strong>The Core Principle.</strong> The lead wrist at the top of the backswing is the single greatest predictor of clubface angle at impact. A 20° difference in wrist angle at the top produces approximately 12–15° difference in face angle at impact. Fix the wrist, fix the face — everything else follows from there.</div></div>
+  <span class="badge badge-lime">📐 What HackMotion Measures</span>
+  <div class="card card-lime">
+    <span class="card-tag">Three Axes, Five Positions</span>
+    <h3>The Complete Wrist Data Set</h3>
+    <p>HackMotion measures three independent axes of wrist motion simultaneously, across five key swing positions, producing a continuous graph of wrist movement through the entire swing arc.</p>
+    <div class="two-col" style="margin-top:12px;">
+      <div><p style="font-size:12px;color:var(--lime);font-family:'Space Mono',monospace;margin-bottom:6px;">THREE AXES</p><p style="font-size:12px;color:var(--muted);line-height:1.7;">① Flexion / Extension<br>② Radial / Ulnar Deviation<br>③ Rotation / Pronation-Supination</p></div>
+      <div><p style="font-size:12px;color:var(--teal);font-family:'Space Mono',monospace;margin-bottom:6px;">FIVE POSITIONS</p><p style="font-size:12px;color:var(--muted);line-height:1.7;">A. Address (P1)<br>B. Mid-Backswing (P2)<br>C. Top of Backswing (P4)<br>D. Impact (P7)<br>E. Follow-Through (P9)</p></div>
+    </div>
+  </div>
+  <span class="badge badge-teal">🔑 The Primary Rule</span>
+  <div class="card card-teal">
+    <span class="card-tag teal">Face Angle Relationship</span>
+    <h3>Flexion/Extension Is the Face Angle Governor</h3>
+    <p>Of the three axes, <strong style="color:var(--white)">flexion/extension</strong> is the primary governor of clubface angle. Flexion (bowed) closes the face. Extension (cupped) opens the face. Axes 2 and 3 are secondary for most ball flight problems.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Master Relationship</div>
+      <div class="formula-main">Lead Wrist Flexion (−°)  → Face CLOSES → Draw / Hook tendency
+Lead Wrist Extension (+°) → Face OPENS  → Fade / Slice tendency
+
+~20° wrist angle change = ~12–15° change in face angle at impact
+~12–15° face angle change = ~10° spin axis shift = major curve change</div>
+      <div class="formula-note">This chain — wrist angle → face angle → spin axis → curve — is the complete diagnostic thread. HackMotion sits at the top. Fix HackMotion first; verify with Mevo spin axis and F2P data.</div>
+    </div>
+  </div>
+  <span class="badge badge-gold">📊 HackMotion in Your Data System</span>
+  <table class="tbl">
+    <thead><tr><th>HackMotion Shows</th><th>Mevo Confirms</th><th>Ball Flight</th></tr></thead>
+    <tbody>
+      <tr><td>Extension at top (+20°)</td><td>Face angle open (+4°) · F2P positive</td><td class="bad">Slice — starts right, curves right</td></tr>
+      <tr><td>Extension at impact (+10°)</td><td>Low smash factor · High spin axis</td><td class="bad">Open face contact — distance + direction loss</td></tr>
+      <tr><td>Flexion at top (−20°)</td><td>Face neutral/closed · F2P near 0</td><td class="good">Controlled draw — ball starts on target</td></tr>
+      <tr><td>High variance shot-to-shot</td><td>High F2P variance · Wide lateral std dev</td><td class="warn">Unpredictable shot shape — main consistency killer</td></tr>
+      <tr><td>Extension at chip impact</td><td>Low smash factor · Thin/bladed</td><td class="bad">Flipping — skulled or chunked short game shots</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="axes">
+  <h2 class="sec-title">The Three Measurement Axes</h2>
+  <p class="sec-desc">HackMotion measures three independent axes simultaneously. Each axis has a distinct role in governing club position. Diagnose in order: Axis 1 first, then 2, then 3.</p>
+  <span class="badge badge-lime">Axis 1 — Flexion / Extension (PRIMARY)</span>
+  <div class="axis-card">
+    <div class="axis-header"><div class="axis-icon lime">↕️</div><div><div class="axis-name">FLEXION / EXTENSION</div><div class="axis-sub">Primary face angle governor — most diagnostically important</div></div></div>
+    <div class="axis-body">
+      <p><strong style="color:var(--white)">What it measures:</strong> The palm-up/palm-down hinging of the wrist. Flexion = back of hand moves toward forearm (bowed). Extension = palm moves toward forearm (cupped).</p>
+      <p><strong style="color:var(--white)">Sign convention:</strong> Negative = flexion (bowed). Positive = extension (cupped). −20° = 20° bowed. +15° = 15° cupped.</p>
+      <div class="formula">
+        <div class="formula-lbl">Flexion / Extension Reference</div>
+        <div class="formula-main">Negative (−) = FLEXION (Bowed)   = Face CLOSES
+Positive (+) = EXTENSION (Cupped) = Face OPENS
+
+DJ extreme style:       −40° at top (closed face — compensates with open body)
+Tour average:           −15° to −25° at top
+Neutral:                0°
+Common 10 HCP fault:    +15° to +25° at top (cupped — open face)
+Severe fault:           +25°+ (slice / shank territory)</div>
+        <div class="formula-note">Every 1° of additional lead wrist flexion at the top = approximately 0.6–0.75° of face closure at impact. Moving from +20° (cupped) to −15° (bowed) is a 35° total wrist change = approximately 21–26° face angle change — the difference between a severe slice and a strong draw.</div>
+      </div>
+    </div>
+  </div>
+  <span class="badge badge-teal">Axis 2 — Radial / Ulnar Deviation</span>
+  <div class="axis-card">
+    <div class="axis-header"><div class="axis-icon teal">↔️</div><div><div class="axis-name">RADIAL / ULNAR DEVIATION</div><div class="axis-sub">Wrist hinge — controls lag, club plane, and transition</div></div></div>
+    <div class="axis-body">
+      <p><strong style="color:var(--white)">What it measures:</strong> Side-to-side hinging — toward the thumb (radial) or little finger (ulnar). Radial deviation loads the hinge in backswing; ulnar deviation releases it through impact.</p>
+      <div class="formula">
+        <div class="formula-lbl">Radial / Ulnar Reference</div>
+        <div class="formula-main">Top of backswing (lead wrist):
+  Tour:    +20° to +35° radial (wrist hinged, lag loaded)
+  Amateur: +10° to +18° (insufficient — lag limited)
+
+Impact:
+  Tour:    Near neutral (0°) to slight ulnar (−5°)
+  Cast:    −10°+ ulnar before impact (lag released early)</div>
+        <div class="formula-note">Insufficient radial deviation at the top means the club was never truly loaded. An early release is then inevitable regardless of body mechanics — there is no lag to retain.</div>
+      </div>
+    </div>
+  </div>
+  <span class="badge badge-gold">Axis 3 — Rotation (Pronation / Supination)</span>
+  <div class="axis-card">
+    <div class="axis-header"><div class="axis-icon gold">🔄</div><div><div class="axis-name">ROTATION / PRONATION-SUPINATION</div><div class="axis-sub">Forearm rotation — controls face through the hitting zone</div></div></div>
+    <div class="axis-body">
+      <p><strong style="color:var(--white)">What it measures:</strong> Rotational movement around the longitudinal axis of the wrist. Supination (palm toward sky) closes the face through impact. Insufficient supination = blocked shot right. Excessive early supination = hook.</p>
+      <div class="formula">
+        <div class="formula-lbl">Rotation Reference</div>
+        <div class="formula-main">Through impact (tour standard):
+  Rapid lead wrist supination P7 → P9
+  This naturally squares and then slightly closes the face
+
+Blocked right / chicken wing:
+  Supination stalls at P7 — face stays open through impact
+
+Over-draw / hook:
+  Rapid supination beginning at P5–P6 (before impact)</div>
+        <div class="formula-note">Diagnose Axis 3 only after Axis 1 (face angle) is in a functional range. Most blocked shots that persist despite correct top position are a rotation-axis problem — the face is set correctly but the release pattern is not executing through the ball.</div>
+      </div>
+    </div>
+  </div>
+  <div class="alert alert-teal"><span class="alert-icon">🔬</span><div class="alert-body"><strong>Diagnostic priority order:</strong> Axis 1 (flexion/extension) for 85% of ball flight problems. Axis 2 (deviation) for distance loss and casting. Axis 3 (rotation) only after Axis 1 is in range. Never mix all three simultaneously — isolate one at a time.</div></div>
+</div>
+
+<div class="sec" id="positions">
+  <h2 class="sec-title">The Five Swing Positions</h2>
+  <p class="sec-desc">HackMotion captures all three axes continuously, with specific position snapshots corresponding to TPI and PGA coaching positions. The swing graph pattern is as informative as any single snapshot.</p>
+  <div class="alert alert-gold"><span class="alert-icon">📍</span><div class="alert-body"><strong>Key diagnostic insight.</strong> The <em>pattern</em> of wrist movement — when flexion increases, when deviation releases, how rotation accelerates — reveals compensations that individual position snapshots can mask. Always review the full swing graph, not just the position numbers.</div></div>
+
+  <span class="badge badge-lime">Address (P1) — The Reference Baseline</span>
+  <div class="card card-lime">
+    <span class="card-tag">Address</span>
+    <h3>Everything Is Relative to This Position</h3>
+    <p>The address position is HackMotion's calibration reference. All subsequent readings are relative to how much the wrist has changed from address. A player who addresses at +10° extension and reaches the top at +15° has only added 5° — not 15°. Understanding your address baseline is essential before interpreting any subsequent number.</p>
+    <div class="formula">
+      <div class="formula-lbl">Address Benchmarks — Lead Wrist</div>
+      <div class="formula-main">Flexion/Extension:
+  Tour average:    0° to −5° (neutral to very slightly flexed)
+  Acceptable:      0° to +5° extension
+  Problem:         +10°+ extension (pre-sets cupped pattern before swing starts)
+
+Radial Deviation: Neutral (0°) — hinge not yet loaded (correct)
+Rotation: Neutral for most players</div>
+      <div class="formula-note">A cupped (+10°+) address starts the swing from a compromised baseline. The face opens progressively through the backswing from an already-open position. Fix address first — it is free marginal improvement that requires no athletic change.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">Mid-Backswing (P2) — Early Warning</span>
+  <div class="card card-teal">
+    <span class="card-tag teal">Mid-Backswing</span>
+    <h3>Where Problems Establish Themselves</h3>
+    <p>At P2 (lead arm parallel to ground), the wrist should begin hinging radially while maintaining or slightly increasing flexion from address. If extension is already increasing at P2, the cupped pattern is establishing early and will only worsen at the top.</p>
+    <div class="formula">
+      <div class="formula-lbl">Mid-Backswing Benchmarks</div>
+      <div class="formula-main">Flexion/Extension:
+  Tour: address + 0° to −5° (maintaining or increasing flexion)
+  Fault: address + 5°+ extension already = early cupping confirmed
+
+Radial Deviation:
+  Tour: +10° to +20° (hinge begun)
+  Fault: Below +10° = no wrist hinge loading occurring</div>
+      <div class="formula-note">Extension increase at P2 = hands-dominated backswing — "picking up the club." This is the earliest fixable intervention point. A player who cups early cannot recover at the top without a complex compensation. Address it at the source.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">Top of Backswing (P4) — THE Critical Position</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Top of Backswing — Primary Diagnostic Snapshot</span>
+    <h3>The Single Greatest Predictor of Impact Face Angle</h3>
+    <p>The top of backswing wrist position is HackMotion's most important single reading. It predicts with high accuracy what the face angle will be at impact — and unlike impact, the top position can be felt and consciously trained.</p>
+    <div class="formula">
+      <div class="formula-lbl">Top of Backswing — Complete Benchmarks</div>
+      <div class="formula-main">FLEXION / EXTENSION (Lead Wrist):
+  Extreme bow (DJ style): −35° to −45°
+  Tour modern standard:   −15° to −25° (bowed)
+  Acceptable:             −5° to −15°
+  Marginal / flat:         0° to +5°
+  Common 10 HCP fault:    +10° to +25° extension (cupped — open face)
+  Severe fault:           +25°+ (slice territory)
+
+RADIAL DEVIATION:
+  Tour:         +25° to +40° (full hinge loaded)
+  Acceptable:   +18° to +25°
+  Insufficient: Below +15° (lag will be lost in transition)
+
+ROTATION:
+  Tour: slight lead wrist pronation at top (face tilted slightly skyward — normal)</div>
+      <div class="formula-note">The top position is trainable with conscious effort because you can pause there. Begin all HackMotion correction work here. Get to the correct top position first. Impact will largely correct itself once the top is in range — because a correct top creates a correct downswing plane and transition sequence.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-rust">Impact (P7) — Ground Truth</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Impact — The Position That Cannot Be Consciously Controlled</span>
+    <h3>Use It to Validate — Not to Directly Train</h3>
+    <p>Impact occurs in 0.5 milliseconds — it cannot be consciously manipulated. It is the result of everything that came before. Use impact data to validate whether backswing and transition changes are reaching the ball. Never attempt to consciously control impact position directly.</p>
+    <div class="formula">
+      <div class="formula-lbl">Impact Position — Lead Wrist Benchmarks</div>
+      <div class="formula-main">FLEXION / EXTENSION:
+  Tour irons:      −10° to −20° (maintained or increased vs. address)
+  Tour driver:     −8° to −15°
+  Acceptable:      −5° to −10°
+  Neutral impact:  0° (depends on address baseline)
+  Extension fault: +5°+ (open face, flip, thin shots)
+
+  CRITICAL RULE: Impact flexion must NEVER be less than address flexion.
+  More extended at impact than address = FLIP confirmed. No exceptions.
+
+RADIAL DEVIATION:
+  Tour: near neutral (0°) — hinge released cleanly through ball
+  Cast: −10°+ ulnar before impact = lag released pre-contact
+
+ROTATION:
+  Active supination beginning at P7
+  Blocked: supination stalling = face open through impact</div>
+      <div class="formula-note">The most important impact check: compare impact Flex/Ext to address Flex/Ext. If impact is MORE extended than address — you are flipping. This single comparison is the clearest, most actionable indicator of the fundamental impact fault in amateur golf.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-blue">Follow-Through (P9) — Release Quality</span>
+  <div class="card card-blue">
+    <span class="card-tag blue">Follow-Through</span>
+    <h3>The Exit Pattern — Reveals Release and Sequencing</h3>
+    <p>Follow-through data confirms whether correct sequencing continues through the entire hitting zone. Watch specifically for the "flip spike" — a sharp extension increase at or just after P7 in the swing graph. This is the most visually obvious fault pattern and directly indicates an early release.</p>
+    <div class="formula">
+      <div class="formula-lbl">Follow-Through Benchmarks</div>
+      <div class="formula-main">ROTATION (most relevant in follow-through):
+  Tour: rapid increase in lead wrist supination P7 → P9
+  Blocked: supination stalls — face stays open beyond impact
+
+FLEXION (watch for flip spike):
+  Tour: gradual, natural decrease from impact
+  Flip: sharp extension spike AT or just after P7
+  This spike is visible in the HackMotion graph — the most
+  common fault pattern for 10–18 handicap players</div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="benchmarks">
+  <h2 class="sec-title">Tour and Player Benchmarks</h2>
+  <p class="sec-desc">Reference benchmarks for lead wrist data across all three axes at all five positions. Work toward the acceptable range first — not the tour extreme. Find YOUR functional range.</p>
+  <div class="alert alert-lime"><span class="alert-icon">⚠️</span><div class="alert-body"><strong>Important context.</strong> Dustin Johnson, Collin Morikawa, and Jon Rahm have radically different wrist positions — all tour-winning. The goal is to find YOUR consistent range that produces the face angle and ball flight you want, not to copy a single player's number.</div></div>
+  <span class="badge badge-lime">Lead Wrist — Full Swing Master Benchmark Table</span>
+  <table class="tbl">
+    <thead><tr><th>Position</th><th>Axis</th><th class="good">Tour Avg</th><th>Scratch</th><th class="warn">10 HCP Typical</th><th class="bad">Common Fault</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Address</strong></td><td>Flex/Ext</td><td class="good">0° to −5°</td><td>0° to +3°</td><td class="warn">+3° to +8°</td><td class="bad">+10°+ (pre-cupped)</td></tr>
+      <tr><td><strong>Mid-BS (P2)</strong></td><td>Flex/Ext</td><td class="good">0° to −8°</td><td>+3° to −5°</td><td class="warn">+5° to +12°</td><td class="bad">+15°+ (early cup)</td></tr>
+      <tr><td><strong>Mid-BS (P2)</strong></td><td>Rad/Uln</td><td class="good">+15° to +22°</td><td>+12° to +20°</td><td class="warn">+8° to +15°</td><td class="bad">Below +8° (no hinge)</td></tr>
+      <tr><td><strong>Top (P4)</strong></td><td>Flex/Ext</td><td class="good">−15° to −25°</td><td>−10° to −20°</td><td class="warn">+5° to +20°</td><td class="bad">+20°+ (severe cup)</td></tr>
+      <tr><td><strong>Top (P4)</strong></td><td>Rad/Uln</td><td class="good">+25° to +40°</td><td>+20° to +35°</td><td class="warn">+12° to +22°</td><td class="bad">Below +12° (lag lost)</td></tr>
+      <tr><td><strong>Impact (P7)</strong></td><td>Flex/Ext</td><td class="good">−10° to −20°</td><td>−5° to −15°</td><td class="warn">0° to +10°</td><td class="bad">+10°+ (flip)</td></tr>
+      <tr><td><strong>Impact (P7)</strong></td><td>Rad/Uln</td><td class="good">0° to −5°</td><td>0° to −8°</td><td class="warn">−5° to −15°</td><td class="bad">−15°+ (cast)</td></tr>
+      <tr><td><strong>Follow-thru (P9)</strong></td><td>Rotation</td><td class="good">Rapid supination</td><td>Active supination</td><td class="warn">Stalled supination</td><td class="bad">No supination (chicken wing)</td></tr>
+    </tbody>
+  </table>
+  <span class="badge badge-gold" style="margin-top:14px;">Known Tour Player Profiles</span>
+  <table class="tbl">
+    <thead><tr><th>Player</th><th>Top Position</th><th>Style</th><th>Key Note</th></tr></thead>
+    <tbody>
+      <tr><td>Dustin Johnson</td><td class="bad">−40° to −45° (extreme bow)</td><td class="good">Power draw</td><td>Extreme bow pre-sets closed face — compensates throughout to manage hook</td></tr>
+      <tr><td>Collin Morikawa</td><td class="good">−5° to −15° (slight bow)</td><td class="good">Controlled fade</td><td>Neutral-bow — relies on body rotation. Highly repeatable. Tour's most accurate iron player.</td></tr>
+      <tr><td>Jon Rahm</td><td class="good">−10° to −20° (moderate bow)</td><td class="good">Draw player</td><td>Strong bow at top, body-driven release. Face closes actively through impact.</td></tr>
+      <tr><td>Tiger Woods (peak)</td><td class="good">−15° to −20° (moderate bow)</td><td class="good">Workable draw/fade</td><td>Deliberate and trained over years for maximum repeatability. The benchmark for consistency.</td></tr>
+      <tr><td>Classic amateur</td><td class="bad">+15° to +25° (cupped)</td><td class="bad">Slice / weak fade</td><td>Most common fault. Open face at impact, low smash factor, positive spin axis.</td></tr>
+    </tbody>
+  </table>
+  <span class="badge badge-teal" style="margin-top:14px;">Consistency Standards — Variance</span>
+  <table class="tbl">
+    <thead><tr><th>Position</th><th class="good">Tour Variance</th><th>Scratch</th><th class="warn">10 HCP</th></tr></thead>
+    <tbody>
+      <tr><td>Top of Backswing (Flex/Ext)</td><td class="good">±2°</td><td>±3–4°</td><td class="warn">±6–10°</td></tr>
+      <tr><td>Impact (Flex/Ext)</td><td class="good">±1.5°</td><td>±2–3°</td><td class="warn">±5–8°</td></tr>
+      <tr><td>Radial Dev at Top</td><td class="good">±3°</td><td>±4–5°</td><td class="warn">±7–12°</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="trail">
+  <h2 class="sec-title">Trail Wrist Data</h2>
+  <p class="sec-desc">HackMotion can be worn on either wrist. Trail wrist data is a complementary diagnostic — particularly powerful for confirming flip patterns and casting that lead wrist data alone may not fully isolate.</p>
+  <div class="alert alert-gold"><span class="alert-icon">🔄</span><div class="alert-body"><strong>Priority:</strong> Start with lead wrist — it is the primary face angle governor. Add trail wrist only when lead wrist data is in range but ball flight problems persist, or when diagnosing specific sequencing issues (casting, flipping, early extension).</div></div>
+  <span class="badge badge-lime">Trail Wrist — Flexion / Extension</span>
+  <div class="card card-lime">
+    <span class="card-tag">Trail Wrist Flex/Ext</span>
+    <h3>Extension Governs Shaft Lean and Power Delivery</h3>
+    <p>The trail wrist operates in the opposite direction to the lead wrist. Where the lead wrist flexes to close the face, the trail wrist extends to maintain shaft lean. A trail wrist that loses extension at impact = shaft leaning back = face opening + loft adding = smash factor loss.</p>
+    <div class="formula">
+      <div class="formula-lbl">Trail Wrist Benchmarks</div>
+      <div class="formula-main">Top of Backswing:
+  Tour:    +80° to +100° extension (fully loaded)
+  Amateur: +50° to +70° (under-loaded)
+
+Impact (most diagnostic):
+  Tour:    +20° to +35° extension maintained (shaft lean preserved)
+  Flip:    +0° to +10° (trail wrist released — no shaft lean)
+  Severe:  −5°+ (trail wrist into flexion — scooping)</div>
+      <div class="formula-note">The trail wrist at impact is the definitive flip diagnostic. If trail wrist extension is not maintained through impact, you are scooping — losing shaft lean, adding dynamic loft, and losing ball speed. This is what the Smash Bag is physically training, made visible in data.</div>
+    </div>
+  </div>
+  <span class="badge badge-teal">Lead vs. Trail — Diagnostic Use Cases</span>
+  <table class="tbl">
+    <thead><tr><th>Symptom</th><th>Lead Wrist Tells You</th><th>Add Trail Wrist When</th></tr></thead>
+    <tbody>
+      <tr><td>Slice / strong fade</td><td class="good">Primary — Flex/Ext at top is the source</td><td>Lead wrist in range but slice persists</td></tr>
+      <tr><td>Distance loss</td><td>Check impact flex vs. address (flip test)</td><td class="good">Trail wrist extension at impact confirms or denies flip</td></tr>
+      <tr><td>Fat/thin alternating</td><td>Check impact variance</td><td class="good">Trail wrist deviation timing reveals cast pattern</td></tr>
+      <tr><td>Inconsistent distances</td><td>Check top variance</td><td>Both wrists — identify which is more variable</td></tr>
+      <tr><td>Hook / over-draw</td><td>Check too much flexion at top (−35°+)</td><td>Trail wrist extension rate — closing face too fast?</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="combos">
+  <h2 class="sec-title">Key Data Combinations</h2>
+  <p class="sec-desc">Expert HackMotion analysis comes from reading relationships between positions and axes — the patterns across the swing graph — not individual snapshots in isolation.</p>
+
+  <div class="combo-card">
+    <div class="combo-header"><span class="combo-pill">TOP FLEX</span><span class="combo-plus">→</span><span class="combo-pill">IMPACT FLEX</span><span class="combo-name">Face Control Chain — Primary Diagnostic</span><span class="combo-priority p1">P1 — Critical</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The relationship between top and impact flexion/extension is the single most important HackMotion combination. Impact must ALWAYS be at least as flexed as the top — ideally more flexed. Any reversal = loss of face control through the downswing.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">Top −20° → Impact −15°</div><div class="ob-val">Slight release. Acceptable. Face consistent. Functional tour-range pattern.</div></div>
+      <div class="outcome-box"><div class="ob-label">Top −20° → Impact 0°</div><div class="ob-val">20° extension added in downswing. Face opening rapidly. Top-to-impact fix required — biofeedback on transition zone.</div></div>
+      <div class="outcome-box"><div class="ob-label">Top +15° → Impact +10°</div><div class="ob-val">Still in extension at impact. Face open at contact. Must fix top position first before impact correction.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header"><span class="combo-pill">ADDRESS FLEX</span><span class="combo-plus">vs.</span><span class="combo-pill">IMPACT FLEX</span><span class="combo-name">The Definitive Flip Test</span><span class="combo-priority p1">P1 — Critical</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The simplest and most powerful HackMotion diagnostic. If impact is MORE extended than address — you are flipping. Unconditionally. No additional data required to confirm it.</p>
+    <div class="formula" style="margin-top:0;">
+      <div class="formula-lbl">Flip Test</div>
+      <div class="formula-main">Address +3°, Impact +8°   → More extended at impact = FLIP confirmed
+Address +3°, Impact −5°  → More flexed at impact = Shaft lean maintained
+Address −5°, Impact −12° → Increased flexion at impact = Excellent compression</div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header"><span class="combo-pill">TOP RADIAL</span><span class="combo-plus">+</span><span class="combo-pill">IMPACT ULNAR</span><span class="combo-name">Lag Loading and Release Timing</span><span class="combo-priority p2">P2 — Important</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The amount loaded at the top (radial deviation) determines lag potential. The timing of release to ulnar at impact determines how that lag converts to speed. Loading without release = blocked shot. Early release = casting = speed loss.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">Top +30° → Impact 0°</div><div class="ob-val">Full load, clean release at ball. Tour standard. Maximum lag-to-speed conversion.</div></div>
+      <div class="outcome-box"><div class="ob-label">Top +12° → Impact −8°</div><div class="ob-val">Insufficient load AND early release. No lag available. Speed ceiling severely limited.</div></div>
+      <div class="outcome-box"><div class="ob-label">Top +30° → Impact −15°</div><div class="ob-val">Full load, early release (cast). Lag released pre-ball. Mevo will show club speed below potential.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header"><span class="combo-pill">TOP FLEX</span><span class="combo-plus">+</span><span class="combo-pill">VARIANCE</span><span class="combo-name">Consistency Profile</span><span class="combo-priority p2">P2 — Important</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">The mean tells you where you are on average. The variance tells you how reliable that position is. High variance at the top (±10°+) predicts wide Mevo lateral dispersion regardless of what the mean number is. Reducing variance is often more impactful than changing the mean.</p>
+    <div class="outcome-row">
+      <div class="outcome-box"><div class="ob-label">Mean −20° · Variance ±3°</div><div class="ob-val">Excellent. Consistent draw pattern. Mevo F2P narrow. Predictable ball flight every shot.</div></div>
+      <div class="outcome-box"><div class="ob-label">Mean −20° · Variance ±12°</div><div class="ob-val">Correct average but unreliable. Ball flight varies. Need consistency drills, not position change.</div></div>
+      <div class="outcome-box"><div class="ob-label">Mean +5° · Variance ±4°</div><div class="ob-val">Wrong position but consistent. Predictable fade. More fixable than inconsistency — clear target to move toward.</div></div>
+    </div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header"><span class="combo-pill">TOP FLEX</span><span class="combo-plus">+</span><span class="combo-pill">TOP RADIAL</span><span class="combo-name">Backswing Quality Score</span><span class="combo-priority p3">P3 — Useful</span></div>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:10px;">These two axes define overall backswing quality. Good flexion (face control) + good radial deviation (lag load) = the backswing has done its job completely. Poor in either means the downswing is compensating from the very start.</p>
+    <table class="tbl" style="margin-top:0;">
+      <thead><tr><th>Top Flex</th><th>Top Radial</th><th>Backswing</th><th>Likely Ball Flight</th></tr></thead>
+      <tbody>
+        <tr><td class="good">−20°</td><td class="good">+32°</td><td class="good">Excellent</td><td class="good">Controlled draw, full power</td></tr>
+        <tr><td class="warn">−8°</td><td class="good">+30°</td><td class="warn">Good lag, marginal face</td><td class="warn">Mild fade, good distance</td></tr>
+        <tr><td class="bad">+18°</td><td class="good">+28°</td><td class="bad">Good lag, open face</td><td class="bad">Strong fade / slice with power</td></tr>
+        <tr><td class="bad">+15°</td><td class="warn">+12°</td><td class="bad">Open face + no lag</td><td class="bad">Slice + distance loss</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="mevo">
+  <h2 class="sec-title">HackMotion + Mevo Integration</h2>
+  <p class="sec-desc">Running HackMotion and Mevo simultaneously is the most powerful diagnostic combination in your entire training system. HackMotion identifies the cause; Mevo confirms the effect in ball flight data.</p>
+  <div class="alert alert-teal"><span class="alert-icon">🔗</span><div class="alert-body"><strong>The Validation Chain.</strong> Any wrist change must show up in BOTH HackMotion data (the cause) AND Mevo data (the effect). If HackMotion improves but Mevo spin axis is unchanged, the change is not reaching impact. If Mevo improves but HackMotion is unchanged, the player is compensating elsewhere — not making the intended change.</div></div>
+  <span class="badge badge-lime">The Core Correlation Map</span>
+  <table class="tbl">
+    <thead><tr><th>HackMotion Change</th><th>Expected Mevo Response</th><th>Pass / Fail</th></tr></thead>
+    <tbody>
+      <tr><td>Top flex +20° → −15° (35° change)</td><td>Face angle closes ~20°, F2P reduces, spin axis reduces 8–12°</td><td class="good">Pass if both change proportionally</td></tr>
+      <tr><td>Impact flex 0° → −10°</td><td>Smash factor rises 0.03–0.05, dynamic loft decreases</td><td class="good">Pass — shaft lean confirmed by efficiency gain</td></tr>
+      <tr><td>Top flex improves, impact unchanged</td><td>Mevo face angle unchanged, same F2P and spin axis</td><td class="bad">Fail — change not transferring through downswing</td></tr>
+      <tr><td>Radial dev at top +10° → +28°</td><td>Club speed increase 2–4 mph, carry increases</td><td class="good">Pass — lag loaded = speed increase</td></tr>
+      <tr><td>Top variance ±12° → ±3°</td><td>Mevo lateral std dev reduces, F2P variance narrows</td><td class="good">Pass — consistency transfer confirmed</td></tr>
+    </tbody>
+  </table>
+  <span class="badge badge-gold">Integration Session Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Running Both Together</span>
+    <h3>The Four-Step Simultaneous Session</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>5-shot baseline (no biofeedback):</strong> Record HackMotion at address, top, and impact. Simultaneously record Mevo face angle, F2P, spin axis, smash factor. Screenshot both. This is your starting correlation baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Activate HackMotion biofeedback (top position target):</strong> Hit 20 shots with audio feedback. Record Mevo data simultaneously. Does Mevo improve as wrist position improves? If yes — direct correlation confirmed.</div></li>
+      <li><span class="step-n">3</span><div><strong>Validation block:</strong> Turn off HackMotion feedback. Hit 10 shots. Compare both datasets to the biofeedback session. Transfer occurring = both datasets improved. Transfer failing = HackMotion improved but Mevo unchanged.</div></li>
+      <li><span class="step-n">4</span><div><strong>Action decision:</strong> If validated, advance to tighter tolerance next session. If not validated, investigate the compensating move between top and impact — use the swing graph to identify where the face angle recovers during the downswing.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-teal">Reactive Trigger Table</span>
+  <table class="tbl">
+    <thead><tr><th>Mevo Shows</th><th>HackMotion Response</th><th>Drill</th></tr></thead>
+    <tbody>
+      <tr><td>High F2P (+5°+) · Positive spin axis</td><td>Check top Flex/Ext — likely extended</td><td>Biofeedback: top position target</td></tr>
+      <tr><td>Low smash factor (&lt;1.42)</td><td>Flip test: impact vs. address flex</td><td>Biofeedback: impact flex target</td></tr>
+      <tr><td>High lateral std dev</td><td>Check top position variance</td><td>Consistency drill: tight tolerance ±3°</td></tr>
+      <tr><td>Low club speed vs. baseline</td><td>Check radial deviation at top</td><td>Hinge loading — increase radial target</td></tr>
+      <tr><td>Blocked shots right</td><td>Check rotation P7–P9</td><td>Supination release drill</td></tr>
+      <tr><td>Pull-hooks left</td><td>Check excessive flexion at top (−35°+)</td><td>Moderate flexion — reduce by 10–15°</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="diagnosis">
+  <h2 class="sec-title">Fault Finder</h2>
+  <p class="sec-desc">Start with the ball flight problem. Work to the wrist data root cause. Use alongside the Mevo fault finder — they approach the same problem from different directions.</p>
+
+  <span class="badge badge-rust">🔴 Slice / Strong Fade</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Ball starts right, curves further right</span>
+    <h3>Almost Always an Extension (Cupped) Problem</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check First</div><div class="dc-val" style="color:var(--rust);">Top Flex/Ext</div><div class="dc-note">Extended (+10°+) at top = face open before downswing starts. Fix this above all else.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check Second</div><div class="dc-val" style="color:var(--gold);">Impact Flex/Ext</div><div class="dc-note">Still extended at impact despite top correction? Change not transferring. Biofeedback on transition zone.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check Third</div><div class="dc-val" style="color:var(--teal);">Address Flex</div><div class="dc-note">In extension at address (+8°+)? Fix address first — free marginal improvement before any swing change.</div></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);"><strong style="color:var(--white)">Fix:</strong> Strengthen grip → reduce address extension → set top target to −10° → biofeedback → validate with Mevo face angle + F2P reduction + spin axis closing.</p>
+  </div>
+
+  <span class="badge badge-gold">🟡 Distance Loss / Flip / Thin Shots</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Loss of compression, smash factor below 1.42</span>
+    <h3>Extension at Impact vs. Address — The Definitive Flip Confirmation</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Primary</div><div class="dc-val" style="color:var(--gold);">Impact vs. Address Flex</div><div class="dc-note">More extended at impact than address = flip. Confirmed. No further investigation needed — this IS the problem.</div></div>
+      <div class="diag-cell"><div class="dc-label">Confirm</div><div class="dc-val" style="color:var(--gold);">Trail Wrist Ext</div><div class="dc-note">Trail wrist extension below +15° at impact = no shaft lean. The Smash Bag drill will feel fundamentally different if this is the cause.</div></div>
+      <div class="diag-cell"><div class="dc-label">Validate</div><div class="dc-val" style="color:var(--gold);">Flip Spike Graph</div><div class="dc-note">Sharp extension spike at P7 in the HackMotion swing graph = visual confirmation of the flip pattern.</div></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);"><strong style="color:var(--white)">Fix:</strong> Smash Bag + HackMotion simultaneously. Smash Bag builds shaft lean feel; HackMotion quantifies it. Target: impact flexion 5°+ MORE bowed than address. Validate with Mevo smash factor increase.</p>
+  </div>
+
+  <span class="badge badge-teal">🔵 Inconsistent Contact — Fat/Thin Alternating</span>
+  <div class="card card-teal">
+    <span class="card-tag teal">Different contact and ball flight on consecutive swings</span>
+    <h3>High Variance at Top or Impact — Consistency Is the Problem</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--teal);">Top Variance</div><div class="dc-note">Variance &gt;±8° at top = motor pattern unreliable. Tighten biofeedback tolerance to ±5° — drill for consistency, not position change.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--teal);">Impact Variance</div><div class="dc-note">Variance &gt;±6° at impact = contact position inconsistency directly causing alternating fat/thin pattern.</div></div>
+      <div class="diag-cell"><div class="dc-label">Note</div><div class="dc-val" style="color:var(--teal);">Address Variance</div><div class="dc-note">Small address variances (±5°) compound through the swing. Consistent setup is a prerequisite for all other consistency gains.</div></div>
+    </div>
+  </div>
+
+  <span class="badge badge-purple">🟣 Distance Loss Without Contact Issue</span>
+  <div class="card card-purple">
+    <span class="card-tag purple">Good contact feel but distance is short</span>
+    <h3>Insufficient Radial Deviation — Lag Not Loaded</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--purple);">Top Radial Dev</div><div class="dc-note">Below +20° = wrist never fully hinged. Lag potential not loaded. Speed ceiling limited regardless of effort.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--purple);">Release Timing</div><div class="dc-note">Radial releasing at P5–P6 rather than P7? Casting — lag loaded but released before the ball.</div></div>
+      <div class="diag-cell"><div class="dc-label">Validate</div><div class="dc-val" style="color:var(--purple);">Mevo Club Speed</div><div class="dc-note">If radial dev increases and Mevo club speed rises — lag loading connection confirmed.</div></div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">🟢 Blocked Shots Right / Chicken Wing</span>
+  <div class="card card-lime">
+    <span class="card-tag">Ball starts right of intended with minimal curve</span>
+    <h3>Insufficient Supination Through Impact — Rotation Stalling</h3>
+    <div class="diag-row">
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--lime);">P9 Rotation</div><div class="dc-note">Supination stalling at P7–P8? Lead arm not rotating through. Chicken wing pattern confirmed.</div></div>
+      <div class="diag-cell"><div class="dc-label">Check</div><div class="dc-val" style="color:var(--lime);">Impact Flex</div><div class="dc-note">Often paired with too much flexion — bowing without rotation = face closing early then blocking through.</div></div>
+      <div class="diag-cell"><div class="dc-label">Validate</div><div class="dc-val" style="color:var(--lime);">Mevo Face/Path</div><div class="dc-note">Face open to path at impact despite correct top position = release is the problem, not backswing.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="shortgame">
+  <h2 class="sec-title">Short Game — Chips and Pitches</h2>
+  <p class="sec-desc">HackMotion is as valuable in the short game as the full swing. The most common short game fault — the flip — is directly measurable, with tighter tolerances required than the full swing.</p>
+  <div class="alert alert-gold"><span class="alert-icon">🏌️</span><div class="alert-body"><strong>Short game principle.</strong> The lead wrist must maintain or increase its flexion through short game impact — same as the full swing, but with smaller absolute numbers due to the shorter arc. Any extension at short game impact = a flip = thin, bladed, or chunked shots.</div></div>
+  <span class="badge badge-lime">Chip Shot Benchmarks</span>
+  <div class="card card-lime">
+    <span class="card-tag">Chips — Lead Wrist</span>
+    <h3>Flat or Slightly Bowed — Never Cupped Through Contact</h3>
+    <div class="formula">
+      <div class="formula-lbl">Chip Shot Benchmarks</div>
+      <div class="formula-main">Address:  0° to +5° extension (normal grip position)
+Impact:   0° to −10° flexion (neutral to slightly bowed)
+
+CRITICAL RULE: Impact must NEVER be more extended than address.
+
+Tour standard: −5° to −10° flexion at chip impact
+10 HCP common: +8° to +15° extension at impact (flip)
+
+Flip severity:
+  +5° at chip impact  = thin / blade risk
+  +10°+ at chip impact = skull or chunk impact</div>
+      <div class="formula-note">Set biofeedback to ±5° around your impact target. Make 50 chip shots with feedback active. Focus entirely on maintaining wrist angle through the hitting zone — not on the ball or target. After 3 sessions, test without feedback to confirm transfer.</div>
+    </div>
+  </div>
+  <span class="badge badge-teal">Pitch Shot Benchmarks</span>
+  <div class="card card-teal">
+    <span class="card-tag teal">Pitches — Lead Wrist</span>
+    <h3>Maintaining Flexion Across a Longer Arc</h3>
+    <div class="formula">
+      <div class="formula-lbl">Pitch Shot Benchmarks</div>
+      <div class="formula-main">Half-swing pitch (9 o'clock):
+  Top position: 0° to −15° flexion
+  Impact:       −5° to −15° (same or more flexed than top)
+
+Three-quarter pitch:
+  Top position: −5° to −20° flexion
+  Impact:       −8° to −20° (maintained)
+
+High, soft pitch:
+  Slight reduction in flexion maintained (deliberate loft add — controlled)
+  NEVER into extension — that is uncontrolled loft addition, not craft</div>
+    </div>
+  </div>
+  <span class="badge badge-gold">G-Force Wedge + HackMotion — The Premium Pairing</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Best Short Game Combination</span>
+    <h3>Kinaesthetic + Data Feedback Simultaneously</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>G-Force Wedge with HackMotion recording:</strong> 20 short game shots. The heavy head naturally prevents the flip. Confirm that HackMotion data shows less extension at impact vs. real wedge baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Transition to real wedge with biofeedback active:</strong> Does the wrist pattern transfer when the heavy club is removed? Large gap = G-Force pattern not yet transferring to standard club — more sessions needed.</div></li>
+      <li><span class="step-n">3</span><div><strong>Compare session graphs:</strong> G-Force session should show consistently less extension at impact. If impact numbers are similar on both clubs, the G-Force pairing is confirming correct mechanics are already present — or the flip is structural, not a load issue.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust">Short Game Fault Table</span>
+  <table class="tbl">
+    <thead><tr><th>Fault</th><th>HackMotion Signature</th><th>Fix Protocol</th></tr></thead>
+    <tbody>
+      <tr><td>Bladed / thin chip</td><td class="bad">Impact ext +8°+. Sharp extension spike at P7.</td><td>Biofeedback −5° impact target. G-Force + HackMotion combo.</td></tr>
+      <tr><td>Heavy / chunked chip</td><td class="bad">Extension at impact + high variance. Arc behind ball.</td><td>Weight forward drill. Fix address wrist — cupped setup = cupped impact.</td></tr>
+      <tr><td>Inconsistent distances</td><td class="warn">Impact variance ±8°+. Face angle varying.</td><td>Tight biofeedback ±3°. High volume — 50 chips per session same target.</td></tr>
+      <tr><td>Ball flight too high on chips</td><td class="warn">Extension adding dynamic loft. Uncontrolled loft.</td><td>Target −8° impact flex. Reduces effective loft = lower trajectory.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Mode</h2>
+  <p class="sec-desc">HackMotion's putting mode applies the same wrist measurement technology to the stroke, where even 1–2° of wrist variance at impact can produce a miss at 6 feet. The tolerances are tighter than any other application.</p>
+  <div class="alert alert-teal"><span class="alert-icon">⛳</span><div class="alert-body"><strong>Why wrist data matters in putting.</strong> Face angle controls 83% of start direction (same D-Plane physics as the full swing). At 6 feet, 1° of face angle error = 1.3 inches of miss. Any wrist change at impact = face angle change = missed putts. HackMotion quantifies this with precision.</div></div>
+  <span class="badge badge-lime">Putting Wrist Benchmarks</span>
+  <div class="card card-lime">
+    <span class="card-tag">Putting Lead Wrist</span>
+    <h3>Set Your Position at Address — Then Lock It In Completely</h3>
+    <div class="formula">
+      <div class="formula-lbl">Putting Lead Wrist Benchmarks</div>
+      <div class="formula-main">Address position:
+  Conventional:  0° to −5° slight flexion (personal — establish YOUR starting point)
+  Forward press: −10° to −20° flexion (pre-set shaft lean)
+
+Through stroke / Impact target: EXACTLY match address
+  Acceptable variance: ±2° (tour standard)
+  10 HCP typical:      ±4°–6° (causing 2–4° face angle errors)
+
+At 6 feet — wrist variance to miss distance conversion:
+  ±1° wrist change = ±0.83° face angle = ~1.1 inches miss
+  ±2° wrist change = ±1.66° face angle = ~2.2 inches miss
+  ±3° wrist change = ~3.3 inches miss (lip-out territory)</div>
+      <div class="formula-note">Set biofeedback tolerance to ±2°. Make 100 putts from 6 feet. The audio will fire every time wrist deviates. After 3 sessions the pattern will be ingrained. Cross-reference with ExPutt face angle data to confirm wrist stability is translating to actual face angle stability.</div>
+    </div>
+  </div>
+  <span class="badge badge-gold">HackMotion + ExPutt — The Putting Diagnostic Pairing</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Wrist Data + Face Angle Data</span>
+    <h3>The Complete Putting Picture</h3>
+    <p>HackMotion = wrist angle (cause). ExPutt = face angle at impact (effect). Running both creates the direct validation chain: wrist variance → face angle variance → start direction variance → miss rate.</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div><strong>Baseline both simultaneously:</strong> 20 putts from 6 feet, no biofeedback. Record average wrist angle and average face angle at impact. Calculate the relationship between them in your stroke.</div></li>
+      <li><span class="step-n">2</span><div><strong>Activate HackMotion biofeedback (±2°):</strong> 30 putts. Does ExPutt face angle variance reduce as HackMotion variance reduces? If yes — wrist is the source of face inconsistency. If no — setup, aim, or path issues exist independently of wrist mechanics.</div></li>
+      <li><span class="step-n">3</span><div><strong>Confirm transfer:</strong> Switch off HackMotion. 20 putts on ExPutt only. Has face angle variance reduced vs. baseline? If yes: wrist stability is internalised. If no: return to biofeedback for another cycle.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-teal">Putting Style Adaptations</span>
+  <table class="tbl">
+    <thead><tr><th>Style</th><th>Lead Wrist Address</th><th>Impact Target</th><th>Key Diagnostic</th></tr></thead>
+    <tbody>
+      <tr><td>Conventional</td><td>0° to −5°</td><td class="good">Match address ±2°</td><td>Any extension at impact = open face = misses right</td></tr>
+      <tr><td>Forward press</td><td>−10° to −20°</td><td class="good">Match address ±2°</td><td>High starting flex must hold — any release loses the technique benefit</td></tr>
+      <tr><td>Arm-lock</td><td>−15° to −25°</td><td class="good">Match address ±1°</td><td>Tightest tolerance — any break releases the lock entirely</td></tr>
+      <tr><td>Claw grip</td><td>Lead wrist neutral</td><td class="good">Lead wrist stays inactive</td><td>Confirm lead wrist is not contributing — claw removes it from the equation</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="sec" id="sessions">
+  <h2 class="sec-title">Session Protocols</h2>
+  <p class="sec-desc">How to structure HackMotion sessions for maximum learning and course transfer. The biofeedback tool is powerful — but only when used in a deliberate phase structure, with clear internalisation tests built in.</p>
+  <div class="alert alert-rust"><span class="alert-icon">⚠️</span><div class="alert-body"><strong>The Dependency Warning.</strong> HackMotion must be cycled: 3 weeks of biofeedback training, then 1 week without the sensor to test whether the pattern has internalised. If you cannot maintain correct wrist position without audio feedback after 3 weeks, the pattern is not yet grooved. Return to biofeedback — do not skip the "off" week or advance the target prematurely.</div></div>
+  <span class="badge badge-lime">Full Swing Baseline Audit — 20 min, Monthly</span>
+  <div class="card card-lime">
+    <span class="card-tag">Baseline Audit</span>
+    <h3>Your Honest Starting Point — No Feedback, No Swing Thoughts</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>20 shots, no biofeedback:</strong> Normal swing. No swing thoughts. Record mean flex/ext at address, top, and impact, plus the variance at each. Screenshot the swing graph.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify the primary target:</strong> Which position needs the most work? For most 10 HCP players: top of backswing first. Start there — do not attempt to correct all positions simultaneously.</div></li>
+      <li><span class="step-n">3</span><div><strong>Run simultaneously with Mevo:</strong> Build your personal wrist-to-face-angle correlation. How many degrees of wrist extension at the top = how many degrees of open face in YOUR swing. This correlation is your personal diagnostic key.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-teal">Full Swing Biofeedback Session — 45 min, 3× per week</span>
+  <div class="card card-teal">
+    <span class="card-tag teal">Biofeedback Training — Three-Phase Protocol</span>
+    <h3>Structured Motor Learning</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Phase 1 — Acquisition (15 min):</strong> Set biofeedback to top-of-backswing target. Wide tolerance ±5°. 30 balls at 50% speed. Goal: understand what the correct position feels like. Target: 7+ successful reps per 10 before advancing to Phase 2.</div></li>
+      <li><span class="step-n">2</span><div><strong>Phase 2 — Refinement (15 min):</strong> Tighten tolerance to ±3°. Full swing speed. 30 balls. Target: 6+ successful reps per 10. This is where the pattern internalises under realistic conditions.</div></li>
+      <li><span class="step-n">3</span><div><strong>Phase 3 — Transfer Test (15 min):</strong> Turn off biofeedback. 20 balls with full pre-shot routine and target focus. Run Mevo simultaneously. If face angle and F2P have improved vs. baseline — transfer is occurring. If not — return to Phase 2 next session.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-gold">Short Game Session — 30 min, 2× per week</span>
+  <div class="card card-gold">
+    <span class="card-tag gold">Anti-Flip Protocol</span>
+    <h3>Chip and Pitch Wrist Stability Work</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>10-shot baseline (no feedback):</strong> Chips from 20 yards. Record impact flex vs. address. Identify today's flip magnitude.</div></li>
+      <li><span class="step-n">2</span><div><strong>G-Force Wedge block (15 reps):</strong> HackMotion recording only. Does the heavy club improve impact wrist angle? Note the improvement vs. real wedge baseline.</div></li>
+      <li><span class="step-n">3</span><div><strong>Real wedge with biofeedback (20 reps):</strong> Target −5° at impact, tolerance ±3°. Count successful reps. Aim for 15+ of 20 before moving to pitch shots.</div></li>
+      <li><span class="step-n">4</span><div><strong>Transfer test (10 reps, no feedback):</strong> Target-focused shots only. Proximity matters here — the change must be executable while playing, not just while thinking technically.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust">Putting Session — 30 min, 3× per week</span>
+  <div class="card card-rust">
+    <span class="card-tag rust">Putting Stability Protocol</span>
+    <h3>Make 100 Drill — With Wrist Accountability</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Set address wrist angle:</strong> Take your grip, note your HackMotion reading. This is your target — match it at impact on every putt.</div></li>
+      <li><span class="step-n">2</span><div><strong>6-foot drill with biofeedback (±2°):</strong> 50 putts. Count how many complete without a beep. Target: 40+ before extending to 10 feet.</div></li>
+      <li><span class="step-n">3</span><div><strong>Extend to 10 feet:</strong> Longer stroke = more opportunity for breakdown. Feedback firing on longer putts but not short = stroke acceleration inconsistency.</div></li>
+      <li><span class="step-n">4</span><div><strong>ExPutt validation:</strong> After every third putting session, run ExPutt without HackMotion. If face angle variance has reduced since your last unassisted session — wrist training is transferring to real face angle control.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-blue">Internalisation Test — Once per 3-Week Cycle</span>
+  <div class="card card-blue">
+    <span class="card-tag blue">Motor Learning Transfer Test</span>
+    <h3>Does the Change Survive Without the Sensor?</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Remove HackMotion entirely:</strong> Full session with no sensor, no feedback, no wrist thoughts. Play or practice normally.</div></li>
+      <li><span class="step-n">2</span><div><strong>Run Mevo only:</strong> Record face angle, F2P, smash factor. Compare to your unaided baseline from 3 weeks ago.</div></li>
+      <li><span class="step-n">3</span><div><strong>Result A — Mevo data improved:</strong> Wrist pattern has internalised. Move to a tighter HackMotion target next cycle (deepen top flexion by 5°, or tighten variance target).</div></li>
+      <li><span class="step-n">4</span><div><strong>Result B — Mevo data reverted:</strong> Pattern not yet grooved. Return to biofeedback training for another 3-week cycle. Do not advance targets until the current target is stable without the sensor.</div></li>
+    </ul>
+  </div>
+  <div class="footer">HACKMOTION — DATA MASTERY PLAYBOOK · THREE AXES · FIVE POSITIONS · FULL SWING · SHORT GAME · PUTTING · MEVO INTEGRATION</div>
+</div>
+
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
+    </a>
+    <a href="09_golf_coach_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
+    </a>
+    <a href="swing_mechanics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚙️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Swing Mechanics</span>
+    </a>
+    <a href="14_video_analysis.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎥</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Video Analysis</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

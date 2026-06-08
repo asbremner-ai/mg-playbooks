@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-05-31 · practice_plan.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4-Week Scratch Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inconsolata:wght@400;500;600&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --paper: #ede8dc;
+    --ink: #1a1a18;
+    --ink-light: #4a4840;
+    --ink-faint: #9a9488;
+    --green: #2d5a27;
+    --green-light: #4a8a42;
+    --green-pale: #e8f0e6;
+    --red: #8b2020;
+    --amber: #8b5e1a;
+    --amber-pale: #f5ead8;
+    --rule: #ccc5b0;
+    --shadow: rgba(26,26,24,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #d4cfc3;
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.03) 27px, rgba(0,0,0,0.03) 28px);
+  }
+
+  .book {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--cream);
+    box-shadow: 0 8px 40px var(--shadow), 0 2px 8px var(--shadow);
+    position: relative;
+  }
+
+  /* Binding strip */
+  .book::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 28px;
+    background: linear-gradient(to right, #2a2620, #3d3830);
+    box-shadow: inset -4px 0 8px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  .inner { margin-left: 28px; }
+
+  /* COVER */
+  .cover {
+    background: var(--ink);
+    padding: 4rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.015) 2px,
+      rgba(255,255,255,0.015) 4px
+    );
+  }
+  .cover-eyebrow {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.2rem;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 3.8rem);
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 0.4rem;
+  }
+  .cover h1 em {
+    font-style: italic;
+    color: #b8d4a8;
+  }
+  .cover-sub {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.5);
+    margin-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cover-stat strong { color: rgba(255,255,255,0.85); display: block; font-size: 1rem; }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    padding: 2.5rem 3rem;
+    border-bottom: 2px solid var(--rule);
+    background: var(--paper);
+  }
+  .phil-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.8rem;
+  }
+  .phil-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--ink-light);
+    line-height: 1.8;
+    border-left: 3px solid var(--green);
+    padding-left: 1.2rem;
+  }
+
+  /* FOCUS LEGEND */
+  .legend {
+    padding: 1.5rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: var(--cream);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-light);
+  }
+  .legend-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-face { background: var(--red); }
+  .dot-strike { background: var(--amber); }
+  .dot-wedge { background: var(--green); }
+  .dot-speed { background: #4a6b8a; }
+  .dot-free { background: var(--ink-faint); }
+
+  /* WEEK SECTIONS */
+  .week {
+    border-bottom: 2px solid var(--rule);
+  }
+  .week-header {
+    padding: 1.8rem 3rem 1.2rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .week-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .week-theme {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--green);
+  }
+  .week-dates {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.7rem;
+    color: var(--ink-faint);
+  }
+  .week-goal {
+    width: 100%;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    margin-top: 0.4rem;
+    font-family: 'Inconsolata', monospace;
+  }
+  .week-goal strong { color: var(--ink); }
+
+  /* DAYS GRID */
+  .days {
+    padding: 0;
+  }
+  .day {
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    min-height: 70px;
+  }
+  .day:last-child { border-bottom: none; }
+  .day-label {
+    padding: 1rem 1rem 1rem 1.5rem;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .day-name {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .day-date {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .day-content {
+    padding: 0.9rem 1.5rem;
+  }
+  .day-type {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .type-range { color: var(--green); }
+  .type-course { color: var(--amber); }
+  .type-rest { color: var(--ink-faint); }
+  .type-short { color: #4a6b8a; }
+
+  .day-title {
+    font-size: 0.88rem;
+    color: var(--ink);
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  .day-drills {
+    list-style: none;
+    margin-top: 0.4rem;
+  }
+  .day-drills li {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-light);
+    padding: 0.15rem 0;
+    padding-left: 1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+  .day-drills li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--rule);
+  }
+  .drill-focus {
+    display: inline-block;
+    width: 7px; height: 7px; border-radius: 50%;
+    margin-right: 4px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .day-duration {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.65rem;
+    color: var(--ink-faint);
+    margin-top: 0.5rem;
+  }
+  .rest-note {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    padding: 0.5rem 0;
+  }
+
+  /* CHECKBOX */
+  .check-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .check-box {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--rule);
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    position: relative;
+    background: white;
+    transition: all 0.15s;
+  }
+  .check-box.done {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  .check-box.done::after {
+    content: '✓';
+    position: absolute;
+    top: -1px; left: 1px;
+    font-size: 10px;
+    color: white;
+  }
+
+  /* METRICS TARGETS */
+  .targets {
+    padding: 2rem 3rem;
+    background: var(--ink);
+    color: #fff;
+  }
+  .targets-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 1.5rem;
+  }
+  .targets h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    color: #fff;
+  }
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+  .target-item {
+    background: rgba(255,255,255,0.04);
+    padding: 1rem;
+  }
+  .target-metric {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.4rem;
+  }
+  .target-now {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.5);
+    text-decoration: line-through;
+  }
+  .target-goal {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #b8d4a8;
+  }
+
+  /* NOTES SECTION */
+  .notes-section {
+    padding: 2rem 3rem;
+    background: var(--cream);
+  }
+  .notes-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+  .notes-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .note-line {
+    border-bottom: 1px solid var(--rule);
+    padding: 0.8rem 0 0.2rem;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+    min-height: 2.2rem;
+    outline: none;
+    background: transparent;
+  }
+  .note-line:focus { color: var(--ink); border-bottom-color: var(--green); }
+
+  /* PROGRESS BAR */
+  .progress-section {
+    padding: 1.5rem 3rem;
+    background: var(--paper);
+    border-top: 1px solid var(--rule);
+  }
+  .progress-label {
+    font-family: 'Inconsolata', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--rule);
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--green);
+    transition: width 0.3s ease;
+  }
+
+  @media (max-width: 600px) {
+    .cover, .philosophy, .legend, .week-header, .day-label, .day-content, .targets, .notes-section, .progress-section {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .day { grid-template-columns: 75px 1fr; }
+    .day-date { font-size: 1rem; }
+  }
+</style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<div class="book">
+  <div class="inner">
+
+    <!-- COVER -->
+    <div class="cover">
+      <div class="cover-eyebrow">Personal Training Programme · May–June 2026</div>
+      <h1>Road to<br><em>Scratch</em></h1>
+      <div class="cover-sub">
+        <div class="cover-stat"><strong>4 weeks</strong>sessions</div>
+        <div class="cover-stat"><strong>4 priorities</strong>face · strike · wedge · spin</div>
+        <div class="cover-stat"><strong>105 mph</strong>your club speed</div>
+        <div class="cover-stat"><strong>±13.4°</strong>spin axis dev to fix</div>
+      </div>
+    </div>
+
+    <!-- PHILOSOPHY -->
+    <div class="philosophy">
+      <div class="phil-label">Programme Philosophy</div>
+      <div class="phil-text">
+        You already swing at scratch speed. The gap is consistency — tighter standard deviations across every metric. Each week builds on the last: establish fundamentals, then train under pressure, then transfer to the course.
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot dot-face"></span> Face Control</div>
+      <div class="legend-item"><span class="legend-dot dot-strike"></span> Ball Striking</div>
+      <div class="legend-item"><span class="legend-dot dot-wedge"></span> Wedge Precision</div>
+      <div class="legend-item"><span class="legend-dot dot-speed"></span> Speed/Spin</div>
+      <div class="legend-item"><span class="legend-dot dot-free"></span> Free Play / Rest</div>
+    </div>
+
+    <!-- ======= WEEK 1 ======= -->
+    <div class="week">
+      <div class="week-header">
+        <div>
+          <div class="week-num">Week 1</div>
+          <div class="week-theme">Foundations</div>
+        </div>
+        <div class="week-dates">13 May – 19 May</div>
+        <div class="week-goal"><strong>Goal:</strong> Establish consistent low point, feel neutral face at impact. No course play — pure drilling.</div>
+      </div>
+      <div class="days">
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Wed</div>
+            <div class="day-date">13</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Low Point & Face Awareness</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>Feet together drill — 7 iron, 20 balls. Feel centred rotation, no slide.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>Towel behind ball drill — 5 iron, 20 balls. Stop catching the towel.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Gate drill — driver, slow-motion, 15 reps. Feel face staying square.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Pump drill — driver, 10 reps. Check face angle at halfway through.</li>
+            </ul>
+            <div class="day-duration">No free-hitting. Drills only today.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Thu</div>
+            <div class="day-date">14</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest / Mobility</div>
+            <div class="rest-note">Active recovery. Hip mobility and shoulder rotation stretches. 20 min.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Fri</div>
+            <div class="day-date">15</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-short">Short Game · 45 min</div>
+            <div class="day-title">Wedge Clock Drill — Carry Mapping</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>PW: 10 balls at 9 o'clock, 10 at 10 o'clock, 10 full. Record avg carry for each.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Land on a 3-ft circle. Count how many out of 10 land inside — aim for 5+.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Finish: 10 full PW to a specific flag. Track lateral dispersion.</li>
+            </ul>
+            <div class="day-duration">Write down your 3 carry distances in the notes below.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sat</div>
+            <div class="day-date">16</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 75 min</div>
+            <div class="day-title">Full Session — All Four Priorities</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>10 min: feet together 7 irons to warm up.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>15 min: tee-in-ground drill — 5 iron, forward low point training.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>20 min: driver with impact tape. Check strike location every 5 balls.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>15 min: clock drill PW, same as Friday.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>15 min: free driver swings — apply the gate drill feel.</li>
+            </ul>
+            <div class="day-duration">Note which driver shots had the best face feel.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sun</div>
+            <div class="day-date">17</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Full rest. Let the patterns bed in.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Mon</div>
+            <div class="day-date">18</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-short">Short Game · 30 min</div>
+            <div class="day-title">Wedge Precision — Landing Spot Only</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Pick a 2-ft circle at 120 yards. Hit 20 PW. Count inside the circle.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Target: 6+ out of 20 inside. Write your score in notes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Tue</div>
+            <div class="day-date">19</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Week 1 Review Session</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>20 min: towel + feet together iron drills. Compare feel to Day 1.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>20 min: driver gate + pump drills, then 10 free swings.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>20 min: clock drill. Record scores.</li>
+            </ul>
+            <div class="day-duration">Self-assessment: what feels different vs Tuesday's session?</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======= WEEK 2 ======= -->
+    <div class="week">
+      <div class="week-header">
+        <div>
+          <div class="week-num">Week 2</div>
+          <div class="week-theme">Pressure & Pattern</div>
+        </div>
+        <div class="week-dates">20 May – 26 May</div>
+        <div class="week-goal"><strong>Goal:</strong> Add competitive pressure to drills. Start tracking scores. One 9-hole round with focus on observation only.</div>
+      </div>
+      <div class="days">
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Wed</div>
+            <div class="day-date">20</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Pressure Drill — Last Ball Counts</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Driver: hit 5-ball sets. Only the last ball is "scored." 6 sets.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>7 iron: 10-ball strike quality check. Smash factor mental target: 1.33+.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>PW: 10-ball precision to flag. Count GIR-equivalent (within 20 ft circle).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Thu</div>
+            <div class="day-date">21</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Rest. Visualise the gate drill feeling before sleeping — 5 min mental rehearsal.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Fri</div>
+            <div class="day-date">22</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 75 min</div>
+            <div class="day-title">Spin Control — Driver Focus</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus" style="background:#4a6b8a;display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px"></span>Shaft lean drill — alignment stick in grip end. 20 driver swings.</li>
+              <li><span class="drill-focus" style="background:#4a6b8a;display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px"></span>Low-and-slow takeaway practice. Feel handle ahead of head through impact.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>10 driver with impact tape — look for centre strikes. Note any heel/toe pattern.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>15 min: 5 iron focused striking. Tee-in-ground drill.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sat</div>
+            <div class="day-date">23</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-course">9 Holes — Observation Round</div>
+            <div class="day-title">Play 9 holes. Track these stats only:</div>
+            <ul class="day-drills">
+              <li>How many drives stayed in play? (target: 7+/9)</li>
+              <li>How many iron shots felt struck vs thin? Note thinned shots.</li>
+              <li>How many wedge shots landed within 30 ft of target?</li>
+            </ul>
+            <div class="day-duration">Don't think about score. This is data collection.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sun</div>
+            <div class="day-date">24</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Review your Saturday observation notes. What pattern do you see?</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Mon</div>
+            <div class="day-date">25</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-short">Short Game · 45 min</div>
+            <div class="day-title">Wedge Precision — Scored Sets</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>10 balls, 3 targets (90, 100, 120 yds). Score: 2pts within 10 ft, 1pt within 20 ft.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Aim for 15+ points out of 30. Record score in notes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Tue</div>
+            <div class="day-date">26</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Week 2 Review + Shot Shaping Intro</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Hit 5 intentional draws then 5 intentional fades with 7 iron. Feel face vs path.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>20 iron strikes — target zero thinned shots this session.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>10 driver — track each as In Play / Near Miss / Miss. Aim for 7+ In Play.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======= WEEK 3 ======= -->
+    <div class="week">
+      <div class="week-header">
+        <div>
+          <div class="week-num">Week 3</div>
+          <div class="week-theme">Transfer to Course</div>
+        </div>
+        <div class="week-dates">27 May – 2 Jun</div>
+        <div class="week-goal"><strong>Goal:</strong> Apply the drills under real scoring pressure. Full 18-hole round mid-week. Tighten wedge circle to 15 ft.</div>
+      </div>
+      <div class="days">
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Wed</div>
+            <div class="day-date">27</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Pre-Round Simulation</div>
+            <ul class="day-drills">
+              <li>Hit shots as if you're on the course — pick specific targets, commit to shape, one shot at a time. No block practice today.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Each driver swing: deliberate pre-shot routine. Gate drill feel in the warm-up, then let it go.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>Every wedge to a specific yardage. No vague "around 120".</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Thu</div>
+            <div class="day-date">28</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-course">18 Holes — Scored Round</div>
+            <div class="day-title">First scored round of the programme</div>
+            <ul class="day-drills">
+              <li>Track: fairways hit, GIR, putts, and any thinned irons.</li>
+              <li>Focus: trust the process on every tee shot. Don't steer — commit to shape.</li>
+              <li>After round: note your actual score and fairways/GIR numbers in notes.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Fri</div>
+            <div class="day-date">29</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest / Review</div>
+            <div class="rest-note">Review Thursday's stats. Which priority cost you the most shots? Adjust Saturday's session to address it.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sat</div>
+            <div class="day-date">30</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 75 min</div>
+            <div class="day-title">Address Thursday's Weakness</div>
+            <ul class="day-drills">
+              <li>Spend 40 min on whichever priority hurt you most on Thursday.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>If thinned irons: back to towel drill + feet together.</li>
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>If wayward driver: back to gate + pump drill + impact tape.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>If wedge misses: scored precision sets, tighten to 15 ft target.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sun</div>
+            <div class="day-date">31</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-course">9 Holes — Competitive Mindset</div>
+            <div class="day-title">Play 9 as if it's a competition</div>
+            <ul class="day-drills">
+              <li>Full pre-shot routine on every shot. No casual swings.</li>
+              <li>Track fairways hit and GIR only. Score is secondary.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Mon</div>
+            <div class="day-date">1</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Rest. Two active days in a row — let the body recover.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Tue</div>
+            <div class="day-date">2</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 60 min</div>
+            <div class="day-title">Consolidation — All Priorities, Pressure Format</div>
+            <ul class="day-drills">
+              <li><span class="drill-focus dot-face" style="background:#8b2020"></span>Driver: 10 balls, score each In Play/Near/Miss. Target: 8+ in play.</li>
+              <li><span class="drill-focus dot-strike" style="background:#8b5e1a"></span>7 iron: 10 balls, target zero thinned shots, note any.</li>
+              <li><span class="drill-focus dot-wedge" style="background:#2d5a27"></span>PW scored set: 15 ft circle, 10 balls. Target: 5+ inside.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ======= WEEK 4 ======= -->
+    <div class="week">
+      <div class="week-header">
+        <div>
+          <div class="week-num">Week 4</div>
+          <div class="week-theme">Sharpen & Benchmark</div>
+        </div>
+        <div class="week-dates">3 Jun – 9 Jun</div>
+        <div class="week-goal"><strong>Goal:</strong> Reduce drilling, increase course time. End with a benchmark launch monitor session to measure progress vs your Tuesday data.</div>
+      </div>
+      <div class="days">
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Wed</div>
+            <div class="day-date">3</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 45 min</div>
+            <div class="day-title">Sharp & Light — No Heavy Drilling</div>
+            <ul class="day-drills">
+              <li>15 min: 5 min feet-together irons, 10 free iron shots. Feel the improvement.</li>
+              <li>15 min: 5 driver warm-up drills, then 10 free driver swings.</li>
+              <li>15 min: 15 PW shots to target. Track lateral spread mentally.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Thu</div>
+            <div class="day-date">4</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-course">18 Holes — Scored Round</div>
+            <div class="day-title">Full competitive round</div>
+            <ul class="day-drills">
+              <li>Full stats tracking: FIR, GIR, putts, penalty shots.</li>
+              <li>Compare fairways hit to Week 3 Thursday. Are you hitting more fairways?</li>
+              <li>Note your handicap-equivalent score in the notes below.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Fri</div>
+            <div class="day-date">5</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Rest day. Review round stats, plan Saturday session around any recurring issues.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sat</div>
+            <div class="day-date">6</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-course">18 Holes — Competition Simulation</div>
+            <div class="day-title">Treat as a competition round</div>
+            <ul class="day-drills">
+              <li>Full pre-shot routine. Keep pace of play. No mulligans.</li>
+              <li>Specific focus: every tee shot — commit to a shape before you step in.</li>
+              <li>Wedge shots: commit to a specific yardage swing every time.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Sun</div>
+            <div class="day-date">7</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-rest">Rest</div>
+            <div class="rest-note">Full rest after two consecutive rounds.</div>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Mon</div>
+            <div class="day-date">8</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Range · 30 min</div>
+            <div class="day-title">Final Tune — Pre-Benchmark</div>
+            <ul class="day-drills">
+              <li>Light session only. A few drill reps of each priority to sharpen the feels.</li>
+              <li>No heavy work. Prime the patterns, don't fatigue them.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="day">
+          <div class="day-label">
+            <div class="day-name">Tue</div>
+            <div class="day-date">9</div>
+          </div>
+          <div class="day-content">
+            <div class="day-type type-range">Launch Monitor — Benchmark Session</div>
+            <div class="day-title">Repeat your Tuesday session exactly</div>
+            <ul class="day-drills">
+              <li><strong>Driver:</strong> 16 shots. Target: spin axis dev below 8°, lateral dev below ±20 yds.</li>
+              <li><strong>5 iron:</strong> 18 shots. Target: smash factor floor 1.32+, carry dev below ±18 yds.</li>
+              <li><strong>7 iron:</strong> 16 shots. Target: zero thinned shots, smash factor avg above 1.30.</li>
+              <li><strong>PW:</strong> 18 shots. Target: lateral dev below ±8°, carry dev below ±12 yds.</li>
+            </ul>
+            <div class="day-duration">Compare every metric against the report at the top of this plan.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- END TARGETS -->
+    <div class="targets">
+      <div class="targets-label">Benchmark Targets — End of Month</div>
+      <h2>Where You Need to Be</h2>
+      <div class="target-grid">
+        <div class="target-item">
+          <div class="target-metric">Driver Spin Axis Dev</div>
+          <div class="target-now">±13.4°</div>
+          <div class="target-goal">→ ±6°</div>
+        </div>
+        <div class="target-item">
+          <div class="target-metric">Driver Lateral Spread</div>
+          <div class="target-now">±30.2 yds</div>
+          <div class="target-goal">→ ±15 yds</div>
+        </div>
+        <div class="target-item">
+          <div class="target-metric">7 Iron Smash Factor</div>
+          <div class="target-now">1.25 avg</div>
+          <div class="target-goal">→ 1.32+</div>
+        </div>
+        <div class="target-item">
+          <div class="target-metric">7 Iron Carry Dev</div>
+          <div class="target-now">±29.8 yds</div>
+          <div class="target-goal">→ ±15 yds</div>
+        </div>
+        <div class="target-item">
+          <div class="target-metric">PW Carry Dev</div>
+          <div class="target-now">±19.3 yds</div>
+          <div class="target-goal">→ ±10 yds</div>
+        </div>
+        <div class="target-item">
+          <div class="target-metric">Driver Spin (good shots)</div>
+          <div class="target-now">2,200 rpm</div>
+          <div class="target-goal">→ consistent</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOTES -->
+    <div class="notes-section">
+      <div class="notes-label">Session Notes</div>
+      <div class="notes-lines">
+        <div class="note-line" contenteditable="true" data-placeholder="PW carry distances (9 o'clock / 10 o'clock / full)…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 1 review — what changed?…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 2 9-hole observations…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 3 scored round — FIR / GIR / score…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 3 weakness to address Saturday…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 4 round 1 score…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Week 4 round 2 score…"></div>
+        <div class="note-line" contenteditable="true" data-placeholder="Benchmark session results vs targets…"></div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-section">
+      <div class="progress-label">
+        <span>Session Progress</span>
+        <span id="progress-count">0 / 28 sessions</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+  </div><!-- /inner -->
+</div><!-- /book -->
+
+<script>
+  // Checkbox behaviour
+  document.querySelectorAll('.check-box').forEach(box => {
+    box.addEventListener('click', () => {
+      box.classList.toggle('done');
+      updateProgress();
+    });
+  });
+
+  // Note line placeholders
+  document.querySelectorAll('.note-line[data-placeholder]').forEach(el => {
+    if (!el.textContent.trim()) {
+      el.style.color = 'var(--ink-faint)';
+      el.textContent = el.dataset.placeholder;
+    }
+    el.addEventListener('focus', () => {
+      if (el.textContent === el.dataset.placeholder) {
+        el.textContent = '';
+        el.style.color = 'var(--ink)';
+      }
+    });
+    el.addEventListener('blur', () => {
+      if (!el.textContent.trim()) {
+        el.textContent = el.dataset.placeholder;
+        el.style.color = 'var(--ink-faint)';
+      }
+    });
+  });
+
+  // Mark day as done when clicking day label
+  document.querySelectorAll('.day-label').forEach(label => {
+    label.style.cursor = 'pointer';
+    label.title = 'Click to mark complete';
+    label.addEventListener('click', () => {
+      const day = label.closest('.day');
+      day.style.opacity = day.style.opacity === '0.5' ? '1' : '0.5';
+      label.style.background = label.style.background ? '' : 'var(--green-pale)';
+      updateProgress();
+    });
+  });
+
+  function updateProgress() {
+    const total = document.querySelectorAll('.day-label').length;
+    const done = Array.from(document.querySelectorAll('.day-label')).filter(
+      l => l.style.background
+    ).length;
+    document.getElementById('progress-count').textContent = `${done} / ${total} sessions`;
+    document.getElementById('progress-fill').style.width = `${(done/total)*100}%`;
+  }
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+    </a>
+    <a href="27_six_month_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📅</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Months 1–6 Plan</span>
+    </a>
+    <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>

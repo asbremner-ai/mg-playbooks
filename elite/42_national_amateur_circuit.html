@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · 42_national_amateur_circuit.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>National Amateur Circuit — The Scratch Project Elite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--elite-border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--elite-hi);}.tab.active{color:var(--elite);border-bottom-color:var(--elite);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--elite);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-elite{background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.card-elite{border-color:var(--elite-border);}.card-elite .card-tag{color:var(--elite);}
+.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--elite);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}.ev{color:var(--elite-hi);font-weight:600;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--elite);background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite-box{background:var(--elite-dim);border:1px solid var(--elite-border);}.elite-box p{color:rgba(200,216,232,.85);}.elite-box strong{color:var(--elite-hi);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}.gold-box p{color:rgba(240,208,112,.9);}.gold-box strong{color:var(--gold-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--elite);padding:14px 18px;margin:18px 0;background:var(--elite-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--elite-hi);line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(200,216,232,0.18);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,216,232,0.3);">The Scratch Project · Elite</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Elite Playbook · Guide 42</p>
+  <h1>National Amateur<br><em>Circuit</em></h1>
+  <p class="hero-sub">The complete map of UK national amateur golf — how to enter, what to expect, how to prepare, and how to use national event results to accelerate handicap progression and county team selection.</p>
+  <div class="hero-tags"><span class="htag">🏆 National Circuit</span><span class="htag">📅 Brabazon Trophy</span><span class="htag">🏅 R&A Qualifying</span><span class="htag">📊 EG Order of Merit</span><span class="htag">🥊 Matchplay</span><span class="htag">🗓️ Competition Calendar</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('landscape',this)">UK Landscape</button>
+  <button class="tab" onclick="show('brabazon',this)">Brabazon</button>
+  <button class="tab" onclick="show('randa',this)">R&A Qualifying</button>
+  <button class="tab" onclick="show('oom',this)">EG Order of Merit</button>
+  <button class="tab" onclick="show('matchplay',this)">Matchplay</button>
+  <button class="tab" onclick="show('calendar',this)">Calendar</button>
+</div>
+
+<div class="sec active" id="landscape">
+  <h2 class="sec-title">The National Amateur Landscape</h2>
+  <p class="sec-desc">The UK national amateur circuit is a structured hierarchy of events that most club-level scratch players never enter — not because they lack the game, but because they lack the knowledge. This guide maps the full circuit and shows you exactly how to navigate it.</p>
+  <span class="badge badge-elite">🏆 UK National Circuit Map</span>
+  <div class="card card-elite">
+    <span class="card-tag">Events Open to Scratch Amateur Players</span>
+    <h3>The National Amateur Hierarchy</h3>
+    <table class="tbl">
+      <tr><th>Event</th><th>Format</th><th>HCP Limit</th><th>Entry Route</th></tr>
+      <tr><td>County strokeplay championships</td><td>36-hole stroke</td><td>Varies (typically 2–4)</td><td>County affiliation</td></tr>
+      <tr><td>England Golf NAC</td><td>72-hole stroke</td><td>+0.4 or better</td><td>England Golf portal</td></tr>
+      <tr><td>Brabazon Trophy</td><td>72-hole stroke</td><td>+0.4 or better</td><td>England Golf portal</td></tr>
+      <tr><td>R&amp;A Amateur Qualifying</td><td>36-hole stroke</td><td>+0.4 or better</td><td>The R&amp;A portal</td></tr>
+      <tr><td>EG Order of Merit events</td><td>Varies</td><td>+2.4 or better</td><td>Individual event entry</td></tr>
+      <tr><td>County Inter-Union matches</td><td>Matchplay team</td><td>County selection</td><td>County cap</td></tr>
+    </table>
+  </div>
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>Handicap threshold reality:</strong> Most national events require a handicap index of +0.4 or better for entry. This means your World Handicap System index must be at or below +0.4. A scratch (0.0) index is not enough — you need to be in genuine plus territory before applying. Plan your plus journey (Guide 41) with national circuit entry as the explicit target.</p>
+  </div>
+  <span class="badge badge-gold">📅 Annual Circuit Calendar</span>
+  <div class="card card-gold">
+    <span class="card-tag">When Each Event Typically Runs</span>
+    <h3>UK National Amateur Calendar (Typical Dates)</h3>
+    <table class="tbl">
+      <tr><th>Month</th><th>Events</th></tr>
+      <tr><td>March–April</td><td>County individual championships begin; EG OoM season opens</td></tr>
+      <tr><td>May</td><td>Brabazon Trophy (usually May); R&amp;A Amateur regional qualifiers</td></tr>
+      <tr><td>June</td><td>The Amateur Championship; England Golf NAC</td></tr>
+      <tr><td>July</td><td>County team fixtures; inter-county championships</td></tr>
+      <tr><td>August</td><td>EG OoM events peak; county strokeplay finals</td></tr>
+      <tr><td>September</td><td>Season close; EG OoM final rankings published</td></tr>
+    </table>
+    <p>Verify exact dates annually via englandgolf.org and the R&amp;A website — dates shift year to year. Entry windows for major events typically open 8–12 weeks before the event date.</p>
+  </div>
+</div>
+
+<div class="sec" id="brabazon">
+  <h2 class="sec-title">The Brabazon Trophy</h2>
+  <p class="sec-desc">The Brabazon Trophy is England's premier 72-hole strokeplay championship for men — the clearest step-up from county to national level. The quality jump from county competition is significant: typical winning scores run 10–14 under par on a top-ranked parkland or heathland venue.</p>
+  <span class="badge badge-elite">🏆 Brabazon-Specific Preparation</span>
+  <div class="card card-elite">
+    <span class="card-tag">72-Hole Strokeplay Protocol</span>
+    <h3>How to Prepare for Your First Brabazon</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Recon visit (6–8 weeks before):</strong> Play the course once at full competitive pace. Walk the most complex greens — do not putt, just observe slope and grain. Record primary wind direction (check the prevailing for that county from the Met Office). Note the 3–4 most penalising holes that will define your scorecard.</div></li>
+      <li><span class="step-n">2</span><div><strong>Practice round (4–7 days before):</strong> Full 18 with your yardage book open. Play every pin position type on each hole — front-left, middle, back-right etc. — to understand your approach angle requirements. Test bunker sand firmness. Record green speeds if a sprinkler head reading is available.</div></li>
+      <li><span class="step-n">3</span><div><strong>Day-before activation only:</strong> 9 holes maximum or range session only. No new course information on the day before — you want to compete on your preparation, not add data noise.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-gold">🧠 The Psychological Reality of 72-Hole Competition</span>
+  <div class="card card-gold">
+    <span class="card-tag">Managing Multi-Round Events</span>
+    <h3>What 72 Holes Demands That 18 Does Not</h3>
+    <p>A 72-hole event introduces cognitive load management as a performance variable. Your decision quality in round 4 is a function of what you did in rounds 1–3, not just round 4. Three principles govern elite multi-round performance:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Round-end protocol:</strong> After each round, do a 10-minute debrief before leaving the venue. Three questions: what cost me strokes unnecessarily? What is the adjusted game plan for tomorrow? What does my body need tonight? Do not analyse SG data between rounds of the event — that is post-event work.</div></li>
+      <li><span class="step-n">2</span><div><strong>Leaderboard management:</strong> Check the leaderboard at most twice per day during a 72-hole event — once after your round, once the evening before the next round. Leaderboard obsession is the most common cause of decision quality collapse in round 3 and 4.</div></li>
+      <li><span class="step-n">3</span><div><strong>Score irrelevance after R1:</strong> If you shoot 5 over in round 1 of the Brabazon, you are not 5 over — you are at even par for the remaining 54 holes. Mentally re-set to even after each round.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="randa">
+  <h2 class="sec-title">R&A Amateur Qualifying</h2>
+  <p class="sec-desc">The Amateur Championship is the oldest and most prestigious amateur championship in golf. Regional qualifying rounds are held across the UK — each producing a small number of qualifiers for the Championship proper. The qualifying standard is exacting: regional fields are typically filled with county and national-level players.</p>
+  <span class="badge badge-elite">🏅 Qualifier Structure</span>
+  <div class="card card-elite">
+    <span class="card-tag">How Regional Qualifying Works</span>
+    <h3>The R&amp;A Amateur Qualifying Pathway</h3>
+    <table class="tbl">
+      <tr><th>Stage</th><th>Format</th><th>Qualifiers per Region</th><th>Typical Cut Score</th></tr>
+      <tr><td>Regional Qualifying</td><td>18-hole stroke</td><td>8–15 players</td><td>Even par to −3</td></tr>
+      <tr><td>Championship (R64)</td><td>36-hole stroke + matchplay</td><td>Full 288-player draw</td><td>N/A (all qualifiers enter)</td></tr>
+    </table>
+    <p>Regional qualifying venues are announced by the R&amp;A in January each year. Entry opens via theranda.com and typically closes 6–8 weeks before the qualifying date. Entry fee is modest — the limiting factor is handicap (must be +0.4 or better) and available places (fields are limited).</p>
+  </div>
+  <span class="badge badge-gold">🎯 Preparing for a Qualifying Round</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Makes Amateur Qualifying Rounds Different</span>
+    <h3>The Qualifier Mindset</h3>
+    <p>An R&amp;A qualifier is an 18-hole strokeplay event where the entire field is competing to shoot the same sub-par score needed to advance. Unlike a club competition where you might target a personal best, the target in a qualifier is fixed: you must shoot at or below a score that typically only 5–8% of the field achieves.</p>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Strategic implication:</strong> Early bogeys in a qualifier require a recalibration, not a surrender. If you make bogey on hole 2, your target for the remaining 16 holes becomes 2-under — very achievable for a plus-handicap player. Players who "play safe" after early bogeys in qualifiers almost never advance. Controlled aggression must be maintained for all 18 holes regardless of early score.</p>
+    </div>
+  </div>
+  <span class="badge badge-teal">📋 Entry Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">Step-by-Step Entry Guide</span>
+    <h3>How to Enter an R&amp;A Amateur Qualifier</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Create or log into your account at theranda.com. Your WHS handicap index is verified automatically against the national database.</div></li>
+      <li><span class="step-n">2</span><div>Navigate to Competitions → The Amateur Championship → Regional Qualifying. Select your preferred regional venue (you can enter multiple regions for different dates).</div></li>
+      <li><span class="step-n">3</span><div>Confirm entry and pay the entry fee (typically £20–35). You will receive confirmation email with tee time allocation 2–3 weeks before the event.</div></li>
+      <li><span class="step-n">4</span><div>If your handicap drops below +0.4 between entry and the event, you remain eligible — the qualifying threshold applies at time of entry, not the day of play.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="oom">
+  <h2 class="sec-title">EG Order of Merit</h2>
+  <p class="sec-desc">England Golf's Order of Merit is the ranking system for serious amateur golfers — the mechanism by which performance in open amateur events accumulates into a national standing. A high OoM ranking opens invitation events, county consideration, and England Golf performance programme pathways.</p>
+  <span class="badge badge-elite">📊 How the OoM Works</span>
+  <div class="card card-elite">
+    <span class="card-tag">Points Accumulation System</span>
+    <h3>EG Order of Merit Structure</h3>
+    <table class="tbl">
+      <tr><th>Event Category</th><th>Points Available</th><th>Example Events</th></tr>
+      <tr><td>Category 1 (National)</td><td>400–1000</td><td>Brabazon, NAC, English Amateur</td></tr>
+      <tr><td>Category 2 (Regional/County)</td><td>150–400</td><td>County championships, regional opens</td></tr>
+      <tr><td>Category 3 (Open amateurs)</td><td>50–150</td><td>Club-hosted open events, regional invitations</td></tr>
+    </table>
+    <p>Points are awarded based on finish position within each category. Top-5 finishes in Category 1 events generate the most meaningful OoM points — a single strong result in the Brabazon is worth more than winning 10 Category 3 events.</p>
+  </div>
+  <span class="badge badge-gold">📅 Building an OoM Season</span>
+  <div class="card card-gold">
+    <span class="card-tag">Minimum Viable Season for a Meaningful Ranking</span>
+    <h3>Annual Competition Planning</h3>
+    <p>A player targeting a top-100 EG OoM ranking should plan for:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>2 Category 1 events:</strong> The Brabazon and either the NAC or English Amateur. These provide the highest points upside and the most valuable competitive experience.</div></li>
+      <li><span class="step-n">2</span><div><strong>3–4 Category 2 events:</strong> Your county championship plus 2–3 regional opens. County events are the backbone of OoM accumulation for most serious amateurs.</div></li>
+      <li><span class="step-n">3</span><div><strong>4–6 Category 3 events:</strong> Open amateur events hosted by clubs in your region. These maintain competitive sharpness in months without Category 1 or 2 events.</div></li>
+    </ul>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Find events:</strong> The England Golf competition calendar (englandgolf.org/competitions) lists all OoM-eligible events by category and region. Set up email alerts for your region — Category 2 events often fill within 48 hours of opening.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="matchplay">
+  <h2 class="sec-title">Matchplay at Elite Level</h2>
+  <p class="sec-desc">Elite amateur matchplay — county team, inter-county, and championship matchplay rounds — requires a fundamentally different strategic framework from strokeplay. The opponent is a variable; your decisions must account for their score, not just the course.</p>
+  <span class="badge badge-elite">🎯 Matchplay Strategy Framework</span>
+  <div class="card card-elite">
+    <span class="card-tag">Hole-by-Hole Aggression Calibration</span>
+    <h3>When to Attack and When to Take Par</h3>
+    <table class="tbl">
+      <tr><th>Match Situation</th><th>Strategic Posture</th><th>Reasoning</th></tr>
+      <tr><td>All square</td><td>Normal game plan</td><td>No adjustment needed — play your best golf</td></tr>
+      <tr><td>1 up</td><td>Slightly conservative</td><td>Protect the lead — don't gift holes with unnecessary risk</td></tr>
+      <tr><td>2 up</td><td>Conservative on difficult holes</td><td>Par wins most holes when opponent faces pressure</td></tr>
+      <tr><td>3+ up with 6 to play</td><td>Conservative across the board</td><td>Force opponent to make birdies — don't make bogeys</td></tr>
+      <tr><td>1 down</td><td>Slightly aggressive</td><td>Look for birdie opportunities to level the match</td></tr>
+      <tr><td>2–3 down</td><td>Selective aggression</td><td>Attack reachable par 5s and short par 4s; not all holes</td></tr>
+      <tr><td>4+ down with 6 to play</td><td>Full aggression</td><td>Only outcome that matters now is winning holes — attack every pin</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🧠 Playing for a Team</span>
+  <div class="card card-gold">
+    <span class="card-tag">County Team Matchplay Psychology</span>
+    <h3>What Changes When You Play for Others</h3>
+    <p>Playing in a county team match introduces a psychological variable absent from individual competition — the awareness that your result contributes to a cumulative team score. Three specific dynamics require active management:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pressure amplification:</strong> The knowledge that teammates are watching and that your result matters to others amplifies performance anxiety. Pre-shot routine adherence is the best mitigation — it creates a repeatable focus anchor regardless of situational pressure.</div></li>
+      <li><span class="step-n">2</span><div><strong>Conservative drift:</strong> Players in team matches unconsciously drift toward conservative play to "not cost the team" — this is often the wrong strategy. Your captain selected you to win your match, not to halve it safely. Play your best golf.</div></li>
+      <li><span class="step-n">3</span><div><strong>Opponent management:</strong> Watch your opponent's body language without engaging with it. A deflated opponent is not your responsibility — your responsibility is executing your own shots. Attempting to "press the advantage" psychologically usually distracts the player doing it more than the opponent.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="calendar">
+  <h2 class="sec-title">Building Your Competition Calendar</h2>
+  <p class="sec-desc">A structured annual competition calendar for a player targeting national events — when to peak, how to taper, and how to manage the cognitive load of a full competitive season without burning out before the events that matter most.</p>
+  <span class="badge badge-elite">📅 Annual Peaking Structure</span>
+  <div class="card card-elite">
+    <span class="card-tag">Competition Periodisation for Elite Amateurs</span>
+    <h3>The Two-Peak Annual Model</h3>
+    <table class="tbl">
+      <tr><th>Period</th><th>Focus</th><th>Event Type</th></tr>
+      <tr><td>Jan–Feb</td><td>Off-season technical work</td><td>No competition</td></tr>
+      <tr><td>March–April</td><td>Building competition sharpness</td><td>Category 3 events</td></tr>
+      <tr><td>May (Peak 1)</td><td>National circuit</td><td>Brabazon, R&amp;A qualifying</td></tr>
+      <tr><td>June</td><td>Active recovery</td><td>Club competition only</td></tr>
+      <tr><td>July–August (Peak 2)</td><td>County team season</td><td>Inter-county matches + EG OoM</td></tr>
+      <tr><td>September</td><td>Season close</td><td>Final OoM events; handicap review</td></tr>
+      <tr><td>October–Dec</td><td>Off-season training begins</td><td>No competition pressure</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">🔬 Using Competition as Diagnostic Data</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Post-Season Audit</span>
+    <h3>What National Events Reveal That Club Competition Does Not</h3>
+    <p>National-level competition exposes weaknesses that club competition masks. The diagnostic questions to ask after each national event:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Which SG category showed the most unusual variance vs. my season average? (Unusual variance under pressure = the category that needs mental as well as technical work.)</div></li>
+      <li><span class="step-n">2</span><div>Which decision type — tee strategy, approach club selection, short game shot selection — was I least confident about? Confidence deficits under pressure trace to preparation gaps, not skill gaps.</div></li>
+      <li><span class="step-n">3</span><div>What did the course conditions reveal about my game that standard conditions do not? (Fast greens, tight lies, links wind — each exposes a specific technical or strategic limitation.)</div></li>
+    </ul>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Record it immediately:</strong> Write your post-event diagnostic in your Progress Journal (Guide 17) within 24 hours. The emotional memory of how you played under pressure is your most valuable data — it fades fast.</p>
+    </div>
+  </div>
+</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 42 · NATIONAL AMATEUR CIRCUIT · UK COMPETITIVE PATHWAY · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="33_competitive_pathway.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">UK Competitive Pathway</span>
+    </a>
+    <a href="43_caddie_preparation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📖</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Caddie Prep & Yardage Books</span>
+    </a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Competitive Strategy</span>
+    </a>
+    <a href="41_plus_hcp_sg_targets.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⭐</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Plus-HCP SG Targets</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

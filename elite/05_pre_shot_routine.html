@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<!-- version:v2.1 · 2026-05-30 · 05_pre_shot_routine.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Pre-Shot Routine & Practice Plan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Advanced Player Edition</p>
+  <h1>Pre-Shot Routine<br><em>&amp; Practice Plan</em></h1>
+  <p class="hero-sub">Trust the Process — One Shot at a Time. Full-swing, putting, and short game routines plus structured practice plans.</p>
+  <div class="hero-tags">
+    <span class="htag">🏌️ Full-Swing Routine</span><span class="htag">🎯 Putting Routine</span>
+    <span class="htag">🌊 Short Game Routine</span><span class="htag">📋 Practice Plans</span>
+    <span class="htag">📅 Weekly Schedule</span><span class="htag">✅ Quick Reference</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('fullswing',this)">Full Swing</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('shortgame',this)">Short Game</button>
+  <button class="tab" onclick="show('rangeprac',this)">Range Plan</button>
+  <button class="tab" onclick="show('puttingprac',this)">Putting Plan</button>
+  <button class="tab" onclick="show('sgprac',this)">SG Plan</button>
+  <button class="tab" onclick="show('weekly',this)">Weekly</button>
+  <button class="tab" onclick="show('checklist',this)">Checklists</button>
+  <button class="tab" onclick="show('imagery',this)">Imagery</button>
+  <button class="tab" onclick="show('alignment',this)">Alignment</button>
+  <button class="tab" onclick="show('practicesci',this)">Practice Sci.</button>
+  <button class="tab" onclick="show('selfcorrect',this)">Self-Correct</button>
+  <button class="tab" data-tier="pro" onclick="show('cognitive_arch',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Cognitive Architecture</button>
+</div>
+
+<div class="sec active" id="fullswing">
+  <h2 class="sec-title">Full-Swing Routine</h2>
+  <p class="sec-desc">All thinking happens BEFORE you step into the shot — zero analysis once you move. Identical timing every time — same on the 1st tee as the 18th under pressure.</p>
+  <span class="badge badge-lime">🏌️ The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Every Shot, Every Time</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Read & Decide (behind ball):</strong> Stand 2–3m behind the ball. Assess lie, wind, distance, shot shape. Pick ONE precise target — not a zone. Commit fully. All thinking stops when you leave this spot.</div></li>
+      <li><span class="step-n">2</span><div><strong>The Trigger Breath:</strong> Before stepping in, take one slow, deliberate exhale. Transitions your brain from analytical mode to athletic mode and physically lowers heart rate. Non-negotiable on pressure shots.</div></li>
+      <li><span class="step-n">3</span><div><strong>Purpose Practice Swing:</strong> One rehearsal swing focused on FEEL — the tempo and sensation of the shot. Not a mechanical check. Smooth and confident, never tentative.</div></li>
+      <li><span class="step-n">4</span><div><strong>Approach & Align:</strong> Walk in from behind on the target line. Club face first (aimed at precise target), then feet, hips, shoulders. One look to confirm. Keep this brisk — the longer you stand over it, the more your mind wanders.</div></li>
+      <li><span class="step-n">5</span><div><strong>The Go Trigger:</strong> A personal trigger that fires the swing — forward press, look-then-back, waggle, or exhale. Pick ONE and use it EVERY time. If you feel frozen, the trigger breaks the loop.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Managing Mental Focus</span>
+    <h3>Handling Every Situation</h3>
+    <table class="tbl"><tr><th>Situation</th><th>Strategy</th></tr>
+    <tr><td>After a bad shot</td><td>10-second reaction window, then close with a physical cue (tuck tee in pocket, sip water). That shot is done.</td></tr>
+    <tr><td>When feeling rushed</td><td>Deliberately slow your walk to the ball. Nerves speed everything up — a slower walk physically counters this.</td></tr>
+    <tr><td>Anchor phrase</td><td>A single internal word at Step 2: "process", "smooth", or "one shot". Interrupts negative thought loops.</td></tr>
+    <tr><td>Between shots</td><td>Stay in the present. Chat, enjoy the scenery. Only enter "routine mode" when it is your turn.</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>The Non-Negotiable:</strong> The routine should be IDENTICAL whether you are 1-up or 3-down. Consistency of process is the whole point. A routine that varies is not a routine — it is just a habit.</p>
+  </div>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Routine</h2>
+  <p class="sec-desc">Putting is the most mental part of the game — commit to a line and trust it. Once you have read the putt, your only job is start line and speed — not outcome.</p>
+  <span class="badge badge-gold">🎯 The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Hole More Putts Through Process</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Read from Low Side:</strong> Always read from the LOW SIDE of the hole first — you see true break from here. Then check from behind the ball. Pick one precise entry point into the hole.</div></li>
+      <li><span class="step-n">2</span><div><strong>Visualise the Roll:</strong> Standing behind the ball, watch the ball roll into the hole in your mind — full journey, start to finish. Shifts focus from mechanics to outcome and builds confidence before stepping in.</div></li>
+      <li><span class="step-n">3</span><div><strong>Intermediate Target:</strong> Pick a spot 6–12 inches in front of the ball on your start line. Aim the putter face there — not at the hole. Dramatically improves accuracy on longer putts.</div></li>
+      <li><span class="step-n">4</span><div><strong>Two Practice Strokes (looking at hole):</strong> Take two rehearsal strokes while LOOKING AT THE HOLE, not the ball. Like throwing — you look at the target, not your hand. Calibrates feel and distance naturally.</div></li>
+      <li><span class="step-n">5</span><div><strong>Sole, Look, Go:</strong> Set up to the ball, one smooth look at the hole, eyes back to the ball, stroke within 2–3 seconds. No hesitation. Doubt lives in the pause.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Putting Mindset Keys</span>
+    <h3>Mental Framework</h3>
+    <ul class="checklist">
+      <li>Read is committed — no changing your mind once you step into the shot.</li>
+      <li>You control start line and speed. The hole does the rest.</li>
+      <li>A missed putt on the correct line is a GOOD putt. Trust the read.</li>
+      <li>Speed kills — on slippery greens, focus 80% of attention on pace, 20% on line.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="shortgame">
+  <h2 class="sec-title">Short Game Routine</h2>
+  <p class="sec-desc">Variables change dramatically — lie, surface, trajectory, spin. Assess first, always. Pick your SHOT TYPE before picking your club. Deceleration comes from doubt.</p>
+  <span class="badge badge-teal">🌊 The 5-Step Process</span>
+  <div class="card">
+    <span class="card-tag">The Routine — Step by Step</span>
+    <h3>Commitment Prevents Deceleration</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Assess All Variables:</strong> Check lie (tight/fluffy/buried/slope), landing zone needed, green to work with. Decide SHOT TYPE first: chip, pitch, flop, or bump-and-run. Then select club.</div></li>
+      <li><span class="step-n">2</span><div><strong>Precise Landing Spot:</strong> Not a zone — a specific blade of grass or mark where the ball must land. This is your ACTUAL target, not the hole. Everything is built around hitting that spot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Feel-Based Practice Swings (2–3 swings):</strong> Take rehearsal swings LOOKING AT YOUR LANDING SPOT. Feel the exact length and pace of swing needed. This is feel calibration, not mechanical checking.</div></li>
+      <li><span class="step-n">4</span><div><strong>Visualise Full Shot:</strong> See the entire trajectory — flight, landing, and roll to the hole. Primes your hands and brain to execute, and builds the commitment needed to prevent deceleration at impact.</div></li>
+      <li><span class="step-n">5</span><div><strong>Setup and Go with Conviction:</strong> Walk in, set up, and go WITHOUT hesitation. Deceleration almost always comes from doubt — and doubt comes from a routine that did not build enough commitment before the shot.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Shot Selection Guide</span>
+    <h3>Right Shot for Every Situation</h3>
+    <table class="tbl"><tr><th>Shot Type</th><th>When to Use</th><th>Club</th></tr>
+    <tr><td>Bump-and-run</td><td>Tight lie, firm ground, plenty of green</td><td>7–9 iron, PW</td></tr>
+    <tr><td>Chip</td><td>Short grass, moderate green to work with</td><td>PW, GW</td></tr>
+    <tr><td>Pitch</td><td>Need height, soft landing, less roll</td><td>SW, LW</td></tr>
+    <tr><td>Flop</td><td>Tight pin, need to stop quickly, open lie</td><td>LW (60°+)</td></tr>
+    <tr><td>Bunker shot</td><td>Sand — open face, swing through the sand</td><td>SW</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="rangeprac">
+  <h2 class="sec-title">Range Practice Plan</h2>
+  <p class="sec-desc">The goal of range practice is NOT to hit perfect shots — it is to groove the ROUTINE so it becomes automatic under pressure. Every ball should use your full pre-shot routine.</p>
+  <span class="badge badge-lime">⛳ 60-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>Structure Every Range Visit</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–10 min</td><td>Warm-Up</td><td>Short irons only. Loose, easy swings. No target. Just feel the club.</td></tr>
+    <tr><td>10–25 min</td><td>Routine Groove</td><td>5 different clubs. Hit 3 balls each with FULL ROUTINE — including walk-in, breath, and go-trigger. No rushing.</td></tr>
+    <tr><td>25–40 min</td><td>Target Focus</td><td>3 alignment sticks or 3 specific targets. Each shot: full routine, different target. Change club every 4 shots.</td></tr>
+    <tr><td>40–50 min</td><td>Pressure Simulation</td><td>Play 9 imaginary holes. Visualise each hole, pick realistic targets, full routine every shot. Score routine quality (1–5).</td></tr>
+    <tr><td>50–60 min</td><td>Cool Down</td><td>Finish with wedges to a specific distance. Focus on tempo and clean contact. End on a good note.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Key Range Drills</span>
+    <h3>Drills That Build Real Skills</h3>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">1️⃣</div><div><h4>One Ball Drill</h4><div class="drill-meta">ROUTINE · ESSENTIAL</div></div></div>
+      <p>Hit one shot, fully reset, walk away from the mat between each ball. Eliminates the "bucket emptying" habit that bypasses the routine.</p>
+    </div>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">⏱️</div><div><h4>Clock Drill</h4><div class="drill-meta">TIMING · CONSISTENCY</div></div></div>
+      <p>Time your routine with a stopwatch. Aim for 20–28 seconds consistently. If it varies by more than 5 seconds, slow down and standardise.</p>
+    </div>
+    <div class="drill" style="margin-bottom:10px;">
+      <div class="drill-hdr"><div class="drill-icon">🔊</div><div><h4>Distraction Drill</h4><div class="drill-meta">MENTAL TOUGHNESS</div></div></div>
+      <p>Have a friend talk, make noise, or stand nearby during your routine. Practise maintaining focus and tempo regardless of external noise.</p>
+    </div>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Golden Rule:</strong> Never hit a ball on the range without a full routine. Lazy range practice builds lazy course habits. Quality, not quantity.</p>
+  </div>
+</div>
+
+<div class="sec" id="puttingprac">
+  <h2 class="sec-title">Putting Green Plan</h2>
+  <p class="sec-desc">Elite putting practice splits time between distance control, start-line accuracy, and pressure simulation. Use your full putting routine on EVERY practice putt.</p>
+  <span class="badge badge-gold">🎯 40-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>40-Minute Putting Session</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–8 min</td><td>Distance Control</td><td>Place tees at 20ft, 30ft, 40ft. Roll 5 putts to each. Goal: every ball stops within 2 feet of the hole. Feel only.</td></tr>
+    <tr><td>8–20 min</td><td>Start-Line Gate</td><td>Two tees 3 inches apart, 6 inches in front of ball. Every putt must pass through the gate. Use 6–8ft putts. Full routine.</td></tr>
+    <tr><td>20–30 min</td><td>Circle Drill (Pressure)</td><td>8 balls in a circle at 4 feet. Make all 8 consecutively. Missing restarts. Full routine on every putt.</td></tr>
+    <tr><td>30–40 min</td><td>Course Simulation</td><td>Move around the green, pick different holes. Play 9 imaginary holes — 2-putt target on each. Score routine quality.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Mental Focus Drills</span>
+    <h3>Develop Feel and Concentration</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Eyes-Closed Drill:</strong> After setting up normally, close eyes and stroke the putt. Develops feel and stops mechanical overthinking. Use on 3–6ft putts.</div></li>
+      <li><span class="step-n">▸</span><div><strong>One-Handed Drill:</strong> Putt with your lead hand only for 10 minutes. Builds feel and forces correct stroke path.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Pre-Round Routine:</strong> Before every round — 5 lag putts, 5 mid-range (10–15ft), 5 short (3–4ft). Always end on a make.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="sgprac">
+  <h2 class="sec-title">Short Game Practice Plan</h2>
+  <p class="sec-desc">Short game practice must simulate real on-course conditions — different lies, different shots, specific landing spots. Always use your full routine.</p>
+  <span class="badge badge-teal">🌊 45-Minute Session Structure</span>
+  <div class="card">
+    <span class="card-tag">Session Breakdown</span>
+    <h3>45-Minute Short Game Session</h3>
+    <table class="tbl"><tr><th>Time</th><th>Phase</th><th>Drill Detail</th></tr>
+    <tr><td>0–10 min</td><td>Landing Spot Accuracy</td><td>Place a towel 3–5 feet onto the green. Hit 10 chips aiming to land on the towel. Score: 1 point per landing.</td></tr>
+    <tr><td>10–20 min</td><td>Shot Variety</td><td>Same hole, 5 different lies: tight, fluffy, uphill, downhill, rough. Hit each once using full routine.</td></tr>
+    <tr><td>20–30 min</td><td>Up-and-Down Game</td><td>Drop 10 balls around a green in random spots. Attempt up-and-down on each. Track success rate. Target: 5/10+.</td></tr>
+    <tr><td>30–40 min</td><td>Pressure Simulation</td><td>Set a target: hole 5 chips in a row. Missing restarts. Full routine on every shot.</td></tr>
+    <tr><td>40–45 min</td><td>Bunker Practice</td><td>5 bunker shots from flat lie, 5 from plugged lie. Focus on landing spot and full follow-through.</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Short Game Mental Keys</span>
+    <h3>The Mindset for Success</h3>
+    <ul class="checklist">
+      <li>Land spot first — always pick the landing spot before thinking about the hole.</li>
+      <li>Commit to the shot — half-committed chips cause chunking and thinning.</li>
+      <li>Feel swings LOOKING at the landing spot — not at the ball.</li>
+      <li>Acceleration through impact — finish the swing, never decelerate into the ball.</li>
+      <li>Accept outcomes — a solid routine is success, regardless of result.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="weekly">
+  <h2 class="sec-title">Weekly Practice Schedule</h2>
+  <p class="sec-desc">Designed for 3–4 practice sessions per week in addition to a weekend round. Quality of routine use always beats quantity of balls hit.</p>
+  <span class="badge badge-rust">📅 Weekly Structure</span>
+  <div class="card">
+    <span class="card-tag">Weekly Schedule</span>
+    <h3>Day-by-Day Plan</h3>
+    <table class="tbl"><tr><th>Day</th><th>Session</th><th>Focus</th></tr>
+    <tr><td>Monday</td><td>Rest / Light</td><td>Rest or 20-min putting green only. Lag putting and circle drill. No full swings.</td></tr>
+    <tr><td>Tuesday</td><td>Range — 60 min</td><td>Full swing routine practice. Warm-up + Routine Groove Drill + Pressure Simulation.</td></tr>
+    <tr><td>Wednesday</td><td>Short Game — 45 min</td><td>Short game session: landing spot accuracy, shot variety, up-and-down game.</td></tr>
+    <tr><td>Thursday</td><td>Putting — 40 min</td><td>Putting session: lag control, gate drill, circle drill. End with pre-round routine.</td></tr>
+    <tr><td>Friday</td><td>Combo — 60 min</td><td>30 min range (target focus + pressure sim) + 30 min putting (start line focus).</td></tr>
+    <tr><td>Saturday</td><td>Course Round</td><td>Play full round. Grade EVERY shot on routine quality (1–5). Track, don't judge.</td></tr>
+    <tr><td>Sunday</td><td>Course or Rest</td><td>Casual round OR rest. If playing: focus only on routine — ignore score.</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Monthly Progression</span>
+    <h3>Four-Week Theme Plan</h3>
+    <table class="tbl"><tr><th>Week</th><th>Theme</th><th>Focus</th></tr>
+    <tr><td>Week 1</td><td>Establish</td><td>Learn and standardize all 3 routines. Time them. Write them on a card.</td></tr>
+    <tr><td>Week 2</td><td>Groove</td><td>Full routine on EVERY range ball, every putt, every chip. No exceptions.</td></tr>
+    <tr><td>Week 3</td><td>Pressure Test</td><td>Add pressure drills. Circle drill, consecutive chip challenge, clock drill.</td></tr>
+    <tr><td>Week 4</td><td>Course Transfer</td><td>Full round with routine grading. Identify where routine breaks down on the course.</td></tr></table>
+  </div>
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Track routine quality, not just score.</strong> A round with a consistent routine and a high score is more valuable than a lucky low round with a broken routine. Discipline today builds excellence tomorrow.</p>
+  </div>
+</div>
+
+<div class="sec" id="checklist">
+  <h2 class="sec-title">Quick-Reference Checklists</h2>
+  <p class="sec-desc">Print these or screenshot for your bag. Review before every round. The routine is your anchor — use it on every single shot.</p>
+  <span class="badge badge-lime">✅ Quick Reference</span>
+  <div class="card">
+    <span class="card-tag">Full-Swing Routine</span>
+    <h3>Every Full Shot</h3>
+    <ul class="checklist">
+      <li>Stand behind ball — read, decide, commit</li>
+      <li>Trigger breath (slow exhale)</li>
+      <li>One feel-based practice swing</li>
+      <li>Walk in on target line</li>
+      <li>Club face first, then body alignment</li>
+      <li>One look to confirm</li>
+      <li>Go trigger — fire the swing</li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Putting Routine</span>
+    <h3>Every Putt</h3>
+    <ul class="checklist">
+      <li>Read from low side of hole</li>
+      <li>Visualise ball rolling into hole</li>
+      <li>Pick intermediate target (6–12 inches)</li>
+      <li>Two practice strokes looking at hole</li>
+      <li>Sole putter, one look, stroke in 2–3 sec</li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Short Game Routine</span>
+    <h3>Every Chip, Pitch & Bunker Shot</h3>
+    <ul class="checklist">
+      <li>Assess lie, slope, and green to work with</li>
+      <li>Decide shot type FIRST, then club</li>
+      <li>Pick precise landing spot</li>
+      <li>2–3 feel swings looking at landing spot</li>
+      <li>Visualise full shot trajectory</li>
+      <li>Step in and go with conviction</li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Mental Focus Keys</span>
+    <h3>Between Every Shot</h3>
+    <ul class="checklist">
+      <li>10-second reaction window after bad shots</li>
+      <li>Physical cue to close out last shot</li>
+      <li>Slow your walk when nervous</li>
+      <li>Anchor word at trigger breath</li>
+      <li>Grade routine quality, not result</li>
+      <li>Thinking zone = behind the ball ONLY</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- COGNITIVE IMAGERY PROTOCOLS -->
+<div class="sec" id="imagery">
+  <h2 class="sec-title">Cognitive Imagery Protocols</h2>
+  <p class="sec-desc">Mental rehearsal is not motivational thinking — it is a neuroscientifically validated technique that physically encodes motor patterns in the nervous system. Elite golfers use structured imagery protocols before, during, and after rounds to build neural familiarity with pressure situations.</p>
+  <span class="badge badge-gold">🧠 The Neuroscience of Mental Rehearsal</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Imagery Works — The Neural Basis</span>
+    <h3>Mental Practice Activates the Same Neural Pathways as Physical Practice</h3>
+    <p style="margin-bottom:8px;">Research by Dr. Guang Yue at the Cleveland Clinic demonstrated that mental rehearsal of a physical movement produces measurable increases in muscle strength (13.5% gain from imagery alone vs. 30% from physical training). For golf, the implication is direct: high-quality mental rehearsal of specific shots and situations builds neural patterns that transfer to execution.</p>
+    <table class="tbl"><tr><th>Imagery Type</th><th>Neural Effect</th><th>When to Use</th><th>Time Required</th></tr>
+    <tr><td>Internal (first-person)</td><td>Motor cortex activation — builds movement patterns</td><td>Shot visualisation, pre-shot routine</td><td>3–5 seconds per shot</td></tr>
+    <tr><td>External (third-person)</td><td>Observational learning — error correction</td><td>Video review, coach feedback integration</td><td>5–10 min after session</td></tr>
+    <tr><td>Course walk imagery</td><td>Cognitive map construction — reduces in-round decisions</td><td>Night before competition</td><td>20–30 minutes</td></tr>
+    <tr><td>Pressure scenario rehearsal</td><td>Amygdala conditioning — reduces anxiety response</td><td>Weekly mental training</td><td>10–15 minutes</td></tr></table>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🗺️ Course Walk Imagery — Pre-Competition Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Night Before — Complete Hole-by-Hole Mental Round</span>
+    <h3>Building the Cognitive Course Map</h3>
+    <p style="margin-bottom:8px;">Tour players who have played a course multiple times carry a detailed cognitive map of every hole — they have already played thousands of mental shots on that layout. A structured pre-competition imagery session accelerates this process even on unfamiliar courses.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Environment and state:</strong> Lie down or sit in a quiet, dark room. Spend 2 minutes on diaphragmatic breathing to lower arousal. You are building a relaxed but focused mental state — not falling asleep, not anxious. This is the state in which imagery most effectively encodes.</div></li>
+      <li><span class="step-n">2</span><div><strong>Mentally walk to the first tee:</strong> See yourself physically arriving — the sounds, the other players warming up, the feel of your glove. Use all five senses. The richer the sensory detail, the stronger the neural encoding. Generic or blurry images produce weaker neural patterns.</div></li>
+      <li><span class="step-n">3</span><div><strong>Play each hole at real speed — not sped up:</strong> Research by Dr. Anne Isaac shows that imagery performed at the same temporal speed as physical execution produces 40% stronger motor encoding than fast-forwarded mental rehearsal. Visualise the ball flight in real time. Watch it land. Walk to it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pre-decide your strategy for every hole:</strong> As you mentally play each hole, commit to a specific tee club, a specific target area, and your approach club if you hit the fairway. These decisions, made the night before in a calm state, will be available to you on-course without the pressure of real-time decision-making. Decision load is the enemy of process focus.</div></li>
+      <li><span class="step-n">5</span><div><strong>Specifically rehearse the difficult holes:</strong> Every course has 3–4 holes that historically cause scoring problems. Spend additional time on these — play them twice in your mental round. Visualise multiple outcomes including recovery shots from trouble. Building familiarity with the difficult holes reduces the anxiety spike that produces scoring blow-ups.</div></li>
+      <li><span class="step-n">6</span><div><strong>End with a successful 18th:</strong> Close the imagery session by holing your final putt on 18. Walk off the green feeling composed. This final image is what your subconscious stores as the emotional reference point for the round — ending on success is not wishful thinking, it is deliberate emotional anchoring.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">🔥 Pressure Scenario Rehearsal</span>
+  <div class="card">
+    <span class="card-tag">Building Neural Familiarity with High-Stakes Moments</span>
+    <h3>Weekly Pressure Imagery Protocol</h3>
+    <p style="margin-bottom:8px;">The amygdala (the brain's threat-detection centre) produces the anxiety response to pressure situations. Repeated exposure — even in imagery — reduces the amygdala response over time. This is the mechanism by which experienced competitors appear calm in situations that overwhelm less experienced players: they have already experienced the scenario hundreds of times in their mind.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The 5-footer to win the match:</strong> Vividly imagine standing over a 5-foot putt with your match or medal on the line. Feel the physical sensations — slightly elevated heart rate, grip pressure temptation, internal voice. Then deliberately walk through your putting routine. See the ball going in. Repeat 5 times per session, aiming for the routine to feel identical to practice conditions.</div></li>
+      <li><span class="step-n">2</span><div><strong>The tee shot over water:</strong> See the specific hole — the water on the left, the out of bounds right, the narrow landing zone. Feel the weight of the shot. Go through your full pre-shot routine in imagery. Commit to a target. See a quality shot with your natural shape flying to the centre of the fairway. The goal is to make this scenario feel familiar and manageable — not to guarantee success.</div></li>
+      <li><span class="step-n">3</span><div><strong>The recovery scenario:</strong> Mentally play a hole where you have made a bogey or double bogey and must respond immediately. Visualise walking to the next tee, using your between-shot routine, and committing fully to the next shot without carrying the previous hole. Mental resilience is a trainable skill.</div></li>
+      <li><span class="step-n">4</span><div><strong>Frequency:</strong> 2× per week, 10–15 minutes per session. Pressure scenario imagery is most effective when combined with physical pressure training (Guide 16 Solo Pressure Round). The two reinforce each other — imagery builds the neural template, physical pressure training stress-tests it.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">🎯 Shot Library Visualisation</span>
+  <div class="card card-gold">
+    <span class="card-tag">Building Your Personal Shot Library</span>
+    <h3>Storing High-Quality Shot References in Neural Memory</h3>
+    <p style="margin-bottom:8px;">Elite players carry a mental "shot library" — vivid memories of specific high-quality shots they have played. When faced with a difficult shot in competition, they access a relevant shot from the library as a neural reference. This is the mechanism behind the instruction "see the shot you want to play before you play it." The image needs to be from memory, not imagination — a shot you have actually executed.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>After every excellent shot on the range or course — anchor it:</strong> Take 5 seconds to close your eyes, replay the shot in first-person (feel the swing, see the flight), and note the physical sensations. This deliberate encoding strengthens the memory trace significantly compared to simply observing the ball land and moving on.</div></li>
+      <li><span class="step-n">2</span><div><strong>Build a library by category:</strong> Maintain mental examples of: a best driver, a best 7-iron, a best bunker shot, a best 5-foot pressure putt, and a best recovery from trouble. When you encounter a similar shot in competition, deliberately access that reference image before committing to your pre-shot routine.</div></li>
+      <li><span class="step-n">3</span><div><strong>Refresh the library after sessions:</strong> Spend 3 minutes after every range session anchoring the 2–3 best shots. Write them in your progress journal (Guide 17) with a brief description. Over time, your library becomes a reliable resource rather than a vague feeling.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-gold" style="margin-top:20px;">⏱ Pre-Round Imagery — On the Day</span>
+  <div class="card card-teal">
+    <span class="card-tag">30 Minutes Before Tee Time</span>
+    <h3>Competition Morning Mental Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">A</span><div><strong>While getting ready (5 min):</strong> Replay the course walk imagery from the night before — not the full round, just the first 3 holes. Confirm your strategy decisions. This brief replay re-activates the neural map built the night before.</div></li>
+      <li><span class="step-n">B</span><div><strong>During physical warm-up (integrated):</strong> On every range shot during warm-up, complete a full visualisation before executing. The warm-up is not the time to hit balls; it is the time to integrate your pre-shot routine — which includes imagery — so it is automatic by the first tee.</div></li>
+      <li><span class="step-n">C</span><div><strong>Walking to the first tee (90 sec):</strong> One slow, complete breath. Mentally see your tee shot on hole 1 — your target, your shape, the ball landing in your fairway zone. This image is what you will take into your pre-shot routine. Walk to the tee already committed.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The elite standard:</strong> Dr. Gio Valiante's research on tour players found that the players with the most consistent ball-striking under pressure reported vivid, specific pre-shot imagery on 90%+ of competitive shots. Players who described their pre-shot as "just seeing the target" without specific ball flight imagery showed significantly higher scoring variance under pressure. Imagery precision is the differentiator — not simply "looking at the target."</p></div>
+</div>
+
+<!-- INTERMEDIATE TARGET ALIGNMENT -->
+<div class="sec" id="alignment">
+  <h2 class="sec-title">Intermediate Target Alignment</h2>
+  <p class="sec-desc">Intermediate target alignment is one of the highest-ROI, lowest-effort technique improvements available — and it is used by virtually every tour professional on every shot. Despite this, it is underused by most amateur golfers. The science behind why it works explains exactly how to implement it correctly.</p>
+  <span class="badge badge-gold">📐 The Science of Near vs. Far Alignment</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Aiming at a Distant Target Is Unreliable</span>
+    <h3>Optical Distortion at Distance — The Physics</h3>
+    <p style="margin-bottom:8px;">Research on visual perception demonstrates that alignment accuracy degrades significantly as target distance increases. Optical distortion, parallax error, and the absence of a clear reference line all compound over 150+ yards. Studies by Dr. Mark Guadagnoli at UNLV show that aiming at a near target (within 6 feet) produces alignment accuracy approximately 60% better than aiming at a flag 150+ yards away.</p>
+    <div class="formula"><div class="formula-lbl">Alignment Error by Target Distance</div><div class="formula-main">Target at 3 feet: ±0.5° alignment error → miss by 0.3" at 6 feet from hole<br>Target at 150 yards: ±3–5° alignment error → miss by 8–14 feet at 150 yards<br>Target at 200 yards: ±4–6° alignment error → miss by 14–21 feet at 200 yards</div></div>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>The implication:</strong> A player who aims with 3° of error on every approach shot from 150 yards will miss their intended line by approximately 8 feet — before any swing error is added. Intermediate targets eliminate the optical distortion component entirely.</p></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🎯 Full Swing — Intermediate Target Method</span>
+  <div class="card card-teal">
+    <span class="card-tag">Tour Standard Alignment Protocol — Every Full Shot</span>
+    <h3>Step-by-Step Execution</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Stand behind the ball — on the target line:</strong> Position yourself 2–3 metres directly behind the ball, looking from the ball toward the target. You must be exactly on the target line — even a foot to the side introduces parallax error that defeats the purpose.</div></li>
+      <li><span class="step-n">2</span><div><strong>Select your intermediate target:</strong> Find a visible mark on the ground between 2 and 6 feet in front of the ball on the target line. A discoloured blade of grass, a small divot, a worn patch, a shadow line — anything visible from your address position. Do not select something behind the ball or parallel to the line; it must be directly on the target line, ahead of the ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>Visualise the full target line:</strong> Trace a visual line from the flag or target, through your intermediate target, to the ball. Confirm the intermediate target is precisely on this line. This takes 2–3 seconds and is done while still behind the ball.</div></li>
+      <li><span class="step-n">4</span><div><strong>Approach the ball from behind — face first:</strong> Walk into the shot from behind, keeping the intermediate target in sight. Set the clubface perpendicular to the target line using the intermediate target — not the flag. Once the face is aligned, set the feet, hips, and shoulders parallel to the face-to-intermediate-target line.</div></li>
+      <li><span class="step-n">5</span><div><strong>One confirmation look — intermediate target, not the flag:</strong> Take one look to confirm the clubface is still pointed at the intermediate target. Do not re-read the line by looking at the flag — this re-introduces the optical distortion you just eliminated. Confirm, look at the ball, go.</div></li>
+    </ul>
+    <div class="info-box elite" style="margin-top:12px;"><span class="ico">⭐</span><p><strong>Tour player data:</strong> Analysis of tour player pre-shot routines shows 94% of players select an intermediate target on every full shot. The target is typically 2–4 feet ahead of the ball. This is not a tip — it is the universal standard of professional alignment technique.</p></div>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">🟢 Putting — Intermediate Target Method</span>
+  <div class="card">
+    <span class="card-tag">Putting Alignment — The Spot Putt System</span>
+    <h3>Enhanced Precision for Start Line Control</h3>
+    <p style="margin-bottom:8px;">In putting, the intermediate target is even more critical because the margins are smaller. At 10 feet, 1° of face misalignment causes a miss of 2.1 inches. Aiming at a spot 12 inches ahead of the ball instead of the hole reduces the aiming precision required by approximately 90%.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>From behind the ball — read the break first:</strong> Determine the full break from hole to ball. Identify the highest point of the ball's arc and trace back to the start line. The spot you select must be on the start line — not on the straight line to the hole (those are different on breaking putts).</div></li>
+      <li><span class="step-n">2</span><div><strong>Select a spot 6–18 inches ahead of the ball:</strong> On most putts, 12 inches ahead is ideal. For very short putts (under 4 feet), select a spot 6 inches ahead. For longer putts, up to 18 inches. The spot must be clearly visible from your address position.</div></li>
+      <li><span class="step-n">3</span><div><strong>Align the putter face to the spot — not the hole:</strong> Use any alignment aid on your putter face (line, dot, inscription) and point it precisely at your spot. Once the face is aligned to the spot, the face is automatically aligned to the full start line. You have solved the optical distortion problem.</div></li>
+      <li><span class="step-n">4</span><div><strong>During the stroke — look at the spot, not the hole:</strong> Some tour players look at the spot rather than the ball through impact for short putts. This prevents the common error of lifting the eyes toward the hole — which rotates the shoulders and pulls the putter offline. Experiment with this technique on putts inside 6 feet.</div></li>
+      <li><span class="step-n">5</span><div><strong>Practice drill — chalk line or string:</strong> Stretch a chalk line or string directly from the ball to the hole on a straight 6-foot putt. Mark a spot on the chalk line 12 inches ahead of the ball. Practice aligning your putter face to the spot while confirming it matches the chalk line. 10 minutes of this drill per week eliminates systematic aim error within 2–3 weeks.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">🏖️ Bunker and Short Game</span>
+  <div class="card card-gold">
+    <span class="card-tag">Intermediate Targets in Short Game and Bunkers</span>
+    <h3>Landing Zone Targeting — Ground Spots</h3>
+    <p style="margin-bottom:8px;">In short game, the intermediate target serves a different but equally important function: it is the landing zone itself — a specific point on the green or fringe where you want the ball to first land. This integrates with the landing zone targeting system in the Advanced Wedge section.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify the landing spot before selecting the shot:</strong> Walk forward and physically look at where you want the ball to land. Pick a specific mark — a discolouration, a shadow, the transition line between fringe and green. This becomes your intermediate target and your landing zone simultaneously.</div></li>
+      <li><span class="step-n">2</span><div><strong>Align your feet to the landing spot, not the flag:</strong> Once you have selected the landing spot, align your body to aim the shot at that spot. Your subconscious will naturally calibrate the required carry distance. Aiming at the flag when your intended landing spot is 8 feet short introduces an alignment conflict that disrupts execution.</div></li>
+      <li><span class="step-n">3</span><div><strong>In bunkers — pick an entry point, not the flag:</strong> For explosion shots, your "target" is the specific point in the sand 2 inches behind the ball where you want the club to enter. This is your intermediate target. Focusing on the sand entry point (rather than the flag or even the ball) is the technical cue used by the best bunker players — it controls attack angle and bounce utilisation simultaneously.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Common Errors and Corrections</span>
+    <h3>What Goes Wrong and How to Fix It</h3>
+    <table class="tbl"><tr><th>Error</th><th>Cause</th><th>Correction</th></tr>
+    <tr><td>Spot not on target line</td><td>Slightly off-axis behind the ball</td><td>Always select spot from directly behind the ball on the line</td></tr>
+    <tr><td>Looking at the flag after alignment</td><td>Re-introduces optical distortion</td><td>One look at the spot after alignment, then look at ball only</td></tr>
+    <tr><td>Spot too far ahead (10+ feet)</td><td>Difficult to see from address position</td><td>Keep spot within 6 feet — closer is better</td></tr>
+    <tr><td>Selecting a spot and then re-aligning to the flag</td><td>Undermines the whole system</td><td>Trust the spot — the flag is irrelevant once you have aligned to the line</td></tr>
+    <tr><td>Not using the system under pressure</td><td>Rushing the pre-shot routine</td><td>Pressure is when the routine matters most — slow down to your spot selection</td></tr></table>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>Implementation:</strong> Start using the intermediate target system in practice only for 2 weeks — on every shot, no exceptions. The technique feels slightly slower initially as you build the habit. After 2 weeks of practice-only use, implement it in competition. The alignment improvement is immediate and permanent — it requires no physical skill change, only a process change. It is one of the highest-ROI adjustments available for this project.</p></div>
+</div>
+
+
+<!-- PRACTICE STRUCTURE SCIENCE -->
+<div class="sec" id="practicesci">
+  <h2 class="sec-title">Practice Structure Science</h2>
+  <p class="sec-desc">How you structure practice determines how much of it transfers to the course. The distinction between blocked, random, and interleaved practice is one of the most impactful — and most overlooked — variables in golf improvement. Your current practice schedule tells you what to practise; this guide tells you how to structure it for maximum retention.</p>
+  <span class="badge badge-gold">🧠 The Motor Learning Framework</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Three Practice Structures — What They Are</span>
+    <h3>Blocked, Random, and Interleaved Practice Defined</h3>
+    <table class="tbl"><tr><th>Structure</th><th>Definition</th><th>Example</th><th>Feel During Practice</th></tr>
+    <tr><td class="good">Blocked</td><td>Same shot, same club, same target repeatedly</td><td>20 × 7-iron to the same flag</td><td>Comfortable — performance improves quickly</td></tr>
+    <tr><td class="warn">Serial</td><td>Rotate through shots in a fixed sequence</td><td>7-iron, PW, 7-iron, PW...</td><td>Moderate challenge — some reset between shots</td></tr>
+    <tr><td class="good">Random / Interleaved</td><td>Different shot, club, target every single attempt</td><td>PW, then driver, then 6-iron to a new flag</td><td>Uncomfortable — performance feels worse</td></tr></table>
+    <div class="info-box elite" style="margin-top:12px;"><span class="ico">⭐</span><p><strong>The paradox:</strong> Blocked practice feels productive because performance improves quickly during the session. Interleaved practice feels unproductive because each shot requires more cognitive effort. But test them 48 hours later — interleaved practice produces 40–60% better retention. Your brain learns more when it has to re-retrieve the motor programme from scratch each attempt.</p></div>
+  </div>
+  <span class="badge badge-teal" style="margin-top:20px;">🔬 The Contextual Interference Effect</span>
+  <div class="card card-teal">
+    <span class="card-tag">Why Difficulty in Practice Equals Retention</span>
+    <h3>The Research That Changes How You Should Practise</h3>
+    <p style="margin-bottom:8px;">The contextual interference effect, first demonstrated by Shea and Morgan (1979) and replicated extensively in golf research by Dr. Gabriele Wulf and colleagues, shows that the difficulty experienced during interleaved practice is not a sign of poor learning — it is the mechanism of deep learning. Struggling to re-access the motor programme for each new shot forces deeper neural encoding than smoothly repeating the same shot.</p>
+    <div class="formula"><div class="formula-lbl">The Acquisition vs. Retention Paradox</div><div class="formula-main">During practice session:<br>Blocked: fast improvement → high apparent learning<br>Interleaved: slow, effortful → low apparent learning<br><br>48–72 hours later (retention test):<br>Blocked: 40–55% of session performance retained<br>Interleaved: 70–85% of session performance retained<br><br>On-course transfer (most important):<br>Blocked: poor — course conditions break the practised pattern<br>Interleaved: strong — course variability was already present in practice</div></div>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">📋 When to Use Each Structure</span>
+  <div class="card">
+    <span class="card-tag">The Two-Phase Model — Acquisition Then Retention</span>
+    <h3>Matching Practice Structure to Learning Stage</h3>
+    <table class="tbl"><tr><th>Stage</th><th>Duration</th><th>Structure to Use</th><th>Signs You Are Ready to Progress</th></tr>
+    <tr><td class="warn">Acquisition (new technique)</td><td>First 1–3 weeks of any new move</td><td><strong>Blocked</strong> — same shot, feedback after each</td><td>Consistent execution in blocked practice; fault is reduced</td></tr>
+    <tr><td class="good">Consolidation</td><td>Weeks 3–6</td><td><strong>Serial</strong> — rotate through 2–3 shots in sequence</td><td>Starting to execute the new move without conscious thought</td></tr>
+    <tr><td class="good">Retention / Transfer</td><td>Week 6 onwards — all ongoing practice</td><td><strong>Random / Interleaved</strong> — different shot every attempt</td><td>The technique holds under varied conditions and on-course</td></tr></table>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>The most common error:</strong> Staying in blocked practice far beyond the acquisition stage. A player who has been working on a new takeaway for 6 weeks and still practises it blocked-only has encoded the technique in a context that the course will not replicate. Switch to interleaved by week 4 at the latest.</p></div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Interleaved Practice — Practical Implementation</span>
+    <h3>How to Structure a Random Practice Session</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Never hit the same club twice in a row:</strong> The simplest rule. After every shot, switch to a different club and a different target. Use 3–5 clubs per session. This alone converts a blocked session into a largely interleaved one.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use full pre-shot routine on every shot:</strong> In interleaved practice, always walk behind the ball, select a target, go through your complete routine, and execute. This replicates the on-course reset that occurs between every shot — the most critical transfer variable between range and course.</div></li>
+      <li><span class="step-n">3</span><div><strong>Change targets constantly:</strong> Set up 4–5 flag targets at different distances and in different directions. Never aim at the same flag twice consecutively. The change in target distance forces a recalibration of the motor programme each time — this is the source of the learning benefit.</div></li>
+      <li><span class="step-n">4</span><div><strong>Simulated hole practice (highest transfer):</strong> Play imaginary holes. Tee shot to a corridor, then approach to a specific flag from wherever it "landed," then a scoring zone shot. Full routine on every shot. This is the most realistic replication of on-course conditions and produces the strongest transfer. Use the last 20–30 minutes of every range session this way.</div></li>
+      <li><span class="step-n">5</span><div><strong>Track make rates, not shot quality:</strong> In interleaved practice, evaluate success by asking "did I execute the plan for that shot?" — not "did the ball go where I wanted?" A blocked session can produce 85% great-looking shots with poor transfer. An interleaved session may produce 55% great-looking shots but 80% on-course performance improvement.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust" style="margin-top:20px;">🎯 Practice Protocols by Phase</span>
+  <div class="card card-teal">
+    <span class="card-tag">Applying Practice Science to This Programme</span>
+    <h3>Structure Recommendations by Scratch Project Phase</h3>
+    <table class="tbl"><tr><th>Programme Phase</th><th>Primary Focus</th><th>Blocked %</th><th>Interleaved %</th><th>Simulation %</th></tr>
+    <tr><td>Months 1–2 (Acquisition)</td><td>New wrist mechanics, GRF pattern</td><td>60%</td><td>25%</td><td>15%</td></tr>
+    <tr><td>Months 3–4 (Consolidation)</td><td>Consistency across clubs and lies</td><td>25%</td><td>50%</td><td>25%</td></tr>
+    <tr><td>Months 5–6 (Transfer)</td><td>On-course performance under pressure</td><td>10%</td><td>45%</td><td>45%</td></tr>
+    <tr><td>Ongoing maintenance</td><td>Retention and competition preparation</td><td>10%</td><td>40%</td><td>50%</td></tr></table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Variability Practice — The Elite Accelerator</span>
+    <h3>Adding Variation Within a Single Shot Type</h3>
+    <p style="margin-bottom:8px;">Beyond interleaving clubs and targets, variability practice adds variation within a shot type itself. This is used extensively by elite coaches to accelerate transfer. Examples:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Deliberately vary shot shape:</strong> Hit a fade, then a draw, then a straight shot with the same club. This forces the nervous system to actively recalculate the motor programme rather than repeating a stored pattern.</div></li>
+      <li><span class="step-n">2</span><div><strong>Vary trajectory:</strong> High, normal, and knockdown with the same 7-iron in alternating shots. Each requires a different setup and impact configuration — the highest form of variability practice for shotmaking development.</div></li>
+      <li><span class="step-n">3</span><div><strong>Vary your focus cue:</strong> Hit one shot thinking about lead wrist position, the next thinking about tempo, the next with an external focus (the flag). This prevents over-reliance on a single internal cue and builds adaptable motor execution.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The bottom line:</strong> If practice feels smooth and comfortable, you are probably in blocked mode. If it feels effortful and inconsistent, you are probably in interleaved mode. Discomfort in practice — within reason — is the signal that deep encoding is occurring. The practice session that leaves you most frustrated is often the one that produces the most on-course improvement 72 hours later.</p></div>
+</div>
+
+<!-- ON-COURSE SELF-CORRECTION -->
+<div class="sec" id="selfcorrect">
+  <h2 class="sec-title">On-Course Self-Correction</h2>
+  <p class="sec-desc">Mid-round fault correction is one of the most misunderstood aspects of competitive golf. Technical analysis belongs on the practice range; on-course correction requires a single, external, feel-based cue applied without disrupting your pre-shot routine. This guide provides the one-thought system for the six most common in-round faults.</p>
+  <span class="badge badge-rust">⚠️ The On-Course Correction Principle</span>
+  <div class="card">
+    <span class="card-tag">The Critical Rule — One External Thought Maximum</span>
+    <h3>Why Multiple Corrections Fail Under Pressure</h3>
+    <p style="margin-bottom:8px;">Research by Dr. Gabriele Wulf on attentional focus demonstrates clearly: one external cue (focused on the movement outcome) outperforms one internal cue (focused on body mechanics), which dramatically outperforms multiple cues. On the golf course under competitive pressure, the cognitive load of monitoring multiple swing thoughts simultaneously fragments the automatic motor programme — producing the "paralysis by analysis" effect that turns a correctable fault into a scoring disaster.</p>
+    <div class="formula"><div class="formula-lbl">The Hierarchy of On-Course Cues</div><div class="formula-main">External cue (e.g. "hit through the flag"): best outcome<br>Single internal cue (e.g. "turn hips"): acceptable<br>Two internal cues (e.g. "bow wrist AND turn hips"): poor<br>Three+ cues: equivalent to no correction — swing degrades further</div></div>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>The decision:</strong> Before reaching for a correction, ask whether the miss is consistent enough to diagnose mid-round. An occasional bad shot does not need a swing thought — it needs a reset and a committed next shot. A correction is only warranted when the same miss appears on 3+ consecutive shots.</p></div>
+  </div>
+  <span class="badge badge-gold" style="margin-top:20px;">🛠️ The One-Thought Fault Correction System</span>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 1 — Consistent Block / Push Right</span>
+    <h3>Hips Stalling, Hands Over-Leading</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Ball starts right of target and continues right. No curve — straight but wrong direction. Occurring on 3+ shots in a row.</p>
+    <p style="margin-bottom:8px;"><strong>Root cause (for reference, not to analyse mid-round):</strong> Hips stalling in the downswing, forcing the hands and arms to dominate — producing an open face and blocked path.</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External (best)</td><td>"Turn the buckle to the target" — visualise your belt buckle rotating to face the flag at impact</td><td>Any pressure situation — most reliable</td></tr>
+    <tr><td class="warn">Internal (backup)</td><td>"Clear left hip fast" — feel the lead hip rotating aggressively through impact</td><td>When external cue isn't working</td></tr></table>
+    <p style="margin-top:8px;"><strong>Course management response:</strong> Aim 10–15 yards left of target until correction takes hold. Do not fight the miss — manage around it while applying one thought.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 2 — Pull / Hook Left</span>
+    <h3>Over-the-Top Path or Early Release</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Ball starts left of target and either continues left (pull) or curves further left (hook).</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External</td><td>"Start ball at right edge of fairway" — commit to a target well right of where you've been missing. Forces a path correction without analysis.</td><td>Best for pull — addresses path through target commitment</td></tr>
+    <tr><td class="warn">Internal</td><td>"Trail elbow to hip pocket" — feel the trail elbow drop into the trail side before extending. Prevents over-the-top move.</td><td>Hook specifically — more of a path thought</td></tr></table>
+    <p style="margin-top:8px;"><strong>Course management response:</strong> Play a fade intentionally for the next 3–4 holes. Weaken trail hand grip slightly and aim left — use the pull tendency as a controlled shape.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fault 3 — Thin / Top Contact</span>
+    <h3>Low Point Too Far Back, Early Extension</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Ball comes off the leading edge or top of club face. Low, skimming flight. Particularly severe with irons and hybrids.</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External</td><td>"Brush the grass 4 inches past the ball" — focus on where the divot should start, not on the ball itself. Moves low point forward automatically.</td><td>Consistently the most effective thin-shot fix mid-round</td></tr>
+    <tr><td class="warn">Internal</td><td>"Stay in posture" — consciously maintain hip hinge through impact, do not stand up</td><td>When early extension is visually obvious</td></tr></table>
+    <p style="margin-top:8px;"><strong>Course management response:</strong> Take one more club than normal and make a controlled 80% swing. More effort on a thin-prone swing accelerates the fault — controlled effort with attention on the divot location is more reliable.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fault 4 — Fat / Heavy Contact</span>
+    <h3>Low Point Too Far Back, Weight Not Transferring</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Club enters the ground significantly before the ball. Ball travels well short of target. Particularly common in cold weather or when tired.</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External</td><td>"Drive the logo on the ball into the ground" — external focus on the specific contact point on the ball. Automatically shifts attack angle and low point forward.</td><td>Most reliable fat-shot correction mid-round</td></tr>
+    <tr><td class="warn">Internal</td><td>"Lead knee drives toward target in transition" — weight transfer initiator that moves low point forward</td><td>When weight is clearly staying on trail side</td></tr></table>
+    <p style="margin-top:8px;"><strong>Course management response:</strong> Play the ball one inch further back in the stance than normal until the fat tendency settles. This is a temporary setup adjustment — not a permanent change.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fault 5 — Loss of Distance (Sudden)</span>
+    <h3>Tension, Casting, or Tempo Acceleration</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Ball flight normal in shape but carrying 15–20 yards shorter than usual. Often accompanies a nervous/pressured state. Smash factor is dropping.</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External</td><td>"Finish with the club pointing at the target" — focus on the finish position. Eliminates deceleration and promotes full release without triggering tension.</td><td>Best all-round distance restoration thought</td></tr>
+    <tr><td class="warn">Feel cue</td><td>"Grip pressure 4 out of 10" — consciously reduce grip pressure before taking the club back. Tension in hands travels up the arms and kills speed at the source.</td><td>When tension is the obvious culprit</td></tr></table>
+    <p style="margin-top:8px;"><strong>Course management response:</strong> Take 1 extra club. Do not try to swing harder to recover lost distance — this increases tension and makes the issue worse. Accept one more club and make a smooth, full swing.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fault 6 — Putting Yips / Direction Loss</span>
+    <h3>Tension-Induced Stroke Breakdown Under Pressure</h3>
+    <p style="margin-bottom:8px;"><strong>What it looks like on course:</strong> Short putts (under 6 feet) are missed consistently. Putter face twisting at impact. Inability to commit to the stroke.</p>
+    <table class="tbl"><tr><th>Cue Type</th><th>The Thought</th><th>When to Use</th></tr>
+    <tr><td class="good">External / target focus</td><td>"Look at a spot on the back of the hole" — shift gaze to the far edge of the cup. Redirects attention from the mechanics of the stroke to the target.</td><td>Immediate yip-breaker — used by tour players</td></tr>
+    <tr><td class="warn">Process cue</td><td>"Small backswing, smooth through" — simplify the stroke to two components only. Eliminates over-complicated mechanics.</td><td>When stroke is clearly too long/decelerated</td></tr></table>
+    <p style="margin-top:8px;"><strong>Deeper yip protocol:</strong> If yips persist beyond 3 holes, switch to a one-handed putting stroke on the practice green after the round. Cross-dominant practice (trail hand only) is one of the most effective yip-disruption tools — the familiar motor programme is interrupted and a new one must be recruited.</p>
+  </div>
+  <span class="badge badge-lime" style="margin-top:20px;">📊 The Accept vs. Correct Decision</span>
+  <div class="card">
+    <span class="card-tag">When to Apply a Correction vs. Manage the Miss</span>
+    <h3>The Two-Question Rule</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Is the miss consistent?</strong> One or two bad shots in 6 holes = random variance. Correct nothing. Three+ consecutive similar misses = a pattern. Apply one thought.</div></li>
+      <li><span class="step-n">2</span><div><strong>Can I manage around it instead?</strong> A consistent 10-yard miss-left means aim 10 yards right and accept the shape for today. Many rounds are better managed by accepting a reliable miss than by attempting a correction that introduces additional variability. Tour professionals play entire rounds with a miss direction — they aim to avoid the miss costing shots rather than eliminating it on-course.</div></li>
+    </ul>
+    <table class="tbl" style="margin-top:12px;"><tr><th>Scenario</th><th>Correct?</th><th>Action</th></tr>
+    <tr><td>2 blocked shots in 18 holes</td><td class="bad">No</td><td>Reset routine, commit to next shot — no thought change</td></tr>
+    <tr><td>4 blocked shots in 6 holes</td><td class="good">Yes</td><td>Apply one external thought ("turn buckle to target")</td></tr>
+    <tr><td>Consistent 10-yard miss-left all round</td><td class="warn">Optional</td><td>Aim right and manage it, OR apply one pull-correction thought</td></tr>
+    <tr><td>Multiple different miss directions</td><td class="bad">No</td><td>Reduce effort to 80%, commit to routine — inconsistency is a tempo/tension problem</td></tr></table>
+  </div>
+  <div class="info-box elite"><span class="ico">⭐</span><p><strong>The ultimate on-course principle:</strong> Every thought you add to your swing on the course costs you something. The player with zero swing thoughts and a committed pre-shot routine will almost always outperform a player with two corrections running simultaneously, regardless of which correction is technically correct. When in doubt — reduce to routine, commit to target, accept the shot.</p></div>
+</div>
+
+<!-- PRO: COGNITIVE ARCHITECTURE -->
+<div class="sec" id="cognitive_arch" data-tier="pro">
+  <h2 class="sec-title">Cognitive Architecture</h2>
+  <p class="sec-desc">The science of how strategic decisions interact with shot execution — and how to structure your thinking so that the analytical brain closes down completely before the motor brain takes over.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Dual-Process Model Applied to Golf</span>
+    <h3>System 1 and System 2 — Why Mixing Them Destroys Performance</h3>
+    <p style="margin-bottom:12px;">Daniel Kahneman's dual-process model describes two cognitive systems operating in parallel. System 2 is analytical, deliberate, and slow — the system you use to calculate yardage, assess risk, and select a club. System 1 is automatic, fast, and skill-based — the system that executes the motor programme of the swing. Elite performance requires System 2 to operate during the decision phase and System 1 to operate completely uninterrupted during execution. When System 2 bleeds into the execution phase — when you are thinking about technique or consequences during the swing — performance degrades severely.</p>
+    <div class="formula">
+      <div class="formula-lbl">The Cognitive Sequence for a Single Shot</div>
+      <div class="formula-main">SYSTEM 2 PHASE (deliberate — full analytical mode)
+  → Yardage assessment, wind calculation
+  → Club selection, target identification
+  → Shot shape decision, risk assessment
+  → Complete commitment to a specific plan
+  ↓ DECISION CLOSURE (the transition ritual — see below)
+SYSTEM 1 PHASE (automatic — motor brain only)
+  → Pre-shot routine (visualisation, alignment)
+  → Trigger thought (ONE external cue only)
+  → Execution — no conscious thought
+  → Follow-through and release</div>
+      <div class="formula-note">The critical requirement: System 2 must finish completely before System 1 begins. Any unresolved doubt, uncompleted decision, or conscious thought about technique during execution is System 2 leaking into System 1 territory. The decision closure ritual is specifically designed to prevent this.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Decision Closure — The Transition Ritual</span>
+    <h3>How to Turn Off the Analytical Brain on Command</h3>
+    <p style="margin-bottom:12px;">A decision closure ritual is a brief, physical act that marks the boundary between the strategic phase and the execution phase. It signals to the nervous system that thinking is complete and motor execution is beginning. Without it, analytical residue from the decision phase bleeds into the swing.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Choose a physical marker:</strong> The closure ritual must be physical — not just mental. Options: a specific tap of the grip against the palm, a deep exhale with a single word ("go," "clear," "yes"), a deliberate placing of the club behind the ball, or a specific step into the address position. Any physical act works — consistency is the requirement, not the specific act.</div></li>
+      <li><span class="step-n">2</span><div><strong>The ritual marks a point of no return:</strong> Once the closure ritual is performed, strategic thinking stops completely. No further club changes, aim adjustments, or second-guessing. If doubt remains after the ritual, step away and repeat the full decision phase before attempting the ritual again.</div></li>
+      <li><span class="step-n">3</span><div><strong>Practise the ritual under pressure:</strong> The closure ritual only works if it has been practised enough to become automatic. In pressure drills (see Guide 01 Pressure Drills tab), always include the full decision sequence including the closure ritual. Do not skip it in practice.</div></li>
+      <li><span class="step-n">4</span><div><strong>The abort rule:</strong> If you realise after the closure ritual that you are still thinking analytically — reconsidering the club, the target, or a swing thought — step away. Do not swing. Reset the entire decision phase. An uncommitted swing produces a poor shot 90%+ of the time. The 10 seconds to reset is never wasted.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Decision Pre-Loading for Competition</span>
+    <h3>Eliminating In-Round Deliberation on High-Pressure Holes</h3>
+    <p style="margin-bottom:12px;">Pre-loading means making specific strategic decisions before the round — committing to a plan on particular holes or situations before you arrive at them. This removes the System 2 workload from the most pressure-heavy moments of a round, when analytical thinking is least reliable.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Identify your two or three decision holes:</strong> Before every competitive round, identify the holes where you most often make poor decisions. These are typically: holes where you are consistently tempted by a risky tee shot, holes where you are seduced by an unreachable pin, or holes where you always second-guess your club selection.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pre-commit with a specific rule:</strong> Write it down. "On hole 7, I always take 3-wood regardless of score." "On hole 12, I always aim at the fat of the green — never the flag." "On hole 16, I always lay up to 100 yards." The rule must be unconditional — no clauses for score, conditions, or mood.</div></li>
+      <li><span class="step-n">3</span><div><strong>Why unconditional rules work:</strong> Research on decision fatigue shows that each in-round decision depletes limited cognitive resources. Pre-committed rules eliminate the decision entirely — reducing cognitive load at the exact moment when cognitive resources are most stretched (late in a competitive round, under pressure).</div></li>
+    </ul>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The Rory McIlroy principle:</strong> McIlroy has discussed making driving decisions on specific holes before the round begins — "I always hit driver here regardless of conditions." This is not inflexibility; it is deliberate cognitive load management. He is saving his decision-making capacity for the situations he cannot pre-plan.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Cognitive Load and Routine Duration Variance</span>
+    <h3>Why Complex Decisions Lengthen and Destabilise Your Routine</h3>
+    <p style="margin-bottom:12px;">Research by Dr. Noel Brick on routine duration consistency shows that pre-shot routine duration variance is a strong predictor of performance — not just routine length, but consistency of length. Players whose routines vary by more than 4–5 seconds between shots show significantly worse performance than players with consistent timing.</p>
+    <p style="margin-bottom:10px;">The mechanism: a difficult course management decision causes the analytical phase to run long, which extends the total time before the swing. The extended analytical phase makes it harder to achieve full System 1 state before execution. The result is a shot made in a partially analytical state — which degrades motor performance.</p>
+    <div class="info-box tip"><span class="ico">💡</span><p><strong>Fix:</strong> Use decision pre-loading to eliminate the longest decisions. For residual in-round decisions, set a hard time limit — 20 seconds maximum from reaching the ball to completing club selection. If no decision is made in 20 seconds, default to the conservative option. A quick conservative decision made in System 1 is almost always better than a correct aggressive decision made in System 2.</p></div>
+  </div>
+</div>
+
+<div class="footer">PRE-SHOT ROUTINE & PRACTICE PLAN · ADVANCED PLAYER EDITION · TRUST THE PROCESS</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+    <a href="16_solo_pressure_round.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔥</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Solo Pressure Round</span>
+    </a>
+    <a href="08_pro_round_prep.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🗺️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pro Round Prep</span>
+    </a>
+    <a href="04_complete_golfer.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧭</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">The Complete Golfer</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

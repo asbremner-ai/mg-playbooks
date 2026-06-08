@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-08 · 48_elite_physical_performance.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Elite Physical Performance — The Scratch Project Elite</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,216,232,0.04) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--elite-border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--elite),var(--gold),var(--elite),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--elite);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--elite-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--elite-hi);}.tab.active{color:var(--elite);border-bottom-color:var(--elite);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--elite);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-elite{background:var(--elite-dim);border:1px solid var(--elite-border);color:var(--elite-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.card-elite{border-color:var(--elite-border);}.card-elite .card-tag{color:var(--elite);}
+.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-lime{border-color:rgba(160,200,80,.2);}.card-lime .card-tag{color:var(--lime);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--elite);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}.ev{color:var(--elite-hi);font-weight:600;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--elite);background:var(--elite-dim);border:1px solid var(--elite-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.elite-box{background:var(--elite-dim);border:1px solid var(--elite-border);}.elite-box p{color:rgba(200,216,232,.85);}.elite-box strong{color:var(--elite-hi);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}.gold-box p{color:rgba(240,208,112,.9);}.gold-box strong{color:var(--gold-hi);}
+.rust-box{background:var(--rust-dim);border:1px solid rgba(216,96,48,.22);}.rust-box p{color:rgba(240,128,80,.9);}.rust-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.pull-quote{border-left:3px solid var(--elite);padding:14px 18px;margin:18px 0;background:var(--elite-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--elite-hi);line-height:1.7;}
+.divider{border:none;border-top:1px solid var(--faint);margin:20px 0;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(200,216,232,0.18);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(200,216,232,0.3);">The Scratch Project · Elite</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Elite Playbook · Guide 48</p>
+  <h1>Elite Physical<br><em>Performance</em></h1>
+  <p class="hero-sub">Speed training periodisation across the competitive season, HRV-guided training at elite volume, cognitive performance science for on-course decision quality, competition week taper protocols, and long-season durability management.</p>
+  <div class="hero-tags"><span class="htag">⚡ Speed Periodisation</span><span class="htag">💓 HRV Mastery</span><span class="htag">🧠 Cognitive Performance</span><span class="htag">📅 Taper Protocol</span><span class="htag">💪 Durability</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('periodisation',this)">Speed Periodisation</button>
+  <button class="tab" onclick="show('hrv',this)">HRV Mastery</button>
+  <button class="tab" onclick="show('cognitive',this)">Cognitive Performance</button>
+  <button class="tab" onclick="show('taper',this)">Competition Taper</button>
+  <button class="tab" onclick="show('durability',this)">Long-Season Durability</button>
+</div>
+
+<div class="sec active" id="periodisation">
+  <h2 class="sec-title">Speed Training Periodisation</h2>
+  <p class="sec-desc">The Rypstick protocol in Guide 25 covers the mechanics of overspeed training. What it does not cover — because it sits at the Elite level of complexity — is how to programme speed work across a full competitive season without conflicting with technical development or peaking at the wrong moment.</p>
+  <span class="badge badge-elite">⚡ Annual Speed Programming</span>
+  <div class="card card-elite">
+    <span class="card-tag">Periodisation Model for Elite Amateur Season</span>
+    <h3>Speed Work by Season Phase</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Timing</th><th>Speed Volume</th><th>Intensity</th><th>Goal</th></tr>
+      <tr><td>Acquisition</td><td>Nov–Jan (off-season)</td><td>4 sessions/week</td><td class="ev">Maximum</td><td>Build new speed ceiling</td></tr>
+      <tr><td>Consolidation</td><td>Feb–Mar</td><td>3 sessions/week</td><td class="warn">High</td><td>Transfer speed to ball striking</td></tr>
+      <tr><td>Competition prep</td><td>April</td><td>2 sessions/week</td><td class="warn">Moderate</td><td>Maintain while sharpening technique</td></tr>
+      <tr><td>Peak competition</td><td>May–Jun</td><td>1 session/week max</td><td class="warn">Low-moderate</td><td>Maintain only — no new gains attempted</td></tr>
+      <tr><td>Mid-season maintenance</td><td>Jul–Aug</td><td>1–2 sessions/week</td><td class="warn">Moderate</td><td>Prevent regression during heavy competition</td></tr>
+      <tr><td>Post-season reset</td><td>Sep–Oct</td><td>2 sessions/week</td><td>Building</td><td>Begin next acquisition block early</td></tr>
+    </table>
+  </div>
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>The peak competition rule:</strong> During the weeks immediately before and during major events (Brabazon, R&A qualifying, county championship), reduce speed work to one light session per week or stop entirely. CNS fatigue from high-intensity speed training degrades fine motor control — the exact quality needed for peak competition performance. Do not train for speed during the weeks that matter most for scoring.</p>
+  </div>
+  <span class="badge badge-gold">📈 Speed Transfer Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">Converting Overspeed Gains to Ball-Striking Improvement</span>
+    <h3>The Transfer Session — Acquiring New Speed in Practice</h3>
+    <p>Overspeed gains achieved in training sessions do not automatically transfer to ball-striking unless a specific transfer protocol is followed. The sequence that produces the highest transfer rate:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Overspeed sets (10–12 minutes):</strong> Rypstick protocol — lighter club swings at maximum effort. 3 sets of 6 swings with 90-second rest between sets. Record peak speed on Mevo.</div></li>
+      <li><span class="step-n">2</span><div><strong>Immediate transfer shots (5 minutes):</strong> Within 60 seconds of the final overspeed set, hit 6 driver shots with maximum commitment. The nervous system is primed at the new speed level — hitting real balls immediately captures the transfer window before the priming effect fades.</div></li>
+      <li><span class="step-n">3</span><div><strong>Compare and record:</strong> Compare Mevo speed from transfer shots to your baseline average. The delta represents your current transfer rate. Track this monthly — a shrinking delta means the overspeed gains are permanently encoding into your ball-striking pattern.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="hrv">
+  <h2 class="sec-title">HRV-Guided Training at Elite Volume</h2>
+  <p class="sec-desc">The HRV basics in Guide 06 cover what HRV is and why it matters for speed training. At Elite level — with 30+ competitive rounds per year plus structured gym work and speed sessions — HRV becomes a daily operational tool, not just a background awareness.</p>
+  <span class="badge badge-elite">💓 The Daily HRV Decision System</span>
+  <div class="card card-elite">
+    <span class="card-tag">What to Do on Each HRV Status</span>
+    <h3>Green / Yellow / Red Day Protocols</h3>
+    <table class="tbl">
+      <tr><th>HRV Status</th><th>What It Means</th><th>Training Response</th><th>Golf Training Response</th></tr>
+      <tr><td class="good">Green (HRV &gt;5% above baseline)</td><td>Full CNS recovery; high adaptability</td><td>High-intensity session: speed work, heavy strength, explosive drills</td><td>Technical work, pressure simulation, full deliberate practice</td></tr>
+      <tr><td class="warn">Yellow (HRV within ±5% of baseline)</td><td>Normal recovery; moderate adaptability</td><td>Moderate intensity: skill work, moderate strength, technique focus</td><td>Skill refinement, putting practice, on-course play</td></tr>
+      <tr><td class="bad">Red (HRV &gt;5% below baseline)</td><td>Incomplete recovery; adaptation impaired</td><td>Active recovery only: walking, light mobility, no high intensity</td><td>Putting and short game only; no launch monitor or speed work</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">📊 HRV Monitoring Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">Making HRV Data Actionable</span>
+    <h3>Daily Measurement and Weekly Review</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Measure every morning, same time, same conditions:</strong> Immediately on waking, before getting out of bed, before caffeine. 2-minute HRV reading with your chosen device (Garmin, Apple Watch, or dedicated HRV4Training app). Any deviation from this protocol makes the data unreliable.</div></li>
+      <li><span class="step-n">2</span><div><strong>Build your personal baseline first:</strong> The green/yellow/red classification is relative to YOUR baseline, not a population average. Most apps calculate this automatically after 2–4 weeks of consistent measurement. Do not make training decisions based on absolute HRV numbers — only baseline-relative status.</div></li>
+      <li><span class="step-n">3</span><div><strong>Weekly pattern review:</strong> After 4+ weeks of data, review weekly patterns. Do you consistently show red on Mondays? (Post-competition recovery.) Do you show green on Fridays? (Your natural high-readiness day — schedule technical sessions here.) These patterns allow proactive training calendar planning, not just reactive day-by-day decisions.</div></li>
+      <li><span class="step-n">4</span><div><strong>Competition week taper response:</strong> In the week before a major event, expect 2–3 consecutive yellow or green days if your taper is working. Consistently red days in competition week indicate either over-training in the prior block or insufficient taper. This is the most actionable training feedback HRV provides.</div></li>
+    </ul>
+  </div>
+  <div class="info-box elite-box">
+    <span class="ico">⭐</span>
+    <p><strong>The HRV paradox at elite volume:</strong> Players who train the most often show the lowest average HRV because they are consistently under-recovering. If your baseline HRV has been declining over 4+ weeks, your total training load — golf plus gym plus competition — exceeds your recovery capacity. The solution is never to train through it; it is to reduce volume for 1–2 weeks until baseline returns. This is the hardest discipline in elite amateur training.</p>
+  </div>
+</div>
+
+<div class="sec" id="cognitive">
+  <h2 class="sec-title">Cognitive Performance Science</h2>
+  <p class="sec-desc">Decision quality over 18 and 36 holes is not constant — it degrades with glucose depletion, dehydration, and cognitive fatigue in ways that directly mirror physical fatigue. Elite players treat their brain as an organ to be fuelled and maintained during competition, not just their muscles.</p>
+  <span class="badge badge-elite">🧠 Glucose & Decision Quality</span>
+  <div class="card card-elite">
+    <span class="card-tag">The Fuel Dependency of the Decision-Making Brain</span>
+    <h3>How Glucose Depletion Degrades Course Management</h3>
+    <p>The prefrontal cortex — the brain region responsible for strategic decision-making, risk assessment, and emotional regulation — consumes glucose at a higher rate than any other brain region and is disproportionately impaired by glucose depletion. Research by Gailliot et al. (2007) demonstrates that willpower, impulse control, and decision quality all decline measurably within 2–3 hours of the last meal.</p>
+    <p>In golf terms: your worst decisions — the aggressive recovery attempt from trees on hole 14, the unnecessary flag-hunting on hole 16 — are most likely to occur in the back nine, not because the pressure is higher, but because your glucose is lower.</p>
+    <table class="tbl">
+      <tr><th>Holes</th><th>Glucose Status</th><th>Decision Quality Risk</th><th>Intervention</th></tr>
+      <tr><td>1–6</td><td class="good">Full</td><td class="good">Low</td><td>Standard pre-round meal sufficient</td></tr>
+      <tr><td>7–12</td><td class="warn">Declining</td><td class="warn">Moderate</td><td>First nutrition intake at hole 7–9</td></tr>
+      <tr><td>13–18</td><td class="bad">Depleted without intervention</td><td class="bad">High</td><td>Second nutrition intake at hole 13–15 critical</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🍎 The Elite On-Course Nutrition Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">Fuelling Decision Quality Across 18 and 36 Holes</span>
+    <h3>Timing and Composition</h3>
+    <table class="tbl">
+      <tr><th>Timing</th><th>What to Consume</th><th>Purpose</th></tr>
+      <tr><td>3 hours before round</td><td>Full meal: complex carbs + protein + healthy fat. 600–800 kcal.</td><td>Sustained glucose baseline; prevent mid-round depletion</td></tr>
+      <tr><td>1 hour before round</td><td>Small snack if needed: banana, oats, or similar. No high-fat/protein.</td><td>Top up without creating digestive load during play</td></tr>
+      <tr><td>Hole 7–9</td><td>25–35g fast carbs: energy gel, banana half, handful of dates</td><td>Prevent the back-nine glucose dip before it starts</td></tr>
+      <tr><td>Hole 13–15</td><td>Same as hole 7–9 intake</td><td>Maintain decision quality through the final stretch</td></tr>
+      <tr><td>Between rounds (36-hole)</td><td>Full recovery meal within 30 min of completing round 1. 60g carbs + 25g protein.</td><td>Glycogen replenishment for round 2</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">💧 Hydration and Fine Motor Control</span>
+  <div class="card card-teal">
+    <span class="card-tag">Dehydration's Effect on Putting and Short Game</span>
+    <h3>The 2% Rule</h3>
+    <p>Research demonstrates that a 2% loss of body weight through dehydration produces measurable impairment in fine motor control, reaction time, and concentration. For a 75kg player, this is just 1.5 litres of fluid deficit — easily reached on a warm day over 18 holes without conscious hydration.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pre-round hydration check:</strong> Urine should be pale yellow before teeing off. Dark yellow indicates dehydration already present before the round has started — you are beginning at a disadvantage.</div></li>
+      <li><span class="step-n">2</span><div><strong>On-course target:</strong> 500ml (one large bottle) per 45–60 minutes in normal UK weather. In hot conditions (above 20°C) or wind, increase to 600–750ml per hour.</div></li>
+      <li><span class="step-n">3</span><div><strong>Electrolyte addition in heat:</strong> Water alone does not replace electrolytes lost in sweat. In hot or humid conditions, add an electrolyte tablet or sports drink to one bottle per 18 holes. Sodium and potassium depletion impairs muscle function before dehydration itself becomes noticeable.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-rust">☕ Caffeine Optimisation</span>
+  <div class="card card-rust">
+    <span class="card-tag">Using Caffeine as a Precision Performance Tool</span>
+    <h3>Protocol for Competition Rounds</h3>
+    <p>Caffeine is the most extensively studied legal performance-enhancing compound in sport, with robust evidence for improved concentration, reduced perceived effort, and maintained decision quality under fatigue. Used correctly, it is a genuine competitive tool. Used carelessly, it amplifies anxiety and produces the jittery tension that is the enemy of a fluid swing.</p>
+    <table class="tbl">
+      <tr><th>Variable</th><th>Optimal Protocol</th><th>Common Mistake</th></tr>
+      <tr><td>Dose</td><td>3–6mg per kg bodyweight (200–400mg for most players)</td><td>Too high a dose amplifies anxiety; too low provides no benefit</td></tr>
+      <tr><td>Timing</td><td>45–60 minutes before tee time</td><td>Drinking coffee at the clubhouse immediately before = peak effect on hole 3, not hole 1</td></tr>
+      <tr><td>Form</td><td>Caffeine tablet (precise dose) preferred over coffee (variable dose)</td><td>Double espresso can vary from 60–200mg — inconsistent</td></tr>
+      <tr><td>Tolerance management</td><td>Avoid caffeine for 3–5 days before a major event to re-sensitise</td><td>Daily caffeine consumers lose 50–70% of the performance benefit</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="taper">
+  <h2 class="sec-title">Competition Week Taper</h2>
+  <p class="sec-desc">Peaking physically and cognitively for a major amateur event requires deliberate reduction of training load in the final week — the taper. Most amateur players do not taper at all, arriving at major events carrying accumulated fatigue from full training blocks. Elite players plan their peak.</p>
+  <span class="badge badge-elite">📅 7-Day Taper Protocol</span>
+  <div class="card card-elite">
+    <span class="card-tag">The Week Before a Major Event</span>
+    <h3>Day-by-Day Taper Structure</h3>
+    <table class="tbl">
+      <tr><th>Day</th><th>Physical Training</th><th>Golf Practice</th><th>Purpose</th></tr>
+      <tr><td>Day 7 (Mon)</td><td>Final moderate gym session — no new stimulus</td><td>60-min technical session with coach or launch monitor</td><td>Last significant training stimulus</td></tr>
+      <tr><td>Day 6 (Tue)</td><td>Light mobility only</td><td>9 holes — competitive simulation with scoring</td><td>Competition sharpness without fatigue</td></tr>
+      <tr><td>Day 5 (Wed)</td><td>Rest or 20-min walk</td><td>45-min short game + putting only</td><td>Skill maintenance, physical recovery</td></tr>
+      <tr><td>Day 4 (Thu)</td><td>Rest</td><td>Rest or 9-hole casual round</td><td>Physical supercompensation begins</td></tr>
+      <tr><td>Day 3 (Fri)</td><td>Light mobility — 15 min</td><td>30-min activation: putting + 20 range shots</td><td>Maintain feel; no fatigue accumulation</td></tr>
+      <tr><td>Day 2 (Sat)</td><td>Rest completely</td><td>Practice round at venue (if available)</td><td>Course familiarisation only</td></tr>
+      <tr><td>Day 1 (Sun — event day)</td><td>5-min dynamic warm-up only</td><td>45-min pre-round warmup protocol</td><td>Activation, not preparation</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🔬 How to Know Your Taper Is Working</span>
+  <div class="card card-gold">
+    <span class="card-tag">Objective Taper Indicators</span>
+    <h3>What to Look For in the 7-Day Window</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>HRV rising toward green:</strong> By day 4–5, your HRV should be at or above baseline if the taper load is correct. Consistently red HRV in taper week = training load was too high in the preceding block, or the taper volume is still too high.</div></li>
+      <li><span class="step-n">2</span><div><strong>Swing feels loose and fast:</strong> The "freshness feeling" — where the swing feels uncommonly easy and fast — is a reliable physical indicator of peak CNS recovery. If you feel this in the final practice session before the event, you have peaked correctly.</div></li>
+      <li><span class="step-n">3</span><div><strong>Appetite increase:</strong> As training load drops, appetite often increases sharply. This is the body entering supercompensation — deliberately eat to fuel this process, particularly carbohydrates, in the 3 days before the event.</div></li>
+      <li><span class="step-n">4</span><div><strong>Slight restlessness:</strong> A mild sense of wanting to play — of having too much energy — is a positive sign in taper week. It indicates adequate recovery. If you feel flat or lethargic in taper week, the taper started too late or the preceding training block was too heavy.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="durability">
+  <h2 class="sec-title">Long-Season Durability</h2>
+  <p class="sec-desc">A full Elite amateur season involves 30+ competitive rounds, multiple gym sessions per week, speed training, deliberate practice, and potentially county team commitments. Managing this load over 8–9 months without accumulating injury, burnout, or chronic fatigue requires explicit durability management — not just fitness.</p>
+  <span class="badge badge-elite">💪 The Durability Framework</span>
+  <div class="card card-elite">
+    <span class="card-tag">Managing Total Load Across the Full Season</span>
+    <h3>Load Components and Their Interaction</h3>
+    <table class="tbl">
+      <tr><th>Load Type</th><th>Weekly Volume (typical Elite)</th><th>Recovery Demand</th><th>Monitoring Method</th></tr>
+      <tr><td>Competitive golf rounds</td><td>2–3 rounds</td><td class="warn">High (physical + psychological)</td><td>HRV; subjective energy rating</td></tr>
+      <tr><td>Deliberate practice</td><td>3–5 sessions</td><td class="warn">Moderate (CNS + physical)</td><td>Session RPE log</td></tr>
+      <tr><td>Gym training</td><td>2–3 sessions</td><td class="warn">Moderate–high (physical)</td><td>Strength benchmarks vs. baseline</td></tr>
+      <tr><td>Speed training</td><td>1–2 sessions</td><td class="bad">Very high (CNS)</td><td>HRV — only on green days</td></tr>
+      <tr><td>Psychological load</td><td>Variable by event quality</td><td class="warn">Moderate–high (recovers with sleep)</td><td>Weekly mental performance log</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-gold">🔄 The Monthly Recovery Week</span>
+  <div class="card card-gold">
+    <span class="card-tag">Planned Deload for Chronic Fatigue Prevention</span>
+    <h3>One Recovery Week Every 4–6 Weeks</h3>
+    <p>Elite endurance athletes build a deload week into every training block — a week where volume drops to 40–60% of normal while intensity is maintained. The same principle applies to elite amateur golf training at high volume.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Schedule it before it is needed:</strong> Plan recovery weeks in advance based on your calendar — not in response to feeling broken. A recovery week in week 5 prevents the breakdown that would have occurred in week 7.</div></li>
+      <li><span class="step-n">2</span><div><strong>Recovery week structure:</strong> No gym training. No speed work. One competitive round maximum. Two short practice sessions (45 min each, low intensity — putting and short game only). Sleep priority. Normal nutrition.</div></li>
+      <li><span class="step-n">3</span><div><strong>Trust the process:</strong> The common fear is that a recovery week will cause regression. Research consistently shows the opposite — performance improves in the week following a recovery week due to supercompensation. The regression fear is psychological, not physiological.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-teal">🩺 The Annual Body Audit</span>
+  <div class="card card-teal">
+    <span class="card-tag">Professional Physical Support at Elite Volume</span>
+    <h3>Quarterly and Annual Check Schedule</h3>
+    <table class="tbl">
+      <tr><th>Appointment</th><th>Frequency</th><th>Purpose</th></tr>
+      <tr><td>Sports physiotherapist</td><td>Quarterly</td><td>Mobility screen; identify emerging restrictions before they become injuries</td></tr>
+      <tr><td>TPI screen</td><td>Annual</td><td>Full functional movement screen; update physical-technical link assessment</td></tr>
+      <tr><td>GP blood panel</td><td>Annual</td><td>Vitamin D (critical for UK-based athletes Oct–Apr), iron, testosterone, B12</td></tr>
+      <tr><td>Sports physician (if needed)</td><td>As required</td><td>Any persistent pain; return-to-play timeline; specialist referral</td></tr>
+    </table>
+    <div class="info-box elite-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Vitamin D for UK players:</strong> The majority of UK-based athletes are deficient in Vitamin D from October through April due to insufficient sunlight. Vitamin D deficiency impairs muscle function, recovery speed, and immune response — all critical for an elite training programme. Test annually; supplement at 2,000–4,000 IU daily through winter unless tested sufficient.</p>
+    </div>
+  </div>
+</div>
+<div class="footer">ELITE PLAYBOOK · GUIDE 48 · ELITE PHYSICAL PERFORMANCE · THE SCRATCH PROJECT</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Fitness Plan</span>
+    </a>
+    <a href="25_speed_training.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚡</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Speed Training</span>
+    </a>
+    <a href="07_golf_nutrition.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🍎</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Nutrition Plan</span>
+    </a>
+    <a href="47_elite_performance_psychology.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧠</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Elite Performance Psychology</span>
+    </a>
+    <a href="13_injury_prevention.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🩺</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Injury Prevention</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

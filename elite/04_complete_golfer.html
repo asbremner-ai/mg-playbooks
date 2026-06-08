@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-06-05 · 04_complete_golfer.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Complete Golfer — Beyond Technique</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV TABS */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* BARS */
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* FORMULA */
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+/* DRILL CARDS */
+.drill{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:12px;transition:border-color .2s;}
+.drill:hover{border-color:var(--border-hi);}
+.drill-hdr{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;}
+.drill-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--lime-dim),var(--teal-dim));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;border:1px solid var(--border);}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);letter-spacing:.06em;margin-top:2px;}
+.drill p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* 2 COL GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* QUOTE */
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--gold-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+</style>
+
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
+<div class="hero">
+  <p class="hero-label">Complete Golfer · Beyond Technique</p>
+  <h1>The Complete<br><em>Golfer</em></h1>
+  <p class="hero-sub">Mental game · physical fitness · equipment fitting · stats tracking · practice design · recovery — everything beyond technique.</p>
+  <div class="hero-tags">
+    <span class="htag">🧠 Mental Game</span><span class="htag">🏋️ Fitness</span>
+    <span class="htag">🔧 Equipment</span><span class="htag">📊 Stats</span>
+    <span class="htag">🎯 Practice Design</span><span class="htag">🍎 Recovery</span>
+  </div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('mental',this)">Mental Game</button>
+  <button class="tab" onclick="show('physical',this)">Fitness</button>
+  <button class="tab" onclick="show('equipment',this)">Equipment</button>
+  <button class="tab" onclick="show('tracking',this)">Stats</button>
+  <button class="tab" onclick="show('practice',this)">Practice Design</button>
+  <button class="tab" onclick="show('recovery',this)">Recovery</button>
+  <button class="tab" onclick="show('roadmap',this)">Roadmap</button>
+</div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Six Things That Move the Needle</h2>
+  <p class="sec-desc">Research on handicap reduction consistently shows that technique accounts for only 20% of improvement rate variance. The rest comes from these factors.</p>
+  <span class="badge badge-gold">📊 The Research</span>
+  <div class="card">
+    <span class="card-tag">What Actually Predicts Handicap Improvement</span>
+    <h3>R&A/USGA Study — 12,000 Golfers, 3 Years</h3>
+    <div class="bar-group">
+      <div class="bar-title">Variance in Handicap Improvement Explained By:</div>
+      <div class="bar-row"><span class="bar-lbl">Practice quality</span><div class="bar-track"><div class="bar-fill gold" style="width:88%"></div></div><span class="bar-val">28%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Mental resilience</span><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><span class="bar-val">22%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Technical skill</span><div class="bar-track"><div class="bar-fill teal" style="width:65%"></div></div><span class="bar-val">20%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Statistical awareness</span><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><span class="bar-val">16%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Physical fitness</span><div class="bar-track"><div class="bar-fill teal" style="width:36%"></div></div><span class="bar-val">11%</span></div>
+      <div class="bar-row"><span class="bar-lbl">Equipment fit</span><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><span class="bar-val">3%</span></div>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);">The single biggest lever is <strong style="color:var(--white)">practice quality</strong> — not volume. A golfer who practises 5 hours per week with structure outperforms one who hits 500 balls with no purpose. The technical playbooks are the <em>what</em>. Everything in this guide is the <em>how</em>.</p>
+  </div>
+  <div class="grid-2">
+    <div class="mini-card"><span class="mini-tag">Quick Win #1</span><h4>Track One Stat Per Round</h4><p>Golfers who track even a single stat improve 40% faster. Start with approach shot proximity — pace off after every approach.</p></div>
+    <div class="mini-card"><span class="mini-tag">Quick Win #2</span><h4>Get a Professional Fitting</h4><p>Equipment fitting is worth 2–4 shots per round for most 10 HCPs. Start with the putter and driver.</p></div>
+    <div class="mini-card"><span class="mini-tag">Quick Win #3</span><h4>Build One Mental Routine</h4><p>A consistent pre-shot routine reduces double-bogeys by creating automatic commitment under pressure.</p></div>
+    <div class="mini-card"><span class="mini-tag">Quick Win #4</span><h4>Add Deliberate Practice</h4><p>Replace 50% of range time with drills that have pass/fail criteria. Measured practice is 3× more effective.</p></div>
+  </div>
+</div>
+
+<div class="sec" id="mental">
+  <h2 class="sec-title">Mind Over Bogey</h2>
+  <p class="sec-desc">Mental skills account for 20–30% of scoring variance at the amateur level — and can be trained just like technique. Most golfers never train it at all.</p>
+  <span class="badge badge-teal">🧠 Sports Psychology</span>
+  <div class="card">
+    <span class="card-tag">How Pressure Kills Performance</span>
+    <h3>The Choking Mechanism — and How to Stop It</h3>
+    <p>Research by Dr. Sian Beilock shows that choking occurs when conscious analytical attention is directed at a motor skill that normally runs automatically. When you think about swing mechanics on the course, you introduce neural interference that causes performance breakdown. The solution is process focus — directing attention to a target, a feel, or a cue word.</p>
+    <div class="bar-group">
+      <div class="bar-title">What Tour Players Think About During the Swing</div>
+      <div class="bar-row"><span class="bar-lbl">Target/destination</span><div class="bar-track"><div class="bar-fill gold" style="width:72%"></div></div><span class="bar-val">48% of shots</span></div>
+      <div class="bar-row"><span class="bar-lbl">Feel/rhythm cue</span><div class="bar-track"><div class="bar-fill" style="width:48%"></div></div><span class="bar-val">32% of shots</span></div>
+      <div class="bar-row"><span class="bar-lbl">Pure reflex</span><div class="bar-track"><div class="bar-fill teal" style="width:30%"></div></div><span class="bar-val">20% of shots</span></div>
+      <div class="bar-row"><span class="bar-lbl">Mechanics</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span class="bar-val">~0% on course</span></div>
+    </div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Pre-Shot Routine — The Non-Negotiable</span>
+    <h3>Four Phases of an Elite Routine</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Decision phase (behind ball):</strong> Full read and commitment. All analysis happens here. Once done, it is done.</div></li>
+      <li><span class="step-n">2</span><div><strong>Transition (walking to ball):</strong> Pick an intermediate target. Shift from analytical to execution mode consciously.</div></li>
+      <li><span class="step-n">3</span><div><strong>Setup (at address):</strong> Face to target, build stance, one practice swing for feel only — never mechanical.</div></li>
+      <li><span class="step-n">4</span><div><strong>Trigger and execute (&lt;3 sec):</strong> One look, cue word, swing. No second-guessing. Ever.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The 10-Second Rule — Dr. Gio Valiante</span>
+    <h3>Managing Bad Shots</h3>
+    <p>After a bad shot: allow yourself 10 seconds of honest reaction. After 10 seconds, close it completely. Use a physical cue — a deep breath, a club twirl, walking to the next shot. Research is clear: ruminating on bad shots for longer than 15 seconds measurably impairs the next shot's performance.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Self-Talk Science</span>
+    <h3>The Language You Use Changes What You Do</h3>
+    <p>Instructional self-talk ("smooth tempo," "stay down") improves execution by 12–18%. Motivational self-talk ("I've got this") improves it by 8–10%. Negative self-talk ("don't hit it in the water") impairs it by 15–22% — because your brain processes the image of the feared outcome. Build a vocabulary of positive, process-focused cue words for each shot type.</p>
+  </div>
+  <div class="pull-quote">
+    <p>"On the golf course, your only job is to hit the next shot as well as possible. The scorecard takes care of itself."</p>
+    <span>— Nick Faldo, six-time major champion</span>
+  </div>
+</div>
+
+<div class="sec" id="physical">
+  <h2 class="sec-title">The Athletic Edge</h2>
+  <p class="sec-desc">Players who engage in structured physical training improve their handicap 35% faster on average than those who focus on technique alone — and sustain their improvements longer.</p>
+  <span class="badge badge-lime">🏋️ Physical Foundations</span>
+  <div class="card card-teal">
+    <span class="card-tag">Physical Attributes That Predict Scoring</span>
+    <h3>Trainable SG Gains</h3>
+    <table class="tbl"><tr><th>Physical Attribute</th><th>SG Impact</th><th>Time</th></tr>
+    <tr><td>Hip mobility</td><td class="good">+0.4 SG/round</td><td>4–8 weeks</td></tr>
+    <tr><td>Thoracic rotation</td><td class="good">+0.3 SG/round</td><td>4–6 weeks</td></tr>
+    <tr><td>Glute strength</td><td class="good">+0.3 SG/round</td><td>8–12 weeks</td></tr>
+    <tr><td>Lead wrist stability</td><td class="good">+0.2 SG/round</td><td>6–10 weeks</td></tr>
+    <tr><td>Cardiovascular endurance</td><td class="warn">+0.2 SG (back 9)</td><td>8–16 weeks</td></tr></table>
+  </div>
+  <div class="card">
+    <span class="card-tag">Daily Mobility Routine — 6 Minutes</span>
+    <h3>The Non-Negotiable Foundation</h3>
+    <p>TPI research shows 80% of swing faults have a direct physical cause. Correcting the physical restriction often eliminates the swing fault without technical instruction.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Thoracic rotation (2 min):</strong> Seated, hands on opposite shoulders, rotate fully × 10 each way. Restricted thoracic rotation directly caps shoulder turn and clubhead speed.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hip 90/90 stretch (2 min):</strong> Both hips at 90° on floor, lean forward over front leg × 30 sec each side. Unlocks hip mobility for proper downswing rotation.</div></li>
+      <li><span class="step-n">3</span><div><strong>Hip flexor stretch (1 min):</strong> Kneeling lunge, press hips forward. Tight hip flexors restrict the pelvic tilt required for consistent address position.</div></li>
+      <li><span class="step-n">4</span><div><strong>Wrist extension/flexion (1 min):</strong> Wrist circles and extension stretches. Lead wrist mobility affects face angle at impact.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Speed Development</span>
+    <h3>Rypstick Overspeed Protocol — 4–8% Gains in 4–6 Weeks</h3>
+    <p>3× per week, 10 minutes. Swing lighter clubs at maximum effort — light × 10, medium × 10, driver × 10. Trains the nervous system to allow higher speeds. Every 1 mph of added speed = ~2.5 yards of carry distance. Used by tour professionals for speed development.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Back-Nine Problem</span>
+    <h3>Why Scores Rise on Holes 14–18</h3>
+    <p>Research shows amateur scores on holes 14–18 average 0.4 strokes higher per hole than holes 1–5 — a pattern almost absent in tour professionals. The causes: physical fatigue reducing swing speed and consistency, and mental fatigue reducing decision quality. Even 20 minutes of walking 3× per week dramatically reduces back-nine score inflation within 6–8 weeks.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Weekly Physical Plan</span>
+    <h3>Minimum Effective Dose — ~3 Hours Per Week</h3>
+    <table class="tbl"><tr><th>Session</th><th>Duration</th><th>Focus</th><th>Key Exercises</th></tr>
+    <tr><td>Mon/Thu</td><td>35 min</td><td>Strength</td><td>Hip thrusts, deadlifts, rotational cable, pallof press</td></tr>
+    <tr><td>Tue/Fri</td><td>10 min</td><td>Speed</td><td>Rypstick speed session, medicine ball throws</td></tr>
+    <tr><td>Daily</td><td>6 min</td><td>Mobility</td><td>Thoracic, hip 90/90, hip flexor, wrist</td></tr>
+    <tr><td>Wed/Sat</td><td>30 min</td><td>Cardio</td><td>Brisk walking, cycling, sustained aerobic activity</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="equipment">
+  <h2 class="sec-title">The Right Tools</h2>
+  <p class="sec-desc">Equipment fitting is the most underutilised marginal gain in amateur golf. Properly fitted clubs improve average scores by 2–4 shots per round — not from placebo, but from eliminating systematic compensations.</p>
+  <span class="badge badge-gold">🔧 Fit for Performance</span>
+  <div class="card card-gold">
+    <span class="card-tag">Fitting Priority Order</span>
+    <h3>Highest Impact First</h3>
+    <table class="tbl"><tr><th>Priority</th><th>Club</th><th>SG Impact</th><th>What Gets Fixed</th></tr>
+    <tr><td>1st</td><td>Putter</td><td class="good">+0.3–0.8/round</td><td>Lie angle, length, loft, head style</td></tr>
+    <tr><td>2nd</td><td>Driver</td><td class="good">+0.3–0.6/round</td><td>Loft, shaft flex, face bias, length</td></tr>
+    <tr><td>3rd</td><td>Wedges</td><td class="warn">+0.2–0.4/round</td><td>Loft gapping, bounce, grind</td></tr>
+    <tr><td>4th</td><td>Irons</td><td class="warn">+0.2–0.4/round</td><td>Shaft flex, lie angle, head style</td></tr>
+    <tr><td>5th</td><td>FW/Hybrids</td><td class="warn">+0.1–0.2/round</td><td>Launch optimisation, loft gapping</td></tr></table>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Wedge Gapping — 4-Wedge Setup</span>
+    <h3>Seamless Coverage from 110 to 30 Yards</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>4-wedge setup (recommended):</strong> PW (45–47°), GW (50–52°), SW (54–56°), LW (58–60°). Seamless 10–15 yd coverage throughout the scoring zone.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Bounce selection:</strong> High bounce (12–14°) for soft/fluffy conditions. Low bounce (4–8°) for firm/tight. Playing the wrong bounce adds fat and thin shots systematically.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Groove maintenance:</strong> Replace wedges every 70–100 rounds. Worn grooves reduce spin 30–40%.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Shaft Flex — Most Misunderstood Factor</span>
+    <h3>Match Flex to Your Swing Speed</h3>
+    <table class="tbl"><tr><th>Driver Swing Speed</th><th>Recommended Flex</th><th>Shaft Weight</th></tr>
+    <tr><td>&lt;75 mph</td><td>Ladies or Senior</td><td>40–50g</td></tr>
+    <tr><td>75–84 mph</td><td>Regular</td><td>50–60g</td></tr>
+    <tr><td>85–95 mph</td><td>Stiff</td><td>60–70g</td></tr>
+    <tr><td>96–104 mph</td><td>X-Stiff</td><td>65–75g</td></tr>
+    <tr><td>105+ mph</td><td>X-Stiff or TX</td><td>70–85g</td></tr></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Ball Selection</span>
+    <h3>Match Compression to Your Swing Speed</h3>
+    <table class="tbl"><tr><th>Swing Speed</th><th>Ball Type</th><th>Recommended</th></tr>
+    <tr><td>&lt;85 mph</td><td>Low-compression</td><td>Callaway Supersoft, Srixon Soft Feel</td></tr>
+    <tr><td>85–95 mph</td><td>Mid-compression urethane</td><td>Pro V1, TP5, Chrome Soft</td></tr>
+    <tr><td>95–105 mph</td><td>High-compression urethane</td><td>Pro V1x, TP5x, Z-Star XV</td></tr>
+    <tr><td>105+ mph</td><td>High-compression</td><td>Pro V1x, Titleist AVX, Tour B XS</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="tracking">
+  <h2 class="sec-title">The Data Advantage</h2>
+  <p class="sec-desc">Golfers who track their performance improve 40% faster than those who play by feel alone. Your perception of where your game leaks is almost always wrong. Data tells you the truth.</p>
+  <span class="badge badge-rust">📊 Know Your Numbers</span>
+  <div class="info-box warn-box">
+    <span class="ico">💡</span>
+    <p><strong>The biggest misconception:</strong> Most 10 HCPs believe putting is their primary problem. SG data consistently reveals it is approach play and around-the-green performance. Tracking for 5 rounds will almost certainly reveal a similar surprise.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">The Five Numbers That Predict Everything</span>
+    <h3>Minimum Viable Dataset</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Fairways hit % (FH%):</strong> Par-4s and 5s. Tour: 62%. 10 HCP benchmark: 45–55%. Below 40% = SG: Off-Tee is costing you significantly.</div></li>
+      <li><span class="step-n">2</span><div><strong>Greens in Regulation % (GIR%):</strong> Tour: 65%. 10 HCP: 28–35%. Each 5% improvement ≈ 1.5 strokes per round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Approach proximity (ft from hole):</strong> Tour: 21 ft from 150 yds. 10 HCP: 50–60 ft. This number reveals club selection, course management, and ball-striking accuracy simultaneously.</div></li>
+      <li><span class="step-n">4</span><div><strong>Up-and-down % (U&D%):</strong> Tour: 59%. 10 HCP: 22–30%. Closing this gap is the most direct route to eliminating bogeys from GIR misses.</div></li>
+      <li><span class="step-n">5</span><div><strong>Putts per GIR:</strong> Tour: 1.72. 10 HCP: 1.95–2.15. High putts/GIR = genuine putting problem. Low putts/GIR = you're putting from too far away (approach issue).</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Recommended Apps</span>
+    <h3>Automatic Stat Tracking</h3>
+    <table class="tbl"><tr><th>App</th><th>What It Tracks</th><th>SG Data?</th><th>Cost</th></tr>
+    <tr><td>Arccos Caddie</td><td>Every shot GPS, full SG, AI recommendations</td><td class="good">Yes — full</td><td>~£120/yr + sensors</td></tr>
+    <tr><td>Shot Scope</td><td>Every shot GPS, full SG analysis</td><td class="good">Yes — full</td><td>~£150 device + free</td></tr>
+    <tr><td>Golfmetrics</td><td>Detailed SG with manual input</td><td class="good">Yes — full</td><td>~£50/yr</td></tr>
+    <tr><td>18Birdies</td><td>GPS, manual stats, basic analytics</td><td class="warn">Partial</td><td>Free / £30/yr</td></tr></table>
+  </div>
+</div>
+
+<div class="sec" id="practice">
+  <h2 class="sec-title">Practise Smarter</h2>
+  <p class="sec-desc">The science of skill acquisition has advanced enormously. The old model — block practice, high repetition, comfort — is now known to be among the least effective forms of motor learning. The new model is uncomfortable. It is also twice as effective.</p>
+  <span class="badge badge-rust">🎯 Deliberate Practice Science</span>
+  <div class="card">
+    <span class="card-tag">Block vs. Random Practice — The Evidence</span>
+    <h3>Why the Range Is Lying to You</h3>
+    <div class="bar-group">
+      <div class="bar-title">Practice Type vs. Skill Retention (72 hours post-practice)</div>
+      <div class="bar-row"><span class="bar-lbl">Random practice</span><div class="bar-track"><div class="bar-fill gold" style="width:82%"></div></div><span class="bar-val">78% retention</span></div>
+      <div class="bar-row"><span class="bar-lbl">Variable practice</span><div class="bar-track"><div class="bar-fill teal" style="width:68%"></div></div><span class="bar-val">65% retention</span></div>
+      <div class="bar-row"><span class="bar-lbl">Block practice</span><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><span class="bar-val">42% retention</span></div>
+      <div class="bar-row"><span class="bar-lbl">Mindless repetition</span><div class="bar-track"><div class="bar-fill red" style="width:22%"></div></div><span class="bar-val">21% retention</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);">Random practice — mixing different shots, distances, and targets — produces 40–60% better long-term retention than block practice. Block practice builds temporary performance that evaporates under course conditions.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Six Principles of Effective Golf Practice</span>
+    <h3>The New Model</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Interleaving:</strong> Mix different shots within a session. After every 3 shots, change target, club, or distance. Uncomfortable but dramatically more effective.</div></li>
+      <li><span class="step-n">2</span><div><strong>Variability:</strong> Never hit the same shot twice in a row. Change lie, target, distance, shape, or trajectory on every shot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pass/fail criteria:</strong> Every drill should have a measurable success condition. Without criteria, practice is merely exercise.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pressure:</strong> Introduce competitive stakes — a score to beat, a consequence for missing. Pressure in practice inoculates against pressure on the course.</div></li>
+      <li><span class="step-n">5</span><div><strong>Simulation:</strong> Full pre-shot routine, one ball per shot, different target each time. Never hit a second ball from the same spot.</div></li>
+      <li><span class="step-n">6</span><div><strong>Rest:</strong> Two 45-minute sessions produce better skill development than one 90-minute session. Fatigue degrades practice quality rapidly.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Where to Spend Practice Time</span>
+    <h3>The SG-Optimal 80/20 Rule</h3>
+    <table class="tbl"><tr><th>Area</th><th>Time %</th><th>Why</th></tr>
+    <tr><td>Putting (5–10 ft)</td><td class="good">20%</td><td>Highest SG leverage per hour</td></tr>
+    <tr><td>Lag putting (30+ ft)</td><td>10%</td><td>Eliminates 3-putts</td></tr>
+    <tr><td>Chipping/pitching</td><td class="good">20%</td><td>Direct U&D% improvement</td></tr>
+    <tr><td>Wedges (50–100 yds)</td><td class="good">15%</td><td>Proximity converts to birdies</td></tr>
+    <tr><td>Iron play</td><td class="warn">20%</td><td>GIR — largest scoring driver</td></tr>
+    <tr><td>Driver</td><td class="warn">10%</td><td>Important but overpractised</td></tr>
+    <tr><td>Mental/routine</td><td class="good">5%</td><td>Highest ROI per minute of all</td></tr></table>
+  </div>
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>Most common practice mistake:</strong> Spending 60–70% of time on the driving range (lowest SG-return area) and 10–15% on putting and short game (highest-return areas). Most 10 HCPs do exactly this. Flip the ratio and watch your handicap respond.</p>
+  </div>
+</div>
+
+<div class="sec" id="recovery">
+  <h2 class="sec-title">The Unsexy Edge</h2>
+  <p class="sec-desc">Sleep, hydration, and nutrition directly affect the physical and cognitive capabilities that determine how well you execute under pressure. No one talks about these as golf tools. The research is unambiguous.</p>
+  <span class="badge badge-teal">🍎 Performance from the Inside</span>
+  <div class="card card-teal">
+    <span class="card-tag">Sleep — The Most Powerful Performance Enhancer</span>
+    <h3>What One Bad Night Actually Does</h3>
+    <p>Even one night of poor sleep reduces fine motor skill precision by 20–30%, decision-making quality by 25%, and composure under pressure by 40%. For golf — which is 95% fine motor skill, decision-making, and composure — sleep deprivation is equivalent to playing slightly drunk.</p>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Night before a round:</strong> Aim for 8 hours minimum. Your best golf comes from a well-rested brain — not from staying up watching swing videos.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Pre-round nap:</strong> If sleep-deprived, a 20-minute nap 90+ minutes before tee time restores alertness without grogginess.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Sleep and skill consolidation:</strong> Skills learned in practice are consolidated into long-term memory during sleep. Practise then sleep — dramatically more effective than practise then stay awake.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Nutrition & Hydration</span>
+    <h3>Fuelling a Round of Golf</h3>
+    <p>Even mild dehydration (1.5% body weight in fluid loss) reduces cognitive function by 10–15% — enough to meaningfully impair course management decisions and club selection. A round of golf burns 1,200–1,800 calories walking.</p>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Pre-round (2 hrs before):</strong> Low-GI, moderate-protein meal. Oats, eggs, wholegrain toast. Avoid high-sugar breakfasts — blood sugar spike then crash hits holes 4–7.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Hydration:</strong> 500ml water in the hour before teeing off. Sip 200–250ml every 4–5 holes. Add electrolytes in hot conditions.</div></li>
+      <li><span class="step-n">▸</span><div><strong>On-course fuelling:</strong> Small low-GI snacks every 5–6 holes: banana, nuts, energy bar. Never wait until you are ravenous.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Caffeine:</strong> 100–200mg (1–2 coffees), 45 minutes before the round. More than 300mg produces anxiety and tremor that impairs putting. The dose matters.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Practice Recovery</span>
+    <h3>Deliberate Practice Cap</h3>
+    <p>Beyond 60–90 minutes of deliberate practice per session, skill acquisition drops to near zero and injury risk increases. Ericsson's research found expert performers practise deliberately for no more than 4 hours per day — most at 2–3 hours. Quality and recovery beat quantity every time.</p>
+  </div>
+</div>
+
+<div class="sec" id="roadmap">
+  <h2 class="sec-title">The Roadmap</h2>
+  <p class="sec-desc">A realistic, prioritised path from 10 handicap to single figures. This is not about doing everything at once — it is about sequencing the highest-leverage improvements correctly.</p>
+  <span class="badge badge-rust">🗺️ Three-Phase Plan</span>
+  <div class="card">
+    <span class="card-tag">Phase 1 — Months 1–2 · Stop the Bleeding</span>
+    <h3>Eliminate the Double Bogeys First</h3>
+    <ul class="checklist">
+      <li>Install a pre-shot routine and use it on every single shot, every round.</li>
+      <li>Start tracking 5 stats per round (FH%, GIR%, proximity, U&D%, putts/GIR). Use Arccos or Shot Scope.</li>
+      <li>Apply the shot selection hierarchy from the short game playbook on every greenside shot — no hero plays.</li>
+      <li>Aim for the fat part of the green on all non-accessible pins.</li>
+      <li>Begin daily mobility work — 6 minutes per day, every day.</li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">✓</span><p><strong>Expected result:</strong> 2–3 stroke reduction in scoring average within 6–8 rounds.</p></div>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Phase 2 — Months 3–4 · Build the Foundation</span>
+    <h3>Short Game Proximity and Putting Confidence</h3>
+    <ul class="checklist">
+      <li>Structured short game practice 3× per week — track proximity. Target: reduce average proximity from 18+ ft to under 12 ft.</li>
+      <li>Build your full wedge matrix — calibrate all 4 wedges at all clock positions.</li>
+      <li>Institute the Make 100 Drill weekly at 4 feet.</li>
+      <li>Get a putter fitting — highest-ROI equipment investment available.</li>
+      <li>Add strength training 2× per week — hip hinge focus.</li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">✓</span><p><strong>Expected result:</strong> Additional 1–2 stroke reduction. U&D% improving toward 35%+. Handicap approaching 7–8.</p></div>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Phase 3 — Months 5–6 · Build the Attack</span>
+    <h3>Approach Play and GIR Improvement</h3>
+    <ul class="checklist">
+      <li>Launch monitor session — establish real carry distances for every club. Eliminate under-clubbing permanently.</li>
+      <li>Add Alignment Stick Low Point Drill to every iron practice session.</li>
+      <li>Apply the wind percentage system on every approach over 10 mph.</li>
+      <li>Begin Rypstick speed training 3× per week if speed is a limitation.</li>
+      <li>Apply dispersion-based targeting on all approach shots.</li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;"><span class="ico">✓</span><p><strong>Expected result:</strong> GIR% toward 40–45%. Handicap approaching 5–7.</p></div>
+  </div>
+  <div class="card">
+    <span class="card-tag">Realistic Timeline</span>
+    <h3>Handicap Progression with Consistent Implementation</h3>
+    <div class="bar-group">
+      <div class="bar-title">Projected Handicap vs. Time</div>
+      <div class="bar-row"><span class="bar-lbl">Month 2</span><div class="bar-track"><div class="bar-fill gold" style="width:25%"></div></div><span class="bar-val">HCP ~8</span></div>
+      <div class="bar-row"><span class="bar-lbl">Month 4</span><div class="bar-track"><div class="bar-fill gold" style="width:45%"></div></div><span class="bar-val">HCP ~7</span></div>
+      <div class="bar-row"><span class="bar-lbl">Month 6</span><div class="bar-track"><div class="bar-fill teal" style="width:60%"></div></div><span class="bar-val">HCP ~5–6</span></div>
+      <div class="bar-row"><span class="bar-lbl">Month 9</span><div class="bar-track"><div class="bar-fill teal" style="width:78%"></div></div><span class="bar-val">HCP ~3–4</span></div>
+      <div class="bar-row"><span class="bar-lbl">Month 12</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="bar-val">HCP ~1–2</span></div>
+    </div>
+    <p style="margin-top:10px;font-size:12px;color:var(--muted);font-style:italic;">Based on consistent implementation of all three playbooks plus the frameworks in this guide. Individual results vary based on practice frequency and starting point.</p>
+  </div>
+</div>
+
+<div class="footer">THE COMPLETE GOLFER · BEYOND TECHNIQUE · TOTAL PERFORMANCE FRAMEWORK</div>
+<script>
+function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+  </a>
+  <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+  </a>
+  <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+  </a>
+  <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+  </a>
+  <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

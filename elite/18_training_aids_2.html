@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<!-- version:v2.2 · 2026-06-05 · 18_training_aids_2.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Golf Playbooks">
+<title>Training Arsenal — Golf Playbooks</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--teal),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV */
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* TYPOGRAPHY */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}
+.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+
+/* TABLES */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* TOOL CARD — Main UI element for each training aid */
+.tool-card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);margin-bottom:20px;overflow:hidden;transition:border-color .2s;}
+.tool-card:hover{border-color:var(--border-hi);}
+.tool-header{display:flex;align-items:center;gap:14px;padding:18px 18px 14px;}
+.tool-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;border:1px solid var(--border);}
+.tool-icon.lime{background:linear-gradient(135deg,rgba(160,200,80,.2),rgba(160,200,80,.05));}
+.tool-icon.gold{background:linear-gradient(135deg,rgba(224,184,64,.2),rgba(224,184,64,.05));}
+.tool-icon.teal{background:linear-gradient(135deg,rgba(72,176,168,.2),rgba(72,176,168,.05));}
+.tool-icon.rust{background:linear-gradient(135deg,rgba(216,96,48,.2),rgba(216,96,48,.05));}
+.tool-meta{flex:1;}
+.tool-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.2;}
+.tool-category{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-top:3px;}
+.tool-category.lime{color:var(--lime);}
+.tool-category.gold{color:var(--gold);}
+.tool-category.teal{color:var(--teal);}
+.tool-category.rust{color:var(--rust-hi);}
+.tool-body{padding:0 18px 18px;}
+.tool-what{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:14px;padding:12px 14px;background:rgba(255,255,255,.02);border-radius:var(--r-sm);border-left:2px solid var(--border-hi);}
+.tool-section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;margin-top:14px;}
+.drill-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.drill-list li{display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:var(--muted);line-height:1.7;}
+.drill-num{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.drill-list li strong{color:var(--white);}
+.freq-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:var(--r-sm);margin-top:12px;border:1px solid var(--faint);}
+.freq-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.freq-value{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;}
+.freq-value.lime{color:var(--lime-hi);}
+.freq-value.gold{color:var(--gold-hi);}
+.freq-value.teal{color:var(--teal-hi);}
+.freq-value.rust{color:var(--rust-hi);}
+.tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.tag.lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.tag.gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.2);color:var(--gold-hi);}
+.tag.teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.2);color:var(--teal-hi);}
+.tag.rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.2);color:var(--rust-hi);}
+
+/* GRID */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-card h4{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.7;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+/* INFO BOXES */
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* PRIORITY MATRIX */
+.matrix{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
+.matrix-cell{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;text-align:center;}
+.matrix-cell.high{border-color:rgba(160,200,80,.35);}
+.matrix-cell.medium{border-color:rgba(224,184,64,.3);}
+.matrix-cell.data{border-color:rgba(72,176,168,.3);}
+.matrix-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;}
+.matrix-label.lime{color:var(--lime);}
+.matrix-label.gold{color:var(--gold);}
+.matrix-label.teal{color:var(--teal);}
+.matrix-tools{font-size:12px;color:var(--muted);line-height:1.7;}
+
+/* PHASE TABLE */
+.phase-table{width:100%;border-collapse:collapse;margin:12px 0;}
+.phase-table th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;}
+.phase-table td{padding:8px 10px;font-size:12px;color:var(--muted);border-bottom:1px solid var(--faint);vertical-align:top;line-height:1.6;}
+.phase-table td:first-child{color:var(--white);font-weight:500;white-space:nowrap;}
+.phase-table tr:last-child td{border-bottom:none;}
+
+/* DIVIDER */
+hr{border:none;border-top:1px solid var(--faint);margin:22px 0;}
+
+/* FOOTER */
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+
+@media(max-width:480px){
+  .grid-2{grid-template-columns:1fr;}
+  .matrix{grid-template-columns:1fr;}
+  .tool-header{gap:10px;}
+  .phase-table{font-size:11px;}
+}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Guide 11 · Training Arsenal</p>
+  <h1>Your Training<br><em>Arsenal</em></h1>
+  <p class="hero-sub">Ten premium training aids — how each one works, exactly how to use it, when to use it, and how to integrate all of them intelligently into your road to scratch.</p>
+  <div class="hero-tags">
+    <span class="htag">🎯 HackMotion</span>
+    <span class="htag">📡 Mevo Gen2</span>
+    <span class="htag">⛳ ExPutt</span>
+    <span class="htag">🏌️ TRS System</span>
+    <span class="htag">⚡ Rypstick</span>
+    <span class="htag">💥 Smash Bag</span>
+    <span class="htag">🪝 G-Force Wedge</span>
+    <span class="htag">🦶 Golf Foot Pedal</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('hackmotion',this)">HackMotion</button>
+  <button class="tab" onclick="show('mevo',this)">Mevo Gen2</button>
+  <button class="tab" onclick="show('exputt',this)">ExPutt</button>
+  <button class="tab" onclick="show('trs',this)">TRS System</button>
+  <button class="tab" onclick="show('pedal',this)">Foot Pedal</button>
+  <button class="tab" onclick="show('rypstick',this)">Rypstick</button>
+  <button class="tab" onclick="show('smash',this)">Smash Bag</button>
+  <button class="tab" onclick="show('gforce',this)">G-Force Wedge</button>
+  <button class="tab" onclick="show('integration',this)">Integration Plan</button>
+</div>
+
+<!-- ═══════ TAB 1 — OVERVIEW ═══════ -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Arsenal Assessment</h2>
+  <p class="sec-desc">You have assembled a genuinely elite set of training tools covering every department of the game. The question is never which tools are best — it is how to deploy them with purpose, not just volume.</p>
+
+  <div class="info-box elite">
+    <span class="ico">🎯</span>
+    <div><p><strong>The Core Principle</strong>Every training aid you own targets a specific physical or technical variable. Random use produces marginal gains. Intentional use — driven by round data and launch monitor feedback — produces compound improvement. Start with data, select the tool that addresses the gap, apply a pass/fail standard, and measure the outcome next round.</p></div>
+  </div>
+
+  <span class="badge badge-gold">📊 Tool Categorisation by Game Area</span>
+
+  <div class="matrix">
+    <div class="matrix-cell high">
+      <div class="matrix-label lime">🏌️ Full Swing</div>
+      <div class="matrix-tools">HackMotion · Mevo Gen2 · Rypstick · Smash Bag · Foot Pedal · TRS Rotation Stick</div>
+    </div>
+    <div class="matrix-cell medium">
+      <div class="matrix-label gold">🎯 Short Game</div>
+      <div class="matrix-tools">G-Force Wedge · TRS Slider · TRS Ball · HackMotion · Mevo Gen2</div>
+    </div>
+    <div class="matrix-cell data">
+      <div class="matrix-label teal">⛳ Putting</div>
+      <div class="matrix-tools">ExPutt Simulator · TRS Ball</div>
+    </div>
+    <div class="matrix-cell">
+      <div class="matrix-label lime">📡 Data & Feedback</div>
+      <div class="matrix-tools">Mevo Gen2 · HackMotion · ExPutt (all provide objective measurement)</div>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">🔑 Should You Follow a Fixed Plan or Let Data Drive It?</span>
+  <div class="card">
+    <span class="card-tag">The Honest Answer</span>
+    <h3>Both — in a Defined Structure</h3>
+    <p>Certain tools should form a non-negotiable weekly baseline regardless of round feedback. Your <strong style="color:var(--white)">measurement tools</strong> (HackMotion, Mevo, ExPutt) must run consistently so you accumulate data — one session is noise, six sessions is a trend. Your <strong style="color:var(--white)">corrective tools</strong> (Smash Bag, G-Force Wedge, Rypstick, Foot Pedal) are deployed reactively based on what the data reveals. Your <strong style="color:var(--white)">pattern tools</strong> (TRS system) build motor patterns over time and need regular repetition to take hold. The integration plan tab provides your exact weekly framework.</p>
+  </div>
+
+  <span class="badge badge-teal">📋 The 10 Tools at a Glance</span>
+  <table class="tbl">
+    <thead><tr><th>Tool</th><th>Primary Function</th><th>Key Variable</th><th>Frequency</th></tr></thead>
+    <tbody>
+      <tr><td>HackMotion</td><td>Wrist angle measurement</td><td>Lead wrist flexion/extension</td><td>Every session</td></tr>
+      <tr><td>Mevo Gen2</td><td>Ball/club launch data</td><td>10+ metrics per shot</td><td>2–3× / week</td></tr>
+      <tr><td>ExPutt</td><td>Putting simulation</td><td>Face angle, path, speed</td><td>3–4× / week</td></tr>
+      <tr><td>TRS Slider</td><td>Short game swing path</td><td>Chip/pitch angle of attack</td><td>2× / week</td></tr>
+      <tr><td>TRS Ball</td><td>Strike quality feedback</td><td>Spin direction, contact point</td><td>2–3× / week</td></tr>
+      <tr><td>TRS Rotation Stick</td><td>Body rotation pattern</td><td>Thoracic/hip sequence</td><td>Daily warm-up</td></tr>
+      <tr><td>Golf Foot Pedal</td><td>Ground force / weight shift</td><td>Pressure transfer sequence</td><td>2× / week</td></tr>
+      <tr><td>Rypstick</td><td>Speed & lag development</td><td>Clubhead speed, lag retention</td><td>3× / week</td></tr>
+      <tr><td>Smash Bag</td><td>Impact position training</td><td>Shaft lean, face angle at impact</td><td>2× / week</td></tr>
+      <tr><td>G-Force Wedge</td><td>Wedge technique</td><td>Pivot, wrist hinge, shaft angle</td><td>2× / week</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <div><p><strong>Critical Warning — Aid Dependency</strong>Training aids produce motor learning only when used to internalise a feel, then removed. If you cannot execute a skill without the aid present, the aid has become a crutch. All corrective tools should be cycled: 3 weeks on, 1 week off without the aid. Test the transfer.</p></div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 2 — HACKMOTION ═══════ -->
+<div class="sec" id="hackmotion">
+  <h2 class="sec-title">HackMotion</h2>
+  <p class="sec-desc">The most data-rich wrist sensor available to amateur golfers. Measures lead wrist flexion/extension, radial/ulnar deviation and rotation in real time — the variables tour coaches have identified as the primary governors of club face angle.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon lime">🖥️</div>
+      <div class="tool-meta">
+        <div class="tool-name">HackMotion Wrist Sensor</div>
+        <div class="tool-category lime">Biofeedback · Wrist Angle · Face Control</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">HackMotion attaches to the lead wrist and connects via Bluetooth to its app. It records wrist angles through every phase of the swing and provides instant audio biofeedback when you deviate from your programmed target range. The app benchmarks your numbers against tour averages at address, top of backswing, and impact.</div>
+
+      <div class="tool-section-label">Tour Benchmarks to Target</div>
+      <table class="tbl">
+        <thead><tr><th>Position</th><th>Tour Average (Lead Wrist)</th><th>Common Amateur Fault</th></tr></thead>
+        <tbody>
+          <tr><td>Address</td><td>Neutral (0° flex/ext)</td><td>Extended (cupped)</td></tr>
+          <tr><td>Top of Backswing</td><td>−15° to −25° flexion (bowed)</td><td>+15° to +25° extension (cupped)</td></tr>
+          <tr><td>Impact</td><td>−10° to −20° flexion</td><td>Extended — open face, flipping</td></tr>
+          <tr><td>Follow-through</td><td>Continued supination</td><td>Early release, chicken wing</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tool-section-label">Drill Protocol — Full Swing</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Baseline audit (first session):</strong> Hit 20 shots without feedback — record your average numbers at all three positions. This is your honest starting point. Screenshot the data.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Biofeedback training:</strong> Set the target zone to the tour benchmark. Hit 30 shots with the audio feedback active. The beep teaches your nervous system the correct position before conscious effort.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Internalisation phase:</strong> After 3 sessions with feedback, remove audio and try to stay in zone through feel. Re-activate feedback and check — how close were you? This measures motor learning transfer.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Pressure test:</strong> Use HackMotion during simulated course scenarios (pre-shot routine, target focus). The wrist must hold its pattern under competitive thinking, not just technique-focused swings.</div></li>
+      </ul>
+
+      <div class="tool-section-label">Drill Protocol — Short Game</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Chip and pitch audit:</strong> Most amateurs extend (cup) the lead wrist through chip contact — causing bladed or thin strikes. Run HackMotion on 20 chips from 20 yards and compare impact position to tour standard (slight flexion maintained).</div></li>
+        <li><span class="drill-num">2</span><div><strong>Flat wrist drill:</strong> Set target to −5° to −10° at impact for chips. This small amount of maintained flexion forward-presses the shaft and delofts slightly — producing consistent ball-first contact.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Putting integration:</strong> HackMotion is particularly valuable on the putting stroke. A consistent wrist angle at impact directly controls face angle — the most important variable in putting direction. Set tight tolerances (±2°) and make 100 putts at 6 feet with audio feedback active.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value lime">Every practice session — wear it as your baseline measurement tool</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag lime">Face Control</span>
+        <span class="tag lime">Wrist Mechanics</span>
+        <span class="tag gold">Biofeedback</span>
+        <span class="tag teal">Putting</span>
+        <span class="tag teal">Short Game</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <div><p><strong>Coaching insight:</strong> The lead wrist at the top of the backswing is the single greatest predictor of club face angle at impact. A 20° difference in wrist angle at the top produces approximately 12–15° difference in face angle at impact. Fix the wrist, fix the face — everything else follows.</p></div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 3 — MEVO GEN2 ═══════ -->
+<div class="sec" id="mevo">
+  <h2 class="sec-title">FlightScope Mevo Gen2</h2>
+  <p class="sec-desc">Your objective reality check. Every training aid in your arsenal produces a feel or a position — the Mevo tells you whether that feel and position is translating into ball flight improvement. Without it, you are guessing.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon gold">📡</div>
+      <div class="tool-meta">
+        <div class="tool-name">FlightScope Mevo Gen2</div>
+        <div class="tool-category gold">Launch Monitor · Ball Data · Skill Measurement</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The Mevo Gen2 is a Doppler radar launch monitor that measures ball speed, clubhead speed, smash factor, launch angle, spin rate, spin axis, carry distance, and shot shape. With the Mevo+ upgrade, it also tracks club data including face angle and dynamic loft. It is the objective arbiter of whether any other training aid is working.</div>
+
+      <div class="tool-section-label">Primary Data Points and What They Reveal</div>
+      <table class="tbl">
+        <thead><tr><th>Metric</th><th>What It Diagnoses</th><th>Scratch Target</th></tr></thead>
+        <tbody>
+          <tr><td>Smash Factor</td><td>Strike quality / contact centredness</td><td>1.47–1.50 driver / 1.38–1.42 irons</td></tr>
+          <tr><td>Spin Rate (driver)</td><td>Attack angle + dynamic loft</td><td>2,000–2,600 rpm (speed dependent)</td></tr>
+          <tr><td>Spin Axis</td><td>Face-to-path relationship (curve)</td><td>±3° for straight / ±8° for shaped shots</td></tr>
+          <tr><td>Launch Angle (driver)</td><td>Loft delivery + attack angle</td><td>12–15° (most amateurs under-launch)</td></tr>
+          <tr><td>Carry Distance</td><td>True carry — eliminates guesswork</td><td>Build your personal matrix</td></tr>
+          <tr><td>Clubhead Speed</td><td>Raw speed — tracks Rypstick progress</td><td>Track weekly, aim +5% over 8 weeks</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tool-section-label">Session Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Monthly baseline session (45 min):</strong> 10 driver shots, 10 each with 7-iron and PW, recorded and averaged. This is your handicap in numbers — track every metric against the previous month. No other drill is more important for directing your training.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Wedge distance matrix build:</strong> Hit 5 shots each with PW, GW, SW, LW at full (12 o'clock), ¾ (10 o'clock), ½ (9 o'clock), and ¼ (7 o'clock). Record mean carry for each. This gives you 16 distances to work with around the green — eliminate guesswork permanently.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Dispersion mapping:</strong> Hit 20 iron shots to a single target without correction. Plot on a grid. Your natural dispersion pattern tells you exactly where to aim relative to the flag — not where you want to land, but where your true centroid falls.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Rypstick speed tracking:</strong> After each Rypstick overspeed session, hit 5 driver shots and record clubhead speed. Tracks whether the speed protocol is converting to actual ball speed.</div></li>
+        <li><span class="drill-num">5</span><div><strong>HackMotion integration check:</strong> Run both simultaneously. Correlate wrist angle data from HackMotion with smash factor and spin axis from Mevo. This reveals whether wrist changes are producing the intended ball flight change — not just a different feel.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value gold">2–3× per week · Full baseline session monthly</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag gold">Launch Data</span>
+        <span class="tag gold">Distance Matrix</span>
+        <span class="tag lime">Smash Factor</span>
+        <span class="tag lime">Spin Rate</span>
+        <span class="tag teal">Progress Tracking</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 4 — EXPUTT ═══════ -->
+<div class="sec" id="exputt">
+  <h2 class="sec-title">ExPutt Simulator</h2>
+  <p class="sec-desc">Putting is the most practice-time-efficient area of the game — every stroke gained in putting requires less physical development than approach play. ExPutt allows indoor, measurable, high-volume putting practice with objective feedback on every stroke.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon teal">⛳</div>
+      <div class="tool-meta">
+        <div class="tool-name">ExPutt Putting Simulator</div>
+        <div class="tool-category teal">Putting · Face Angle · Speed Control · Path</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">ExPutt uses high-speed camera technology to measure face angle at impact (±0.5°), putter path, impact point on face, tempo ratio, and ball speed. The simulator projects the putting green and shows ball roll in real time, giving immediate visual and data feedback on every stroke. Critical for high-volume practice without a putting green.</div>
+
+      <div class="tool-section-label">Key Metrics and Tour Standards</div>
+      <table class="tbl">
+        <thead><tr><th>Metric</th><th>Tour Standard</th><th>Common Amateur Fault</th></tr></thead>
+        <tbody>
+          <tr><td>Face angle at impact</td><td>±1.0° from target line</td><td>±3–5° — primary miss direction cause</td></tr>
+          <tr><td>Tempo ratio (back:through)</td><td>2:1 (consistent)</td><td>Deceleration — 3:1 or worse on short putts</td></tr>
+          <tr><td>Impact point</td><td>Sweet spot ±3mm</td><td>Heel or toe strikes — poor roll quality</td></tr>
+          <tr><td>Path (stroke arc)</td><td>Slight arc or straight</td><td>Excessive in-to-out or out-to-in</td></tr>
+          <tr><td>Ball speed consistency</td><td>&lt;5% variance at a set distance</td><td>10–20% variance — distance control fault</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Make 100 Drill (4–5 feet):</strong> The foundation. 100 consecutive makes without a miss. If you miss, start over. This is the most important putting drill at scratch level. Target: complete in under 25 minutes. Average tour player makes 87% from 5 feet — you need 90%+ to score to scratch.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Face angle isolation drill:</strong> Putt to a 6-foot target with only face angle data visible. Hit 50 putts. Goal: ±1.0° on 80% of strokes. If your miss pattern is consistently one direction, you have a systematic face angle fault — audit setup and grip on HackMotion simultaneously.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Speed ladder drill:</strong> 5 putts at 10 feet, 5 at 20 feet, 5 at 30 feet, 5 at 40 feet. Measure ball speed variance within each distance. Goal: &lt;5% variance. This directly translates to 3-putt prevention — the biggest putting leak at 10 HCP.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Pressure simulation:</strong> Play simulated 18-hole rounds on ExPutt. Record putts per simulated GIR. Track this weekly — it reveals whether your putting practice is transferring to round conditions.</div></li>
+        <li><span class="drill-num">5</span><div><strong>Gate drill (path):</strong> Many ExPutt models allow gate placement. Place virtual gates at 6 inches either side of impact. Pass/fail: putter head must pass through both gates. Eliminates path errors that cause putts to start offline.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value teal">Daily where possible — minimum 3× per week · 20 min per session</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag teal">Face Angle</span>
+        <span class="tag teal">Speed Control</span>
+        <span class="tag lime">Make Rate</span>
+        <span class="tag gold">3-Putt Elimination</span>
+        <span class="tag lime">Indoor Practice</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 5 — TRS SYSTEM ═══════ -->
+<div class="sec" id="trs">
+  <h2 class="sec-title">TRS System</h2>
+  <p class="sec-desc">The TRS range covers three distinct tools — each addressing a different aspect of motor patterning. Together they form a comprehensive pattern-building system for the short game and body rotation.</p>
+
+  <!-- TRS SLIDER -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon lime">📐</div>
+      <div class="tool-meta">
+        <div class="tool-name">TRS Slider</div>
+        <div class="tool-category lime">Short Game · Swing Path · Angle of Attack</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The TRS Slider creates a defined track for the club to travel on during chipping and pitching. It constrains and teaches the correct low-point position and angle of attack — the two variables that most commonly cause thin and fat chips in amateurs.</div>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Low-point calibration:</strong> Set the Slider to match your ball position at address. The constraint forces you to bottom out the arc past the ball, not behind it. Hit 30 chips. If you hit the leading edge of the Slider, your low point is too early. The goal is clean passage through the gate.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Path consistency check:</strong> Hit 20 chips and observe whether the club head moves cleanly along the Slider or torques off it. Torquing indicates a path inconsistency — often linked to shoulder line alignment or early wrist breakdown. Cross-reference with HackMotion data.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Variable lie drill:</strong> Practice chips from uphill, downhill, and sidehill lies using the Slider as your reference point. The low-point position must adjust with lie angle — the Slider teaches you when to expect a different arc.</div></li>
+      </ul>
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value lime">2× per week — short game practice sessions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRS BALL -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon gold">🎱</div>
+      <div class="tool-meta">
+        <div class="tool-name">TRS Ball</div>
+        <div class="tool-category gold">Strike Quality · Contact Point · Face Feedback</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The TRS Ball provides immediate visual feedback on contact quality and face angle at impact. The coloured reaction on the ball face — or the direction of ball flight from a training strike — reveals exactly where contact was made and whether the face was open, closed or square.</div>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Contact mapping (full swing):</strong> Hit 20 iron shots using the TRS Ball as your strike reference. Photograph or observe the contact point pattern. Moving contact 10mm toward centre improves smash factor by ~0.03 — worth 3–4 yards per iron shot with zero swing change.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Chip and pitch contact audit:</strong> Heel-heavy contact on chips is one of the most common short game faults. Use the TRS Ball for 30 chip shots from varying distances. Target: sweet spot contact on 80%+ of strikes.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Putting contact check:</strong> Centre contact in putting directly affects energy transfer and roll quality. Use the TRS Ball in combination with ExPutt to confirm your impact point data. Heel or toe strikes produce 8–12% reduction in ball speed at a given stroke length.</div></li>
+      </ul>
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value gold">2–3× per week — integrated with range and short game sessions</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRS TOUR ROTATION STICK -->
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon teal">🔄</div>
+      <div class="tool-meta">
+        <div class="tool-name">TRS Tour Rotation Stick</div>
+        <div class="tool-category teal">Body Rotation · Sequence · Thoracic Turn</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The TRS Tour Rotation Stick is placed across the chest or through the arms to exaggerate body rotation awareness and enforce the correct kinematic sequence — the pelvis-first, thorax-second, arms-third sequence that defines powerful and consistent ball striking. It is equally effective as a warm-up tool and a fault-correction drill.</div>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Daily rotation warm-up (5 min):</strong> Across the chest, feet shoulder-width, 20 slow full rotations both ways. Focus: pelvis leads, thorax follows, arms last. This grooves the sequence neurologically before a practice session or round.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Impact position drill:</strong> Place the stick through both arms. Turn to the impact position and hold for 3 seconds. Check: hips are open 30–45° to the target, chest is 10–15° open, lead wrist is flat (cross-reference with HackMotion). This is the correct impact geometry — drill it daily.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Sequence exaggeration drill:</strong> With stick across chest, make slow-motion swings (10% speed) focusing on the pelvis initiating the downswing before the upper body. Gradually increase to 50% speed. This directly addresses the most common power leak — casting from the top with the arms and shoulders.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Follow-through check:</strong> Many amateurs stop rotating at impact. With the stick, enforce a full follow-through where the chest faces the target and the back foot rises. Incomplete rotation is a major cause of pushes and heavy contacts.</div></li>
+      </ul>
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value teal">Daily warm-up (5 min) + 2× weekly in dedicated sessions</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 6 — FOOT PEDAL ═══════ -->
+<div class="sec" id="pedal">
+  <h2 class="sec-title">Golf Foot Pedal</h2>
+  <p class="sec-desc">Ground reaction force is the foundation of power in the golf swing. The most underappreciated variable in amateur golf — and one of the clearest differentiators between a 10 handicapper and a scratch player.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon rust">🦶</div>
+      <div class="tool-meta">
+        <div class="tool-name">Golf Foot Pedal</div>
+        <div class="tool-category rust">Ground Force · Weight Shift · Pressure Transfer</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The Golf Foot Pedal is a pressure training tool that teaches the correct weight shift and ground force application through the swing. It sits under the lead foot and provides tactile feedback on when and how much pressure to apply — training the feel of pushing into the ground at the correct moment in the kinematic sequence.</div>
+
+      <div class="tool-section-label">The Physics — Why Ground Force Matters</div>
+      <div class="card card-gold" style="margin-bottom:14px;">
+        <span class="card-tag">Biomechanics</span>
+        <h3>Ground Force = Free Speed</h3>
+        <p>Tour players apply approximately 1.2× their body weight in ground reaction force at the start of the downswing. Amateurs average 0.6–0.8×. This single variable is worth 15–25 yards of carry distance at identical technique. You cannot swing fast with quiet feet.</p>
+      </div>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Pressure transfer drill (basic):</strong> Place the pedal under the lead foot. At the top of the backswing, consciously drive the lead foot into the pedal before the arms begin the downswing. The pedal provides tactile confirmation of correct sequencing. Hit 30 shots focusing only on this one cue.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Sequence timing drill:</strong> Use the Mevo Gen2 alongside the Foot Pedal. Pedal activation timing should produce higher smash factors and carry distances — confirming that ground force application is translating to ball speed. If smash factor drops when using the Pedal, your sequence is still arms-first.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Pump drill integration:</strong> A classic for pressure training. At the top of the backswing, pump the lead foot into the ground twice before swinging. This exaggerates the ground push feel. Hit 20 shots at 70% speed, then remove the pedal and try to retain the sensation.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Iron strike quality test:</strong> Ground force application is directly linked to low-point control. Players with poor pressure transfer hit fat shots under pressure. Use the Pedal during iron practice and track fat/thin ratio. A correctly applied pressure shift should virtually eliminate heavy strikes from level lies.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value rust">2× per week — full swing sessions · More if Mevo shows low smash factor</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag rust">Ground Force</span>
+        <span class="tag rust">Kinematic Sequence</span>
+        <span class="tag lime">Power Transfer</span>
+        <span class="tag gold">Low Point Control</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 7 — RYPSTICK ═══════ -->
+<div class="sec" id="rypstick">
+  <h2 class="sec-title">Rypstick</h2>
+  <p class="sec-desc">Speed is not a fixed attribute. It is a trained physical quality that responds to systematic overspeed and lag development work. The Rypstick is engineered specifically for this — combining speed training with lag retention feedback.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon lime">⚡</div>
+      <div class="tool-meta">
+        <div class="tool-name">Rypstick</div>
+        <div class="tool-category lime">Speed Training · Lag Development · Neurological Overload</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The Rypstick is a weighted and counter-weighted training stick that trains both lag retention and maximum speed simultaneously. Its unique design means the shaft loads differently to a conventional club — training the hands to hold lag deeper into the downswing while the neurological overload protocol (heavy-to-light sequencing) re-educates the nervous system to allow higher clubhead speeds.</div>
+
+      <div class="tool-section-label">The Science</div>
+      <div class="info-box elite">
+        <span class="ico">⚡</span>
+        <div><p><strong>Overspeed principle:</strong> Swinging a lighter-than-normal implement at maximum effort neurologically removes the brain's self-imposed speed governor. Research shows 4–8% clubhead speed gains in 4–6 weeks with 3× per week training. Every 1 mph of added speed = approximately 2.5 yards of carry distance — systematically compounded over 8 weeks = 10–20 yards.</p></div>
+      </div>
+
+      <div class="tool-section-label">Rypstick Protocol (3× per week, 10 minutes)</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Heavy end warm-up (5 reps):</strong> Swing the heavier end of the Rypstick at 80% effort. This activates the large muscle groups and primes the rotation pattern before maximum effort swings.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Lag training swings (10 reps):</strong> Use the Rypstick in its lag-training configuration. Focus on retaining the angle between the lead arm and club shaft as deep into the downswing as possible before releasing through impact. The tool's design provides physical feedback when lag is lost early — you will feel it decelerate prematurely.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Maximum speed swings — light end (15 reps):</strong> Switch to the light end and swing at absolute maximum effort. This is neurological overload training. Swing speed, not accuracy, is the only goal. No ball required — this is pure speed work.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Transfer shots (5 real shots):</strong> Immediately follow Rypstick work with 5 driver shots on the Mevo. Your nervous system will briefly allow higher speeds than your normal ceiling. Record and track — this is your true ceiling measure.</div></li>
+      </ul>
+
+      <div class="tool-section-label">Integration with Mevo Data</div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.8;">Track clubhead speed on the Mevo every session after Rypstick work. Plot a weekly average. If speed is not increasing by week 4 of consistent 3× per week work, check: (1) are you actually swinging at maximum effort or just comfortable effort? (2) Is fatigue accumulating — reduce to 2× per week and increase rest. (3) Consider alternating stimulus patterns for variety — see Guide 25 for alternatives.</p>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value lime">3× per week · 10 minutes · Before full swing sessions, never after</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag lime">Speed Development</span>
+        <span class="tag lime">Lag Retention</span>
+        <span class="tag gold">Distance Gains</span>
+        <span class="tag teal">Neurological Training</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 8 — SMASH BAG ═══════ -->
+<div class="sec" id="smash">
+  <h2 class="sec-title">Golf Smash Bag</h2>
+  <p class="sec-desc">The most tactile impact training tool available. Nothing teaches shaft lean, forward press, and a flat lead wrist at impact faster than the physical resistance of a smash bag. It bypasses conscious mechanics and trains the body through feel and force.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon gold">💥</div>
+      <div class="tool-meta">
+        <div class="tool-name">Golf Smash Bag</div>
+        <div class="tool-category gold">Impact Position · Shaft Lean · Forward Press</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The Smash Bag is filled with material that absorbs club impact and holds the club head in position — allowing you to examine and feel the exact impact geometry. Unlike ball-striking, it eliminates the distraction of ball flight and forces you to focus purely on the position of the hands, shaft, and club head at the moment of contact.</div>
+
+      <div class="tool-section-label">What Correct Smash Bag Impact Looks Like</div>
+      <table class="tbl">
+        <thead><tr><th>Body Part</th><th>Correct Position</th><th>Fault Sign</th></tr></thead>
+        <tbody>
+          <tr><td>Hands</td><td>Lead of the club head — forward press</td><td>Behind or level — flipping</td></tr>
+          <tr><td>Shaft</td><td>Leaning forward toward target</td><td>Vertical or leaning back — scooping</td></tr>
+          <tr><td>Lead wrist</td><td>Flat or slightly flexed</td><td>Extended (cupped) — face open</td></tr>
+          <tr><td>Hips</td><td>Open 30–45° to target at contact</td><td>Square — rotation has stalled</td></tr>
+          <tr><td>Trail elbow</td><td>Tucked to lead hip</td><td>Chicken wing — disconnected</td></tr>
+          <tr><td>Weight</td><td>70–80% on lead side</td><td>Centred or trailing — hanging back</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Slow-motion impact hold (beginner level):</strong> Swing slowly and compress the bag. At contact, STOP. Hold for 5 seconds and examine every position above. Repeat 20 times. The body memorises the held position far more effectively than a fast, unconscious movement.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Progressive speed drill:</strong> Start at 30% speed, increase to 50%, then 70%. Each hit should leave the shaft leaning forward. If the shaft straightens or leans back as you increase speed, you have a deceleration or flipping pattern that must be corrected at lower speeds before progressing.</div></li>
+        <li><span class="drill-num">3</span><div><strong>HackMotion correlation:</strong> Hit the smash bag with HackMotion attached. Check that the wrist angle at impact matches the tour benchmark. The smash bag removes the variable of ball flight, allowing you to focus entirely on the wrist data — a premium drill combination.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Wedge-specific work:</strong> The smash bag is exceptionally effective for wedge impact training. Many amateurs decelerate into short shots — the bag requires commitment through impact. Hit 30 wedge impacts focusing on consistent shaft lean and a maintained wrist hinge through the bag.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value gold">2× per week · 5–10 min · Excellent for indoor use</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag gold">Impact Position</span>
+        <span class="tag gold">Shaft Lean</span>
+        <span class="tag lime">Forward Press</span>
+        <span class="tag teal">Indoor Use</span>
+        <span class="tag rust">Anti-Flip</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 9 — G-FORCE WEDGE ═══════ -->
+<div class="sec" id="gforce">
+  <h2 class="sec-title">G-Force Wedge</h2>
+  <p class="sec-desc">A training wedge engineered with a weighted head that exaggerates the feel of correct pivot and wrist hinge — teaching the body the correct movement pattern for consistent, controlled short game shots through kinesthetic amplification.</p>
+
+  <div class="tool-card">
+    <div class="tool-header">
+      <div class="tool-icon teal">🪝</div>
+      <div class="tool-meta">
+        <div class="tool-name">G-Force Wedge</div>
+        <div class="tool-category teal">Short Game · Pivot · Wrist Hinge · Wedge Technique</div>
+      </div>
+    </div>
+    <div class="tool-body">
+      <div class="tool-what">The G-Force Wedge uses a heavy, offset head to amplify the sensation of correct wrist hinge and pivot through short game shots. The weight forces the body to maintain the correct sequence — if you rush the transition or flip the wrists, the heavy head will feel dramatically wrong and the shot will reflect it immediately.</div>
+
+      <div class="tool-section-label">What the G-Force Wedge Teaches</div>
+      <div class="grid-2">
+        <div class="mini-card">
+          <span class="mini-tag">Wrist Hinge</span>
+          <h4>Correct Hinge Timing</h4>
+          <p>The heavy head amplifies the feeling of correct early wrist hinge. No hinge = heavy, dead impact. Correct hinge = crisp, compressed strike.</p>
+        </div>
+        <div class="mini-card">
+          <span class="mini-tag">Pivot Drive</span>
+          <h4>Body Rotation Through</h4>
+          <p>The weight demands the body pivot through impact to maintain speed. Stopping the body causes the head to release early — the most common short game fault.</p>
+        </div>
+      </div>
+
+      <div class="tool-section-label">Drill Protocols</div>
+      <ul class="drill-list">
+        <li><span class="drill-num">1</span><div><strong>Hinge and hold (25–30 yards):</strong> Take the G-Force Wedge to 9 o'clock and hold the hinge into the downswing as long as possible before releasing through impact. The heavy head will pull if you release early. Goal: feel the head arriving late (lag) into impact, not leading. 20 reps.</div></li>
+        <li><span class="drill-num">2</span><div><strong>Pivot awareness drill:</strong> Using only pivot (no arm contribution), brush the turf repeatedly with the G-Force Wedge. The heavy head means incomplete pivot = the head drags. This teaches body-driven — not arm-driven — short game technique, which is the tour standard for consistent proximity.</div></li>
+        <li><span class="drill-num">3</span><div><strong>Transition to real wedge:</strong> After 15 G-Force Wedge reps, immediately hit 10 shots with your real wedge. The lighter club will feel effortless and your pattern will be amplified. Measure proximity with Mevo data — confirm the transfer.</div></li>
+        <li><span class="drill-num">4</span><div><strong>Bunker technique:</strong> The G-Force Wedge is highly effective for bunker training. The weight teaches the splash technique — opening the face, maintaining the hinge, and driving the pivot through sand. The heavy head makes poor bunker technique immediately obvious.</div></li>
+        <li><span class="drill-num">5</span><div><strong>HackMotion pairing:</strong> Use HackMotion on the lead wrist during G-Force Wedge drills. Confirm that the wrist angle maintained through impact in G-Force training is matching your HackMotion target. The combination provides both kinesthetic and data-based feedback simultaneously.</div></li>
+      </ul>
+
+      <div class="freq-row">
+        <span class="freq-label">Recommended Frequency</span>
+        <span class="freq-value teal">2× per week · 10–15 min · Always transition to real wedge after</span>
+      </div>
+      <div class="tag-row">
+        <span class="tag teal">Wedge Technique</span>
+        <span class="tag teal">Wrist Hinge</span>
+        <span class="tag lime">Pivot Drive</span>
+        <span class="tag gold">Bunker Play</span>
+        <span class="tag rust">Anti-Flip</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ TAB 10 — INTEGRATION ═══════ -->
+<div class="sec" id="integration">
+  <h2 class="sec-title">Integration Plan</h2>
+  <p class="sec-desc">Every tool deployed with purpose, in a structured weekly framework, informed by round data and launch monitor feedback. This is how you compound the benefits of each aid into a systematic journey to scratch.</p>
+
+  <span class="badge badge-gold">📅 Weekly Integration Framework</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Model Week</span>
+    <h3>Fixed vs. Data-Driven Tool Deployment</h3>
+    <p>Divide your tools into two categories: <strong style="color:var(--white)">Baseline tools</strong> (used every session regardless of round data — build the measurement foundation) and <strong style="color:var(--white)">Reactive tools</strong> (deployed in response to what the data reveals). Without baselines, you have no data. Without reactive deployment, you are practising without purpose.</p>
+  </div>
+
+  <table class="phase-table">
+    <thead><tr><th>Day</th><th>Session</th><th>Primary Tools</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Monday</td><td>Rest / Mobility</td><td>TRS Rotation Stick (5 min)</td><td>Active recovery, sequence maintenance</td></tr>
+      <tr><td>Tuesday</td><td>Practice Session 1</td><td>HackMotion + Mevo + Rypstick + Reactive tool</td><td>Full swing focus — data-driven correction</td></tr>
+      <tr><td>Wednesday</td><td>Gym / Cardio</td><td>TRS Rotation Stick (5 min warm-up)</td><td>Strength, speed foundation, rotation pattern</td></tr>
+      <tr><td>Thursday</td><td>Round 1</td><td>No aids — play and track data</td><td>Competitive application, stat collection</td></tr>
+      <tr><td>Friday</td><td>Gym / Cardio + Rypstick</td><td>Rypstick (10 min post gym)</td><td>Speed session — neurological overload</td></tr>
+      <tr><td>Saturday</td><td>Round 2 (competitive)</td><td>No aids — play and track data</td><td>Pressure application, SG measurement</td></tr>
+      <tr><td>Sunday</td><td>Practice Session 2</td><td>ExPutt + TRS + G-Force Wedge + Smash Bag</td><td>Short game and putting focus — based on week's data</td></tr>
+    </tbody>
+  </table>
+
+  <span class="badge badge-lime">🔁 Baseline Tools — Every Practice Session</span>
+  <div class="card">
+    <span class="card-tag">Non-Negotiable Baselines</span>
+    <h3>The Measurement Foundation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><strong>HackMotion:</strong> Wear on the lead wrist for every range session. Even if you are not actively drilling with it, it accumulates data and catches pattern drift before it becomes a problem.</li>
+      <li><span class="step-n">2</span><strong>ExPutt (minimum 20 min):</strong> The Make 100 drill or speed ladder. Putting practice that costs you nothing physically but compounds directly into scoring.</li>
+      <li><span class="step-n">3</span><strong>TRS Rotation Stick (5 min warm-up):</strong> Every session, before any ball striking. The sequence must be grooved before speed and ball flight work begins.</li>
+      <li><span class="step-n">4</span><strong>Mevo Gen2 (at least 15 shots per session):</strong> Even if not doing a full session, capture data. Cumulative session data over weeks is far more valuable than individual readings.</li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">📊 Data-Driven Tool Deployment</span>
+  <div class="card card-teal">
+    <span class="card-tag">Reactive Protocol</span>
+    <h3>Let the Data Choose the Tool</h3>
+    <table class="tbl">
+      <thead><tr><th>Round / Mevo Data Shows</th><th>Primary Tool Response</th><th>Secondary Tool</th></tr></thead>
+      <tbody>
+        <tr><td>Low smash factor (&lt;1.42 irons)</td><td>TRS Ball (contact mapping)</td><td>HackMotion (wrist audit)</td></tr>
+        <tr><td>Low clubhead speed vs baseline</td><td>Rypstick (speed session)</td><td>Foot Pedal (ground force)</td></tr>
+        <tr><td>High spin axis (curve)</td><td>HackMotion (face audit)</td><td>Smash Bag (impact position)</td></tr>
+        <tr><td>Fat/thin shots on course</td><td>Smash Bag + Foot Pedal</td><td>TRS Slider (low point)</td></tr>
+        <tr><td>Wedge proximity &gt;30 ft</td><td>G-Force Wedge + TRS Slider</td><td>Mevo wedge matrix session</td></tr>
+        <tr><td>High 3-putt rate</td><td>ExPutt (speed ladder)</td><td>HackMotion (face angle)</td></tr>
+        <tr><td>Missed short putts (&lt;6 ft)</td><td>ExPutt Make 100 drill</td><td>HackMotion (impact wrist)</td></tr>
+        <tr><td>Short game dispersion wide</td><td>TRS Ball (contact check)</td><td>G-Force Wedge (hinge/pivot)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <span class="badge badge-rust">📈 Phase-Based Emphasis</span>
+  <div class="card card-rust">
+    <span class="card-tag">Tool Priority by Phase</span>
+    <h3>How Emphasis Shifts as Your Game Improves</h3>
+    <table class="tbl">
+      <thead><tr><th>Phase</th><th>HCP Target</th><th>Primary Tools</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td>Phase 1 (Months 1–2)</td><td>~8</td><td>ExPutt · HackMotion · Smash Bag · Mevo</td><td>Eliminate double bogeys. Fix impact position. Build putting baseline.</td></tr>
+        <tr><td>Phase 2 (Months 3–4)</td><td>~6</td><td>G-Force Wedge · TRS Slider · TRS Ball · ExPutt</td><td>Short game proximity improvement. Build wedge matrix. U&D% to 35%+.</td></tr>
+        <tr><td>Phase 3 (Months 5–6)</td><td>~4</td><td>Mevo · Rypstick · Foot Pedal · HackMotion</td><td>GIR improvement. Real carry distances confirmed. Speed gains.</td></tr>
+        <tr><td>Phase 4 (Months 7–24)</td><td>Scratch</td><td>All tools — precision standards applied</td><td>Margin elimination. Competitive pressure. Precision in all SG categories.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <div><p><strong>The 3-Week Cycle Rule:</strong> When using any corrective tool intensively, follow a 3-weeks-on, 1-week-off cycle. During the off week, practise the same skills without the aid and measure whether the motor pattern has transferred. If it has not transferred, the aid was compensating rather than teaching — adjust your drill approach.</p></div>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <div><p><strong>The Compound Effect:</strong> Used in isolation, each tool produces incremental gains. Used in combination — HackMotion + Mevo + Smash Bag for impact position; G-Force Wedge + TRS Slider + Mevo for short game; ExPutt + HackMotion for putting — you create a feedback loop where objective data, kinesthetic training, and motor pattern work reinforce each other simultaneously. This is how scratch players train.</p></div>
+  </div>
+</div>
+
+<div class="footer">GOLF PLAYBOOKS · GUIDE 11 · TRAINING ARSENAL · 10 HCP → SCRATCH · STROKES GAINED FRAMEWORK</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
+  </a>
+  <a href="hackmotion_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🖥️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">HackMotion Data Mastery</span>
+  </a>
+  <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
+  </a>
+  <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🌊</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Short Game Playbook</span>
+  </a>
+  <a href="03_longgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🏌️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Long Game Playbook</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

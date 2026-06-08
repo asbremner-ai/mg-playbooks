@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<!-- version:v2.1 · 2026-05-30 · 11_shot_dispersion.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shot Dispersion Mapping — Pro Edition</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}
+.card-rust .card-tag{color:var(--rust-hi);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p{color:rgba(112,204,196,.9);}
+.tip strong{color:var(--teal-hi);}
+.elite{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}
+.elite p{color:rgba(240,208,112,.9);}
+.elite strong{color:var(--gold-hi);}
+.warn-box{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.22);}
+.warn-box p{color:rgba(240,128,80,.9);}
+.warn-box strong{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;}
+.formula-main{font-size:12px;color:var(--white);line-height:1.75;}
+.formula-note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.pull-quote{border-left:3px solid var(--gold);padding:14px 16px;margin:18px 0;background:var(--gold-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-hi);font-style:italic;line-height:1.6;margin-bottom:6px;}
+.pull-quote span{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;}
+
+/* DISPERSION VISUAL */
+.disp-wrap{position:relative;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px 16px;margin:14px 0;overflow:hidden;}
+.disp-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;}
+.disp-field{position:relative;width:100%;max-width:360px;margin:0 auto;aspect-ratio:1/1.4;background:rgba(30,50,30,.6);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+.disp-field::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(160,200,80,.06) 39px,rgba(160,200,80,.06) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(160,200,80,.06) 39px,rgba(160,200,80,.06) 40px);}
+.target-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(160,200,80,.25);transform:translateX(-50%);}
+.zone-outer{position:absolute;left:50%;top:50%;width:80%;padding-top:80%;border-radius:50%;border:1px dashed rgba(216,96,48,.4);transform:translate(-50%,-50%);margin-top:-10%;}
+.zone-mid{position:absolute;left:50%;top:50%;width:50%;padding-top:50%;border-radius:50%;border:1px dashed rgba(224,184,64,.4);transform:translate(-50%,-50%);margin-top:-10%;}
+.zone-inner{position:absolute;left:50%;top:50%;width:25%;padding-top:25%;border-radius:50%;border:1px solid rgba(160,200,80,.5);transform:translate(-50%,-50%);margin-top:-10%;}
+.shot-dot{position:absolute;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%);}
+.dot-good{background:var(--lime);box-shadow:0 0 4px rgba(160,200,80,.6);}
+.dot-ok{background:var(--gold);box-shadow:0 0 4px rgba(224,184,64,.5);}
+.dot-miss{background:var(--bad);box-shadow:0 0 4px rgba(224,112,96,.5);}
+.flag{position:absolute;left:50%;bottom:12%;font-size:18px;transform:translateX(-50%);}
+.zone-labels{display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+.zl{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);}
+.zl-dot{width:8px;height:8px;border-radius:50%;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+@media(max-width:480px){.two-col{grid-template-columns:1fr;}}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.stat-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--faint);font-size:13px;}
+.stat-row:last-child{border-bottom:none;}
+.stat-label{color:var(--muted);}
+.stat-val{font-family:'JetBrains Mono',monospace;font-size:12px;}
+
+.bar-group{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;}
+.bar-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-row:last-child{margin-bottom:0;}
+.bar-lbl{font-size:11px;color:var(--muted);min-width:80px;flex-shrink:0;}
+.bar-track{flex:1;height:5px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));}
+.bar-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.bar-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+.bar-fill.red{background:linear-gradient(90deg,#c84040,var(--bad));}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);min-width:56px;text-align:right;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">⌂</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Shot Dispersion · Guide 11</p>
+  <h1>Know Your<br><em>Pattern</em></h1>
+  <p class="hero-sub">Map your real dispersion data, eliminate the guesswork from course management, and aim where your shot pattern dictates — not where you hope the ball goes.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 Data Collection</span>
+    <span class="htag">🎯 Club Mapping</span>
+    <span class="htag">🗺️ Course Application</span>
+    <span class="htag">📐 Miss Patterns</span>
+    <span class="htag">🏆 Scratch Standards</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why It Matters</button>
+  <button class="tab" onclick="show('protocol',this)">The Protocol</button>
+  <button class="tab" onclick="show('clubs',this)">Club by Club</button>
+  <button class="tab" onclick="show('logging',this)">Logging System</button>
+  <button class="tab" onclick="show('application',this)">On-Course Use</button>
+  <button class="tab" onclick="show('benchmarks',this)">Benchmarks</button>
+  <button class="tab" onclick="show('improvement',this)">Improvement</button>
+  <button class="tab" data-tier="pro" onclick="show('prob_targeting',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Probability Targeting</button>
+  <button class="tab" data-tier="pro" onclick="show('dynamic_disp',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Dynamic Dispersion</button>
+</div>
+
+<!-- WHY IT MATTERS -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">The Most Honest Data in Golf</h2>
+  <p class="sec-desc">Your dispersion pattern is not what you think it is. Research consistently shows amateur golfers overestimate their consistency by 30–50%. Mapping real data changes how you aim, how you practise, and how you think about risk.</p>
+
+  <div class="pull-quote">
+    <p>"Every tour caddie knows exactly where his player misses. That knowledge is worth more than any swing tip."</p>
+    <span>— Steve Williams, caddie to Tiger Woods</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Perception Gap</span>
+    <h3>What You Think vs. What Is Real</h3>
+    <p>A 10 handicap typically believes their 7-iron dispersion is approximately ±15 yards offline. The actual measured average is ±28 yards — nearly double the perceived figure. This gap is not a failure of technique; it is a failure of self-knowledge. And self-knowledge is something you can fix this week.</p>
+    <div class="bar-group" style="margin-top:14px;">
+      <div class="bar-title">Perceived vs. Actual Dispersion — 150-Yard Iron (10 HCP)</div>
+      <div class="bar-row"><span class="bar-lbl">Perceived offline</span><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><span class="bar-val">±15 yds</span></div>
+      <div class="bar-row"><span class="bar-lbl">Actual offline</span><div class="bar-track"><div class="bar-fill red" style="width:70%"></div></div><span class="bar-val">±28 yds</span></div>
+      <div class="bar-row"><span class="bar-lbl">Tour average</span><div class="bar-track"><div class="bar-fill teal" style="width:22%"></div></div><span class="bar-val">±9 yds</span></div>
+      <div class="bar-row"><span class="bar-lbl">Scratch target</span><div class="bar-track"><div class="bar-fill gold" style="width:35%"></div></div><span class="bar-val">±16 yds</span></div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <span class="card-tag">Strategic Value</span>
+      <h3>Course Management</h3>
+      <p style="font-size:12px;">Knowing your actual dispersion cone tells you where to aim on every approach shot — based on data, not hope. Aim your <em>pattern</em> at the green, not your ideal shot.</p>
+    </div>
+    <div class="card card-gold">
+      <span class="card-tag">Practice Value</span>
+      <h3>Practice Targeting</h3>
+      <p style="font-size:12px;">Dispersion data reveals your real weakness. Most players practise what they enjoy, not what costs them strokes. The data removes the bias entirely.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Three Dispersion Dimensions</span>
+    <h3>What You Are Actually Measuring</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Lateral (offline) dispersion:</strong> How far left or right of the target line your shots land, measured in yards. The primary metric for approach shot targeting. The majority of poor approach shots involve lateral error, not distance error.</div></li>
+      <li><span class="step-n">2</span><div><strong>Distance (long/short) dispersion:</strong> How much variation exists in carry distance for a given club with the same perceived effort. A 10 HCP typically has ±12–18 yards of distance variation with a given iron; tour average is ±4–6 yards.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pattern bias (miss tendency):</strong> Whether your miss is directionally consistent — predominantly left, right, short, or long. Most golfers have a clear bias. Identifying and accepting this is the foundation of intelligent course management.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🎯</span>
+    <p><strong>The scratch golfer's edge:</strong> Scratch golfers do not hit the ball straighter than +2 golfers as often as you'd expect. What separates them is knowing their pattern so thoroughly that they are almost never in a position where their miss finds serious trouble. That is not luck — it is applied data.</p>
+  </div>
+</div>
+
+<!-- THE PROTOCOL -->
+<div class="sec" id="protocol">
+  <h2 class="sec-title">The Mapping Protocol</h2>
+  <p class="sec-desc">A structured, repeatable process for measuring your real dispersion. Requires one dedicated range session of 90 minutes per club group. Run this quarterly as your game evolves.</p>
+
+  <span class="badge badge-gold">📋 Session Setup</span>
+  <div class="card card-gold">
+    <span class="card-tag">Equipment Required</span>
+    <h3>What You Need Before You Start</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Alignment sticks (2):</strong> One on the ground pointing at your target, one forming the club path reference. Non-negotiable — without a fixed reference, your target drifts and the data becomes meaningless.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Notebook or phone spreadsheet:</strong> Record every shot. A shot you don't log doesn't count. Use the logging template in the next section.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Range with distance markers:</strong> Know exactly where 100, 125, 150, 175, and 200 yards are. If your range doesn't have markers, pace them out from a known distance.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Full bag of balls (minimum 50 per session):</strong> Smaller samples produce unreliable data. 20 shots with a 7-iron is a minimum; 30 is ideal.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Launch monitor (optional but excellent):</strong> A Garmin Approach R10, Rapsodo MLM2PRO, or similar provides carry distance and offline data instantly. If unavailable, use visual landing zone estimation against range markers.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">🔬 The Session Process</span>
+  <div class="card card-teal">
+    <span class="card-tag">Step-by-Step Session Method</span>
+    <h3>Executing a Valid Dispersion Session</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Warm up first (15 minutes):</strong> Never begin dispersion mapping cold. Hit a standard warm-up routine first — 10 minutes of easy swings, then 5 minutes with the club you're mapping. Your first 5 dispersion shots should not be recorded; treat them as calibration.</div></li>
+      <li><span class="step-n">2</span><div><strong>Set your target precisely:</strong> Pick a specific target — a range flag, a yardage marker, a cone. Lay an alignment stick on the ground pointing directly at it. Every shot is aimed from this exact same setup position.</div></li>
+      <li><span class="step-n">3</span><div><strong>Play every shot with full routine:</strong> Pre-shot routine, commitment, normal swing. Do not manipulate your swing. You are mapping what you actually do, not a best-case attempt. Consciously hitting "careful" shots corrupts the data entirely.</div></li>
+      <li><span class="step-n">4</span><div><strong>Record immediately after each shot:</strong> Estimate the landing position relative to your target line. Left/right offline in yards; short/long versus intended carry in yards. Do this for every single shot — no exceptions.</div></li>
+      <li><span class="step-n">5</span><div><strong>Ignore shot quality during the session:</strong> Do not re-hit "bad" shots or exclude "unlucky" ones. The session must capture reality including your mishit rate. A 7-iron that flies 120 yards when you expected 155 is exactly the data you need.</div></li>
+      <li><span class="step-n">6</span><div><strong>Minimum 20 shots per club:</strong> 20 is the statistical floor for meaningful pattern identification. 30 is the gold standard. Below 15 and the data is too noisy to trust for course management decisions.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The most common mistake:</strong> Players unconsciously exclude mishits from their mental average. If you hit a shank, a thin, or a massive pull — it counts. Those are the shots that cost you the most strokes on the course. They belong in your dispersion data more than any other shot.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Session Frequency</span>
+    <h3>When to Map — and When to Remap</h3>
+    <table class="tbl">
+      <tr><th>Trigger</th><th>Action</th></tr>
+      <tr><td>Initial baseline</td><td class="good">Map all scoring clubs in first 2 weeks</td></tr>
+      <tr><td>After swing change with coach</td><td class="good">Remap affected clubs within 2 weeks</td></tr>
+      <tr><td>New equipment</td><td class="warn">Remap immediately — fitting does not equal reality</td></tr>
+      <tr><td>Quarterly review</td><td class="good">Full remap to measure improvement</td></tr>
+      <tr><td>Mid-season slump</td><td class="warn">Remap before assuming swing fault — often a pattern shift</td></tr>
+      <tr><td>After injury/return</td><td class="bad">Must remap — body change = pattern change</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CLUB BY CLUB -->
+<div class="sec" id="clubs">
+  <h2 class="sec-title">Club-by-Club Mapping Guide</h2>
+  <p class="sec-desc">Each club category requires a slightly different approach to produce valid data. Driver dispersion is measured differently from wedge dispersion. Follow these specific protocols.</p>
+
+  <span class="badge badge-rust">🏌️ Driver & Fairway Woods</span>
+  <div class="card card-rust">
+    <span class="card-tag">Driver Dispersion Protocol</span>
+    <h3>The Most Important Pattern to Know</h3>
+    <p>Driver dispersion determines which holes you can attack and which you must manage conservatively. It is also the most variable club in your bag — emotional state and adrenaline affect it more than any other.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Target distance:</strong> Use a target at your realistic average carry — not your best drive. If you average 240 yards, target 240.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Record left/right in yards at landing:</strong> Not at the target distance — where it actually lands. A drive that carries 220 and rolls out 15 yards right should be logged as +15 yards right at landing.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Include all tee heights and ball positions:</strong> Your dispersion on the range equals your dispersion on the course only if you replicate the same setup. Tee the ball identically each time.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Sample size:</strong> Minimum 25 drives. 30 is ideal. Driver is the highest-variance club — smaller samples are statistically unreliable.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Calculate your width at 240 yards:</strong> After logging, find the total offline spread (furthest left to furthest right). This is your "dispersion cone width" — the actual corridor you need in a fairway.</div></li>
+    </ul>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Dispersion Cone Formula</div>
+      <div class="formula-main">Cone Width = (Furthest Right Miss) + (Furthest Left Miss)<br>
+Example: 18 yds right worst, 22 yds left worst → Cone width = 40 yards<br>
+A 40-yard fairway = you need to aim at the edge toward your safe miss</div>
+      <div class="formula-note">Most 10 HCPs have a cone width of 50–70 yards. Scratch standard: under 35 yards.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">⛳ Irons (4–9)</span>
+  <div class="card card-gold">
+    <span class="card-tag">Iron Dispersion Protocol</span>
+    <h3>Your Approach Shot Reality</h3>
+    <p>Iron dispersion data directly drives approach targeting decisions. Map each iron separately — dispersion patterns change significantly across the set, and your miss tendency often shifts between long and short irons.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Map in groups:</strong> Long irons (4–6), mid irons (7–8), short irons (9–PW) typically share similar patterns within groups. Map at least one club per group; ideally your 6-iron, 8-iron, and PW as representatives.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Record both offline AND distance:</strong> For irons, distance variation is a primary concern. Log whether each shot is short/on/long of target in yards alongside lateral data.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Identify your "stock distance" vs "max distance":</strong> Your stock distance is the median carry from your sample. Your max distance (95th percentile) is typically 8–12% further. Club selection should use stock distance, not max.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Note the mishit rate:</strong> Count how many shots in your 20-shot sample land more than 20 yards offline or more than 15 yards short. This is your mishit rate — the percentage that requires recovery play, not par saving.</div></li>
+    </ul>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Metric</th><th>10 HCP Typical</th><th>Scratch Target</th><th>Tour Avg</th></tr>
+      <tr><td>7-iron lateral spread (±)</td><td class="bad">±28 yds</td><td class="good">±16 yds</td><td class="good">±9 yds</td></tr>
+      <tr><td>7-iron distance variation (±)</td><td class="bad">±18 yds</td><td class="good">±9 yds</td><td class="good">±4 yds</td></tr>
+      <tr><td>Mishit rate (&gt;20 yds off)</td><td class="bad">18–22%</td><td class="good">&lt;8%</td><td class="good">&lt;2%</td></tr>
+      <tr><td>Shot bias (L vs R)</td><td class="warn">Usually consistent</td><td class="good">Known and managed</td><td class="good">Controlled</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">🎯 Wedges (50–60°)</span>
+  <div class="card card-teal">
+    <span class="card-tag">Wedge Dispersion Protocol</span>
+    <h3>Scoring Zone Precision</h3>
+    <p>Wedge dispersion matters most for proximity to the hole — the direct driver of birdie rate. Unlike longer clubs, wedge dispersion is mapped at multiple distances rather than a single target.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Map at 50%, 75%, and 100% of each wedge's max carry:</strong> For a 56° wedge with 90-yard max, map at 45, 67, and 90 yards. Most amateurs have dramatically worse dispersion at partial-swing distances.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Track proximity (not just offline):</strong> For wedges, the combined offline + distance error = proximity to hole. Log the estimated distance from the target (combining both dimensions) for each shot.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Identify your "go-to" yardages:</strong> Every scratch golfer has 2–3 wedge distances where their dispersion is significantly tighter than average — their "A" distances. Know yours. Architect your approach game to arrive at these distances whenever possible.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Note trajectory tendency:</strong> Wedges are heavily affected by launch angle. A high-trajectory player disperses less online but more long/short. A low-trajectory player is the reverse. Know your pattern.</div></li>
+    </ul>
+  </div>
+
+  <div class="disp-wrap">
+    <div class="disp-title">Illustrative Dispersion Pattern — 7-Iron (10 HCP vs Scratch)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:500px;margin:0 auto;">
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--bad);letter-spacing:.1em;text-align:center;margin-bottom:8px;">10 HANDICAP</p>
+        <div class="disp-field" style="height:200px;">
+          <div class="target-line"></div>
+          <div class="zone-outer"></div><div class="zone-mid"></div><div class="zone-inner"></div>
+          <div class="flag">⛳</div>
+          <div class="shot-dot dot-miss" style="left:30%;top:35%"></div>
+          <div class="shot-dot dot-miss" style="left:72%;top:42%"></div>
+          <div class="shot-dot dot-ok" style="left:58%;top:48%"></div>
+          <div class="shot-dot dot-miss" style="left:25%;top:55%"></div>
+          <div class="shot-dot dot-good" style="left:52%;top:50%"></div>
+          <div class="shot-dot dot-ok" style="left:65%;top:38%"></div>
+          <div class="shot-dot dot-miss" style="left:78%;top:60%"></div>
+          <div class="shot-dot dot-ok" style="left:42%;top:44%"></div>
+          <div class="shot-dot dot-miss" style="left:20%;top:48%"></div>
+          <div class="shot-dot dot-good" style="left:48%;top:52%"></div>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--good);letter-spacing:.1em;text-align:center;margin-bottom:8px;">SCRATCH</p>
+        <div class="disp-field" style="height:200px;">
+          <div class="target-line"></div>
+          <div class="zone-outer"></div><div class="zone-mid"></div><div class="zone-inner"></div>
+          <div class="flag">⛳</div>
+          <div class="shot-dot dot-good" style="left:52%;top:48%"></div>
+          <div class="shot-dot dot-good" style="left:48%;top:52%"></div>
+          <div class="shot-dot dot-ok" style="left:57%;top:46%"></div>
+          <div class="shot-dot dot-good" style="left:50%;top:50%"></div>
+          <div class="shot-dot dot-ok" style="left:44%;top:54%"></div>
+          <div class="shot-dot dot-good" style="left:53%;top:51%"></div>
+          <div class="shot-dot dot-ok" style="left:58%;top:52%"></div>
+          <div class="shot-dot dot-good" style="left:47%;top:49%"></div>
+          <div class="shot-dot dot-ok" style="left:55%;top:47%"></div>
+          <div class="shot-dot dot-miss" style="left:62%;top:44%"></div>
+        </div>
+      </div>
+    </div>
+    <div class="zone-labels" style="margin-top:16px;">
+      <div class="zl"><div class="zl-dot" style="background:var(--lime)"></div><span>Within 15 ft</span></div>
+      <div class="zl"><div class="zl-dot" style="background:var(--gold)"></div><span>15–30 ft</span></div>
+      <div class="zl"><div class="zl-dot" style="background:var(--bad)"></div><span>30+ ft / off green</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGGING SYSTEM -->
+<div class="sec" id="logging">
+  <h2 class="sec-title">The Logging System</h2>
+  <p class="sec-desc">A consistent, repeatable logging format transforms raw shot data into actionable intelligence. Use this system for every mapping session and build your personal dispersion database over time.</p>
+
+  <span class="badge badge-lime">📝 Session Log Template</span>
+  <div class="card">
+    <span class="card-tag">Shot Log — Per Session</span>
+    <h3>Record Every Shot in This Format</h3>
+    <table class="tbl">
+      <tr><th>#</th><th>Club</th><th>Target (yds)</th><th>Carry (yds)</th><th>Offline (yds)</th><th>Miss Direction</th><th>Shot Quality</th></tr>
+      <tr><td>1</td><td>7-iron</td><td>155</td><td>148</td><td class="warn">+12</td><td class="warn">Right</td><td>Slight push</td></tr>
+      <tr><td>2</td><td>7-iron</td><td>155</td><td>157</td><td class="good">+3</td><td class="good">Right</td><td>Solid</td></tr>
+      <tr><td>3</td><td>7-iron</td><td>155</td><td>132</td><td class="bad">+22</td><td class="bad">Left</td><td>Thin, pull</td></tr>
+      <tr><td colspan="7" style="text-align:center;color:var(--faint);font-size:11px;">Continue for all shots · Negative offline = left · Positive offline = right</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Summary Calculations</span>
+    <h3>What to Calculate After Each Session</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Average carry distance:</strong> Sum all carry distances ÷ number of shots. This is your stock distance — what you should load in your yardage planning for that club.</div></li>
+      <li><span class="step-n">2</span><div><strong>Average offline distance:</strong> Sum all absolute offline values (ignore left/right sign) ÷ number of shots. This is your average dispersion — the number that drives your approach targeting offset.</div></li>
+      <li><span class="step-n">3</span><div><strong>Miss bias:</strong> Count left misses vs right misses. If 15 of 20 offline shots miss right, your bias is right. This is the direction you should aim away from on penalty-heavy approach shots.</div></li>
+      <li><span class="step-n">4</span><div><strong>Worst-case spread (90th percentile):</strong> Ignore the best and worst single shot. Find your 2nd-worst left miss and 2nd-worst right miss. This is your practical cone width — use it for hole-by-hole targeting decisions.</div></li>
+      <li><span class="step-n">5</span><div><strong>Mishit rate:</strong> Count shots that land more than 20 yards offline OR more than 15 yards short of target ÷ total shots × 100. Your mishit rate tells you the probability of a recovery shot on any given approach.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Master Summary Card</span>
+    <h3>Build Your Personal Dispersion Card</h3>
+    <p>After mapping each club, transfer the results to a master summary card. Keep this in your bag — either on a phone note or a small card in your yardage book.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Club</th><th>Stock Carry</th><th>Avg Offline</th><th>Miss Bias</th><th>Mishit %</th><th>Last Updated</th></tr>
+      <tr><td>Driver</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>3-wood</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>5-iron / Hybrid</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>6-iron</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>7-iron</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>8-iron</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>9-iron</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>PW</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>52° wedge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>56° wedge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>60° wedge</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">📱</span>
+    <p><strong>Digital logging tools:</strong> Arccos and Shot Scope capture dispersion data automatically during rounds — far more statistically reliable than range sessions because it is real course data under real conditions. If you have either system, review your dispersion reports monthly. Combine with quarterly range mapping for a complete picture.</p>
+  </div>
+</div>
+
+<!-- ON-COURSE APPLICATION -->
+<div class="sec" id="application">
+  <h2 class="sec-title">Applying Your Data On the Course</h2>
+  <p class="sec-desc">Raw dispersion data is worthless unless it changes how you aim, plan, and commit. This section translates your personal numbers into practical shot-by-shot decisions.</p>
+
+  <span class="badge badge-gold">🗺️ The Targeting Offset System</span>
+  <div class="card card-gold">
+    <span class="card-tag">How to Adjust Your Aim Using Dispersion Data</span>
+    <h3>The Offset Rule — Move Your Aim Away From Danger</h3>
+    <p>If your miss bias is right and trouble is right — bunker, water, OB, severe rough — your aim point should shift left of the flag by your average offline distance. Not your worst-case miss. Your average. The targeting offset system applies this automatically.</p>
+    <div class="formula">
+      <div class="formula-lbl">Targeting Offset Formula</div>
+      <div class="formula-main">Aim Point = Flag Position − (Miss Bias Direction × Average Offline Distance)<br><br>
+Example: Flag is tucked right, water right, your 7-iron averages 12 yds right bias<br>
+→ Aim 12 yards LEFT of the flag<br>
+→ Your "miss" still finds the green centre; your "good" shot is pin-high left</div>
+      <div class="formula-note">The goal is for your miss to be on the green, not for your best shot to be at the flag.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Pin Position Decision Matrix</span>
+    <h3>What to Do at Every Pin Location</h3>
+    <table class="tbl">
+      <tr><th>Pin Position</th><th>Trouble?</th><th>Your Miss Toward Trouble?</th><th>Targeting Decision</th></tr>
+      <tr><td class="good">Centre / Fat</td><td class="good">No</td><td>Irrelevant</td><td class="good">Attack the pin — full dispersion cone lands safely</td></tr>
+      <tr><td class="warn">Left edge</td><td class="warn">Left bunker</td><td>No — you miss right</td><td class="good">Attack — your miss goes away from trouble</td></tr>
+      <tr><td class="warn">Left edge</td><td class="warn">Left bunker</td><td>Yes — you miss left</td><td class="warn">Aim centre, accept longer putt</td></tr>
+      <tr><td class="bad">Right tuck</td><td class="bad">Water right</td><td>Yes — you miss right</td><td class="bad">Aim left half of green — accept 30-ft putt</td></tr>
+      <tr><td class="bad">Back flag</td><td class="bad">Short-sides severe</td><td>Varies</td><td class="bad">Aim front-centre, play for distance control</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Driver Targeting — The Fairway Corridor Concept</span>
+    <h3>Aiming Your Cone at the Fairway</h3>
+    <p>Rather than aiming at the fairway centre, aim so that your dispersion cone is centred on the fairway with your bias side toward the safer rough. On a fairway with a bunker right and light rough left:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Tee up on the danger side (right, near the bunker).</strong> This maximises the angle away from danger when you swing toward the safe side.</div></li>
+      <li><span class="step-n">2</span><div><strong>Aim at the left half of the fairway</strong> (or left rough edge if your cone is wide) so your right-biased misses land in the right fairway rather than the bunker.</div></li>
+      <li><span class="step-n">3</span><div><strong>The fairway corridor you can safely use</strong> = fairway width minus your 90th-percentile miss distance on each side. If that leaves you less than 10 yards of safe corridor, consider a laying up option.</div></li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <span class="card-tag">Par 3 Application</span>
+      <h3>Green-Only Target</h3>
+      <p style="font-size:12px;">On par 3s, your target is the safe zone of the green — not the flag. Identify which portion of the green results in the simplest two-putt if you miss the flag by your average offline amount.</p>
+    </div>
+    <div class="card card-gold">
+      <span class="card-tag">Lay-Up Application</span>
+      <h3>Preferred Wedge Distance</h3>
+      <p style="font-size:12px;">Your lay-up target should land you at your tightest wedge dispersion distance — your "A" yardage. Never lay up to a distance where your wedge dispersion is wide.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BENCHMARKS -->
+<div class="sec" id="benchmarks">
+  <h2 class="sec-title">Dispersion Benchmarks by Level</h2>
+  <p class="sec-desc">Use these benchmarks to assess where your dispersion currently sits and identify which clubs offer the most improvement leverage on your path to scratch.</p>
+
+  <div class="card">
+    <span class="card-tag">Driver Dispersion — Lateral Spread (Cone Width)</span>
+    <h3>Off the Tee Standards</h3>
+    <table class="tbl">
+      <tr><th>Handicap Level</th><th>Avg Offline (±)</th><th>Cone Width (90th pct)</th><th>Mishit Rate</th></tr>
+      <tr><td>PGA Tour</td><td class="good">±18 yds</td><td class="good">28 yds total</td><td class="good">&lt;3%</td></tr>
+      <tr><td>Scratch (0)</td><td class="good">±22 yds</td><td class="good">35 yds total</td><td class="good">&lt;6%</td></tr>
+      <tr><td>+5 (5 HCP)</td><td class="warn">±28 yds</td><td class="warn">46 yds total</td><td class="warn">10–12%</td></tr>
+      <tr><td>10 HCP</td><td class="bad">±34 yds</td><td class="bad">56 yds total</td><td class="bad">15–20%</td></tr>
+      <tr><td>18 HCP</td><td class="bad">±45 yds</td><td class="bad">72 yds total</td><td class="bad">25–30%</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">7-Iron Dispersion — Lateral & Distance</span>
+    <h3>The Benchmark Iron</h3>
+    <table class="tbl">
+      <tr><th>Level</th><th>Avg Offline (±)</th><th>Distance Var (±)</th><th>Prox 150 yds</th></tr>
+      <tr><td>PGA Tour</td><td class="good">±9 yds</td><td class="good">±4 yds</td><td class="good">18 ft avg</td></tr>
+      <tr><td>Scratch</td><td class="good">±16 yds</td><td class="good">±8 yds</td><td class="good">28 ft avg</td></tr>
+      <tr><td>5 HCP</td><td class="warn">±22 yds</td><td class="warn">±13 yds</td><td class="warn">38 ft avg</td></tr>
+      <tr><td>10 HCP</td><td class="bad">±28 yds</td><td class="bad">±18 yds</td><td class="bad">52 ft avg</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Wedge Dispersion — Proximity at Key Distances</span>
+    <h3>Scoring Zone Standards</h3>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Tour Prox</th><th>Scratch Prox</th><th>10 HCP Prox</th></tr>
+      <tr><td>50 yards</td><td class="good">9 ft</td><td class="good">15 ft</td><td class="bad">28 ft</td></tr>
+      <tr><td>75 yards</td><td class="good">12 ft</td><td class="good">22 ft</td><td class="bad">38 ft</td></tr>
+      <tr><td>100 yards</td><td class="good">16 ft</td><td class="good">28 ft</td><td class="bad">48 ft</td></tr>
+      <tr><td>125 yards</td><td class="good">22 ft</td><td class="good">35 ft</td><td class="bad">60 ft</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box elite">
+    <span class="ico">🏆</span>
+    <p><strong>The scratch insight:</strong> Scratch golfers do not need Tour-level dispersion. They need to be tight enough that their average miss lands on the green — not in trouble — when they aim correctly. A 16-yard average offline iron is manageable with intelligent targeting. A 28-yard offline is not, because no green is wide enough to absorb it from every flag position.</p>
+  </div>
+</div>
+
+<!-- IMPROVEMENT -->
+<div class="sec" id="improvement">
+  <h2 class="sec-title">Reducing Your Dispersion</h2>
+  <p class="sec-desc">Dispersion reduction is the product of better mechanics, better contact quality, and smarter practice design. Each has a different ceiling and a different timeline.</p>
+
+  <span class="badge badge-lime">📉 The Three Levers</span>
+  <div class="card">
+    <span class="card-tag">Lever 1 — Contact Quality</span>
+    <h3>Strike First, Shape Second</h3>
+    <p>The single highest-leverage dispersion reducer is improving strike location on the face. Off-centre contact is the primary cause of lateral dispersion — not swing path. A centred strike with a slightly open path beats a "perfect" path with toe or heel contact every time.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Strike pattern drill:</strong> Apply foot powder spray or impact tape to your clubface for one full range session. Map where the ball is actually striking. Most amateur golfers strike significantly more toe-side than they perceive.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Low point control:</strong> Consistent ball-first contact (negative attack angle for irons) eliminates fat and thin shots — the two largest dispersion contributors. Alignment stick low-point drill: lay a stick 4 inches behind the ball; train hitting the ball without touching the stick.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Shaft lean at impact:</strong> Forward shaft lean at impact compresses the ball and reduces dispersion. Train with a gate drill — two tees either side of the ball, wider than the face, narrowed progressively as contact improves.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Lever 2 — Swing Path Consistency</span>
+    <h3>Eliminate the Destructive Miss</h3>
+    <p>Your miss bias (left or right) is determined by your path-to-face relationship. Rather than trying to eliminate your miss entirely, tighten it: reduce the dispersion while keeping the bias predictable. A predictable miss is manageable. An unpredictable miss is not.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">▸</span><div><strong>Identity your natural path:</strong> Use an alignment stick or two headcovers as a gate on the range. Does the club exit consistently left or right of the target line? Your natural path is not something to fight — it is something to manage and manage well.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Match face to path:</strong> A consistent face-to-path relationship (within 2°) produces a tight, predictable shot shape. Wide face-path variation produces wild dispersion. Improving this relationship is the primary job of technical coaching.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Lever 3 — Practice Design</span>
+    <h3>Train Dispersion Directly</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Corridor training:</strong> Place two alignment sticks or range baskets defining a corridor 20% narrower than your current average dispersion. Hit 20 shots aiming to land within the corridor. Track your success rate. Narrow the corridor monthly.</div></li>
+      <li><span class="step-n">2</span><div><strong>Random target practice:</strong> Never hit two balls at the same target in succession. Rotate targets every shot — simulates on-course conditions and develops adaptability rather than repetitive groove.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pressure dispersion sets:</strong> Hit 10 shots with a consequence for any that miss a designated zone. The pressure replicates competitive conditions and reveals whether your dispersion holds under stress — a critical scratch-level skill.</div></li>
+      <li><span class="step-n">4</span><div><strong>Quarterly remapping:</strong> After each training block, remap the clubs you focused on. Seeing the dispersion numbers move — even by 3–4 yards — is one of the most motivating data points in improvement tracking.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>The dispersion plateau:</strong> Once you reach approximately ±18 yards offline with your irons, further reduction requires significant technical refinement — typically requiring sustained coaching, video analysis, and possibly equipment adjustment. Do not expect linear improvement. Gains slow dramatically below ±20 yards. Focus instead on eliminating your worst-case misses rather than improving the average.</p>
+  </div>
+
+  <div class="pull-quote">
+    <p>"I don't aim at the flag. I aim at the place that gives me the best chance of the worst outcome being acceptable."</p>
+    <span>— Padraig Harrington, on course management strategy</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">12-Month Dispersion Targets — 10 HCP to Scratch</span>
+    <h3>Realistic Reduction Timeline</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Now (10 HCP)</th><th>Month 6</th><th>Month 12</th><th>Month 24 (Scratch)</th></tr>
+      <tr><td>Driver cone width</td><td class="bad">56 yds</td><td class="warn">48 yds</td><td class="warn">42 yds</td><td class="good">35 yds</td></tr>
+      <tr><td>7-iron avg offline</td><td class="bad">±28 yds</td><td class="warn">±22 yds</td><td class="warn">±19 yds</td><td class="good">±16 yds</td></tr>
+      <tr><td>Wedge prox (100 yds)</td><td class="bad">48 ft</td><td class="warn">38 ft</td><td class="warn">32 ft</td><td class="good">28 ft</td></tr>
+      <tr><td>Mishit rate (irons)</td><td class="bad">20%</td><td class="warn">14%</td><td class="warn">10%</td><td class="good">&lt;8%</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PRO: PROBABILITY-WEIGHTED TARGETING -->
+<div class="sec" id="prob_targeting" data-tier="pro">
+  <h2 class="sec-title">Probability-Weighted Targeting</h2>
+  <p class="sec-desc">Converting your dispersion cone into a full probability distribution — and using it to calculate the aim point that minimises expected strokes, not the aim point that maximises your best-case outcome.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">From Cone to Distribution</span>
+    <h3>Treating Every Shot as a Probability Problem</h3>
+    <p style="margin-bottom:12px;">Your dispersion cone tells you how wide your shot pattern is. Converting it to a probability distribution tells you <em>where within that cone</em> your shots land most frequently. The distribution is approximately normal — most shots cluster near your intended line, with decreasing frequency toward the edges.</p>
+    <div class="formula">
+      <div class="formula-lbl">Distribution Construction</div>
+      <div class="formula-main">Your 7-iron at 150 yards: ±25 yards lateral (10 HCP typical)
+This means (approximately):
+  ~68% of shots land within ±12.5 yards of aim line
+  ~95% of shots land within ±25 yards of aim line
+  ~99.7% within ±37 yards (the extreme misses)
+
+Divide the green into 5-yard zones left and right of aim:
+  Centre zone (±5 yards):   ~38% of shots
+  ±5–15 yards:              ~42% of shots (21% each side)
+  ±15–25 yards:             ~18% of shots (9% each side)
+  Beyond ±25 yards:         ~2% (extreme misses)</div>
+      <div class="formula-note">This distribution assumes you are aiming at the centre of it. If you have a known bias (65% of your misses go left), the distribution shifts — the centre of your actual distribution is left of your intended aim line. Adjust your aim point to account for bias first, then apply the EV calculation.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Consequence Mapping</span>
+    <h3>Assigning Expected Strokes to Each Landing Zone</h3>
+    <p style="margin-bottom:12px;">Once you have the probability distribution, you need the consequence of each landing zone — the expected strokes from each outcome position. These come from Broadie's Strokes Gained data.</p>
+    <table class="tbl">
+      <tr><th>Position</th><th>Expected Strokes to Hole Out (150 yd approach scenario)</th></tr>
+      <tr><td>On green, 15 feet</td><td class="good">~2.0</td></tr>
+      <tr><td>On green, 25 feet</td><td class="warn">~2.1</td></tr>
+      <tr><td>On green, 40 feet</td><td class="warn">~2.2</td></tr>
+      <tr><td>Fairway fringe, short</td><td class="warn">~2.35</td></tr>
+      <tr><td>Light rough</td><td class="warn">~2.5</td></tr>
+      <tr><td>Greenside bunker</td><td class="bad">~2.8</td></tr>
+      <tr><td>Thick rough / penalty</td><td class="bad">~3.2+</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Worked Example — Calculating Your Optimal Aim Point</span>
+    <h3>Flag Tight to Left Bunker, Centre Green Safe Right</h3>
+    <p style="margin-bottom:10px;"><strong>Scenario:</strong> 150 yards. Flag 10 yards from left edge. Bunker left. Rough right (manageable). 10 HCP player, ±25 yards lateral dispersion.</p>
+    <p style="margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);">OPTION A — Aim at flag:</p>
+    <table class="tbl">
+      <tr><th>Zone</th><th>P(landing here)</th><th>Expected Strokes</th><th>Contribution to EV</th></tr>
+      <tr><td>Bunker (left 10+ yds)</td><td>20%</td><td>2.8</td><td>0.56</td></tr>
+      <tr><td>Green, left half (0–10 left)</td><td>28%</td><td>2.1</td><td>0.59</td></tr>
+      <tr><td>Green, right half (0–10 right)</td><td>28%</td><td>2.1</td><td>0.59</td></tr>
+      <tr><td>Rough right (10+ right)</td><td>24%</td><td>2.5</td><td>0.60</td></tr>
+      <tr><td colspan="3"><strong>EV — Aim at flag</strong></td><td class="bad"><strong>2.34</strong></td></tr>
+    </table>
+    <p style="margin:12px 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--lime);">OPTION B — Aim 15 yards right of flag (centre-right of green):</p>
+    <table class="tbl">
+      <tr><th>Zone</th><th>P(landing here)</th><th>Expected Strokes</th><th>Contribution to EV</th></tr>
+      <tr><td>Bunker (now 25+ yds left of aim)</td><td>5%</td><td>2.8</td><td>0.14</td></tr>
+      <tr><td>Green, left of aim (0–25 left)</td><td>48%</td><td>2.1</td><td>1.01</td></tr>
+      <tr><td>Green, right of aim (0–10 right)</td><td>30%</td><td>2.1</td><td>0.63</td></tr>
+      <tr><td>Rough right (10+ right)</td><td>17%</td><td>2.5</td><td>0.43</td></tr>
+      <tr><td colspan="3"><strong>EV — Aim centre-right</strong></td><td class="good"><strong>2.21</strong></td></tr>
+    </table>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Result:</strong> Aiming 15 yards right of the flag saves 0.13 expected strokes on this single shot. Applied consistently over 18 holes, players who use probability-weighted targeting save 1.5–2.5 strokes per round compared to players who aim intuitively.</p></div>
+  </div>
+</div>
+
+<!-- PRO: DYNAMIC DISPERSION — SITUATION ADJUSTMENTS -->
+<div class="sec" id="dynamic_disp" data-tier="pro">
+  <h2 class="sec-title">Dynamic Dispersion — Situation Adjustments</h2>
+  <p class="sec-desc">Your range dispersion data is a baseline — not a fixed truth. Dispersion changes with situation, pressure level, and conditions. Using range data directly on-course without adjustment systematically underestimates your real cone width.</p>
+  <span class="badge badge-gold">⬡ Pro Depth</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Range vs. Course Dispersion Gap</span>
+    <h3>Why Your On-Course Pattern Is Wider Than Your Range Pattern</h3>
+    <p style="margin-bottom:12px;">Research on shot tracking data consistently shows that amateur golfers' on-course dispersion is 15–25% wider than their range dispersion. The reasons are structural — not technical failures:</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Uneven lies:</strong> On the range you hit from flat, level mats or well-maintained turf. On the course, uphill, downhill, sidehill, and unlevel lies add dispersion. A sidehill lie adds approximately 15–20% more lateral dispersion than a flat lie with the same swing.</div></li>
+      <li><span class="step-n">2</span><div><strong>Variable lies (rough, divots, tight):</strong> Range practice is typically from perfect lies. A ball in light rough adds 10–15% dispersion; a divot adds 20–30%. Your range cone does not capture these.</div></li>
+      <li><span class="step-n">3</span><div><strong>Variable conditions:</strong> Wind, temperature, and ground firmness all widen effective dispersion on-course relative to the controlled range environment.</div></li>
+      <li><span class="step-n">4</span><div><strong>Cognitive load:</strong> On-course decision-making, course management thinking, and the awareness of consequences all subtract cognitive resources from execution — widening the physical dispersion.</div></li>
+    </ul>
+    <div class="formula">
+      <div class="formula-lbl">Course Adjustment Factor</div>
+      <div class="formula-main">On-course dispersion = Range dispersion × 1.20 (conservative estimate)
+
+A range 7-iron dispersion of ±22 yards
+becomes approximately ±26 yards on-course.
+
+For planning purposes, always use the adjusted (wider) cone
+when making aim-point calculations from your Guide 11 data.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Pressure Dispersion Widening</span>
+    <h3>How Competition Stress Expands Your Cone</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Dispersion Multiplier</th><th>Practical Impact</th></tr>
+      <tr><td>Casual practice round</td><td class="good">1.0× (baseline)</td><td>Closest to range data</td></tr>
+      <tr><td>Club competition (normal)</td><td class="warn">1.15–1.25×</td><td>Add ~15% to range cone width</td></tr>
+      <tr><td>Important competition (pressure)</td><td class="warn">1.25–1.40×</td><td>Add ~30% to range cone width</td></tr>
+      <tr><td>Match play, decisive moment</td><td class="bad">1.35–1.50×</td><td>Add ~40% to range cone width</td></tr>
+    </table>
+    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The conservative implication:</strong> In an important competition, your real dispersion is 35–50% wider than your range data suggests. This means targeting conservative aim points is even more justified in competition than in casual play — not less. The player who attacks pins in competition based on range dispersion is using the wrong data.</p></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Building Your Competition Adjustment Factor</span>
+    <h3>Personalising the Adjustment From Your Arccos Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pull your Arccos approach proximity data by round type:</strong> If you have tagged competition rounds vs. practice rounds in Arccos, compare proximity at the same distance band between the two. The difference is your personal competition adjustment factor.</div></li>
+      <li><span class="step-n">2</span><div><strong>Calculate your competition dispersion:</strong> If practice-round proximity at 150 yards is 28 feet and competition-round proximity is 38 feet, your competition dispersion is approximately 36% wider. Apply this factor to your range cone measurements for all competition aim-point planning.</div></li>
+      <li><span class="step-n">3</span><div><strong>Update quarterly:</strong> As your technique and mental game improve, the competition adjustment factor should decrease. A reducing gap between practice and competition proximity is one of the clearest signals of genuine improvement in pressure performance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  SHOT DISPERSION MAPPING · GUIDE 11 · THE SCRATCH PROJECT<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Map every club · Trust your data · Aim your pattern, not your hope</span>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top: document.querySelector('.nav').offsetTop, behavior: 'smooth'});
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.7);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+  <a href="03_longgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🏌️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Long Game Playbook</span>
+  </a>
+  <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
+  </a>
+  <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">⚖️</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Course Management</span>
+  </a>
+  <a href="09_golf_coach_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
+    <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
+    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
+  </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+</body>
+</html>

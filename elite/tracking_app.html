@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<!-- version:v1.2 · 2026-06-07 · tracking_app.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<meta name="apple-mobile-web-app-title" content="Scratch Tracker">
+<title>Scratch Project — Performance Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.50);--faint:rgba(232,240,216,0.14);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;background:#0a160a;min-height:100%;}
+body{background:#0a160a;background:var(--bg);color:#e8f0d8;color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;padding-bottom:env(safe-area-inset-bottom);}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+/* ── HERO ─────────────────────────────────────────────── */
+.hero{position:relative;z-index:2;background:#040a04;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:48px 20px 36px;text-align:center;border-bottom:1px solid rgba(160,200,80,0.16);border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:#a0c850;color:var(--lime);margin-bottom:12px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:900;line-height:1.05;color:#e8f0d8;color:var(--white);margin-bottom:8px;}
+.hero h1 em{color:#c0e060;color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:12px;color:rgba(232,240,216,0.55);color:var(--muted);max-width:440px;margin:0 auto 16px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:4px 9px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* ── NAV ──────────────────────────────────────────────── */
+.nav{display:flex;overflow-x:auto;background:#040a04;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 8px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:rgba(232,240,216,0.25);color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 11px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}
+.tab.active{color:#e0b840;color:var(--gold);border-bottom-color:#e0b840;border-bottom-color:var(--gold);}
+
+/* ── SECTIONS ─────────────────────────────────────────── */
+.sec{display:none;padding:24px 16px 80px;max-width:680px;margin:0 auto;position:relative;z-index:1;color:#e8f0d8;}
+.sec.active{display:block;animation:rise .25s ease;}
+@keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:#e8f0d8;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:12px;color:rgba(232,240,216,0.70);color:var(--muted);margin-bottom:20px;line-height:1.75;padding-left:12px;border-left:2px solid #a0c850;border-left:2px solid var(--lime);font-weight:300;}
+
+/* ── CARDS ────────────────────────────────────────────── */
+.card{background:#182818;background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);border-radius:12px;border-radius:var(--r);padding:18px 16px;margin-bottom:12px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#a0c850;color:var(--lime);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#e8f0d8;color:var(--white);margin-bottom:10px;line-height:1.2;}
+
+/* ── FORMS ────────────────────────────────────────────── */
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#a0c850;color:var(--lime);margin-bottom:6px;opacity:.85;}
+.field label.gold{color:var(--gold);}
+.field label.teal{color:var(--teal);}
+.field label.rust{color:var(--rust);}
+input[type=text],input[type=number],input[type=date],select,textarea{
+  width:100%;background:#182818;background:var(--surface2);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);border-radius:8px;border-radius:var(--r-sm);
+  color:#e8f0d8;color:var(--white);font-family:'Inter',sans-serif;font-size:14px;padding:11px 13px;
+  -webkit-appearance:none;appearance:none;transition:border-color .2s;outline:none;
+}
+input[type=text]:focus,input[type=number]:focus,input[type=date]:focus,select:focus,textarea:focus{border-color:var(--border-hi);}
+input[type=number]::-webkit-inner-spin-button{opacity:0.4;}
+textarea{resize:vertical;min-height:80px;line-height:1.6;}
+select option{background:var(--surface2);}
+.row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+
+/* ── BUTTONS ──────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:13px 20px;border-radius:var(--r-sm);cursor:pointer;transition:all .2s;border:none;-webkit-appearance:none;width:100%;}
+.btn-lime{background:linear-gradient(135deg,var(--lime),var(--lime-hi));color:#060e06;font-weight:700;}
+.btn-lime:hover{opacity:.9;transform:translateY(-1px);}
+.btn-lime:active{transform:translateY(0);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-hi));color:#0a0800;font-weight:700;}
+.btn-gold:hover{opacity:.9;}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--teal-hi));color:#020808;font-weight:700;}
+.btn-ghost{background:var(--surface2);border:1px solid var(--border);color:var(--muted);}
+.btn-ghost:hover{border-color:var(--border-hi);color:var(--white);}
+.btn-sm{padding:8px 14px;font-size:9px;width:auto;}
+.btn-row{display:flex;gap:8px;margin-top:16px;}
+.btn-row .btn{flex:1;}
+
+/* ── SEGMENT / RATING CONTROLS ───────────────────────── */
+.seg-group{display:flex;gap:6px;flex-wrap:wrap;}
+.seg{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;padding:9px 14px;border-radius:8px;border-radius:var(--r-sm);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);background:#182818;background:var(--surface2);color:rgba(232,240,216,0.50);color:var(--muted);cursor:pointer;transition:all .2s;flex:1;text-align:center;min-width:0;}
+.seg.active-lime{background:var(--lime-dim);border-color:rgba(160,200,80,.4);color:var(--lime-hi);}
+.seg.active-gold{background:var(--gold-dim);border-color:rgba(224,184,64,.4);color:var(--gold-hi);}
+.seg.active-teal{background:var(--teal-dim);border-color:rgba(72,176,168,.4);color:var(--teal-hi);}
+.seg.active-rust{background:var(--rust-dim);border-color:rgba(216,96,48,.4);color:var(--rust-hi);}
+.seg.active-good{background:rgba(112,200,112,.12);border-color:rgba(112,200,112,.4);color:var(--good);}
+.seg.active-bad{background:rgba(224,112,96,.12);border-color:rgba(224,112,96,.4);color:var(--bad);}
+
+.rating-row{display:flex;gap:4px;}
+.rating-btn{flex:1;padding:10px 4px;border-radius:6px;border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);background:#182818;background:var(--surface2);color:rgba(232,240,216,0.50);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer;text-align:center;transition:all .15s;}
+.rating-btn.sel{background:var(--lime-dim);border-color:rgba(160,200,80,.5);color:var(--lime-hi);}
+
+/* ── BADGE ────────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;margin-bottom:14px;}
+.badge-lime{background:rgba(160,200,80,0.09);background:var(--lime-dim);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);color:#c0e060;color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+/* ── METRIC TILES ─────────────────────────────────────── */
+.tile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.tile{background:#182818;background:var(--surface2);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);border-radius:8px;border-radius:var(--r-sm);padding:14px 13px;transition:border-color .2s;}
+.tile-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:rgba(232,240,216,0.50);color:var(--muted);margin-bottom:4px;}
+.tile-value{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--white);line-height:1;}
+.tile-value.lime{color:var(--lime-hi);}
+.tile-value.gold{color:var(--gold-hi);}
+.tile-value.teal{color:var(--teal-hi);}
+.tile-value.rust{color:var(--rust-hi);}
+.tile-value.good{color:var(--good);}
+.tile-sub{font-size:11px;color:var(--muted);margin-top:4px;}
+
+/* ── HISTORY LIST ─────────────────────────────────────── */
+.history-item{background:#182818;background:var(--surface2);border:1px solid rgba(160,200,80,0.16);border:1px solid var(--border);border-radius:8px;border-radius:var(--r-sm);padding:13px 14px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;transition:border-color .2s;}
+.history-item:hover{border-color:var(--border-hi);}
+.history-main{flex:1;min-width:0;}
+.history-date{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#a0c850;color:var(--lime);text-transform:uppercase;margin-bottom:4px;}
+.history-title{font-size:13px;color:#e8f0d8;color:var(--white);font-weight:500;line-height:1.4;}
+.history-meta{font-size:11px;color:rgba(232,240,216,0.50);color:var(--muted);margin-top:3px;line-height:1.5;}
+.history-badge{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--gold);background:var(--gold-dim);border:1px solid rgba(224,184,64,.2);border-radius:6px;padding:4px 8px;white-space:nowrap;flex-shrink:0;}
+.history-badge.lime{color:var(--lime-hi);background:var(--lime-dim);border-color:rgba(160,200,80,.2);}
+.history-badge.teal{color:var(--teal-hi);background:var(--teal-dim);border-color:rgba(72,176,168,.2);}
+.history-badge.good{color:var(--good);background:rgba(112,200,112,.1);border-color:rgba(112,200,112,.2);}
+.history-badge.bad{color:var(--bad);background:rgba(224,112,96,.1);border-color:rgba(224,112,96,.2);}
+.del-btn{background:none;border:none;color:var(--faint);cursor:pointer;font-size:14px;padding:2px 4px;transition:color .15s;flex-shrink:0;}
+.del-btn:hover{color:var(--bad);}
+
+/* ── PLAYBOOK LINKS ───────────────────────────────────── */
+.pb-links{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.pb-link{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:4px;background:rgba(160,200,80,0.09);background:var(--lime-dim);border:1px solid rgba(160,200,80,0.20);border:1px solid var(--border);color:#c0e060;color:var(--lime-hi);text-decoration:none;transition:all .2s;display:inline-flex;align-items:center;gap:4px;}
+.pb-link:hover{background:rgba(160,200,80,.18);border-color:var(--border-hi);}
+.pb-link.gold{background:var(--gold-dim);border-color:rgba(224,184,64,.25);color:var(--gold-hi);}
+.pb-link.gold:hover{background:rgba(224,184,64,.2);}
+.pb-link.teal{background:var(--teal-dim);border-color:rgba(72,176,168,.25);color:var(--teal-hi);}
+.pb-link.teal:hover{background:rgba(72,176,168,.18);}
+
+/* ── PROGRESS BAR ─────────────────────────────────────── */
+.prog-bar{background:var(--faint);border-radius:3px;height:5px;overflow:hidden;margin-top:6px;}
+.prog-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--lime),var(--lime-hi));transition:width .6s ease;}
+.prog-fill.gold{background:linear-gradient(90deg,var(--gold),var(--gold-hi));}
+.prog-fill.teal{background:linear-gradient(90deg,var(--teal),var(--teal-hi));}
+
+/* ── INFO BOX ─────────────────────────────────────────── */
+.info-box{border-radius:var(--r-sm);padding:12px 14px;margin:12px 0;display:flex;gap:9px;align-items:flex-start;}
+.info-box p{font-size:12px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;font-size:12px;}
+.tip{background:rgba(72,176,168,.10);border:1px solid rgba(72,176,168,.30);}
+.tip p,.tip strong{color:#70ccc4;}
+.elite{background:rgba(224,184,64,.10);border:1px solid rgba(224,184,64,.30);}
+.elite p,.elite strong{color:#f0d070;}
+.ico{font-size:1rem;flex-shrink:0;margin-top:1px;}
+
+/* ── TOAST ────────────────────────────────────────────── */
+#toast{position:fixed;bottom:calc(24px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface2);border:1px solid var(--border);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:10px 18px;border-radius:30px;z-index:999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.lime{border-color:rgba(160,200,80,.4);color:var(--lime-hi);}
+#toast.gold{border-color:rgba(224,184,64,.4);color:var(--gold-hi);}
+
+/* ── DIVIDER ──────────────────────────────────────────── */
+hr{border:none;border-top:1px solid var(--border);margin:20px 0;}
+
+/* ── EMPTY STATE ──────────────────────────────────────── */
+.empty{text-align:center;padding:40px 20px;color:rgba(232,240,216,0.20);color:var(--faint);}
+.empty .empty-icon{font-size:2.5rem;margin-bottom:12px;opacity:.4;}
+.empty p{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;}
+
+/* ── FOOTER ───────────────────────────────────────────── */
+.footer{text-align:center;padding:20px 16px;font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(232,240,216,0.20);color:var(--faint);letter-spacing:.2em;border-top:1px solid rgba(160,200,80,0.16);border-top:1px solid var(--border);position:relative;z-index:1;}
+
+@media(max-width:380px){.row-3{grid-template-columns:1fr 1fr;}.tile-grid{grid-template-columns:1fr 1fr;}.tile-value{font-size:1.4rem;}}
+
+/* ── HARD FALLBACKS — ensure visibility regardless of CSS var support ── */
+body { background-color: #0a160a !important; }
+.card, .tile, .history-item, .seg, .rating-btn { background-color: #182818; }
+input, select, textarea { background-color: #182818; color: #e8f0d8; }
+.nav { background-color: #040a04; }
+.hero { background-color: #040a04; }
+</style>
+
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#060c06">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<script>
+/* tier-init */
+const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">The Scratch Project · Performance Tracker</p>
+  <h1>Track the <em>Journey</em></h1>
+  <p class="hero-sub">Daily logging · round analysis · speed benchmarks · readiness · journal — all linked to your 31 playbooks.</p>
+  <div class="hero-tags">
+    <span class="htag">📊 Dashboard</span>
+    <span class="htag">🏌️ Rounds</span>
+    <span class="htag">📝 Practice</span>
+    <span class="htag">⚡ Speed</span>
+    <span class="htag">❤️ Readiness</span>
+    <span class="htag">📔 Journal</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="tab active" onclick="show('dash',this)">Dashboard</button>
+  <button class="tab" onclick="show('hrv',this)">HRV Check-In</button>
+  <button class="tab" onclick="show('round',this)">Log Round</button>
+  <button class="tab" onclick="show('practice',this)">Log Practice</button>
+  <button class="tab" onclick="show('speed',this)">Speed Session</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('benchmarks',this)">Benchmarks</button>
+  <button class="tab" onclick="show('journal',this)">Journal</button>
+  <button class="tab" onclick="show('history',this)">History</button>
+  <button class="tab" onclick="show('howto',this)">How To Use</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     DASHBOARD
+════════════════════════════════════════════════════════════ -->
+<div class="sec active" id="dash">
+  <h2 class="sec-title">Dashboard</h2>
+  <p class="sec-desc">Your live performance snapshot — updated every time you log a session. Benchmarks pulled from your last entry.</p>
+
+  <!-- Today's readiness banner -->
+  <div class="card card-gold" id="readiness-banner">
+    <span class="card-tag">Today's Readiness</span>
+    <div id="readiness-content">
+      <p style="color:var(--muted);font-size:13px;">No HRV logged yet today. <strong style="color:var(--gold);">Log your morning check-in →</strong></p>
+    </div>
+  </div>
+
+  <!-- Key metrics tiles -->
+  <span class="badge badge-lime">📊 Key Metrics</span>
+  <div class="tile-grid">
+    <div class="tile">
+      <div class="tile-label">Driver Speed</div>
+      <div class="tile-value lime" id="dash-speed">—</div>
+      <div class="tile-sub">mph · target 108–112</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">Handicap Index</div>
+      <div class="tile-value gold" id="dash-hcp">—</div>
+      <div class="tile-sub">target: Scratch by M24</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">Last Round</div>
+      <div class="tile-value teal" id="dash-score">—</div>
+      <div class="tile-sub" id="dash-score-sub">gross score</div>
+    </div>
+    <div class="tile">
+      <div class="tile-label">HRV (7-day avg)</div>
+      <div class="tile-value" id="dash-hrv" style="color:var(--white)">—</div>
+      <div class="tile-sub">rMSSD</div>
+    </div>
+  </div>
+
+  <!-- SG Summary -->
+  <span class="badge badge-gold">⛳ Strokes Gained (last 5 rounds)</span>
+  <div class="card card-gold">
+    <span class="card-tag">SG Category Averages</span>
+    <div id="sg-summary">
+      <p style="color:var(--muted);font-size:13px;">Log at least one round to see your SG averages.</p>
+    </div>
+  </div>
+
+  <!-- Activity streak -->
+  <span class="badge badge-teal">🗓 Recent Activity</span>
+  <div id="activity-feed">
+    <div class="empty"><div class="empty-icon">📋</div><p>No entries yet — start logging</p></div>
+  </div>
+
+  <!-- Playbook links -->
+  <hr>
+  <span class="badge badge-lime">📚 Quick Links — Your Playbooks</span>
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/index.html" class="pb-link" target="_blank">🏠 All Playbooks</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/10_scratch_plan.html" class="pb-link gold" target="_blank">🏆 Guide 10 · Scratch Plan</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link teal" target="_blank">📊 Guide 26 · Stats</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/27_six_month_plan.html" class="pb-link" target="_blank">📅 Guide 27 · 6-Month Plan</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HRV CHECK-IN
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="hrv">
+  <h2 class="sec-title">HRV Check-In</h2>
+  <p class="sec-desc">Complete every morning before coffee. Takes 90 seconds. Tells you exactly how hard to train today.</p>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Guide 06 — HRV & Readiness Protocol</strong> Measure lying down, same time daily. High HRV = full speed session. Low HRV = mobility and putting only. Never do overspeed work on a Low-HRV day.</p>
+  </div>
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" class="pb-link teal" target="_blank">💪 Guide 06 · Golf Fitness · HRV tab</a>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Today's Morning Check-In</span>
+    <h3>Daily Readiness Entry</h3>
+
+    <div class="field">
+      <label class="teal">Date</label>
+      <input type="date" id="hrv-date">
+    </div>
+
+    <div class="field">
+      <label class="teal">HRV Reading (rMSSD — from Oura / Whoop / HRV4Training)</label>
+      <input type="number" id="hrv-value" placeholder="e.g. 62" min="20" max="150">
+    </div>
+
+    <div class="field">
+      <label class="teal">Sleep Duration (hours)</label>
+      <input type="number" id="hrv-sleep" placeholder="e.g. 7.5" min="3" max="12" step="0.5">
+    </div>
+
+    <div class="field">
+      <label class="teal">Resting Heart Rate (bpm)</label>
+      <input type="number" id="hrv-rhr" placeholder="e.g. 54" min="30" max="100">
+    </div>
+
+    <div class="field">
+      <label class="teal">Overall Readiness</label>
+      <div class="seg-group" id="hrv-status-seg">
+        <div class="seg" data-val="H" onclick="setSeg(this,'hrv-status-seg','active-good')">🟢 High</div>
+        <div class="seg" data-val="N" onclick="setSeg(this,'hrv-status-seg','active-gold')">🟡 Normal</div>
+        <div class="seg" data-val="L" onclick="setSeg(this,'hrv-status-seg','active-bad')">🔴 Low</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="teal">Energy Level (1–10)</label>
+      <div class="rating-row" id="hrv-energy-rating"></div>
+    </div>
+
+    <div class="field">
+      <label class="teal">Notes (sleep quality, alcohol, stress etc.)</label>
+      <textarea id="hrv-notes" placeholder="e.g. Poor sleep — late night. Stiff lower back this morning."></textarea>
+    </div>
+
+    <button class="btn btn-teal" onclick="saveHRV()">💾 Save Check-In</button>
+  </div>
+
+  <!-- Training recommendation -->
+  <div class="card" id="hrv-recommendation" style="display:none">
+    <span class="card-tag">Today's Training Recommendation</span>
+    <h3 id="hrv-rec-title"></h3>
+    <p id="hrv-rec-body" style="font-size:13px;color:var(--muted);margin-top:8px;"></p>
+    <div class="pb-links" id="hrv-rec-links" style="margin-top:12px;"></div>
+  </div>
+
+  <hr>
+  <span class="badge badge-teal">📈 Recent HRV Readings</span>
+  <div id="hrv-history"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOG ROUND
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="round">
+  <h2 class="sec-title">Log Round</h2>
+  <p class="sec-desc">Quick round entry — SG data from Arccos / Shot Scope. Focus on the decision quality and mental game data that your tracking apps don't capture.</p>
+
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/10_scratch_plan.html" class="pb-link gold" target="_blank">🏆 Guide 10 · Scratch Plan</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/24_competitive_strategy.html" class="pb-link" target="_blank">🏆 Guide 24 · Competitive Strategy</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/20_course_management.html" class="pb-link teal" target="_blank">⚖️ Guide 20 · Course Management</a>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Round Details</span>
+    <h3>Course & Format</h3>
+    <div class="row-2">
+      <div class="field"><label class="gold">Date</label><input type="date" id="rnd-date"></div>
+      <div class="field"><label class="gold">Par</label><input type="number" id="rnd-par" placeholder="72" min="60" max="74"></div>
+    </div>
+    <div class="field"><label class="gold">Course</label><input type="text" id="rnd-course" placeholder="e.g. Royal Lytham"></div>
+    <div class="field">
+      <label class="gold">Format</label>
+      <div class="seg-group" id="rnd-format-seg">
+        <div class="seg" data-val="Stroke Play" onclick="setSeg(this,'rnd-format-seg','active-gold')">Medal</div>
+        <div class="seg" data-val="Stableford" onclick="setSeg(this,'rnd-format-seg','active-gold')">Stableford</div>
+        <div class="seg" data-val="Matchplay" onclick="setSeg(this,'rnd-format-seg','active-gold')">Match</div>
+        <div class="seg" data-val="Solo Pressure" onclick="setSeg(this,'rnd-format-seg','active-gold')">Solo</div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Gross Score</label><input type="number" id="rnd-gross" placeholder="e.g. 78"></div>
+      <div class="field"><label class="gold">Net Score / Points</label><input type="number" id="rnd-net" placeholder="e.g. 70 or 35pts"></div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Putts Total</label><input type="number" id="rnd-putts" placeholder="e.g. 30"></div>
+      <div class="field"><label class="gold">Penalties</label><input type="number" id="rnd-penalties" placeholder="e.g. 1" min="0"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Strokes Gained — Enter from Arccos / Shot Scope</span>
+    <h3>SG Data</h3>
+    <div class="row-2">
+      <div class="field"><label>SG: Off the Tee</label><input type="number" id="rnd-sg-ott" placeholder="e.g. −0.4" step="0.1"></div>
+      <div class="field"><label>SG: Approach</label><input type="number" id="rnd-sg-app" placeholder="e.g. −0.8" step="0.1"></div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label>SG: Around Green</label><input type="number" id="rnd-sg-arg" placeholder="e.g. −0.3" step="0.1"></div>
+      <div class="field"><label>SG: Putting</label><input type="number" id="rnd-sg-putt" placeholder="e.g. +0.2" step="0.1"></div>
+    </div>
+    <div class="field"><label>SG: Total</label><input type="number" id="rnd-sg-total" placeholder="e.g. −1.3" step="0.1"></div>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p>Guide 26 Weekly Synthesis: if Arccos/Shot Scope SG looks good but score is high, the issue is strategic not technical. Check Guide 20 Course Management.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Mental Game — Data your apps can't capture (Guide 17 / Guide 05)</span>
+    <h3>Mental & Decision Quality</h3>
+    <div class="field">
+      <label class="teal">Pre-Shot Routine Adherence</label>
+      <div class="seg-group" id="rnd-routine-seg">
+        <div class="seg" data-val="100%" onclick="setSeg(this,'rnd-routine-seg','active-good')">100%</div>
+        <div class="seg" data-val="~80%" onclick="setSeg(this,'rnd-routine-seg','active-gold')">~80%</div>
+        <div class="seg" data-val="~60%" onclick="setSeg(this,'rnd-routine-seg','active-rust')">~60%</div>
+        <div class="seg" data-val="<50%" onclick="setSeg(this,'rnd-routine-seg','active-bad')">&lt;50%</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="teal">Decision Quality (1–10)</label>
+      <div class="rating-row" id="rnd-decision-rating"></div>
+    </div>
+    <div class="field">
+      <label class="teal">Emotional Control (1–10)</label>
+      <div class="rating-row" id="rnd-emotional-rating"></div>
+    </div>
+    <div class="field">
+      <label class="teal">Comp vs Practice Gap (strokes — Guide 24 key metric)</label>
+      <input type="number" id="rnd-gap" placeholder="e.g. 3 (above practice avg)" step="0.5">
+    </div>
+    <div class="field">
+      <label class="teal">Dominant Miss Direction</label>
+      <div class="seg-group" id="rnd-miss-seg">
+        <div class="seg" data-val="None" onclick="setSeg(this,'rnd-miss-seg','active-good')">None</div>
+        <div class="seg" data-val="Block Right" onclick="setSeg(this,'rnd-miss-seg','active-rust')">Block R</div>
+        <div class="seg" data-val="Pull Left" onclick="setSeg(this,'rnd-miss-seg','active-rust')">Pull L</div>
+        <div class="seg" data-val="Thin" onclick="setSeg(this,'rnd-miss-seg','active-gold')">Thin</div>
+        <div class="seg" data-val="Fat" onclick="setSeg(this,'rnd-miss-seg','active-gold')">Fat</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="teal">Key Decision That Cost / Saved Most Strokes</label>
+      <textarea id="rnd-key-decision" placeholder="e.g. Took driver on 14 — should have used 3-wood. Cost double bogey."></textarea>
+    </div>
+    <div class="field">
+      <label class="teal">Practice Priority This Round Revealed</label>
+      <textarea id="rnd-priority" placeholder="e.g. SG: Approach from 150–175 yards is the biggest leak this week."></textarea>
+    </div>
+    <div class="field">
+      <label class="teal">Conditions</label>
+      <input type="text" id="rnd-conditions" placeholder="e.g. 15°C, 15mph crosswind, firm greens Stimp 10">
+    </div>
+  </div>
+
+  <button class="btn btn-gold" onclick="saveRound()">💾 Save Round</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOG PRACTICE
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">Log Practice</h2>
+  <p class="sec-desc">Every session logged. Data compounds over time — 6 months of practice logs reveal patterns no single session can show.</p>
+
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html" class="pb-link" target="_blank">⏱ Guide 05 · Practice Structure Science</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link teal" target="_blank">📊 Guide 26 · Weekly Synthesis</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/17_progress_journal.html" class="pb-link gold" target="_blank">📓 Guide 17 · Progress Journal</a>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Session Details</span>
+    <h3>What Did You Work On?</h3>
+    <div class="row-2">
+      <div class="field"><label>Date</label><input type="date" id="prac-date"></div>
+      <div class="field"><label>Duration (mins)</label><input type="number" id="prac-duration" placeholder="e.g. 90" min="10" max="360"></div>
+    </div>
+    <div class="field">
+      <label>Primary SG Focus (Guide 26 — data-driven priority)</label>
+      <div class="seg-group" id="prac-focus-seg">
+        <div class="seg" data-val="SG: OTT" onclick="setSeg(this,'prac-focus-seg','active-lime')">OTT</div>
+        <div class="seg" data-val="SG: Approach" onclick="setSeg(this,'prac-focus-seg','active-lime')">Approach</div>
+        <div class="seg" data-val="SG: ARG" onclick="setSeg(this,'prac-focus-seg','active-lime')">ARG</div>
+        <div class="seg" data-val="SG: Putting" onclick="setSeg(this,'prac-focus-seg','active-lime')">Putting</div>
+        <div class="seg" data-val="Multi" onclick="setSeg(this,'prac-focus-seg','active-lime')">Multi</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Practice Structure (Guide 05 — Practice Science tab)</label>
+      <div class="seg-group" id="prac-type-seg">
+        <div class="seg" data-val="Blocked" onclick="setSeg(this,'prac-type-seg','active-rust')">🔴 Blocked</div>
+        <div class="seg" data-val="Serial" onclick="setSeg(this,'prac-type-seg','active-gold')">🟡 Serial</div>
+        <div class="seg" data-val="Random" onclick="setSeg(this,'prac-type-seg','active-good')">🟢 Random</div>
+        <div class="seg" data-val="Simulation" onclick="setSeg(this,'prac-type-seg','active-teal')">🏌 Simulation</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>HRV Status This Morning</label>
+      <div class="seg-group" id="prac-hrv-seg">
+        <div class="seg" data-val="High" onclick="setSeg(this,'prac-hrv-seg','active-good')">🟢 High</div>
+        <div class="seg" data-val="Normal" onclick="setSeg(this,'prac-hrv-seg','active-gold')">🟡 Normal</div>
+        <div class="seg" data-val="Low" onclick="setSeg(this,'prac-hrv-seg','active-bad')">🔴 Low</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Tools & Drills</span>
+    <h3>What Tools Did You Use?</h3>
+    <div class="field">
+      <label class="teal">Tools Used</label>
+      <div class="seg-group" id="prac-tools-seg" style="flex-wrap:wrap;">
+        <div class="seg" data-val="Mevo" onclick="toggleSeg(this,'active-teal')">Mevo</div>
+        <div class="seg" data-val="HackMotion" onclick="toggleSeg(this,'active-teal')">HackMotion</div>
+        <div class="seg" data-val="Rypstick" onclick="toggleSeg(this,'active-teal')">Rypstick</div>
+        <div class="seg" data-val="Impact Bag" onclick="toggleSeg(this,'active-teal')">Impact Bag</div>
+        <div class="seg" data-val="Alignment Sticks" onclick="toggleSeg(this,'active-teal')">Align Sticks</div>
+        <div class="seg" data-val="Video" onclick="toggleSeg(this,'active-teal')">Video</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="teal">Specific Drill / Target</label>
+      <input type="text" id="prac-drill" placeholder="e.g. HackMotion lead wrist — target ≥ −5° at top">
+    </div>
+    <div class="field">
+      <label class="teal">Drill Result</label>
+      <div class="seg-group" id="prac-result-seg">
+        <div class="seg" data-val="Pass" onclick="setSeg(this,'prac-result-seg','active-good')">✓ Pass</div>
+        <div class="seg" data-val="Partial" onclick="setSeg(this,'prac-result-seg','active-gold')">~ Partial</div>
+        <div class="seg" data-val="Fail" onclick="setSeg(this,'prac-result-seg','active-bad')">✗ Fail</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="teal">Key Observation</label>
+      <textarea id="prac-observation" placeholder="e.g. Lead wrist at top improved to −6° on 70% of swings. Still cupping in takeaway."></textarea>
+    </div>
+    <div class="field">
+      <label class="teal">Next Session Priority</label>
+      <input type="text" id="prac-next" placeholder="e.g. Maintain wrist work + add interleaved drill with 7-iron and PW">
+    </div>
+  </div>
+
+  <button class="btn btn-lime" onclick="savePractice()">💾 Save Session</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SPEED SESSION
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="speed">
+  <h2 class="sec-title">Speed Session</h2>
+  <p class="sec-desc">Log every Rypstick overspeed session. Only train on High or Normal HRV days. Never do overspeed within 72 hours of competition.</p>
+
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Guide 25 — Speed Training Protocol</strong> 3× per week on non-consecutive days. Lead-hand swings first. Maximum effort on every rep. 45–60 sec rest between sets. Transfer shots to driver after each set.</p>
+  </div>
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html" class="pb-link" target="_blank">⚡ Guide 25 · Speed Training</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" class="pb-link teal" target="_blank">💪 Guide 06 · GRF Training tab</a>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Session Entry</span>
+    <h3>Speed Training Log</h3>
+    <div class="row-2">
+      <div class="field"><label class="gold">Date</label><input type="date" id="spd-date"></div>
+      <div class="field"><label class="gold">Session #</label><input type="number" id="spd-session-num" placeholder="e.g. 12" min="1"></div>
+    </div>
+    <div class="field">
+      <label class="gold">HRV Status (must be High or Normal — Guide 06)</label>
+      <div class="seg-group" id="spd-hrv-seg">
+        <div class="seg" data-val="High" onclick="setSeg(this,'spd-hrv-seg','active-good')">🟢 High — proceed</div>
+        <div class="seg" data-val="Normal" onclick="setSeg(this,'spd-hrv-seg','active-gold')">🟡 Normal — proceed</div>
+        <div class="seg" data-val="Low" onclick="setSeg(this,'spd-hrv-seg','active-bad')">🔴 Low — SKIP today</div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="gold">Protocol Level</label>
+      <div class="seg-group" id="spd-protocol-seg">
+        <div class="seg" data-val="Level 1" onclick="setSeg(this,'spd-protocol-seg','active-gold')">Level 1</div>
+        <div class="seg" data-val="Level 2" onclick="setSeg(this,'spd-protocol-seg','active-gold')">Level 2</div>
+        <div class="seg" data-val="Level 3" onclick="setSeg(this,'spd-protocol-seg','active-gold')">Level 3</div>
+      </div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Lead-Hand Swings</label><input type="number" id="spd-lead" placeholder="e.g. 30" min="0" max="60"></div>
+      <div class="field"><label class="gold">Normal Swings</label><input type="number" id="spd-normal" placeholder="e.g. 30" min="0" max="60"></div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Driver Speed Before (mph)</label><input type="number" id="spd-before" placeholder="e.g. 104" step="0.1"></div>
+      <div class="field"><label class="gold">Driver Speed After (mph)</label><input type="number" id="spd-after" placeholder="e.g. 107" step="0.1"></div>
+    </div>
+    <div id="spd-gain-display" style="display:none;margin:8px 0 12px;padding:10px 14px;background:var(--lime-dim);border:1px solid var(--border);border-radius:8px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--lime-hi);">Session speed gain: <strong id="spd-gain-val">+0.0 mph</strong></span>
+    </div>
+    <div class="field">
+      <label class="gold">Notes</label>
+      <textarea id="spd-notes" placeholder="e.g. Jump drill + squat sequence felt better. GRF timing improving."></textarea>
+    </div>
+    <button class="btn btn-gold" onclick="saveSpeed()">💾 Save Speed Session</button>
+  </div>
+
+  <hr>
+  <span class="badge badge-gold">📊 4-Weekly Benchmark</span>
+  <div class="card card-gold">
+    <span class="card-tag">Benchmark Entry — Run every 4 weeks · High-HRV day only · 10 shots · middle 6 average</span>
+    <h3>Speed Benchmark Test</h3>
+    <div class="row-2">
+      <div class="field"><label class="gold">Test Date</label><input type="date" id="bench-date"></div>
+      <div class="field"><label class="gold">Week #</label><input type="number" id="bench-week" placeholder="e.g. 4" min="1"></div>
+    </div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Avg Driver Speed (mph)</label><input type="number" id="bench-speed" placeholder="e.g. 106" step="0.1"></div>
+      <div class="field"><label class="gold">Avg Ball Speed (mph)</label><input type="number" id="bench-ball-speed" placeholder="e.g. 156" step="0.1"></div>
+    </div>
+    <div class="field"><label class="gold">Smash Factor</label><input type="number" id="bench-smash" placeholder="e.g. 1.47" step="0.01" min="1.3" max="1.55"></div>
+    <div class="field"><label class="gold">Notes</label><input type="text" id="bench-notes" placeholder="e.g. Best session yet — GRF work paying off"></div>
+    <button class="btn btn-gold btn-sm" style="width:auto;margin-top:8px;" onclick="saveBenchmark()">💾 Save Benchmark</button>
+  </div>
+
+  <hr>
+  <span class="badge badge-gold">📈 Speed History</span>
+  <div id="speed-history"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     PUTTING STATS
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Stats</h2>
+  <p class="sec-desc">Track make % by distance against tour and scratch benchmarks. The data reveals whether putting is truly your weakness or whether it is an approach shot proximity problem.</p>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Guide 26 — The Putting Trap</strong> Poor SG: PUTT can mean an approach problem, not a putting problem. If your average approach proximity is 35+ feet, the 3-putt rate will be high regardless of putting technique. Cross-reference before changing anything.</p>
+  </div>
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html" class="pb-link" target="_blank">🎯 Guide 01 · Putting Playbook</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html" class="pb-link teal" target="_blank">🌾 Green Cond. tab · Grain & Stimp</a>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Session Make % Logger</span>
+    <h3>Log a Putting Session</h3>
+    <div class="row-2">
+      <div class="field"><label>Date</label><input type="date" id="putt-date"></div>
+      <div class="field"><label>Surface</label>
+        <select id="putt-surface"><option>Practice Green</option><option>On Course</option><option>Putting Mat</option></select>
+      </div>
+    </div>
+
+    <div id="putt-distances">
+      <!-- Generated by JS -->
+    </div>
+
+    <div class="field">
+      <label>3-Putt Count (this session / round)</label>
+      <input type="number" id="putt-3putts" placeholder="e.g. 2" min="0" max="18">
+    </div>
+    <div class="field">
+      <label>Notes</label>
+      <textarea id="putt-notes" placeholder="e.g. Grain reading improved. Still losing pace on 20+ ft putts."></textarea>
+    </div>
+    <button class="btn btn-lime" onclick="savePutting()">💾 Save Session</button>
+  </div>
+
+  <hr>
+  <span class="badge badge-lime">📊 Make % Averages vs Targets</span>
+  <div class="card" id="putt-summary-card">
+    <span class="card-tag">Your Averages vs Tour & Scratch Targets</span>
+    <div id="putt-summary"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BENCHMARKS
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="benchmarks">
+  <h2 class="sec-title">Benchmarks</h2>
+  <p class="sec-desc">Monthly technical benchmarks — Mevo driver and 7-iron, HackMotion wrist positions. Run on a High-HRV day. Same time, same conditions, every month.</p>
+
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html" class="pb-link" target="_blank">🏌️ Guide 03 · Wrist Mech. tab</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link gold" target="_blank">📊 Guide 26 · Weekly Synthesis</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/15_equipment_fitting.html" class="pb-link teal" target="_blank">⚙️ Guide 15 · Equipment Fitting</a>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Monthly Benchmark Entry</span>
+    <h3>Mevo + HackMotion Data</h3>
+    <div class="row-2">
+      <div class="field"><label class="gold">Date</label><input type="date" id="bm-date"></div>
+      <div class="field"><label class="gold">Month #</label><input type="number" id="bm-month" placeholder="e.g. 1" min="1" max="24"></div>
+    </div>
+
+    <div class="field"><label class="gold" style="font-size:10px;letter-spacing:.2em;">── MEVO · DRIVER (10 shots · middle 6 average) ──</label></div>
+    <div class="row-3">
+      <div class="field"><label class="gold">Speed (mph)</label><input type="number" id="bm-drv-speed" placeholder="105" step="0.1"></div>
+      <div class="field"><label class="gold">Ball Spd</label><input type="number" id="bm-drv-ball" placeholder="156" step="0.1"></div>
+      <div class="field"><label class="gold">Smash</label><input type="number" id="bm-drv-smash" placeholder="1.47" step="0.01"></div>
+    </div>
+    <div class="row-3">
+      <div class="field"><label class="gold">Spin (rpm)</label><input type="number" id="bm-drv-spin" placeholder="2350"></div>
+      <div class="field"><label class="gold">Spin Axis°</label><input type="number" id="bm-drv-axis" placeholder="±8" step="0.1"></div>
+      <div class="field"><label class="gold">Carry (yds)</label><input type="number" id="bm-drv-carry" placeholder="258"></div>
+    </div>
+
+    <div class="field"><label class="gold" style="font-size:10px;letter-spacing:.2em;margin-top:6px;">── MEVO · 7-IRON (8 shots · middle 6 average) ──</label></div>
+    <div class="row-3">
+      <div class="field"><label class="gold">Speed (mph)</label><input type="number" id="bm-7i-speed" placeholder="88" step="0.1"></div>
+      <div class="field"><label class="gold">Spin (rpm)</label><input type="number" id="bm-7i-spin" placeholder="7200"></div>
+      <div class="field"><label class="gold">Carry (yds)</label><input type="number" id="bm-7i-carry" placeholder="162"></div>
+    </div>
+
+    <div class="field"><label class="gold" style="font-size:10px;letter-spacing:.2em;margin-top:6px;">── HACKMOTION · KEY WRIST POSITIONS (Guide 03) ──</label></div>
+    <div class="row-2">
+      <div class="field"><label class="gold">Lead Wrist at Top° (target −5° to −15° flex)</label><input type="number" id="bm-wrist-top" placeholder="e.g. −8" step="0.1"></div>
+      <div class="field"><label class="gold">Lead Wrist at Impact° (target −8° to −18° flex)</label><input type="number" id="bm-wrist-impact" placeholder="e.g. −12" step="0.1"></div>
+    </div>
+    <div class="field"><label class="gold">Handicap Index at this date</label><input type="number" id="bm-hcp" placeholder="e.g. 8.4" step="0.1" min="-5" max="28"></div>
+    <div class="field"><label class="gold">Notes</label><textarea id="bm-notes" placeholder="e.g. Wrist flexion at top improved from −3° last month to −8°. Spin axis reduced from ±13° to ±8°."></textarea></div>
+    <button class="btn btn-gold" onclick="saveBenchmarkFull()">💾 Save Monthly Benchmark</button>
+  </div>
+
+  <hr>
+  <span class="badge badge-gold">📈 Benchmark History</span>
+  <div id="benchmark-history"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JOURNAL
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="journal">
+  <h2 class="sec-title">Journal</h2>
+  <p class="sec-desc">Sunday evening — 30 minutes. The compound interest mechanism of the programme. Data tells you what. Reflection tells you why. Both are required.</p>
+
+  <div class="info-box elite">
+    <span class="ico">⭐</span>
+    <p><strong>Guide 17 — Progress Journal</strong> A journal entry written in Month 2 is mildly useful. A pattern identified across Month 2 through Month 14 is transformative self-knowledge no app can produce. Write within 30 minutes of finishing a round.</p>
+  </div>
+  <div class="pb-links">
+    <a href="https://asbremner-ai.github.io/mg-playbooks/17_progress_journal.html" class="pb-link gold" target="_blank">📓 Guide 17 · Progress Journal</a>
+    <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link teal" target="_blank">📊 Guide 26 · Weekly Synthesis</a>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Guide 26 — Sunday 30-Minute Weekly Review</span>
+    <h3>Weekly Journal Entry</h3>
+    <div class="field"><label class="gold">Week Beginning</label><input type="date" id="jnl-date"></div>
+
+    <div class="field">
+      <label class="gold">SG This Week (from Arccos / Shot Scope rolling avg)</label>
+      <div class="row-3">
+        <input type="number" id="jnl-sg-ott" placeholder="OTT" step="0.1">
+        <input type="number" id="jnl-sg-app" placeholder="APP" step="0.1">
+        <input type="number" id="jnl-sg-arg" placeholder="ARG" step="0.1">
+      </div>
+      <div class="row-2" style="margin-top:8px;">
+        <input type="number" id="jnl-sg-putt" placeholder="PUTT" step="0.1">
+        <input type="number" id="jnl-sg-total" placeholder="TOTAL" step="0.1">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="gold">HRV Trend This Week</label>
+      <div class="seg-group" id="jnl-hrv-seg">
+        <div class="seg" data-val="Improving" onclick="setSeg(this,'jnl-hrv-seg','active-good')">↑ Improving</div>
+        <div class="seg" data-val="Stable" onclick="setSeg(this,'jnl-hrv-seg','active-gold')">→ Stable</div>
+        <div class="seg" data-val="Declining" onclick="setSeg(this,'jnl-hrv-seg','active-bad')">↓ Declining</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="gold">Practice Structure This Week</label>
+      <div class="seg-group" id="jnl-prac-seg">
+        <div class="seg" data-val="Mostly Blocked" onclick="setSeg(this,'jnl-prac-seg','active-rust')">Mostly Blocked</div>
+        <div class="seg" data-val="Mixed" onclick="setSeg(this,'jnl-prac-seg','active-gold')">Mixed</div>
+        <div class="seg" data-val="Mostly Random/Sim" onclick="setSeg(this,'jnl-prac-seg','active-good')">Mostly Random</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="gold">Best Moment This Week</label>
+      <textarea id="jnl-best" placeholder="e.g. Made four 6-footers in a row on hole 16 using the intermediate target system."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="gold">Biggest Challenge</label>
+      <textarea id="jnl-challenge" placeholder="e.g. Approach miss direction — still aiming at tucked pins and short-siding myself."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="gold">Key Observation / What I Learned</label>
+      <textarea id="jnl-learning" placeholder="e.g. The bowed wrist feels strange but HackMotion shows it's working — stay the course."></textarea>
+    </div>
+
+    <div class="field">
+      <label class="gold">Next Week's Single Priority (one thing only — Guide 26)</label>
+      <input type="text" id="jnl-priority" placeholder="e.g. Lead wrist flexion at top — HackMotion biofeedback every range session">
+    </div>
+
+    <div class="field">
+      <label class="gold">Competitions This Week</label>
+      <input type="text" id="jnl-comp" placeholder="e.g. Monthly Medal — Royal Lytham — Score 76 (net 68) · Stableford 36 pts">
+    </div>
+  </div>
+
+  <button class="btn btn-gold" onclick="saveJournal()">💾 Save Journal Entry</button>
+
+  <hr>
+  <span class="badge badge-gold">📚 Previous Entries</span>
+  <div id="journal-history"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HISTORY
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="history">
+  <h2 class="sec-title">History</h2>
+  <p class="sec-desc">All logged data across every category. Filter by type to review patterns.</p>
+
+  <div class="field">
+    <label>Filter by Type</label>
+    <div class="seg-group" id="hist-filter-seg">
+      <div class="seg active-lime" data-val="All" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('All')">All</div>
+      <div class="seg" data-val="Round" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('Round')">Rounds</div>
+      <div class="seg" data-val="Practice" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('Practice')">Practice</div>
+      <div class="seg" data-val="Speed" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('Speed')">Speed</div>
+      <div class="seg" data-val="HRV" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('HRV')">HRV</div>
+      <div class="seg" data-val="Journal" onclick="setSeg(this,'hist-filter-seg','active-lime');renderAllHistory('Journal')">Journal</div>
+    </div>
+  </div>
+
+  <div id="all-history"></div>
+
+  <hr>
+  <div class="btn-row">
+    <button class="btn btn-ghost btn-sm" onclick="exportData()">📤 Export Data (JSON)</button>
+    <button class="btn btn-ghost btn-sm" onclick="if(confirm('Delete ALL data? This cannot be undone.'))clearAllData()">🗑 Clear All Data</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HOW TO USE
+════════════════════════════════════════════════════════════ -->
+<div class="sec" id="howto">
+  <h2 class="sec-title">How To Use</h2>
+  <p class="sec-desc">Everything you need to get the most from this tracker — daily habits, weekly rhythms, what to enter where, and how every tab connects to your 31 playbooks.</p>
+
+  <!-- INSTALL -->
+  <span class="badge badge-lime">📱 Step 0 — Install on Your Phone</span>
+  <div class="card">
+    <span class="card-tag">Add to Home Screen — One Tap Access</span>
+    <h3>Install as an App Icon</h3>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">This tracker works best when saved to your home screen so it opens instantly — no browser required. Data is stored locally on your device and persists between sessions.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:4px;">
+      <div style="background:#182818;border:1px solid rgba(160,200,80,0.2);border-radius:8px;padding:13px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#a0c850;margin-bottom:6px;">iPhone / Safari</div>
+        <div style="font-size:13px;color:#e8f0d8;line-height:1.7;">Tap the <strong style="color:#e0b840;">Share</strong> button (box with arrow) → scroll down → tap <strong style="color:#e0b840;">"Add to Home Screen"</strong> → tap Add. The tracker appears as an app icon.</div>
+      </div>
+      <div style="background:#182818;border:1px solid rgba(160,200,80,0.2);border-radius:8px;padding:13px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#a0c850;margin-bottom:6px;">Android / Chrome</div>
+        <div style="font-size:13px;color:#e8f0d8;line-height:1.7;">Tap the <strong style="color:#e0b840;">⋮ menu</strong> (top right) → tap <strong style="color:#e0b840;">"Add to Home Screen"</strong> → tap Add.</div>
+      </div>
+    </div>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Also add your Playbook home screen</strong> — visit <a href="https://asbremner-ai.github.io/mg-playbooks/" target="_blank" style="color:#70ccc4;">mg-playbooks</a> and add that to your home screen too. Keep both one tap away.</p>
+    </div>
+  </div>
+
+  <!-- DAILY RHYTHM -->
+  <span class="badge badge-gold">🌅 Daily Rhythm — What to Log Every Day</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Daily Habit Loop</span>
+    <h3>Morning + Evening — Under 5 Minutes Total</h3>
+    <div style="display:flex;flex-direction:column;gap:0;">
+
+      <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(224,184,64,0.12);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#e0b840;min-width:70px;margin-top:2px;">ON WAKING</div>
+        <div>
+          <div style="font-size:13px;color:#e8f0d8;font-weight:500;margin-bottom:3px;">HRV Check-In tab → 90 seconds</div>
+          <div style="font-size:12px;color:rgba(232,240,216,0.55);line-height:1.6;">Before coffee, lying down. Enter your HRV reading from Oura / Whoop / HRV4Training, sleep hours, resting HR, and select High / Normal / Low readiness. The app immediately tells you what to train today and links you to the right playbook. <a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" target="_blank" style="color:#48b0a8;">→ Guide 06 HRV tab</a></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(224,184,64,0.12);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#e0b840;min-width:70px;margin-top:2px;">AFTER PRACTICE</div>
+        <div>
+          <div style="font-size:13px;color:#e8f0d8;font-weight:500;margin-bottom:3px;">Log Practice tab → 2 minutes</div>
+          <div style="font-size:12px;color:rgba(232,240,216,0.55);line-height:1.6;">Within 30 minutes of finishing. Select your SG focus category, practice structure type (Blocked / Random / Simulation), tick the tools used, note your drill result and key observation. This is the raw material your weekly journal draws from. <a href="https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html" target="_blank" style="color:#48b0a8;">→ Guide 05 Practice Science tab</a></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;padding:14px 0;border-bottom:1px solid rgba(224,184,64,0.12);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#e0b840;min-width:70px;margin-top:2px;">AFTER SPEED SESSION</div>
+        <div>
+          <div style="font-size:13px;color:#e8f0d8;font-weight:500;margin-bottom:3px;">Speed Session tab → 1 minute</div>
+          <div style="font-size:12px;color:rgba(232,240,216,0.55);line-height:1.6;">Log before and after driver speed from Mevo. The app calculates your session gain. Note: if you selected <strong style="color:#e07060;">Low HRV</strong> in the morning check-in, the app will block the save and remind you to skip speed work today. <a href="https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html" target="_blank" style="color:#48b0a8;">→ Guide 25 Speed Training</a></div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:14px;padding:14px 0;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#e0b840;min-width:70px;margin-top:2px;">AFTER A ROUND</div>
+        <div>
+          <div style="font-size:13px;color:#e8f0d8;font-weight:500;margin-bottom:3px;">Log Round tab → 3–4 minutes</div>
+          <div style="font-size:12px;color:rgba(232,240,216,0.55);line-height:1.6;">Enter your score, then paste in SG figures from Arccos / Shot Scope. The unique value here is the mental game section — decision quality, emotional control, routine adherence, competition-vs-practice gap. These are numbers your GPS app will never capture. <a href="https://asbremner-ai.github.io/mg-playbooks/24_competitive_strategy.html" target="_blank" style="color:#48b0a8;">→ Guide 24 Competitive Strategy</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEKLY RHYTHM -->
+  <span class="badge badge-teal">📅 Weekly Rhythm — Sunday Evening · 30 Minutes</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Sunday Review — Guide 26 Weekly Synthesis</span>
+    <h3>The Most Important 30 Minutes of Your Week</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);margin-bottom:14px;">This is described in Guide 26 as "the compound interest mechanism of the programme." Do not skip it. The journal entries you write in Month 2 become invaluable pattern recognition by Month 12.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="background:rgba(72,176,168,0.08);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#48b0a8;letter-spacing:.12em;margin-bottom:5px;">STEP 1 — 5 MIN</div>
+        <div style="font-size:13px;color:#e8f0d8;">Open Arccos or Shot Scope. Find your 10-round rolling SG averages. Note the weakest category and the sub-skill within it (distance band, shot type). Enter into the Journal tab.</div>
+      </div>
+      <div style="background:rgba(72,176,168,0.08);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#48b0a8;letter-spacing:.12em;margin-bottom:5px;">STEP 2 — 8 MIN</div>
+        <div style="font-size:13px;color:#e8f0d8;">Review your Mevo session data. Does it confirm or contradict your SG weakness? High spin axis = face control issue → Guide 03 Wrist Mech. Good Mevo but poor SG → strategy issue → Guide 20.</div>
+      </div>
+      <div style="background:rgba(72,176,168,0.08);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#48b0a8;letter-spacing:.12em;margin-bottom:5px;">STEP 3 — 7 MIN</div>
+        <div style="font-size:13px;color:#e8f0d8;">Review HackMotion data. Are wrist positions moving toward targets? Cross-reference with Mevo spin axis. Then check this week's HRV trend — declining means reduce next week's load.</div>
+      </div>
+      <div style="background:rgba(72,176,168,0.08);border-radius:8px;padding:12px 14px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#48b0a8;letter-spacing:.12em;margin-bottom:5px;">STEP 4 — 10 MIN</div>
+        <div style="font-size:13px;color:#e8f0d8;">Write the Journal entry. Be specific — not "irons were bad" but "SG: APP −1.2 from 150–175 yards, predominantly missing left, approach miss direction protocol not applied on holes 7, 12, 14." Then commit to ONE priority for next week. One only.</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link teal" target="_blank">📊 Guide 26 · Weekly Synthesis tab — full protocol</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/17_progress_journal.html" class="pb-link" target="_blank" style="margin-top:6px;">📓 Guide 17 · Progress Journal — why journalling matters</a>
+    </div>
+  </div>
+
+  <!-- MONTHLY RHYTHM -->
+  <span class="badge badge-lime">📊 Monthly Rhythm — First High-HRV Day of the Month</span>
+  <div class="card">
+    <span class="card-tag">Monthly Benchmark Session — Guide 26</span>
+    <h3>The 10 Metrics That Tell You Whether the Programme is Working</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);margin-bottom:14px;">Run this on a High-HRV day. Same time of day. Fully warmed up. These numbers are your true scorecard — they reveal progress that neither your handicap nor your SG data can show in isolation.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">1. Driver club speed (mph)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → Mevo Driver</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">2. Driver smash factor</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → Mevo Driver</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">3. Driver spin axis (°)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → Mevo Driver</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">4. 7-iron spin rate (rpm)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → Mevo 7-iron</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">5. Lead wrist at top (°)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → HackMotion</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">6. Lead wrist at impact (°)</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → HackMotion</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">7. SG: Approach 10-round avg</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Dashboard → SG section</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">8. Average approach proximity</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">From Arccos / Shot Scope</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(160,200,80,0.10);">
+        <div style="font-size:12px;color:#e8f0d8;">9. HRV 30-day average</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">HRV Check-In history</div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;">
+        <div style="font-size:12px;color:#e8f0d8;">10. Current handicap index</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#a0c850;">Benchmarks tab → HCP field</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB-BY-TAB GUIDE -->
+  <span class="badge badge-gold">📋 Tab-by-Tab Reference</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Dashboard</span>
+    <h3>What It Shows & When It Updates</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">Your live performance snapshot. The <strong style="color:#e8f0d8;">Readiness Banner</strong> pulls today's HRV check-in and shows your training recommendation. The <strong style="color:#e8f0d8;">SG Summary</strong> averages your last 5 logged rounds automatically. The <strong style="color:#e8f0d8;">Activity Feed</strong> shows your 6 most recent entries across all categories. Updates every time you log anything — open it at the start of each day to confirm your plan matches your readiness.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">HRV Check-In</span>
+    <h3>Morning Readiness — Every Day Before Coffee</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">The most important daily habit in the programme. Measure HRV lying down using Oura Ring, Whoop, or HRV4Training (free app using your phone camera). Enter the rMSSD value, sleep hours, resting HR. Select your readiness level. The app generates a specific training recommendation with direct playbook links. High = push hard, including speed work. Normal = standard programme. Low = mobility, putting, and rest only — no overspeed training under any circumstances.</p>
+    <div style="margin-top:10px;"><a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" target="_blank" class="pb-link teal">💪 Guide 06 · HRV & Readiness tab</a></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Log Round</span>
+    <h3>Enter After Every Competitive or Practice Round</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;"><strong style="color:#e8f0d8;">Basic data</strong> (score, putts, penalties) takes 30 seconds. <strong style="color:#e8f0d8;">SG data</strong> — copy your four SG figures directly from Arccos or Shot Scope after the round; don't try to calculate them manually. <strong style="color:#e8f0d8;">Mental game section</strong> is the unique value of this tracker — rate decision quality and emotional control 1–10, record the competition-vs-practice gap (the key Guide 24 metric), and note the dominant miss direction so you can apply the self-correction system next time. The "Key Decision" field is the most valuable — be honest and specific.</p>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/20_course_management.html" target="_blank" class="pb-link">⚖️ Guide 20 · Course Management</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/24_competitive_strategy.html" target="_blank" class="pb-link gold">🏆 Guide 24 · Competitive Strategy</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Log Practice</span>
+    <h3>Every Session — Even Short Ones</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">The practice type selector is critical — <strong style="color:#e07060;">Blocked</strong> (same shot repeatedly) is only correct in the first 1–3 weeks of learning a new move. After that, shift to <strong style="color:#e0b840;">Serial</strong> then <strong style="color:#70c870;">Random</strong> and ultimately <strong style="color:#70ccc4;">Simulation</strong>. If you are in Month 4+ and still logging Blocked sessions for an existing technique, you are practising in a way that does not transfer to the course. The drill result (Pass / Partial / Fail) is the only honest measure of session quality — not how the ball looked or felt.</p>
+    <div style="margin-top:10px;"><a href="https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html" target="_blank" class="pb-link">⏱ Guide 05 · Practice Science tab</a></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Speed Session</span>
+    <h3>Three Times Per Week — Never on Low HRV Days</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">Log before and after driver speed using Mevo — the live session gain display shows immediately whether the session produced a speed increase. The <strong style="color:#e8f0d8;">4-Weekly Benchmark</strong> section is a separate, standardised test: 10 driver shots at maximum effort on a High-HRV day, middle 6 averaged. This is your true speed progress record — run it every 4 weeks and compare to your baseline. Expected gain rate: +2–4 mph in weeks 1–6, then +1–2 mph per month. If gains have stalled, the GRF training section of Guide 06 is almost always the answer.</p>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html" target="_blank" class="pb-link">⚡ Guide 25 · Speed Training</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" target="_blank" class="pb-link teal">💪 Guide 06 · GRF Training tab</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Putting Stats</span>
+    <h3>Log a Putting Session or Post-Round Make Percentages</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">Enter how many putts you made out of how many attempts at each distance. The app tracks your running average per distance and colour-codes it against tour and scratch targets — green means on track, amber means close, red means this distance needs practice time. <strong style="color:#e8f0d8;">Important cross-reference:</strong> before concluding you have a putting problem, check your average approach proximity in Arccos. If you are leaving the ball 35+ feet from the flag on average, your 3-putt rate will be high regardless of putting quality. The issue is the approach, not the putting.</p>
+    <div style="margin-top:10px;"><a href="https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html" target="_blank" class="pb-link">🎯 Guide 01 · Putting Playbook</a></div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Benchmarks</span>
+    <h3>Monthly Technical Snapshot — Run on a High-HRV Day</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">This tab captures the numbers that prove whether your technique is actually changing — independent of score or feel. <strong style="color:#e8f0d8;">Spin axis</strong> is the direct read on face control — your Tuesday session data showed ±13.4°; target is under ±8° by Month 6, under ±5° by Month 12. <strong style="color:#e8f0d8;">Lead wrist at top and impact</strong> from HackMotion show whether the bowed wrist move is actually landing in the right position or just feeling like it is. <strong style="color:#e8f0d8;">Always run on a High-HRV day</strong> — benchmark tests on Low-HRV days produce artificially low speed and worse wrist positions, making the data unreliable for progress tracking.</p>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html" target="_blank" class="pb-link">🏌️ Guide 03 · Wrist Mech. tab</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" target="_blank" class="pb-link gold">📊 Guide 26 · Stats Interpretation</a>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Journal</span>
+    <h3>Sunday Evening · 30 Minutes · Never Skip</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">The Journal tab is the Guide 26 Sunday review structured as a form. <strong style="color:#e8f0d8;">The SG fields</strong> take your 10-round rolling averages from Arccos — copy them in weekly. <strong style="color:#e8f0d8;">The HRV trend</strong> summarises your week's readiness pattern — if it has been declining, the training load needs reducing next week. <strong style="color:#e8f0d8;">The best moment and biggest challenge fields</strong> are the qualitative record that SG data cannot capture. The <strong style="color:#e8f0d8;">Next Week's Single Priority</strong> field is the most important of all — one thing only, written in the format: "Priority: [specific skill] using [specific drill] because [SG data says X] confirmed by [Mevo/HackMotion says Y]." Vague priorities produce vague practice.</p>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/17_progress_journal.html" target="_blank" class="pb-link gold">📓 Guide 17 · Progress Journal</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" target="_blank" class="pb-link">📊 Guide 26 · Weekly Synthesis tab</a>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">History</span>
+    <h3>All Entries · Filter by Type · Export Anytime</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;">Every logged entry appears here, newest first. Use the filter buttons to view only rounds, practice sessions, speed data, HRV readings, or journal entries. The <strong style="color:#e8f0d8;">Export Data (JSON)</strong> button downloads all your data as a file — do this monthly as a backup, and use the exported data to cross-reference with the Excel workbook during your monthly review. Individual entries can be deleted by tapping the ✕ button — use this to remove obvious errors only.</p>
+  </div>
+
+  <!-- DATA TIPS -->
+  <span class="badge badge-teal">💾 Data & Privacy</span>
+  <div class="card card-teal">
+    <span class="card-tag">How Your Data Is Stored</span>
+    <h3>Local Storage — On Your Device Only</h3>
+    <p style="font-size:13px;color:rgba(232,240,216,0.55);line-height:1.7;margin-bottom:12px;">All data is stored in your browser's local storage — it never leaves your device and is never sent to any server. This means:</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="color:#70ccc4;font-size:11px;margin-top:2px;">✓</span>
+        <span style="font-size:13px;color:rgba(232,240,216,0.55);">Completely private — no account, no cloud, no tracking</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="color:#70ccc4;font-size:11px;margin-top:2px;">✓</span>
+        <span style="font-size:13px;color:rgba(232,240,216,0.55);">Works offline — no internet connection needed after loading</span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="color:#e0b840;font-size:11px;margin-top:2px;">⚠</span>
+        <span style="font-size:13px;color:rgba(232,240,216,0.55);">Data stays on this device and browser — if you clear your browser cache or switch browsers, data will be lost. <strong style="color:#e8f0d8;">Export your data monthly from the History tab as a backup.</strong></span>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <span style="color:#e0b840;font-size:11px;margin-top:2px;">⚠</span>
+        <span style="font-size:13px;color:rgba(232,240,216,0.55);">If you use this on both your phone and computer, they will have separate data sets — the phone is your primary device for logging.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYBOOK QUICK LINKS -->
+  <span class="badge badge-lime">📚 All 31 Playbooks — Quick Reference</span>
+  <div class="card">
+    <span class="card-tag">The Scratch Project Playbook Library</span>
+    <h3>Every Guide — One Tap Away</h3>
+    <div class="pb-links" style="margin-top:8px;">
+      <a href="https://asbremner-ai.github.io/mg-playbooks/index.html" class="pb-link" target="_blank">🏠 All Playbooks — Home</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/04_complete_golfer.html" class="pb-link" target="_blank">🧭 G04 · System Overview</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/10_scratch_plan.html" class="pb-link gold" target="_blank">🏆 G10 · 24-Month Plan</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/27_six_month_plan.html" class="pb-link gold" target="_blank">📅 G27 · 6-Month Plan</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/28_months_7_12_plan.html" class="pb-link gold" target="_blank">📆 G28 · Months 7–12</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html" class="pb-link" target="_blank">🎯 G01 · Putting</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/02_shortgame_pro.html" class="pb-link" target="_blank">🌊 G02 · Short Game</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html" class="pb-link" target="_blank">🏌️ G03 · Long Game</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html" class="pb-link" target="_blank">⏱ G05 · Pre-Shot</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html" class="pb-link teal" target="_blank">💪 G06 · Fitness</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/07_golf_nutrition.html" class="pb-link teal" target="_blank">🍎 G07 · Nutrition</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/08_pro_round_prep.html" class="pb-link" target="_blank">🗺️ G08 · Round Prep</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/09_golf_coach_ai.html" class="pb-link gold" target="_blank">🤖 G09 · Coach AI</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/11_shot_dispersion.html" class="pb-link" target="_blank">📊 G11 · Dispersion</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/12_rules_of_golf.html" class="pb-link" target="_blank">📜 G12 · Rules</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/13_injury_prevention.html" class="pb-link" target="_blank">🛡️ G13 · Injury</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/14_video_analysis.html" class="pb-link" target="_blank">🎬 G14 · Video</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/15_equipment_fitting.html" class="pb-link" target="_blank">⚙️ G15 · Equipment</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/16_solo_pressure_round.html" class="pb-link" target="_blank">🎯 G16 · Solo Round</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/17_progress_journal.html" class="pb-link gold" target="_blank">📓 G17 · Journal</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/18_training_aids_2.html" class="pb-link" target="_blank">🔧 G18 · Training Aids</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/20_course_management.html" class="pb-link" target="_blank">⚖️ G20 · Course Mgmt</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/22_wedge_distances.html" class="pb-link" target="_blank">📏 G22 · Wedge Dist.</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/23_weather_conditions.html" class="pb-link" target="_blank">🌬️ G23 · Conditions</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/24_competitive_strategy.html" class="pb-link" target="_blank">🏆 G24 · Competition</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html" class="pb-link" target="_blank">⚡ G25 · Speed</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/26_stats_interpretation.html" class="pb-link gold" target="_blank">📊 G26 · Stats</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/practice_plan.html" class="pb-link teal" target="_blank">🗓️ Active 4-Week Plan</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/swing_mechanics.html" class="pb-link" target="_blank">⚙️ Swing Mechanics</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/hackmotion_playbook.html" class="pb-link" target="_blank">🖥️ HackMotion Guide</a>
+      <a href="https://asbremner-ai.github.io/mg-playbooks/mevo_gen2_playbook.html" class="pb-link" target="_blank">📡 Mevo Gen2 Guide</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">THE SCRATCH PROJECT · PERFORMANCE TRACKER · <a href="https://asbremner-ai.github.io/mg-playbooks/" style="color:#a0c850;color:var(--lime);text-decoration:none;" target="_blank">31 PLAYBOOKS ↗</a></div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── STORAGE HELPERS ───────────────────────────────────────
+const BASE = 'scratch_';
+const get = k => { try { return JSON.parse(localStorage.getItem(BASE+k)) || []; } catch { return []; } };
+const set = (k,v) => localStorage.setItem(BASE+k, JSON.stringify(v));
+const getObj = k => { try { return JSON.parse(localStorage.getItem(BASE+k)) || {}; } catch { return {}; } };
+const setObj = (k,v) => localStorage.setItem(BASE+k, JSON.stringify(v));
+
+// ── NAV ───────────────────────────────────────────────────
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (id === 'dash') renderDashboard();
+  if (id === 'hrv') { setTodayDate('hrv-date'); renderHRVHistory(); }
+  if (id === 'round') setTodayDate('rnd-date');
+  if (id === 'practice') setTodayDate('prac-date');
+  if (id === 'speed') { setTodayDate('spd-date'); setTodayDate('bench-date'); renderSpeedHistory(); }
+  if (id === 'putting') { setTodayDate('putt-date'); buildPuttDistances(); renderPuttSummary(); }
+  if (id === 'benchmarks') { setTodayDate('bm-date'); renderBenchmarkHistory(); }
+  if (id === 'journal') { setTodayDate('jnl-date'); renderJournalHistory(); }
+  if (id === 'history') renderAllHistory('All');
+}
+
+function setTodayDate(id) {
+  const el = document.getElementById(id);
+  if (el && !el.value) el.value = new Date().toISOString().split('T')[0];
+}
+
+// ── SEGMENT CONTROLS ──────────────────────────────────────
+function setSeg(el, groupId, activeClass) {
+  document.querySelectorAll('#' + groupId + ' .seg').forEach(s => {
+    s.className = 'seg';
+  });
+  el.classList.add(activeClass);
+}
+
+function toggleSeg(el, activeClass) {
+  if (el.classList.contains(activeClass)) {
+    el.className = 'seg';
+  } else {
+    el.classList.add(activeClass);
+  }
+}
+
+function getSegVal(groupId) {
+  const el = document.querySelector('#' + groupId + ' .seg[class*="active"]');
+  return el ? el.dataset.val : '';
+}
+
+function getMultiSegVals(groupId) {
+  return [...document.querySelectorAll('#' + groupId + ' .seg[class*="active"]')].map(e => e.dataset.val);
+}
+
+// ── RATING BUTTONS ────────────────────────────────────────
+function buildRatingRow(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 1; i <= 10; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.className = 'rating-btn';
+    btn.onclick = () => {
+      container.querySelectorAll('.rating-btn').forEach(b => b.classList.remove('sel'));
+      btn.classList.add('sel');
+    };
+    container.appendChild(btn);
+  }
+}
+
+function getRatingVal(containerId) {
+  const sel = document.querySelector('#' + containerId + ' .rating-btn.sel');
+  return sel ? parseInt(sel.textContent) : null;
+}
+
+// ── TOAST ─────────────────────────────────────────────────
+function toast(msg, type = 'lime', duration = 2400) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show ' + type;
+  setTimeout(() => { t.className = ''; }, duration);
+}
+
+// ── FORMAT DATE ───────────────────────────────────────────
+function fmtDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T12:00:00');
+  return dt.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// ── HRV ──────────────────────────────────────────────────
+const HRV_RECS = {
+  H: {
+    title: '🟢 High Readiness — Full Programme Today',
+    body: 'Your nervous system is well-recovered. This is your day to push — full Rypstick overspeed protocol, progressive strength loading, and technique acquisition work. New motor patterns encode best on high-HRV days.',
+    links: [
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/25_speed_training.html', label: '⚡ Guide 25 · Full Speed Protocol', cls: '' },
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html', label: '💪 Guide 06 · GRF Training', cls: 'teal' },
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/03_longgame_pro.html', label: '🏌️ Guide 03 · Wrist Mech.', cls: 'gold' }
+    ]
+  },
+  N: {
+    title: '🟡 Normal Readiness — Standard Programme',
+    body: 'Adequate recovery. Proceed with your planned session at normal intensity. Consolidation and maintenance work is ideal — no new technique acquisition today, and reduce speed work to 75% effort.',
+    links: [
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/05_pre_shot_routine.html', label: '⏱ Guide 05 · Practice Structure', cls: '' },
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/02_shortgame_pro.html', label: '🌊 Guide 02 · Short Game', cls: 'teal' }
+    ]
+  },
+  L: {
+    title: '🔴 Low Readiness — Rest, Mobility, or Putting Only',
+    body: 'Your nervous system is under-recovered. Do NOT do overspeed training today — you will produce fatigue without adaptation. Mobility, putting practice, or full rest. Review what caused the low reading: poor sleep, alcohol, high training load.',
+    links: [
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/01_putting_pro.html', label: '🎯 Guide 01 · Putting — perfect for today', cls: '' },
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/06_golf_fitness.html', label: '❤️ Guide 06 · HRV & Readiness', cls: 'teal' },
+      { href: 'https://asbremner-ai.github.io/mg-playbooks/13_injury_prevention.html', label: '🛡️ Guide 13 · Injury Prevention', cls: 'gold' }
+    ]
+  }
+};
+
+function saveHRV() {
+  const status = getSegVal('hrv-status-seg');
+  const val = document.getElementById('hrv-value').value;
+  if (!status || !val) { toast('⚠ Select readiness level and enter HRV reading', 'gold'); return; }
+  const entries = get('hrv');
+  const entry = {
+    id: Date.now(),
+    date: document.getElementById('hrv-date').value,
+    hrv: parseFloat(val),
+    sleep: parseFloat(document.getElementById('hrv-sleep').value) || null,
+    rhr: parseInt(document.getElementById('hrv-rhr').value) || null,
+    status,
+    energy: getRatingVal('hrv-energy-rating'),
+    notes: document.getElementById('hrv-notes').value,
+    type: 'HRV'
+  };
+  entries.unshift(entry);
+  set('hrv', entries);
+  showHRVRecommendation(status);
+  renderHRVHistory();
+  renderDashboard();
+  toast('✓ Check-in saved', 'lime');
+}
+
+function showHRVRecommendation(status) {
+  const rec = HRV_RECS[status];
+  if (!rec) return;
+  const card = document.getElementById('hrv-recommendation');
+  document.getElementById('hrv-rec-title').textContent = rec.title;
+  document.getElementById('hrv-rec-body').textContent = rec.body;
+  const linksDiv = document.getElementById('hrv-rec-links');
+  linksDiv.innerHTML = rec.links.map(l => `<a href="${l.href}" class="pb-link ${l.cls}" target="_blank">${l.label}</a>`).join('');
+  card.style.display = 'block';
+}
+
+function renderHRVHistory() {
+  const entries = get('hrv').slice(0, 14);
+  const div = document.getElementById('hrv-history');
+  if (!entries.length) { div.innerHTML = '<div class="empty"><div class="empty-icon">❤️</div><p>No HRV readings yet</p></div>'; return; }
+  div.innerHTML = entries.map(e => `
+    <div class="history-item">
+      <div class="history-main">
+        <div class="history-date">${fmtDate(e.date)}</div>
+        <div class="history-title">${e.status==='H'?'🟢':e.status==='N'?'🟡':'🔴'} ${e.status==='H'?'High':e.status==='N'?'Normal':'Low'} Readiness</div>
+        <div class="history-meta">HRV: ${e.hrv} rMSSD${e.sleep ? ` · Sleep: ${e.sleep}h` : ''}${e.rhr ? ` · RHR: ${e.rhr}bpm` : ''}${e.notes ? '<br>'+e.notes : ''}</div>
+      </div>
+      <div class="history-badge ${e.status==='H'?'good':e.status==='L'?'bad':''}">${e.hrv}</div>
+      <button class="del-btn" onclick="deleteEntry('hrv',${e.id},renderHRVHistory)">✕</button>
+    </div>`).join('');
+}
+
+// ── ROUNDS ────────────────────────────────────────────────
+function saveRound() {
+  const gross = document.getElementById('rnd-gross').value;
+  const course = document.getElementById('rnd-course').value;
+  if (!gross || !course) { toast('⚠ Enter course and gross score', 'gold'); return; }
+  const entries = get('rounds');
+  const entry = {
+    id: Date.now(),
+    date: document.getElementById('rnd-date').value,
+    course,
+    par: parseInt(document.getElementById('rnd-par').value) || 72,
+    format: getSegVal('rnd-format-seg'),
+    gross: parseInt(gross),
+    net: parseInt(document.getElementById('rnd-net').value) || null,
+    putts: parseInt(document.getElementById('rnd-putts').value) || null,
+    penalties: parseInt(document.getElementById('rnd-penalties').value) || 0,
+    sg: {
+      ott: parseFloat(document.getElementById('rnd-sg-ott').value) || null,
+      app: parseFloat(document.getElementById('rnd-sg-app').value) || null,
+      arg: parseFloat(document.getElementById('rnd-sg-arg').value) || null,
+      putt: parseFloat(document.getElementById('rnd-sg-putt').value) || null,
+      total: parseFloat(document.getElementById('rnd-sg-total').value) || null
+    },
+    routine: getSegVal('rnd-routine-seg'),
+    decision: getRatingVal('rnd-decision-rating'),
+    emotional: getRatingVal('rnd-emotional-rating'),
+    gap: parseFloat(document.getElementById('rnd-gap').value) || null,
+    miss: getSegVal('rnd-miss-seg'),
+    keyDecision: document.getElementById('rnd-key-decision').value,
+    priority: document.getElementById('rnd-priority').value,
+    conditions: document.getElementById('rnd-conditions').value,
+    type: 'Round'
+  };
+  entries.unshift(entry);
+  set('rounds', entries);
+  renderDashboard();
+  toast('✓ Round saved', 'gold');
+}
+
+// ── PRACTICE ──────────────────────────────────────────────
+function savePractice() {
+  const dur = document.getElementById('prac-duration').value;
+  const focus = getSegVal('prac-focus-seg');
+  if (!dur || !focus) { toast('⚠ Enter duration and select focus', 'gold'); return; }
+  const entries = get('practice');
+  const entry = {
+    id: Date.now(),
+    date: document.getElementById('prac-date').value,
+    duration: parseInt(dur),
+    focus,
+    type_struct: getSegVal('prac-type-seg'),
+    hrv: getSegVal('prac-hrv-seg'),
+    tools: getMultiSegVals('prac-tools-seg'),
+    drill: document.getElementById('prac-drill').value,
+    result: getSegVal('prac-result-seg'),
+    observation: document.getElementById('prac-observation').value,
+    next: document.getElementById('prac-next').value,
+    type: 'Practice'
+  };
+  entries.unshift(entry);
+  set('practice', entries);
+  toast('✓ Session saved', 'lime');
+}
+
+// ── SPEED ─────────────────────────────────────────────────
+function saveSpeed() {
+  const status = getSegVal('spd-hrv-seg');
+  const before = parseFloat(document.getElementById('spd-before').value);
+  const after = parseFloat(document.getElementById('spd-after').value);
+  if (status === 'Low') { toast('🔴 Low HRV — skip speed training today (Guide 25)', 'gold', 3500); return; }
+  const entries = get('speed');
+  const entry = {
+    id: Date.now(),
+    date: document.getElementById('spd-date').value,
+    sessionNum: parseInt(document.getElementById('spd-session-num').value) || entries.length + 1,
+    hrv: status,
+    protocol: getSegVal('spd-protocol-seg'),
+    leadSwings: parseInt(document.getElementById('spd-lead').value) || null,
+    normalSwings: parseInt(document.getElementById('spd-normal').value) || null,
+    before: before || null,
+    after: after || null,
+    gain: (before && after) ? +(after - before).toFixed(1) : null,
+    notes: document.getElementById('spd-notes').value,
+    type: 'Speed'
+  };
+  entries.unshift(entry);
+  set('speed', entries);
+  renderSpeedHistory();
+  renderDashboard();
+  toast('✓ Speed session saved', 'lime');
+}
+
+function saveBenchmark() {
+  const speed = parseFloat(document.getElementById('bench-speed').value);
+  if (!speed) { toast('⚠ Enter driver speed', 'gold'); return; }
+  const benchmarks = get('speed_benchmarks');
+  benchmarks.unshift({
+    id: Date.now(),
+    date: document.getElementById('bench-date').value,
+    week: parseInt(document.getElementById('bench-week').value),
+    speed,
+    ballSpeed: parseFloat(document.getElementById('bench-ball-speed').value) || null,
+    smash: parseFloat(document.getElementById('bench-smash').value) || null,
+    notes: document.getElementById('bench-notes').value
+  });
+  set('speed_benchmarks', benchmarks);
+  renderDashboard();
+  toast('✓ Benchmark saved', 'gold');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const before = document.getElementById('spd-before');
+  const after = document.getElementById('spd-after');
+  const gainDiv = document.getElementById('spd-gain-display');
+  const gainVal = document.getElementById('spd-gain-val');
+  function updateGain() {
+    const b = parseFloat(before.value), a = parseFloat(after.value);
+    if (b && a) {
+      const g = (a - b).toFixed(1);
+      gainVal.textContent = (g >= 0 ? '+' : '') + g + ' mph';
+      gainDiv.style.display = 'block';
+      gainDiv.style.borderColor = g >= 0 ? 'rgba(160,200,80,.4)' : 'rgba(224,112,96,.4)';
+    } else { gainDiv.style.display = 'none'; }
+  }
+  before.addEventListener('input', updateGain);
+  after.addEventListener('input', updateGain);
+});
+
+function renderSpeedHistory() {
+  const sessions = get('speed').slice(0, 10);
+  const benchmarks = get('speed_benchmarks').slice(0, 6);
+  const div = document.getElementById('speed-history');
+  let html = '';
+  if (benchmarks.length) {
+    html += '<span class="badge badge-gold">📊 Benchmark Tests</span>';
+    html += benchmarks.map(b => `
+      <div class="history-item">
+        <div class="history-main">
+          <div class="history-date">${fmtDate(b.date)} · Week ${b.week || '—'}</div>
+          <div class="history-title">Speed Benchmark</div>
+          <div class="history-meta">${b.ballSpeed ? `Ball: ${b.ballSpeed} mph` : ''} ${b.smash ? `· Smash: ${b.smash}` : ''} ${b.notes ? '<br>'+b.notes : ''}</div>
+        </div>
+        <div class="history-badge gold">${b.speed} mph</div>
+        <button class="del-btn" onclick="deleteEntry('speed_benchmarks',${b.id},renderSpeedHistory)">✕</button>
+      </div>`).join('');
+  }
+  if (sessions.length) {
+    html += '<span class="badge badge-lime" style="margin-top:12px;">⚡ Sessions</span>';
+    html += sessions.map(s => `
+      <div class="history-item">
+        <div class="history-main">
+          <div class="history-date">${fmtDate(s.date)} · Session ${s.sessionNum || '—'}</div>
+          <div class="history-title">${s.protocol || 'Speed Session'} · ${s.hrv==='High'?'🟢':s.hrv==='Normal'?'🟡':'🔴'} HRV</div>
+          <div class="history-meta">${s.before?`Before: ${s.before} mph`:''} ${s.after?`→ After: ${s.after} mph`:''} ${s.gain!==null?`· Gain: ${s.gain>=0?'+':''}${s.gain} mph`:''}</div>
+        </div>
+        ${s.gain !== null ? `<div class="history-badge ${s.gain>=0?'good':'bad'}">${s.gain>=0?'+':''}${s.gain}</div>` : ''}
+        <button class="del-btn" onclick="deleteEntry('speed',${s.id},renderSpeedHistory)">✕</button>
+      </div>`).join('');
+  }
+  if (!html) { div.innerHTML = '<div class="empty"><div class="empty-icon">⚡</div><p>No speed sessions yet</p></div>'; return; }
+  div.innerHTML = html;
+}
+
+// ── PUTTING ───────────────────────────────────────────────
+const PUTT_DISTANCES = [
+  { d: '3 ft',  tour: 99, scratch: 97 },
+  { d: '5 ft',  tour: 88, scratch: 80 },
+  { d: '8 ft',  tour: 65, scratch: 52 },
+  { d: '10 ft', tour: 54, scratch: 40 },
+  { d: '15 ft', tour: 33, scratch: 22 },
+  { d: '20 ft', tour: 20, scratch: 13 },
+];
+
+function buildPuttDistances() {
+  const div = document.getElementById('putt-distances');
+  div.innerHTML = PUTT_DISTANCES.map(p => `
+    <div class="field">
+      <label>${p.d} — Tour ${p.tour}% · Scratch target ${p.scratch}%</label>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <input type="number" id="putt-made-${p.d.replace(' ','')}" placeholder="Made" min="0" max="20" style="width:80px;">
+        <span style="color:var(--muted);font-size:12px;">/ </span>
+        <input type="number" id="putt-att-${p.d.replace(' ','')}" placeholder="Attempts" min="0" max="20" style="width:80px;">
+        <span style="color:var(--muted);font-size:12px;">attempts</span>
+      </div>
+    </div>`).join('');
+}
+
+function savePutting() {
+  const results = {};
+  PUTT_DISTANCES.forEach(p => {
+    const key = p.d.replace(' ','');
+    const made = parseInt(document.getElementById('putt-made-'+key)?.value) || 0;
+    const att = parseInt(document.getElementById('putt-att-'+key)?.value) || 0;
+    if (att > 0) results[p.d] = { made, att, pct: Math.round(made/att*100) };
+  });
+  if (!Object.keys(results).length) { toast('⚠ Enter at least one distance result', 'gold'); return; }
+  const entries = get('putting');
+  entries.unshift({
+    id: Date.now(),
+    date: document.getElementById('putt-date').value,
+    surface: document.getElementById('putt-surface').value,
+    results,
+    threePutts: parseInt(document.getElementById('putt-3putts').value) || 0,
+    notes: document.getElementById('putt-notes').value,
+    type: 'Putting'
+  });
+  set('putting', entries);
+  renderPuttSummary();
+  toast('✓ Putting session saved', 'lime');
+}
+
+function renderPuttSummary() {
+  const entries = get('putting');
+  const div = document.getElementById('putt-summary');
+  if (!entries.length) { div.innerHTML = '<p style="color:var(--muted);font-size:13px;">Log putting sessions to see your averages vs targets.</p>'; return; }
+  const avgs = {};
+  PUTT_DISTANCES.forEach(p => {
+    const vals = entries.map(e => e.results[p.d]?.pct).filter(v => v !== undefined);
+    if (vals.length) avgs[p.d] = { avg: Math.round(vals.reduce((a,b)=>a+b,0)/vals.length), tour: p.tour, scratch: p.scratch, n: vals.length };
+  });
+  div.innerHTML = Object.entries(avgs).map(([d, v]) => {
+    const pct = Math.min(100, Math.max(0, v.avg));
+    const col = v.avg >= v.scratch ? 'var(--good)' : v.avg >= v.scratch * 0.8 ? 'var(--warn)' : 'var(--bad)';
+    return `<div style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);">${d}</span>
+        <span style="font-weight:700;color:${col};font-family:'Playfair Display',serif;font-size:1.2rem;">${v.avg}%</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${col};"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:3px;">
+        <span style="font-size:10px;color:var(--faint);">Tour: ${v.tour}%</span>
+        <span style="font-size:10px;color:var(--faint);">Scratch: ${v.scratch}% · (${v.n} sessions)</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── FULL BENCHMARK ────────────────────────────────────────
+function saveBenchmarkFull() {
+  const speed = parseFloat(document.getElementById('bm-drv-speed').value);
+  if (!speed) { toast('⚠ Enter at least driver speed', 'gold'); return; }
+  const entries = get('benchmarks');
+  entries.unshift({
+    id: Date.now(),
+    date: document.getElementById('bm-date').value,
+    month: parseInt(document.getElementById('bm-month').value) || null,
+    drv: { speed, ball: parseFloat(document.getElementById('bm-drv-ball').value)||null, smash: parseFloat(document.getElementById('bm-drv-smash').value)||null, spin: parseInt(document.getElementById('bm-drv-spin').value)||null, axis: parseFloat(document.getElementById('bm-drv-axis').value)||null, carry: parseInt(document.getElementById('bm-drv-carry').value)||null },
+    iron7: { speed: parseFloat(document.getElementById('bm-7i-speed').value)||null, spin: parseInt(document.getElementById('bm-7i-spin').value)||null, carry: parseInt(document.getElementById('bm-7i-carry').value)||null },
+    wrist: { top: parseFloat(document.getElementById('bm-wrist-top').value)||null, impact: parseFloat(document.getElementById('bm-wrist-impact').value)||null },
+    hcp: parseFloat(document.getElementById('bm-hcp').value)||null,
+    notes: document.getElementById('bm-notes').value,
+    type: 'Benchmark'
+  });
+  set('benchmarks', entries);
+  renderBenchmarkHistory();
+  renderDashboard();
+  toast('✓ Benchmark saved', 'gold');
+}
+
+function renderBenchmarkHistory() {
+  const entries = get('benchmarks').slice(0, 8);
+  const div = document.getElementById('benchmark-history');
+  if (!entries.length) { div.innerHTML = '<div class="empty"><div class="empty-icon">🔬</div><p>No benchmarks yet</p></div>'; return; }
+  div.innerHTML = entries.map(e => `
+    <div class="history-item">
+      <div class="history-main">
+        <div class="history-date">${fmtDate(e.date)}${e.month ? ` · Month ${e.month}` : ''}</div>
+        <div class="history-title">Driver: ${e.drv.speed} mph ${e.drv.smash ? `· Smash: ${e.drv.smash}` : ''} ${e.drv.axis !== null ? `· Axis: ±${Math.abs(e.drv.axis)}°` : ''}</div>
+        <div class="history-meta">
+          ${e.wrist.top !== null ? `Wrist top: ${e.wrist.top}°` : ''} ${e.wrist.impact !== null ? `· Impact: ${e.wrist.impact}°` : ''}
+          ${e.hcp !== null ? `· HCP: ${e.hcp}` : ''}
+          ${e.notes ? '<br>'+e.notes : ''}
+        </div>
+      </div>
+      <div class="history-badge gold">${e.drv.speed}<span style="font-size:9px;font-weight:400;"> mph</span></div>
+      <button class="del-btn" onclick="deleteEntry('benchmarks',${e.id},renderBenchmarkHistory)">✕</button>
+    </div>`).join('');
+}
+
+// ── JOURNAL ───────────────────────────────────────────────
+function saveJournal() {
+  const priority = document.getElementById('jnl-priority').value;
+  const best = document.getElementById('jnl-best').value;
+  if (!priority && !best) { toast('⚠ Add at least a priority or best moment', 'gold'); return; }
+  const entries = get('journal');
+  entries.unshift({
+    id: Date.now(),
+    date: document.getElementById('jnl-date').value,
+    sg: { ott: parseFloat(document.getElementById('jnl-sg-ott').value)||null, app: parseFloat(document.getElementById('jnl-sg-app').value)||null, arg: parseFloat(document.getElementById('jnl-sg-arg').value)||null, putt: parseFloat(document.getElementById('jnl-sg-putt').value)||null, total: parseFloat(document.getElementById('jnl-sg-total').value)||null },
+    hrvTrend: getSegVal('jnl-hrv-seg'),
+    practiceStruct: getSegVal('jnl-prac-seg'),
+    best, challenge: document.getElementById('jnl-challenge').value,
+    learning: document.getElementById('jnl-learning').value,
+    priority, comp: document.getElementById('jnl-comp').value,
+    type: 'Journal'
+  });
+  set('journal', entries);
+  renderJournalHistory();
+  toast('✓ Journal entry saved', 'gold');
+}
+
+function renderJournalHistory() {
+  const entries = get('journal').slice(0, 10);
+  const div = document.getElementById('journal-history');
+  if (!entries.length) { div.innerHTML = '<div class="empty"><div class="empty-icon">📔</div><p>No journal entries yet</p></div>'; return; }
+  div.innerHTML = entries.map(e => `
+    <div class="history-item">
+      <div class="history-main">
+        <div class="history-date">Week of ${fmtDate(e.date)}</div>
+        <div class="history-title">${e.priority || 'Journal Entry'}</div>
+        <div class="history-meta">
+          ${e.sg.total !== null ? `SG Total: ${e.sg.total}` : ''}
+          ${e.hrvTrend ? ` · HRV: ${e.hrvTrend}` : ''}
+          ${e.best ? `<br>Best: ${e.best.substring(0,80)}${e.best.length>80?'…':''}` : ''}
+        </div>
+      </div>
+      <button class="del-btn" onclick="deleteEntry('journal',${e.id},renderJournalHistory)">✕</button>
+    </div>`).join('');
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────
+function renderDashboard() {
+  // Readiness banner
+  const hrvEntries = get('hrv');
+  const today = new Date().toISOString().split('T')[0];
+  const todayHRV = hrvEntries.find(e => e.date === today);
+  const bannerContent = document.getElementById('readiness-content');
+  if (todayHRV) {
+    const rec = HRV_RECS[todayHRV.status];
+    const col = todayHRV.status==='H' ? 'var(--good)' : todayHRV.status==='N' ? 'var(--warn)' : 'var(--bad)';
+    bannerContent.innerHTML = `<p style="color:${col};font-weight:600;font-size:14px;">${rec.title}</p><p style="color:var(--muted);font-size:12px;margin-top:5px;">${rec.body.substring(0,120)}…</p>`;
+  } else {
+    bannerContent.innerHTML = `<p style="color:var(--muted);font-size:13px;">No HRV logged yet today. <a onclick="show('hrv',document.querySelectorAll('.tab')[1])" style="color:var(--gold);cursor:pointer;text-decoration:none;font-weight:600;">Log your morning check-in →</a></p>`;
+  }
+
+  // Key metrics
+  const benchmarks = get('benchmarks');
+  const speedSessions = get('speed');
+  const rounds = get('rounds');
+
+  const latestSpeed = benchmarks[0]?.drv?.speed || speedSessions[0]?.after || null;
+  document.getElementById('dash-speed').textContent = latestSpeed ? latestSpeed + '' : '—';
+
+  const latestHCP = benchmarks[0]?.hcp ?? null;
+  document.getElementById('dash-hcp').textContent = latestHCP !== null ? latestHCP : '—';
+
+  if (rounds[0]) {
+    document.getElementById('dash-score').textContent = rounds[0].gross || '—';
+    document.getElementById('dash-score-sub').textContent = rounds[0].course ? rounds[0].course.substring(0,18) : 'gross score';
+  }
+
+  // 7-day HRV avg
+  const last7 = hrvEntries.slice(0, 7).map(e => e.hrv).filter(Boolean);
+  const avgHRV = last7.length ? (last7.reduce((a,b)=>a+b,0)/last7.length).toFixed(0) : null;
+  document.getElementById('dash-hrv').textContent = avgHRV || '—';
+
+  // SG summary (last 5 rounds)
+  const last5 = rounds.slice(0, 5);
+  const sgDiv = document.getElementById('sg-summary');
+  if (!last5.length) {
+    sgDiv.innerHTML = '<p style="color:var(--muted);font-size:13px;">Log at least one round to see your SG averages.</p>';
+  } else {
+    const cats = ['ott','app','arg','putt','total'];
+    const labels = {'ott':'OTT','app':'APP','arg':'ARG','putt':'PUTT','total':'TOTAL'};
+    const targets = {'ott':-0.5,'app':-0.8,'arg':-0.4,'putt':-0.3,'total':-2.0};
+    sgDiv.innerHTML = cats.map(cat => {
+      const vals = last5.map(r => r.sg[cat]).filter(v => v !== null && v !== undefined);
+      if (!vals.length) return '';
+      const avg = (vals.reduce((a,b)=>a+b,0)/vals.length);
+      const col = avg >= targets[cat] ? 'var(--good)' : avg >= targets[cat]*1.5 ? 'var(--warn)' : 'var(--bad)';
+      return `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--faint);">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);">SG: ${labels[cat]}</span>
+        <span style="font-weight:700;color:${col};font-family:'Playfair Display',serif;">${avg.toFixed(2)}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Activity feed
+  const all = [...get('rounds'), ...get('practice'), ...get('speed'), ...get('hrv').slice(0,3), ...get('journal')]
+    .sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0,6);
+  const feedDiv = document.getElementById('activity-feed');
+  if (!all.length) { feedDiv.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No entries yet</p></div>'; return; }
+  feedDiv.innerHTML = all.map(e => {
+    const typeMap = { Round:'🏌️', Practice:'📝', Speed:'⚡', HRV:'❤️', Journal:'📔', Putting:'🟢', Benchmark:'🔬' };
+    const icon = typeMap[e.type] || '📋';
+    const badge = e.type==='Round' ? (e.gross||'—') : e.type==='Speed' ? (e.after ? e.after+' mph' : '✓') : e.type==='HRV' ? (e.status==='H'?'🟢':e.status==='N'?'🟡':'🔴') : '✓';
+    return `<div class="history-item">
+      <div class="history-main">
+        <div class="history-date">${fmtDate(e.date)}</div>
+        <div class="history-title">${icon} ${e.type}${e.course?' — '+e.course:e.focus?' — '+e.focus:''}</div>
+      </div>
+      <div class="history-badge ${e.type==='Speed'?'teal':e.type==='Round'?'gold':''}">${badge}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── HISTORY ───────────────────────────────────────────────
+function renderAllHistory(filter) {
+  let all = [];
+  if (filter === 'All' || filter === 'Round') all = [...all, ...get('rounds')];
+  if (filter === 'All' || filter === 'Practice') all = [...all, ...get('practice')];
+  if (filter === 'All' || filter === 'Speed') all = [...all, ...get('speed'), ...get('speed_benchmarks').map(b=>({...b,type:'Speed Benchmark'}))];
+  if (filter === 'All' || filter === 'HRV') all = [...all, ...get('hrv')];
+  if (filter === 'All' || filter === 'Journal') all = [...all, ...get('journal'), ...get('benchmarks').map(b=>({...b,type:'Benchmark'}))];
+  all.sort((a,b) => (b.date||'').localeCompare(a.date||''));
+
+  const div = document.getElementById('all-history');
+  if (!all.length) { div.innerHTML = '<div class="empty"><div class="empty-icon">📋</div><p>No entries in this category</p></div>'; return; }
+
+  div.innerHTML = all.slice(0,50).map(e => {
+    const typeMap = { Round:'🏌️', Practice:'📝', Speed:'⚡', HRV:'❤️', Journal:'📔', Benchmark:'🔬', 'Speed Benchmark':'📊', Putting:'🟢' };
+    const icon = typeMap[e.type] || '📋';
+    let title = e.type;
+    let meta = '';
+    if (e.type==='Round') { title=`${icon} Round — ${e.course||'—'}`;meta=`Score: ${e.gross||'—'} · Format: ${e.format||'—'} ${e.sg?.total?'· SG: '+e.sg.total:''}` }
+    else if (e.type==='Practice') { title=`${icon} Practice — ${e.focus||'—'}`;meta=`${e.duration}min · ${e.type_struct||'—'} · ${e.result||'—'}` }
+    else if (e.type==='Speed') { title=`${icon} Speed Session #${e.sessionNum||'—'}`;meta=`${e.before?e.before+' → ':''} ${e.after||'—'} mph${e.gain!==null?` · Gain: ${e.gain>=0?'+':''}${e.gain}mph`:''}` }
+    else if (e.type==='HRV') { title=`${icon} HRV — ${e.status==='H'?'🟢 High':e.status==='N'?'🟡 Normal':'🔴 Low'}`;meta=`${e.hrv} rMSSD${e.sleep?' · Sleep: '+e.sleep+'h':''}` }
+    else if (e.type==='Journal') { title=`${icon} Journal`;meta=e.priority?.substring(0,80)||'' }
+    else if (e.type==='Benchmark') { title=`${icon} Benchmark M${e.month||'—'}`;meta=`Driver: ${e.drv?.speed||'—'} mph${e.hcp!==null?' · HCP: '+e.hcp:''}` }
+    const storeKey = e.type==='Round'?'rounds':e.type==='Practice'?'practice':e.type==='Speed'?'speed':e.type==='HRV'?'hrv':e.type==='Journal'?'journal':e.type==='Benchmark'?'benchmarks':'speed_benchmarks';
+    return `<div class="history-item">
+      <div class="history-main">
+        <div class="history-date">${fmtDate(e.date)}</div>
+        <div class="history-title">${title}</div>
+        ${meta ? `<div class="history-meta">${meta}</div>` : ''}
+      </div>
+      <button class="del-btn" onclick="deleteEntry('${storeKey}',${e.id},()=>renderAllHistory('${filter}'))">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ── DELETE ────────────────────────────────────────────────
+function deleteEntry(storeKey, id, callback) {
+  if (!confirm('Delete this entry?')) return;
+  const entries = get(storeKey).filter(e => e.id !== id);
+  set(storeKey, entries);
+  if (callback) callback();
+  renderDashboard();
+  toast('Deleted', 'lime', 1800);
+}
+
+// ── EXPORT ────────────────────────────────────────────────
+function exportData() {
+  const data = {
+    exported: new Date().toISOString(),
+    rounds: get('rounds'),
+    practice: get('practice'),
+    speed: get('speed'),
+    speed_benchmarks: get('speed_benchmarks'),
+    hrv: get('hrv'),
+    putting: get('putting'),
+    journal: get('journal'),
+    benchmarks: get('benchmarks')
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'scratch_project_data_' + new Date().toISOString().split('T')[0] + '.json';
+  a.click();
+  toast('✓ Data exported', 'lime');
+}
+
+function clearAllData() {
+  ['rounds','practice','speed','speed_benchmarks','hrv','putting','journal','benchmarks'].forEach(k => localStorage.removeItem(BASE+k));
+  renderDashboard();
+  toast('All data cleared', 'gold');
+}
+
+// ── INIT ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  buildRatingRow('hrv-energy-rating');
+  buildRatingRow('rnd-decision-rating');
+  buildRatingRow('rnd-emotional-rating');
+  buildPuttDistances();
+  renderDashboard();
+  setTodayDate('hrv-date');
+  setTodayDate('rnd-date');
+  setTodayDate('prac-date');
+  setTodayDate('spd-date');
+  setTodayDate('bench-date');
+  setTodayDate('putt-date');
+  setTodayDate('bm-date');
+  setTodayDate('jnl-date');
+});
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span>
+    </a>
+    <a href="09_golf_coach_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('[SW] Registered:', reg.scope))
+      .catch(err => console.warn('[SW] Registration failed:', err));
+  });
+}
+</script>
+</body>
+</html>
