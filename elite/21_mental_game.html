@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.1 · 2026-05-30 · 21_mental_game.html -->
+<!-- version:v2.1-elite · 2026-05-30 · 21_mental_game.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -129,8 +129,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('sleep',this)">Sleep</button>
   <button class="tab" onclick="show('plateaus',this)">Plateaus</button>
   <button class="tab" onclick="show('shanks',this)">Shanks & Meltdown</button>
-  <button class="tab" data-tier="pro" onclick="show('act_framework',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ ACT Framework</button>
-  <button class="tab" data-tier="pro" onclick="show('adversity_protocol',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Adversity Protocol</button>
+  <button class="tab" data-tier="elite" onclick="show('elite_comppsych',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Elite Comp. Psych.</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -721,119 +720,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   </div>
 </div>
 
-<!-- PRO: ACT FRAMEWORK -->
-<div class="sec" id="act_framework" data-tier="pro">
-  <h2 class="sec-title">ACT — Acceptance &amp; Commitment</h2>
-  <p class="sec-desc">Acceptance and Commitment Therapy (ACT) is the dominant current paradigm in elite sport psychology. Unlike CBT approaches that try to suppress or replace negative thoughts, ACT teaches you to notice thoughts without being controlled by them — and to take committed action toward your values regardless of what the mind is generating.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Problem With Suppression</span>
-    <h3>Why Trying Not to Think About the Water Hazard Makes It Worse</h3>
-    <p style="margin-bottom:12px;">Daniel Wegner's research on ironic mental processes — popularly summarised as "don't think of a white bear" — demonstrated that consciously trying to suppress a thought makes that thought more intrusive. Applied to golf: telling yourself "don't think about the bunker" activates the exact mental representation you are trying to avoid. The traditional "stay positive" and "block it out" advice is, at the neurological level, counterproductive.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Suppression Trap</div>
-      <div class="formula-main">Situation: water hazard left on the tee shot
-Traditional approach: "Don't think about the water"
-Neurological result: brain processes "water" as the primary cue
-Motor system activates the water direction as a reference point
-Outcome: increased probability of the thought-about result
-
-ACT approach: "I notice I'm thinking about the water"
-Neurological result: thought acknowledged, not suppressed
-No additional processing resources allocated to the thought
-Committed action: focus on the target, not the hazard</div>
-    </div>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The reframe alone is not enough:</strong> Standard mental game advice says "reframe negatives as positives — instead of thinking about the bunker, focus on the fairway." This is useful but incomplete. ACT goes further: even the positive reframe involves engaging with the content of the thought. Defusion — treating the thought as just a thought, not a command — is more powerful than reframing.</p></div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Defusion — The Core ACT Technique</span>
-    <h3>Observing Thoughts Instead of Obeying Them</h3>
-    <p style="margin-bottom:12px;">Defusion (also called cognitive defusion or deliteralisation) is the process of creating psychological distance between yourself and your thoughts — observing them as mental events rather than facts that require action. The thought "I always miss this putt" becomes "I am having the thought that I always miss this putt." The content is the same; the relationship to the content changes entirely.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>The "I notice" prefix:</strong> When a negative thought arises, prefix it with "I notice I'm having the thought that..." rather than treating the thought as a fact. "I'm going to shank this" becomes "I notice I'm having the thought that I'm going to shank this." This creates observer distance — you are watching the thought, not inhabiting it.</div></li>
-      <li><span class="step-n">2</span><div><strong>Label the thought type:</strong> Identify what kind of thought it is — a prediction, a self-criticism, a what-if, a comparison. "There's a prediction thought" or "there's the self-criticism mind doing its thing." Labelling activates the observer self rather than the experiencing self.</div></li>
-      <li><span class="step-n">3</span><div><strong>Allow the thought without engagement:</strong> You do not need to argue with the thought, fix it, or make it go away. Let it exist. Committed action proceeds alongside the thought — you do not wait for thoughts to clear before executing.</div></li>
-      <li><span class="step-n">4</span><div><strong>Return to the process:</strong> After noticing and labelling, return attention to the specific external target of the shot — the line of the putt, the flagstick, the landing zone. Not back to the thought. The external focus is the replacement for thought engagement.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Three Most Common Competitive Thought Patterns</span>
-    <h3>Defusion Techniques for Each</h3>
-    <div class="card" style="background:var(--surface3);border:1px solid var(--border);margin-bottom:10px;">
-      <span class="card-tag">Pattern 1 — Outcome Anticipation</span>
-      <h3>"If I make this, I win / If I miss, I lose"</h3>
-      <p style="font-size:12.5px;color:var(--muted);">The mind is calculating future outcomes during execution — a classic System 2 intrusion during a System 1 task. <strong style="color:var(--white);">Defusion:</strong> "I notice my mind is calculating futures. That's what minds do. Now: the line. This is a 12-foot right-edge putt. Roll it to the high side." Return immediately to specific technical target.</p>
-    </div>
-    <div class="card" style="background:var(--surface3);border:1px solid var(--border);margin-bottom:10px;">
-      <span class="card-tag">Pattern 2 — Score Tracking Mid-Round</span>
-      <h3>"I need three pars to shoot 74"</h3>
-      <p style="font-size:12.5px;color:var(--muted);">Score calculation during a round shifts attention from the current shot to a future aggregate — pulling focus exactly where it should not go. <strong style="color:var(--white);">Defusion:</strong> "There's the score calculator. I don't need that information right now. What I need: this fairway, this distance, this target." The score will be what it is when you sign the card.</p>
-    </div>
-    <div class="card" style="background:var(--surface3);border:1px solid var(--border);">
-      <span class="card-tag">Pattern 3 — Miss Replay</span>
-      <h3>"I just pulled the last shot — I'm going to pull this one too"</h3>
-      <p style="font-size:12.5px;color:var(--muted);">The previous shot is being used as a predictor for the current one — a cognitive fusion with recent history. <strong style="color:var(--white);">Defusion:</strong> "I notice my mind is replaying the previous shot. That shot is over. It has no information about this shot. This is a new shot with its own conditions, its own line, its own chance." Then commit to the current process.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Values-Based Committed Action</span>
-    <h3>Performing from Values, Not From Absence of Doubt</h3>
-    <p style="margin-bottom:12px;">The ACT framework is not about achieving a perfect mental state — it is about taking committed action toward what you value regardless of the mental state you are in. You do not wait for doubt to clear before hitting the shot. You identify your values as a golfer (process, commitment, honest effort), and then act from those values even when the mind is noisy.</p>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The key distinction from traditional mental game:</strong> Traditional mental game says "achieve the right mental state, then perform." ACT says "perform from your values regardless of your mental state — the mental state will follow commitment, not precede it." Scratch-standard golf is not played in a quiet mind. It is played in a committed one.</p></div>
-  </div>
-</div>
-
-<!-- PRO: ADVERSITY RESPONSE PROTOCOL -->
-<div class="sec" id="adversity_protocol" data-tier="pro">
-  <h2 class="sec-title">Adversity Response Protocol</h2>
-  <p class="sec-desc">A structured decision tree for the 10–30 seconds after adversity strikes mid-round. What to do physically, cognitively, and strategically in that specific window — before the next shot is played.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-rust">
-    <span class="card-tag">The 10-Second Physical Reset</span>
-    <h3>Move Before You Think</h3>
-    <p style="margin-bottom:12px;">Research by Dr. Gio Valiante on tour player behaviour following bad holes shows that the most resilient players physically move away from the source of adversity within 10 seconds — before the analytical brain can construct a narrative around what happened. Movement interrupts the cortisol loop before it establishes.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Seconds 0–5 (allowed reaction):</strong> A brief, contained emotional reaction is healthy and normal. A controlled gesture, an exhale, a single word. This is a release valve — not a licence for sustained frustration. The reaction must be brief and then physically complete.</div></li>
-      <li><span class="step-n">2</span><div><strong>Seconds 5–10 (physical movement):</strong> Start walking. Do not stand still. Movement — particularly walking at a normal pace toward the next position — activates a task-oriented state and interrupts the emotional rumination loop. The walk itself is the reset.</div></li>
-      <li><span class="step-n">3</span><div><strong>Three exhales while walking:</strong> Three slow, deliberate exhales (not the full box breathing sequence — that comes later if needed) reduce cortisol and return grip pressure toward normal. Do this during the first 30 seconds of walking.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Cognitive Reset — The Next 60 Seconds</span>
-    <h3>What to Think About While Walking</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Practical task focus:</strong> Use the walk to assess practical facts — yardage, lie, conditions. These external, task-oriented thoughts occupy the analytical mind with useful content and prevent it from replaying the adversity event. "I have 165 yards, slight wind left, ball is sitting well" is the correct thought. "Why did I miss that putt" is not.</div></li>
-      <li><span class="step-n">2</span><div><strong>The score is permanent:</strong> The stroke(s) that just happened are fixed. No amount of review, frustration, or urgency changes them. The next hole starts from zero. Accepting the permanence of the past (an ACT principle) removes the urgency that triggers aggressive play on the next hole.</div></li>
-      <li><span class="step-n">3</span><div><strong>Do not recalibrate the target score:</strong> After a double bogey on hole 5, do not calculate what you now "need" on holes 6–18 to achieve your target. This is precisely the score-tracking error that produces the double-bogey follow-on that statistics confirm. Play hole 6 as if it had no relationship to what just happened on hole 5.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Strategic Reset — The Decision Before the Next Tee</span>
-    <h3>Returning to Conservative Strategy After Adversity</h3>
-    <p style="margin-bottom:12px;">Statistical analysis of amateur round data shows that the hole after a double bogey is played approximately 30% more aggressively than normal — more driver on tight holes, more flag attacks, less conservative layups. This urgency-driven aggression produces a second bad hole in 58% of cases. The strategic reset is specifically about countering this tendency.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Post-Adversity Decision Rule</div>
-      <div class="formula-main">After any double bogey or worse:
-  → On the next tee: take one club shorter than your instinct
-  → On the next approach: aim one zone further from the flag than instinct
-  → On the next putt: lag putt mentality — not aggressive
-
-Rationale: Adversity elevates arousal and risk tolerance above normal.
-The deliberate conservatism is a correction to the upward bias,
-not a retreat from your normal game.</div>
-      <div class="formula-note">This applies for exactly one hole after the adversity event. After that, return to normal strategic parameters. The goal is to prevent the cascading hole — not to play defensively for the rest of the round.</div>
-    </div>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The one-hole firewall:</strong> Implementing the post-adversity conservative protocol on just the next hole — and then returning to normal — produces measurably better scorecards than either ignoring the tendency (and experiencing the cascade) or playing defensively for multiple subsequent holes (and missing birdie opportunities). One hole. Then reset completely.</p></div>
-  </div>
-</div>
-
 <div class="footer">MENTAL GAME PLAYBOOK — PRO EDITION · PERFORMANCE NEUROSCIENCE · PRESSURE MANAGEMENT · COMPETITIVE RESILIENCE</div>
 <script>
 function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
@@ -862,6 +748,40 @@ function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.r
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+
+<div class="sec" id="elite_comppsych" data-tier="elite">
+  <h2 class="sec-title">Elite Competition Psychology</h2>
+  <p class="sec-desc">County team matchplay and national strokeplay impose psychological demands that club competition does not. This tab addresses the county and national event context specifically. Guide 47 covers the full Elite psychology system.</p>
+  <span class="badge badge-gold">🧠 The Identity Shift at Elite Level</span>
+  <div class="card card-gold">
+    <span class="card-tag">Why Self-Concept Precedes Performance</span>
+    <h3>From Club Improver to Competitive Amateur Athlete</h3>
+    <p>Players who stall at low handicap typically have improved their technique to a level their self-concept has not yet accepted as theirs. They perform well in practice and poorly under observation because part of them does not believe they are the kind of player who performs at that standard when it counts.</p>
+    <p>Write two paragraphs: one describing how a club golfer with your handicap thinks and behaves; one describing how a county-level competitive amateur thinks and behaves. The gap between them is the identity work to do. Act from the second description starting in your next session.</p>
+  </div>
+  <span class="badge badge-teal">🏆 County Team Match Principles</span>
+  <div class="card card-teal">
+    <span class="card-tag">Three Rules for Playing for a Team</span>
+    <h3>Managing What Changes at County Level</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Your only job is to win your match:</strong> The team score takes care of itself if every player wins their match. Do not monitor the board or adjust strategy based on teammates. Play your own game.</div></li>
+      <li><span class="step-n">2</span><div><strong>Prepare for pressure amplification:</strong> Pre-shot routine adherence is the primary mitigation — practise it under observation before county matches (Guide 16).</div></li>
+      <li><span class="step-n">3</span><div><strong>Conservative drift is the hidden danger:</strong> Your captain selected you to win your match — play your own strategy, not a defensive version of it.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime">📊 Managing 72-Hole Events</span>
+  <div class="card">
+    <span class="card-tag">Brabazon, NAC, and Multi-Round Competition</span>
+    <h3>What 72 Holes Demands That 18 Does Not</h3>
+    <table class="tbl">
+      <tr><th>Challenge</th><th>Protocol</th></tr>
+      <tr><td>Leaderboard obsession</td><td>Check at most twice per day — after your round and the evening before the next round only</td></tr>
+      <tr><td>Bad opening round</td><td>Reset to even par mentally after each round — 54 holes remain at even par</td></tr>
+      <tr><td>Decision quality in R3/R4</td><td>On-course nutrition (Guide 48) is not optional in 72-hole events — glucose depletion degrades decision quality by hole 13</td></tr>
+      <tr><td>Post-round processing</td><td>10-minute debrief maximum. No SG data review until after the event.</td></tr>
+    </table>
   </div>
 </div>
 </body>

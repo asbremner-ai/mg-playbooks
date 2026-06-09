@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.1 · 2026-05-30 · 08_pro_round_prep.html -->
+<!-- version:v2.1-elite-tabs · 2026-05-30 · 08_pro_round_prep.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -13,7 +13,8 @@
   --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
   --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
   --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
-  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --rust:#d86030;--rust-hi:#f08050;  --elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);--elite-border:rgba(200,216,232,0.22);
+  --rust-dim:rgba(216,96,48,0.09);
   --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
   --good:#70c870;--warn:#e0b840;--bad:#e07060;
   --r:12px;--r-sm:8px;
@@ -193,6 +194,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('firsttee',this)">First Tee</button>
   <button class="tab" onclick="show('firstthree',this)">First 3 Holes</button>
   <button class="tab" onclick="show('card',this)">Strategy Card</button>
+  <button class="tab" data-tier="elite" onclick="show('elite_taper',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Tournament Week</button>
   <button class="tab" onclick="show('postround',this)">Post-Round</button>
 </div>
 
@@ -675,6 +677,50 @@ function show(id,btn){
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+  </div>
+</div>
+
+<div class="sec" id="elite_taper" data-tier="elite">
+  <h2 class="sec-title">Tournament Week Periodisation</h2>
+  <p class="sec-desc">Most amateur players arrive at major events carrying accumulated training fatigue. Elite players deliberately reduce load in the 7 days before a significant event so physical and cognitive resources peak on competition day, not the day before.</p>
+  <span class="badge badge-gold">📅 The 7-Day Taper Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">Day-by-Day Structure — Week Before a Major Event</span>
+    <h3>What to Do and When</h3>
+    <table class="tbl">
+      <tr><th>Day</th><th>Physical Training</th><th>Golf Practice</th><th>Purpose</th></tr>
+      <tr><td>Day 7 (Mon)</td><td>Final moderate gym session</td><td>60-min technical session with coach or launch monitor</td><td>Last significant training stimulus</td></tr>
+      <tr><td>Day 6 (Tue)</td><td>Light mobility only</td><td>9 holes — competitive simulation with scoring</td><td>Competition sharpness without fatigue</td></tr>
+      <tr><td>Day 5 (Wed)</td><td>Rest or 20-min walk</td><td>45-min short game + putting only</td><td>Skill maintenance; physical recovery begins</td></tr>
+      <tr><td>Day 4 (Thu)</td><td>Rest</td><td>Rest or casual 9 holes</td><td>Supercompensation begins</td></tr>
+      <tr><td>Day 3 (Fri)</td><td>15-min mobility only</td><td>30 min: putting + 20 range shots</td><td>Maintain feel without accumulating fatigue</td></tr>
+      <tr><td>Day 2 (Sat)</td><td>Rest completely</td><td>Practice round at venue if available</td><td>Course familiarisation only</td></tr>
+      <tr><td>Day 1 (event day)</td><td>5-min dynamic warm-up</td><td>45-min pre-round warmup (this guide)</td><td>Activation, not preparation</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">🔬 Signs Your Taper Is Working</span>
+  <div class="card card-teal">
+    <span class="card-tag">Objective Indicators in Days 3–5</span>
+    <h3>Four Things to Look For</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>HRV rising toward or above baseline:</strong> By Day 4–5, HRV should be at or above your personal baseline. Consistently red HRV in taper week means the preceding block was too heavy or the taper volume is still too high. See Guide 48.</div></li>
+      <li><span class="step-n">2</span><div><strong>Swing feels loose and fast:</strong> The freshness feeling — where the swing feels uncommonly easy — is a reliable indicator of peak CNS recovery. If you feel this in your Day 3 activation session, you have peaked correctly.</div></li>
+      <li><span class="step-n">3</span><div><strong>Appetite increases:</strong> As training load drops, appetite often rises sharply. This is supercompensation — eat to fuel it, particularly carbohydrates, in the 3 days before the event.</div></li>
+      <li><span class="step-n">4</span><div><strong>Mild restlessness:</strong> A sense of having too much energy is a positive sign. Flatness in taper week means the taper started too late or the preceding block was too heavy.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime">❌ What Not to Do in Taper Week</span>
+  <div class="card">
+    <span class="card-tag">The Most Common Taper Mistakes</span>
+    <h3>Eliminate These Entirely</h3>
+    <table class="tbl">
+      <tr><th>Mistake</th><th>Why It Costs You</th></tr>
+      <tr><td>Speed training (Rypstick) in Days 1–5</td><td>High CNS demand — degrades fine motor control exactly when you need it most</td></tr>
+      <tr><td>Technical overhaul within 2 weeks of event</td><td>New patterns are unstable under pressure; minimum 4 weeks consolidation required</td></tr>
+      <tr><td>Full 18-hole practice round the day before</td><td>Physical fatigue plus focus shifting to course conditions rather than process</td></tr>
+      <tr><td>Obsessive leaderboard monitoring in rounds 3–4</td><td>Shifts from process to outcome focus — primary cause of performance collapse in multi-round events</td></tr>
+      <tr><td>Diet changes in taper week</td><td>Digestive disruption adds unnecessary physical stress; eat familiar foods only</td></tr>
+    </table>
   </div>
 </div>
 </body>

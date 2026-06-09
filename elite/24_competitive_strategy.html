@@ -113,8 +113,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('formats',this)">Team Formats</button>
   <button class="tab" onclick="show('handicap',this)">Handicap</button>
   <button class="tab" onclick="show('bogey',this)">Medal & Bogey</button>
-  <button class="tab" data-tier="pro" onclick="show('matchplay_deep',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Match Play Deep</button>
-  <button class="tab" data-tier="pro" onclick="show('scoring_patterns',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Scoring Patterns</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -449,113 +447,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
       <li><span class="step-n">2</span><div><strong>Not tracking the running score:</strong> Bogey competition requires positional awareness throughout the round. "Am I up or down, and by how much?" determines aggression level for the next hole. Playing every hole with identical strategy regardless of the match position is leaving strokes on the card.</div></li>
       <li><span class="step-n">3</span><div><strong>Ignoring the stroke index allocation:</strong> On stroke index holes (where you receive a handicap shot), your adjusted target is one better than par — this is your birdie hole in bogey terms. Most players treat these exactly like non-index holes. An aggressive approach to these holes (attacking accessible flags, accepting more risk on approach) is statistically justified because the downside is only losing a hole you had a shot on.</div></li>
     </ul>
-  </div>
-</div>
-
-<!-- PRO: MATCH PLAY DEEP STRATEGY -->
-<div class="sec" id="matchplay_deep" data-tier="pro">
-  <h2 class="sec-title">Match Play Deep Strategy</h2>
-  <p class="sec-desc">Match play operates on completely different strategic logic from stroke play. The unit of currency is holes, not strokes — a single-shot advantage on one hole is worth the same as a five-stroke advantage. Understanding this changes every decision.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Fundamental Strategic Difference</span>
-    <h3>Why Match Play Inverts Several Stroke Play Principles</h3>
-    <table class="tbl">
-      <tr><th>Situation</th><th>Stroke Play Decision</th><th>Match Play Decision</th><th>Why Different</th></tr>
-      <tr><td>Partner has already made birdie</td><td>Play conservatively — your shot is independent</td><td class="good">Attack — you cannot win the hole with par</td><td>In match play, a birdie already secured means your par loses the hole</td></tr>
-      <tr><td>You are 2-up with 5 to play</td><td>N/A in stroke play</td><td class="warn">Protect — make pars, don't give holes away</td><td>Protecting a lead is valid strategy; in stroke play there is no "lead" to protect</td></tr>
-      <tr><td>Long putt, both players 40 feet</td><td>Lag to 3 feet, limit 3-putt risk</td><td class="good">Attack — if opponent lags, your make wins the hole</td><td>The conceded putt eliminates 3-putt risk for both; the made long putt wins the hole outright</td></tr>
-      <tr><td>Severe rough, 180 yards out</td><td>Take the penalty if drop is better</td><td class="warn">Depends entirely on match state</td><td>If 2-down, must attempt heroics. If 1-up, protect the lead.</td></tr>
-    </table>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Aggression Level by Match State</span>
-    <h3>The Dynamic Strategy Adjustment Framework</h3>
-    <table class="tbl">
-      <tr><th>Match State</th><th>Tee Club</th><th>Approach Target</th><th>Putt Strategy</th></tr>
-      <tr><td>All square or 1-up</td><td>Normal selection</td><td>Conservative — fat of green</td><td>Lag putts; make the short ones</td></tr>
-      <tr><td>2-up or more</td><td class="good">Conservative (protect)</td><td>Centre of green, avoid all risk</td><td>Never 3-putt — bogey concedes a hole</td></tr>
-      <tr><td>1-down</td><td>Normal + slightly aggressive</td><td>Can attack accessible pins</td><td>Attack putts — must create birdie opportunities</td></tr>
-      <tr><td>2-down</td><td class="warn">Aggressive on birdie holes</td><td>Attack when opportunity exists</td><td>Hole everything — you need birdies</td></tr>
-      <tr><td>3-down with 5 to play (dormie −)</td><td class="bad">Full aggression</td><td>Attack every flag — must make birdies</td><td>Attack every putt — must hole long putts</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The most common match play mistake:</strong> Playing defensively when you are 2-down. A player who is 2-down and plays conservatively will lose by 3&2 with great shots but no birdies. Match play requires manufactured birdies when you are behind — which requires accepting more risk than your stroke-play instincts allow.</p></div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Concession Strategy</span>
-    <h3>When to Concede — and When Not To</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Always concede a tap-in when the hole is already won:</strong> Never make an opponent hole a 1-footer after you have already secured the hole. It is poor sportsmanship, slows play, and creates unnecessary antagonism. Concede it and move on.</div></li>
-      <li><span class="step-n">2</span><div><strong>The strategic pressure concession:</strong> Conceding a medium-length putt (5–8 feet) early in a match sends a signal of confidence and can unsettle an opponent who then expects similar concessions later. Withdrawing concessions at a critical moment creates maximum psychological pressure.</div></li>
-      <li><span class="step-n">3</span><div><strong>Late in a tight match — never concede anything until the match is decided:</strong> A player who has been conceding 4-footers throughout a match and suddenly faces a 4-footer on the 17th with the match even will feel the pressure of that putt far more acutely. This is legitimate and legal match play strategy.</div></li>
-      <li><span class="step-n">4</span><div><strong>Dormie management:</strong> When you reach dormie (you cannot lose, only halve), your strategy becomes straightforward — make pars, never bogey, let your opponent produce the birdie they need. Dormie positions are won by defensive excellence, not continued aggression.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Psychological Dynamics of Match Play</span>
-    <h3>How Match Play Differs Mentally From Stroke Play</h3>
-    <p style="margin-bottom:12px;">Match play has a different emotional cadence to stroke play. Wins and losses are instant — not deferred to a scorecard. This creates a momentum dynamic that has genuine psychological (though limited statistical) reality. Understanding it allows you to manage it.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Winning the first hole matters:</strong> Data from amateur match play shows that winning the first hole produces a measurable advantage in match outcomes — partly through genuine confidence and partly through the opponent's heightened awareness of being behind. Play the first hole as if it determines the match.</div></li>
-      <li><span class="step-n">2</span><div><strong>Never let a halved hole feel like a loss:</strong> After making a birdie that is halved by your opponent's birdie, the psychological trap is feeling like you should have won the hole. A halved hole is neutral — treat it as such, reset, and move to the next hole.</div></li>
-      <li><span class="step-n">3</span><div><strong>The post-birdie concession trap:</strong> Many players, after making a long birdie putt to take the lead, unconsciously relax and play the next hole passively. Their opponent, energised by having to fight back, often makes a birdie in return. Stay fully engaged for at least two holes after taking or extending a lead.</div></li>
-    </ul>
-  </div>
-</div>
-
-<!-- PRO: SCORING PATTERN ANALYSIS -->
-<div class="sec" id="scoring_patterns" data-tier="pro">
-  <h2 class="sec-title">Scoring Pattern Analysis</h2>
-  <p class="sec-desc">Your score distribution contains structural patterns that reveal specific fixable weaknesses. Identifying them allows targeted pre-round strategy for your personal vulnerability profile — turning known weaknesses into pre-planned defences.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-teal">
-    <span class="card-tag">Analysing Your Score Distribution</span>
-    <h3>The Audit Protocol — 10 Recent Rounds</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Score frequency by hole number:</strong> Map your score (eagle/birdie/par/bogey/double+) on every hole across 10 rounds. Look for holes where you score double bogey or worse in more than 40% of rounds — these are structural weaknesses, not random bad luck.</div></li>
-      <li><span class="step-n">2</span><div><strong>Front nine vs. back nine split:</strong> A consistent differential (e.g. always 3 shots worse on the back nine) indicates a physical or psychological pattern. Common causes: fatigue, score-awareness after the turn, specific hole types concentrated on one nine.</div></li>
-      <li><span class="step-n">3</span><div><strong>Hole type classification:</strong> Categorise your worst scoring holes: Are they long par 4s (driving problem)? Short par 4s with tight tee shots (driver selection)? Par 3s over water (specific mental trigger)? The pattern by hole type is more actionable than the pattern by hole number.</div></li>
-      <li><span class="step-n">4</span><div><strong>Bogey conversion rate:</strong> Of your bogey situations (approach to rough or green missed), how often do you make bogey vs. double? A poor bogey conversion rate (frequent doubles from bogey situations) is almost always a decision error, not a technique error — it is the hero shot from trouble that turns a manageable bogey into a double.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Building a Pre-Round Target Plan</span>
-    <h3>Turning Pattern Knowledge Into Strategic Pre-Commitments</h3>
-    <p style="margin-bottom:12px;">Once you know your structural weaknesses — the hole types and situations where you consistently over-score — you can make explicit pre-round decisions that override in-round instincts at those specific moments.</p>
-    <div class="formula">
-      <div class="formula-lbl">Pre-Round Target Plan Template</div>
-      <div class="formula-main">Identify your 3 highest-risk holes from the pattern analysis.
-For each:
-  (a) What is my typical error on this hole? (OOB right, approach left, 3-putt)
-  (b) What is the specific decision that creates that error?
-  (c) What is the pre-committed alternative decision?
-
-Write it down before the round. Example:
-  Hole 7: I consistently OOB right with driver.
-  Decision error: always hit driver on this hole.
-  Pre-commitment: 3-wood to the left side of the fairway, every time.</div>
-      <div class="formula-note">This is the same decision pre-loading technique covered in Guide 05 Cognitive Architecture — applied specifically to your personal structural weaknesses identified from scoring data.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Double Bogey Rate by Hole Type</span>
-    <h3>The Benchmark and What It Tells You</h3>
-    <table class="tbl">
-      <tr><th>Hole Type</th><th>10 HCP Average Double+ Rate</th><th>Scratch Target</th><th>If Yours Is Higher — Look At</th></tr>
-      <tr><td>Long par 4 (&gt;400 yds)</td><td class="warn">28%</td><td class="good">14%</td><td>Tee shot club selection; recovery decision-making</td></tr>
-      <tr><td>Short par 4 (&lt;350 yds)</td><td class="warn">18%</td><td class="good">8%</td><td>Aggressive driver use; short game from tight lies</td></tr>
-      <tr><td>Par 3 over hazard</td><td class="bad">32%</td><td class="warn">16%</td><td>Club selection (under-clubbing); mental process on tee</td></tr>
-      <tr><td>Par 5 (reachable)</td><td class="warn">22%</td><td class="good">10%</td><td>Go/no-go decision; recovery from failed attempts</td></tr>
-      <tr><td>Par 5 (not reachable)</td><td class="warn">15%</td><td class="good">7%</td><td>Layup zone discipline; scoring zone execution</td></tr>
-    </table>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>The highest-leverage insight:</strong> For most 10 HCP players, par 3s over hazards carry the highest double bogey rate — despite requiring the shortest shots. The hazard creates a specific psychological trigger that degrades club selection and routine consistency. Knowing this allows a pre-round commitment: always take one more club than feels necessary on hazard par 3s. This single rule, applied consistently, is typically worth 1.5–2 strokes over 18 holes for players with this pattern.</p></div>
   </div>
 </div>
 

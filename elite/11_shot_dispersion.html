@@ -191,8 +191,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('application',this)">On-Course Use</button>
   <button class="tab" onclick="show('benchmarks',this)">Benchmarks</button>
   <button class="tab" onclick="show('improvement',this)">Improvement</button>
-  <button class="tab" data-tier="pro" onclick="show('prob_targeting',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Probability Targeting</button>
-  <button class="tab" data-tier="pro" onclick="show('dynamic_disp',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Dynamic Dispersion</button>
 </div>
 
 <!-- WHY IT MATTERS -->
@@ -626,127 +624,6 @@ Example: Flag is tucked right, water right, your 7-iron averages 12 yds right bi
       <tr><td>Wedge prox (100 yds)</td><td class="bad">48 ft</td><td class="warn">38 ft</td><td class="warn">32 ft</td><td class="good">28 ft</td></tr>
       <tr><td>Mishit rate (irons)</td><td class="bad">20%</td><td class="warn">14%</td><td class="warn">10%</td><td class="good">&lt;8%</td></tr>
     </table>
-  </div>
-</div>
-
-<!-- PRO: PROBABILITY-WEIGHTED TARGETING -->
-<div class="sec" id="prob_targeting" data-tier="pro">
-  <h2 class="sec-title">Probability-Weighted Targeting</h2>
-  <p class="sec-desc">Converting your dispersion cone into a full probability distribution — and using it to calculate the aim point that minimises expected strokes, not the aim point that maximises your best-case outcome.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">From Cone to Distribution</span>
-    <h3>Treating Every Shot as a Probability Problem</h3>
-    <p style="margin-bottom:12px;">Your dispersion cone tells you how wide your shot pattern is. Converting it to a probability distribution tells you <em>where within that cone</em> your shots land most frequently. The distribution is approximately normal — most shots cluster near your intended line, with decreasing frequency toward the edges.</p>
-    <div class="formula">
-      <div class="formula-lbl">Distribution Construction</div>
-      <div class="formula-main">Your 7-iron at 150 yards: ±25 yards lateral (10 HCP typical)
-This means (approximately):
-  ~68% of shots land within ±12.5 yards of aim line
-  ~95% of shots land within ±25 yards of aim line
-  ~99.7% within ±37 yards (the extreme misses)
-
-Divide the green into 5-yard zones left and right of aim:
-  Centre zone (±5 yards):   ~38% of shots
-  ±5–15 yards:              ~42% of shots (21% each side)
-  ±15–25 yards:             ~18% of shots (9% each side)
-  Beyond ±25 yards:         ~2% (extreme misses)</div>
-      <div class="formula-note">This distribution assumes you are aiming at the centre of it. If you have a known bias (65% of your misses go left), the distribution shifts — the centre of your actual distribution is left of your intended aim line. Adjust your aim point to account for bias first, then apply the EV calculation.</div>
-    </div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Consequence Mapping</span>
-    <h3>Assigning Expected Strokes to Each Landing Zone</h3>
-    <p style="margin-bottom:12px;">Once you have the probability distribution, you need the consequence of each landing zone — the expected strokes from each outcome position. These come from Broadie's Strokes Gained data.</p>
-    <table class="tbl">
-      <tr><th>Position</th><th>Expected Strokes to Hole Out (150 yd approach scenario)</th></tr>
-      <tr><td>On green, 15 feet</td><td class="good">~2.0</td></tr>
-      <tr><td>On green, 25 feet</td><td class="warn">~2.1</td></tr>
-      <tr><td>On green, 40 feet</td><td class="warn">~2.2</td></tr>
-      <tr><td>Fairway fringe, short</td><td class="warn">~2.35</td></tr>
-      <tr><td>Light rough</td><td class="warn">~2.5</td></tr>
-      <tr><td>Greenside bunker</td><td class="bad">~2.8</td></tr>
-      <tr><td>Thick rough / penalty</td><td class="bad">~3.2+</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Worked Example — Calculating Your Optimal Aim Point</span>
-    <h3>Flag Tight to Left Bunker, Centre Green Safe Right</h3>
-    <p style="margin-bottom:10px;"><strong>Scenario:</strong> 150 yards. Flag 10 yards from left edge. Bunker left. Rough right (manageable). 10 HCP player, ±25 yards lateral dispersion.</p>
-    <p style="margin-bottom:12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--teal);">OPTION A — Aim at flag:</p>
-    <table class="tbl">
-      <tr><th>Zone</th><th>P(landing here)</th><th>Expected Strokes</th><th>Contribution to EV</th></tr>
-      <tr><td>Bunker (left 10+ yds)</td><td>20%</td><td>2.8</td><td>0.56</td></tr>
-      <tr><td>Green, left half (0–10 left)</td><td>28%</td><td>2.1</td><td>0.59</td></tr>
-      <tr><td>Green, right half (0–10 right)</td><td>28%</td><td>2.1</td><td>0.59</td></tr>
-      <tr><td>Rough right (10+ right)</td><td>24%</td><td>2.5</td><td>0.60</td></tr>
-      <tr><td colspan="3"><strong>EV — Aim at flag</strong></td><td class="bad"><strong>2.34</strong></td></tr>
-    </table>
-    <p style="margin:12px 0 8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--lime);">OPTION B — Aim 15 yards right of flag (centre-right of green):</p>
-    <table class="tbl">
-      <tr><th>Zone</th><th>P(landing here)</th><th>Expected Strokes</th><th>Contribution to EV</th></tr>
-      <tr><td>Bunker (now 25+ yds left of aim)</td><td>5%</td><td>2.8</td><td>0.14</td></tr>
-      <tr><td>Green, left of aim (0–25 left)</td><td>48%</td><td>2.1</td><td>1.01</td></tr>
-      <tr><td>Green, right of aim (0–10 right)</td><td>30%</td><td>2.1</td><td>0.63</td></tr>
-      <tr><td>Rough right (10+ right)</td><td>17%</td><td>2.5</td><td>0.43</td></tr>
-      <tr><td colspan="3"><strong>EV — Aim centre-right</strong></td><td class="good"><strong>2.21</strong></td></tr>
-    </table>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Result:</strong> Aiming 15 yards right of the flag saves 0.13 expected strokes on this single shot. Applied consistently over 18 holes, players who use probability-weighted targeting save 1.5–2.5 strokes per round compared to players who aim intuitively.</p></div>
-  </div>
-</div>
-
-<!-- PRO: DYNAMIC DISPERSION — SITUATION ADJUSTMENTS -->
-<div class="sec" id="dynamic_disp" data-tier="pro">
-  <h2 class="sec-title">Dynamic Dispersion — Situation Adjustments</h2>
-  <p class="sec-desc">Your range dispersion data is a baseline — not a fixed truth. Dispersion changes with situation, pressure level, and conditions. Using range data directly on-course without adjustment systematically underestimates your real cone width.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">Range vs. Course Dispersion Gap</span>
-    <h3>Why Your On-Course Pattern Is Wider Than Your Range Pattern</h3>
-    <p style="margin-bottom:12px;">Research on shot tracking data consistently shows that amateur golfers' on-course dispersion is 15–25% wider than their range dispersion. The reasons are structural — not technical failures:</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Uneven lies:</strong> On the range you hit from flat, level mats or well-maintained turf. On the course, uphill, downhill, sidehill, and unlevel lies add dispersion. A sidehill lie adds approximately 15–20% more lateral dispersion than a flat lie with the same swing.</div></li>
-      <li><span class="step-n">2</span><div><strong>Variable lies (rough, divots, tight):</strong> Range practice is typically from perfect lies. A ball in light rough adds 10–15% dispersion; a divot adds 20–30%. Your range cone does not capture these.</div></li>
-      <li><span class="step-n">3</span><div><strong>Variable conditions:</strong> Wind, temperature, and ground firmness all widen effective dispersion on-course relative to the controlled range environment.</div></li>
-      <li><span class="step-n">4</span><div><strong>Cognitive load:</strong> On-course decision-making, course management thinking, and the awareness of consequences all subtract cognitive resources from execution — widening the physical dispersion.</div></li>
-    </ul>
-    <div class="formula">
-      <div class="formula-lbl">Course Adjustment Factor</div>
-      <div class="formula-main">On-course dispersion = Range dispersion × 1.20 (conservative estimate)
-
-A range 7-iron dispersion of ±22 yards
-becomes approximately ±26 yards on-course.
-
-For planning purposes, always use the adjusted (wider) cone
-when making aim-point calculations from your Guide 11 data.</div>
-    </div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Pressure Dispersion Widening</span>
-    <h3>How Competition Stress Expands Your Cone</h3>
-    <table class="tbl">
-      <tr><th>Situation</th><th>Dispersion Multiplier</th><th>Practical Impact</th></tr>
-      <tr><td>Casual practice round</td><td class="good">1.0× (baseline)</td><td>Closest to range data</td></tr>
-      <tr><td>Club competition (normal)</td><td class="warn">1.15–1.25×</td><td>Add ~15% to range cone width</td></tr>
-      <tr><td>Important competition (pressure)</td><td class="warn">1.25–1.40×</td><td>Add ~30% to range cone width</td></tr>
-      <tr><td>Match play, decisive moment</td><td class="bad">1.35–1.50×</td><td>Add ~40% to range cone width</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The conservative implication:</strong> In an important competition, your real dispersion is 35–50% wider than your range data suggests. This means targeting conservative aim points is even more justified in competition than in casual play — not less. The player who attacks pins in competition based on range dispersion is using the wrong data.</p></div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Building Your Competition Adjustment Factor</span>
-    <h3>Personalising the Adjustment From Your Arccos Data</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Pull your Arccos approach proximity data by round type:</strong> If you have tagged competition rounds vs. practice rounds in Arccos, compare proximity at the same distance band between the two. The difference is your personal competition adjustment factor.</div></li>
-      <li><span class="step-n">2</span><div><strong>Calculate your competition dispersion:</strong> If practice-round proximity at 150 yards is 28 feet and competition-round proximity is 38 feet, your competition dispersion is approximately 36% wider. Apply this factor to your range cone measurements for all competition aim-point planning.</div></li>
-      <li><span class="step-n">3</span><div><strong>Update quarterly:</strong> As your technique and mental game improve, the competition adjustment factor should decrease. A reducing gap between practice and competition proximity is one of the clearest signals of genuine improvement in pressure performance.</div></li>
-    </ul>
   </div>
 </div>
 
