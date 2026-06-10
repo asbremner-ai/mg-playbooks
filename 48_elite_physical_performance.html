@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.0 · 2026-06-08 · 48_elite_physical_performance.html -->
+<!-- version:v2.0 · 2026-06-09 · 48_elite_physical_performance.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -85,6 +85,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="tab" onclick="show('cognitive',this)">Cognitive Performance</button>
   <button class="tab" onclick="show('taper',this)">Competition Taper</button>
   <button class="tab" onclick="show('durability',this)">Long-Season Durability</button>
+  <button class="tab" onclick="show('nutrition',this)">Nutrition Timing</button>
+  <button class="tab" onclick="show('recovery',this)">Round Recovery</button>
 </div>
 
 <div class="sec active" id="periodisation">
@@ -281,6 +283,114 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <p><strong>Vitamin D for UK players:</strong> The majority of UK-based athletes are deficient in Vitamin D from October through April due to insufficient sunlight. Vitamin D deficiency impairs muscle function, recovery speed, and immune response — all critical for an elite training programme. Test annually; supplement at 2,000–4,000 IU daily through winter unless tested sufficient.</p>
     </div>
   </div>
+<!-- NUTRITION TIMING -->
+<div class="sec" id="nutrition">
+  <h2 class="sec-title">Nutrition Timing for Elite Golf</h2>
+  <p class="sec-desc">Nutrition for elite amateur golf is not about general health — it is about maintaining cognitive performance and fine motor control across 18 and 36 holes. The timing of carbohydrate intake, caffeine, and hydration has measurable effects on decision quality and putting consistency in the closing holes of a competitive round.</p>
+
+  <span class="badge badge-pro">🍽️ Pre-Round Nutrition</span>
+  <div class="card card-pro">
+    <span class="card-tag">The 3-Hour Window Before Tee Time</span>
+    <h3>What to Eat and When for Peak Cognitive Performance</h3>
+    <table class="tbl">
+      <tr><th>Timing</th><th>Recommended</th><th>Avoid</th><th>Reason</th></tr>
+      <tr><td>3h before</td><td>Mixed meal: complex carbs + moderate protein + low fat (porridge + eggs; rice + chicken)</td><td>High fat, high fibre — delays gastric emptying; GI discomfort risk during round</td><td>Slow carb release maintains glucose through the front 9</td></tr>
+      <tr><td>90 min before</td><td>Small carbohydrate top-up if hungry (banana, cereal bar)</td><td>High-glycaemic load alone — causes insulin spike and crash before the turn</td><td>Stabilise blood glucose without GI load</td></tr>
+      <tr><td>30 min before</td><td>Final 500ml water; caffeine if using (see below)</td><td>Nothing large — stomach should be settled for warm-up</td><td>Caffeine peaks at 45–60 min post-ingestion</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">☕ Caffeine Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">Dose, Timing, and the 4-Day Taper</span>
+    <h3>Optimising Caffeine for an 18-Hole Round</h3>
+    <p>Caffeine reliably improves attention, reaction time, and fine motor control at 3–6 mg/kg body weight. For an 80 kg player that is 240–480 mg — roughly 2–4 espresso shots. The performance effect is substantially larger after a caffeine taper, making the 4-day pre-event protocol the highest-leverage application.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Variable</th><th>Detail</th><th>Application</th></tr>
+      <tr><td>Dose</td><td>3–6 mg/kg body weight</td><td>Start at 3 mg/kg — confirm no GI or anxiety side-effects before competition use</td></tr>
+      <tr><td>Timing</td><td>45–60 min before performance</td><td>For a 9am tee: caffeine at 8am. 36-hole day: second dose at hole 12–14, no later — disrupts sleep if taken late</td></tr>
+      <tr><td>Tolerance taper</td><td>4-day caffeine taper before major events</td><td>Abstain from all caffeine for 4 days before a major event; pre-competition dose effect is significantly amplified</td></tr>
+      <tr><td>Form</td><td>Caffeine tablets give most predictable dose</td><td>Coffee varies by brew; energy drinks carry counterproductive sugar load; tablets preferred for competition use</td></tr>
+      <tr><td>Risk</td><td>Anxiety, tremor, GI upset in sensitive players</td><td>Never use a new caffeine protocol on competition day — trial in practice rounds first</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">🔄 On-Course Fuelling by Hole Group</span>
+  <div class="card card-teal">
+    <span class="card-tag">Holes 1–18: Preventing the Back-Nine Cognitive Drop</span>
+    <h3>The Glucose Management Protocol</h3>
+    <p>The enemy is not hunger — it is glycaemic variability. Most amateur golfers crash on the back nine because they eat nothing or eat simple sugars at the turn that cause an insulin spike and subsequent crash on holes 14–17, exactly when the round is most consequential.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Holes 1–6:</strong> No food needed if pre-round meal was adequate. Sip 150–200 ml water every 3 holes. Avoid eating before the body has settled into the round — blood flow to digestion competes with physical performance in the first hour.</div></li>
+      <li><span class="step-n">2</span><div><strong>Holes 7–9 (approaching the turn):</strong> Small carbohydrate — banana, cereal bar, or 30 g dried fruit. This is the critical fuelling window. Eat before you feel hungry — by the time hunger registers you are already glycaemically depleted.</div></li>
+      <li><span class="step-n">3</span><div><strong>The turn:</strong> If eating a full meal, choose protein + complex carb (ham sandwich on wholegrain). Avoid fried food — fat slows gastric emptying and produces sluggishness on holes 10–13.</div></li>
+      <li><span class="step-n">4</span><div><strong>Holes 13–16:</strong> Second small carbohydrate top-up. Most players are running on empty here — a small snack maintains decision quality on the closing holes where rounds are won or lost.</div></li>
+      <li><span class="step-n">5</span><div><strong>Hydration throughout:</strong> 150–200 ml every 3 holes regardless of thirst. Thirst is a lagging indicator — you are already 1–2% dehydrated before you feel it. At 2% dehydration, fine motor control measurably degrades.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-lime">🌡️ Condition-Specific Adjustments</span>
+  <div class="card">
+    <span class="card-tag">Hot, Cold, and Coastal Wind Protocols</span>
+    <h3>UK Condition Variants</h3>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Key Adjustment</th><th>Why</th></tr>
+      <tr><td>Hot summer (25°C+)</td><td>Increase hydration by 30–50%; add electrolytes; reduce caffeine dose — dehydration amplifies caffeine's diuretic effect</td><td>Sweat rate increases; electrolyte loss degrades muscle function and concentration before dehydration is felt</td></tr>
+      <tr><td>Cold (below 8°C)</td><td>Slightly increase carbohydrate intake — thermoregulation burns additional glucose; warm drinks at the turn are beneficial</td><td>Cold suppresses thirst even more than heat — deliberate hydration schedule is critical in winter</td></tr>
+      <tr><td>Exposed links / coastal wind</td><td>Additional half-snack on the back nine — physical effort is 15–20% higher on exposed courses in wind</td><td>More walking resistance, more club through wind; caloric demand is genuinely higher</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- RECOVERY BETWEEN ROUNDS -->
+<div class="sec" id="recovery">
+  <h2 class="sec-title">Recovery Between Rounds</h2>
+  <p class="sec-desc">The 90-minute window after completing a competitive round is the highest-leverage recovery intervention available to an elite amateur. What you do in that window — nutrition, movement, cognitive decompression — determines how well you perform the next day. Most amateurs use that window to replay every bad shot they hit.</p>
+
+  <span class="badge badge-pro">⏱️ The 90-Minute Post-Round Protocol</span>
+  <div class="card card-pro">
+    <span class="card-tag">Immediately Post-Round — What Tour Caddies Do</span>
+    <h3>Three Windows in the First 90 Minutes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>0–20 min: Nutrition.</strong> 0.8–1.0 g carbohydrate per kg body weight plus 20–30 g protein within 20 minutes. For an 80 kg player: 64–80 g carbohydrate (banana + cereal bar + milk) and 20–30 g protein (chicken sandwich, protein shake). This combination maximises glycogen resynthesis — the "glycogen window" is real and closes after about 45 minutes.</div></li>
+      <li><span class="step-n">2</span><div><strong>20–40 min: Light movement.</strong> 15–20 minutes walking or gentle stretching. Do not sit immediately after a round. The transition from competition stress to rest is smoother with light movement — hip flexor stretches and shoulder rotations address the areas most loaded by a full round of golf.</div></li>
+      <li><span class="step-n">3</span><div><strong>40–90 min: Cognitive decompression.</strong> Avoid reviewing your scorecard obsessively or reliving bad shots in detail. Light non-golf conversation, music, or quiet time. The brain needs to reduce cortisol levels — competitive re-analysis keeps cortisol elevated and delays both physical and cognitive recovery.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">😴 Sleep for Multi-Day Events</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Evening Protocol for Back-to-Back Rounds</span>
+    <h3>What to Do Between Round 1 and Round 2</h3>
+    <table class="tbl">
+      <tr><th>Time</th><th>Action</th><th>What to Avoid</th></tr>
+      <tr><td>Post-round</td><td>Recovery nutrition + light movement (above)</td><td>Alcohol — impairs glycogen resynthesis and disrupts sleep architecture significantly</td></tr>
+      <tr><td>Evening meal</td><td>Full balanced meal: complex carbs, lean protein, vegetables</td><td>Heavy fat or spicy food — delays sleep onset and increases GI discomfort risk</td></tr>
+      <tr><td>2h before sleep</td><td>Avoid screens if possible; dim lighting; calm environment</td><td>Round review on phone — analytical thought delays sleep onset by raising cortisol</td></tr>
+      <tr><td>60 min before sleep</td><td>Magnesium glycinate 200–400 mg — supports sleep quality</td><td>Caffeine after 2pm — 5–6h half-life means afternoon coffee disrupts sleep architecture</td></tr>
+      <tr><td>Sleep target</td><td>7.5–9h; consistent wake time across event days</td><td>Varying wake times between event days — disrupts circadian rhythm and degrades day-3 performance</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">🧊 Physical Recovery Tools — Evidence Ranking</span>
+  <div class="card card-teal">
+    <span class="card-tag">What the Research Actually Supports</span>
+    <h3>Recovery Methods Ranked by Evidence Quality</h3>
+    <table class="tbl">
+      <tr><th>Method</th><th>Evidence</th><th>Recommendation</th></tr>
+      <tr><td>Sleep (7.5–9h)</td><td class="good">Strong — most impactful single recovery tool</td><td>Prioritise above everything else; non-negotiable</td></tr>
+      <tr><td>Post-exercise nutrition (glycogen window)</td><td class="good">Strong</td><td>20-min window protocol at every multi-day event</td></tr>
+      <tr><td>Cold water immersion (10–15°C, 10–15 min)</td><td class="warn">Moderate — reduces soreness; may blunt adaptation if used after strength training</td><td>Use after competition days only; not within 4h of a gym session</td></tr>
+      <tr><td>Compression garments</td><td class="warn">Moderate — modest reduction in perceived soreness</td><td>Worth wearing on long travel days between events</td></tr>
+      <tr><td>Foam rolling / self-myofascial release</td><td class="warn">Moderate — increases ROM acutely</td><td>10 min pre- and post-round: hip flexors, quads, thoracic spine</td></tr>
+      <tr><td>Massage</td><td class="warn">Moderate — psychological benefit clear; physiological modest</td><td>If available at venue — worth doing; not worth travelling for</td></tr>
+      <tr><td>Ice baths (below 10°C)</td><td class="bad">Mixed — physiological benefit unclear; discomfort risk</td><td>Not recommended; cold water immersion at moderate temperatures is safer and equally effective</td></tr>
+    </table>
+  </div>
+</div>
+
+
 </div>
 <div class="footer">ELITE PLAYBOOK · GUIDE 48 · ELITE PHYSICAL PERFORMANCE · THE SCRATCH PROJECT</div>
 <script>

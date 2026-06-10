@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.0 · 2026-06-08 · 49_advanced_game_construction.html -->
+<!-- version:v2.0 · 2026-06-09 · 49_advanced_game_construction.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -85,6 +85,9 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <button class="tab" onclick="show('windgame',this)">Wind Game</button>
   <button class="tab" onclick="show('scoring',this)">Scoring Under Par</button>
   <button class="tab" onclick="show('gameplan',this)">Game Plans</button>
+  <button class="tab" onclick="show('pressure',this)">Pressure Shots</button>
+  <button class="tab" onclick="show('patterns',this)">Scoring Patterns</button>
+  <button class="tab" onclick="show('links',this)">Links Specialism</button>
 </div>
 
 <div class="sec active" id="shotlibrary">
@@ -251,6 +254,147 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <p><strong>Once the plan is made — follow it:</strong> The game plan is only valuable if you adhere to it under pressure. The moment you deviate from it because "the pin looks gettable" or "I feel good today," you have abandoned the analytical work for in-the-moment emotional reasoning. In-the-moment emotional reasoning produces worse outcomes than pre-planned analytical decisions in every sport studied. Make the plan; follow the plan.</p>
     </div>
   </div>
+<!-- PRESSURE SHOT LIBRARY -->
+<div class="sec" id="pressure">
+  <h2 class="sec-title">The Pressure Shot Library</h2>
+  <p class="sec-desc">Every elite amateur player has a set of shots they trust completely under pressure — shots hit hundreds of times in practice and dozens of times in competition, reproducible when the match or medal is on the line. This library is not built accidentally; it is constructed deliberately in the off-season.</p>
+
+  <span class="badge badge-pro">🎯 The Six Shot Categories</span>
+  <div class="card card-pro">
+    <span class="card-tag">What Belongs in a Pressure Library</span>
+    <h3>Reliability Over Impressiveness</h3>
+    <p>A pressure shot library is not a collection of your best shots — it is your most <em style="color:var(--white);">reliable</em> shots. Shots you can execute at 80% of physical capacity, with elevated heart rate, minimal warm-up, in conditions you do not control. That distinction matters.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Category</th><th>The Shot to Own</th><th>Why This One</th></tr>
+      <tr><td>Tee shot under pressure</td><td>3-wood or driving iron — control over distance</td><td>Driver on a tight tee when the match is close is the single most common source of blow-up holes at elite level</td></tr>
+      <tr><td>Long approach (150–180y)</td><td>High, slightly cut mid-iron to the safe side of the green</td><td>This zone costs the most strokes per round — a reliable "pro-side miss" shot is worth ~0.2 SG per round</td></tr>
+      <tr><td>Short approach (80–120y)</td><td>Full-swing wedge to large target — carry control over proximity</td><td>Partial shots fail under pressure; a full-swing wedge to the middle of the green is more reliable than a half-wedge to the flag</td></tr>
+      <tr><td>Bunker shot</td><td>One repeatable technique for 15–30 ft greenside bunker shots</td><td>Creative bunker play under pressure produces disasters; a single owned technique is worth more than five situational shots</td></tr>
+      <tr><td>Chip / pitch</td><td>One bump-and-run for tight lies; one pitch for 10–20 yards with a lofted wedge</td><td>Two reliable shots beat six situational options — the player who owns two executes better under pressure</td></tr>
+      <tr><td>Short putt under pressure</td><td>4–6 ft with full pre-shot routine, no shortcuts</td><td>The putts that decide county matches are almost all inside 6 feet; own this distance completely before any other</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">🔨 Building Each Shot to Pressure-Proof Standard</span>
+  <div class="card card-gold">
+    <span class="card-tag">The 4-Stage Confidence Protocol</span>
+    <h3>How a Shot Earns a Place in the Library</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Blocked acquisition (200+ reps):</strong> Repeat the shot in blocked practice until fully autonomous — passes the Skill Stage test from Guide 38. Do not rush this phase. A shot requiring conscious execution during play is not pressure-proof and does not belong in the library yet.</div></li>
+      <li><span class="step-n">2</span><div><strong>Variable consolidation (100+ reps):</strong> Same shot from different lies, distances, and wind conditions. The shot must work from imperfect conditions, not only ideal range conditions.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pressure inoculation:</strong> Hit the shot in consequence-based practice — money balls, match scenarios, last-chance drills where something is at stake. The shot needs prior experience of being executed when something mattered before it can be trusted when everything matters.</div></li>
+      <li><span class="step-n">4</span><div><strong>Competition confirmation (3+ rounds):</strong> Execute the shot in at least 3 competitive rounds under moderate pressure before calling it a pressure shot. Only competition use earns it full entry into the library.</div></li>
+    </ul>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">📅</span>
+      <p><strong>Annual library review:</strong> Every October after the season, review the library. Remove anything not tested in competition that year. Add 1–2 new shots based on the SG patterns Arccos revealed. A library that grows by one well-tested shot per year compounds its value over a career.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-teal">🚨 The Last-Hole Decision Framework</span>
+  <div class="card card-teal">
+    <span class="card-tag">When Everything Depends on One Shot</span>
+    <h3>A Pre-Committed System for Maximum-Consequence Shots</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Select from your library — not from what the moment seems to demand.</strong> The temptation under maximum pressure is to attempt a shot that feels commensurate with the importance of the moment. The correct response is the opposite: your most reliable shot, not your most impressive one.</div></li>
+      <li><span class="step-n">2</span><div><strong>Execute the full pre-shot routine — slower and more deliberate, not faster.</strong> Players abbreviate their routine under pressure and wonder why execution suffers. The routine exists precisely for this moment. Extend it slightly; the extra 10 seconds will not affect pace of play but will materially improve execution.</div></li>
+      <li><span class="step-n">3</span><div><strong>Commit to a specific target.</strong> Not "somewhere safe" but a precise landing spot — a tree on the horizon, a bunker face, a specific blade of grass on the green. Vague intentions produce vague swings. Your visual system needs a precise target to aim the motor programme at.</div></li>
+      <li><span class="step-n">4</span><div><strong>Accept the outcome before you swing.</strong> Acknowledge that good process is all you control. A perfect execution that produces a bad result through bad luck is not a failure. This cognitive release — counterintuitively — produces better physical execution by removing result-anxiety from the motor programme during the swing.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- SCORING PATTERNS & DATA -->
+<div class="sec" id="patterns">
+  <h2 class="sec-title">Scoring Patterns &amp; Data Analysis</h2>
+  <p class="sec-desc">Your Arccos data contains patterns that monthly SG averages do not surface — how your game changes under competitive pressure, across a round's duration, and by hole type. Mining these patterns reveals game construction priorities worth more strokes than any technical change.</p>
+
+  <span class="badge badge-pro">📊 The Four Core Pattern Analyses</span>
+  <div class="card card-pro">
+    <span class="card-tag">Beyond Monthly SG Averages</span>
+    <h3>Four Specific Analyses to Extract from Arccos</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Front 9 vs. Back 9 SG split (30+ rounds).</strong> A back-nine SG decline greater than −0.3 relative to the front nine is a systematic pattern. Common causes: glucose crash (fix: on-course nutrition protocol from Guide 48), decision fatigue (fix: pre-committed strategy card), physical fatigue (fix: fitness periodisation). The cause is identifiable from the Arccos category breakdown — if the drop is in putting, suspect fatigue; if in approaches, suspect decision drift or glucose.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hole score distribution.</strong> Pull your percentage of eagles, birdies, pars, bogeys, doubles, and triples. At scratch, the target distribution per round is roughly: birdie 22%, par 62%, bogey 14%, double 2%. At +1: birdie 28%, par 62%, bogey 9%, double 1%. Where does your distribution deviate most from target? That deviation is your highest-leverage game construction priority.</div></li>
+      <li><span class="step-n">3</span><div><strong>Post-bogey scoring pattern.</strong> After making a bogey, what is your average score on the next hole? After making a birdie? Players who score measurably worse after bogeys than the statistical average have a recovery problem — not a technique problem. The fix is psychological (Guide 47 post-bogey reset protocol), not technical.</div></li>
+      <li><span class="step-n">4</span><div><strong>Par-type differential.</strong> Your SG on par 3s, par 4s, and par 5s separately. Most players have a structural advantage or disadvantage on one par type. Par 5s are typically where the biggest gains are available — poor go-for-two decision making, poor layup zone selection — and where bad decisions cost most per hole.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">🎯 The Annual Game Construction Review</span>
+  <div class="card card-gold">
+    <span class="card-tag">October — After the Season Closes</span>
+    <h3>From Data to Three Specific Output Items</h3>
+    <table class="tbl">
+      <tr><th>Output</th><th>What It Specifies</th><th>Where It Goes</th></tr>
+      <tr><td>Primary game construction priority</td><td>The single pattern change worth the most strokes in the next season — e.g. "par 5 strategy" or "post-bogey recovery"</td><td>Written into the first training block of the off-season</td></tr>
+      <tr><td>Shot library update</td><td>One shot to add based on the season's data; one to remove if it didn't hold under pressure</td><td>Pressure shot library (previous tab)</td></tr>
+      <tr><td>Hole strategy update</td><td>2–3 specific holes on your home course where the data shows a persistent decision error</td><td>Written into the pre-round planning card for next season (Guide 40)</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">📈 Multi-Season Progress Tracking</span>
+  <div class="card card-teal">
+    <span class="card-tag">How Elite Amateur Games Develop Year-Over-Year</span>
+    <h3>Expected Trajectory for Players in This Programme</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Typical Year 1 → Year 2 Change</th><th>Primary Mechanism</th></tr>
+      <tr><td>Double bogey rate</td><td>−30 to −50% reduction</td><td>Better decision making eliminates most blow-up holes before they happen</td></tr>
+      <tr><td>Birdie conversion from &lt;150y</td><td>+5 to +10 percentage points</td><td>Approach zone discipline and aim point accuracy</td></tr>
+      <tr><td>Back-nine SG gap vs. front nine</td><td>Gap narrows from −0.4 to −0.1</td><td>On-course nutrition + pre-committed strategy card</td></tr>
+      <tr><td>Post-bogey average score</td><td>Approaches statistical baseline</td><td>Recovery protocol and pre-shot routine consistency</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- LINKS SPECIALISM -->
+<div class="sec" id="links">
+  <h2 class="sec-title">Links Golf Specialism</h2>
+  <p class="sec-desc">UK elite amateur golf is disproportionately played on links and heathland — the Brabazon Trophy, national qualifying events, and most county championships are on courses where parkland game construction needs significant adjustment. Links specialism is a genuine competitive advantage at county and national level.</p>
+
+  <span class="badge badge-pro">🌬️ Seven Links Game Construction Adjustments</span>
+  <div class="card card-pro">
+    <span class="card-tag">How Links Golf Differs from Parkland Defaults</span>
+    <h3>The Strategic Adjustments by Category</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>Parkland Default</th><th>Links Adjustment</th></tr>
+      <tr><td>Tee shot target</td><td>Centre of fairway</td><td>Specific quadrant — depends on wind direction and the approach angle needed for that day's flag position</td></tr>
+      <tr><td>Approach trajectory</td><td>High, soft landing</td><td>Low running — use slopes and banks; hitting into the ground, not over it</td></tr>
+      <tr><td>Approach target</td><td>Flag or flag zone</td><td>Fattest part of the green — links greens are firmer and faster; any green is a success on a difficult day</td></tr>
+      <tr><td>Short game default</td><td>Pitch or chip</td><td>Putt from everywhere you can putt from — fringe, collar, light rough within 10 yards</td></tr>
+      <tr><td>Wind adjustment</td><td>±1 club for moderate wind</td><td>±3 clubs into a strong headwind is not uncommon; the ball curves far more in links conditions than on sheltered parkland</td></tr>
+      <tr><td>Miss acceptance</td><td>Miss green = chip close</td><td>Miss to the big side = two-putt from 40 feet is a success; links greens punish aggressive flag-hunting</td></tr>
+      <tr><td>Risk tolerance</td><td>Normal EV calculation</td><td>Lower — bunkers and rough lies are more severe; err conservative more often than the EV calculation alone would suggest</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">🏌️ The Three Shots Every Links Player Must Own</span>
+  <div class="card card-gold">
+    <span class="card-tag">Technical Requirements for Elite Links Play</span>
+    <h3>Shots You Cannot Compete Without at National Level</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The knockdown iron:</strong> Ball back in stance, hands forward, abbreviated follow-through — trajectory 30–40% lower than standard with reduced spin. Essential for holding approaches under the wind and landing them short to run up. Practice drill: place a towel suspended at mid-iron height above the ball line; the ball must fly under it.</div></li>
+      <li><span class="step-n">2</span><div><strong>The running chip-putt:</strong> A 6- or 7-iron chip that lands 5 yards short of the green and runs like a putt the rest of the way. The most reliable short game shot in firm links conditions — a lofted wedge will check unpredictably or bound through hard greens. Practice: chip to a hoop 5 yards short of a practice green and let it run to the hole.</div></li>
+      <li><span class="step-n">3</span><div><strong>The bump-and-run driver:</strong> Struck with a level or slightly downward attack angle to produce maximum run with minimum balloon in the wind. Useful on downwind par 4s where a standard high driver will balloon and lose 20–30 yards of carry advantage. Practice: mark where your standard driver lands and compare to a de-lofted impact version — the ground-game yardage gain is the value of owning this shot.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">📋 Pre-Round Links Preparation Checklist</span>
+  <div class="card card-teal">
+    <span class="card-tag">Venue Preparation Specific to Links Courses</span>
+    <h3>Four Checks Before Your Links Round</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Wind direction and forecast for the full round.</strong> Wind can shift 30–45° between front and back nine on an exposed links. Note which holes play directly into wind, downwind, and crosswind for each potential wind direction — this preparation takes 10 minutes the night before and saves 2–3 strokes in club selection during the round.</div></li>
+      <li><span class="step-n">2</span><div><strong>Green firmness assessment.</strong> During your practice round, bounce three balls from 10 yards short of each green. If they bounce and run more than 5 yards past the fringe, you cannot pitch to most flags — the ground game becomes the primary approach. Adjust your entire strategy accordingly.</div></li>
+      <li><span class="step-n">3</span><div><strong>Bunker character by hole.</strong> Links bunkers vary enormously — some have near-vertical faces requiring full explosion technique, others are shallow and escapable with a pitch. Identify the character of the 2–3 most dangerous bunkers on each hole during your recon round.</div></li>
+      <li><span class="step-n">4</span><div><strong>Ground-game corridor mapping.</strong> On each approach hole, identify the strip of ground between you and the green where you can run the ball up — note it on your yardage book. This corridor becomes your primary approach route when the wind makes aerial approach too risky. Players who have mapped it in advance are significantly faster and more decisive on the approach.</div></li>
+    </ul>
+  </div>
+</div>
+
+
 </div>
 <div class="footer">ELITE PLAYBOOK · GUIDE 49 · ADVANCED GAME CONSTRUCTION · THE SCRATCH PROJECT</div>
 <script>

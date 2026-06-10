@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · commercialisation_plan.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Scratch Project — Commercialisation Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070f07;--s:#0d1a0d;--s2:#111e11;--s3:#182818;
+  --border:rgba(160,200,80,0.14);--bhi:rgba(160,200,80,0.30);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.08);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.10);
+  --elite:#c8d8e8;--elite-hi:#e8f4ff;--elite-dim:rgba(200,216,232,0.07);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.48);--faint:rgba(232,240,216,0.14);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:14px;line-height:1.7;overflow-x:hidden;}
+
+/* ── STICKY NAV ── */
+.topnav{background:rgba(7,15,7,.97);border-bottom:1px solid var(--border);padding:10px 24px;position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(6px);}
+.topnav-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+.topnav-links{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;}
+.topnav-links::-webkit-scrollbar{display:none;}
+.topnav-links a{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-decoration:none;white-space:nowrap;transition:color .2s;}
+.topnav-links a:hover{color:var(--lime);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,#030803 0%,#091409 55%,var(--s) 100%);border-bottom:2px solid var(--border);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 60%,rgba(160,200,80,0.06) 0%,transparent 55%),radial-gradient(ellipse at 70% 20%,rgba(224,184,64,0.04) 0%,transparent 45%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:var(--lime);margin-bottom:16px;position:relative;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,6vw,2.9rem);font-weight:900;line-height:1.05;margin-bottom:10px;position:relative;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:560px;margin:0 auto 28px;font-weight:300;line-height:1.75;position:relative;}
+.hero-stats{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;position:relative;}
+.hstat{text-align:center;}
+.hstat-n{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--lime);display:block;line-height:1;}
+.hstat-l{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:block;}
+.hdiv{width:1px;background:var(--border);align-self:stretch;}
+
+/* ── LAYOUT ── */
+.page{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+.section{margin-top:52px;}
+.anc{display:block;margin-top:-64px;padding-top:64px;}
+
+/* ── SECTION HEADERS ── */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:flex;align-items:center;gap:10px;}
+.eyebrow::after{content:'';flex:1;height:1px;background:var(--border);}
+.stitle{font-family:'Playfair Display',serif;font-size:1.65rem;font-weight:900;color:var(--white);margin-bottom:6px;line-height:1.1;}
+.sdesc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.8;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+
+/* ── CARDS ── */
+.card{background:linear-gradient(145deg,var(--s3) 0%,var(--s2) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--bhi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,0.25),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.22),transparent);}
+.card-pro{border-color:rgba(200,146,42,.25);}.card-pro::before{background:linear-gradient(90deg,transparent,rgba(200,146,42,.25),transparent);}
+.card-elite{border-color:rgba(200,216,232,.2);}.card-elite::before{background:linear-gradient(90deg,transparent,rgba(200,216,232,.2),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-rust .card-tag{color:var(--rust-hi);}
+.card-pro .card-tag{color:var(--pro-hi);}
+.card-elite .card-tag{color:var(--elite);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card p+p{margin-top:8px;}
+
+/* ── TABLES ── */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0;display:block;overflow-x:auto;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:8px 10px;color:var(--muted);border-bottom:1px solid rgba(232,240,216,.06);line-height:1.55;vertical-align:top;}
+.tbl td:first-child{color:var(--white);font-weight:500;}
+.tbl tr:last-child td{border-bottom:none;}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+/* ── STEPS ── */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.sn{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.card-gold .sn{color:var(--gold);background:var(--gold-dim);border-color:rgba(224,184,64,.2);}
+.card-rust .sn{color:var(--rust-hi);background:var(--rust-dim);border-color:rgba(216,96,48,.2);}
+.card-teal .sn{color:var(--teal-hi);background:var(--teal-dim);border-color:rgba(72,176,168,.2);}
+.steps li strong{color:var(--white);}
+
+/* ── INFO BOXES ── */
+.ibox{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.ibox p{font-size:12.5px;line-height:1.7;}.ibox strong{color:var(--white);display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.07);border:1px solid rgba(72,176,168,.2);}.tip p{color:var(--teal-hi);}
+.wbox{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.18);}.wbox p{color:var(--gold-hi);}
+.dbox{background:rgba(216,96,48,.07);border:1px solid rgba(216,96,48,.2);}.dbox p{color:var(--rust-hi);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;padding:4px 9px;border-radius:4px;margin-bottom:14px;}
+.b-red{background:rgba(216,96,48,.1);border:1px solid rgba(216,96,48,.28);color:var(--rust-hi);}
+.b-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.b-green{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+
+/* ── TWO/THREE COLUMN GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.mini{background:var(--s2);border:1px solid var(--border);border-radius:var(--r-sm);padding:15px 13px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:5px;display:block;}
+.mini h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.3;}
+.mini p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ── TIMELINE ── */
+.tl{display:flex;flex-direction:column;gap:0;position:relative;margin:14px 0;}
+.tl::before{content:'';position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--lime),var(--gold),var(--teal));opacity:.25;}
+.tl-item{display:flex;gap:14px;margin-bottom:18px;}
+.tl-dot{width:38px;height:38px;border-radius:50%;border:2px solid var(--lime);background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);flex-shrink:0;z-index:1;}
+.tl-body{flex:1;padding-top:7px;}
+.tl-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:3px;}
+.tl-title{font-size:13.5px;font-weight:600;color:var(--white);margin-bottom:4px;}
+.tl-desc{font-size:12.5px;color:var(--muted);line-height:1.65;}
+
+/* ── PRICING CARDS ── */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0;}
+.pcrd{background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:18px 15px;text-align:center;}
+.pcrd.featured{border-color:var(--bhi);background:linear-gradient(145deg,rgba(160,200,80,0.06) 0%,var(--s) 100%);}
+.pt{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.featured .pt{color:var(--lime);}
+.pa{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px;}
+.pn{font-size:11px;color:var(--muted);margin-bottom:12px;line-height:1.5;}
+.pi{text-align:left;font-size:12px;color:var(--muted);line-height:1.95;}
+.pi span{display:block;}
+.pi span::before{content:'✓ ';color:var(--lime);}
+
+/* ── DIVIDER ── */
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+
+/* ── FOOTER ── */
+.footer{text-align:center;padding:28px 20px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);margin-top:60px;}
+
+@media(max-width:600px){
+  .g2,.g3,.pgrid{grid-template-columns:1fr;}
+  .hdiv{display:none;}
+  .hero-stats{gap:16px;}
+}
+</style>
+</head>
+<body>
+
+<div class="topnav">
+  <span class="topnav-title">Commercialisation Plan · The Scratch Project · June 2026</span>
+  <div class="topnav-links">
+    <a href="#product">Product</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#legal">Legal</a>
+    <a href="#platform">Platform</a>
+    <a href="#launch">Launch</a>
+    <a href="#growth">Growth</a>
+    <a href="#commercial">Revenue</a>
+    <a href="#risk">Risk</a>
+    <a href="#actions">Actions</a>
+  </div>
+</div>
+
+<div class="hero">
+  <p class="hero-label">Internal Strategy Document · Confidential · v1.0 · June 2026</p>
+  <h1>The Scratch Project —<br><em>Commercialisation Plan</em></h1>
+  <p class="hero-sub">Everything needed to move from content-complete to commercially live — product structure, pricing, legal obligations, platform setup, launch sequence, growth channels, unit economics, and risk management.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">3</span><span class="hstat-l">Tiers</span></div>
+    <div class="hdiv"></div>
+    <div class="hstat"><span class="hstat-n">49</span><span class="hstat-l">Guides</span></div>
+    <div class="hdiv"></div>
+    <div class="hstat"><span class="hstat-n">86%</span><span class="hstat-l">Gross Margin</span></div>
+    <div class="hdiv"></div>
+    <div class="hstat"><span class="hstat-n">8</span><span class="hstat-l">Steps to Launch</span></div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══════════════════════════════════════════════════════
+     §1 PRODUCT STRUCTURE
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="product"></span>
+  <div class="eyebrow">01 · Product</div>
+  <h2 class="stitle">What You Are Selling</h2>
+  <p class="sdesc">Three distinct products at three price points, sold to the same audience at different stages of their improvement journey. The architecture is designed for maximum lifetime value — Standard buyers become Pro buyers, Pro buyers become Elite buyers.</p>
+
+  <div class="card">
+    <span class="card-tag">Three-Tier Architecture</span>
+    <h3>The Product Stack</h3>
+    <table class="tbl">
+      <tr><th>Tier</th><th>Target Buyer</th><th>Content</th><th>Primary Promise</th></tr>
+      <tr><td>Standard</td><td>5–18 HCP, data-literate, self-directed</td><td>37 guides + all tools + 24-month plan</td><td>"Go from 10 HCP to scratch in 24 months with a structured, science-backed system"</td></tr>
+      <tr><td>Pro</td><td>5–12 HCP, serious, willing to go deeper</td><td>Standard + 3 exclusive Pro guides (38–40)</td><td>"The advanced layer: practice science, GRF, and EV decision-making"</td></tr>
+      <tr><td>Elite Add-On</td><td>Scratch–+2, county-eligible, competing nationally</td><td>Standard/Pro + 9 Elite guides (41–49)</td><td>"What comes after scratch: plus-HCP SG targets, national circuit, county team"</td></tr>
+    </table>
+    <div class="ibox wbox" style="margin-top:12px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Architecture note:</strong> Elite is sold as an add-on requiring Standard or Pro — not as a standalone. This protects content sequencing, prevents under-qualified buyers, and creates a natural upsell at checkout.</p>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Competitive Differentiation</span>
+    <h3>Five Things That Make This Different</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Strokes gained as the backbone, not an afterthought.</strong> Most golf products teach technique. This system uses your actual Arccos data to identify which category costs the most strokes — and tells you exactly what to do about it. Data-first at this price point is rare.</div></li>
+      <li><span class="sn">2</span><div><strong>A genuine 24-month plan with phase structure.</strong> Not a tip collection — a sequenced programme with monthly milestones, phase transitions, and a defined target (scratch by May 2028). Buyers can see exactly where they are at any moment.</div></li>
+      <li><span class="sn">3</span><div><strong>Built for UK conditions and UK competitive structure.</strong> County team guides, England Golf pathways, Brabazon preparation, heathland and links course types — none of this is covered by US-origin golf products. This is a competitive moat that American competitors cannot easily replicate.</div></li>
+      <li><span class="sn">4</span><div><strong>PWA — works offline on the course.</strong> Installs as a phone app. No internet required once installed. No competing product has structured guides, a caddie card, and a tracking tool in one installable offline package at this price point.</div></li>
+      <li><span class="sn">5</span><div><strong>One payment, lifetime access.</strong> In a subscription-fatigued market, a one-off payment is increasingly a purchasing decision driver — especially for a product someone may use over 2+ years.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §2 PRICING
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="pricing"></span>
+  <div class="eyebrow">02 · Pricing</div>
+  <h2 class="stitle">Pricing Strategy</h2>
+  <p class="sdesc">Standard and Pro prices have not been set yet — this is the opportunity to anchor correctly from the start rather than underpricing and having to raise later (which generates friction with existing buyers).</p>
+
+  <div class="pgrid">
+    <div class="pcrd">
+      <div class="pt">Standard</div>
+      <div class="pa">£27</div>
+      <div class="pn">One-time · Lifetime access<br>Recommended launch price</div>
+      <div class="pi">
+        <span>37 complete guides</span>
+        <span>24-month plan</span>
+        <span>All tools + PWA</span>
+        <span>Tracking app v2</span>
+        <span>Caddie card</span>
+      </div>
+    </div>
+    <div class="pcrd featured">
+      <div class="pt">Pro Bundle</div>
+      <div class="pa">£47</div>
+      <div class="pn">One-time · Includes Standard<br>Recommended launch price</div>
+      <div class="pi">
+        <span>Everything in Standard</span>
+        <span>Practice Structure Science</span>
+        <span>Ground Reaction Force</span>
+        <span>Decision Architecture & EV</span>
+        <span>Pro tabs on existing guides</span>
+      </div>
+    </div>
+    <div class="pcrd">
+      <div class="pt">Elite Add-On</div>
+      <div class="pa">£55</div>
+      <div class="pn">Requires Standard or Pro<br>Recommended launch price</div>
+      <div class="pi">
+        <span>9 Elite guides (41–49)</span>
+        <span>Plus-HCP SG benchmarks</span>
+        <span>National amateur circuit</span>
+        <span>County team & psychology</span>
+        <span>Elite physiology + game construction</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Pricing Rationale</span>
+    <h3>Why These Numbers</h3>
+    <table class="tbl">
+      <tr><th>Tier</th><th>Comparable Market</th><th>Rationale</th></tr>
+      <tr><td>Standard · £27</td><td>Golf books £15–25. Online courses £50–200. Golf magazines £5/mo = £60/yr.</td><td>Low enough for an impulse purchase by a serious golfer; high enough to signal quality. £27 sits below the £30 psychological ceiling.</td></tr>
+      <tr><td>Pro · £47</td><td>One golf lesson £50–80. TrackMan monthly rental £40+.</td><td>The practice science and GRF content alone is worth a lesson to a player who applies it. One-lesson anchoring is the natural comparison.</td></tr>
+      <tr><td>Elite · £55</td><td>County event entry fees. EG Order of Merit events.</td><td>The Elite buyer is already spending heavily on competitive golf. £55 for a system specifically addressing county-level play is a trivially small cost in that context.</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Revenue Maximisation Tactics</span>
+    <h3>Four Mechanisms That Increase Revenue Per Buyer</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Bundle upgrade pricing at checkout.</strong> On the Standard checkout page show Pro Bundle as "Add the Pro upgrade for just £20 more" (£47 − £27 = £20 incremental). Most buyers serious enough to purchase Standard will upgrade for £20. Expected upgrade rate: 25–35%.</div></li>
+      <li><span class="sn">2</span><div><strong>Elite upsell to existing buyers.</strong> Email existing Standard/Pro buyers when Elite launches. These buyers already trust the product — conversion rate should be 15–25% at £55. Zero acquisition cost makes this the highest-margin revenue source.</div></li>
+      <li><span class="sn">3</span><div><strong>No discounting for at least 6 months post-launch.</strong> Early discounting trains buyers to wait for sales and permanently anchors price expectations downward. The only exception: a founding-member price for the first 48–72 hours at launch if you want to create urgency.</div></li>
+      <li><span class="sn">4</span><div><strong>Annual price review.</strong> If the product gains traction, raise prices — existing buyers keep their tier at purchase price, new buyers pay the new price. Creates urgency for prospective buyers aware of an imminent increase.</div></li>
+    </ul>
+    <div class="ibox wbox" style="margin-top:12px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Avoid lifetime deal sites</strong> (AppSumo, PitchGround). They flood your list with bargain hunters who generate the most support requests and fewest testimonials, and permanently cap price perception. Not appropriate for a premium product at this price point.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §3 LEGAL & COMPLIANCE
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="legal"></span>
+  <div class="eyebrow">03 · Legal</div>
+  <h2 class="stitle">Legal &amp; Compliance</h2>
+  <p class="sdesc">This is the hard blocking item for commercial launch. You cannot legally take payment from UK or EU customers without a Privacy Policy and Terms of Service in place. GDPR applies from the first purchase. These are not optional polish.</p>
+
+  <span class="badge b-red">🚨 Blocking — Complete Before First Sale</span>
+
+  <div class="card card-rust">
+    <span class="card-tag">The Three Required Legal Documents</span>
+    <h3>Minimum Legal Stack</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Privacy Policy.</strong> Required by GDPR before collecting any personal data — including email addresses at checkout. Must specify: what data you collect, why, retention period, who you share it with (Gumroad, ConvertKit), and how users can request deletion. Host on the website; link from every form, checkout page, and email footer. Gumroad provides a standard template — customise it for your specific data flows. Time required: 2–3 hours.</div></li>
+      <li><span class="sn">2</span><div><strong>Terms of Service.</strong> Defines the purchase relationship — what buyers get, what they don't, refund policy, acceptable use, and IP ownership. Key clauses: one licence per purchase (no redistribution), digital product refund policy (recommend 30-day satisfaction guarantee — reduces friction more than it costs in refunds), IP ownership statement. Time required: 1–2 hours using a template.</div></li>
+      <li><span class="sn">3</span><div><strong>Data Processing Agreements (DPAs).</strong> Required under GDPR when sharing personal data with third-party processors. Both Gumroad and ConvertKit provide pre-executed DPAs in their account settings — activate both before your first sale. Takes 5 minutes per platform. Do not skip this — it is the most commonly overlooked legal requirement for UK digital product sellers.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Business Entity</span>
+    <h3>Sole Trader vs. Limited Company</h3>
+    <table class="tbl">
+      <tr><th>Structure</th><th>Setup</th><th>Tax</th><th>Liability</th><th>Recommendation</th></tr>
+      <tr><td>Sole Trader</td><td>Register with HMRC — free, 20 minutes</td><td>Income tax + NI on profits above £12,570</td><td>Personal liability</td><td class="good">Start here — simplest for pre-revenue stage</td></tr>
+      <tr><td>Limited Company</td><td>Companies House — £12 online</td><td>25% corporation tax; salary + dividends can reduce personal tax</td><td>Limited liability</td><td class="warn">Move to Ltd when revenue exceeds ~£30k/year</td></tr>
+    </table>
+    <div class="ibox tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Practical recommendation:</strong> Register as a sole trader now (free, instant, no ongoing compliance cost). Revisit when revenue is established. Incorporating later is always possible; simplifying from Ltd is not.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">VAT Threshold Awareness</span>
+    <h3>When Registration Becomes Compulsory</h3>
+    <p>The UK VAT registration threshold is £90,000 annual turnover (2024–25). Below this, VAT registration is optional.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Scenario</th><th>Action</th></tr>
+      <tr><td>Revenue below £90k/year</td><td>No registration needed; prices shown are final prices</td></tr>
+      <tr><td>Revenue approaches £90k</td><td>Register voluntarily before crossing — avoids administrative surprise and allows VAT reclaim on business expenses</td></tr>
+      <tr><td>Revenue crosses £90k in any rolling 12 months</td><td>Must register within 30 days; must charge VAT retrospectively — costly if not monitored</td></tr>
+    </table>
+    <div class="ibox wbox" style="margin-top:10px;">
+      <span class="ico">🇪🇺</span>
+      <p><strong>EU digital services:</strong> EU VAT rules apply from the first sale to EU consumers — no threshold. Gumroad handles this automatically as the deemed seller, collecting and remitting EU VAT on your behalf. This is one of the primary reasons Gumroad is the right platform choice.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Intellectual Property</span>
+    <h3>Protecting What You've Built</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Copyright is automatic.</strong> UK copyright law protects original works from the moment of creation — no registration required. Add a notice to the footer of your index pages: "© 2026 The Scratch Project. All rights reserved."</div></li>
+      <li><span class="sn">2</span><div><strong>Trademark "The Scratch Project" (optional).</strong> UK trademark registration via the IPO costs £170 for one class and takes 4–6 months. Worthwhile if the brand develops significant value or you have concerns about someone registering the same name.</div></li>
+      <li><span class="sn">3</span><div><strong>Licence terms in your ToS.</strong> State clearly that purchase grants a personal, non-transferable licence. Explicitly prohibit redistribution, resale, and sharing of paid content. Clear licence terms are the first line of defence — legal action is the last resort.</div></li>
+      <li><span class="sn">4</span><div><strong>The real anti-piracy protection is continuous improvement.</strong> Pirates get v1.0; buyers get v2.0, v3.0, and new Elite content. A product that keeps improving is far harder to pirate effectively than a static PDF.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §4 PLATFORM & TECHNOLOGY
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="platform"></span>
+  <div class="eyebrow">04 · Platform</div>
+  <h2 class="stitle">Platform &amp; Technology Setup</h2>
+  <p class="sdesc">The core infrastructure is already in place — GitHub Pages for hosting, Gumroad for sales, ConvertKit for email. This section covers the specific configuration required to make each work correctly for a paid product.</p>
+
+  <div class="card card-pro">
+    <span class="card-tag">Gumroad — Detailed Setup</span>
+    <h3>Configuring Gumroad for Three-Tier Sales</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Create three separate products.</strong> Standard (£27), Pro Bundle (£47), Elite Add-On (£55). Each delivers its respective dist/ build as a zip file. Separate products allow separate upsell flows and cleaner analytics — do not use variants of a single product.</div></li>
+      <li><span class="sn">2</span><div><strong>Enable the Gumroad overlay widget.</strong> Add the Gumroad.js script to your landing page and set <code>data-gumroad-overlay-checkout="true"</code> on purchase buttons. Buyers complete checkout without leaving your site — significantly higher conversion than redirecting to Gumroad's own page.</div></li>
+      <li><span class="sn">3</span><div><strong>Configure upsell offers.</strong> On the Standard product, add Pro Bundle as an upsell ("Add the Pro upgrade for £20 more"). On Pro Bundle, add Elite as an upsell. Gumroad's native upsell feature charges the differential automatically — the buyer is not re-charged the full tier price.</div></li>
+      <li><span class="sn">4</span><div><strong>Connect to ConvertKit via Gumroad webhook.</strong> Every purchase should automatically apply a ConvertKit tag (standard-buyer, pro-buyer, elite-buyer) and enrol the buyer in the relevant welcome sequence. Configure in Gumroad Settings → Integrations → ConvertKit.</div></li>
+      <li><span class="sn">5</span><div><strong>Activate the Gumroad DPA.</strong> Settings → Legal → Data Processing Agreement. One click. Required before your first sale to any UK or EU buyer.</div></li>
+      <li><span class="sn">6</span><div><strong>Set a 30-day satisfaction guarantee.</strong> Enter in Product settings. Gumroad handles refunds automatically. The goodwill from a clear guarantee reduces chargebacks — which cost more than refunds.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">ConvertKit — Email Architecture</span>
+    <h3>Email Sequences for Three Buyer Segments</h3>
+    <table class="tbl">
+      <tr><th>Sequence</th><th>Trigger</th><th>Emails</th><th>Goal</th></tr>
+      <tr><td>Standard Welcome</td><td>standard-buyer tag applied</td><td>Day 1: Access + quick-start. Day 3: SG diagnostic prompt. Day 7: Guide 10 (scratch plan) nudge. Day 30: Feedback + Pro upsell.</td><td>Activation → usage → upgrade</td></tr>
+      <tr><td>Pro Welcome</td><td>pro-buyer tag applied</td><td>Day 1: Access + start with Guide 38. Day 7: Guide 39 (GRF) prompt. Day 14: Guide 40 (EV) prompt. Day 30: Feedback + Elite upsell.</td><td>Feature adoption → Elite conversion</td></tr>
+      <tr><td>Elite Welcome</td><td>elite-buyer tag applied</td><td>Day 1: Access + start with Guide 41 (SG benchmarks). Day 7: Benchmark audit checklist. Day 30: Which guide had most impact? (qualitative feedback)</td><td>Usage depth → testimonials</td></tr>
+      <tr><td>Upgrade Nurture</td><td>Standard buyer, 60 days, no Pro purchase</td><td>One email: "Here's the one thing Pro buyers see that Standard buyers miss" (tease GRF or practice structure content without revealing it)</td><td>Pro conversion</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">GitHub Pages — Production Setup</span>
+    <h3>Deploying Correctly</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Run patch_playbooks.py for all three tiers</strong> to generate dist/standard, dist/pro, dist/elite. The Standard build is what GitHub Pages serves publicly — it is both the free sample and the product delivered to Standard buyers.</div></li>
+      <li><span class="sn">2</span><div><strong>Zip dist/pro and dist/elite</strong> for upload to Gumroad. Buyers download these zips and open locally. Test the zip on both Mac and Windows before the first sale — file path issues are the most common delivery problem.</div></li>
+      <li><span class="sn">3</span><div><strong>The Standard build as freemium.</strong> Keeping Standard openly accessible on GitHub Pages is recommended — it maximises top-of-funnel reach and the content is the best marketing for Pro. The depth difference between Standard and Pro is immediately apparent to any serious buyer who explores both.</div></li>
+      <li><span class="sn">4</span><div><strong>Build a dedicated landing page.</strong> The current index.html is a guide hub, not a sales page. You need a separate page that explains the system to cold traffic — the problem it solves, the journey it maps, social proof, pricing, and a Gumroad overlay checkout button. This is separate from the guide hub.</div></li>
+      <li><span class="sn">5</span><div><strong>Custom domain.</strong> thescratchproject.co.uk is available for ~£10/year and projects significantly more commercial credibility than a github.io URL. A custom domain is not a vanity item — it affects trust and conversion at the point of purchase.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §5 LAUNCH SEQUENCE
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="launch"></span>
+  <div class="eyebrow">05 · Launch</div>
+  <h2 class="stitle">Launch Sequence</h2>
+  <p class="sdesc">A structured soft launch before public launch serves two purposes: it surfaces product and payment flow issues before a large audience is affected, and it generates the first testimonials needed to make the public launch effective. Do not skip the soft launch.</p>
+
+  <div class="tl">
+    <div class="tl-item">
+      <div class="tl-dot">W1</div>
+      <div class="tl-body">
+        <div class="tl-label">Week 1 — Pre-Launch</div>
+        <div class="tl-title">Legal, Platform, Landing Page</div>
+        <div class="tl-desc">Complete Privacy Policy and ToS. Activate Gumroad DPA and ConvertKit DPA. Register as sole trader with HMRC. Set up three Gumroad products with pricing, refund policy, and ConvertKit integration. Build landing page. Test the complete purchase and download flow end-to-end with a test payment. Do not proceed to soft launch until the purchase flow works perfectly.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">W2</div>
+      <div class="tl-body">
+        <div class="tl-label">Week 2 — Soft Launch</div>
+        <div class="tl-title">Private Share: 20–30 Known Golfers</div>
+        <div class="tl-desc">Share the product link privately with club members, playing partners, and anyone who has expressed interest. Full price — no discount. You want real buyers and real feedback, not charity purchases. Goal: 5–10 purchases, first ConvertKit sequences activated, and identification of any friction in the onboarding experience. Fix anything that breaks before proceeding to public launch.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">W3</div>
+      <div class="tl-body">
+        <div class="tl-label">Week 3 — Testimonial Collection</div>
+        <div class="tl-title">Direct Buyer Outreach</div>
+        <div class="tl-desc">Email soft launch buyers directly. Ask three specific questions: (1) What's the most useful guide so far? (2) What would you tell a fellow golfer considering buying this? (3) What handicap are you and what are you working on? These answers become testimonials, product improvements, and positioning data. You need at least 3 strong testimonials on the landing page before public launch. Do not launch publicly without social proof.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">W4</div>
+      <div class="tl-body">
+        <div class="tl-label">Week 4 — Public Launch</div>
+        <div class="tl-title">Reddit and Golf Communities</div>
+        <div class="tl-desc">Post on r/golf and r/golfadvice as a genuine contributor — your own journey, what you learned building the system, what the Arccos data showed. Do not post a direct sales link. Share the GitHub Pages URL (free content) and mention you have turned it into a product. The post should be valuable without the product. The product is discovered through the content. Post simultaneously in any golf Facebook groups or Discord servers you already belong to.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--gold);color:var(--gold);">W6</div>
+      <div class="tl-body">
+        <div class="tl-label">Week 6 — Distribution</div>
+        <div class="tl-title">YouTube Outreach and Forum Presence</div>
+        <div class="tl-desc">Identify 10–15 golf improvement YouTube channels (strokes gained analysis, scratch golf, handicap improvement). Send personalised outreach offering free Pro access in exchange for honest coverage. Expect 1–3 positive responses from 15 emails. One coverage video from a 30k–80k subscriber channel can drive 50–200 sales. Simultaneously: establish a presence in England Golf community forums and county golf social channels.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--teal);color:var(--teal);">M3</div>
+      <div class="tl-body">
+        <div class="tl-label">Month 3 — Elite Launch</div>
+        <div class="tl-title">Email Existing Buyers About Elite</div>
+        <div class="tl-desc">By month 3, you should have a meaningful buyer list. Email them the Elite launch: "You asked what comes after scratch. Here's the answer." The audience is warm, trusted, and already committed to the programme. This is the highest-conversion moment in the entire funnel. Expected conversion: 15–25% of the existing buyer list.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §6 GROWTH CHANNELS
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="growth"></span>
+  <div class="eyebrow">06 · Growth</div>
+  <h2 class="stitle">Growth Channels</h2>
+  <p class="sdesc">Ranked by expected ROI for a solo founder with no paid acquisition budget. All channels are organic and content-led — the product's quality is the primary marketing asset.</p>
+
+  <div class="card">
+    <span class="card-tag">Channel Priority Matrix</span>
+    <h3>Where to Focus Time — Ranked</h3>
+    <table class="tbl">
+      <tr><th>Channel</th><th>Effort</th><th>Time to Revenue</th><th>Potential Volume</th><th>Priority</th></tr>
+      <tr><td>Reddit (r/golf, r/golfadvice)</td><td>Low</td><td>1–2 weeks</td><td class="good">High — 800k+ members; a quality post can reach 10k+ views</td><td class="good">1st</td></tr>
+      <tr><td>Existing buyer referrals</td><td>Very low</td><td>Ongoing</td><td class="warn">Medium — each buyer knows 5–10 serious golfers</td><td class="good">1st</td></tr>
+      <tr><td>YouTube affiliate outreach</td><td>Medium</td><td>4–8 weeks</td><td class="good">High if you land the right channels</td><td class="warn">2nd</td></tr>
+      <tr><td>Golf club + society outreach</td><td>Medium</td><td>4–6 weeks</td><td class="warn">Medium — highly targeted buyers</td><td class="warn">2nd</td></tr>
+      <tr><td>England Golf community forums</td><td>Low</td><td>2–4 weeks</td><td class="warn">Medium — pre-qualified serious players</td><td class="warn">2nd</td></tr>
+      <tr><td>Twitter/X golf community</td><td>High (ongoing)</td><td>8–12 weeks</td><td class="warn">Medium if built consistently</td><td class="bad">3rd — only if you enjoy the platform</td></tr>
+      <tr><td>Instagram golf</td><td>High (visual)</td><td>12+ weeks</td><td class="bad">Low for this product type</td><td class="bad">4th — not this product's medium</td></tr>
+      <tr><td>Paid ads (Meta, Google)</td><td>High (budget + time)</td><td>Immediate</td><td>Variable</td><td class="bad">5th — not until organic is proven</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Reddit Playbook</span>
+    <h3>How to Post Without Getting Banned or Ignored</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Build karma first if the account is new.</strong> Spend 2–3 weeks genuinely contributing to r/golf before posting about your product — answering questions, sharing insights, participating in discussions. This makes your eventual product post read as a contributor sharing something, not a marketer spamming a link.</div></li>
+      <li><span class="sn">2</span><div><strong>Frame as a journey post, not a product post.</strong> "I built a data-driven system to go from 10 HCP to scratch — here's what I learned" outperforms "I'm selling a golf improvement system" by orders of magnitude. Share the Arccos data, the SG methodology, the practice science findings. The post should be valuable without the product.</div></li>
+      <li><span class="sn">3</span><div><strong>Link to the free Standard build first.</strong> Send people to the GitHub Pages URL — free content, no gate. The paid version is discovered through the site. This approach never reads as spam and the content stands independently.</div></li>
+      <li><span class="sn">4</span><div><strong>Budget 2–3 hours for response day.</strong> Reddit's algorithm rewards engagement. A post with 50 thoughtful comment exchanges will be seen by vastly more people than one with 5 comments. Reply to every comment — especially critical ones.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">YouTube Affiliate Outreach</span>
+    <h3>How to Find the Right Channels and What to Say</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Target criteria:</strong> UK-based or UK-audience channels covering handicap improvement, strokes gained analysis, or serious amateur golf. Subscriber range 5,000–100,000 (smaller channels have more engaged audiences and are more likely to respond without requesting payment). Search terms: "strokes gained amateur," "golf handicap improvement," "scratch golf YouTube."</div></li>
+      <li><span class="sn">2</span><div><strong>Outreach email structure (under 150 words):</strong> One line about who you are and your handicap. One line about the product and why their audience would find it useful. Offer of free Pro or Elite access. Explicit statement that there is no obligation to cover it and no script to follow. The more it reads like a genuine golfer reaching out to a fellow golfer, the higher the response rate.</div></li>
+      <li><span class="sn">3</span><div><strong>Offer 30% affiliate commission via Gumroad.</strong> Settings → Affiliates. Gumroad handles tracking and payment automatically. 30% at £47 = £14.10 per Pro sale — well within acceptable customer acquisition cost for a no-recurring-cost product. Creates ongoing incentive for channels to keep linking.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Golf Club and Society Outreach</span>
+    <h3>A Channel Competitors From Outside the UK Cannot Access</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Your own club first.</strong> Share with members, committee, and scratch players. Get testimonials from people in your competitive peer group. Their recommendation to other club golfers carries more weight than any external review.</div></li>
+      <li><span class="sn">2</span><div><strong>County golf communications.</strong> If you have a relationship with your county union, a mention in the county newsletter or social media channels is a targeted reach to exactly the Elite audience — scratch players actively competing nationally.</div></li>
+      <li><span class="sn">3</span><div><strong>Golf societies.</strong> UK golf societies typically have 20–40 members, most of whom are serious about their handicap. A message to a society captain takes 2 minutes and can produce 3–5 sales directly, plus referrals.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §7 REVENUE & COMMERCIAL MODEL
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="commercial"></span>
+  <div class="eyebrow">07 · Revenue</div>
+  <h2 class="stitle">Revenue &amp; Commercial Model</h2>
+  <p class="sdesc">Unit economics, revenue scenarios, and the metrics that matter. Set realistic year-one targets and measure the right things — not vanity metrics.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">Year 1 Revenue Scenarios</span>
+    <h3>Conservative, Base, and Optimistic Cases</h3>
+    <table class="tbl">
+      <tr><th>Scenario</th><th>Monthly Sales</th><th>Mix</th><th>Monthly Revenue</th><th>Year 1</th></tr>
+      <tr><td class="bad">Conservative</td><td>8</td><td>5 Standard · 2 Pro · 1 Elite</td><td>~£300</td><td>~£3,600</td></tr>
+      <tr><td class="warn">Base Case</td><td>25</td><td>12 Standard · 9 Pro · 4 Elite</td><td>~£1,000</td><td>~£12,000</td></tr>
+      <tr><td class="good">Optimistic</td><td>60</td><td>25 Standard · 25 Pro · 10 Elite</td><td>~£2,500</td><td>~£30,000</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--muted);">Optimistic case assumes one successful YouTube coverage from a mid-size channel (40k+ subscribers). Base case assumes the Reddit launch performs well and generates 3–4 months of sustained organic traffic. Conservative case is what happens with minimal active promotion.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Unit Economics</span>
+    <h3>The Numbers Behind Each Sale</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Standard</th><th>Pro</th><th>Elite</th></tr>
+      <tr><td>Selling price</td><td>£27</td><td>£47</td><td>£55</td></tr>
+      <tr><td>Gumroad fee (~10% + 50p)</td><td>£3.20</td><td>£5.20</td><td>£6.00</td></tr>
+      <tr><td>Payment processing (~3%)</td><td>£0.81</td><td>£1.41</td><td>£1.65</td></tr>
+      <tr><td><strong>Net per sale (organic)</strong></td><td class="good"><strong>£23.00 (85%)</strong></td><td class="good"><strong>£40.40 (86%)</strong></td><td class="good"><strong>£47.35 (86%)</strong></td></tr>
+    </table>
+    <div class="ibox tip" style="margin-top:12px;">
+      <span class="ico">📊</span>
+      <p><strong>Digital products with organic acquisition are among the highest-margin products available to a solo founder.</strong> The 86% gross margin is achievable because there is no cost of goods, no shipping, no inventory, and no staff. The main variable cost is time — content updates, email responses, and product improvements.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Metrics That Matter — First 12 Months</span>
+    <h3>What to Track and What to Ignore</h3>
+    <table class="tbl">
+      <tr><th>Metric</th><th>Track?</th><th>Target (Base Case)</th></tr>
+      <tr><td>Monthly revenue</td><td class="good">Yes — weekly</td><td>£1,000/month by month 6</td></tr>
+      <tr><td>Tier mix (Standard vs Pro vs Elite)</td><td class="good">Yes — monthly</td><td>Pro upgrade rate &gt;30% of Standard buyers</td></tr>
+      <tr><td>Email open rate (ConvertKit)</td><td class="good">Yes — per sequence email</td><td>&gt;40% open rate (warm buyer list)</td></tr>
+      <tr><td>Refund rate</td><td class="good">Yes — monthly</td><td>&lt;5% (higher suggests expectation mismatch)</td></tr>
+      <tr><td>GitHub Pages traffic</td><td class="warn">Monthly only</td><td>Useful for traffic source understanding; not a direct revenue metric</td></tr>
+      <tr><td>Social media followers</td><td class="bad">No</td><td>Vanity metric — does not predict revenue</td></tr>
+      <tr><td>Reddit post upvotes</td><td class="bad">No</td><td>Correlation with sales is loose — track revenue, not engagement</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Future Revenue Opportunities</span>
+    <h3>What Comes After the Initial Product is Established</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Annual content update subscriptions.</strong> After 12 months, offer a small annual fee (£9–15) for buyers who want ongoing guide updates, new tool releases, and the next phase of the programme as you complete your own journey. This creates recurring revenue without a subscription model at the point of sale.</div></li>
+      <li><span class="sn">2</span><div><strong>Coaching integration.</strong> A referral arrangement with qualified golf coaches who use the system with their pupils — the coach recommends the product, earns a small commission, and the product becomes embedded in a coaching workflow. This is high-trust distribution that is very difficult for competitors to replicate.</div></li>
+      <li><span class="sn">3</span><div><strong>Golf club bulk licences.</strong> UK golf clubs with active handicap improvement programmes (typically clubs with a well-organised junior or senior academy) are a potential B2B customer. A site licence for club members at £5 per active member per year would be attractive to a club and predictable for you. This requires almost no additional product work — just a pricing page and an invoice template.</div></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §8 RISK REGISTER
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="risk"></span>
+  <div class="eyebrow">08 · Risk</div>
+  <h2 class="stitle">Risk Register</h2>
+  <p class="sdesc">An honest assessment of the material risks to the commercial venture with specific mitigations. Most are manageable with early action.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">Risk Register — All Material Risks</span>
+    <h3>Likelihood, Impact, and Mitigation</h3>
+    <table class="tbl">
+      <tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+      <tr><td>Market too small (serious UK golfers &lt;12 HCP)</td><td class="warn">Medium</td><td class="warn">Medium — caps revenue ceiling</td><td>UK has 850k+ registered golfers; a 5 HCP+ player base of 100k+. Even 0.1% conversion = 100+ buyers. The UK-specific focus means lower competition, not lower opportunity.</td></tr>
+      <tr><td>GDPR compliance failure</td><td class="good">Low (if you act now)</td><td class="bad">High — ICO fines up to £17.5m or 4% global turnover</td><td>Implement Privacy Policy, ToS, and DPAs before the first sale. This is a solved problem — the documents are well-templated and take one afternoon to complete.</td></tr>
+      <tr><td>Competitor copies the system</td><td class="warn">Medium</td><td class="warn">Medium</td><td>Copyright is automatic. The real moat is depth — a superficial copy cannot replicate 49 guides of genuine content. Stay ahead through continuous improvement: v2 updates, new Elite content, tool enhancements. The system is the product, not just the content.</td></tr>
+      <tr><td>Gumroad or ConvertKit policy change or price increase</td><td class="good">Low</td><td class="warn">Medium</td><td>Export your full buyer list from both platforms monthly. This is your most valuable business asset — own the data, never depend on the platform. Alternative platforms (Lemon Squeezy, Payhip) exist as fallbacks and can be migrated to within hours.</td></tr>
+      <tr><td>GitHub Pages downtime or terms change</td><td class="good">Low</td><td class="good">Low</td><td>The dist/ builds can be hosted on Netlify, Vercel, or any CDN in under an hour. GitHub Pages downtime is extremely rare and brief. A custom domain adds resilience — the URL remains stable regardless of hosting provider.</td></tr>
+      <tr><td>Product fails to deliver promised results for buyers</td><td class="warn">Medium</td><td class="warn">Medium</td><td>The promise is a system, not a guarantee. "10 HCP to scratch with structured effort" is defensible. Clear disclaimers about required practice time and individual variation manage expectations. The 30-day refund policy handles buyers for whom the fit is genuinely wrong — without a chargeback.</td></tr>
+      <tr><td>Content accuracy becomes outdated</td><td class="good">Low</td><td class="warn">Medium</td><td>Flag version dates on all guides. Annual October review to update statistics, research references, and tool-specific protocols. The motor learning and GRF science referenced is well-replicated research unlikely to be overturned. Tool protocols (Arccos, Sportsbox AI) are the most likely to need updating.</td></tr>
+    </table>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     §9 PRIORITISED ACTION PLAN
+══════════════════════════════════════════════════════ -->
+<div class="section">
+  <span class="anc" id="actions"></span>
+  <div class="eyebrow">09 · Actions</div>
+  <h2 class="stitle">Prioritised Action Plan</h2>
+  <p class="sdesc">Everything from this document in order. Steps 1–3 are an afternoon's work. Steps 4–7 are a weekend. The product is ready — the only thing between you and revenue is this checklist.</p>
+
+  <span class="badge b-red">🚨 Steps 1–3 are legal prerequisites — do these before anything else</span>
+
+  <div class="card">
+    <span class="card-tag">The 8-Step Launch Checklist — In Order</span>
+    <h3>Do Not Skip or Reorder</h3>
+    <table class="tbl">
+      <tr><th>#</th><th>Action</th><th>Time</th><th>Unblocks</th></tr>
+      <tr>
+        <td style="color:var(--bad);font-weight:700;">1</td>
+        <td><strong>Write Privacy Policy and Terms of Service.</strong> Use Gumroad's template as a base; customise for your data flows (Gumroad, ConvertKit), product type (digital download), and refund policy (30 days). Host both pages on GitHub Pages and link from your landing page.</td>
+        <td>2–3h</td>
+        <td>Everything legal</td>
+      </tr>
+      <tr>
+        <td style="color:var(--bad);font-weight:700;">2</td>
+        <td><strong>Activate Gumroad DPA and ConvertKit DPA.</strong> Both are in the account settings of each platform. One click each. Non-negotiable before any UK or EU sale.</td>
+        <td>10 min</td>
+        <td>GDPR compliance</td>
+      </tr>
+      <tr>
+        <td style="color:var(--bad);font-weight:700;">3</td>
+        <td><strong>Register as a sole trader with HMRC.</strong> Online at gov.uk. Free. Takes 20 minutes. You will need a Unique Taxpayer Reference (UTR) for self-assessment once revenue begins.</td>
+        <td>20 min</td>
+        <td>Legal to trade</td>
+      </tr>
+      <tr>
+        <td style="color:var(--warn);font-weight:700;">4</td>
+        <td><strong>Create three Gumroad products</strong> with correct pricing, refund policy, file delivery (dist/ zips), and ConvertKit integration. Test the purchase and download flow end-to-end with a real test payment.</td>
+        <td>2h</td>
+        <td>Payment processing</td>
+      </tr>
+      <tr>
+        <td style="color:var(--warn);font-weight:700;">5</td>
+        <td><strong>Set up ConvertKit sequences</strong> for Standard, Pro, and Elite buyers using the email architecture in §4. Test each sequence fires correctly when a tag is applied.</td>
+        <td>3–4h</td>
+        <td>Buyer onboarding</td>
+      </tr>
+      <tr>
+        <td style="color:var(--warn);font-weight:700;">6</td>
+        <td><strong>Build a landing page.</strong> Sales copy, testimonial slots (fill after soft launch), Gumroad overlay integration, pricing section. Host on GitHub Pages. Consider registering a custom domain (thescratchproject.co.uk).</td>
+        <td>4–6h</td>
+        <td>Cold traffic conversion</td>
+      </tr>
+      <tr>
+        <td style="color:var(--warn);font-weight:700;">7</td>
+        <td><strong>Run patch_playbooks.py for all three tiers.</strong> Zip dist/pro and dist/elite. Upload to Gumroad. Test complete purchase → download → product open flow on both Mac and Windows.</td>
+        <td>1–2h</td>
+        <td>Product delivery</td>
+      </tr>
+      <tr>
+        <td style="color:var(--good);font-weight:700;">8</td>
+        <td><strong>Soft launch.</strong> Share with 20–30 known golfers at full price. Collect first testimonials. Add to landing page. Fix any issues before public launch. Then: Reddit post as described in §6.</td>
+        <td>1 week</td>
+        <td>Public launch readiness</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="ibox tip">
+    <span class="ico">🎯</span>
+    <p><strong>Realistic timeline to first revenue:</strong> Steps 1–3 can be done this afternoon. Steps 4–7 across a weekend. Soft launch in week 2. Reddit public launch in week 3–4. First £1,000 in revenue is achievable within 30 days of public launch if the Reddit post performs as expected. There is no product to finish — it is content-complete, technically clean, and ready to ship.</p>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="footer">
+  THE SCRATCH PROJECT · COMMERCIALISATION PLAN · V1.0 · JUNE 2026 · INTERNAL &amp; CONFIDENTIAL
+</div>
+
+</body>
+</html>
