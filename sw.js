@@ -1,16 +1,11 @@
-// ─────────────────────────────────────────────────────────
-// The Scratch Project — Service Worker
-// Version: 2.3 · 2026-05-31
-// Strategy: Cache-first for all static assets
-//           Network-first for external APIs (Golf Coach AI)
-// ─────────────────────────────────────────────────────────
+// Service Worker — The Scratch Project
+// Version: 3.0 · 2026-06-09
+// Cache: Standard (37) + Pro (3) + Elite (9) + Tools + Index pages = 64 items
 
-const CACHE_NAME = 'scratch-project-v2-4';
+const CACHE_NAME = 'scratch-project-v3-0';
 
-// All HTML files to cache on install
 const STATIC_FILES = [
   '/',
-  '/index.html',
   '/01_putting_pro.html',
   '/02_shortgame_pro.html',
   '/03_longgame_pro.html',
@@ -47,6 +42,18 @@ const STATIC_FILES = [
   '/35_links_travel_golf.html',
   '/36_playing_partners.html',
   '/37_approach_zone.html',
+  '/38_practice_structure.html',
+  '/39_ground_reaction_force.html',
+  '/40_decision_architecture.html',
+  '/41_plus_hcp_sg_targets.html',
+  '/42_national_amateur_circuit.html',
+  '/43_caddie_preparation.html',
+  '/44_golfmetrics_deepdive.html',
+  '/45_sportsbox_ai.html',
+  '/46_county_team_golf.html',
+  '/47_elite_performance_psychology.html',
+  '/48_elite_physical_performance.html',
+  '/49_advanced_game_construction.html',
   '/caddie_card.html',
   '/golf_analysis.html',
   '/golf_weekly_dashboard.html',
@@ -58,160 +65,75 @@ const STATIC_FILES = [
   '/tracking_app_v2.html',
   '/motivation.html',
   '/on_course_reference_A5_8pp.html',
-  '/manifest.json'
+  '/index.html',
+  '/index_pro.html',
+  '/index_elite.html',
+  '/elite_tier_brief.html'
 ];
 
-// External font URLs to cache (both variants used across guides)
-const FONT_URLS = [
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
-  'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap',
-  'https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500;600&display=swap'
-];
-
-// APIs that always need a live connection — never cache
-const NETWORK_ONLY = [
-  'api.anthropic.com',
-  'firebaseio.com',
-  'googleapis.com/identitytoolkit',
-  'securetoken.googleapis.com'
-];
-
-// ─── INSTALL ───────────────────────────────────────────────
-// Pre-cache all static files when the service worker installs.
-// Uses individual try/catch so one failed file doesn't block the rest.
-
-self.addEventListener('install', event => {
+// Install: cache all static files
+self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(async cache => {
-      console.log('[SW] Installing — caching', STATIC_FILES.length, 'files');
-
-      // Cache HTML files individually so a single failure doesn't abort
-      for (const url of STATIC_FILES) {
-        try {
-          await cache.add(url);
-        } catch (err) {
-          console.warn('[SW] Failed to cache:', url, err.message);
-        }
-      }
-
-      // Cache font CSS with CORS mode
-      for (const url of FONT_URLS) {
-        try {
-          const response = await fetch(url, { mode: 'cors' });
-          if (response.ok) await cache.put(url, response);
-        } catch (err) {
-          console.warn('[SW] Failed to cache font:', url);
-        }
-      }
-
-      console.log('[SW] Install complete');
+    caches.open(CACHE_NAME).then(function(cache) {
+      console.log('[SW] Installing v3.0 — caching', STATIC_FILES.length, 'files');
+      return Promise.all(
+        STATIC_FILES.map(function(url) {
+          return cache.add(url).catch(function(err) {
+            console.warn('[SW] Failed to cache:', url, err);
+          });
+        })
+      );
+    }).then(function() {
+      console.log('[SW] Install complete — v3.0');
+      return self.skipWaiting();
     })
   );
-  // Activate immediately — don't wait for old SW to finish
-  self.skipWaiting();
 });
 
-// ─── ACTIVATE ──────────────────────────────────────────────
-// Delete any old cache versions when a new SW takes over.
-
-self.addEventListener('activate', event => {
+// Activate: delete old caches
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(keys => {
+    caches.keys().then(function(keys) {
       return Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => {
-            console.log('[SW] Deleting old cache:', key);
-            return caches.delete(key);
-          })
+        keys.filter(function(key) {
+          return key !== CACHE_NAME;
+        }).map(function(key) {
+          console.log('[SW] Deleting old cache:', key);
+          return caches.delete(key);
+        })
       );
-    }).then(() => {
-      console.log('[SW] Activated — version', CACHE_NAME);
+    }).then(function() {
+      console.log('[SW] Activated — v3.0 is current cache');
       return self.clients.claim();
     })
   );
 });
 
-// ─── FETCH ─────────────────────────────────────────────────
-// Request interception strategy:
-//   • Network-only for Anthropic API and Firebase (always live)
-//   • Cache-first for all guide HTML and fonts
-//   • Network-with-cache-fallback for everything else
+// Fetch: cache-first with network fallback
+self.addEventListener('fetch', function(event) {
+  // Only handle GET requests for same-origin resources
+  if (event.request.method !== 'GET') return;
 
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-
-  // 1. Always go to network for API calls — never serve from cache
-  const isNetworkOnly = NETWORK_ONLY.some(domain => url.hostname.includes(domain));
-  if (isNetworkOnly) {
-    event.respondWith(fetch(event.request));
-    return;
-  }
-
-  // 2. Cache-first for local HTML files and manifest
-  if (url.origin === self.location.origin) {
-    event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        // Not in cache yet — fetch, cache, and return
-        return fetch(event.request).then(response => {
-          if (response.ok) {
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, response.clone());
-            });
-          }
-          return response;
-        }).catch(() => {
-          // Completely offline and not cached — return offline page
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
-          }
-        });
-      })
-    );
-    return;
-  }
-
-  // 3. Cache-first for Google Fonts (same domain as CSS fetches)
-  if (url.hostname.includes('fonts.googleapis.com') || url.hostname.includes('fonts.gstatic.com')) {
-    event.respondWith(
-      caches.match(event.request).then(cached => {
-        if (cached) return cached;
-        return fetch(event.request, { mode: 'cors' }).then(response => {
-          if (response.ok) {
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, response.clone());
-            });
-          }
-          return response;
-        }).catch(() => {
-          // Fonts unavailable offline — browser falls back to system fonts gracefully
-          return new Response('', { status: 408 });
-        });
-      })
-    );
-    return;
-  }
-
-  // 4. Everything else — try network, fall back to cache
   event.respondWith(
-    fetch(event.request).then(response => {
-      if (response.ok) {
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, response.clone());
-        });
+    caches.match(event.request).then(function(cached) {
+      if (cached) {
+        return cached;
       }
-      return response;
-    }).catch(() => caches.match(event.request))
+      return fetch(event.request).then(function(response) {
+        // Cache successful responses
+        if (response && response.status === 200 && response.type === 'basic') {
+          var clone = response.clone();
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(event.request, clone);
+          });
+        }
+        return response;
+      }).catch(function() {
+        // Offline fallback — return index for navigation requests
+        if (event.request.mode === 'navigate') {
+          return caches.match('/index.html');
+        }
+      });
+    })
   );
-});
-
-// ─── MESSAGE HANDLER ───────────────────────────────────────
-// Allows pages to trigger a cache refresh (e.g. after a repo update).
-// Send { type: 'SKIP_WAITING' } from any page to force SW update.
-
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
 });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.1 · 2026-05-30 · 01_putting_pro.html -->
+<!-- version:v2.5-elite · 2026-06-09 · 01_putting_pro.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -193,9 +193,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('plans',this)">Practice Plans</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
   <button class="tab" onclick="show('greencond',this)">Green Cond.</button>
-  <button class="tab" data-tier="pro" onclick="show('adv_green',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Adv. Reading</button>
-  <button class="tab" data-tier="pro" onclick="show('impact_pattern',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Impact Pattern</button>
-  <button class="tab" data-tier="pro" onclick="show('pressure_drills',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Pressure Drills</button>
+  <button class="tab" data-tier="elite" onclick="show('elite_putting',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ AimPoint Adv.</button>
 </div>
 
 <!-- SG: PUTTING -->
@@ -648,186 +646,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <div class="info-box elite"><span class="ico">⭐</span><p><strong>Integration priority:</strong> Address grain in the following sequence: (1) identify grain direction on the practice green before your round (2 minutes), (2) apply the sheen test on every green during the round, (3) apply a +/−0.5–1 board adjustment to your AimPoint read based on grain direction and putt length, (4) adjust pace by ±15% for grain on putts over 20 feet. Start with long putts where grain effect is largest — do not attempt grain adjustment on putts under 10 feet until you are confident in the read.</p></div>
 </div>
 
-<!-- PRO: ADVANCED GREEN READING -->
-<div class="sec" id="adv_green" data-tier="pro">
-  <h2 class="sec-title">Advanced Green Reading</h2>
-  <p class="sec-desc">Beyond the standard AimPoint framework — multi-tier slope interaction, influence zone physics, grain-slope compound reads, and the stimpmeter mathematics that explain why the same putt plays completely differently at stimp 9 versus stimp 14.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">Multi-Tier Slope Interaction</span>
-    <h3>When Two Slopes Pull in Different Directions</h3>
-    <p style="margin-bottom:12px;">Most putts have a dominant slope and a secondary slope. The standard AimPoint read captures the dominant slope. The error that costs advanced players strokes is failing to account for how the secondary slope takes over in the final third of the putt — the zone where ball speed drops below the critical threshold and slope influence accelerates non-linearly.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify the primary fall line first:</strong> Walk the full length of the putt and identify the single strongest slope pulling the ball. This determines the overall aim direction. Do not average the two slopes — the primary slope dominates at full speed.</div></li>
-      <li><span class="step-n">2</span><div><strong>Walk the final third separately:</strong> The last 4–6 feet of any putt is where secondary slope becomes dominant. Walk to the hole from the midpoint and feel the slope specifically in that zone. Ask: which direction does water drain from here? That is where the ball will track at dying speed.</div></li>
-      <li><span class="step-n">3</span><div><strong>Apply the override rule:</strong> If the secondary slope in the final third contradicts the primary slope direction, add 0.5–1 finger width in the secondary direction to your AimPoint read. On severely tiered greens, the secondary slope can completely cancel the primary — the ball appears to break right through the entire putt then kick left in the final foot. This is not bad luck; it is physics.</div></li>
-      <li><span class="step-n">4</span><div><strong>The grain interaction:</strong> On bentgrass with visible grain, grain can strengthen or cancel secondary slope. Downgrain in the final third amplifies secondary break; into-grain reduces it. Always walk the final third looking both at the ground slope and the sheen direction of the grass simultaneously.</div></li>
-    </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Tour application:</strong> Tour caddies with deep green knowledge will describe reads as "primary 2%, late-break left a board." The late-break is the secondary slope taking over in the influence zone. Building this as a separate step in your read — primary slope first, final-third slope second — transforms a guessing problem into a systematic one.</p></div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Influence Zone Physics</span>
-    <h3>Why the Final Third Breaks More Than You Expect</h3>
-    <p style="margin-bottom:12px;">The influence zone is the area approaching the hole where the ball has decelerated below the critical speed threshold — approximately 2.5–3 mph for a standard-weight ball on tour-speed greens. Below this threshold, gravity's effect relative to ball momentum increases rapidly and non-linearly. Break accelerates. This is why downhill putts are so consistently under-read.</p>
-    <div class="formula">
-      <div class="formula-lbl">Break Acceleration in the Influence Zone</div>
-      <div class="formula-main">At full speed (start of putt):     slope effect is minimal
-At medium speed (mid-putt):       slope influence grows
-In the influence zone (~final 30%): slope effect is maximum
-
-A putt that appears to move 2 inches on the first 20 feet
-will move 3–5 inches in the final 10 feet on the same slope.
-The acceleration is not constant — it is exponential near the hole.</div>
-      <div class="formula-note">Practical rule: read the last third of the putt as if the slope is 1.5× what your foot feels on the main read. On severely downhill putts, 2× is appropriate — the ball is barely moving and slope dominates entirely.</div>
-    </div>
-    <table class="tbl">
-      <tr><th>Putt Type</th><th>Influence Zone Size</th><th>Break Multiplier</th><th>Practical Adjustment</th></tr>
-      <tr><td>Uphill (firm pace)</td><td>~2 ft from hole</td><td class="good">0.7×</td><td>Reduce read by 30%</td></tr>
-      <tr><td>Flat cross-slope</td><td>~4 ft from hole</td><td class="warn">1.0×</td><td>Standard AimPoint tables</td></tr>
-      <tr><td>Downhill (gentle pace)</td><td>~6 ft from hole</td><td class="warn">1.5×</td><td>Add 50% to final third</td></tr>
-      <tr><td>Severely downhill</td><td>~8 ft from hole</td><td class="bad">2.0–2.5×</td><td>Double the final third read</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Stimpmeter Break Mathematics</span>
-    <h3>Why Stimp 12 Plays 40% More Break Than Stimp 9</h3>
-    <p style="margin-bottom:12px;">Faster greens amplify break for two reasons: the ball spends more time on the slope (travels further before stopping) and the influence zone begins earlier relative to the overall putt length. The relationship is not linear — it accelerates with green speed.</p>
-    <table class="tbl">
-      <tr><th>Green Speed</th><th>Stimpmeter</th><th>Break Multiplier vs. Stimp 9</th><th>Example: 2% slope, 15 ft</th></tr>
-      <tr><td>Slow parkland winter</td><td>8–9</td><td class="good">1.0× (baseline)</td><td>2 finger widths</td></tr>
-      <tr><td>Average summer parkland</td><td>10–11</td><td class="warn">1.3–1.4×</td><td>2.6–2.8 fingers</td></tr>
-      <tr><td>Good links / fast parkland</td><td>11–12</td><td class="warn">1.5–1.6×</td><td>3.0–3.2 fingers</td></tr>
-      <tr><td>Tournament conditions</td><td>13–14</td><td class="bad">1.8–2.0×</td><td>3.6–4.0 fingers</td></tr>
-      <tr><td>US Open / Augusta style</td><td>14–15+</td><td class="bad">2.2–2.5×</td><td>4.4–5.0+ fingers</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The calibration problem:</strong> Most amateur golfers play stimp 9–10 greens regularly and calibrate their reads to that speed. Arriving at a links or championship course running stimp 12–13, they read breaks as they would at home — and miss everything on the low side. The fix: use the 15-minute pre-round stimp calibration protocol (Guide 32, Adv. section) before every round on unfamiliar greens.</p></div>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Grain-Slope Compound Reads</span>
-    <h3>When Grain and Slope Interact — Amplification vs. Cancellation</h3>
-    <table class="tbl">
-      <tr><th>Grain Direction</th><th>Slope Direction</th><th>Net Effect</th><th>Adjustment</th></tr>
-      <tr><td>Downgrain (shiny)</td><td>Same as grain (downhill too)</td><td class="bad">Amplified — ball runs fast and breaks more</td><td>Reduce pace 10–15%, add 0.5 finger break</td></tr>
-      <tr><td>Downgrain (shiny)</td><td>Opposite (uphill into grain)</td><td class="good">Partly cancelled — slower than expected</td><td>Add pace 10%, reduce break 20%</td></tr>
-      <tr><td>Into-grain (dull)</td><td>Downhill cross-slope</td><td class="warn">Slow but breaks as normal</td><td>Add pace 15%, read break normally</td></tr>
-      <tr><td>Cross-grain (shiny left of line)</td><td>Right-to-left slope</td><td class="bad">Double-break — grain and slope both pull left</td><td>Aim 1 full finger further right than slope alone</td></tr>
-      <tr><td>Cross-grain (dull right of line)</td><td>Right-to-left slope</td><td class="good">Partial cancel — grain slows left drift</td><td>Reduce break by 30%</td></tr>
-    </table>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>The rule of dominance:</strong> On UK bentgrass, grain effect is typically 10–20% of the total read — a modifier, not a primary read. On links fescue in summer dry conditions, grain can equal or exceed slope influence. Always identify the surface type before deciding how much weight to give grain in the read.</p></div>
-  </div>
-</div>
-
-<!-- PRO: PUTTER FACE IMPACT PATTERN -->
-<div class="sec" id="impact_pattern" data-tier="pro">
-  <h2 class="sec-title">Putter Face Impact Pattern Analysis</h2>
-  <p class="sec-desc">Where the ball contacts the putter face is as important as stroke path. Consistent off-centre contact creates systematic pace errors that no amount of pace control technique can fix — because the error is happening at the club, not in the stroke.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-teal">
-    <span class="card-tag">How to Map Your Strike Pattern</span>
-    <h3>The Impact Tape Protocol</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Apply impact tape or Dr. Scholl's foot spray:</strong> Place a strip of impact tape (or spray the face with Dr. Scholl's odour spray, which leaves a clear impact mark) on the putter face before a practice session. Do not tell yourself to strike the centre — simply putt normally. The goal is to capture your natural pattern, not an artificially corrected one.</div></li>
-      <li><span class="step-n">2</span><div><strong>Hit 20 putts from 15 feet:</strong> Mix distances slightly — some 10 ft, some 15 ft, some 20 ft — to capture a realistic sample. After each putt, note the impact location: toe, heel, high, low, or centre. Do not adjust mid-session.</div></li>
-      <li><span class="step-n">3</span><div><strong>Identify the pattern:</strong> After 20 putts, photograph the tape. A consistent cluster — toe strikes, heel strikes, high-face, or low-face — indicates a systematic setup or stroke fault. Random scatter indicates either an inconsistent stroke or a correct stroke with small random variation. Consistent clusters are fixable; random scatter needs a different diagnostic approach.</div></li>
-      <li><span class="step-n">4</span><div><strong>Repeat monthly:</strong> As your stroke improves, your impact pattern will tighten. Monthly tape checks provide objective evidence of improvement that feel-based assessment cannot.</div></li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Impact Location Diagnostics</span>
-    <h3>What Each Pattern Means and How to Fix It</h3>
-    <table class="tbl">
-      <tr><th>Strike Pattern</th><th>Gear Effect</th><th>Pace Error</th><th>Likely Cause</th><th>Fix</th></tr>
-      <tr><td>Consistent toe strikes</td><td>Draws spin added</td><td class="bad">−8–12% distance short</td><td>Standing too far from ball; putter too long</td><td>Move closer; check length fitting</td></tr>
-      <tr><td>Consistent heel strikes</td><td>Fade spin added</td><td class="bad">−8–12% distance short</td><td>Standing too close; inside-out path</td><td>Move back; check arc direction</td></tr>
-      <tr><td>High face (driver area)</td><td>Topspin boost</td><td class="warn">+5–8% distance long</td><td>Ball too far forward; shaft lean back</td><td>Move ball back 1 inch</td></tr>
-      <tr><td>Low face</td><td>Backspin — skids</td><td class="bad">Unpredictable; short or offline</td><td>Ball too far back; descending stroke</td><td>Move ball forward; level stroke</td></tr>
-      <tr><td>Random scatter</td><td>Variable</td><td class="warn">High variance — pace inconsistency</td><td>Unstable head position during stroke</td><td>Head stillness drill; gate drill</td></tr>
-    </table>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Pace Error Mechanism</span>
-    <h3>Why Off-Centre Strikes Create Systematic Pace Problems</h3>
-    <p style="margin-bottom:12px;">When a putt is struck off-centre, the putter head rotates slightly around its centre of gravity at impact — this is gear effect. Energy that should transfer into ball speed is instead lost to head rotation. The result is a ball that leaves the face at lower speed than your stroke produced, creating a consistent "short" pattern that feels like a pace control problem but is actually a contact problem.</p>
-    <div class="formula">
-      <div class="formula-lbl">Ball Speed Loss by Impact Location</div>
-      <div class="formula-main">Centre strike (sweet spot):    100% of stroke energy transferred
-¼ inch off-centre (toe/heel):  92–94% transferred → ~8% shorter
-½ inch off-centre:             85–88% transferred → ~14% shorter
-¾ inch off-centre:             78–82% transferred → ~20% shorter</div>
-      <div class="formula-note">A player consistently striking ½ inch toward the toe will systematically leave putts short — and when they compensate by stroking harder, they overshoot putts on the rare occasions they find the sweet spot. The fix must be in contact quality, not pace recalibration.</div>
-    </div>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>Diagnostic shortcut:</strong> If your putts consistently finish short despite feeling like a solid stroke, check impact location before adjusting your pace. If they consistently start offline despite good aim, check impact location before adjusting path. Off-centre contact is the silent cause behind many problems that appear to be technique issues.</p></div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Centre-Strike Training Drills</span>
-    <h3>Building Consistent Sweet-Spot Contact</h3>
-    <div class="drill">
-      <div class="drill-hdr"><div class="drill-icon">🎯</div><div><h4>The Tee Gate Drill</h4><div class="drill-meta">10 min · Daily · Centre-strike training</div></div></div>
-      <p>Push two tees into the green or carpet just wider than your putter head (1–2mm clearance each side). Putt through the gate from 6 feet. Any deviation left or right contacts a tee — immediate feedback without needing tape. This forces centre strikes by punishing path deviation and face rotation simultaneously. Start with a wide gate (5mm clearance) and narrow to 2mm as consistency improves.</p>
-    </div>
-    <div class="drill">
-      <div class="drill-hdr"><div class="drill-icon">📏</div><div><h4>The Coin Drill</h4><div class="drill-meta">5 min · Pre-round · Warm-up and calibration</div></div></div>
-      <p>Place a coin (10p piece) on the green and putt the coin rather than a ball. The coin provides zero forgiveness — only a precisely centred, level stroke will send it in the intended direction. The coin will deflect wildly on heel or toe contact, giving immediate feedback. Do not use this drill to exhaustion; 10–15 successful strikes is sufficient. Use it to establish your stroke pattern before a round.</p>
-    </div>
-  </div>
-</div>
-
-<!-- PRO: PRESSURE CALIBRATION DRILLS -->
-<div class="sec" id="pressure_drills" data-tier="pro">
-  <h2 class="sec-title">Pressure Calibration Drills</h2>
-  <p class="sec-desc">Putting under pressure cannot be trained by putting without pressure. These drills introduce structured consequences, competitive formats, and escalating difficulty that create genuine physiological stress — the only way to build real pressure tolerance on the green.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Pressure Principle</span>
-    <h3>Why You Must Create Real Stakes in Practice</h3>
-    <p style="margin-bottom:12px;">Research on pressure inoculation in sport consistently shows that simulated pressure — if the consequence is real (physical, financial, or social) — produces physiological responses similar to competition: elevated heart rate, increased grip pressure, narrowed attention. Practice under these conditions builds a tolerance that transfers to the course. Practice without consequences produces improvement in calm conditions only.</p>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The consequence test:</strong> If you feel nothing when you miss during a practice drill, the drill has no pressure value. You must feel something — frustration, the awareness of starting over, the cost of the consequence — for the drill to inoculate you against competition pressure. If a drill feels comfortable, make it harder.</p></div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Drill 01 — The 100-Ball Challenge</span>
-    <h3>Make-Percentage Baseline Under Accumulating Pressure</h3>
-    <ul class="steps">
-      <li><span class="step-n">S</span><div><strong>Setup:</strong> Place 5 balls at each of 4 distances: 3 ft, 5 ft, 8 ft, 10 ft. That's 20 balls per circuit, 5 circuits = 100 balls total. Mark each make with a tally.</div></li>
-      <li><span class="step-n">R</span><div><strong>Rules:</strong> If you miss any putt in the 3 ft or 5 ft zone, restart the entire circuit from zero. The restart rule creates pressure on the short putts without it being punitive on longer ones. No gimmes — every putt must be holed.</div></li>
-      <li><span class="step-n">T</span><div><strong>Target:</strong> Complete 5 clean circuits (no restarts) in under 40 minutes. Record make percentage by distance. Track weekly — your pressure make-rate is a separate metric from your calm make-rate.</div></li>
-      <li><span class="step-n">P</span><div><strong>Progression:</strong> Once 5 clean circuits is routine, reduce the restart trigger to 5 ft only (raises the pressure). Then add a time limit — complete each circuit in under 4 minutes. Each constraint adds a different pressure type.</div></li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Drill 02 — The 9-Hole Putting Game</span>
-    <h3>Full Competitive Putting Round — Consequence Format</h3>
-    <ul class="steps">
-      <li><span class="step-n">S</span><div><strong>Setup:</strong> Treat the practice green as a 9-hole putting course. Select 9 different hole positions at varying distances (10–40 ft range). Play each hole in sequence — you hole out before moving to the next.</div></li>
-      <li><span class="step-n">R</span><div><strong>Scoring:</strong> Par is 2 for each hole (one lag, one tap-in). Record actual putts. A 3-putt is a bogey; a single-putt is a birdie. Play stableford or stroke format — both work. Your target score is 18 (par). Track it weekly.</div></li>
-      <li><span class="step-n">C</span><div><strong>Consequence:</strong> Before starting, set a physical consequence for every stroke over 22 (double bogey pace). 10 press-ups per stroke over target. Make the consequence immediate — do it on the green after tallying, not at home. The consequence must be real to create the physiological response you are training for.</div></li>
-      <li><span class="step-n">P</span><div><strong>Pressure escalator:</strong> Week 1: target 22. Week 2: target 20. Week 4: target 18 (par). Maintaining a consistently sub-20 score on the 9-hole game correlates strongly with reduced 3-putt rate in competition.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Drill 03 — The Make-or-Start-Over Short Putt Circuit</span>
-    <h3>Building the Automatic Short Putt Under Maximum Pressure</h3>
-    <p style="margin-bottom:12px;">The highest-pressure putting situation in golf is a 4–6 foot putt late in a round. This drill simulates the consequence pattern as closely as possible outside of competition.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Place 6 balls around the hole at 4 feet, evenly spaced (clock positions).</strong> You must make all 6 in succession. If you miss any, restart from ball 1.</div></li>
-      <li><span class="step-n">2</span><div><strong>Progress to 6 balls at 5 feet, then 6 feet.</strong> Do not advance the distance until all 6 consecutive makes are routine — fewer than 2 restarts in a session.</div></li>
-      <li><span class="step-n">3</span><div><strong>Add the "one miss and done" rule:</strong> In competition simulation mode, you have one attempt per ball. A miss ends the session with the consequence (10 press-ups). Restart tomorrow. This mimics the one-chance nature of competition putting more closely than any other format.</div></li>
-    </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The data point that matters:</strong> Track consecutive makes before your first miss in each session (your "streak record"). Over 8–12 weeks of consistent pressure drill practice, this number should increase significantly — from 8–10 to 20–30+ consecutive makes under consequence conditions. That improvement directly translates to short-putt reliability in competition.</p></div>
-  </div>
-</div>
-
 <div class="footer">THE PUTTING PLAYBOOK — PRO EDITION · STROKES GAINED FRAMEWORK</div>
 <script>
 function show(id,btn){
@@ -864,8 +682,55 @@ function show(id,btn){
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Coach AI</span>
     </a>
   </div>
+    <a href="41_plus_hcp_sg_targets.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⭐</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Plus-HCP SG Targets</span>
+    </a>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+
+<div class="sec" id="elite_putting" data-tier="elite">
+  <h2 class="sec-title">AimPoint Advanced & Plus-Level Putting</h2>
+  <p class="sec-desc">At county and national level, greens regularly run at Stimp 12–14. AimPoint Express (half-feet) is sufficient for club play; the full AimPoint method produces measurably better results on severely sloped greens above Stimp 12. This tab also covers the make-percentage benchmarks that separate scratch from plus.</p>
+  <span class="badge badge-gold">⛳ Make% Benchmarks — Scratch to +3</span>
+  <div class="card card-gold">
+    <span class="card-tag">Where the Plus-HCP Putting Gains Actually Live</span>
+    <h3>Make% by Distance: Scratch → +3</h3>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Scratch</th><th>+1</th><th>+2</th><th>+3</th></tr>
+      <tr><td>4 feet</td><td>88%</td><td class="warn">91%</td><td class="warn">93%</td><td class="good">95%</td></tr>
+      <tr><td>6 feet</td><td>60%</td><td class="warn">66%</td><td class="warn">72%</td><td class="good">77%</td></tr>
+      <tr><td>8 feet</td><td>45%</td><td class="warn">51%</td><td class="warn">57%</td><td class="good">63%</td></tr>
+      <tr><td>10 feet</td><td>33%</td><td class="warn">38%</td><td class="warn">43%</td><td class="good">48%</td></tr>
+      <tr><td>15 feet</td><td>19%</td><td>22%</td><td>25%</td><td>28%</td></tr>
+      <tr><td>20+ feet</td><td>11%</td><td>13%</td><td>15%</td><td>16%</td></tr>
+    </table>
+    <p>The 6–10 foot range shows the steepest gradient. The plus-handicap putting advantage is won almost entirely between 6 and 10 feet — lag putting is already near-optimal for serious amateurs.</p>
+  </div>
+  <span class="badge badge-teal">📐 Express vs. Advanced — When to Upgrade</span>
+  <div class="card card-teal">
+    <span class="card-tag">Method Selection by Competition Level</span>
+    <h3>The Upgrade Decision</h3>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Express sufficient?</th><th>Advanced recommended?</th></tr>
+      <tr><td>Club strokeplay (9–11 Stimp)</td><td class="good">Yes</td><td>No</td></tr>
+      <tr><td>County events (11–12 Stimp)</td><td class="warn">Marginal</td><td class="warn">Preferred</td></tr>
+      <tr><td>National events (12–14 Stimp)</td><td class="bad">No</td><td class="good">Yes</td></tr>
+      <tr><td>Links (variable slope/speed)</td><td class="warn">Marginal</td><td class="warn">Preferred</td></tr>
+    </table>
+    <p>AimPoint Advanced uses feet (and fractions) rather than half-feet, producing more precise aim points on slopes above 3% at championship green speeds. The learning curve from Express to Advanced is 2–3 practice sessions for a player already proficient with Express.</p>
+  </div>
+  <span class="badge badge-lime">🏋️ The 6–10 Foot Weekly Protocol</span>
+  <div class="card">
+    <span class="card-tag">Three-Drill 100-Putt Session</span>
+    <h3>Closing the Plus-HCP Putting Gap</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Gate drill (6 feet) — 25 putts:</strong> Tee gates 1 putter-head-width either side of the hole. Target 78%+ make rate. Face angle precision is the dominant variable at 6 feet.</div></li>
+      <li><span class="step-n">2</span><div><strong>Circle drill (8 feet) — 8 balls:</strong> Arrange in a circle at 8 feet. Complete the full circle without missing — restart on a miss. Target: complete within 3 attempts consistently.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pressure drill (10 feet) — 10 putts:</strong> Set a meaningful consequence for missing more than 4. Record actual vs. target make%. Only pressure-laden practice trains the execution that appears in competition.</div></li>
+    </ul>
   </div>
 </div>
 </body>

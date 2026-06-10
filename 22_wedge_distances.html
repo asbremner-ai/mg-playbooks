@@ -74,21 +74,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 @media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}.matrix-table{font-size:10px;}}
 </style>
-<script>
-/* tier-init */
-const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-tier]').forEach(function(el) {
-      var t = el.getAttribute('data-tier');
-      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
-      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
-      el.setAttribute('data-tier-active', t);
-    });
-  });
-})();
-</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -376,37 +361,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
     <div class="info-box elite" style="margin-top:10px;">
       <span class="ico">⭐</span>
       <p><strong>ROI of a matrix session:</strong> A 90-minute launch monitor session that produces an accurate personal wedge matrix is worth an estimated 1.5–2.5 strokes per round in the scoring zone. It is the single highest return-on-investment use of practice time available to a 10 HCP player.</p>
-    </div>
-  </div>
-
-  <!-- PRO: SPIN RATE & TRAJECTORY CORRELATION -->
-  <div data-tier="pro" style="margin-top:20px;">
-    <span class="badge badge-gold">⬡ Pro Depth — Spin Rate & Matrix Reliability</span>
-    <div class="card card-gold" style="margin-top:12px;">
-      <span class="card-tag">Using Spin Rate to Validate Matrix Entry Reliability</span>
-      <h3>Why Carry Distance Alone Is Not Enough</h3>
-      <p style="margin-bottom:12px;">Two shots can produce identical carry distances with very different spin rates — and the lower-spin carry is less reliable as a matrix entry. High spin produces a steeper descent angle that stops the ball predictably on landing. Low spin produces a shallower descent that runs out unpredictably. A matrix built only on carry distance will mislead you when spin rates are inconsistent.</p>
-      <table class="tbl">
-        <tr><th>Shot</th><th>Carry</th><th>Spin Rate</th><th>Landing Angle</th><th>Matrix Reliability</th></tr>
-        <tr><td>SW full, clean contact</td><td>88 yards</td><td class="good">7,200 rpm</td><td class="good">48°</td><td class="good">High — predictable stop</td></tr>
-        <tr><td>SW full, slightly fat</td><td>87 yards</td><td class="bad">3,800 rpm</td><td class="bad">34°</td><td class="bad">Low — ball will run 8–12 feet further</td></tr>
-        <tr><td>SW full, worn grooves</td><td>88 yards</td><td class="warn">5,100 rpm</td><td class="warn">40°</td><td class="warn">Moderate — some run unpredictability</td></tr>
-      </table>
-      <div class="info-box warn-box" style="margin-top:10px;"><span class="ico">⚠️</span><p><strong>The flagging rule:</strong> During your matrix calibration session, record spin rate alongside carry distance. Any carry distance achieved with a spin rate more than 25% below your average for that club-swing combination should be discarded as a mis-strike — not averaged in. A low-spin carry is not a representative shot for the matrix.</p></div>
-    </div>
-    <div class="card card-teal">
-      <span class="card-tag">Spin Rate Benchmarks by Club and Swing Length</span>
-      <h3>What Your Mevo Should Show for Valid Matrix Shots</h3>
-      <table class="tbl">
-        <tr><th>Club/Swing</th><th>Minimum Valid Spin</th><th>Ideal Spin Range</th><th>Below Minimum = Discard</th></tr>
-        <tr><td>PW full</td><td>7,500 rpm</td><td>8,500–10,000 rpm</td><td>Mis-strike or worn grooves</td></tr>
-        <tr><td>GW full</td><td>7,000 rpm</td><td>8,000–9,500 rpm</td><td>Fat contact or groove wear</td></tr>
-        <tr><td>SW full</td><td>6,500 rpm</td><td>7,500–9,000 rpm</td><td>Contact quality issue</td></tr>
-        <tr><td>LW full</td><td>6,000 rpm</td><td>7,000–9,000 rpm</td><td>Open face not maintained</td></tr>
-        <tr><td>Any wedge, ¾ swing</td><td>5,000 rpm</td><td>5,500–7,500 rpm</td><td>Partial deceleration</td></tr>
-        <tr><td>Any wedge, ½ swing</td><td>3,500 rpm</td><td>4,000–6,000 rpm</td><td>Normal — less spin is expected at partial swings</td></tr>
-      </table>
-      <div class="info-box tip" style="margin-top:10px;"><span class="ico">💡</span><p><strong>Groove wear indicator:</strong> If your full-wedge spin rates are consistently in the lower half of the valid range (e.g. full SW giving 5,500–6,000 rpm instead of 8,000+), your grooves may be significantly worn. This is an accurate, objective groove-wear test — more reliable than visual inspection. If Mevo shows sustained low spin on clean strikes, replace your wedges.</p></div>
     </div>
   </div>
 </div>

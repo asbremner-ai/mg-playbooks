@@ -196,21 +196,6 @@
     .week-grid{grid-template-columns:repeat(4,1fr);}
   }
 </style>
-<script>
-/* tier-init */
-const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-tier]').forEach(function(el) {
-      var t = el.getAttribute('data-tier');
-      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
-      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
-      el.setAttribute('data-tier-active', t);
-    });
-  });
-})();
-</script>
 </head>
 <body>
 <!-- HOME NAV -->

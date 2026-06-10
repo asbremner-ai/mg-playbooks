@@ -149,21 +149,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 
-<script>
-/* tier-init */
-const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-tier]').forEach(function(el) {
-      var t = el.getAttribute('data-tier');
-      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
-      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
-      el.setAttribute('data-tier-active', t);
-    });
-  });
-})();
-</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -196,7 +181,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('alignment',this)">Alignment</button>
   <button class="tab" onclick="show('practicesci',this)">Practice Sci.</button>
   <button class="tab" onclick="show('selfcorrect',this)">Self-Correct</button>
-  <button class="tab" data-tier="pro" onclick="show('cognitive_arch',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Cognitive Architecture</button>
 </div>
 
 <div class="sec active" id="fullswing">
@@ -732,66 +716,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
     <tr><td>Multiple different miss directions</td><td class="bad">No</td><td>Reduce effort to 80%, commit to routine — inconsistency is a tempo/tension problem</td></tr></table>
   </div>
   <div class="info-box elite"><span class="ico">⭐</span><p><strong>The ultimate on-course principle:</strong> Every thought you add to your swing on the course costs you something. The player with zero swing thoughts and a committed pre-shot routine will almost always outperform a player with two corrections running simultaneously, regardless of which correction is technically correct. When in doubt — reduce to routine, commit to target, accept the shot.</p></div>
-</div>
-
-<!-- PRO: COGNITIVE ARCHITECTURE -->
-<div class="sec" id="cognitive_arch" data-tier="pro">
-  <h2 class="sec-title">Cognitive Architecture</h2>
-  <p class="sec-desc">The science of how strategic decisions interact with shot execution — and how to structure your thinking so that the analytical brain closes down completely before the motor brain takes over.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Dual-Process Model Applied to Golf</span>
-    <h3>System 1 and System 2 — Why Mixing Them Destroys Performance</h3>
-    <p style="margin-bottom:12px;">Daniel Kahneman's dual-process model describes two cognitive systems operating in parallel. System 2 is analytical, deliberate, and slow — the system you use to calculate yardage, assess risk, and select a club. System 1 is automatic, fast, and skill-based — the system that executes the motor programme of the swing. Elite performance requires System 2 to operate during the decision phase and System 1 to operate completely uninterrupted during execution. When System 2 bleeds into the execution phase — when you are thinking about technique or consequences during the swing — performance degrades severely.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Cognitive Sequence for a Single Shot</div>
-      <div class="formula-main">SYSTEM 2 PHASE (deliberate — full analytical mode)
-  → Yardage assessment, wind calculation
-  → Club selection, target identification
-  → Shot shape decision, risk assessment
-  → Complete commitment to a specific plan
-  ↓ DECISION CLOSURE (the transition ritual — see below)
-SYSTEM 1 PHASE (automatic — motor brain only)
-  → Pre-shot routine (visualisation, alignment)
-  → Trigger thought (ONE external cue only)
-  → Execution — no conscious thought
-  → Follow-through and release</div>
-      <div class="formula-note">The critical requirement: System 2 must finish completely before System 1 begins. Any unresolved doubt, uncompleted decision, or conscious thought about technique during execution is System 2 leaking into System 1 territory. The decision closure ritual is specifically designed to prevent this.</div>
-    </div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Decision Closure — The Transition Ritual</span>
-    <h3>How to Turn Off the Analytical Brain on Command</h3>
-    <p style="margin-bottom:12px;">A decision closure ritual is a brief, physical act that marks the boundary between the strategic phase and the execution phase. It signals to the nervous system that thinking is complete and motor execution is beginning. Without it, analytical residue from the decision phase bleeds into the swing.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Choose a physical marker:</strong> The closure ritual must be physical — not just mental. Options: a specific tap of the grip against the palm, a deep exhale with a single word ("go," "clear," "yes"), a deliberate placing of the club behind the ball, or a specific step into the address position. Any physical act works — consistency is the requirement, not the specific act.</div></li>
-      <li><span class="step-n">2</span><div><strong>The ritual marks a point of no return:</strong> Once the closure ritual is performed, strategic thinking stops completely. No further club changes, aim adjustments, or second-guessing. If doubt remains after the ritual, step away and repeat the full decision phase before attempting the ritual again.</div></li>
-      <li><span class="step-n">3</span><div><strong>Practise the ritual under pressure:</strong> The closure ritual only works if it has been practised enough to become automatic. In pressure drills (see Guide 01 Pressure Drills tab), always include the full decision sequence including the closure ritual. Do not skip it in practice.</div></li>
-      <li><span class="step-n">4</span><div><strong>The abort rule:</strong> If you realise after the closure ritual that you are still thinking analytically — reconsidering the club, the target, or a swing thought — step away. Do not swing. Reset the entire decision phase. An uncommitted swing produces a poor shot 90%+ of the time. The 10 seconds to reset is never wasted.</div></li>
-    </ul>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Decision Pre-Loading for Competition</span>
-    <h3>Eliminating In-Round Deliberation on High-Pressure Holes</h3>
-    <p style="margin-bottom:12px;">Pre-loading means making specific strategic decisions before the round — committing to a plan on particular holes or situations before you arrive at them. This removes the System 2 workload from the most pressure-heavy moments of a round, when analytical thinking is least reliable.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify your two or three decision holes:</strong> Before every competitive round, identify the holes where you most often make poor decisions. These are typically: holes where you are consistently tempted by a risky tee shot, holes where you are seduced by an unreachable pin, or holes where you always second-guess your club selection.</div></li>
-      <li><span class="step-n">2</span><div><strong>Pre-commit with a specific rule:</strong> Write it down. "On hole 7, I always take 3-wood regardless of score." "On hole 12, I always aim at the fat of the green — never the flag." "On hole 16, I always lay up to 100 yards." The rule must be unconditional — no clauses for score, conditions, or mood.</div></li>
-      <li><span class="step-n">3</span><div><strong>Why unconditional rules work:</strong> Research on decision fatigue shows that each in-round decision depletes limited cognitive resources. Pre-committed rules eliminate the decision entirely — reducing cognitive load at the exact moment when cognitive resources are most stretched (late in a competitive round, under pressure).</div></li>
-    </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The Rory McIlroy principle:</strong> McIlroy has discussed making driving decisions on specific holes before the round begins — "I always hit driver here regardless of conditions." This is not inflexibility; it is deliberate cognitive load management. He is saving his decision-making capacity for the situations he cannot pre-plan.</p></div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Cognitive Load and Routine Duration Variance</span>
-    <h3>Why Complex Decisions Lengthen and Destabilise Your Routine</h3>
-    <p style="margin-bottom:12px;">Research by Dr. Noel Brick on routine duration consistency shows that pre-shot routine duration variance is a strong predictor of performance — not just routine length, but consistency of length. Players whose routines vary by more than 4–5 seconds between shots show significantly worse performance than players with consistent timing.</p>
-    <p style="margin-bottom:10px;">The mechanism: a difficult course management decision causes the analytical phase to run long, which extends the total time before the swing. The extended analytical phase makes it harder to achieve full System 1 state before execution. The result is a shot made in a partially analytical state — which degrades motor performance.</p>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>Fix:</strong> Use decision pre-loading to eliminate the longest decisions. For residual in-round decisions, set a hard time limit — 20 seconds maximum from reaching the ball to completing club selection. If no decision is made in 20 seconds, default to the conservative option. A quick conservative decision made in System 1 is almost always better than a correct aggressive decision made in System 2.</p></div>
-  </div>
 </div>
 
 <div class="footer">PRE-SHOT ROUTINE & PRACTICE PLAN · ADVANCED PLAYER EDITION · TRUST THE PROCESS</div>

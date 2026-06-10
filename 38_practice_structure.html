@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- version:v2.0 · 2026-06-08 · 38_practice_structure.html · PRO EDITION -->
+<!-- version:v2.1-elite · 2026-06-09 · 38_practice_structure.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Practice Structure Science — Pro Edition · Guide 38</title>
+<title>Practice Structure Science — Pro Edition</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -14,79 +14,115 @@
   --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
   --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
   --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
-  --pro:#c8922a;--pro-hi:#e8b050;--pro-border:rgba(200,146,42,0.35);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
   --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
   --r:12px;--r-sm:8px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
 .home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
-.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;}
-.pro-badge-nav{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);background:rgba(200,146,42,0.1);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
-.hero{position:relative;z-index:2;background:linear-gradient(170deg,#050d05 0%,#0f1e0e 60%,var(--surface) 100%);padding:44px 20px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:10px;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:8px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
 .hero h1 em{color:var(--pro-hi);font-style:italic;}
-.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto;font-weight:300;line-height:1.65;}
-.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);padding:0 4px;scrollbar-width:none;position:relative;z-index:100;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
 .nav::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:14px 14px 12px;cursor:pointer;transition:color .2s,border-color .2s;white-space:nowrap;}
-.tab.active{color:var(--lime-hi);border-bottom-color:var(--lime);}
-.tab:hover{color:var(--white);}
-.sec{display:none;padding:24px 16px 60px;max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
 .sec.active{display:block;}
-.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,6vw,2.2rem);font-weight:900;line-height:1.1;margin-bottom:8px;}
-.sec-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7;}
-.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
-.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.4);color:var(--gold-hi);}
-.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.4);color:var(--teal-hi);}
-.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,0.4);color:var(--lime-hi);}
-.card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.card-gold::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.card-teal::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
-.card-lime::before{background:linear-gradient(90deg,transparent,var(--lime),transparent);}
-.card-rust::before{background:linear-gradient(90deg,transparent,var(--rust),transparent);}
-.card-gold{border-color:rgba(224,184,64,0.25);}
-.card-teal{border-color:rgba(72,176,168,0.25);}
-.card-lime{border-color:rgba(160,200,80,0.25);}
-.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;line-height:1.25;}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-.steps{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.steps li{display:flex;gap:12px;align-items:flex-start;}
-.step-n{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--lime-dim);border:1px solid rgba(160,200,80,0.3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--lime-hi);display:flex;align-items:center;justify-content:center;margin-top:2px;}
-.formula{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
-.formula-lbl{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.formula-main{font-size:11.5px;color:var(--lime-hi);line-height:1.8;white-space:pre-wrap;}
-.formula-note{font-size:11px;color:var(--muted);margin-top:8px;font-style:italic;font-family:'Inter',sans-serif;}
-.tbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;}
-.tbl th{background:var(--surface);padding:8px 10px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
-.tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(232,240,216,0.82);vertical-align:top;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
 .tbl tr:last-child td{border-bottom:none;}
-.good{color:#78d080;}
-.warn{color:#d0a840;}
-.bad{color:#d06050;}
-.info-box{display:flex;gap:10px;padding:14px 14px;border-radius:var(--r-sm);margin:14px 0;font-size:12.5px;line-height:1.7;}
-.info-box .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
-.tip{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.25);color:var(--teal-hi);}
-.elite{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.25);color:var(--gold-hi);}
-.warn-box{background:var(--rust-dim);border:1px solid rgba(216,96,48,0.25);color:var(--rust-hi);}
-.drill{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin-bottom:12px;}
-.drill-hdr{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px;}
-.drill-icon{font-size:1.4rem;flex-shrink:0;}
-.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;margin-bottom:2px;}
-.drill-meta{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--muted);}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-.mini-card{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;}
-.mini-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.mini-card h4{font-size:12.5px;font-weight:600;margin-bottom:4px;}
-.mini-card p{font-size:11.5px;color:var(--muted);line-height:1.55;}
-.footer{background:var(--surface);border-top:1px solid var(--border);padding:20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#050d05 0%,#0f1e0e 60%,var(--surface) 100%);}
 </style>
-<script>
-/* tier-init */
+<script>/* tier-init */
 const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
@@ -94,423 +130,574 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
       var t = el.getAttribute('data-tier');
       if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
       if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
       el.setAttribute('data-tier-active', t);
     });
   });
-})();
-</script>
+})();</script>
 </head>
 <body>
+
 <div class="home-nav">
-  <a href="index_pro.html">&#8962; Pro Playbooks</a>
-  <span class="pro-badge-nav">⬡ Guide 38 · Pro Edition</span>
+  <a href="index_pro.html"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span class="pro-nav-badge">⬡ Pro Edition</span>
 </div>
 
 <div class="hero">
-  <div class="hero-label">Guide 38 · Motor Learning Science</div>
-  <h1>Practice <em>Structure</em><br>Science</h1>
-  <p class="hero-sub">How you structure practice matters more than how much you do. The research on motor learning has transformed elite coaching — and most amateur golfers are still practising the wrong way.</p>
+  <p class="hero-label">Pro Playbook · Guide 38 · Pro Edition</p>
+  <h1>Practice<br><em>Structure Science</em></h1>
+  <p class="hero-sub">The neuroscience of how skill is actually acquired — blocked vs. random vs. interleaved practice, contextual interference, variability training, and how to design sessions that build game-ready competence, not range performance.</p>
+  <div class="hero-tags">
+    <span class="htag">🔬 Motor Learning</span>
+    <span class="htag">🔁 Blocked vs Random</span>
+    <span class="htag">🎯 Transfer Science</span>
+    <span class="htag">📋 Session Templates</span>
+  </div>
 </div>
 
-<div class="nav" id="nav">
+<div class="nav">
   <button class="tab active" onclick="show('overview',this)">Overview</button>
-  <button class="tab" onclick="show('blocked_random',this)">Blocked vs Random</button>
-  <button class="tab" onclick="show('interleaving',this)">Interleaving</button>
+  <button class="tab" onclick="show('blocked',this)">Blocked vs Random</button>
+  <button class="tab" onclick="show('interleave',this)">Interleaving</button>
   <button class="tab" onclick="show('variability',this)">Variability</button>
   <button class="tab" onclick="show('difficulties',this)">Desirable Difficulties</button>
-  <button class="tab" onclick="show('skill_stage',this)">Skill Stage</button>
+  <button class="tab" onclick="show('stages',this)">Skill Stage</button>
   <button class="tab" onclick="show('templates',this)">Session Templates</button>
   <button class="tab" onclick="show('feedback',this)">Feedback Science</button>
+  <button class="tab" data-tier="elite" onclick="show('elitesci',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Elite Practice Science</button>
 </div>
+
 
 <!-- OVERVIEW -->
 <div class="sec active" id="overview">
-  <h2 class="sec-title">Practice Structure Science</h2>
-  <p class="sec-desc">The science of motor learning has produced findings that directly contradict how most golfers practise. This guide covers the key principles and their practical application for a serious amateur working toward scratch.</p>
-  <span class="badge badge-gold">⬡ Pro Edition · Guide 38</span>
+  <h2 class="sec-title">How Skill Is Actually Built</h2>
+  <p class="sec-desc">Most practice plans tell you what to practise. This guide tells you how to structure sessions so what you practise actually transfers to the course under pressure. The motor learning research on this is among the most consistently replicated in sport science — and almost entirely absent from golf instruction.</p>
 
-  <div class="card card-gold">
-    <span class="card-tag">The Core Problem</span>
-    <h3>Why Feel-Good Practice Produces Less Learning</h3>
-    <p style="margin-bottom:12px;">The most important finding in motor learning research over the past 30 years is that practice conditions which feel productive in the moment often produce worse long-term retention than conditions that feel difficult and less satisfying. This is the performance-learning paradox — the subjective experience of a good practice session is negatively correlated with actual skill development.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Performance-Learning Paradox</div>
-      <div class="formula-main">High Performance During Practice:
-  Blocked repetition → consistent, satisfying, visible improvement
-  Result: good within-session performance, poor retention
-
-Lower Performance During Practice:
-  Random / interleaved practice → effortful, inconsistent, frustrating
-  Result: poorer within-session performance, superior retention
-
-The practice condition that FEELS better produces LESS learning.
-The practice condition that FEELS harder produces MORE learning.</div>
-      <div class="formula-note">This is why players who exclusively hit 50 balls with the same club feel like they've had a productive session — and then arrive on the course and find the skill has not transferred. The range performance was real. The learning was not.</div>
+  <span class="badge badge-pro">🔬 The Core Problem</span>
+  <div class="card card-pro">
+    <span class="card-tag">Why Range Practice Doesn't Transfer</span>
+    <h3>The Performance vs. Learning Paradox</h3>
+    <p>Blocked practice — hitting the same shot repeatedly to the same target — produces fast, visible improvement during the session. It feels productive. The ball goes where you aim it. You leave the range feeling good.</p>
+    <p style="margin-top:10px;">The problem: that improvement is mostly performance, not learning. Within 48 hours, much of it fades. On the course, under pressure, with changed conditions, the skill is not there. You have practised performing, not learning.</p>
+    <div class="pull-quote" style="margin-top:14px;">
+      <p>The conditions that make practice feel productive are often the opposite of the conditions that make practice produce durable learning.</p>
+      <span>— Bjork & Bjork, 2011 — Desirable Difficulties in Theory and Practice</span>
     </div>
   </div>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Five Principles</span>
-    <h3>Framework for This Guide</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Blocked vs. Random Practice:</strong> The difference between hitting 50 7-irons (blocked) and cycling through 7-iron, wedge, driver in random order. Random practice produces 35–40% better retention despite feeling worse. See the Blocked vs Random tab.</div></li>
-      <li><span class="step-n">2</span><div><strong>Contextual Interference:</strong> The mechanism behind random practice — forcing the brain to reconstruct the motor plan for each shot rather than running a cached pattern. The reconstruction effort drives learning.</div></li>
-      <li><span class="step-n">3</span><div><strong>Variability of Practice:</strong> Practising slightly different versions of the same shot (different distances, lies, trajectories) outperforms repeating exactly the same shot. The variation builds a more robust motor programme.</div></li>
-      <li><span class="step-n">4</span><div><strong>Desirable Difficulties:</strong> Conditions that make practice harder in the short term — reduced feedback frequency, spacing, interleaving — but produce better long-term retention. Not all difficulty is desirable; this tab defines the distinction.</div></li>
-      <li><span class="step-n">5</span><div><strong>Skill Stage Adaptation:</strong> Beginners benefit from blocked practice; advanced players benefit from random. The optimal practice structure changes as skill develops — and most golfers are using beginner practice methods for advanced-skill training.</div></li>
-    </ul>
+  <span class="badge badge-gold">📊 The Evidence Base</span>
+  <div class="card card-gold">
+    <span class="card-tag">What the Research Actually Shows</span>
+    <h3>Three Consistent Findings Across 40 Years</h3>
+    <table class="tbl">
+      <tr><th>Finding</th><th>What It Means for Golfers</th><th>Practical Implication</th></tr>
+      <tr><td>Blocked practice improves performance during training</td><td>You hit better shots at the range using blocked repetition</td><td class="warn">Do not use as the primary measure of practice quality</td></tr>
+      <tr><td>Random/interleaved practice improves learning and retention</td><td>Harder sessions with varied shots produce better course performance</td><td class="good">Make practice feel harder — it is working</td></tr>
+      <tr><td>Feedback withheld periodically accelerates skill acquisition</td><td>Not looking at every launch monitor number builds self-regulation</td><td class="good">Use 1-in-3 external feedback rule for skill work</td></tr>
+    </table>
   </div>
 
-  <div class="card">
-    <span class="card-tag">The Transfer Problem</span>
-    <h3>Why Range Performance Doesn't Transfer to the Course</h3>
-    <p style="margin-bottom:12px;">The golf course differs from the range in ways that matter for motor learning. On the range: same turf, consistent ball positioning, no consequences, unlimited retries, flat lies, permanent feedback (you can see where the ball went). On the course: variable lies, genuine consequences, one attempt per shot, random shot sequences, no immediate visual feedback on many shots.</p>
-    <p>Practice that mirrors the course conditions — variable, consequential, one attempt — transfers better than practice that mirrors the range. The Session Templates tab provides specific session structures that maximise transfer.</p>
+  <span class="badge badge-teal">🗺️ Guide Map</span>
+  <div class="card card-teal">
+    <span class="card-tag">How to Use This Guide</span>
+    <h3>Eight Tabs — One Integrated System</h3>
+    <ul class="checklist">
+      <li><strong>Blocked vs Random</strong> — the foundational distinction and when each is appropriate</li>
+      <li><strong>Interleaving</strong> — the practice schedule that maximises transfer between skills</li>
+      <li><strong>Variability</strong> — why practising imperfect conditions builds more robust skills</li>
+      <li><strong>Desirable Difficulties</strong> — the full framework of productive struggle conditions</li>
+      <li><strong>Skill Stage</strong> — how practice structure must change as you improve</li>
+      <li><strong>Session Templates</strong> — ready-to-use session designs for each practice type</li>
+      <li><strong>Feedback Science</strong> — when to use launch monitor data and when to withhold it</li>
+    </ul>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Start here:</strong> Read Blocked vs Random first — it is the conceptual foundation every other tab builds on.</p>
+    </div>
   </div>
 </div>
+
 
 <!-- BLOCKED VS RANDOM -->
-<div class="sec" id="blocked_random">
+<div class="sec" id="blocked">
   <h2 class="sec-title">Blocked vs. Random Practice</h2>
-  <p class="sec-desc">The most well-replicated finding in motor learning: random (varied) practice produces better retention and transfer than blocked (repetitive) practice, despite producing worse performance during the session itself.</p>
-  <span class="badge badge-teal">Motor Learning Research</span>
+  <p class="sec-desc">The most important structural decision in any practice session. Blocked and random practice produce opposite short-term and long-term results — understanding which to use and when is the foundation of effective practice design.</p>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Shea & Morgan Study</span>
-    <h3>The Original Evidence</h3>
-    <p style="margin-bottom:12px;">Shea and Morgan (1979) trained two groups on a movement task. Group A practised in blocked fashion (all trials of one task, then all of the next). Group B practised randomly (tasks interleaved throughout). During practice, Group A performed better. On retention tests 10 minutes later and 10 days later, Group B outperformed Group A significantly — despite having appeared to learn less during practice.</p>
-    <p style="margin-bottom:10px;">This pattern has been replicated dozens of times in sport science, including specifically in golf and other precision sports. The effect is robust and consistent.</p>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The practical implication:</strong> A player who hits 15 7-irons, then 15 5-irons, then 15 drivers is doing better practice than a player who hits 50 balls with each club — even though the first player's within-session performance will look worse. The appearance of learning is misleading. Actual retention requires the effort of reconstruction that random practice forces.</p></div>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Mechanism — Contextual Interference</span>
-    <h3>Why Random Practice Produces Better Learning</h3>
-    <p style="margin-bottom:12px;">The contextual interference effect explains why randomness works. When you practise the same shot repeatedly, the brain runs a cached version of the motor programme — it doesn't need to reconstruct the plan for each trial. This feels smooth and produces good performance but minimal learning.</p>
-    <p style="margin-bottom:10px;">When you alternate between different shots, the brain must reconstruct the motor plan from scratch for each new shot. This reconstruction process — which makes performance worse in the short term — is precisely the mechanism that drives long-term learning and retention.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Reconstruction Mechanism</div>
-      <div class="formula-main">Blocked practice (50 × 7-iron):
-  Shot 1: Motor plan reconstructed from memory
-  Shot 2: Same plan retrieved from working memory cache
-  Shot 50: Same cached plan — minimal reconstruction effort
-  → Motor programme rehearsed but not strengthened
-
-Random practice (7-iron → wedge → driver, repeat):
-  Shot 1: 7-iron plan reconstructed
-  Shot 2: Wedge plan reconstructed (different — old plan must be set aside)
-  Shot 3: Driver plan reconstructed (different again)
-  Shot 4: 7-iron plan reconstructed (must rebuild — not cached)
-  → Each shot demands full reconstruction → stronger memory trace</div>
+  <span class="badge badge-pro">🔁 The Distinction</span>
+  <div class="card card-pro">
+    <span class="card-tag">Definitions and Mechanisms</span>
+    <h3>Two Fundamentally Different Practice Structures</h3>
+    <div class="grid-2">
+      <div class="mini-card">
+        <span class="mini-tag">Blocked Practice</span>
+        <h4>Same shot, repeatedly</h4>
+        <p>Hit 20 7-irons to the same target before moving to the next club. The nervous system settles into the pattern quickly. Performance improves fast. Learning is shallow.</p>
+      </div>
+      <div class="mini-card">
+        <span class="mini-tag">Random Practice</span>
+        <h4>Different shot every time</h4>
+        <p>Alternate between driver, 8-iron, and wedge every shot. The nervous system must reconstruct the motor pattern from scratch each time. Performance is messier. Learning is deep.</p>
+      </div>
     </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);">The mechanism behind random practice: each retrieval of a motor pattern under uncertainty strengthens it more than repeating it without forgetting. The slight forgetting between shots is productive — the act of reconstruction is what builds the durable pattern.</p>
   </div>
 
-  <div class="card">
-    <span class="card-tag">Implementation Guide</span>
-    <h3>How to Randomise Your Range Sessions</h3>
+  <span class="badge badge-gold">📊 When to Use Each</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Decision Framework</span>
+    <h3>Blocked and Random Both Have a Place — Context Determines Which</h3>
     <table class="tbl">
-      <tr><th>Session Type</th><th>Blocked (Old Method)</th><th>Random (Better Method)</th></tr>
-      <tr><td>Full-swing irons</td><td class="bad">50 × 7-iron, then 50 × 5-iron</td><td class="good">Cycle: 7i → 5i → 9i → 7i → 5i..., changing every shot</td></tr>
-      <tr><td>Wedge practice</td><td class="bad">20 × full SW, 20 × 3/4 GW, 20 × half PW</td><td class="good">Random distance: pull out a number (e.g. 65, 90, 110, 80, 95, 70...) and hit that distance with the appropriate club each time</td></tr>
-      <tr><td>Driving practice</td><td class="bad">20 × driver to the same target</td><td class="good">Alternate: driver → 3-wood → driver (different target) → 3-wood (different target)</td></tr>
-      <tr><td>Short game</td><td class="bad">20 chips from the same spot</td><td class="good">Move to a new position after every single shot — never the same position twice</td></tr>
+      <tr><th>Situation</th><th>Use Blocked</th><th>Use Random</th></tr>
+      <tr><td>Learning a new movement pattern</td><td class="good">Yes — first 3–5 sessions</td><td>Not yet — too early</td></tr>
+      <tr><td>Consolidating a recently acquired skill</td><td class="warn">Short blocked warm-up only</td><td class="good">Yes — primary structure</td></tr>
+      <tr><td>Maintaining a stable skill</td><td>No</td><td class="good">Yes — full random</td></tr>
+      <tr><td>Competition simulation session</td><td>No</td><td class="good">Yes — mimic on-course variety</td></tr>
+      <tr><td>Technical fault repair (acute)</td><td class="good">Yes — confirm new pattern</td><td>After 2–3 sessions of blocked</td></tr>
+      <tr><td>Pre-round warm-up</td><td class="warn">Short and light only</td><td class="good">Majority of warm-up</td></tr>
     </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The exception — acquisition phase:</strong> When learning a completely new technique (a new grip, a fundamentally different swing change), blocked practice is appropriate during the initial acquisition phase. Random practice is counterproductive when the basic motor pattern does not yet exist. Once the pattern exists and can be executed consistently (even if imperfectly), switch to random practice to consolidate it.</p></div>
+  </div>
+
+  <span class="badge badge-teal">⚡ The Practical Test</span>
+  <div class="card card-teal">
+    <span class="card-tag">Identifying Which Mode You Are In</span>
+    <h3>The Session Self-Audit</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Count your consecutive same-club repetitions.</strong> More than 5 to the same target without a club change = blocked. If this is beyond the initial acquisition phase of a new skill, restructure the session.</div></li>
+      <li><span class="step-n">2</span><div><strong>Note your session feel.</strong> If practice feels smooth and satisfying, you are probably in blocked mode. If it feels effortful and inconsistent, you are probably in random mode — which is what you want for long-term learning.</div></li>
+      <li><span class="step-n">3</span><div><strong>Test on-course transfer.</strong> The only true measure of whether your practice structure is working is how skills perform on the course 48–72 hours after a session. Keep a note of which practice structures preceded your best rounds.</div></li>
+    </ul>
   </div>
 </div>
+
 
 <!-- INTERLEAVING -->
-<div class="sec" id="interleaving">
-  <h2 class="sec-title">Contextual Interference &amp; Interleaving</h2>
-  <p class="sec-desc">Interleaving — alternating between different skills within a single practice session — is the structural technique that implements the contextual interference principle. The more different the interleaved skills, the greater the learning benefit.</p>
-  <span class="badge badge-lime">Contextual Interference</span>
+<div class="sec" id="interleave">
+  <h2 class="sec-title">Interleaved Practice</h2>
+  <p class="sec-desc">Interleaving is the practice schedule that deliberately mixes different skills within a single session. It is the most powerful structural tool for building durable, transferable skills — and the most commonly avoided because it feels uncomfortable.</p>
 
-  <div class="card card-lime">
-    <span class="card-tag">Interleaving Gradations</span>
-    <h3>From Serial to Full Random — A Spectrum</h3>
+  <span class="badge badge-pro">🔬 The Research</span>
+  <div class="card card-pro">
+    <span class="card-tag">The Contextual Interference Effect</span>
+    <h3>Why Mixing Skills Accelerates Learning</h3>
+    <p>The contextual interference effect is one of the most replicated findings in motor learning: practising multiple skills in an interleaved schedule produces worse immediate performance but significantly better long-term retention and transfer than practising the same skills in blocked fashion.</p>
+    <p style="margin-top:10px;">The explanation: interleaving forces the brain to reconstruct each motor pattern from memory on every trial, rather than running a single pattern on autopilot. This reconstruction process is metabolically expensive and feels harder — which is exactly why it works.</p>
+    <div class="formula" style="margin-top:14px;">
+      <div class="formula-lbl">Interleaved Session Structure</div>
+      <div class="formula-main">Shot 1: Driver · Shot 2: PW 80y · Shot 3: 7-iron · Shot 4: Driver · Shot 5: GW 60y · Shot 6: 6-iron</div>
+      <div class="formula-note">No two consecutive shots use the same club or target distance. The brain must fully retrieve and reconstruct each motor pattern before executing.</div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">📋 Interleaving Protocols</span>
+  <div class="card card-gold">
+    <span class="card-tag">Three Interleaving Approaches by Context</span>
+    <h3>How to Structure an Interleaved Session</h3>
     <table class="tbl">
-      <tr><th>Structure</th><th>Example</th><th>CI Level</th><th>Best For</th></tr>
-      <tr><td>Blocked</td><td>50 × 7-iron, then 50 × 5-iron</td><td class="bad">None</td><td>Skill acquisition only</td></tr>
-      <tr><td>Serial</td><td>10 × 7-iron, 10 × 5-iron, 10 × 9-iron, repeat</td><td class="warn">Low-moderate</td><td>Early consolidation</td></tr>
-      <tr><td>Random serial</td><td>Sets of 3–5, randomly ordered each set</td><td class="warn">Moderate</td><td>Intermediate players</td></tr>
-      <tr><td>Full random</td><td>Every shot is a different club/target/distance</td><td class="good">Maximum</td><td>Advanced consolidation, competition prep</td></tr>
+      <tr><th>Protocol</th><th>Structure</th><th>Best For</th></tr>
+      <tr><td>Random interleaving</td><td>Completely random club and target selection — use a die or app</td><td>Competition simulation, peak performance maintenance</td></tr>
+      <tr><td>Systematic interleaving</td><td>Rotate through 3–4 pre-selected clubs in a fixed but non-repeating order</td><td>Skill consolidation, introducing interleaving to a new practice habit</td></tr>
+      <tr><td>Category interleaving</td><td>Alternate between skill categories (e.g. full shots → short game → full shots)</td><td>Sessions covering multiple practice areas within one session</td></tr>
     </table>
   </div>
 
-  <div class="card card-gold">
-    <span class="card-tag">Cross-Skill Interleaving</span>
-    <h3>The Most Powerful Form — Mixing Skill Categories</h3>
-    <p style="margin-bottom:12px;">The greatest contextual interference — and therefore the greatest learning benefit — comes from interleaving fundamentally different skill types, not just different clubs. Alternating between putting, chipping, and full swings in a single session forces the brain to switch between completely different motor programmes, maximising reconstruction effort.</p>
-    <div class="drill">
-      <div class="drill-hdr"><div class="drill-icon">🔄</div><div><h4>The 18-Hole Simulation Session</h4><div class="drill-meta">60 min · Maximum Transfer · Advanced players</div></div></div>
-      <p>Structure your practice session as a simulated round. Hole 1: drive, then approach with iron, then chip, then putt. Hole 2: 3-wood off tee (tight fairway), different approach distance, bunker shot, putt. Continue for 9 or 18 simulated holes. Never hit the same shot twice in a row. Every shot has a target, a consequence, and a different challenge from the previous one. This is the highest-transfer practice format available.</p>
-    </div>
-    <div class="drill">
-      <div class="drill-hdr"><div class="drill-icon">🎲</div><div><h4>The Par-18 Random Ball Practice</h4><div class="drill-meta">30 min · High CI · Good for club players</div></div></div>
-      <p>Take one ball, no bucket. Walk to a spot on the range or short game area. Hit one shot — any club, any target, any distance. Walk to a new spot. Repeat. Never staying stationary. The single-ball constraint forces you to commit to every shot (no safety net of repeated attempts) and constantly changes the challenge. Par is making 18 "satisfying" shots in 30 minutes.</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">When Interleaving Hurts</span>
-    <h3>The Acquisition Exception Revisited</h3>
-    <p style="margin-bottom:12px;">Interleaving is counterproductive when you are deliberately working on a technical change under coaching. If your coach has given you a specific position to ingrain — a new wrist angle, a different takeaway path — blocked repetition is required to establish that pattern as a motor habit. Interleaving would switch you out of the new pattern before it has consolidated.</p>
-    <p>The practical rule: blocked practice for <em>acquisition</em> (new patterns), random/interleaved practice for <em>consolidation and transfer</em> (ingraining existing patterns). Most golfers with a handicap below 12 need more of the latter and less of the former.</p>
+  <span class="badge badge-teal">🎯 Golf-Specific Application</span>
+  <div class="card card-teal">
+    <span class="card-tag">Interleaving in Your Practice Context</span>
+    <h3>Practical Implementation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The 3-club drill:</strong> Select three clubs — typically driver, a mid-iron, and a wedge. Hit one shot with each in rotation, to different targets, for 30–45 minutes. This is a complete interleaved session for full-swing maintenance.</div></li>
+      <li><span class="step-n">2</span><div><strong>The on-course simulation drill:</strong> Play 9 imaginary holes from the range. On each "hole", select the appropriate club for a tee shot, then an approach, then a chip or pitch. Every shot uses a different club and target — pure interleaving in a meaningful context.</div></li>
+      <li><span class="step-n">3</span><div><strong>The Arccos feedback loop:</strong> After an interleaved range session, note which clubs felt weakest under the interleaved conditions. These are your genuine skill gaps — the clubs your game depends on performing under uncertainty. Prioritise them in the next session's blocked acquisition work if they are newly weak, or continued interleaving if they are established skills that need sharpening.</div></li>
+    </ul>
   </div>
 </div>
+
 
 <!-- VARIABILITY -->
 <div class="sec" id="variability">
-  <h2 class="sec-title">Variability of Practice</h2>
-  <p class="sec-desc">Practising the same task with deliberate variation produces a more robust, adaptable motor programme than practising the same task identically. Variability builds robustness; repetition builds brittleness.</p>
-  <span class="badge badge-teal">Schema Theory Applied</span>
+  <h2 class="sec-title">Variability Training</h2>
+  <p class="sec-desc">Variable practice — deliberately varying target, distance, lie, or conditions within a session — builds more robust motor programs than fixed repetition at a single target. The golf course presents infinite variety; practice must reflect that.</p>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Schema Principle</span>
-    <h3>Why Variable Practice Builds a Stronger Motor Programme</h3>
-    <p style="margin-bottom:12px;">Richard Schmidt's Schema Theory (1975) proposes that the brain does not store specific movement programmes for every possible version of a task. Instead, it stores a schema — a generalised rule that can be applied to novel variations. Variable practice builds a richer schema. Constant practice produces a narrow, task-specific representation that fails under the slightest variation.</p>
-    <div class="formula">
-      <div class="formula-lbl">Schema Richness by Practice Type</div>
-      <div class="formula-main">Constant practice (always 7-iron to 155 yards):
-  Schema: accurate for 155 yards, brittle for 145 or 165 yards
-  On-course result: good when the exact distance comes up, error-prone otherwise
-
-Variable practice (7-iron to 140, 150, 155, 160, 165 yards in sequence):
-  Schema: rich representation across the 140-170 yard range
-  On-course result: reliable at any distance in the practised range</div>
-    </div>
+  <span class="badge badge-pro">🎯 Why Variability Works</span>
+  <div class="card card-pro">
+    <span class="card-tag">Schema Theory and Motor Programs</span>
+    <h3>Fixed Practice Builds Brittle Skills</h3>
+    <p>When you practise a shot repeatedly from the same lie to the same target, you build a specific motor program for that exact combination of conditions. Move the target 10 yards left, change the lie to a slight downslope, or add wind — and the program no longer fits.</p>
+    <p style="margin-top:10px;">Variable practice builds a generalised schema — a flexible motor program that can adapt to novel conditions. The variability is not noise; it is the information the nervous system uses to build a schema rather than a fixed program.</p>
   </div>
 
+  <span class="badge badge-gold">📊 Variability Dimensions</span>
   <div class="card card-gold">
-    <span class="card-tag">Implementing Variability</span>
-    <h3>Practical Variation Techniques for Each Area</h3>
-    <div class="grid-2">
-      <div class="mini-card"><span class="mini-tag">Full Swing</span><h4>Distance Laddering</h4><p>Hit each iron in sequence at 80%, 90%, 100%, and 110% effort. Never hit the same effort twice in a row. Note carry variation — this is your distance schema being built.</p></div>
-      <div class="mini-card"><span class="mini-tag">Wedges</span><h4>Exact Distance Targeting</h4><p>Set a specific distance target on the range (e.g. 73 yards). Hit 5 shots to that exact distance, alternating clubs. Then change to a random new distance. Never round to round numbers.</p></div>
-      <div class="mini-card"><span class="mini-tag">Chipping</span><h4>Variable Landing Zone</h4><p>Place targets at 3 different landing zones for the same hole. Hit one chip to each zone in random order. The different trajectories and run-outs required build a fuller short game schema.</p></div>
-      <div class="mini-card"><span class="mini-tag">Putting</span><h4>Clock Drill Variation</h4><p>Practise from 5 positions around the hole at 6 feet — each putt has different slope, grain, and line. Never practise the same putt twice consecutively from the same position.</p></div>
-    </div>
+    <span class="card-tag">What to Vary and How</span>
+    <h3>Four Dimensions of Practice Variability</h3>
+    <table class="tbl">
+      <tr><th>Dimension</th><th>How to Vary It</th><th>What It Builds</th></tr>
+      <tr><td>Target</td><td>Change target every shot — use multiple targets at different distances and directions</td><td>Aim adaptability, distance control generalisation</td></tr>
+      <tr><td>Lie</td><td>Practise from uneven lies (slopes, tight fairway, rough, divots)</td><td>Lie adaptability, real-course ball striking</td></tr>
+      <tr><td>Distance</td><td>Hit half-shots, three-quarter shots, punch shots — not just full swings</td><td>Distance control schema, partial swing robustness</td></tr>
+      <tr><td>Trajectory</td><td>Alternate high, low, and standard trajectory with the same club</td><td>Trajectory control, wind-game resilience</td></tr>
+    </table>
   </div>
 
-  <div class="card">
-    <span class="card-tag">Lie Variability</span>
-    <h3>The Most Under-Used Form of Golf Practice Variation</h3>
-    <p style="margin-bottom:12px;">Most practice occurs from flat, perfect lies. On the course, lie variation is constant — uphill, downhill, sidehill, rough, divots, tight lies. Practising exclusively from flat lies builds a schema that is optimised for a condition that rarely occurs on the course.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Actively seek uneven lies:</strong> Practise on the slope of the practice ground. Hit shots from the edge of the range where the lie is not perfectly flat. Use divots deliberately as lie conditions.</div></li>
-      <li><span class="step-n">2</span><div><strong>Practice from rough:</strong> Walk to the edge of the range where there is real rough. Practise approach shots from rough lies regularly — the different ball position, reduced spin, and tighter lie require schema elements that flat-lie practice never builds.</div></li>
-      <li><span class="step-n">3</span><div><strong>The one-ball walk drill:</strong> Place a ball wherever it lands after your previous shot. Then hit from that exact lie. Never reposition the ball to a better lie. This maximises lie variability within a single session.</div></li>
+  <span class="badge badge-teal">🔨 The Constraint-Led Method</span>
+  <div class="card card-teal">
+    <span class="card-tag">Using Equipment Constraints to Drive Variability</span>
+    <h3>Shaping Movement Through Constraints</h3>
+    <p>Constraint-led practice uses physical or environmental constraints to guide the nervous system toward target movement patterns without conscious technical thought. It is a powerful application of variability that avoids the paralysis-by-analysis problem of verbal instruction.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Towel under trail arm:</strong> Keeps the right elbow connected through impact. The constraint forces the movement without requiring you to think about it — practise shots with varying targets while maintaining the constraint.</div></li>
+      <li><span class="step-n">2</span><div><strong>Alignment stick gate:</strong> Two alignment sticks placed to create a narrow gate the club must pass through at address. Vary the gate position between shots to practise path adaptability.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ball below feet / above feet alternation:</strong> Alternate between these lies every shot. Forces stance, swing plane, and balance adaptations — builds real-course variability tolerance without any technical instruction.</div></li>
     </ul>
   </div>
 </div>
+
 
 <!-- DESIRABLE DIFFICULTIES -->
 <div class="sec" id="difficulties">
   <h2 class="sec-title">Desirable Difficulties</h2>
-  <p class="sec-desc">Desirable difficulties are practice conditions that impair performance in the short term but produce superior long-term retention. Not all difficulties are desirable — this tab defines which are, and which are merely frustrating without benefit.</p>
-  <span class="badge badge-gold">Bjork's Framework</span>
+  <p class="sec-desc">A family of practice conditions that make learning feel harder in the short term but produce significantly better long-term retention and transfer. The difficulty is desirable because it is doing the work that easy, smooth practice cannot.</p>
 
-  <div class="card card-gold">
-    <span class="card-tag">The Bjork Framework</span>
-    <h3>What Makes a Difficulty Desirable</h3>
-    <p style="margin-bottom:12px;">Robert Bjork's research on desirable difficulties identifies conditions that make learning harder in the short term but more durable in the long term. The key distinction: a desirable difficulty challenges the retrieval and reconstruction of a motor skill, forcing deeper processing. An undesirable difficulty (e.g. practising with a broken club, in extreme pain) interferes with the skill itself without any learning benefit.</p>
+  <span class="badge badge-pro">🔬 The Framework</span>
+  <div class="card card-pro">
+    <span class="card-tag">Bjork's Desirable Difficulties — Applied to Golf</span>
+    <h3>Six Conditions That Accelerate Durable Learning</h3>
     <table class="tbl">
-      <tr><th>Condition</th><th>Type</th><th>Mechanism</th><th>Application in Golf</th></tr>
-      <tr><td>Spacing practice sessions</td><td class="good">Desirable</td><td>Forgetting forces retrieval effort → stronger trace</td><td>3 × 30-min sessions beat 1 × 90-min session</td></tr>
-      <tr><td>Interleaving skills</td><td class="good">Desirable</td><td>Contextual interference → reconstruction effort</td><td>Random shot sequences on the range</td></tr>
-      <tr><td>Reducing feedback frequency</td><td class="good">Desirable</td><td>Forces internal error detection → self-correction skill</td><td>1-in-3 Mevo feedback rule</td></tr>
-      <tr><td>Testing without prior practice</td><td class="good">Desirable</td><td>Retrieval practice strengthens memory trace</td><td>Hit a round without a warmup first occasionally</td></tr>
-      <tr><td>Practising when fatigued</td><td class="warn">Context-dependent</td><td>Builds fatigue-state performance but risks injury</td><td>Occasionally useful; not a regular method</td></tr>
+      <tr><th>Difficulty</th><th>Golf Application</th><th>Why It Works</th></tr>
+      <tr><td>Spacing</td><td>Leave 24–48h between practice sessions rather than massing practice into one long session</td><td>Forgetting then retrieving a skill strengthens encoding more than continuous practice</td></tr>
+      <tr><td>Interleaving</td><td>Mix clubs and shot types within a session (see Interleaving tab)</td><td>Reconstruction under uncertainty builds deeper schemas</td></tr>
+      <tr><td>Testing / Retrieval</td><td>Before practising a skill, attempt it cold without warm-up repetitions</td><td>Retrieval effort — even when it produces errors — is a powerful learning stimulus</td></tr>
+      <tr><td>Variability</td><td>Change target, lie, distance every shot (see Variability tab)</td><td>Builds flexible schemas rather than brittle fixed programs</td></tr>
+      <tr><td>Reduced feedback</td><td>Use the 1-in-3 external feedback rule — see Feedback Science tab</td><td>Self-assessment builds the internal feedback loop required for competition</td></tr>
+      <tr><td>Generation</td><td>Attempt each shot shape or distance before seeing a model or getting instruction</td><td>Generating an attempt — even an incorrect one — primes the encoding of the correct version</td></tr>
     </table>
   </div>
 
-  <div class="card card-teal">
-    <span class="card-tag">Spacing — The Most Underused Desirable Difficulty</span>
-    <h3>Why Short Frequent Sessions Beat Long Infrequent Ones</h3>
-    <p style="margin-bottom:12px;">The spacing effect is one of the most reliable findings in all of cognitive science: distributed practice (spaced out over multiple sessions) produces better retention than massed practice (same total time in a single session). For golf, this means three 30-minute sessions produce more improvement than one 90-minute session with the same total ball count.</p>
-    <p style="margin-bottom:10px;">The mechanism: between sessions, forgetting occurs. Partial forgetting means that when you return to the skill, you must reconstruct it — which produces a stronger memory trace. This reconstruction effort is the learning.</p>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>Daily minimum practice:</strong> 20 minutes of putting and chipping daily outperforms 2-hour weekend sessions for developing short game skill. If your schedule allows only one session per week, split it mentally — 30 minutes, a break doing something else, then 30 more. Even an hour's gap between sub-sessions produces measurable spacing benefit.</p></div>
+  <span class="badge badge-gold">🎯 The Spacing Protocol</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Most Underused Desirable Difficulty</span>
+    <h3>Distributed Practice Beats Massed Practice</h3>
+    <p>Three 45-minute sessions across a week produces more durable learning than one 135-minute session on the same day — even with identical total practice volume. The spacing allows consolidation, and the retrieval at the start of each subsequent session strengthens encoding.</p>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Practical implication:</strong> If you have 3 hours of practice available this week, resist the urge to use it in one long Sunday session. Three 60-minute sessions on Monday, Wednesday, and Friday — even if they feel less comprehensive — will produce meaningfully better retention by the following week.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <span class="card-tag">Undesirable Difficulties</span>
-    <h3>Hard Practice That Doesn't Produce Learning</h3>
-    <ul class="steps">
-      <li><span class="step-n">✗</span><div><strong>Practising with incorrect technique:</strong> Repeating a swing fault reinforces it. If a coach has identified a technical error, practising with that error present (even in a random structure) reinforces the wrong pattern. Fix the technique in blocked acquisition work first, then move to random practice.</div></li>
-      <li><span class="step-n">✗</span><div><strong>Practising under extreme pain or injury:</strong> Any difficulty produced by injury or physical dysfunction is undesirable. The skill being rehearsed is not the target skill — it is a compensated version of it. Practising injured builds a compensated motor programme that must be unlearned after recovery.</div></li>
-      <li><span class="step-n">✗</span><div><strong>Practising when cognitively exhausted:</strong> Motor learning requires cognitive resources. Practising after a full day of demanding mental work produces less learning per shot than the same practice when cognitively fresh. Morning practice (for most people) produces better learning outcomes than late-evening practice.</div></li>
-    </ul>
+  <span class="badge badge-teal">⚠️ The Difficulty-Fluency Trap</span>
+  <div class="card card-teal">
+    <span class="card-tag">Why Productive Practice Feels Wrong</span>
+    <h3>Managing the Psychological Cost of Desirable Difficulties</h3>
+    <p>The most common failure point: players abandon interleaved or random practice after one or two sessions because it feels unproductive. The ball goes to inconsistent places. The session lacks the satisfying rhythm of blocked practice. They conclude the method does not work for them.</p>
+    <p style="margin-top:10px;">The correct interpretation of this feeling is the opposite of the intuitive one. The discomfort is the learning. The inconsistency during practice is the neurological work that will produce the consistency on the course. Track your course performance over 4–6 weeks — not your session performance — as the measure of whether the practice structure is working.</p>
   </div>
 </div>
+
 
 <!-- SKILL STAGE -->
-<div class="sec" id="skill_stage">
+<div class="sec" id="stages">
   <h2 class="sec-title">Skill Stage Adaptation</h2>
-  <p class="sec-desc">The optimal practice structure is not fixed — it changes as skill develops. Beginners genuinely benefit from blocked practice. Advanced players who continue using beginner practice methods are actively limiting their development.</p>
-  <span class="badge badge-lime">Fitts &amp; Posner Model</span>
+  <p class="sec-desc">Practice structure must change as skill develops. Blocked practice is appropriate — and necessary — for the earliest stage of skill acquisition. Random and interleaved practice is appropriate for established skills. Most amateurs use the wrong structure for their stage.</p>
 
-  <div class="card card-lime">
-    <span class="card-tag">The Three Stages of Skill Development</span>
-    <h3>Cognitive, Associative, and Autonomous</h3>
+  <span class="badge badge-pro">📊 The Three Stages</span>
+  <div class="card card-pro">
+    <span class="card-tag">Fitts & Posner Model — Applied to Golf</span>
+    <h3>Each Stage Requires a Different Practice Approach</h3>
     <table class="tbl">
-      <tr><th>Stage</th><th>Characteristics</th><th>Best Practice Structure</th><th>Where 10 HCP Players Are</th></tr>
-      <tr><td>Cognitive (novice)</td><td>Conscious attention required for every element; high error rate; thinking through each component</td><td class="good">Blocked — repetition builds the basic pattern</td><td>Not here anymore (established players)</td></tr>
-      <tr><td>Associative (intermediate)</td><td>Basic pattern established; refining timing and feel; errors still frequent but recognisable</td><td class="warn">Mixed — transitioning to random for most skills</td><td>Most elements beyond this — some new technique work may be here</td></tr>
-      <tr><td>Autonomous (advanced)</td><td>Execution is largely automatic; attention can shift to strategy and feel; errors are subtle</td><td class="good">Random, interleaved, competitive — maximum CI</td><td>Most full swing skills; putting fundamentals</td></tr>
+      <tr><th>Stage</th><th>Characteristics</th><th>Appropriate Practice Structure</th></tr>
+      <tr><td>Cognitive (early learning)</td><td>Conscious attention required for every element of the movement; high error rate; variable results</td><td class="good">Blocked — same shot, same target, high repetition. Immediate feedback after every shot. Short sessions (30–40 min).</td></tr>
+      <tr><td>Associative (intermediate)</td><td>Errors are smaller and more consistent; some automatic processing beginning; able to self-monitor</td><td class="warn">Mixed — blocked to warm up and confirm pattern, random for majority of session. Feedback every 3rd shot.</td></tr>
+      <tr><td>Autonomous (advanced)</td><td>Movement largely automatic; attentional resources available for strategy and course management; minimal conscious monitoring</td><td class="good">Random and interleaved — primarily. Blocked only to re-acquire after a technical change with a coach. Feedback 1-in-5 or less.</td></tr>
     </table>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The 10 HCP diagnosis:</strong> A player at 10 handicap has most fundamental skills at the autonomous stage. Random, interleaved, consequence-based practice is the appropriate structure for the vast majority of their practice time. Blocked practice should be reserved specifically for the acquisition of new technique under coaching guidance.</p></div>
   </div>
 
+  <span class="badge badge-gold">🎯 Your Current Stage</span>
   <div class="card card-gold">
-    <span class="card-tag">Applying the Stage Model</span>
-    <h3>Matching Practice Structure to Skill State</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify which stage each skill is at:</strong> Your 7-iron may be autonomous (no conscious thought required) while a new HackMotion-guided wrist position may be at the cognitive stage. Different practice structures are appropriate simultaneously for different skills.</div></li>
-      <li><span class="step-n">2</span><div><strong>Allocate blocked time only for cognitive-stage skills:</strong> If you are working on a new wrist position, allocate 15 minutes of blocked repetition to that specific change at the start of the session. Then switch to random practice for all other skills.</div></li>
-      <li><span class="step-n">3</span><div><strong>Graduate cognitive-stage work quickly:</strong> A new technical pattern should not stay in blocked practice for more than 3–4 sessions. If it is not consolidating by then, the issue is the technical prescription itself (wrong change for this player) or the setup (equipment, fitting). More blocked repetition of the same pattern rarely solves a non-consolidating technical change.</div></li>
+    <span class="card-tag">Self-Assessment Framework</span>
+    <h3>Identifying Your Stage by Club</h3>
+    <p>Skill stage is club-specific. Most players are autonomous with a 7-iron (their "reliable" club), associative with a 5-iron or fairway wood, and still cognitive with a new swing pattern their coach has introduced. Determine the stage for each part of your game separately.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>The 10-shot test:</strong> Hit 10 consecutive shots with the club in question, no warm-up. Count how many require conscious technical thought mid-swing. More than 5: cognitive stage. 2–5: associative. 0–1: autonomous.</div></li>
+      <li><span class="step-n">2</span><div><strong>The conversation test:</strong> Can you hold a basic conversation while hitting shots with this club? No: cognitive. Sometimes: associative. Yes: autonomous.</div></li>
+      <li><span class="step-n">3</span><div><strong>Map to practice structure:</strong> Use this stage map to select the appropriate session structure for each part of your game. Do not use random practice for cognitive-stage skills — you will practise errors.</div></li>
     </ul>
   </div>
+
+  <span class="badge badge-teal">🔄 Technical Change Protocols</span>
+  <div class="card card-teal">
+    <span class="card-tag">When Your Coach Introduces a New Pattern</span>
+    <h3>Reverting to Blocked After a Technical Change</h3>
+    <p>When a coaching intervention introduces a new movement pattern, you temporarily revert from autonomous back to cognitive stage for that specific movement. This is expected and should be treated accordingly: switch temporarily to blocked practice for 2–4 sessions while the new pattern is acquired, then progressively reintroduce interleaving and random work.</p>
+    <div class="formula" style="margin-top:12px;">
+      <div class="formula-lbl">Technical Change Session Sequence</div>
+      <div class="formula-main">Sessions 1–2: Full blocked · Sessions 3–4: 70% blocked / 30% random · Sessions 5–6: 40% blocked / 60% random · Session 7+: Random primary, blocked warm-up only</div>
+      <div class="formula-note">The transition timeline depends on how fundamentally different the new pattern is from the old one. Small adjustments may move through this sequence in 2–3 weeks; major pattern changes may take 6–8 weeks.</div>
+    </div>
+  </div>
 </div>
+
 
 <!-- SESSION TEMPLATES -->
 <div class="sec" id="templates">
   <h2 class="sec-title">Session Templates</h2>
-  <p class="sec-desc">Four science-backed session structures for different practice contexts — each applying the principles of spacing, interleaving, variability, and desirable difficulties in a practical format.</p>
-  <span class="badge badge-teal">Applied Session Design</span>
+  <p class="sec-desc">Ready-to-use session structures for each practice type. Each template specifies structure, duration, shot volume, feedback rules, and SG category focus — designed to be used directly from the range without further planning.</p>
 
-  <div class="card card-teal">
-    <span class="card-tag">Template 01 — The 60-Minute Full Practice Session</span>
-    <h3>Structured Transfer Practice — Weekly Cornerstone Session</h3>
+  <span class="badge badge-pro">📋 Template 1 — Technical Acquisition</span>
+  <div class="card card-pro">
+    <span class="card-tag">For New Patterns from a Coaching Session</span>
+    <h3>Blocked Acquisition Session (45 min)</h3>
     <table class="tbl">
-      <tr><th>Segment</th><th>Duration</th><th>Structure</th><th>Focus</th></tr>
-      <tr><td>Technical acquisition block</td><td>10 min</td><td>Blocked — specific technical work under coaching instruction</td><td>Current technical priority only</td></tr>
-      <tr><td>Transition</td><td>5 min</td><td>Walk; reset mentally</td><td>Clear the technical focus before skill work</td></tr>
-      <tr><td>Random iron practice</td><td>15 min</td><td>One shot per club per target — cycling through bag</td><td>All iron distances, random sequence</td></tr>
-      <tr><td>Wedge random targeting</td><td>10 min</td><td>Random exact distances — pull a number, hit that distance</td><td>Distance control across full wedge matrix</td></tr>
-      <tr><td>Short game interleaving</td><td>10 min</td><td>Chip, pitch, and bunker in sequence — new position every shot</td><td>Variable lies, targets, trajectories</td></tr>
-      <tr><td>Pressure putting circuit</td><td>10 min</td><td>9-hole putting game or make-or-start-over circuit</td><td>Consequence-based — simulate competition</td></tr>
+      <tr><th>Block</th><th>Duration</th><th>Structure</th><th>Feedback</th></tr>
+      <tr><td>Warm-up</td><td>10 min</td><td>PW to 80y, easy tempo, no technical focus</td><td>None — feel only</td></tr>
+      <tr><td>Technical block</td><td>25 min</td><td>Target club only, same target, 50 repetitions</td><td>Every shot — Mevo + feel</td></tr>
+      <tr><td>Transfer check</td><td>10 min</td><td>3-club interleaving: target club + driver + PW</td><td>Every 3rd shot</td></tr>
     </table>
+    <div class="info-box pro-box" style="margin-top:10px;">
+      <span class="ico">⬡</span>
+      <p><strong>Success criterion:</strong> The technical block is complete when 8 of 10 consecutive shots are within the target window. Do not continue beyond 25 minutes even if criterion is not met — cognitive fatigue produces junk repetitions.</p>
+    </div>
   </div>
 
+  <span class="badge badge-gold">📋 Template 2 — Skill Consolidation</span>
   <div class="card card-gold">
-    <span class="card-tag">Template 02 — The 20-Minute Daily Maintenance Session</span>
-    <h3>Short Game + Putting Only — Spacing the Skill</h3>
-    <p style="margin-bottom:10px;">Daily 20-minute sessions maintain skill more effectively than two 50-minute sessions. The spacing effect means daily practice produces superior retention even with lower total volume. This template is designed to be done every day as a minimum maintenance standard.</p>
-    <ul class="steps">
-      <li><span class="step-n">5m</span><div><strong>Pre-round mobility (if morning):</strong> Hip rotation, thoracic extension, glute activation. See Guide 06. Or: walk to the practice green.</div></li>
-      <li><span class="step-n">8m</span><div><strong>Variable chip/pitch:</strong> One ball. Move after every shot — never the same position twice. 5–8 different lies, trajectories, and targets. Focus on landing zone selection, not the hole.</div></li>
-      <li><span class="step-n">7m</span><div><strong>Pressure putting circuit:</strong> 6 balls around the hole at 5 feet. Must make all 6 consecutively. If you miss, start again. Record how many attempts to complete. Track weekly.</div></li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Template 03 — Pre-Round Warmup (45 min before tee)</span>
-    <h3>Activation Without Acquisition</h3>
-    <p style="margin-bottom:10px;">A pre-round warmup is not a practice session. The goal is to activate existing patterns, calibrate pace and distance for today's conditions, and enter the round with motor patterns warm and trust established. No technical work — if something feels off, accept it and play with it.</p>
+    <span class="card-tag">For Established Skills Being Sharpened</span>
+    <h3>Mixed Practice Session (60 min)</h3>
     <table class="tbl">
-      <tr><th>Segment</th><th>Duration</th><th>What to Do</th></tr>
-      <tr><td>Short irons (9i, PW, SW)</td><td>8 min</td><td>Gentle build from half swings to full. Focus on rhythm, not distance.</td></tr>
-      <tr><td>Mid irons (7i, 6i)</td><td>5 min</td><td>5–6 shots at a target. Confirm shape is available today.</td></tr>
-      <tr><td>Long game (5i or 3w, driver)</td><td>5 min</td><td>3–4 shots. Confirm tee shot shape. No technical fixing.</td></tr>
-      <tr><td>Wedge distance calibration</td><td>7 min</td><td>3 full shots each wedge to confirm distances for today (temp, altitude).</td></tr>
-      <tr><td>Putting green</td><td>10 min</td><td>Stimp calibration (15-min protocol abbreviated); 3 long laggers; pressure short putts.</td></tr>
-      <tr><td>Mental setup</td><td>5 min</td><td>Review pre-round target plan. Confirm strategy for 3 highest-risk holes.</td></tr>
+      <tr><th>Block</th><th>Duration</th><th>Structure</th><th>Feedback</th></tr>
+      <tr><td>Warm-up</td><td>10 min</td><td>Interleaved, easy — 3 clubs rotating</td><td>None</td></tr>
+      <tr><td>SG priority block</td><td>15 min</td><td>Highest-priority SG category — blocked to confirm pattern</td><td>Every 3rd shot</td></tr>
+      <tr><td>Integration block</td><td>25 min</td><td>Random 4-club interleaving — different target every shot</td><td>Every 3rd shot</td></tr>
+      <tr><td>Scoring game</td><td>10 min</td><td>9-hole sim or par game — competitive pressure, no feedback</td><td>None during play</td></tr>
     </table>
   </div>
 
-  <div class="card card-lime">
-    <span class="card-tag">Template 04 — The Competition Simulation Session</span>
-    <h3>Maximum Transfer Practice — Monthly or Pre-Event</h3>
-    <p style="margin-bottom:12px;">This session is designed to maximise transfer to the course by replicating competitive conditions as closely as possible. No blocked practice, no repeated shots, full consequences, complete routine on every shot.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Play 18 simulated holes on the range:</strong> Write out a fictional hole layout before starting. For each hole, hit the exact sequence of shots a round would require — tee shot, then approach (from the position the tee shot left you), then short game if needed. Move physically between stations.</div></li>
-      <li><span class="step-n">2</span><div><strong>Full pre-shot routine on every shot:</strong> No shortcuts. Full decision, full routine, full closure ritual. The simulation only works if every element of the competition routine is present.</div></li>
-      <li><span class="step-n">3</span><div><strong>Track simulated score:</strong> Record whether you hit fairway, green, made the putt. Calculate a simulated score. Compare across simulation sessions — improvement in the simulation is a reliable predictor of improvement on the course.</div></li>
-      <li><span class="step-n">4</span><div><strong>Include consequences:</strong> Set a target score for the simulation. If you miss it, complete your consequence (10 press-ups, a shorter future session, etc.). The consequence must be real for the practice to replicate competitive pressure.</div></li>
-    </ul>
+  <span class="badge badge-teal">📋 Template 3 — Competition Simulation</span>
+  <div class="card card-teal">
+    <span class="card-tag">Pre-Competition or Weekly Maintenance</span>
+    <h3>Random Transfer Session (75 min)</h3>
+    <table class="tbl">
+      <tr><th>Block</th><th>Duration</th><th>Structure</th><th>Feedback</th></tr>
+      <tr><td>Cold retrieval</td><td>10 min</td><td>Hit first 3 shots of each club cold — no warm-up repetitions</td><td>None — note which are weakest</td></tr>
+      <tr><td>On-course sim</td><td>40 min</td><td>Play 9 imaginary holes: tee shot → approach → pitch/chip per hole</td><td>None during sim</td></tr>
+      <tr><td>Weakness repair</td><td>15 min</td><td>Blocked on the 1–2 clubs identified as weakest in cold retrieval</td><td>Every shot</td></tr>
+      <tr><td>Pressure finish</td><td>10 min</td><td>5 shots to make: must hole out or reach a defined zone. Walk away after success.</td><td>Outcome only</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box tip" style="margin-top:4px;">
+    <span class="ico">💡</span>
+    <p><strong>Session frequency guidance:</strong> Technical Acquisition sessions are high-volume and cognitively demanding — max 2 per week per skill being changed. Skill Consolidation is sustainable at 3–4 per week. Competition Simulation once per week in-season, more if preparing for a specific event.</p>
   </div>
 </div>
+
 
 <!-- FEEDBACK SCIENCE -->
 <div class="sec" id="feedback">
   <h2 class="sec-title">Feedback Science</h2>
-  <p class="sec-desc">How you use feedback during practice is as important as what you practise. More feedback is not always better — in fact, high-frequency feedback can suppress the development of internal error detection and create dependency.</p>
-  <span class="badge badge-gold">Augmented Feedback Research</span>
+  <p class="sec-desc">When to use launch monitor and video feedback, when to withhold it, and how the timing and frequency of external feedback affects learning versus performance. The 1-in-3 rule — and why most golfers are dramatically over-using external feedback during practice.</p>
 
-  <div class="card card-gold">
-    <span class="card-tag">The Guidance Hypothesis</span>
-    <h3>Why Constant Mevo Feedback Can Hurt Learning</h3>
-    <p style="margin-bottom:12px;">The guidance hypothesis proposes that augmented feedback (external data — a launch monitor reading, a coach correction, a video replay) guides performance in the short term but can suppress the development of the internal error detection system that is essential for on-course performance. If a player receives launch monitor data after every shot, they stop developing the kinesthetic sense of "that was a good strike" — they rely on the external data instead.</p>
-    <div class="formula">
-      <div class="formula-lbl">The Feedback Dependency Problem</div>
-      <div class="formula-main">High-frequency feedback (Mevo after every shot):
-  → Good performance during practice (data guides immediately)
-  → Poor internal error detection (external cue replaces internal sense)
-  → On-course: no Mevo → relies on feel that was never developed
-
-Reduced feedback (Mevo every 3rd shot — the 1-in-3 rule):
-  → Slightly lower performance during practice
-  → Strong internal error detection develops (must assess shots 1 and 2)
-  → On-course: internal sense works reliably without external data</div>
+  <span class="badge badge-pro">🔬 The Research</span>
+  <div class="card card-pro">
+    <span class="card-tag">External Feedback and the Guidance Hypothesis</span>
+    <h3>Why Constant Feedback Creates Dependence</h3>
+    <p>When external feedback (launch monitor numbers, video, coach instruction) is provided after every shot, learners develop a dependence on it. Their internal error-detection system — the feedback loop required for consistent performance on the course — atrophies from disuse.</p>
+    <p style="margin-top:10px;">Research shows that learners who receive feedback after 50% or fewer of their practice shots perform significantly better at retention tests than those who receive feedback after every shot — despite performing worse during acquisition.</p>
+    <div class="pull-quote" style="margin-top:14px;">
+      <p>Providing feedback too frequently during practice creates a guidance effect — learners use the feedback as a crutch, and when it is withdrawn (as it always is in competition) performance degrades.</p>
+      <span>— Salmoni, Schmidt & Walter, 1984</span>
     </div>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The Mevo trap:</strong> Staring at the Mevo screen after every shot and adjusting based on the reading is a practice behaviour that creates range-only improvement. The internal error detection system — the "feel" that tells a tour player their shot was 2° open before the ball has even landed — is suppressed, not built, by constant external feedback.</p></div>
   </div>
 
+  <span class="badge badge-gold">📊 The 1-in-3 Feedback Rule</span>
+  <div class="card card-gold">
+    <span class="card-tag">Practical Implementation</span>
+    <h3>How to Use the Mevo During Practice Sessions</h3>
+    <table class="tbl">
+      <tr><th>Practice Type</th><th>Feedback Frequency</th><th>What to Look At</th></tr>
+      <tr><td>Technical Acquisition (blocked)</td><td class="good">Every shot</td><td>Club speed, smash factor, spin — pattern confirmation</td></tr>
+      <tr><td>Skill Consolidation (mixed)</td><td class="warn">Every 3rd shot</td><td>Carry distance, spin rate — quality check only</td></tr>
+      <tr><td>Competition Simulation (random)</td><td class="bad">Every 5th shot or less</td><td>Only if ball flight looks anomalous</td></tr>
+      <tr><td>Pre-round warm-up</td><td class="bad">None</td><td>Feel only — Mevo off or facing away</td></tr>
+      <tr><td>Pressure finishing game</td><td class="bad">None</td><td>Outcome (in/out of zone) only</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">🎯 Summary Feedback vs. Trial Feedback</span>
   <div class="card card-teal">
-    <span class="card-tag">The 1-in-3 Feedback Rule</span>
-    <h3>Implementing Reduced Feedback for Better Learning</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Hit three shots, check data only on the third:</strong> Before looking at the Mevo after shots 1 and 2, make your own assessment: Was that a good strike? Did it go where I intended? What did the flight tell me? Then check the data on the third shot to calibrate your internal assessment.</div></li>
-      <li><span class="step-n">2</span><div><strong>Compare your internal assessment to the data:</strong> Over time, your internal assessment and the data should converge. If you thought a shot was a good strike but the smash factor was 1.38 (poor), your internal error detection is not calibrated. If you correctly identify poor strikes kinesthetically before seeing the data, it is working.</div></li>
-      <li><span class="step-n">3</span><div><strong>The bandwidth feedback variation:</strong> Instead of every 3rd shot, use bandwidth feedback — only check data when the shot felt significantly off from your target. If it felt on, trust the feel. Only check when you are uncertain. This accelerates internal calibration because you are actively using the internal system.</div></li>
+    <span class="card-tag">The Most Effective Feedback Timing</span>
+    <h3>Reviewing After Blocks, Not After Shots</h3>
+    <p>Summary feedback — reviewing data after a block of 5–10 shots rather than after each shot — produces better learning outcomes than trial-by-trial feedback, even when total information provided is identical.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Block then review:</strong> Hit 7 shots in a randomised interleaved set. After the 7th shot, review the Mevo session summary — average carry, speed consistency, spin range. Identify the 1–2 outliers and note the feeling associated with them.</div></li>
+      <li><span class="step-n">2</span><div><strong>Internal feedback first:</strong> Before checking any external data, make your own assessment of each shot — where did it go, why, what did it feel like. Then check the data. The gap between your assessment and the data reveals the calibration of your internal feedback system.</div></li>
+      <li><span class="step-n">3</span><div><strong>HackMotion integration:</strong> HackMotion provides continuous wrist data — but resist reviewing it shot-by-shot during practice. Set a target range and review after each block. The goal is to develop feel for the target position, not to use HackMotion as a real-time crutch.</div></li>
     </ul>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Feedback Timing — Immediate vs. Delayed</span>
-    <h3>Why Delayed Feedback Produces Better Learning</h3>
-    <p style="margin-bottom:12px;">Research consistently shows that delaying feedback (waiting 5–10 seconds after a shot before providing any external information) produces better learning than immediate feedback. The 5–10 second delay allows the learner's internal error detection system to generate its own assessment before the external data overrides it.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>After each shot: close your eyes for 3–5 seconds.</strong> Focus on the kinesthetic feel of the shot — grip pressure, contact location, swing tempo, finish position. Form your internal assessment before looking at where the ball went or at any data.</div></li>
-      <li><span class="step-n">2</span><div><strong>Verbalise your assessment before looking:</strong> Saying "that was slightly toe — will fly right and short" before watching the ball is a powerful internal calibration technique. Your verbal prediction vs. the actual outcome is the training signal for your internal error detection.</div></li>
-      <li><span class="step-n">3</span><div><strong>HackMotion feedback timing:</strong> If using HackMotion during practice, review the data after completing a block of 5–10 shots rather than after each shot. This preserves the internal assessment process for each shot while still using the HackMotion data for calibration.</div></li>
-    </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The integration principle:</strong> The goal is not to stop using Mevo or HackMotion — it is to use them as periodic calibration tools rather than constant guidance systems. The same data is more valuable when reviewed after you have made your own assessment. The combination of strong internal error detection plus accurate external data is more powerful than either alone.</p></div>
   </div>
 </div>
 
-<div class="footer">PRACTICE STRUCTURE SCIENCE · GUIDE 38 · PRO EDITION · THE SCRATCH PROJECT</div>
-<script>
-function show(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-</script>
+
+
+<!-- ELITE PRACTICE SCIENCE -->
+<div class="sec" id="elitesci" data-tier="elite">
+  <h2 class="sec-title">Elite Practice Science</h2>
+  <p class="sec-desc" style="border-left-color:#c8d8e8;">The graduate layer beyond Guide 38's Pro content — implicit learning, the OPTIMAL theory update, bandwidth feedback, self-controlled practice, analogy instruction, and the neuroplasticity window that determines how much of each session actually sticks. These are the marginal-gain mechanisms that separate scratch-level improvement from plus-handicap improvement.</p>
+
+  <span class="badge" style="background:rgba(200,216,232,0.08);border:1px solid rgba(200,216,232,0.22);color:#e8f4ff;">⭐ Elite Edition · Builds on Pro Tabs 1–8</span>
+
+  <!-- CARD 1: IMPLICIT VS EXPLICIT -->
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Implicit vs. Explicit Learning</span>
+    <h3>Why Scratch Players Should Stop Thinking About Their Swing</h3>
+    <p>Explicit learning — consciously processing technical instructions — is appropriate at the cognitive stage (Guide 38, Skill Stage tab). At autonomous stage, it becomes a liability. Under competitive pressure, explicit knowledge is processed slowly and disrupts the automatic motor programme. Implicit learning — acquiring a pattern without verbalised rules — produces a motor programme that is significantly more pressure-proof.</p>
+    <p style="margin-top:10px;">The research: Masters et al. (1992) showed that golfers who learned a putting stroke implicitly (via an analogy) outperformed explicit learners under psychological stress, even when both groups performed identically under no-stress conditions. The implicit group had fewer reinvestment thoughts — they had less conscious knowledge to fall back on, so they didn't try.</p>
+    <table class="tbl" style="margin-top:14px;">
+      <tr><th>Mode</th><th>How Acquired</th><th>Under Pressure</th><th>Best For</th></tr>
+      <tr><td>Explicit</td><td>Verbal rules, conscious repetition, technical instruction</td><td class="bad">Degrades — reinvestment disrupts automatic execution</td><td>Early acquisition of new patterns only</td></tr>
+      <tr><td>Implicit</td><td>Analogy cues, error-strewn exploration, discovery learning</td><td class="good">Robust — no verbal rules to reinvest</td><td>Consolidation and competition-stage skill</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Practical shift:</strong> Once a technical change is consolidated (autonomous stage), stop thinking about it in terms of body parts and positions. Replace the technical cue with a feel cue, a metaphor, or a task cue ("land the ball on the slope, 20 feet right of the flag") that achieves the movement without engaging the verbal system.</p>
+    </div>
+  </div>
+
+  <!-- CARD 2: OPTIMAL THEORY -->
+  <div class="card card-teal">
+    <span class="card-tag">OPTIMAL Theory — Wulf & Lewthwaite, 2016</span>
+    <h3>The Updated Framework That Supersedes Pure Contextual Interference</h3>
+    <p>OPTIMAL — Optimising Performance Through Intrinsic Motivation and Attention — is the current state of the motor learning research. It identifies three conditions that accelerate skill acquisition beyond what the contextual interference effect alone predicts:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Enhanced expectancies:</strong> Believing you are performing well — even through accurate positive feedback, target success metrics, or peer comparison with less skilled players — measurably accelerates motor learning. This is not placebo: it activates dopaminergic circuits that consolidate motor memory. Practical application: set your practice targets so you succeed 60–70% of the time, not 30%.</div></li>
+      <li><span class="step-n">2</span><div><strong>Autonomy support:</strong> Giving yourself choices during practice — which target, which drill sequence, which feedback to check — consistently outperforms externally imposed practice schedules, even when the imposed schedule is theoretically optimal. The act of choosing activates the same reward circuitry as enhanced expectancies. Practical application: within a session structure, let yourself choose the target and sequence.</div></li>
+      <li><span class="step-n">3</span><div><strong>External focus of attention:</strong> Directing attention to the intended movement effect (the ball, the target, the divot location) rather than body movements consistently produces better skill acquisition and retention than internal focus (grip pressure, hip position, wrist angle). At Elite level: all cues should be target or effect-based, never body-based, during autonomous-stage practice.</div></li>
+    </ul>
+  </div>
+
+  <!-- CARD 3: BANDWIDTH FEEDBACK -->
+  <div class="card card-gold">
+    <span class="card-tag">Bandwidth Feedback — Beyond the 1-in-3 Rule</span>
+    <h3>Feedback Only When Performance Leaves a Tolerance Band</h3>
+    <p>The Pro tier's 1-in-3 feedback rule is a significant improvement over constant feedback. The Elite upgrade: bandwidth feedback, where external feedback is provided only when performance falls outside a pre-defined tolerance zone — not on a fixed schedule.</p>
+    <p style="margin-top:10px;">Research by Sherwood (1988) and replicated across multiple sports shows bandwidth feedback produces superior long-term retention compared to fixed-schedule reduced feedback. The mechanism: learners calibrate their internal error-detection system against only the shots that genuinely deviate, rather than receiving feedback on "good" shots (which they should already be able to self-assess).</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Feedback Approach</th><th>Trigger</th><th>Learning Effect</th></tr>
+      <tr><td>Constant (every shot)</td><td>Always</td><td class="bad">Guidance dependence — internal system atrophies</td></tr>
+      <tr><td>1-in-3 (Pro level)</td><td>Fixed schedule</td><td class="warn">Good — internal system develops on 2 in 3 shots</td></tr>
+      <tr><td>Bandwidth (Elite level)</td><td>Only when outside tolerance</td><td class="good">Best — self-assessment is primary; external confirms only genuine errors</td></tr>
+    </table>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p><strong>Implementation:</strong> Set a carry-distance tolerance on Mevo (e.g. ±6 yards from target). Only look at the data when the ball lands outside that zone. On-zone shots: self-assess the feel, note it, move on. Off-zone shots: check Mevo to identify the cause. Over 4–6 weeks this builds a calibrated internal sensor that functions without the monitor on the course.</p>
+    </div>
+  </div>
+
+  <!-- CARD 4: SELF-CONTROLLED PRACTICE -->
+  <div class="card card-pro">
+    <span class="card-tag">Self-Controlled Practice</span>
+    <h3>Learner-Controlled Feedback Timing Outperforms Researcher-Controlled</h3>
+    <p>Across 20+ studies, learners who control when they receive feedback — asking for it when they want it, rather than receiving it on a fixed schedule — consistently outperform yoked controls who receive feedback on an identical schedule. The effect size is large and robust across skill levels.</p>
+    <p style="margin-top:10px;">The mechanism connects to OPTIMAL theory: the act of deciding to request feedback is itself an autonomy-supporting choice that activates the dopaminergic consolidation pathway. Additionally, learners tend to request feedback after shots they feel were close to correct — creating a natural bandwidth-feedback pattern without explicit bandwidth rules.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Solo range sessions:</strong> Place the Mevo in data-collection mode but face the screen away. Hit shots and assess each internally. When you feel uncertain about a shot or want to confirm a feel, turn the screen and check. Do not check on a fixed schedule.</div></li>
+      <li><span class="step-n">2</span><div><strong>Coaching sessions:</strong> Ask your coach to give you information only when you ask for it during the practice component of a lesson. During the initial assessment they should direct; during practice repetitions, request-only feedback. Most coaches will adapt willingly — it is a well-evidenced approach.</div></li>
+      <li><span class="step-n">3</span><div><strong>HackMotion:</strong> Apply the same principle. Set the wrist angle target, hit shots, and only check the HackMotion data when you want confirmation of a specific feel. Do not review every shot by default.</div></li>
+    </ul>
+  </div>
+
+  <!-- CARD 5: ANALOGY LEARNING -->
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Analogy Learning</span>
+    <h3>Movement Metaphors That Bypass Explicit Processing</h3>
+    <p>An analogy instruction encodes a complete movement pattern as a single metaphor, bypassing the verbal-analytical system that explicit technical instructions engage. Because the movement is encoded as a single chunk rather than a sequence of rules, it is more resistant to reinvestment under pressure and more durable under fatigue.</p>
+    <p style="margin-top:10px;">Masters et al. demonstrated this with putting: "swing the putter like a pendulum" produced equivalent initial performance to explicit instruction but significantly better retention under anxiety. Golf is particularly suited to analogy learning because the movement is too fast for conscious control anyway — the verbal system is always playing catch-up.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Technical Goal</th><th>Explicit Cue (avoid at Elite level)</th><th>Analogy Cue (prefer)</th></tr>
+      <tr><td>Lead wrist bow at impact</td><td>"Flex the lead wrist downward through the ball"</td><td>"Press a thumbtack into the wall with the back of your left hand"</td></tr>
+      <tr><td>Shallow angle of attack</td><td>"Extend the trail arm and sweep through the ball"</td><td>"Brush the grass a foot behind the ball first"</td></tr>
+      <tr><td>Pelvis lateral drive</td><td>"Shift your lead hip toward the target before rotating"</td><td>"Bump the car door open with your left hip"</td></tr>
+      <tr><td>Putting tempo</td><td>"Keep the backstroke and through-stroke equal length"</td><td>"Tick-tock — same time each way"</td></tr>
+      <tr><td>Full swing width</td><td>"Keep the lead arm straight and extend the trail arm fully"</td><td>"Push the club head as far from your body as possible at the top"</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Building your analogy library:</strong> Work with your coach to develop 2–3 personal analogies for your most common technical goals. Analogies are most effective when they are personal — a metaphor that resonates with you is more powerful than a textbook one. Test them in low-pressure sessions before relying on them in competition.</p>
+    </div>
+  </div>
+
+  <!-- CARD 6: NEUROPLASTICITY AND SLEEP -->
+  <div class="card card-teal">
+    <span class="card-tag">Neuroplasticity &amp; The Consolidation Window</span>
+    <h3>What Happens in the 8 Hours After a Practice Session</h3>
+    <p>Motor skill consolidation — the process of converting a newly acquired movement pattern from fragile short-term encoding into durable long-term memory — occurs primarily during sleep. Specifically, slow-wave sleep (deep sleep, approximately 3–4 hours in) drives offline motor sequence consolidation, while REM sleep handles procedural memory integration.</p>
+    <p style="margin-top:10px;">Walker et al. (2002) demonstrated a 20% performance improvement on a motor sequence task following a night of sleep, with no additional practice — the improvement occurred entirely offline. For golf, this means the session you do on Monday evening is still being consolidated on Tuesday morning. Disrupting that night's sleep disrupts the consolidation.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Practice Timing</th><th>Consolidation Quality</th><th>Recommendation</th></tr>
+      <tr><td>Morning session, normal sleep night</td><td class="good">Full consolidation — 12+ hours before sleep</td><td>Ideal for technical acquisition work</td></tr>
+      <tr><td>Evening session, normal sleep night</td><td class="good">Full consolidation — sleep follows within hours</td><td>Good — consolidation window is short but complete</td></tr>
+      <tr><td>Evening session, disrupted sleep (travel, stress)</td><td class="bad">Partial consolidation — fragile encoding</td><td>Avoid technical acquisition on travel nights before events</td></tr>
+      <tr><td>Multiple sessions same day</td><td class="warn">Interference between sessions possible</td><td>Separate by 6+ hours; different skills in AM vs PM</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);margin-top:10px;">
+      <span class="ico">⭐</span>
+      <p><strong>Elite competition week protocol:</strong> Do your last meaningful technical practice session no later than 48 hours before competition. The 48-hour window allows two full consolidation cycles. Technical work within 24 hours of competition competes with consolidation of the performance state you want to be in — not worth it.</p>
+    </div>
+  </div>
+
+  <!-- CARD 7: THE ELITE INTEGRATION -->
+  <div class="card card-gold">
+    <span class="card-tag">Putting It Together — The Elite Practice Architecture</span>
+    <h3>How the Elite Mechanisms Stack with the Pro Framework</h3>
+    <table class="tbl">
+      <tr><th>Layer</th><th>Standard (Guide 05)</th><th>Pro (Guide 38)</th><th>Elite (This Tab)</th></tr>
+      <tr><td>Core principle</td><td>Interleaving beats blocked</td><td>Full framework: stages, templates, feedback rules</td><td>Implicit &gt; explicit at autonomous stage; OPTIMAL conditions</td></tr>
+      <tr><td>Feedback protocol</td><td>Not specified</td><td>1-in-3 rule, summary vs trial feedback</td><td>Bandwidth feedback, self-controlled timing</td></tr>
+      <tr><td>Cue type</td><td>Technical (body-focused)</td><td>Technical moving toward external</td><td>Analogy and external focus only — no body cues</td></tr>
+      <tr><td>Session design</td><td>General interleaving guidance</td><td>Three full templates with time allocations</td><td>Same templates + OPTIMAL conditions applied within them</td></tr>
+      <tr><td>Recovery</td><td>Not addressed</td><td>Not addressed</td><td>Consolidation window: session timing and sleep architecture</td></tr>
+    </table>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);">The Elite layer does not replace the Pro layer — it sits on top of it. You need the Pro framework running correctly before these mechanisms produce marginal gains. A player still doing blocked practice will not benefit from bandwidth feedback because the blocked structure is already the dominant variable.</p>
+  </div>
+
+</div>
+
+
+<div class="footer">PRACTICE STRUCTURE SCIENCE · PRO EDITION · GUIDE 38 · THE SCRATCH PROJECT</div>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
   <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
   <div style="display:flex;flex-wrap:wrap;gap:10px;">
-    <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+    <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
     </a>
-    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
-      <span style="font-size:1.3rem;flex-shrink:0;">🧠</span>
-      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game</span>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats &amp; SG Interpretation</span>
     </a>
-    <a href="40_decision_architecture.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
-      <span style="font-size:1.3rem;flex-shrink:0;">♟️</span>
-      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Decision Architecture</span>
+    <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+    <a href="47_elite_performance_psychology.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧠</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Elite Performance Psychology</span>
     </a>
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
-    <a href="index_pro.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+    <a href="index_pro.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
+
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
 </body>
 </html>

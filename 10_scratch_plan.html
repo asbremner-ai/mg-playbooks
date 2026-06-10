@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-06-05 · 10_scratch_plan.html -->
+<!-- version:v2.3 · 2026-06-09 · 10_scratch_plan.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -491,21 +491,6 @@
     .gap-cat{min-width:90px;}
   }
 </style>
-<script>
-/* tier-init */
-const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-tier]').forEach(function(el) {
-      var t = el.getAttribute('data-tier');
-      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
-      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
-      el.setAttribute('data-tier-active', t);
-    });
-  });
-})();
-</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -524,7 +509,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <p class="hero-deck">You have committed to 2 rounds and 2 structured practice sessions per week. This plan closes every remaining SG gap in sequence. Execute the phases in order and the handicap follows.</p>
   <div class="hero-topics">
     <span class="hero-topic">📅 Phase 1–3: Months 1–12</span>
-    <span class="hero-topic">🎯 Phase 4: Months 13–24</span>
+    <span class="hero-topic">🎯 Phase 4: Months 13–18 and Phase 5: Months 19–24</span>
     <span class="hero-topic">💪 Fitness Protocol</span>
     <span class="hero-topic">🍎 Nutrition</span>
     <span class="hero-topic">📊 SG Targets</span>
@@ -550,7 +535,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
 <div class="section active" id="verdict">
   <span class="section-label">The Verdict</span>
   <h2 class="section-title">CAN YOU DO IT?</h2>
-  <p class="section-desc">Yes — but the existing plan takes you to roughly +1–2 by Month 12. This document extends it with a formal Phase 4 and the additional pillars required to close the final margin to scratch.</p>
+  <p class="section-desc">Yes — but the existing plan takes you to roughly +1–2 by Month 12. This document extends it with a formal Phases 4 and 5 and the additional pillars required to close the final margin to scratch.</p>
 
   <div class="pull-quote">
     "The path from 10 to scratch is not a matter of talent. It is a matter of structure, discipline, and willingness to compete under pressure."
@@ -626,7 +611,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
     <div class="mini-card">
       <span class="mini-kicker">Timeline Reality</span>
       <h4>Month 12 → Scratch</h4>
-      <p>Months 1–12 follow the existing plan. Months 13–24 introduce Phase 4: elite execution, competitive exposure, and the precision-level SG standards a scratch golfer must hold across all categories.</p>
+      <p>Months 1–12 follow the existing plan. Months 13–24 introduce Phases 4 and 5: elite execution, competitive exposure, and the precision-level SG standards a scratch golfer must hold across all categories.</p>
     </div>
   </div>
 </div>
@@ -726,7 +711,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <div class="card teal-card" style="margin-bottom:24px;">
     <span class="card-kicker">Navigation Guide — How Phases Map to Monthly Plans</span>
     <h3>Phase Framework Cross-Reference</h3>
-    <p style="font-size:0.85rem;color:var(--ink-light);margin-bottom:12px;">The four phases below describe <em>what</em> you are working on. The monthly plan guides (27–30) describe <em>exactly how</em> to execute each week. Use this table to navigate between them.</p>
+    <p style="font-size:0.85rem;color:var(--ink-light);margin-bottom:12px;">The five phases below describe <em>what</em> you are working on. The monthly plan guides (27–30) describe <em>exactly how</em> to execute each week. Use this table to navigate between them.</p>
     <table class="dtable">
       <tr><th>This Guide — Phase</th><th>Months</th><th>Dates</th><th>Monthly Plan Guide</th><th>Theme</th></tr>
       <tr><td><strong>Phase 1</strong></td><td>1–2</td><td>Jun–Jul 2026</td><td><strong>Guide 27</strong> (Months 1–6)</td><td>Stop the Bleeding</td></tr>
@@ -798,7 +783,142 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <div class="phase-block">
     <div class="phase-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Phase</span>4</div>
     <p class="phase-title">Elite Execution — The Scratch Standard</p>
-    <span class="phase-sub">Months 13–24 · Target: Scratch · Focus: Precision, competition, closing the margin</span>
+    <span class="phase-sub">Months 13–18 · Target: Scratch · Focus: Precision, competition, closing the margin</span>
+    <ul class="checklist">
+      <li><span class="check gold">✓</span><strong>Approach proximity target: &lt;25 ft from 150 yards.</strong> GIR% target: 55–60%. These are scratch-calibre standards — tighten from Phase 3 targets.</li>
+      <li><span class="check gold">✓</span>Eliminate bogeys from miscalculation, not poor ball-striking. Every decision on course must be the statistically correct one, not the emotionally compelling one.</li>
+      <li><span class="check gold">✓</span><strong>Quarterly swing audits with a TPI-certified coach.</strong> Your SG data tells you what is leaking; a coach tells you why and how to fix it efficiently. Self-directed improvement has a ceiling around +2–3.</li>
+      <li><span class="check gold">✓</span>Up-and-down rate target: 40%+. Bunker save rate: 35%+. 3-putt rate: &lt;5%. 5-ft make rate: 85%+. These are the scratch benchmarks — not aspirational, but required.</li>
+      <li><span class="check gold">✓</span><strong>Minimum 2 competitive rounds per month.</strong> Club championship, open competitions, county events. Pressure exposure is non-negotiable at scratch level. Your handicap will not reflect your capability until you perform under real stakes consistently.</li>
+      <li><span class="check gold">✓</span>Weekly pressure practice — putting for consequence, chipping to tight targets with a financial penalty for misses. Simulate the emotional conditions of competition in every practice session.</li>
+      <li><span class="check gold">✓</span>Full physical protocol sustained: strength 2×/week, cardio 2–3×/week, daily mobility, sleep discipline, on-course nutrition. At scratch level, physical precision across 18 holes under competitive pressure is a primary differentiator.</li>
+    </ul>
+    <div class="callout" style="background:var(--gold-pale);border-left:3px solid var(--gold);">
+      <span class="cicon">🏆</span>
+      <p><strong>Expected result:</strong> Scratch handicap confirmed across multiple competitive rounds. All four SG categories within scratch benchmarks simultaneously. This is the standard — not aspirational, but achievable with the commitment you have made.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TAB 4 — SG TARGETS
+════════════════════════════════════════ -->
+<div class="section" id="sgtargets">
+  <span class="section-label">Strokes Gained</span>
+  <h2 class="section-title">THE NUMBERS TO HIT</h2>
+  <p class="section-desc">Scratch is defined by closing four SG gaps simultaneously. Each category has a current deficit and a target. Track these in Arccos or Shot Scope every round — the data, not your feel, drives every practice decision.</p>
+
+  <span class="badge b-rust">📊 SG Gap vs. Scratch Baseline</span>
+
+  <div class="card">
+    <span class="card-kicker">Current 10 HCP Deficits</span>
+    <h3>Where Every Stroke Is Leaking Right Now</h3>
+    <div style="margin-top:14px;">
+      <div class="gap-row">
+        <span class="gap-cat">SG: Approach</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:60%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−1.8/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Around-Green</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:83%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−2.5/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Putting</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:80%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val bad">−2.4/rd</span>
+      </div>
+      <div class="gap-row">
+        <span class="gap-cat">SG: Off-Tee</span>
+        <div class="gap-bar-wrap"><div class="gap-bar" style="width:30%;background:linear-gradient(90deg,var(--rust),var(--rust-light));"></div></div>
+        <span class="gap-val warn">−0.9/rd</span>
+      </div>
+    </div>
+    <p style="margin-top:16px;font-size:0.88rem;color:var(--ink-light);font-style:italic;">Total deficit vs. scratch: approximately −7.6 strokes per round. That is your full journey. The plan closes these gaps in sequence, with the largest gaps targeted first.</p>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Scratch Benchmarks — Your Targets</span>
+    <h3>What Every Category Must Look Like to Register Scratch</h3>
+    <table class="dtable">
+      <tr>
+        <th>Category</th>
+        <th>10 HCP Current</th>
+        <th>Phase 3 Target</th>
+        <th>Scratch Target</th>
+      </tr>
+<tr><th>This Guide — Phase</th><th>Months</th><th>Dates</th><th>Monthly Plan Guide</th><th>Theme</th></tr>
+      <tr><td><strong>Phase 1</strong></td><td>1–2</td><td>Jun–Jul 2026</td><td><strong>Guide 27</strong> (Months 1–6)</td><td>Stop the Bleeding</td></tr>
+      <tr><td><strong>Phase 2</strong></td><td>3–4</td><td>Aug–Sep 2026</td><td><strong>Guide 27</strong> (Months 1–6)</td><td>Build the Foundation</td></tr>
+      <tr><td><strong>Phase 3</strong> (early)</td><td>5–6</td><td>Oct–Nov 2026</td><td><strong>Guide 27</strong> (Months 1–6)</td><td>Build the Attack — begins</td></tr>
+      <tr><td><strong>Phase 3</strong> (main)</td><td>7–12</td><td>Dec 2026–May 2027</td><td><strong>Guide 28</strong> (Months 7–12)</td><td>Build the Attack — full</td></tr>
+      <tr><td><strong>Phase 5</strong> (early)</td><td>19–24</td><td>Jun–Nov 2027</td><td><strong>Guide 30</strong> (Months 19–24)</td><td>Elite Execution — close the margin</td></tr>
+      <tr><td><strong>Phase 5</strong> (final)</td><td>19–24</td><td>Dec 2027–May 2028</td><td><strong>Guide 30</strong> (Months 19–24)</td><td>Defend the Standard</td></tr>
+    </table>
+    <div class="insight" style="margin-top:10px;"><span class="cicon">📌</span><p><strong>How to use this:</strong> Start each month by opening your current monthly guide (27, 28, 29, or 30). Use the phase descriptions below to understand the strategic context. The monthly guides contain the week-by-week drills, session templates, and competition calendar — this guide provides the framework behind them.</p></div>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>1</div>
+    <p class="phase-title">Stop the Bleeding</p>
+    <span class="phase-sub">Months 1–2 · Target: Handicap ~8 · Focus: Eliminate double bogeys</span>
+    <ul class="checklist">
+      <li><span class="check rust">✓</span>Install and use pre-shot routine on every single shot — no exceptions.</li>
+      <li><span class="check rust">✓</span>Begin tracking 5 stats per round via Arccos or Shot Scope from Round 1.</li>
+      <li><span class="check rust">✓</span>Apply shot selection hierarchy: no hero plays from trouble. Chip out, take your medicine.</li>
+      <li><span class="check rust">✓</span>Aim for the fat part of the green on all pins that are not clearly accessible.</li>
+      <li><span class="check rust">✓</span>Begin 6-minute daily mobility routine: thoracic, hip 90/90, hip flexor, wrist.</li>
+    </ul>
+    <div class="callout">
+      <span class="cicon">📊</span>
+      <p><strong>Expected result:</strong> −2 to −3 strokes in scoring average within 6–8 rounds. Most of this gain comes from decision-making, not ball-striking.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>2</div>
+    <p class="phase-title">Build the Foundation</p>
+    <span class="phase-sub">Months 3–4 · Target: Handicap ~7 · Focus: Short game + putting confidence</span>
+    <ul class="checklist">
+      <li><span class="check teal">✓</span>Structured short game practice every session — track proximity, not feel.</li>
+      <li><span class="check teal">✓</span>Build the full wedge distance matrix: all 4 clubs × 4 clock positions (8 o'clock to 12 o'clock).</li>
+      <li><span class="check teal">✓</span>Make 100 Drill weekly at 4 feet — build neurological confidence under pressure.</li>
+      <li><span class="check teal">✓</span>Get a professional putter fitting — highest ROI equipment investment available (+0.3–0.8 SG).</li>
+      <li><span class="check teal">✓</span>Begin strength training 2× per week: hip hinge focus (deadlifts, hip thrusts, goblet squats).</li>
+    </ul>
+    <div class="insight">
+      <span class="cicon">🎯</span>
+      <p><strong>Expected result:</strong> Up-and-down rate improving toward 35%+. 3-putt rate below 10%. Handicap approaching 7–8.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div class="phase-block">
+    <div class="phase-num"><span class="ph-label">Phase</span>3</div>
+    <p class="phase-title">Build the Attack</p>
+    <span class="phase-sub">Months 5–12 · Target: Handicap ~1–2 · Focus: Approach play + GIR</span>
+    <ul class="checklist">
+      <li><span class="check gold">✓</span>Launch monitor session: establish verified carry distances for every club. End under-clubbing permanently.</li>
+      <li><span class="check gold">✓</span>Add Alignment Stick Low Point Drill to every iron practice session. Target consistent ball-first contact.</li>
+      <li><span class="check gold">✓</span>Apply wind percentage system on every approach where wind exceeds 10 mph. Automate it until it is unconscious.</li>
+      <li><span class="check gold">✓</span>Begin Rypstick speed training if driver speed is a limiter: 3× per week, 10 minutes per session (Guide 25).</li>
+      <li><span class="check gold">✓</span>Apply dispersion-based targeting on all approach shots — aim based on your shot pattern, not the flag.</li>
+      <li><span class="check gold">✓</span>Enter at least 1 competitive round per month (club medal, stableford, or equivalent).</li>
+    </ul>
+    <div class="warning">
+      <span class="cicon">📈</span>
+      <p><strong>Expected result:</strong> GIR% improving toward 40–45%. Approach proximity under 30 ft from 150 yards. Handicap reaching +1–2 by Month 12.</p>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div class="phase-block">
+    <div class="phase-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Phase</span>4</div>
+    <p class="phase-title">Elite Execution — The Scratch Standard</p>
+    <span class="phase-sub">Months 19–24 · Target: Scratch · Focus: Precision, competition, closing the margin</span>
     <ul class="checklist">
       <li><span class="check gold">✓</span><strong>Approach proximity target: &lt;25 ft from 150 yards.</strong> GIR% target: 55–60%. These are scratch-calibre standards — tighten from Phase 3 targets.</li>
       <li><span class="check gold">✓</span>Eliminate bogeys from miscalculation, not poor ball-striking. Every decision on course must be the statistically correct one, not the emotionally compelling one.</li>

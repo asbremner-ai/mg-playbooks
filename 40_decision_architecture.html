@@ -1,88 +1,141 @@
 <!DOCTYPE html>
-<!-- version:v2.0 · 2026-06-08 · 40_decision_architecture.html · PRO EDITION -->
+<!-- version:v2.6 · 2026-06-09 · 40_decision_architecture.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Decision Architecture &amp; EV Mastery — Pro Edition · Guide 40</title>
+<title>Decision Architecture &amp; EV Mastery — Pro Edition</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
   --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
-  --border:rgba(160,200,80,0.16);
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
   --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
   --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
   --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
   --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
-  --pro:#c8922a;--pro-hi:#e8b050;--pro-border:rgba(200,146,42,0.35);
-  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
   --r:12px;--r-sm:8px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
 .home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
-.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;}
-.pro-badge-nav{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);background:rgba(200,146,42,0.1);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
-.hero{position:relative;z-index:2;background:linear-gradient(170deg,#050d05 0%,#0f1e0e 60%,var(--surface) 100%);padding:44px 20px 32px;text-align:center;border-bottom:1px solid var(--border);}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:10px;}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,7vw,2.8rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:8px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
 .hero h1 em{color:var(--pro-hi);font-style:italic;}
-.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto;font-weight:300;line-height:1.65;}
-.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);padding:0 4px;scrollbar-width:none;position:relative;z-index:100;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
 .nav::-webkit-scrollbar{display:none;}
-.tab{flex-shrink:0;background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:14px 14px 12px;cursor:pointer;transition:color .2s,border-color .2s;white-space:nowrap;}
-.tab.active{color:var(--lime-hi);border-bottom-color:var(--lime);}
-.tab:hover{color:var(--white);}
-.sec{display:none;padding:24px 16px 60px;max-width:700px;margin:0 auto;position:relative;z-index:1;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
 .sec.active{display:block;}
-.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.6rem,6vw,2.2rem);font-weight:900;line-height:1.1;margin-bottom:8px;}
-.sec-desc{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7;}
-.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
-.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.4);color:var(--gold-hi);}
-.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.4);color:var(--teal-hi);}
-.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,0.4);color:var(--lime-hi);}
-.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,0.4);color:var(--rust-hi);}
-.card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:16px;position:relative;overflow:hidden;}
-.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.card-gold::before{background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.card-teal::before{background:linear-gradient(90deg,transparent,var(--teal),transparent);}
-.card-lime::before{background:linear-gradient(90deg,transparent,var(--lime),transparent);}
-.card-rust::before{background:linear-gradient(90deg,transparent,var(--rust),transparent);}
-.card-gold{border-color:rgba(224,184,64,0.25);}
-.card-teal{border-color:rgba(72,176,168,0.25);}
-.card-lime{border-color:rgba(160,200,80,0.25);}
-.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;line-height:1.25;}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
-.steps{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.steps li{display:flex;gap:12px;align-items:flex-start;}
-.step-n{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--lime-dim);border:1px solid rgba(160,200,80,0.3);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;color:var(--lime-hi);display:flex;align-items:center;justify-content:center;margin-top:2px;}
-.formula{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
-.formula-lbl{font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
-.formula-main{font-size:11.5px;color:var(--lime-hi);line-height:1.8;white-space:pre-wrap;}
-.formula-note{font-size:11px;color:var(--muted);margin-top:8px;font-style:italic;font-family:'Inter',sans-serif;}
-.tbl{width:100%;border-collapse:collapse;margin:12px 0;font-size:12px;}
-.tbl th{background:var(--surface);padding:8px 10px;text-align:left;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);}
-.tbl td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(232,240,216,0.82);vertical-align:top;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
 .tbl tr:last-child td{border-bottom:none;}
-.good{color:#78d080;}
-.warn{color:#d0a840;}
-.bad{color:#d06050;}
-.info-box{display:flex;gap:10px;padding:14px;border-radius:var(--r-sm);margin:14px 0;font-size:12.5px;line-height:1.7;}
-.info-box .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
-.tip{background:var(--teal-dim);border:1px solid rgba(72,176,168,0.25);color:var(--teal-hi);}
-.elite{background:var(--gold-dim);border:1px solid rgba(224,184,64,0.25);color:var(--gold-hi);}
-.warn-box{background:var(--rust-dim);border:1px solid rgba(216,96,48,0.25);color:var(--rust-hi);}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0;}
-.mini-card{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;}
-.mini-tag{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;}
-.mini-card h4{font-size:12.5px;font-weight:600;margin-bottom:4px;}
-.mini-card p{font-size:11.5px;color:var(--muted);line-height:1.55;}
-.footer{background:var(--surface);border-top:1px solid var(--border);padding:20px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
 </style>
-<script>
-/* tier-init */
+<script>/* tier-init */
 const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
@@ -90,419 +143,476 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
       var t = el.getAttribute('data-tier');
       if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
       if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
       el.setAttribute('data-tier-active', t);
     });
   });
-})();
-</script>
+})();</script>
 </head>
 <body>
+
 <div class="home-nav">
-  <a href="index_pro.html">&#8962; Pro Playbooks</a>
-  <span class="pro-badge-nav">⬡ Guide 40 · Pro Edition</span>
+  <a href="index_pro.html"><span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks</a>
+  <span class="pro-nav-badge">⬡ Pro Edition</span>
 </div>
 
 <div class="hero">
-  <div class="hero-label">Guide 40 · Strategic Mastery</div>
-  <h1>Decision <em>Architecture</em><br>&amp; EV Mastery</h1>
-  <p class="hero-sub">Every shot in golf is a probability problem. Decision Architecture is the systematic framework for solving these problems consistently — converting feel-based guessing into defensible, data-driven choices.</p>
+  <p class="hero-label">Pro Playbook · Guide 40 · Pro Edition</p>
+  <h1>Decision Architecture<br><em>&amp; EV Mastery</em></h1>
+  <p class="hero-sub">The Decade framework built out in full — expected value calculations for every shot type, probability-weighted aim points from your Arccos dispersion data, pre-round hole planning, and a complete worked scenario library.</p>
+  <div class="hero-tags" style="--htag-bg:var(--gold-dim);--htag-border:rgba(224,184,64,.3);--htag-color:var(--gold-hi);">
+    <span class="htag" style="background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);">♟️ Expected Value</span>
+    <span class="htag" style="background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);">📊 Dispersion → Probability</span>
+    <span class="htag" style="background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);">🎯 Optimal Aim Points</span>
+    <span class="htag" style="background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);">📋 Scenario Library</span>
+  </div>
 </div>
 
-<div class="nav" id="nav">
+<div class="nav">
   <button class="tab active" onclick="show('overview',this)">Overview</button>
-  <button class="tab" onclick="show('dispersion_prob',this)">Dispersion → Probability</button>
-  <button class="tab" onclick="show('consequence',this)">Consequence Mapping</button>
-  <button class="tab" onclick="show('aim_calc',this)">Aim Point Calc</button>
-  <button class="tab" onclick="show('tee_ev',this)">Tee Shot EV</button>
+  <button class="tab" onclick="show('dispersion',this)">Dispersion → Probability</button>
+  <button class="tab" onclick="show('consequence',this)">Consequence Map</button>
+  <button class="tab" onclick="show('aimpoint',this)">Aim Point Calc</button>
+  <button class="tab" onclick="show('tee',this)">Tee EV</button>
   <button class="tab" onclick="show('par5',this)">Par 5 Strategy</button>
   <button class="tab" onclick="show('scenarios',this)">Scenario Library</button>
-  <button class="tab" onclick="show('planning',this)">Pre-Round Planning</button>
-  <button class="tab" onclick="show('formats',this)">Format Adjustment</button>
+  <button class="tab" onclick="show('template',this)">Planning Template</button>
+  <button class="tab" onclick="show('format',this)">Format Adjustment</button>
 </div>
+
 
 <!-- OVERVIEW -->
 <div class="sec active" id="overview">
-  <h2 class="sec-title">Decision Architecture</h2>
-  <p class="sec-desc">The Decade system (Broadie/Fawcett) provides the analytical backbone. This guide operationalises it into a complete decision framework — from raw Arccos dispersion data to a specific aim point on a specific shot in a specific wind.</p>
-  <span class="badge badge-gold">⬡ Guide 40 · Pro Edition · Decade Applied</span>
+  <h2 class="sec-title">The Decision Framework</h2>
+  <p class="sec-desc">Every strategic decision on a golf course has an expected value — the average score outcome across all possible results, weighted by their probability. Playing the highest-EV option on every shot is how scratch and plus-handicap players score better than their ball-striking ability alone would predict.</p>
 
-  <div class="card card-gold">
-    <span class="card-tag">The Fundamental Shift</span>
-    <h3>From Aspirational Thinking to Expected Value Thinking</h3>
-    <p style="margin-bottom:12px;">Most amateur golfers make shot decisions based on their best-case outcome: "If I hit a perfect 7-iron, I can get it to 15 feet." Decision Architecture replaces this with expected value thinking: "Given my dispersion at this distance, with this wind, from this lie — where does aiming at the flag produce the lowest expected number of strokes to hole out?"</p>
-    <div class="formula">
-      <div class="formula-lbl">The Core Equation</div>
-      <div class="formula-main">EV(aim point) = Σ P(landing zone i) × E(strokes from zone i)
-
-Where:
-  P(landing zone i) = probability of landing in each zone
-                    (derived from personal dispersion data)
-  E(strokes from zone i) = expected strokes from each position
-                          (derived from Broadie's SG tables)
-
-The aim point with the LOWEST EV is ALWAYS the correct play.
-Lower EV = fewer expected strokes = better decision.</div>
-      <div class="formula-note">The Decade system (Scott Fawcett) popularised EV-based course management at tour level. This guide applies the same framework specifically to the 10 HCP player profile — using 10 HCP dispersion data, 10 HCP scoring rates, and 10 HCP-specific decision contexts.</div>
+  <span class="badge badge-pro">♟️ Why EV Matters</span>
+  <div class="card card-pro">
+    <span class="card-tag">The Stroke Cost of Poor Decisions</span>
+    <h3>How Much Strategic Errors Cost</h3>
+    <p>Strokes gained research consistently shows that mid-to-low handicap players lose more strokes to poor decision-making than to poor ball striking. A 10-handicapper who aims at flags rather than optimal aim points, attempts carries they make 40% of the time, and ignores their dominant miss pattern will score 3–5 shots worse per round than a player with identical ball-striking who makes optimal decisions.</p>
+    <div class="pull-quote" style="margin-top:14px;">
+      <p>The best tee shot is not the one that goes the furthest — it is the one that leaves the highest expected value approach shot. Those are often not the same thing.</p>
+      <span>— Scott Fawcett, Decade Golf</span>
     </div>
   </div>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Five-Step Framework</span>
-    <h3>How to Apply Decision Architecture on Every Shot</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Map the dispersion cone:</strong> From Guide 11 data, know your lateral dispersion at the relevant distance. Apply the 20% on-course widening factor. This is your probability distribution.</div></li>
-      <li><span class="step-n">2</span><div><strong>Map the consequences:</strong> Identify what is in each zone of the dispersion cone. Assign expected strokes to each landing zone using Broadie's tables.</div></li>
-      <li><span class="step-n">3</span><div><strong>Calculate EV for each candidate aim point:</strong> Run the EV calculation for 2–3 candidate aim points (flag, centre-of-green, conservative). Select the lowest.</div></li>
-      <li><span class="step-n">4</span><div><strong>Apply situation adjustments:</strong> Modify the baseline EV for conditions (wind, pressure, lie quality, fatigue). See Dynamic Dispersion in Guide 11.</div></li>
-      <li><span class="step-n">5</span><div><strong>Commit and execute:</strong> Once the aim point is selected, close the analytical phase and execute from System 1. No revision during the shot.</div></li>
+  <span class="badge badge-gold">📊 The Decade Framework</span>
+  <div class="card card-gold">
+    <span class="card-tag">Five Core Principles</span>
+    <h3>What the Decade System Actually Says</h3>
+    <ul class="checklist">
+      <li><strong>Aim at the highest-EV target, not the flag.</strong> The flag is almost never the optimal aim point — the optimal aim point is the centre of the distribution of good outcomes, accounting for your miss pattern.</li>
+      <li><strong>Your miss is not random — it is patterned.</strong> Arccos data shows your actual miss distribution. Use it. Aim points shift left or right depending on your dominant miss, not the architect's intention.</li>
+      <li><strong>Risk is only worth taking when the expected value is positive.</strong> Going for a flag tight to a bunker is correct when the EV of the aggressive play exceeds the EV of the safe play. The calculation, not the feeling, determines the answer.</li>
+      <li><strong>Scoring position changes the calculation.</strong> Needing to make birdie on the last hole to win changes optimal strategy — not because the physics changes, but because the consequence weighting changes.</li>
+      <li><strong>Most aggressive-looking decisions are wrong; most conservative-looking decisions are also wrong.</strong> The optimal play is usually in the middle — neither hero nor safety mode.</li>
     </ul>
   </div>
 
-  <div class="card">
-    <span class="card-tag">What This Guide Covers</span>
-    <h3>Nine Tabs — The Complete Decision System</h3>
-    <table class="tbl">
-      <tr><th>Tab</th><th>What It Covers</th><th>Key Output</th></tr>
-      <tr><td>Dispersion → Probability</td><td>Converting Guide 11 data to a probability distribution</td><td>Your personal probability table by distance</td></tr>
-      <tr><td>Consequence Mapping</td><td>Assigning expected strokes to every landing zone</td><td>The consequence matrix for your home course</td></tr>
-      <tr><td>Aim Point Calc</td><td>The actual EV calculation — step by step</td><td>A reproducible aim point for any shot</td></tr>
-      <tr><td>Tee Shot EV</td><td>Driver vs. iron decisions — the break-even framework</td><td>The OB rate threshold for each decision</td></tr>
-      <tr><td>Par 5 Strategy</td><td>Go/layup decisions with specific thresholds</td><td>Personal carry confidence thresholds</td></tr>
-      <tr><td>Scenario Library</td><td>10 pre-calculated scenario decisions for common situations</td><td>Ready-to-use decisions for frequent situations</td></tr>
-      <tr><td>Pre-Round Planning</td><td>Building the hole-by-hole decision plan before teeing off</td><td>A completed pre-round strategy template</td></tr>
-      <tr><td>Format Adjustment</td><td>How EV changes for stroke play, Stableford, match play</td><td>Format-specific decision rules</td></tr>
-    </table>
+  <span class="badge badge-teal">🗺️ Guide Map</span>
+  <div class="card card-teal">
+    <span class="card-tag">How This Guide Is Structured</span>
+    <h3>Build the Full Framework Tab by Tab</h3>
+    <p style="margin-bottom:10px;">This guide builds sequentially. Start with Dispersion → Probability, then Consequence Map, then Aim Point Calc. These three tabs together give you the calculation method. The remaining tabs apply it to specific situations.</p>
+    <ul class="checklist">
+      <li><strong>Dispersion → Probability:</strong> Converting your Guide 11 data into a probability distribution</li>
+      <li><strong>Consequence Map:</strong> Assigning expected scores to each landing zone</li>
+      <li><strong>Aim Point Calc:</strong> The 4-step calculation from data to optimal target</li>
+      <li><strong>Tee EV:</strong> Driver vs iron decisions, dogleg carries, fairway width trade-offs</li>
+      <li><strong>Par 5 Strategy:</strong> Go-for-two calculations with real EV numbers</li>
+      <li><strong>Scenario Library:</strong> 10 fully worked scenarios covering every major hole type</li>
+      <li><strong>Planning Template:</strong> Pre-round 18-hole EV planning framework</li>
+      <li><strong>Format Adjustment:</strong> How stroke, match, and Stableford change the optimal play</li>
+    </ul>
   </div>
 </div>
 
-<!-- DISPERSION TO PROBABILITY -->
-<div class="sec" id="dispersion_prob">
-  <h2 class="sec-title">Dispersion → Probability Distribution</h2>
-  <p class="sec-desc">Your Guide 11 dispersion data gives you cone width. This tab converts it to a probability distribution — the foundation of every EV calculation.</p>
-  <span class="badge badge-teal">Data Conversion</span>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Conversion Method</span>
-    <h3>From ± Yards to Zone Probabilities</h3>
-    <p style="margin-bottom:12px;">Your dispersion data says "±25 yards lateral at 150 yards." To use this in an EV calculation, you need to know what percentage of shots land in each 5-yard zone left and right of your aim line. The distribution is approximately normal (bell-curve shaped) — most shots cluster near the aim line, with decreasing frequency toward the edges.</p>
-    <div class="formula">
-      <div class="formula-lbl">Zone Probability Table (±25 yard baseline)</div>
-      <div class="formula-main">Distance from aim line → % of shots landing in that zone:
-  Within ±5 yards:    ~38% of all shots
-  ±5 to ±10 yards:    ~27% (13.5% each side)
-  ±10 to ±15 yards:   ~21% (10.5% each side)
-  ±15 to ±20 yards:   ~9%  (4.5% each side)
-  ±20 to ±25 yards:   ~5%  (2.5% each side)
+<!-- DISPERSION → PROBABILITY -->
+<div class="sec" id="dispersion">
+  <h2 class="sec-title">Dispersion → Probability</h2>
+  <p class="sec-desc">Converting your actual shot dispersion data — from Guide 11 or Arccos — into a probability distribution across landing zones. This is the input to every EV calculation in this guide.</p>
 
-Note: Also account for your personal bias.
-If 65% of your misses go left, shift the entire distribution left.
-Your AIM LINE should be right of your target to account for bias.</div>
+  <span class="badge badge-pro">📊 Your Dispersion Cone</span>
+  <div class="card card-pro">
+    <span class="card-tag">From Guide 11 to a Probability Map</span>
+    <h3>Reading Your Dispersion Data as a Probability Distribution</h3>
+    <p>Your Guide 11 dispersion cone shows where your shots land as a scatter plot. To convert this into an EV calculation, you need to know the probability of landing in each zone — not just the average outcome.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Pull your Arccos approach shot data for a specific club</strong> — ideally 30+ shots from a consistent distance bracket (e.g. 150–160 yards with 7-iron). Export or note the landing positions relative to the flag.</div></li>
+      <li><span class="step-n">2</span><div><strong>Sort into zones:</strong> On green (within 30 feet), on green (30–60 feet), fringe/collar, greenside rough, greenside bunker, and penalty/disaster. Count the shots in each zone and convert to percentages. These are your zone probabilities.</div></li>
+      <li><span class="step-n">3</span><div><strong>Identify your dominant miss direction.</strong> If more than 60% of your misses go to one side, you have a directional bias — your aim point must shift to account for this. Most players have a dominant miss; using average data without accounting for bias understates the EV cost of aiming at flags on the miss side.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">📐 Zone Probability Reference</span>
+  <div class="card card-gold">
+    <span class="card-tag">Typical Zone Probabilities by Handicap</span>
+    <h3>Where to Expect Your Shots to Land — 150-Yard Approach</h3>
+    <table class="tbl">
+      <tr><th>Zone</th><th>10 HCP</th><th>5 HCP</th><th>Scratch</th></tr>
+      <tr><td>On green, inside 30 feet</td><td>28%</td><td>42%</td><td>58%</td></tr>
+      <tr><td>On green, 30–60 feet</td><td>22%</td><td>28%</td><td>24%</td></tr>
+      <tr><td>Fringe / collar</td><td>14%</td><td>10%</td><td>7%</td></tr>
+      <tr><td>Greenside rough (recoverable)</td><td>22%</td><td>13%</td><td>8%</td></tr>
+      <tr><td>Greenside bunker</td><td>9%</td><td>5%</td><td>2%</td></tr>
+      <tr><td>Penalty / disaster</td><td>5%</td><td>2%</td><td>1%</td></tr>
+    </table>
+    <div class="info-box gold-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Use your own data, not this table.</strong> These are population averages — your actual distribution may differ significantly. A player with a consistent fade pattern will have a different left-vs-right zone split than these averages suggest. Personalised data always beats reference data.</p>
     </div>
   </div>
 
-  <div class="card card-gold">
-    <span class="card-tag">Your Personal Probability Table</span>
-    <h3>Build This Once — Use for Every EV Calculation</h3>
-    <table class="tbl">
-      <tr><th>Distance</th><th>Lateral Dispersion (±)</th><th>P(within ±5 yds)</th><th>P(within ±10 yds)</th><th>P(beyond ±15 yds)</th></tr>
-      <tr><td>100 yards</td><td>±15 yards</td><td class="good">~45%</td><td class="good">~78%</td><td class="warn">~8%</td></tr>
-      <tr><td>125 yards</td><td>±20 yards</td><td class="good">~40%</td><td class="warn">~70%</td><td class="warn">~12%</td></tr>
-      <tr><td>150 yards</td><td>±25 yards</td><td class="warn">~38%</td><td class="warn">~65%</td><td class="warn">~14%</td></tr>
-      <tr><td>175 yards</td><td>±30 yards</td><td class="warn">~35%</td><td class="warn">~62%</td><td class="bad">~18%</td></tr>
-      <tr><td>200 yards</td><td>±38 yards</td><td class="bad">~30%</td><td class="bad">~55%</td><td class="bad">~24%</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Always apply the 20% on-course widening factor:</strong> These are range-based dispersion numbers. On-course, add 20% to every lateral dispersion figure before calculating zone probabilities. A ±25 yard range dispersion becomes ±30 yards on-course. Failure to apply this factor systematically underestimates how wide your real cone is in competition.</p></div>
+  <span class="badge badge-teal">🔄 Updating Your Probabilities</span>
+  <div class="card card-teal">
+    <span class="card-tag">How Often to Recalculate</span>
+    <h3>Keeping Your EV Inputs Current</h3>
+    <p>Your zone probabilities should be recalculated every 3 months from updated Arccos data — your game changes, especially as you work through this programme. A major swing change (new ball flight shape, new trajectory) will shift your zone distribution and make old EV calculations inaccurate.</p>
+    <p style="margin-top:10px;">Also recalculate per-club separately for distance brackets where you carry significantly different clubs — your 7-iron probabilities from 155 yards differ from your 8-iron probabilities from 145 yards, even if the distances are similar.</p>
   </div>
 </div>
 
-<!-- CONSEQUENCE MAPPING -->
+
+<!-- CONSEQUENCE MAP -->
 <div class="sec" id="consequence">
-  <h2 class="sec-title">Consequence Mapping</h2>
-  <p class="sec-desc">Every landing zone has an expected strokes value. Mapping consequences converts a physical shot zone into a number — the raw material for EV calculation.</p>
-  <span class="badge badge-gold">Expected Strokes by Zone</span>
+  <h2 class="sec-title">Consequence Map</h2>
+  <p class="sec-desc">Assigning expected strokes to each landing zone — the second input to every EV calculation. The consequence map converts landing zones into score predictions, which combined with zone probabilities produces an expected value for any aim point.</p>
 
-  <div class="card card-gold">
-    <span class="card-tag">Broadie's Expected Strokes Table</span>
-    <h3>The Reference Values for Your Calculations</h3>
-    <p style="margin-bottom:12px;">These expected strokes values come from Broadie's tracking data on PGA Tour players. For 10 HCP players, expected strokes are typically 0.3–0.6 higher from each position. Use the adjusted values below for your EV calculations.</p>
+  <span class="badge badge-pro">📋 Expected Strokes by Zone</span>
+  <div class="card card-pro">
+    <span class="card-tag">Strokes Gained Research — Expected Score from Each Position</span>
+    <h3>The Expected Strokes Reference Table</h3>
     <table class="tbl">
-      <tr><th>Position</th><th>Tour Expected Strokes</th><th>10 HCP Expected Strokes</th></tr>
-      <tr><td>Green, 5 feet</td><td class="good">1.35</td><td class="good">1.55</td></tr>
-      <tr><td>Green, 10 feet</td><td class="good">1.54</td><td class="good">1.75</td></tr>
-      <tr><td>Green, 20 feet</td><td class="good">1.88</td><td class="warn">2.05</td></tr>
-      <tr><td>Green, 30 feet</td><td class="warn">2.10</td><td class="warn">2.25</td></tr>
-      <tr><td>Fringe (light rough adjacent to green)</td><td class="warn">2.35</td><td class="warn">2.55</td></tr>
-      <tr><td>Light rough, 10 yards off green</td><td class="warn">2.50</td><td class="bad">2.75</td></tr>
-      <tr><td>Greenside bunker</td><td class="bad">2.70</td><td class="bad">3.00</td></tr>
-      <tr><td>Heavy rough, 20 yards off green</td><td class="bad">2.85</td><td class="bad">3.15</td></tr>
-      <tr><td>Water hazard (penalty drop)</td><td class="bad">3.40</td><td class="bad">3.70</td></tr>
-      <tr><td>OOB (stroke and distance)</td><td class="bad">3.80</td><td class="bad">4.20</td></tr>
+      <tr><th>Position</th><th>Expected Strokes to Hole</th><th>Notes</th></tr>
+      <tr><td>On green, 10 feet</td><td>1.60</td><td>Make % from 10 feet: ~40% for scratch, ~25% for 10 HCP</td></tr>
+      <tr><td>On green, 20 feet</td><td>1.92</td><td>Three-putt risk begins here for most amateurs</td></tr>
+      <tr><td>On green, 30 feet</td><td>2.10</td><td>Standard two-putt expectation; three-putt risk ~18%</td></tr>
+      <tr><td>On green, 45 feet</td><td>2.32</td><td>Three-putt risk ~30%; distance control critical</td></tr>
+      <tr><td>Fringe, 5 yards off green</td><td>2.45</td><td>Chip or putt; most players lose ~0.15 strokes vs same distance on green</td></tr>
+      <tr><td>Light rough, 10 yards from green</td><td>2.60</td><td>Standard chip; variable lies</td></tr>
+      <tr><td>Greenside bunker</td><td>2.80</td><td>Varies significantly by bunker skill; average amateur ~2.95</td></tr>
+      <tr><td>Deep rough / heavy lie</td><td>2.95</td><td>High variance; disaster outcomes more likely</td></tr>
+      <tr><td>Penalty drop (water, OOB)</td><td>3.50+</td><td>One shot penalty plus recovery from drop zone</td></tr>
     </table>
   </div>
 
-  <div class="card card-teal">
-    <span class="card-tag">Asymmetric Consequences</span>
-    <h3>Why the Left Bunker and the Right Rough Are Not Equivalent</h3>
-    <p style="margin-bottom:12px;">The most important principle in consequence mapping: consequences are rarely symmetric. A bunker on the left and rough on the right of a green may both be "misses" — but the greenside bunker costs 3.00 expected strokes while the rough costs 2.75. If you aim at the flag (between them), you should aim slightly away from the bunker because the asymmetric consequence justifies the asymmetric aim.</p>
-    <div class="formula">
-      <div class="formula-lbl">Asymmetric Consequence Rule</div>
-      <div class="formula-main">When consequences are asymmetric:
-  Shift aim point AWAY from the more costly consequence
-  By an amount proportional to the difference in cost
-
-Example: Bunker left (EV=3.0) vs Rough right (EV=2.75)
-  Difference: 0.25 expected strokes
-  Shift aim: 5–8 yards toward the rough (away from bunker)
-  This reduces P(bunker) at a small cost in P(rough)
-  Net EV reduction: ~0.08 strokes per shot</div>
-    </div>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The cumulative effect:</strong> Correctly accounting for asymmetric consequences on 8–10 shots per round where it applies produces 0.5–0.8 cumulative EV improvement per round. Over a season, this is equivalent to 2–3 handicap shots of decision-quality improvement — with no change in ball-striking ability.</p></div>
+  <span class="badge badge-gold">🗺️ Building a Hole-Specific Consequence Map</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Pre-Round Process</span>
+    <h3>Mapping Consequences for a Specific Flag Position</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Draw the green mentally (or on your yardage card).</strong> Mark the flag position. Identify the zones around it: left, right, short, long, and on-green distances from flag.</div></li>
+      <li><span class="step-n">2</span><div><strong>Assign a consequence value to each zone.</strong> Use the table above as a base, then adjust for the specific hole: a bunker on the left that you rarely escape cleanly is worth 3.2, not 2.8. Water right that costs a penalty stroke is 3.5+. A wide flat fringe short is 2.4.</div></li>
+      <li><span class="step-n">3</span><div><strong>Note the asymmetry.</strong> On most holes, one miss direction is significantly more costly than the other. The optimal aim point will be offset toward the cheaper miss side — sometimes by 10–20 yards from the flag. This is the fundamental insight of the Decade system: aim at the centre of the acceptable outcome distribution, not the flag.</div></li>
+    </ul>
   </div>
 </div>
+
 
 <!-- AIM POINT CALC -->
-<div class="sec" id="aim_calc">
+<div class="sec" id="aimpoint">
   <h2 class="sec-title">Aim Point Calculation</h2>
-  <p class="sec-desc">The complete step-by-step EV calculation for any approach shot. Work through this fully on paper for your 10 most common scenarios, then use the pre-calculated results on the course.</p>
-  <span class="badge badge-lime">The Full Calculation</span>
+  <p class="sec-desc">The 4-step calculation from dispersion data and consequence map to optimal aim point. Once you have done this process 10–15 times, the logic becomes intuitive and you can execute approximate versions on-course without a calculator.</p>
 
-  <div class="card card-lime">
-    <span class="card-tag">Step-by-Step Calculation</span>
-    <h3>The Aim Point Formula in Practice</h3>
+  <span class="badge badge-pro">🧮 The 4-Step Process</span>
+  <div class="card card-pro">
+    <span class="card-tag">Complete Worked Method</span>
+    <h3>From Data to Optimal Target — Step by Step</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify the shot parameters:</strong> Distance (e.g. 155 yards), lie (fairway), conditions (slight headwind — widen dispersion 10%). Personal dispersion at 155 yards: ±27 yards (range) × 1.20 (on-course) × 1.10 (wind) = ±35 yards effective.</div></li>
-      <li><span class="step-n">2</span><div><strong>Map the green:</strong> Flag is 8 yards from left edge. Right side is 22 yards wide with rough. Bunker is left of the green, 15 yards left of the flag. Sketch this on your yardage book or mentally.</div></li>
-      <li><span class="step-n">3</span><div><strong>Calculate zone probabilities for 3 candidate aim points:</strong>
-        <br>— Aim at flag
-        <br>— Aim at centre of green (10 yards right of flag)
-        <br>— Aim at right-centre (18 yards right of flag)
-        <br>Use your probability table to assign P(bunker), P(green left), P(green right), P(rough right) for each aim point.</div></li>
-      <li><span class="step-n">4</span><div><strong>Multiply probabilities by expected strokes and sum:</strong> EV = P(bunker)×3.0 + P(green left)×2.1 + P(green right)×2.1 + P(rough right)×2.75 for each aim point.</div></li>
-      <li><span class="step-n">5</span><div><strong>Select the lowest EV aim point:</strong> This is your target. If it feels aggressively conservative — it is supposed to. The maths are usually more conservative than instinct by 8–15 yards.</div></li>
+      <li><span class="step-n">1</span><div><strong>Set your aim point at flag.</strong> Calculate the EV of aiming directly at the flag: multiply each zone probability by its consequence value and sum them. This is your baseline EV.</div></li>
+      <li><span class="step-n">2</span><div><strong>Shift the aim point 5 yards toward the safe side.</strong> Recalculate EV with the shifted aim point — zone probabilities change (less probability of the costly miss, more probability of the safe miss). Compare to baseline.</div></li>
+      <li><span class="step-n">3</span><div><strong>Continue shifting in 5-yard increments</strong> until EV stops improving. The aim point that produces the lowest expected strokes is your optimal target. For most amateur golfers, this is 8–18 yards away from a flag located near trouble.</div></li>
+      <li><span class="step-n">4</span><div><strong>Apply your dominant miss adjustment.</strong> If your dominant miss goes left, shift the final aim point further right (so your miss lands near the calculated centre). The aim point is not where you aim to land the ball — it is where you aim so that your actual shot distribution centres on the optimal zone.</div></li>
     </ul>
   </div>
 
+  <span class="badge badge-gold">📐 Worked Example</span>
   <div class="card card-gold">
-    <span class="card-tag">Worked Example</span>
-    <h3>155 Yards — Flag Tight Left, Bunker Left, Rough Right</h3>
+    <span class="card-tag">Flag Left, Bunker Left — 155 Yards</span>
+    <h3>Full Calculation: Approach to a Tucked Left Flag</h3>
     <table class="tbl">
-      <tr><th>Aim Point</th><th>P(bunker)</th><th>P(green)</th><th>P(rough right)</th><th>EV</th></tr>
-      <tr><td class="bad">At flag</td><td class="bad">22%</td><td class="warn">46%</td><td class="warn">32%</td><td class="bad">2.47</td></tr>
-      <tr><td class="warn">Centre of green (+10 yds)</td><td class="warn">10%</td><td class="good">58%</td><td class="warn">32%</td><td class="warn">2.33</td></tr>
-      <tr><td class="good">Right-centre (+18 yds)</td><td class="good">4%</td><td class="good">60%</td><td class="warn">36%</td><td class="good">2.26</td></tr>
+      <tr><th>Aim Point</th><th>Bunker Prob</th><th>On-Green Prob</th><th>Safe-Miss Prob</th><th>EV</th></tr>
+      <tr><td>At flag (tucked left)</td><td class="bad">18%</td><td>55%</td><td>27%</td><td class="bad">2.31</td></tr>
+      <tr><td>5 yards right of flag</td><td>10%</td><td>60%</td><td>30%</td><td>2.21</td></tr>
+      <tr><td>10 yards right of flag</td><td class="good">4%</td><td>58%</td><td>38%</td><td class="good">2.14</td></tr>
+      <tr><td>15 yards right of flag</td><td>2%</td><td>50%</td><td>48%</td><td>2.18</td></tr>
     </table>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Result:</strong> Right-centre aim saves 0.21 expected strokes vs. aiming at the flag. Applied to 8 similar shots per round, this is 1.68 strokes per round of decision quality improvement — without hitting the ball any differently.</p></div>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">Optimal aim point: <strong style="color:var(--white);">10 yards right of the flag.</strong> This costs 0 strokes vs. aiming at flag when the shot is perfect, but saves 0.17 expected strokes per attempt by avoiding the costly bunker outcome. Over 72 holes with 10–12 such flag positions per round, this represents approximately 1.5–2.0 strokes per round of strategic gain.</p>
+  </div>
+
+  <span class="badge badge-teal">⚡ The On-Course Shortcut</span>
+  <div class="card card-teal">
+    <span class="card-tag">When You Cannot Do the Full Calculation</span>
+    <h3>The Rule of Thumb That Gets You 80% of the Way</h3>
+    <p>For on-course use without a calculator, apply this heuristic: <strong style="color:var(--white);">aim at the safe side of the green whenever trouble on the flag side is worse than a two-putt from 40 feet.</strong></p>
+    <p style="margin-top:10px;">In practice: if the flag is left and there is a bunker left, aim at the right-centre of the green unless you have a specific reason to believe your dispersion pattern will keep you clear of the bunker. The specific aim point — right-centre — is the pre-calculated optimal target for the majority of such situations.</p>
   </div>
 </div>
 
-<!-- TEE SHOT EV -->
-<div class="sec" id="tee_ev">
-  <h2 class="sec-title">Tee Shot EV — Driver vs. Iron</h2>
-  <p class="sec-desc">The break-even framework for tee shot club selection. When is driver EV-positive? What OB rate makes iron the correct play? The calculation is simple and eliminates guesswork.</p>
-  <span class="badge badge-teal">Tee Decision Framework</span>
 
-  <div class="card card-teal">
-    <span class="card-tag">The Break-Even OB Rate</span>
-    <h3>The Only Number You Need</h3>
-    <div class="formula">
-      <div class="formula-lbl">Break-Even Calculation</div>
-      <div class="formula-main">Define:
-  EV(driver, fairway) = expected strokes from good driver position
-  EV(driver, OB)      = expected strokes after OB (stroke + distance: ~4.5)
-  EV(iron, fairway)   = expected strokes from iron position
-  OB_rate             = probability of going OB with driver
+<!-- TEE EV -->
+<div class="sec" id="tee">
+  <h2 class="sec-title">Tee Shot EV</h2>
+  <p class="sec-desc">Driver vs. iron decisions, dogleg carry decisions, and fairway width vs. distance trade-offs — all expressed as EV calculations with real numbers. The most commonly misplayed area in amateur golf, and the highest-leverage improvement opportunity in many players' games.</p>
 
-Break-even where EV(driver) = EV(iron):
-  EV(driver) = (1-OB_rate) × EV(driver,fw) + OB_rate × EV(driver,OB)
-  Set equal to EV(iron)
+  <span class="badge badge-pro">🏌️ Driver vs. Iron Framework</span>
+  <div class="card card-pro">
+    <span class="card-tag">The Calculation Most Amateurs Skip</span>
+    <h3>When to Hit Driver and When Not To</h3>
+    <p>The decision to hit driver or a shorter club off the tee should be based on the expected score from each approach position — not on how comfortable you feel with each club. Driver is correct when the closer approach position produces enough EV improvement to outweigh the additional dispersion risk of driver off the tee.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Scenario</th><th>Driver EV Input</th><th>Iron EV Input</th><th>Driver Correct?</th></tr>
+      <tr><td>Tight OOB left, wide right</td><td>−0.4 strokes if OOB (12% prob with driver)</td><td>+0.15 strokes from 185y vs 155y approach</td><td class="warn">Depends on OOB rate — calculate</td></tr>
+      <tr><td>Wide fairway, no trouble</td><td>+0.20 strokes from shorter approach</td><td>Baseline</td><td class="good">Yes — almost always</td></tr>
+      <tr><td>Narrow fairway, OOB both sides</td><td>High penalty risk overwhelms approach gain</td><td>Fairway hit rate ~85%</td><td class="bad">Usually no — 3-wood or iron</td></tr>
+      <tr><td>Dogleg left, cut corner available</td><td>High reward if carried, penalty if not</td><td>Safe, longer approach</td><td class="warn">Only if carry success rate &gt;75%</td></tr>
+    </table>
+  </div>
 
-Solving for OB_rate:
-  OB_rate = [EV(iron) - EV(driver,fw)] / [EV(driver,OB) - EV(driver,fw)]</div>
-      <div class="formula-note">For a typical 420-yard par 4 at 10 HCP: EV(driver, fairway) = 4.05, EV(iron, fairway) = 4.35, EV(driver, OB) = 5.50. Break-even OB rate = (4.35 - 4.05) / (5.50 - 4.05) = 0.30 / 1.45 = 21%. If your OB rate with driver on this hole exceeds 21%, iron is the better play.</div>
+  <span class="badge badge-gold">📐 The OOB Rate Calculation</span>
+  <div class="card card-gold">
+    <span class="card-tag">Using Your Arccos Data</span>
+    <h3>Personalising the Driver EV Calculation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>From Arccos, find your OOB/penalty rate with driver over the last 50 rounds.</strong> This is your personal penalty probability — not the population average.</div></li>
+      <li><span class="step-n">2</span><div><strong>Calculate the stroke cost of your average OOB:</strong> penalty stroke + re-hit from tee (or drop) = approximately 2.0 strokes above average tee shot outcome. Multiply by your OOB rate to get your expected penalty cost per driver shot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Compare to the approach EV gain from driver vs. iron.</strong> If driver gives you a 30-yard shorter approach, that is worth approximately 0.20–0.30 strokes in expected approach outcome. If your penalty cost exceeds this gain, the iron is correct even if you feel confident with driver.</div></li>
+    </ul>
+    <div class="formula gold" style="margin-top:12px;">
+      <div class="formula-lbl">Driver EV Formula</div>
+      <div class="formula-main">Driver EV = Approach EV gain − (OOB rate × 2.0 stroke penalty)</div>
+      <div class="formula-note">If Driver EV is positive: hit driver. If negative: hit the shorter club. Example: 0.25 approach gain − (0.08 OOB rate × 2.0) = 0.25 − 0.16 = +0.09. Driver is correct by a small margin.</div>
     </div>
   </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Standard Break-Even Thresholds</span>
-    <h3>Pre-Calculated for Common Hole Types</h3>
-    <table class="tbl">
-      <tr><th>Hole Type</th><th>OB Penalty</th><th>Driver Distance Advantage</th><th>Break-Even OB Rate</th></tr>
-      <tr><td>420-yd par 4, wide fairway</td><td>Stroke + distance</td><td>30 yards</td><td class="warn">~21%</td></tr>
-      <tr><td>420-yd par 4, OOB right</td><td>Stroke + distance</td><td>30 yards</td><td class="warn">~20%</td></tr>
-      <tr><td>400-yd par 4, water right</td><td>Stroke + distance + hazard</td><td>25 yards</td><td class="good">~14%</td></tr>
-      <tr><td>380-yd par 4, tight fairway</td><td>Stroke + distance</td><td>20 yards</td><td class="good">~18%</td></tr>
-      <tr><td>Short par 4 (&lt;350 yds), driveable green</td><td>Bunker/rough only</td><td>45 yards</td><td class="bad">~32% (aggressive is often correct)</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Your OB rate by hole:</strong> Most players do not know their actual OB rate on specific holes. Arccos logs every shot — after 10+ rounds, extract your OB/out-of-bounds rate on specific driving holes. Compare to the break-even threshold. If your OB rate exceeds the break-even on any hole, iron is the mathematically correct play regardless of how it feels.</p></div>
-  </div>
 </div>
+
 
 <!-- PAR 5 STRATEGY -->
 <div class="sec" id="par5">
-  <h2 class="sec-title">Par 5 Go/Layup Decision</h2>
-  <p class="sec-desc">The carry confidence threshold that makes going for it EV-positive — calculated specifically for the hazard profile of the hole you are playing.</p>
-  <span class="badge badge-gold">Par 5 EV Framework</span>
+  <h2 class="sec-title">Par 5 Strategy</h2>
+  <p class="sec-desc">Go-for-two vs. three-shot par 5 EV calculations. Optimal layup zone identification. How scoring position changes the calculation. The most birdie-generating decision framework in amateur golf — and the most commonly executed suboptimally.</p>
 
+  <span class="badge badge-pro">⚡ Go-For-Two Decision</span>
+  <div class="card card-pro">
+    <span class="card-tag">The EV Crossover Point</span>
+    <h3>When Going For It in Two Becomes EV-Positive</h3>
+    <p>Going for a par 5 green in two is EV-positive when: the expected score from going for it (accounting for your probability of reaching the green, your probability of a penalty, and your resulting putts) is lower than the expected score from the three-shot route.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Scenario</th><th>Go-For-Two EV</th><th>Three-Shot EV</th><th>Decision</th></tr>
+      <tr><td>Reachable, open green, no water</td><td>4.45 (Eagle 8%, Birdie 62%, Par 28%, Bogey 2%)</td><td>4.55 (Birdie 45%, Par 50%, Bogey 5%)</td><td class="good">Go for it — EV advantage 0.10</td></tr>
+      <tr><td>Reachable, water front, flag back</td><td>4.70 (high penalty risk)</td><td>4.52 (controlled layup)</td><td class="bad">Lay up — EV advantage 0.18 for layup</td></tr>
+      <tr><td>Borderline carry, OOB behind</td><td>4.85 (penalty risk dominates)</td><td>4.55</td><td class="bad">Lay up — never go for it near OOB</td></tr>
+      <tr><td>Need birdie to win (matchplay)</td><td>EV irrelevant — go for it</td><td>Par probable — insufficient</td><td class="warn">Situation overrides EV</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">📐 The Optimal Layup Zone</span>
   <div class="card card-gold">
-    <span class="card-tag">The Go/Layup Break-Even Formula</span>
-    <h3>When Is Attempting the Green EV-Positive?</h3>
-    <div class="formula">
-      <div class="formula-lbl">Break-Even Carry Confidence</div>
-      <div class="formula-main">Define:
-  p = probability of successful carry (your carry confidence)
-  EV(go, success) = expected strokes when successfully on green (~2.0–2.3)
-  EV(go, fail)    = expected strokes from hazard or bad miss (~3.5–4.5)
-  EV(layup)       = expected strokes from optimal layup position (~2.5–2.8)
-
-Break-even where EV(go) = EV(layup):
-  p × EV(go,success) + (1-p) × EV(go,fail) = EV(layup)
-
-Solving for p:
-  p = [EV(layup) - EV(go,fail)] / [EV(go,success) - EV(go,fail)]</div>
+    <span class="card-tag">Where to Lay Up When You Cannot Go For It</span>
+    <h3>The 80-100 Yard Wedge Zone Principle</h3>
+    <p>The highest-EV layup target is the distance that leaves your best wedge shot — typically 80–100 yards for most players. This is not the maximum distance you can lay up to; it is the optimal distance based on your scoring statistics from that range.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);"><strong style="color:var(--white);">Finding your optimal wedge distance:</strong> From Arccos, identify the yardage bracket where your SG: ARG is highest — typically the distance that produces the most approaches inside 20 feet. That is your optimal layup distance. Many players assume it is "as close as possible" — it is often not.</p>
+    <div class="info-box gold-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>The full-swing wedge advantage:</strong> A full-swing 100-yard shot produces significantly more consistent distance control than a 60-yard half-wedge. Laying up to a distance that requires a partial shot — because you overshoot your optimal zone — is a common error that costs strokes.</p>
     </div>
   </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Break-Even Thresholds by Hazard Type</span>
-    <h3>Pre-Calculated Go/Layup Thresholds</h3>
-    <table class="tbl">
-      <tr><th>Par 5 Scenario</th><th>EV(go, fail)</th><th>Break-Even Carry Confidence</th><th>Implication</th></tr>
-      <tr><td>Water front, layup to 100 yards</td><td class="bad">3.70</td><td class="bad">75–80%</td><td>Very high confidence required — lay up unless certain</td></tr>
-      <tr><td>Bunker front, layup to 100 yards</td><td class="warn">3.10</td><td class="warn">60–65%</td><td>Moderate confidence sufficient</td></tr>
-      <tr><td>Rough miss long, no hazard</td><td class="warn">2.90</td><td class="good">50–55%</td><td>Go if you have reasonable confidence — rough miss is manageable</td></tr>
-      <tr><td>OOB long, water front</td><td class="bad">4.30</td><td class="bad">85–90%</td><td>Almost never go for it — both sides punish severely</td></tr>
-    </table>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>Calibrating your carry confidence:</strong> Most players overestimate carry confidence by 15–25%. Before assigning a confidence number, ask: "Of the last 10 times I've faced this exact carry distance in similar conditions, how many times have I made it?" That tracking-based estimate is far more accurate than an in-the-moment feel for confidence.</p></div>
-  </div>
 </div>
+
 
 <!-- SCENARIO LIBRARY -->
 <div class="sec" id="scenarios">
-  <h2 class="sec-title">Scenario Library — 10 Pre-Calculated Decisions</h2>
-  <p class="sec-desc">The most frequently occurring decision types in UK amateur golf — with the correct EV decision already calculated. Use these as defaults when time doesn't allow a full calculation.</p>
-  <span class="badge badge-rust">Pre-Calculated Decisions</span>
+  <h2 class="sec-title">Scenario Library</h2>
+  <p class="sec-desc">Ten fully worked scenarios covering every major strategic decision type — with the EV calculation shown in full and the strategic conclusion derived from it. Study these to build the intuition that lets you apply EV thinking on-course without calculation.</p>
 
-  <div class="card card-rust">
-    <span class="card-tag">How to Use This Library</span>
-    <h3>Reference, Not Dogma</h3>
-    <p style="margin-bottom:12px;">These decisions are calculated for a standard 10 HCP player with ±25 yard lateral dispersion at 150 yards. Adjust if your dispersion is significantly different. These are defaults — the full calculation (Aim Point Calc tab) should be run for any shot where the specific hole geometry differs substantially from the scenario.</p>
-  </div>
+  <span class="badge badge-pro">📋 10 Worked Scenarios</span>
+  <div class="card card-pro">
+    <span class="card-tag">Every Major Hole Type — Full EV Calculation</span>
+    <h3>Complete Scenario Reference</h3>
 
-  <div class="card">
-    <span class="card-tag">The 10 Standard Decisions</span>
-    <table class="tbl">
-      <tr><th>#</th><th>Scenario</th><th>Correct Decision</th><th>EV Saving vs. Instinct</th></tr>
-      <tr><td>01</td><td>150-yd approach, flag tight left, bunker left, rough right</td><td class="good">Aim 15 yards right of flag</td><td class="good">+0.21 strokes</td></tr>
-      <tr><td>02</td><td>150-yd approach, water front, flag back</td><td class="good">Take one extra club; aim centre-back</td><td class="good">+0.20 strokes</td></tr>
-      <tr><td>03</td><td>420-yd par 4, OOB right, driver OB rate ~25%</td><td class="good">3-wood or hybrid off tee</td><td class="good">+0.18 strokes</td></tr>
-      <tr><td>04</td><td>Ball in rough behind trees, hero shot success rate ~35%</td><td class="good">Punch out to fairway</td><td class="good">+0.55 strokes</td></tr>
-      <tr><td>05</td><td>Par 5, reachable in 2, water front-left, 65% carry confidence</td><td class="warn">Lay up to 100 yards</td><td class="warn">+0.19 strokes</td></tr>
-      <tr><td>06</td><td>Par 5, reachable in 2, rough only mis-hit, 65% carry confidence</td><td class="good">Go for it — rough miss is acceptable</td><td class="good">Aggressive is correct at this threshold</td></tr>
-      <tr><td>07</td><td>150-yd approach, wind directly into (15mph)</td><td class="good">Add 2 clubs; aim centre of green</td><td class="warn">Club adjustment more important than aim</td></tr>
-      <tr><td>08</td><td>Short par 4 (295 yds), driver success rate 50%</td><td class="warn">Safe iron to 65-yard pitch zone</td><td class="warn">+0.20 strokes</td></tr>
-      <tr><td>09</td><td>Double bogey on hole 5 — next tee shot decision</td><td class="good">One club shorter than instinct; conservative aim</td><td class="good">One-hole firewall prevents cascading hole</td></tr>
-      <tr><td>10</td><td>Par 3 over water, 170 yards (typical misclub scenario)</td><td class="good">Take 2 clubs more than feels right</td><td class="bad">Under-clubbing is the #1 par 3 error</td></tr>
-    </table>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px;">
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 1 — Driveable Par 4</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">Short par 4, green reachable with driver, OOB behind green</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Setup:</strong> 285-yard par 4, green reachable but OOB behind. Your driver OOB rate: 8%. Layup leaves 120-yard approach.<br><strong style="color:var(--white);">Calculation:</strong> Driver: Eagle 5% + Birdie 35% + Par 45% + Bogey/OOB 15% = EV 3.80. Layup: Birdie 28% + Par 58% + Bogey 14% = EV 3.86.<br><strong style="color:var(--white);">Verdict: Hit driver</strong> — EV advantage 0.06. The eagle/birdie upside outweighs the OOB risk at 8% rate.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 2 — Water Short, Flag Back</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">Approach with water short of green, flag back-centre</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Setup:</strong> 155 yards, water short, flag at back of green. Carry required: 148 yards. Your carry rate at 155: 82%. Short miss penalty: 3.5 expected strokes.<br><strong style="color:var(--white);">Calculation:</strong> Aiming at flag: 12% short of carry = 0.42 expected penalty strokes absorbed. Club up 1: reduces short miss to 4%, removes most of the risk. EV improvement: ~0.22 strokes.<br><strong style="color:var(--white);">Verdict: Club up one.</strong> Aim at the back of the green. The longer distance removes carry risk; the additional putts from a longer flag distance cost far less than the penalty.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 3 — Flag Tight to Left Bunker</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">145 yards, flag 8 yards from left bunker, dominant miss: left</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Setup:</strong> Your left miss rate: 55% of misses go left. Bunker EV from 8 yards: 2.80. Green right side EV: 2.15 (40-foot putt).<br><strong style="color:var(--white);">Calculation:</strong> Aiming at flag: 18% in bunker × 2.80 = 0.50 weighted cost. Aiming 12 yards right: bunker drops to 4% × 2.80 = 0.11. Reduction: 0.39 strokes minus cost of longer average putt (0.12) = net gain 0.27 strokes.<br><strong style="color:var(--white);">Verdict: Aim 12 yards right of flag.</strong> The dominant left miss makes this an even stronger case than average dispersion would suggest.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 4 — Dogleg Left, OOB Left</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">Driver into dogleg left with OOB left, 3-wood keeps you in play</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Setup:</strong> Your left OOB rate with driver on tight holes: 14%. 3-wood leaves 195 yards vs driver leaving 155 yards. Approach EV difference (195 vs 155): ~0.25 strokes.<br><strong style="color:var(--white);">Calculation:</strong> Driver EV gain: 0.25. Driver OOB cost: 0.14 × 2.0 = 0.28. Net: driver is −0.03 EV (marginally negative).<br><strong style="color:var(--white);">Verdict: 3-wood</strong> — by a small margin. If your OOB rate drops to 8% (good driving day/open course), driver becomes correct by 0.09. Reassess on the day.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 5 — Reachable Par 5 in Two</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">235 yards to centre, water left of green, flag right</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Setup:</strong> Your 235-yard carry success rate: 68%. Water left EV: 4.20. Going for it — weighted EV: Eagle 4% + Birdie 38% + Par 42% + Bogey 10% + Penalty 6% = 4.66. Three-shot route EV: 4.53.<br><strong style="color:var(--white);">Verdict: Lay up.</strong> Water left makes the penalty risk too costly at 6% probability. Aim for layup zone at 90 yards. Revisit if water were absent: go-for-two EV drops to ~4.45 (positive vs 4.53 layup).</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 6 — Front Bunker, Centre Flag</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">165 yards, large front bunker, flag centre of green</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Verdict:</strong> Club up one, aim at the back half of the green. The front bunker is a trap — it looks like you should aim for the flag but the bunker requires a full carry. Clubbing up removes carry anxiety, produces a higher launch angle that lands more softly, and the long putt costs far less than the bunker. Gain: ~0.18 strokes per occurrence.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 7 — Greenside Recovery, Two Options</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">Tight lie, 20 yards from flag: bump-and-run vs. lob wedge</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Verdict:</strong> Bump-and-run unless a slope or bunker between ball and flag makes it impossible. The lob wedge has a higher catastrophic-miss rate (thin, skull) that dominates the EV calculation for most amateurs. A player who makes the lob wedge 70% of the time and skulls it 30% has a worse EV than a player who bumps and runs consistently every time. Run the numbers from your own chip statistics before committing to a high-trajectory short game approach as default.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 8 — Putt vs. Chip from Fringe</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">30 feet from hole, on fringe, perfect putting line</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Verdict:</strong> Putt. The fringe putt from a clean lie with a consistent path to the hole will outperform a chip for the vast majority of players — the error distribution of chipping (including the catastrophic thin) is wider than a fringe putt at 30 feet. Exception: if the fringe is thick and the putter will not run true, chip.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 9 — Last Hole, Need Birdie</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">Stroke play, need birdie to beat your personal best</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Verdict:</strong> In pure EV terms, play your normal optimal strategy — the birdie requirement does not change the physics or the probability. However, if you need birdie to win a competition, the consequence weighting changes: a bogey and a par are now worth the same (you lose either way), so slightly more aggressive aim points become correct because the downside of a bogey is zero additional cost. The upside of a birdie is maximum. This is the one scenario where the flag becomes a more defensible aim point.</p>
+      </div>
+
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">Scenario 10 — Approach Into Wind</div>
+        <p style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:6px;">20 mph headwind, 155 yards to a flag with trouble back</p>
+        <p style="font-size:12.5px;color:var(--muted);line-height:1.7;"><strong style="color:var(--white);">Verdict:</strong> Club up 2–3 clubs (see Guide 23 for the adjustment table) and aim at the front-centre of the green. Into a strong headwind, the optimal aim point shifts forward significantly — the wind amplifies dispersion, making back-of-green positions more costly (balls fly long occasionally) and front positions safer. Never aim at a back flag in a strong headwind. The penalty for running through the back is compounded by the wind.</p>
+      </div>
+
+    </div>
   </div>
 </div>
 
-<!-- PRE-ROUND PLANNING -->
-<div class="sec" id="planning">
-  <h2 class="sec-title">Pre-Round Decision Planning</h2>
-  <p class="sec-desc">A structured template for building hole-by-hole decision commitments before the round begins — eliminating the highest-pressure in-round decisions through pre-planning.</p>
-  <span class="badge badge-lime">Pre-Round Template</span>
 
-  <div class="card card-lime">
-    <span class="card-tag">The Planning Protocol</span>
-    <h3>15 Minutes Before Every Competitive Round</h3>
+<!-- PLANNING TEMPLATE -->
+<div class="sec" id="template">
+  <h2 class="sec-title">Pre-Round Planning Template</h2>
+  <p class="sec-desc">A reusable 18-hole strategy planning framework — identify the two or three key EV decisions on every hole before you tee off. Pre-committing to decisions removes the in-the-moment pressure that causes strategic errors.</p>
+
+  <span class="badge badge-pro">📋 The Pre-Round Protocol</span>
+  <div class="card card-pro">
+    <span class="card-tag">30-Minute Planning Session</span>
+    <h3>How to Plan 18 Holes Strategically Before You Play</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify your 5 highest-risk holes:</strong> From your scoring pattern analysis (Guide 24 Scoring Patterns tab), identify the 5 holes where you most frequently score double bogey or worse. These are your pre-planning priorities.</div></li>
-      <li><span class="step-n">2</span><div><strong>For each risk hole, write one specific pre-commitment:</strong> Not "play sensibly" — a specific, unconditional decision. "Hole 7: 3-wood every time. Hole 12: centre of green always — never the left flag. Hole 16: lay up to 90 yards regardless of score." Write it on your scorecard.</div></li>
-      <li><span class="step-n">3</span><div><strong>Confirm your three EV decisions:</strong> Of your pre-commitments, which three involve the highest EV consequence? Run a quick sanity check — does the pre-committed decision align with the EV calculation? It should. If not, update the pre-commitment.</div></li>
-      <li><span class="step-n">4</span><div><strong>Set the score context rule:</strong> Decide in advance how you will adjust your overall strategy if you are significantly above or below target at the turn. "If 3+ over at the turn: conservative for the back nine — protect against double bogeys. If 3+ under: maintain standard EV play — do not become aggressive just because the round is going well."</div></li>
+      <li><span class="step-n">1</span><div><strong>Walk the course or review the scorecard/yardage book 30–60 minutes before play.</strong> For each hole, identify: (a) the tee shot decision — driver or iron, and the aim point; (b) the likely approach distance and flag positions that change your strategy; (c) any hole where penalty risk is high enough to warrant a conservative plan.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pre-commit to your three highest-leverage decisions.</strong> On every course, 3–5 holes contain the majority of the strategic value — holes where a wrong decision regularly costs a stroke. Identify these and decide in advance what you will do, regardless of how you feel on the day.</div></li>
+      <li><span class="step-n">3</span><div><strong>Write it down.</strong> A plan you have written is far more likely to be followed under competitive pressure than a plan you have only thought about. Use the caddie card template or a small notebook. The simple act of writing "hole 7: 3-wood left, aim 10 yards right of flag" removes the in-play cognitive load that causes drift.</div></li>
     </ul>
   </div>
 
+  <span class="badge badge-gold">📝 Hole Planning Card Format</span>
   <div class="card card-gold">
-    <span class="card-tag">The Hole-by-Hole Plan Template</span>
-    <h3>Build This for Your Home Course — Reuse Every Round</h3>
+    <span class="card-tag">What to Note for Each Hole</span>
+    <h3>The Minimal Viable Pre-Round Note</h3>
     <table class="tbl">
-      <tr><th>Hole</th><th>Tee Shot Commitment</th><th>Approach Target</th><th>Scoring Target</th><th>Risk Flag</th></tr>
-      <tr><td>01</td><td>[Your tee shot plan]</td><td>[Your approach aim]</td><td>Par</td><td>[High/Med/Low]</td></tr>
-      <tr><td>02</td><td>[Your tee shot plan]</td><td>[Your approach aim]</td><td>Par</td><td></td></tr>
-      <tr><td>...</td><td colspan="4">Complete for all 18 holes based on your course</td></tr>
+      <tr><th>Element</th><th>What to Note</th><th>Example</th></tr>
+      <tr><td>Tee club</td><td>Driver, 3-wood, or iron — and why</td><td>"3W — OOB left, narrow"</td></tr>
+      <tr><td>Tee aim</td><td>Side of fairway to favour</td><td>"Favour right half"</td></tr>
+      <tr><td>Approach aim</td><td>Default aim point relative to flag</td><td>"Centre-right regardless of flag"</td></tr>
+      <tr><td>Danger zone</td><td>The one miss that costs most</td><td>"Never left — OOB"</td></tr>
+      <tr><td>Layup zone</td><td>If par 5, optimal layup distance</td><td>"90 yards — PW full swing"</td></tr>
     </table>
-    <p style="margin-top:10px;font-size:12px;color:var(--muted);">The plan does not need to be elaborate — one line per hole. The value is in the pre-commitment, not the length of the description. A 15-minute pre-round planning session produces more score improvement than an hour of hitting balls before the round.</p>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>Digital version:</strong> The Caddie Card (caddie_card.html) is designed to hold exactly this information for your regular courses. Build the plan digitally on Caddie Card, then screenshot your notes for the round. The pre-commitment transfers directly to the card.</p></div>
+  </div>
+
+  <div class="info-box tip" style="margin-top:4px;">
+    <span class="ico">💡</span>
+    <p><strong>Cross-reference with caddie card:</strong> The Caddie Card tool in your system has a field for per-hole notes. Populate the strategy fields before each competition round — the card is designed to hold exactly this information in a pocket-accessible format.</p>
   </div>
 </div>
+
 
 <!-- FORMAT ADJUSTMENT -->
-<div class="sec" id="formats">
+<div class="sec" id="format">
   <h2 class="sec-title">Format Adjustment</h2>
-  <p class="sec-desc">The same EV logic applies differently to stroke play, Stableford, and match play. Understanding the adjustments prevents the error of playing stroke play strategy in a Stableford competition.</p>
-  <span class="badge badge-teal">Format-Specific Rules</span>
+  <p class="sec-desc">How the optimal aim point and strategic decisions change between stroke play, Stableford, match play, and competition vs. practice rounds. The EV inputs shift significantly by format — using stroke play strategy in Stableford costs real points.</p>
 
-  <div class="card card-teal">
-    <span class="card-tag">Why Format Changes EV</span>
-    <h3>The Value of a Stroke Is Not Constant Across Formats</h3>
-    <p style="margin-bottom:12px;">In stroke play, every shot counts equally. A double bogey is exactly 2 strokes worse than par — no more, no less. In Stableford, a double bogey scores 0 points — the same as a triple bogey or a 10. The excess damage above double bogey is worthless in Stableford, which means avoiding double bogeys has the same value as avoiding triple bogeys — but making birdies has twice the value they have in stroke play.</p>
+  <span class="badge badge-pro">📊 Format Comparison</span>
+  <div class="card card-pro">
+    <span class="card-tag">How Consequence Weighting Changes by Format</span>
+    <h3>The Four Formats — Strategic Differences</h3>
     <table class="tbl">
-      <tr><th>Score</th><th>Stroke Play Value</th><th>Stableford Points</th><th>Stableford Relative Value</th></tr>
-      <tr><td>Eagle</td><td>−2</td><td>5</td><td class="good">High — 2× birdie</td></tr>
-      <tr><td>Birdie</td><td>−1</td><td>3</td><td class="good">High — 2× par</td></tr>
-      <tr><td>Par</td><td>0</td><td>2</td><td class="warn">Normal</td></tr>
-      <tr><td>Bogey</td><td>+1</td><td>1</td><td class="warn">Low — only slightly worse than par</td></tr>
-      <tr><td>Double bogey</td><td>+2</td><td>0</td><td class="bad">Floor — same as any worse score</td></tr>
-      <tr><td>Triple bogey+</td><td>+3+</td><td>0</td><td class="bad">No additional cost beyond double bogey</td></tr>
+      <tr><th>Format</th><th>Double Bogey Cost</th><th>Birdie Value</th><th>Strategic Implication</th></tr>
+      <tr><td>Stroke play</td><td>High — every shot counts</td><td>Standard</td><td>Risk-averse optimal; avoid penalty zones; aim points most conservative</td></tr>
+      <tr><td>Stableford</td><td class="good">Low — max 1 point lost</td><td class="good">High — 3 points for birdie</td><td>More aggressive on birdie holes; willingness to risk bogey/double for eagle/birdie opportunity is EV-positive</td></tr>
+      <tr><td>Match play (winning)</td><td class="good">Low — just lose the hole</td><td>Variable by match situation</td><td>Aggressive when behind; conservative when ahead; opponent's situation determines your optimal strategy</td></tr>
+      <tr><td>Match play (losing by 2+)</td><td class="bad">Irrelevant — need birdies</td><td class="good">Maximum value</td><td>Fully aggressive; flag hunting; risk-taking is correct because conservative play cannot change the outcome</td></tr>
+      <tr><td>Practice/casual</td><td>None</td><td>None</td><td>Use for EV pattern reinforcement — play the optimal strategy regardless of outcome to build the decision habit</td></tr>
     </table>
   </div>
 
+  <span class="badge badge-gold">🏆 Stableford-Specific Strategy</span>
   <div class="card card-gold">
-    <span class="card-tag">Stableford Strategy Adjustments</span>
-    <h3>How EV Decisions Change in Stableford</h3>
+    <span class="card-tag">The Most Misplayed Format</span>
+    <h3>Why Your Stableford Strategy Is Probably Too Conservative</h3>
+    <p>In Stableford, a double bogey costs only 1 point (or 0 on a handicap stroke hole). A birdie earns 3 points. This asymmetry means aggressive play — going for flags, attempting carries, going for par 5s in two — has a significantly higher EV in Stableford than in stroke play.</p>
+    <p style="margin-top:10px;">Players who use stroke play strategy in Stableford are systematically leaving points on the table. The calculation: an aggressive play that produces birdie 25% of the time and double bogey 15% of the time nets: (0.25 × 3) − (0.15 × 1) = 0.75 − 0.15 = +0.60 points per attempt vs conservative play netting ~1.0 point consistently. The aggressive play is EV-positive in Stableford as long as birdie probability exceeds roughly 20%.</p>
+  </div>
+
+  <span class="badge badge-teal">🤝 Match Play Opponent Adjustment</span>
+  <div class="card card-teal">
+    <span class="card-tag">Adapting Strategy to Your Opponent's Situation</span>
+    <h3>When Opponent Situation Changes Your Optimal Play</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>The hole you cannot score points on — pick up immediately:</strong> Once you are at double bogey on a Stableford hole (0 points certain), picking up and moving to the next hole is always correct. Every additional stroke costs you nothing in points but costs you physical and mental energy needed for the next hole.</div></li>
-      <li><span class="step-n">2</span><div><strong>Birdie attempts have higher EV:</strong> In Stableford, a birdie is worth 3 points vs. 2 for a par — a 50% premium over par. This shifts the EV calculation toward more aggressive aim points when birdie opportunities exist. Flag attacking on accessible pins is more justified in Stableford than in stroke play.</div></li>
-      <li><span class="step-n">3</span><div><strong>Bogey protection is less important:</strong> In stroke play, the difference between par and bogey is 1 stroke. In Stableford, it is 1 point — the same magnitude but lower relative penalty since double bogey is the floor. Slightly more risk is justified on approach shots in Stableford because a missed green costs only 1 point, not a potential double-bogey score.</div></li>
-      <li><span class="step-n">4</span><div><strong>Double bogey prevention remains the primary rule:</strong> Despite adjustments 2 and 3, the double bogey prevention imperative from stroke play transfers fully to Stableford. Scoring 0 on a hole kills a Stableford round just as surely as a double bogey kills a stroke play round.</div></li>
+      <li><span class="step-n">1</span><div><strong>Opponent is in trouble (OOB, bad lie, 40 feet to putt):</strong> Play conservatively — put the ball in play and make them beat you. Their expected score on the hole is already high; you just need a par or better to win or halve. No aggressive plays.</div></li>
+      <li><span class="step-n">2</span><div><strong>Opponent is in a perfect position (fairway, 15 feet to putt):</strong> Play your normal optimal strategy. Do not panic into hero shots — they are likely to make birdie but making par to halve is a legitimate outcome. Only go aggressive if you are down in the match and need to close ground.</div></li>
+      <li><span class="step-n">3</span><div><strong>All square, last few holes:</strong> Tighten up to stroke play strategy — every shot counts as in stroke play. The match situation converges to stroke play EV at this point.</div></li>
     </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>Match play addendum:</strong> Match play EV is covered in depth in Guide 24 Match Play Deep Strategy tab. The core principle: match state entirely determines the correct aggression level. Never apply stroke play EV instincts in a match play context — the unit of currency is holes, not strokes, and the EV framework adjusts completely.</p></div>
   </div>
 </div>
 
-<div class="footer">DECISION ARCHITECTURE &amp; EV MASTERY · GUIDE 40 · PRO EDITION · THE SCRATCH PROJECT</div>
-<script>
-function show(id,btn){
-  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  btn.classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-</script>
+
+<div class="footer">DECISION ARCHITECTURE &amp; EV MASTERY · PRO EDITION · GUIDE 40 · THE SCRATCH PROJECT</div>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
   <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
   <div style="display:flex;flex-wrap:wrap;gap:10px;">
-    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
-      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+    <a href="20_course_management.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚖️</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Management</span>
     </a>
-    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">📊</span>
-      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion Mapping</span>
     </a>
-    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;">
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats &amp; SG Interpretation</span>
+    </a>
+    <a href="24_competitive_strategy.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Competitive Strategy</span>
     </a>
+    <a href="49_advanced_game_construction.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Advanced Game Construction (Elite)</span>
+    </a>
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
-    <a href="index_pro.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+    <a href="index_pro.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   </div>
 </div>
+
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
 </body>
 </html>

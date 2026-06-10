@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-06-05 · 03_longgame_pro.html -->
+<!-- version:v2.6 · 2026-06-09 · 03_longgame_pro.html -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -196,9 +196,7 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('drills',this)">Drills</button>
   <button class="tab" onclick="show('plans',this)">Plans</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
-  <button class="tab" data-tier="pro" onclick="show('grf_preview',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ GRF Preview</button>
-  <button class="tab" data-tier="pro" onclick="show('shape_pressure',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Shape Under Pressure</button>
-  <button class="tab" data-tier="pro" onclick="show('wind_trajectory',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ Wind Trajectory</button>
+  <button class="tab" data-tier="elite" onclick="show('elite_shotshape',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Shape Programming</button>
 </div>
 
 <!-- SG -->
@@ -790,160 +788,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   </div>
 </div>
 
-<!-- PRO: GRF PREVIEW -->
-<div class="sec" id="grf_preview" data-tier="pro">
-  <h2 class="sec-title">Ground Reaction Force — Preview</h2>
-  <p class="sec-desc">Ground Reaction Force (GRF) accounts for 30–35% of all clubhead speed — the single largest speed source in the golf swing. This section introduces the three phases and links to the full standalone Guide 39 for the complete treatment.</p>
-  <span class="badge badge-gold">⬡ Pro Depth — See Also Guide 39</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Three GRF Phases</span>
-    <h3>How Pushing Against the Ground Creates Rotational Speed</h3>
-    <div class="formula">
-      <div class="formula-lbl">Newton's Third Law Applied to the Golf Swing</div>
-      <div class="formula-main">Phase 1 — Vertical Loading (top of backswing)
-  Trail foot pushes DOWN into the ground
-  Ground pushes UP → loads the kinetic chain with potential energy
-  Tour players generate 1.2–1.5× body weight of vertical force
-
-Phase 2 — Lateral Drive (early downswing — THE MOST COMMONLY MISSING PHASE)
-  Hips SHIFT toward target 2–4 inches BEFORE rotating
-  This is the "bump" move — lateral, not rotational
-  Missing this phase = hip spin-out = over-the-top club path
-
-Phase 3 — Rotational Impulse (impact zone)
-  Lead foot brakes hard against the ground
-  Braking force drives upper body acceleration (like a whip)
-  Lead heel plants aggressively — never passive</div>
-      <div class="formula-note">The player who skips Phase 2 (lateral drive) and goes straight to rotation produces a hip spin-out fault that throws the club over the top. This is the most common cause of the slice at all levels. It is not primarily a wrist, arm, or shoulder problem — it is a ground force sequencing problem.</div>
-    </div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">Mevo Proxy Metrics for GRF Assessment</span>
-    <h3>Diagnosing GRF Without Force Plates</h3>
-    <table class="tbl">
-      <tr><th>GRF Pattern</th><th>Mevo Signal</th><th>What It Means</th></tr>
-      <tr><td>Good vertical loading (Phase 1)</td><td class="good">High smash factor (1.46+); consistent ball speed</td><td>Energy is loaded and transferring efficiently</td></tr>
-      <tr><td>Missing lateral drive (Phase 2)</td><td class="bad">High F2P positive (+3° to +8°); slice/pull</td><td>Club came over the top — Phase 2 missing</td></tr>
-      <tr><td>Stalled lead side (Phase 3)</td><td class="bad">Club speed plateau; blocked shots right</td><td>Lead foot braking is insufficient — body rotation stalls</td></tr>
-      <tr><td>Good Phase 3 braking</td><td class="good">High club speed relative to body speed; whip effect</td><td>Lead side is working correctly</td></tr>
-    </table>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>The Phase 2 feel cue:</strong> At the top of the backswing, before the downswing begins, feel the trail knee "bump" toward the target before any rotation. This is a lateral hip shift of 2–4 inches. Then rotate. Players who have never felt this move find it strange — but Mevo F2P numbers typically improve immediately when it is introduced.</p></div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Quick-Start Drill</span>
-    <h3>The Step Drill for Phase 2 Awareness</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Stand with feet together</strong>, club in normal grip. Take a backswing.</div></li>
-      <li><span class="step-n">2</span><div><strong>Step the lead foot toward the target</strong> at the start of the downswing — literally step 12 inches toward the target before rotating. This forces the lateral drive of Phase 2.</div></li>
-      <li><span class="step-n">3</span><div><strong>Hit balls from the stepped position.</strong> The step replicates the Phase 2 weight shift. Most players immediately notice the club path moving from out-to-in to in-to-out, and club speed increasing.</div></li>
-      <li><span class="step-n">4</span><div><strong>Graduate to normal stance</strong> while replicating the "step feeling" — a lateral bump before rotation. This is the Phase 2 motor pattern internalised.</div></li>
-    </ul>
-    <p style="margin-top:12px;font-size:12.5px;color:var(--muted);">For the complete GRF treatment — physics, self-assessment protocol, all three phase drills, failure mode table, and Rypstick synergy — see the standalone Guide 39: Ground Reaction Force.</p>
-  </div>
-</div>
-
-<!-- PRO: INTENTIONAL SHAPE UNDER PRESSURE -->
-<div class="sec" id="shape_pressure" data-tier="pro">
-  <h2 class="sec-title">Intentional Shape Under Pressure</h2>
-  <p class="sec-desc">Calling and executing a shot shape in competition is a different skill from producing a shape on the range. Pressure narrows the dispersion of your stock shape and amplifies any deviation. These protocols make your called shape reliable when the round is on the line.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-teal">
-    <span class="card-tag">The Bail Shape vs. The Go Shape</span>
-    <h3>Two Shapes for Different Decision Contexts</h3>
-    <p style="margin-bottom:12px;">Every player has a stock shape — the shot they produce reliably under pressure. They may also have a calling shape — a shape they can produce intentionally but which requires additional focus. Understanding the distinction prevents calling a shape you cannot reliably execute in competition.</p>
-    <table class="tbl">
-      <tr><th>Shape Type</th><th>Definition</th><th>When to Use</th><th>Selection Criteria</th></tr>
-      <tr><td class="good">Bail shape</td><td>Your most reliable, automatic shot under any condition</td><td>Tight holes, late in a round, under maximum pressure</td><td>Use when consequence of a bad shot is high</td></tr>
-      <tr><td class="warn">Go shape</td><td>A deliberately shaped shot — requires active setup changes</td><td>Open fairways, wide targets, practised regularly</td><td>Use only when confident this shape is available today</td></tr>
-      <tr><td class="bad">Called shape you cannot execute</td><td>A shape you intend but cannot reliably produce</td><td>Never in competition</td><td>Confirms during warm-up — do not use if not available</td></tr>
-    </table>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>The warm-up confirmation protocol:</strong> In the pre-round warm-up, hit 5 intentional draws and 5 intentional fades. Note which you can produce with 80%+ reliability. Only use shapes confirmed as available during that session. A shape that was reliable last week may not be available today.</p></div>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">The D-Plane Setup for Called Shapes</span>
-    <h3>Reliable Shape Production — The Exact Setup Changes</h3>
-    <div class="grid-2">
-      <div class="mini-card"><span class="mini-tag">Draw Setup</span><h4>In-to-Out Path, Closed Face to Path</h4><p>Align body 5–10° right of target. Club face aimed at target (closed to body line). This creates in-to-out path with face slightly closed to path → draw spin. Ball starts right and curves back.</p></div>
-      <div class="mini-card"><span class="mini-tag">Fade Setup</span><h4>Out-to-In Path, Open Face to Path</h4><p>Align body 5–10° left of target. Club face aimed at target (open to body line). Out-to-in path with face slightly open to path → fade spin. Ball starts left and curves back.</p></div>
-    </div>
-    <div class="info-box tip"><span class="ico">💡</span><p><strong>The common error:</strong> Players trying to produce a draw aim the face right and the body right — producing a straight shot or a push. D-Plane requires a relationship between face and path, not just face direction. The face should aim at the target; the body alignment changes the path. Face target, body changes the curve.</p></div>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Shape Recovery Under Pressure</span>
-    <h3>When Your Go-To Shape Abandons You Mid-Round</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Identify the change immediately:</strong> If three consecutive shots have drifted in the same unintended direction, the pattern is real. Do not explain it away. Your shot shape has shifted.</div></li>
-      <li><span class="step-n">2</span><div><strong>Switch to your bail shape:</strong> Do not attempt to fix the go shape mid-round. Accept the current ball flight, switch to the bail shape, and play the remainder of the round with it. Attempts to fix a shape mid-round almost always make it worse.</div></li>
-      <li><span class="step-n">3</span><div><strong>Adjust targeting immediately:</strong> If you have been fading and the ball is now drawing, your previous aim points are wrong. On the next tee, aim 10 yards right of where you were aiming for a draw. Adjust immediately — do not wait.</div></li>
-      <li><span class="step-n">4</span><div><strong>Post-round diagnosis:</strong> After the round, Mevo F2P and HackMotion data will show what changed. Was the face angle different? Was the path different? This is where the technical fix happens — not on the course.</div></li>
-    </ul>
-  </div>
-</div>
-
-<!-- PRO: WIND-ADJUSTED TRAJECTORY SELECTION -->
-<div class="sec" id="wind_trajectory" data-tier="pro">
-  <h2 class="sec-title">Wind-Adjusted Trajectory Selection</h2>
-  <p class="sec-desc">The physics behind why punch shots reduce wind exposure — and the mathematics of how much. Wind speed is not constant at all heights, and ball time in the air determines total drift. Understanding this makes trajectory a genuine strategic tool.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-teal">
-    <span class="card-tag">Wind Speed Gradient by Height</span>
-    <h3>Why Punch Shots Genuinely Reduce Wind Exposure</h3>
-    <p style="margin-bottom:12px;">Wind speed is not constant with height. It is faster higher up — typically 30–50% faster at 30 metres than at ground level on a standard day with a moderate boundary layer. A ball flying at a high trajectory spends more time in the stronger upper-wind layer. A punch shot flying at 15 metres peak height is in slower, more consistent wind throughout its flight.</p>
-    <table class="tbl">
-      <tr><th>Height</th><th>Typical Wind Speed Ratio vs. Ground</th><th>Ball Flight Time at This Height</th></tr>
-      <tr><td>Ground level (0–3m)</td><td class="good">1.0× (baseline)</td><td>Brief — takeoff and landing only</td></tr>
-      <tr><td>Low trajectory (3–12m)</td><td class="good">1.1–1.2×</td><td>Majority of punch shot flight</td></tr>
-      <tr><td>Standard trajectory (12–25m)</td><td class="warn">1.3–1.4×</td><td>Majority of normal iron flight</td></tr>
-      <tr><td>High trajectory (25–40m)</td><td class="bad">1.5–1.7×</td><td>Peak of high ball flight</td></tr>
-    </table>
-    <div class="formula">
-      <div class="formula-lbl">Total Wind Effect on Ball</div>
-      <div class="formula-main">Wind Effect = Σ (wind speed at each height × time spent at that height)
-
-Punch shot into 20mph headwind (true speed):
-  Effective wind exposure ≈ 14–16 mph (lower trajectory, faster)
-
-Standard iron into same 20mph headwind:
-  Effective wind exposure ≈ 20–22 mph (higher, slower, in stronger wind)
-
-Difference: punch shot experiences ~35% less effective wind resistance</div>
-      <div class="formula-note">This is why experienced links players say a low punch "stays under the wind" — they are correct not just intuitively but physically. The ball genuinely experiences less wind because it spends less time in the faster upper layers.</div>
-    </div>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">Trajectory Selection by Wind Condition</span>
-    <h3>Which Shot to Play — A Decision Framework</h3>
-    <table class="tbl">
-      <tr><th>Wind</th><th>Best Trajectory</th><th>Why</th><th>Club Adjustment</th></tr>
-      <tr><td>Headwind &gt;15mph</td><td class="good">Low punch (30% lower than normal)</td><td>Reduces air resistance and wind drift; ball holds line better</td><td>1–2 clubs more; abbreviated follow-through</td></tr>
-      <tr><td>Headwind &lt;15mph</td><td class="warn">Standard or slightly lower</td><td>Moderate wind — full trajectory adjustment may over-complicate</td><td>½–1 club more</td></tr>
-      <tr><td>Downwind</td><td class="warn">Standard to slightly higher</td><td>Higher trajectory uses wind assistance; more carry</td><td>½–1 club less; allow for extra run</td></tr>
-      <tr><td>Crosswind &gt;15mph</td><td class="good">Low punch or curve into wind</td><td>Low trajectory reduces lateral drift; curve into wind cancels drift</td><td>Aim into wind; take 1 club more</td></tr>
-      <tr><td>Variable/gusty</td><td class="good">Low, controlled trajectory always</td><td>Gusts affect high balls disproportionately; low ball is more predictable</td><td>Play between gusts where possible</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">The Punch Shot Technique</span>
-    <h3>Producing a Reliable Low Trajectory Under Pressure</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Ball back in stance (1–2 inches):</strong> Moving the ball back increases effective dynamic loft reduction and produces a lower launch angle. Start here — do not over-complicate the technique.</div></li>
-      <li><span class="step-n">2</span><div><strong>Shaft lean forward at address:</strong> Hands ahead of the ball at address pre-sets the forward lean that will reduce loft at impact. This is the single most important position for trajectory control.</div></li>
-      <li><span class="step-n">3</span><div><strong>Abbreviated follow-through (9 o'clock finish):</strong> Stop the follow-through at waist height rather than a full finish. This keeps the hands leading and prevents any loft addition at impact from a full release.</div></li>
-      <li><span class="step-n">4</span><div><strong>Quiet lower body:</strong> Less hip turn than a normal shot keeps the torso over the ball and maintains shaft lean through impact. More hip rotation adds loft. Think "stacked over the ball" throughout.</div></li>
-    </ul>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Common error:</strong> Players who try to punch by swinging softer produce a weak, high shot that balloons in the wind — the worst of all outcomes. The punch must be firm. The trajectory reduction comes from setup and shaft lean, not from reduced swing effort.</p></div>
-  </div>
-</div>
-
 <div class="footer">THE LONG GAME PLAYBOOK — PRO EDITION · SG: OFF-TEE & APPROACH FRAMEWORK</div>
 <script>
 function show(id,btn){
@@ -980,8 +824,51 @@ function show(id,btn){
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
     </a>
   </div>
+    <a href="45_sportsbox_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎬</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Sportsbox AI Integration</span>
+    </a>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+
+<div class="sec" id="elite_shotshape" data-tier="elite">
+  <h2 class="sec-title">Advanced Shot-Shape Programming</h2>
+  <p class="sec-desc">At county and national level, a reliable 5-yard draw and 5-yard fade on demand is the minimum shot-shape library. This covers deliberate shape acquisition, the wind-shape interaction matrix, and how to verify a shape is body-driven using Sportsbox AI data.</p>
+  <span class="badge badge-gold">📐 The Minimum Elite Shape Library</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Must Be Owned — Not Just Attempted</span>
+    <h3>Three Shots, All Clubs</h3>
+    <table class="tbl">
+      <tr><th>Shape</th><th>D-Plane Requirement</th><th>Primary Use Case</th></tr>
+      <tr><td>Controlled 5-yard draw</td><td>Face 2° closed to path; path 2–3° right of target</td><td>OOB right; into right-to-left wind; right-side pins from left rough</td></tr>
+      <tr><td>Controlled 5-yard fade</td><td>Face 1–2° open to path; path 1–2° left of target</td><td>Dogleg right; holding into left-to-right wind; tight left pins with water right</td></tr>
+      <tr><td>Low punch (all clubs)</td><td>Ball back, shaft forward, ¾ swing, abbreviated finish</td><td>Into any wind above 15 mph; tight lies on links and heathland</td></tr>
+    </table>
+  </div>
+  <span class="badge badge-teal">🔨 Shape Acquisition Protocol</span>
+  <div class="card card-teal">
+    <span class="card-tag">How to Add a Shape to Your Library</span>
+    <h3>Four-Stage Process</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Verify the D-Plane numbers:</strong> Use Mevo to confirm the required face-to-path relationship. A consistent 5-yard draw needs approximately 2° closed face to path.</div></li>
+      <li><span class="step-n">2</span><div><strong>Blocked acquisition (50 consecutive shots):</strong> Hit 50 shots of the target shape in a single session. Blocked practice is correct here — building the motor pattern. Do not mix with other shapes.</div></li>
+      <li><span class="step-n">3</span><div><strong>Random consolidation:</strong> After 3–4 blocked sessions, call the shape before each swing and execute randomly. The shape enters your library when you can produce it with 75%+ reliability on call.</div></li>
+      <li><span class="step-n">4</span><div><strong>Pressure test on the course:</strong> The shape is not library-ready until it holds in competition. Continue Guide 16 pressure simulation practice until consistent in both environments.</div></li>
+    </ul>
+  </div>
+  <span class="badge badge-lime">🌬️ Wind-Shape Interaction Matrix</span>
+  <div class="card">
+    <span class="card-tag">When Combining Wind with Shape Produces the Best Result</span>
+    <h3>The Decision Table</h3>
+    <table class="tbl">
+      <tr><th>Wind Direction</th><th>Preferred Shape</th><th>Reasoning</th></tr>
+      <tr><td>Left-to-right (10+ mph)</td><td class="good">Draw into the wind</td><td>Ball rides wind back to target; more controlled than a straight ball pushed by wind</td></tr>
+      <tr><td>Right-to-left (10+ mph)</td><td class="good">Fade into the wind</td><td>Shape working against wind gives most predictable result</td></tr>
+      <tr><td>Into wind (15+ mph)</td><td class="good">Low punch, 2 extra clubs</td><td>Lower trajectory, less wind exposure, more predictable distance</td></tr>
+      <tr><td>Downwind</td><td class="warn">Normal trajectory</td><td>High shapes balloon unpredictably downwind</td></tr>
+    </table>
   </div>
 </div>
 </body>

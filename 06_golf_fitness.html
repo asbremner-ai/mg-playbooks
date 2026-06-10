@@ -156,21 +156,6 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .yt-link.tpi:hover{background:rgba(224,184,64,.18);border-color:rgba(224,184,64,.55);}
 </style>
 
-<script>
-/* tier-init */
-const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
-(function() {
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('[data-tier]').forEach(function(el) {
-      var t = el.getAttribute('data-tier');
-      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
-      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
-      // Element is visible for this tier — mark it active for styling
-      el.setAttribute('data-tier-active', t);
-    });
-  });
-})();
-</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -200,7 +185,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
   <button class="tab" onclick="show('postround',this)">Post-Round</button>
   <button class="tab" onclick="show('hrvsleep',this)">HRV & Sleep</button>
-  <button class="tab" data-tier="pro" onclick="show('inseason',this)" style="color:var(--gold);border-bottom-color:transparent;">⬡ In-Season</button>
 </div>
 
 <div class="sec active" id="overview">
@@ -599,104 +583,6 @@ const TIER = 'elite'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks
   <div class="info-box tip" style="margin-top:4px;">
     <span class="ico">💡</span>
     <p><strong>Track it in the Tracker:</strong> Log your sleep hours and HRV every morning in the Performance Tracker. After 4 weeks of data, the correlation between your sleep quality and HRV, and between HRV and your practice/round performance, will become clearly visible. The data motivates the behaviour change better than any single recommendation.</p>
-  </div>
-
-  <!-- PRO: HRV-GUIDED TRAINING DECISIONS -->
-  <div data-tier="pro" style="margin-top:20px;">
-    <span class="badge badge-gold">⬡ Pro Depth — HRV Decision Framework</span>
-    <div class="card card-gold" style="margin-top:12px;">
-      <span class="card-tag">HRV Decision Thresholds — Your Personal Training Guide</span>
-      <h3>When to Train Hard, When to Reduce, When to Rest</h3>
-      <p style="margin-bottom:12px;">HRV alone is not actionable. What makes it actionable is comparing today's reading to your personal 7-day rolling average. A reading 10% below average means something very different for one person versus another — the percentage change from baseline is what matters, not the absolute number.</p>
-      <div class="formula">
-        <div class="formula-lbl">HRV Decision Rules</div>
-        <div class="formula-main">HRV within 5% of 7-day average:  → Train as planned (green zone)
-HRV 5–10% below average:          → Reduce intensity by 20% (amber zone)
-                                      Skip Rypstick; keep strength session
-HRV 10–15% below average:         → Reduce to mobility + short game only (red zone)
-                                      No strength, no speed, no GRF work
-HRV &gt;15% below average:            → Rest day (recovery mode)
-                                      Light walk acceptable; no golf practice</div>
-        <div class="formula-note">Build your 7-day baseline over the first 2–3 weeks of consistent morning measurement. Single-day anomalies (poor sleep, alcohol, illness) will show as sharp drops. Sustained low readings (3+ days below average) indicate genuine accumulated fatigue requiring a de-load. See In-Season Periodisation tab.</div>
-      </div>
-    </div>
-    <div class="card card-teal">
-      <span class="card-tag">Distinguishing Noise from Signal</span>
-      <h3>When to Trust the HRV and When to Override It</h3>
-      <table class="tbl">
-        <tr><th>Scenario</th><th>HRV Reading</th><th>Decision</th><th>Why</th></tr>
-        <tr><td>Competition day (nervous energy)</td><td class="warn">Often elevated above baseline</td><td>Train as pre-planned</td><td>Elevated HRV before competition is normal arousal — not a training stimulus</td></tr>
-        <tr><td>Poor sleep (single night)</td><td class="warn">10–15% below average</td><td>Reduce intensity; do not cancel</td><td>Single-night sleep disruption recovers quickly — train light rather than skip</td></tr>
-        <tr><td>3+ consecutive low readings</td><td class="bad">Sustained 10%+ below baseline</td><td>De-load week immediately</td><td>Sustained suppression indicates systemic fatigue — training through it extends recovery</td></tr>
-        <tr><td>Illness recovery</td><td class="bad">Often very low</td><td>Rest until within 5% of baseline</td><td>Training during illness recovery suppresses immune response</td></tr>
-        <tr><td>Travel (competition away)</td><td class="warn">Variable — often low day 1</td><td>Day 1: mobility only. Day 2+: normal if HRV recovers</td><td>Travel disrupts circadian rhythm; HRV settles after first night</td></tr>
-      </table>
-    </div>
-  </div>
-</div>
-
-<!-- PRO: IN-SEASON PERIODISATION -->
-<div class="sec" id="inseason" data-tier="pro">
-  <h2 class="sec-title">In-Season Periodisation</h2>
-  <p class="sec-desc">The 6-month linear fitness plan builds the base. In-season periodisation maintains it during competition season without the volume that built it — and prevents training from disrupting performance at critical moments.</p>
-  <span class="badge badge-gold">⬡ Pro Depth</span>
-
-  <div class="card card-gold">
-    <span class="card-tag">The Training-Performance Interference Period</span>
-    <h3>Why New Fitness Gains Can Temporarily Hurt Your Game</h3>
-    <p style="margin-bottom:12px;">When a new physical quality is gained — increased rotational power, improved hip mobility, higher clubhead speed — the nervous system requires 2–4 weeks to integrate it into the existing motor programme. During this integration window, the new physical capacity may actually disrupt timing, tempo, and ball striking before it improves them. This is the training-performance interference period.</p>
-    <div class="formula">
-      <div class="formula-lbl">Timing the Interference Period</div>
-      <div class="formula-main">Week 1–2 of new training stimulus: Potential disruption to motor patterns
-Week 3–4: Integration begins — disruption fades
-Week 5–6+: New physical quality improves performance
-
-Implication: Never start a new, high-intensity fitness phase
-within 4 weeks of an important competition.
-Plan training phases to complete their interference period
-before the competition window opens.</div>
-    </div>
-    <div class="info-box warn-box"><span class="ico">⚠️</span><p><strong>Practical rule:</strong> Schedule any significant fitness phase change — starting Phase 2 Strength, beginning speed work, changing to a new exercise programme — at least 4 weeks before your next important competition. If a major competition is within 3 weeks, maintain current training levels rather than introducing new stimuli.</p></div>
-  </div>
-
-  <div class="card card-teal">
-    <span class="card-tag">In-Season Maintenance Protocol</span>
-    <h3>Preserving the Fitness Base Without Building Volume</h3>
-    <p style="margin-bottom:12px;">Research on training maintenance shows that a physical quality built over months can be maintained with as little as 30–40% of the training volume that built it, provided intensity is preserved. In-season training reduces volume, keeps intensity, and prioritises recovery around competition.</p>
-    <table class="tbl">
-      <tr><th>Off-Season Volume</th><th>In-Season Maintenance Volume</th><th>Frequency</th><th>Priority</th></tr>
-      <tr><td>3 × 50-min strength sessions/week</td><td class="good">2 × 35-min sessions/week</td><td>Mon + Wed (not Fri before weekend golf)</td><td>Maintain strength — reduce sets by 30%</td></tr>
-      <tr><td>3 × Rypstick speed sessions/week</td><td class="warn">2 × sessions/week</td><td>Avoid within 72hrs of competition</td><td>Maintain neurological ceiling</td></tr>
-      <tr><td>Daily mobility (6 min)</td><td class="good">Daily mobility (6 min)</td><td>Non-negotiable throughout</td><td>Never reduce mobility work</td></tr>
-      <tr><td>Phase 3 power sessions</td><td class="warn">1 × session/week maximum</td><td>At least 5 days before competition</td><td>Maintain but do not build</td></tr>
-    </table>
-  </div>
-
-  <div class="card">
-    <span class="card-tag">Competition Week Structure</span>
-    <h3>The 7-Day Countdown Protocol</h3>
-    <table class="tbl">
-      <tr><th>Days Before Competition</th><th>Training</th><th>Rationale</th></tr>
-      <tr><td>7 days (Mon)</td><td class="good">Full strength session + Rypstick</td><td>Full week for recovery — no restriction</td></tr>
-      <tr><td>6 days (Tue)</td><td class="good">Mobility + short game practice</td><td>Active recovery</td></tr>
-      <tr><td>5 days (Wed)</td><td class="warn">Light strength (60% intensity, no speed work)</td><td>Last training day — keep light</td></tr>
-      <tr><td>4 days (Thu)</td><td class="good">Mobility only</td><td>CNS recovery begins</td></tr>
-      <tr><td>3 days (Fri)</td><td class="good">On-course practice or range only — no gym</td><td>Motor pattern consolidation</td></tr>
-      <tr><td>2 days (Sat)</td><td class="good">Pre-round warmup protocol only</td><td>Activation, not training</td></tr>
-      <tr><td>1 day (Sun — Competition)</td><td class="good">Pre-round warmup protocol</td><td>Performance day</td></tr>
-    </table>
-  </div>
-
-  <div class="card card-gold">
-    <span class="card-tag">De-Load Week Structure</span>
-    <h3>Planned Recovery for Multi-Competition Seasons</h3>
-    <p style="margin-bottom:12px;">After any block of 4–6 competition weeks, a planned de-load week restores CNS freshness, reduces accumulated fatigue, and allows soft tissue recovery. De-loading is not rest — it is reduced-intensity training that preserves movement patterns while allowing the system to recover.</p>
-    <ul class="steps">
-      <li><span class="step-n">M</span><div><strong>Monday:</strong> Mobility routine only (6 min). No strength, no speed work.</div></li>
-      <li><span class="step-n">W</span><div><strong>Wednesday:</strong> Light movement session — bodyweight exercises, gentle stretching, putting practice. 20 minutes maximum. No loading.</div></li>
-      <li><span class="step-n">F</span><div><strong>Friday:</strong> Light range session — 9-iron and putter only. 30 minutes. Process focus, not performance focus.</div></li>
-      <li><span class="step-n">+</span><div><strong>After de-load:</strong> Return to full training volume and begin the next competition preparation cycle. Most players find a de-load week produces noticeably better swing feel in the following week.</div></li>
-    </ul>
   </div>
 </div>
 
