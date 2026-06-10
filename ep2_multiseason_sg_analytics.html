@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep2_multiseason_sg_analytics.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Multi-SeasonSG Analytics — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}
+.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}
+.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style>
+<script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span>
+</div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP2 · Future Release</p>
+  <h1>Multi-Season<br><em>SG Analytics</em></h1>
+  <p class="hero-sub">The statistical layer beyond Guide 26 — separating skill from variance, building a personal SG fingerprint, regression to the mean applied to golf, multi-season modelling, category correlation analysis, and predictive analytics for your improvement trajectory.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📊 Skill vs. Variance</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔍 SG Fingerprint</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📉 Regression to Mean</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📈 Multi-Season Model</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔗 Correlation</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔮 Predictive Analytics</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('separation',this)">Skill vs. Variance</button>
+  <button class="tab" onclick="show('fingerprint',this)">Your SG Fingerprint</button>
+  <button class="tab" onclick="show('regression',this)">Regression to Mean</button>
+  <button class="tab" onclick="show('multiseason',this)">Multi-Season Modelling</button>
+  <button class="tab" onclick="show('correlation',this)">Category Correlation</button>
+  <button class="tab" onclick="show('prediction',this)">Predictive Analytics</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Beyond the Dashboard</h2>
+  <p class="sec-desc">Guide 26 covers how to read and act on your Arccos SG data. This guide covers the statistical layer that transforms data reading into genuine analysis — separating real skill change from statistical noise, understanding regression to the mean, building a multi-season SG model, and using correlation analysis to identify the highest-leverage improvement levers specific to your game.</p>
+
+  <span class="badge badge-elite">📊 Why You Need This Layer</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Problem with Monthly SG Reviews</span>
+    <h3>When Data Reading Misleads You</h3>
+    <p>Monthly SG reviews are a useful diagnostic tool — but they have a fundamental limitation: most month-to-month variation in SG numbers is noise, not signal. A player who improves SG: Putting by +0.3 in one month has a high probability of returning toward their baseline in the next month, regardless of whether anything actually changed in their putting.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>SG Category</th><th>Typical Month-to-Month Noise (SD)</th><th>Rounds Needed for Signal</th></tr>
+      <tr><td>SG: Putting</td><td>±0.4–0.6 strokes</td><td class="bad">40–50 rounds for a reliable trend</td></tr>
+      <tr><td>SG: Around Green</td><td>±0.3–0.5 strokes</td><td class="warn">30–40 rounds</td></tr>
+      <tr><td>SG: Approach</td><td>±0.3–0.4 strokes</td><td class="warn">25–35 rounds</td></tr>
+      <tr><td>SG: Off the Tee</td><td>±0.3–0.4 strokes</td><td class="warn">25–35 rounds</td></tr>
+      <tr><td>SG: Total</td><td>±0.5–0.7 strokes</td><td class="good">20–25 rounds (aggregation reduces noise)</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">The practical implication:</strong> Do not make major practice priority changes based on a single month's SG data. Use rolling 12-week averages as the minimum analysis window. Use 6-month rolling averages for trend identification. Only change your fundamental game construction priorities based on multi-season data.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SKILL VS VARIANCE -->
+<div class="sec" id="separation">
+  <h2 class="sec-title">Separating Skill from Variance</h2>
+  <p class="sec-desc">The single most important analytical skill in SG interpretation: distinguishing genuine skill change from statistical variance. Getting this wrong drives wasted practice effort — working on a weakness that was noise, or abandoning work on a strength that temporarily underperformed.</p>
+
+  <span class="badge badge-elite">📐 The Statistical Framework</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Confidence Intervals for Your SG Data</span>
+    <h3>How to Know If a Change Is Real</h3>
+    <p>Every SG measurement has a confidence interval — a range of values within which the true skill level lies, given the sample size. The smaller the sample, the wider the interval. The wider the interval, the less actionable the measurement.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Sample Size</th><th>95% CI Width (SG: Total)</th><th>Interpretation</th></tr>
+      <tr><td>5 rounds</td><td>±1.0 stroke</td><td class="bad">Essentially meaningless — could be any level within 2 strokes of the reading</td></tr>
+      <tr><td>10 rounds</td><td>±0.7 stroke</td><td class="bad">Still very noisy — unsuitable for practice priority decisions</td></tr>
+      <tr><td>20 rounds</td><td>±0.5 stroke</td><td class="warn">Moderate signal — useful for directional guidance only</td></tr>
+      <tr><td>40 rounds</td><td>±0.35 stroke</td><td class="warn">Reasonable signal — suitable for practice priority decisions</td></tr>
+      <tr><td>80 rounds</td><td>±0.25 stroke</td><td class="good">Strong signal — suitable for structural game construction decisions</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Variance Filter</span>
+    <h3>Applying a Statistical Filter to Your Monthly Data</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Calculate your rolling 20-round SG for each category.</strong> Pull the most recent 20 rounds from Arccos and calculate average SG per category. This is your current baseline.</div></li>
+      <li><span class="step-n">2</span><div><strong>Apply the ±0.35 threshold.</strong> Any single-month SG change smaller than ±0.35 strokes is within normal variance for a 40-round dataset. It is not a signal. Do not change practice priorities based on it.</div></li>
+      <li><span class="step-n">3</span><div><strong>Require 3 consecutive months of directional movement before acting.</strong> If SG: Putting has declined for 3 consecutive months — even by small amounts — that is a meaningful signal. A single month's decline followed by two stable months is noise.</div></li>
+      <li><span class="step-n">4</span><div><strong>Course difficulty normalisation.</strong> SG data from courses of very different difficulty is not directly comparable. If your last 5 rounds were on the hardest course in your county, an apparent SG decline may be entirely explained by course difficulty, not skill change. Arccos provides course benchmarks — use them.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- YOUR SG FINGERPRINT -->
+<div class="sec" id="fingerprint">
+  <h2 class="sec-title">Your Personal SG Fingerprint</h2>
+  <p class="sec-desc">A personal SG fingerprint is a stable, characteristic profile of your strengths and weaknesses that persists across conditions and courses. Most players have identifiable fingerprints by 60+ rounds of Arccos data — and these fingerprints are more useful than population benchmarks for designing practice and game strategy.</p>
+
+  <span class="badge badge-elite">🔍 Building Your Fingerprint</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Three-Step Fingerprint Construction</span>
+    <h3>What Makes Your Game Distinctive</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pull 60+ rounds from Arccos.</strong> Calculate your average SG per category and compare to the scratch-handicap population benchmark (from Guide 41 for plus-handicap targets). For each category, note whether you are above or below benchmark and by how much. This is your raw fingerprint.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify your structural advantage.</strong> The category where you consistently outperform your overall handicap standard. A 3-handicapper with SG: Putting at scratch-standard has putting as their structural advantage. This is the category you must protect — it is disproportionately responsible for your results, and degrading it will cost more strokes than improving any other category.</div></li>
+      <li><span class="step-n">3</span><div><strong>Identify your structural gap.</strong> The category most responsible for the difference between your current handicap and your target handicap. This is where the highest-leverage practice investment lies. The fingerprint calculation makes this precise — not "I should improve my approach play" but "closing my SG: APP gap by 0.3 strokes would move my scoring average by 0.4 per round."</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Fingerprint Stability Over Time</span>
+    <h3>How Your Fingerprint Changes (and Doesn't) as You Improve</h3>
+    <table class="tbl">
+      <tr><th>Observation</th><th>What It Means</th><th>Action</th></tr>
+      <tr><td>Fingerprint is stable across 2+ seasons</td><td>Your relative strengths and weaknesses are structural — they reflect your movement pattern, physical characteristics, or formative experience</td><td>Accept the fingerprint and play to it — game strategy should exploit strengths, not just address weaknesses</td></tr>
+      <tr><td>Structural advantage deteriorates</td><td>Either a technical change has disrupted the underlying skill, or the rest of the game has improved and the advantage is now less differentiated</td><td>High-priority protection work — do not allow a structural advantage to erode</td></tr>
+      <tr><td>Structural gap narrows significantly</td><td>Genuine skill improvement in the target category — this is the system working</td><td>Celebrate, then identify the new structural gap (the fingerprint shifts as improvement happens)</td></tr>
+      <tr><td>New category becomes a weakness</td><td>A technical change has introduced a new pattern that is underperforming relative to the rest of the game</td><td>Monitor for 3 months before acting — may be temporary consolidation noise</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- REGRESSION TO MEAN -->
+<div class="sec" id="regression">
+  <h2 class="sec-title">Regression to the Mean</h2>
+  <p class="sec-desc">Regression to the mean is the most commonly misunderstood statistical phenomenon in golf improvement. Understanding it prevents two expensive errors: abandoning practice that is working because the results temporarily deteriorated, and crediting a practice change for an improvement that would have happened anyway.</p>
+
+  <span class="badge badge-elite">📉 The RTM Effect in Golf</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Why Your Best Month Is Often Followed by a Worse One</span>
+    <h3>RTM Explained Without the Statistics</h3>
+    <p>If you play the best round of your life — hitting every fairway, making all the 6-footers, holing a bunker shot — a significant portion of that exceptional performance was luck. Good bounces, putts that caught the lip and went in, approaches that landed close on firm greens that should have run through. The next round, that luck is not repeated. Your score goes up. This is not regression in your skill level — it is the mean reasserting itself after an exceptional luck-influenced outlier.</p>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">The coaching trap:</strong> A player shoots a career best after their coach introduces a new technique. The coach attributes the improvement to the technique. The player practises intensely. The next 3 rounds are average. The technique appears to have stopped working. The coach tries something different. In reality, the career best was partly RTM in positive direction — luck and a good day. The subsequent averages were simply the baseline. The technique may have been fine all along.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Correcting for RTM in Your SG Analysis</span>
+    <h3>Four Practical Rules</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Never change your practice programme after a single exceptional round (positive or negative).</strong> Apply the 3-consecutive-month rule from the Skill vs. Variance tab. One outlier round is almost always RTM — in either direction.</div></li>
+      <li><span class="step-n">2</span><div><strong>Regress your personal best.</strong> When you shoot a personal best, estimate how much of the improvement was luck. A useful heuristic: if your SG: Putting was more than 1.5 standard deviations above your baseline in that round, at least half of the putting improvement was variance, not skill. Apply this to all categories.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use rolling averages as your baseline, not recent peaks.</strong> Your "true" SG level is not your best 10 rounds — it is your rolling 20-round average. Comparing yourself to your best rounds is always a route to disappointment and misleads practice direction.</div></li>
+      <li><span class="step-n">4</span><div><strong>Require evidence of trend, not evidence of peak.</strong> A single round where you holed everything is not evidence that your putting has improved. Three consecutive months of above-baseline SG: Putting is evidence of improvement. The difference between peak and trend is the difference between luck and skill.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- MULTI-SEASON MODELLING -->
+<div class="sec" id="multiseason">
+  <h2 class="sec-title">Multi-Season SG Modelling</h2>
+  <p class="sec-desc">Building a two-to-three year picture of your SG trajectory reveals structural improvement patterns that monthly reviews cannot identify. This is the analytical framework that underpins long-term game construction decisions.</p>
+
+  <span class="badge badge-elite">📈 The 8-Quarter Review</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Minimum Dataset for Structural Analysis</span>
+    <h3>Why Two Years of Data Changes Everything</h3>
+    <p>With 8 quarters of data (approximately 80–120 competitive rounds for a player doing 10–15 rounds per quarter), three structural patterns become identifiable that are invisible in shorter datasets:</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Seasonal variation.</strong> Most players have consistent seasonal SG patterns — stronger in summer (more play, better conditions) or stronger in autumn (course conditioning, less pressure). Identifying your seasonal pattern prevents misattributing seasonal variation to practice changes.</div></li>
+      <li><span class="step-n">2</span><div><strong>Category improvement sequence.</strong> SG categories improve in a characteristic order for each player. For most, it goes ARG first (most practice-responsive), then APP (technique-dependent), then OTT (speed and consistency dependent), then Putting (slowest to improve). Your sequence may differ — the 8-quarter review reveals it.</div></li>
+      <li><span class="step-n">3</span><div><strong>Plateau identification.</strong> Where improvement has stalled for 4+ quarters is where deliberate intervention is required — not more practice of the same type, but a different approach (coaching change, technique change, equipment change). The plateau is a signal that the current approach has reached its ceiling.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Conducting the Annual Model Review</span>
+    <h3>October Protocol — Building Your SG Model</h3>
+    <table class="tbl">
+      <tr><th>Step</th><th>What to Do</th><th>Output</th></tr>
+      <tr><td>1. Export season data</td><td>Pull 12 months of Arccos data; split by quarter; calculate average SG per category per quarter</td><td>8-quarter SG table across 5 categories</td></tr>
+      <tr><td>2. Plot trajectories</td><td>Chart each SG category across 8 quarters — identify improvement, plateau, or decline</td><td>Visual SG trajectory per category</td></tr>
+      <tr><td>3. Identify the rate-limiting category</td><td>The category showing the least improvement relative to its potential gap is the current development bottleneck</td><td>One primary development priority for next season</td></tr>
+      <tr><td>4. Course-adjust for difficulty</td><td>Note any quarters with unusual course difficulty concentration; adjust for it in trend analysis</td><td>Adjusted trajectory removing course noise</td></tr>
+      <tr><td>5. Set next-season targets</td><td>Based on trajectory rates, set realistic 12-month targets for each SG category — not aspirational, but extrapolations of current improvement rates</td><td>Next season's SG target table</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CATEGORY CORRELATION -->
+<div class="sec" id="correlation">
+  <h2 class="sec-title">Category Correlation Analysis</h2>
+  <p class="sec-desc">SG categories do not improve independently. Some improve together because they share an underlying cause. Understanding which categories are correlated in your personal data identifies the highest-leverage interventions — changes that improve multiple categories simultaneously.</p>
+
+  <span class="badge badge-elite">🔗 Correlation in Your Game</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Why Correlation Matters for Practice Design</span>
+    <h3>Shared Causes Produce Multiple Improvements</h3>
+    <p>If SG: OTT and SG: APP are positively correlated in your data, an intervention that improves both simultaneously is worth twice as much as one that improves only one. Common shared causes and their associated category correlations:</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Shared Cause</th><th>Categories Correlated</th><th>Identifying the Pattern</th></tr>
+      <tr><td>Improved course management / aim points</td><td>OTT + APP (both improve when tee shot position improves approach quality)</td><td>Both categories improve simultaneously following a strategic change, not a technical one</td></tr>
+      <tr><td>Increased swing speed</td><td>OTT + APP (shorter approaches produce closer proximity)</td><td>Both improve linearly with speed training; putting is unaffected</td></tr>
+      <tr><td>Improved contact quality</td><td>APP + ARG (consistent strike across the set)</td><td>Both improve simultaneously following a technique change affecting ball striking</td></tr>
+      <tr><td>Improved competitive pressure management</td><td>Putting + ARG (both are short-game categories most affected by pressure)</td><td>Both improve in less-pressured events, both decline in high-pressure events</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Calculating Your Personal Correlation Matrix</span>
+    <h3>A Practical Approach Without Statistical Software</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pull 40+ rounds and score each round's SG per category.</strong> You now have a spreadsheet with 5 columns (OTT, APP, ARG, Putting, Total) and 40+ rows (rounds).</div></li>
+      <li><span class="step-n">2</span><div><strong>Identify co-movement visually.</strong> Sort the rounds by OTT score. Do the APP scores also tend to be high when OTT is high? If yes, they are positively correlated. If APP is randomly distributed regardless of OTT, they are not correlated.</div></li>
+      <li><span class="step-n">3</span><div><strong>If OTT and APP are correlated:</strong> The intervention that improves tee shot position (course management + aim point discipline) will also improve approach quality. This is the leverage point — spend practice time on tee shot strategy before approach technique, because the former has a multiplier effect.</div></li>
+      <li><span class="step-n">4</span><div><strong>If Putting and ARG are correlated:</strong> The common cause is likely pressure sensitivity — short game categories are most exposed under stress. The intervention is psychological (Guide 47 + Guide 21) rather than technical.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PREDICTIVE ANALYTICS -->
+<div class="sec" id="prediction">
+  <h2 class="sec-title">Predictive Analytics</h2>
+  <p class="sec-desc">Using your multi-season SG data to make predictions about future performance — not outcomes, which are variance-dependent, but the expected scoring average range at each phase of the programme, what a realistic timeline to scratch looks like given current improvement rates, and early warning indicators of plateau.</p>
+
+  <span class="badge badge-elite">🔮 What You Can Actually Predict</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Realistic vs. Overconfident Prediction</span>
+    <h3>Three Things Your Data Can Predict Reliably</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Your expected scoring range.</strong> From your rolling 20-round SG: Total average, the expected scoring range in your next 10 rounds (at your current courses, conditions, and pressure level) is approximately ±0.5 × your SG: Total standard deviation. This range — not a single number — is your realistic performance envelope. Plan and communicate around the range, not a specific target score.</div></li>
+      <li><span class="step-n">2</span><div><strong>Time to next handicap milestone.</strong> If your SG: Total has been improving at 0.1 strokes per quarter on average, and scratch requires another 0.8 improvement from your current level, the expected timeline is 8 quarters (2 years) assuming the improvement rate holds. This kind of extrapolation — with explicit uncertainty — is far more useful than "I want to be scratch in 18 months" without any data basis.</div></li>
+      <li><span class="step-n">3</span><div><strong>Early warning of plateau.</strong> If your SG trajectory in any category has been flat for 3 consecutive quarters despite deliberate practice, it is likely approaching a plateau. The leading indicator is declining improvement rate (still improving, but more slowly) — this is the signal to change approach before the full plateau arrives.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Predictive Model in Practice</span>
+    <h3>A Worked Example</h3>
+    <table class="tbl">
+      <tr><th>Current Data</th><th>Value</th><th>Implication</th></tr>
+      <tr><td>Current handicap</td><td>3.2</td><td>—</td></tr>
+      <tr><td>Rolling 20-round SG: Total average</td><td>−2.8 vs scratch</td><td>Consistent with 3-handicap</td></tr>
+      <tr><td>Average quarterly SG improvement (8 quarters)</td><td>+0.12 per quarter</td><td>Reliable improvement rate across 2 years of data</td></tr>
+      <tr><td>SG gap to scratch target</td><td>−2.8 strokes</td><td>—</td></tr>
+      <tr><td>Predicted quarters to scratch (at current rate)</td><td>23 quarters (5.75 years)</td><td class="bad">Too slow — current improvement rate will not deliver scratch in 24 months</td></tr>
+      <tr><td>Required quarterly improvement rate for 24-month target</td><td>+0.35 per quarter</td><td class="warn">Requires 3× current improvement rate — what intervention produces this?</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">This is the value of predictive modelling: it replaces hope-based targets ("I want to be scratch in 24 months") with data-based targets ("At my current rate I will be 2-handicap in 24 months — to reach scratch I need to identify one intervention worth +0.2 per quarter"). The intervention search becomes precise rather than general.</p>
+  </div>
+</div>
+
+<div class="footer">MULTI-SEASON STROKES GAINED ANALYTICS · GUIDE EP2 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔢</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span></a>
+    <a href="41_plus_hcp_sg_targets.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">⭐</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Plus-HCP SG Targets</span></a>
+    <a href="44_golfmetrics_deepdive.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔬</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golfmetrics Deep-Dive</span></a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📓</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span></a>
+    <a href="ep1_season_decision_architecture.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">♟️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Season Decision Architecture</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
+</body>
+</html>

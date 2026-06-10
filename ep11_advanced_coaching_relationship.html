@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep11_advanced_coaching_relationship.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>The AdvancedCoaching Relationship — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style><script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script></head><body>
+<div class="home-nav"><a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+<span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span></div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP11 · Future Release</p>
+  <h1>The Advanced<br><em>Coaching Relationship</em></h1><p class="hero-sub">The strategic management of a coaching relationship at scratch and plus level — the pre-lesson data brief, evaluating whether coaching is producing results, navigating disagreement between your data and your coach's assessment, structuring a year-round coaching calendar, and how to be a better client.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📋 Pre-Lesson Brief</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📊 Evaluating Coaching</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">⚖️ Data vs Coach</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📅 Coaching Calendar</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🤝 Being a Better Client</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔄 Coach Selection at Elite Level</span></div>
+</div>
+<div class="nav">  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('brief',this)">Pre-Lesson Brief</button>
+  <button class="tab" onclick="show('evaluating',this)">Evaluating Results</button>
+  <button class="tab" onclick="show('disagreement',this)">Data vs. Coach</button>
+  <button class="tab" onclick="show('calendar',this)">Coaching Calendar</button>
+  <button class="tab" onclick="show('client',this)">Being a Better Client</button>
+  <button class="tab" onclick="show('elitecoach',this)">Elite-Level Coach Selection</button></div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Coaching Relationship at Advanced Level</h2>
+  <p class="sec-desc">Guide 34 covers the foundations — selecting a coach, lesson structure, using data in coaching, and the 24-month coaching arc. This guide covers the advanced layer: how to manage a coaching relationship as a scratch or better player with significant data, how to evaluate whether coaching is producing results, and how to navigate the complex situation where your data disagrees with your coach's assessment.</p>
+
+  <span class="badge badge-elite">🤝 What Changes at Elite Level</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">How the Coaching Relationship Evolves</span>
+    <h3>Scratch Level vs. 10-Handicap Level Coaching Needs</h3>
+    <table class="tbl">
+      <tr><th>Aspect</th><th>10-Handicap Level</th><th>Scratch &amp; Below</th></tr>
+      <tr><td>Lesson frequency</td><td>Monthly or as needed</td><td>Fortnightly or with specific data triggers</td></tr>
+      <tr><td>Technical change scope</td><td>Multiple areas addressed simultaneously often appropriate</td><td>One carefully selected change at a time — changes at this level are higher risk</td></tr>
+      <tr><td>Data role</td><td>Helpful context for the coach</td><td>Essential input that should drive every session agenda</td></tr>
+      <tr><td>Communication style</td><td>Coach-led; player implements</td><td>Collaborative; player brings equal analytical contribution</td></tr>
+      <tr><td>Evaluation framework</td><td>Feel and ball flight</td><td>SG data, launch monitor metrics, movement screen — objective measurement</td></tr>
+      <tr><td>Season structure</td><td>Lessons as available</td><td>Deliberately planned coaching calendar aligned with competitive season</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="brief">
+  <h2 class="sec-title">The Pre-Lesson Data Brief</h2>
+  <p class="sec-desc">The single highest-leverage improvement to a coaching relationship at elite level. A coach who receives a concise, data-rich brief 24 hours before a lesson designs a meaningfully better session than one who starts from scratch at the beginning of the lesson.</p>
+
+  <span class="badge badge-elite">📋 The Pre-Lesson Brief Structure</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What to Send Your Coach Before Every Session</span>
+    <h3>A One-Page Brief That Transforms Lesson Quality</h3>
+    <p>Send this brief by email or message 24 hours before the lesson. It takes 10 minutes to prepare and gives your coach the context they need to design the session agenda before they see you, rather than spending the first 10 minutes of the lesson on diagnosis.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>SG summary (3 lines):</strong> "My 10-round rolling SG averages: OTT −0.2, APP −0.8, ARG +0.1, Putting −0.3, Total −1.2. The APP gap has been consistent for 3 months. This is the priority I want to address today." Give the coach the data picture before they see your swing — not after.</div></li>
+      <li><span class="step-n">2</span><div><strong>Specific concern (2–3 lines):</strong> "From Arccos, my SG: APP at 140–160 yards is the largest gap — averaging 36 feet proximity vs 28 feet at scratch standard. From Mevo, my spin axis in that distance bracket is consistently +5 to +7 degrees (slight fade). My dominant miss is right and slightly short." Be specific — "I'm not hitting my irons well" is not actionable; the SG and Mevo data is.</div></li>
+      <li><span class="step-n">3</span><div><strong>Relevant data attachment:</strong> Screenshot of the Arccos approach analytics screen and the relevant Mevo session data. If you have a recent HackMotion session, include the wrist data summary. The coach can review this before the lesson rather than spending lesson time reading numbers off your phone.</div></li>
+      <li><span class="step-n">4</span><div><strong>Session request (1 line):</strong> "I'd like to spend the majority of the lesson on the 140–160 yard iron play. If there's time, a brief short game check would be useful." Give the coach a requested agenda — they may modify it based on what they see, but a pre-stated priority prevents lessons drifting to whatever the coach noticed last week.</div></li>
+      <li><span class="step-n">5</span><div><strong>Progress since last lesson (1–2 lines):</strong> "The hip bump drill you gave me has been running for 3 weeks. Mevo shows spin axis has moved from +6° to +3° average. Still some inconsistency — I'll show you the session data." Close the feedback loop from the previous lesson before opening a new one.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Post-Lesson Documentation</span>
+    <h3>Capturing What Was Decided for the Between-Lesson Period</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Write the lesson output immediately after the session.</strong> Within 1 hour, document: the specific technical change agreed, the drill or practice protocol to work on, the success criterion (what should be measurably different in 3–4 weeks?), and the feedback metric (HackMotion reading, Mevo number, or feel cue that confirms progress).</div></li>
+      <li><span class="step-n">2</span><div><strong>Include in the Progress Journal (Guide 17).</strong> Tag the lesson date, the technical priority, and the metric to track. This creates a searchable record of every coaching input and its measured outcome — invaluable for the annual review and for any future coaching transition.</div></li>
+      <li><span class="step-n">3</span><div><strong>Send the coach a summary.</strong> A 3-line message after the lesson confirming what you understood the session to be working on — and asking for confirmation. Misunderstandings between player and coach about what was agreed are common and quietly sabotage many coaching relationships. A quick confirmation prevents this.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="evaluating">
+  <h2 class="sec-title">Evaluating Whether Coaching Is Working</h2>
+  <p class="sec-desc">The most difficult question in any coaching relationship: is the coaching producing measurable results? At elite level, the answer must be data-based — not based on how good the coach's explanations sound, how well the lessons feel, or how respected the coach is.</p>
+
+  <span class="badge badge-elite">📊 The Evidence Framework</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Three-Month Evaluation Cycle</span>
+    <h3>How to Assess Coaching ROI Objectively</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Set specific, measurable objectives at the start of each coaching block.</strong> Before beginning work on a new technical priority, agree with the coach on a specific outcome: "In 3 months, my spin axis on 7-iron should average below +2° (from current +5.5°)" or "SG: APP should improve from −0.8 to −0.5 (0.3 stroke improvement)." Without a measurable objective, evaluation is impossible.</div></li>
+      <li><span class="step-n">2</span><div><strong>Evaluate at 3 months, not 3 weeks.</strong> Technical changes take 6–12 weeks to reach autonomous stage. A 3-week evaluation is almost always evaluating the acquisition dip rather than the final outcome. Build in the timeline before beginning the work.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the pre-agreed metric, not how things feel.</strong> Feel is unreliable as an evaluation tool — a change that feels worse can produce better results, and a change that feels great can be producing worse ball flight. The objective metric (SG category, Mevo reading, HackMotion number) is the evaluation input.</div></li>
+      <li><span class="step-n">4</span><div><strong>Separate execution quality from design quality.</strong> Before concluding the coaching is not working, ask honestly: have I practised the prescribed drills with the required frequency and quality? A coaching intervention that wasn't practised cannot be evaluated. This is the most common reason a player concludes their coach isn't helping — the intervention wasn't implemented correctly, not that the intervention was wrong.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">When the Data Says the Coaching Isn't Working</span>
+    <h3>Three Questions Before Changing Coach</h3>
+    <table class="tbl">
+      <tr><th>Question</th><th>If Yes</th><th>If No</th></tr>
+      <tr><td>Have I completed the full 3-month implementation with consistent practice?</td><td>Continue to evaluation</td><td>The data is evaluating implementation quality, not coaching quality. Improve implementation first.</td></tr>
+      <tr><td>Is the metric I'm using genuinely measuring what the coaching was trying to change?</td><td>Continue to evaluation</td><td>Re-identify the correct metric. A coaching intervention on swing path may not show up in SG until multiple months later.</td></tr>
+      <tr><td>Has the agreed objective metric not improved, or has it worsened?</td><td class="bad">The coaching intervention has not produced the intended result. A structured conversation with the coach is warranted — either the intervention was wrong, or the implementation was insufficient.</td><td>The metric has improved. The coaching is working.</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="disagreement">
+  <h2 class="sec-title">When Your Data Disagrees with Your Coach</h2>
+  <p class="sec-desc">As players become more sophisticated data users, disagreements between what the data shows and what the coach recommends become increasingly common. These disagreements are not a problem — they are an opportunity for better coaching, if handled correctly.</p>
+
+  <span class="badge badge-elite">⚖️ Navigating the Disagreement</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Three Types of Data-Coach Disagreement</span>
+    <h3>Not All Disagreements Are Equal</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Type 1 — Temporal disagreement (most common).</strong> Your data shows SG: Putting is your worst category; your coach says your putting stroke looks fine and wants to work on your iron play. This is not a fundamental disagreement — it is a sequencing question. Ask the coach directly: "My data consistently shows putting as my largest SG gap. Can you explain why you think iron play is the higher priority?" A good coach will either change their priority or give you a convincing reason why the data is misleading in this case.</div></li>
+      <li><span class="step-n">2</span><div><strong>Type 2 — Diagnostic disagreement.</strong> Your Mevo data shows your spin axis averaging +5° (consistent fade); your coach says you're pulling everything left. This is a factual disagreement — one of you is wrong. Check the Mevo data against video. Show the coach both. If the data and the coach's visual analysis directly contradict, the data should prevail — spin axis is objective; "pulling everything left" is a visual interpretation that can be in error.</div></li>
+      <li><span class="step-n">3</span><div><strong>Type 3 — Philosophical disagreement.</strong> Your coach recommends a technique change that Sportsbox AI data suggests is wrong for your kinematic profile; or a swing model that your HackMotion data shows is contraindicated for your wrist mobility range. This is the most complex type of disagreement. Bring all data to the conversation. A coach who cannot engage with objective 3D movement data or wrist sensor data at elite level is not the right coach for this level of play.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Having the Conversation</span>
+    <h3>How to Raise Data-Based Concerns Constructively</h3>
+    <p>The way you raise a disagreement with your coach is as important as the substance of it. A coach who feels challenged or undermined becomes defensive; a coach who feels their expertise is being supplemented rather than questioned engages productively.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Lead with a question, not a statement.</strong> "I've noticed my SG: APP has continued to decline despite 3 months of the new pattern — can you help me understand whether the data means the change isn't working or whether I should expect it to take longer?" vs. "The coaching isn't working." The question invites collaboration; the statement invites defensiveness.</div></li>
+      <li><span class="step-n">2</span><div><strong>Share the data, not the conclusion.</strong> Show the coach the specific screen or chart. Let them see the data before drawing conclusions. A coach who sees the Mevo spin axis data directly often arrives at the same conclusion you have — without you needing to state it, which removes the adversarial dynamic.</div></li>
+      <li><span class="step-n">3</span><div><strong>Accept that the coach may be right.</strong> Your data interpretation may be wrong, or the data itself may be misleading. A player who has been measuring the wrong metric for 3 months may correctly observe that the metric hasn't improved — but the technique may have improved, and the metric just doesn't capture it. Stay open to the coach's perspective after showing them your data.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="calendar">
+  <h2 class="sec-title">The Year-Round Coaching Calendar</h2>
+  <p class="sec-desc">Ad-hoc coaching — booking a lesson when things feel wrong — is the least efficient model for serious improvement. A planned coaching calendar aligned with the competitive season maximises the value of each coaching interaction.</p>
+
+  <span class="badge badge-elite">📅 The Optimal Coaching Calendar</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">When to See Your Coach and What to Work On</span>
+    <h3>Session Timing Aligned with the Competitive Year</h3>
+    <table class="tbl">
+      <tr><th>Period</th><th>Session Type</th><th>Session Goal</th><th>Frequency</th></tr>
+      <tr><td>October</td><td>Annual review + off-season agenda setting</td><td>Debrief the season with data; agree 1–2 off-season technical priorities</td><td>1 extended session (90 min)</td></tr>
+      <tr><td>November–December</td><td>Technical acquisition sessions</td><td>Introduce and acquire the agreed technical changes</td><td>Fortnightly (every 2 weeks)</td></tr>
+      <tr><td>January–February</td><td>Consolidation check sessions</td><td>Verify technical changes are holding under varied conditions; introduce competition simulation</td><td>Monthly</td></tr>
+      <tr><td>March</td><td>Pre-season confirmation</td><td>Confirm all technical work is at autonomous stage; no new technical changes</td><td>1 session</td></tr>
+      <tr><td>April–September</td><td>Maintenance and acute issue sessions</td><td>Maintain the established game; address acute issues only with data evidence; no speculative technical changes</td><td>Monthly or as needed — resist the urge for more</td></tr>
+      <tr><td>Post-target event (major competition)</td><td>Performance review</td><td>Data review of the target event; identify what the competition revealed about the game that practice hadn't</td><td>After each major event (48h+ after)</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The In-Season Coaching Trap</span>
+    <h3>Why More Lessons in Competition Season Is Often Counterproductive</h3>
+    <p>The most common coaching relationship error at advanced level: booking a lesson after every poor competitive round during the season. This produces: unnecessary technical changes during the period when the game should be stable, confidence undermining through the constant implicit message that something is wrong, and a coaching dependency that undermines the self-sufficiency required for competition.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">One bad round is not a signal to see the coach — it is noise. Three consecutive rounds below your rolling baseline is a signal. Poor performance in a specific situation that Arccos data confirms is systematic is a signal. A vague feeling that something is "off" with the swing after a poor score is not a signal.</p>
+  </div>
+</div>
+
+<div class="sec" id="client">
+  <h2 class="sec-title">Being a Better Client</h2>
+  <p class="sec-desc">The quality of a coaching relationship is not only determined by the coach's skill — it is significantly influenced by the quality of the player as a client. This tab covers the specific behaviours that make coaching relationships more productive at elite level.</p>
+
+  <span class="badge badge-elite">🤝 The Elite Client Framework</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What Elite Players Do Differently in the Coaching Relationship</span>
+    <h3>Eight Behaviours That Improve Coaching Outcomes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Prepare the pre-lesson brief every session.</strong> The brief is the single highest-ROI coaching practice for serious players. Coaches consistently report that briefed players get more from lessons — not because the coach is better prepared but because the player is more focused.</div></li>
+      <li><span class="step-n">2</span><div><strong>Practise exactly what was prescribed, not a modified version.</strong> The most common reason technical change fails: the player modifies the prescribed drill because it feels uncomfortable. The discomfort is usually the sign it is working. Do exactly what was prescribed for 3–4 weeks before evaluating.</div></li>
+      <li><span class="step-n">3</span><div><strong>Report the outcome of the prescribed work at the next lesson.</strong> Tell your coach what happened when you practised the drill — how many sessions, what the Mevo data showed, where it felt uncomfortable, what improved. This feedback makes every subsequent lesson more effective.</div></li>
+      <li><span class="step-n">4</span><div><strong>Do not ask for multiple changes per session.</strong> Elite coaches report that the most counterproductive client request is "can we also look at my bunker play" at the end of a lesson focused on iron play. Each additional change dilutes the primary change. Defer secondary concerns to the next session.</div></li>
+      <li><span class="step-n">5</span><div><strong>Trust the timeline.</strong> Technical change takes 6–12 weeks. If you request a change assessment at 3 weeks, you are measuring the acquisition dip. Agree the evaluation timeline with the coach at the start of every change and respect it.</div></li>
+      <li><span class="step-n">6</span><div><strong>Share your competitive performance data, not just range performance.</strong> A coach who only sees you on the range has an incomplete picture. Share your Arccos SG from the past 4 competition rounds at the start of each lesson — the competitive performance is the measure that matters.</div></li>
+      <li><span class="step-n">7</span><div><strong>Raise concerns promptly and specifically.</strong> If something the coach suggested isn't working after 4 weeks of genuine effort, say so clearly and with data — not after 12 weeks of silent frustration. Early, specific feedback produces better outcomes than delayed, vague dissatisfaction.</div></li>
+      <li><span class="step-n">8</span><div><strong>Respect the coach's assessment when it contradicts what you want to hear.</strong> Confirmation bias affects all golfers — we want the coach to confirm that the area we're most comfortable working on is the priority. A good coach who challenges this with data is providing more value, not less.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="elitecoach">
+  <h2 class="sec-title">Elite-Level Coach Selection</h2>
+  <p class="sec-desc">The coach who helped you move from 10 to 5 handicap may not be the right coach to take you from scratch to plus. The requirements change, and so does the appropriate coach profile. This tab covers how to evaluate whether your current coaching relationship is appropriate for elite-level play and what to look for if a change is warranted.</p>
+
+  <span class="badge badge-elite">🔍 Evaluating Your Coaching Fit at Elite Level</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What to Look for in an Elite-Level Coach</span>
+    <h3>The Criteria That Matter at Scratch and Below</h3>
+    <table class="tbl">
+      <tr><th>Criterion</th><th>Why It Matters at Elite Level</th></tr>
+      <tr><td>Experience coaching to scratch and below</td><td>The technical changes that take a player from scratch to plus are different from those that take a player from 10 to scratch. A coach whose experience stops at scratch may not know the next layer.</td></tr>
+      <tr><td>Data literacy — can engage with Arccos, Mevo, Sportsbox AI</td><td>The coaching relationship described in this guide requires a coach who can interpret and engage with objective performance data. A coach who dismisses this data cannot function in the evidence-based model that elite-level development requires.</td></tr>
+      <tr><td>Experience with competitive amateur golf — county and national level</td><td>A coach who has worked with county and national-level players understands the specific pressures, competition formats, and performance requirements of that environment. A coach whose experience is primarily club-level cannot fully advise on it.</td></tr>
+      <tr><td>Long-term relationship orientation</td><td>Elite improvement requires a multi-year coaching relationship, not transactional lessons. A coach whose model is primarily lesson-by-lesson without a longer-term plan is not the right model for the scratch-to-plus journey.</td></tr>
+      <tr><td>Willingness to be challenged by data</td><td>The advanced player in this programme will arrive with Mevo data, Arccos SG, HackMotion wrist data, and Sportsbox AI readings. A coach who resists or dismisses objective data in favour of pure visual assessment cannot fully engage with the player's analytical capabilities.</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Trial Lesson Evaluation</span>
+    <h3>How to Assess a New Coach in One Session</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Send the pre-lesson brief.</strong> A coach who engages substantively with a data-rich brief and arrives prepared has demonstrated the data literacy criterion. A coach who doesn't reference it in the lesson almost certainly won't use data effectively in an ongoing relationship.</div></li>
+      <li><span class="step-n">2</span><div><strong>Ask one direct question about your priority category.</strong> "My SG: APP is my largest gap at −0.8. What is your diagnostic hypothesis for the cause?" A coach who can connect your SG data to a plausible technical cause demonstrates both data literacy and diagnostic competence. A coach who deflects to observations about your grip or stance without addressing the question has not passed this test.</div></li>
+      <li><span class="step-n">3</span><div><strong>Evaluate the lesson structure.</strong> Did the coach establish a measurable objective at the start? Did they explain the mechanism behind the change they recommended? Did they specify a success metric and an evaluation timeline? These are the structural markers of an evidence-based coaching approach that works at elite level.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">THE ADVANCED COACHING RELATIONSHIP · GUIDE EP11 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">    <a href="34_coaching_relationship.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🤝</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">The Coaching Relationship</span></a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔢</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span></a>
+    <a href="ep8_arccos_air_mastery.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📡</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Arccos Air Mastery</span></a>
+    <a href="45_sportsbox_ai.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔬</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Sportsbox AI Integration</span></a>
+    <a href="ep3_identity_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🧠</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Identity & Self-Concept</span></a></div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script></body></html>

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · quick_start.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Quick Start Guide — The Scratch Project</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f2f4f0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #f2f4f0;
+  --surface:   #ffffff;
+  --surface2:  #f8f9f6;
+  --border:    #d8ddd4;
+  --border-hi: #b0b8a8;
+  --text-primary: #111c0e;
+  --text-body:    #2e3a2a;
+  --text-muted:   #566050;
+  --text-faint:   #5e6a58;
+  --gold:        #7e6400;
+  --gold-hi:     #e8b800;
+  --gold-bg:     #fffbeb;
+  --gold-border: #f0d060;
+  --gold-tag-bg: #fef3c0;
+  --gold-tag-tx: #7a5e08;
+  --lime:        #2d7a1c;
+  --lime-hi:     #3aaa22;
+  --lime-bg:     #f1faf0;
+  --lime-border: #88cc78;
+  --lime-tag-bg: #dcf5d8;
+  --lime-tag-tx: #1e5a12;
+  --teal:        #0e7c74;
+  --teal-hi:     #12a89e;
+  --teal-bg:     #f0faf9;
+  --teal-border: #7dd4cf;
+  --teal-tag-bg: #ccefed;
+  --teal-tag-tx: #0b5e58;
+  --rust:        #b84820;
+  --rust-bg:     #fff5f1;
+  --rust-border: #f0a888;
+  --rust-tag-bg: #fde0d4;
+  --rust-tag-tx: #8a3018;
+  --violet:      #5a30b8;
+  --violet-bg:   #f6f2ff;
+  --violet-border:#c4acf0;
+  --violet-tag-bg:#e8dcfc;
+  --violet-tag-tx:#3e1e8a;
+  --r:    12px;
+  --r-sm: 8px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text-body);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* ── TOP BAR ─────────────────────────────────────────── */
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 11px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.topbar a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .2s;
+}
+.topbar a:hover { color: var(--lime); }
+.topbar-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  background: var(--lime-tag-bg);
+  color: var(--lime-tag-tx);
+  border: 1px solid var(--lime-border);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+/* ── HERO ────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(145deg, #e8f0e4 0%, #f2f7f0 60%, #eef4eb 100%);
+  border-bottom: 2px solid var(--lime-border);
+  padding: 44px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 25% 75%, rgba(45,122,28,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 75% 20%, rgba(126,100,0,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 14px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero h1 em { color: var(--lime); font-style: italic; }
+.hero-sub {
+  font-size: 14px;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0 auto 24px;
+  font-weight: 300;
+  line-height: 1.75;
+  position: relative;
+}
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.htag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 4px;
+  background: var(--lime-tag-bg);
+  border: 1px solid var(--lime-border);
+  color: var(--lime-tag-tx);
+}
+
+/* ── STEP NAV ────────────────────────────────────────── */
+.step-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 16px;
+  scrollbar-width: none;
+  position: sticky;
+  top: 48px;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+.step-nav::-webkit-scrollbar { display: none; }
+.snav-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 13px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .2s;
+  -webkit-appearance: none;
+}
+.snav-btn:hover { color: var(--lime); }
+.snav-btn.active { color: var(--lime); border-bottom-color: var(--lime); font-weight: 600; }
+
+/* ── SECTIONS ────────────────────────────────────────── */
+.section {
+  display: none;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 28px 16px 60px;
+  animation: rise .3s ease;
+}
+.section.active { display: block; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+.section-desc {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin-bottom: 22px;
+  line-height: 1.8;
+  padding-left: 12px;
+  border-left: 3px solid var(--lime-border);
+  font-weight: 300;
+}
+
+/* ── CARDS ───────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 20px 18px;
+  margin-bottom: 14px;
+  transition: box-shadow .2s, border-color .2s;
+}
+.card:hover { border-color: var(--border-hi); box-shadow: 0 2px 10px rgba(0,0,0,0.07); }
+.card-lime  { border-left: 3px solid var(--lime-border);  background: linear-gradient(135deg, var(--lime-bg) 0%, var(--surface) 100%); }
+.card-gold  { border-left: 3px solid var(--gold-border);  background: linear-gradient(135deg, var(--gold-bg) 0%, var(--surface) 100%); }
+.card-teal  { border-left: 3px solid var(--teal-border);  background: linear-gradient(135deg, var(--teal-bg) 0%, var(--surface) 100%); }
+.card-rust  { border-left: 3px solid var(--rust-border);  background: linear-gradient(135deg, var(--rust-bg) 0%, var(--surface) 100%); }
+.card-violet { border-left: 3px solid var(--violet-border); background: linear-gradient(135deg, var(--violet-bg) 0%, var(--surface) 100%); }
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--lime);
+  margin-bottom: 7px;
+  display: block;
+}
+.card-gold .card-tag  { color: var(--gold); }
+.card-teal .card-tag  { color: var(--teal); }
+.card-rust .card-tag  { color: var(--rust); }
+.card-violet .card-tag { color: var(--violet); }
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+.card p { font-size: 13.5px; color: var(--text-muted); line-height: 1.8; }
+.card p + p { margin-top: 8px; }
+
+/* ── STEP CARDS ──────────────────────────────────────── */
+.step-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+.step-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 16px;
+  transition: border-color .2s;
+}
+.step-item:hover { border-color: var(--border-hi); }
+.step-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--lime-tag-bg);
+  border: 1.5px solid var(--lime-border);
+  color: var(--lime-tag-tx);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.step-body { flex: 1; }
+.step-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+.step-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+.step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--lime);
+  text-decoration: none;
+  padding: 4px 9px;
+  background: var(--lime-tag-bg);
+  border: 1px solid var(--lime-border);
+  border-radius: 4px;
+  transition: background .2s;
+}
+.step-link:hover { background: var(--lime-bg); }
+.step-link.gold { color: var(--gold); background: var(--gold-tag-bg); border-color: var(--gold-border); }
+.step-link.teal { color: var(--teal); background: var(--teal-tag-bg); border-color: var(--teal-border); }
+
+/* ── GUIDE CARDS (mini) ──────────────────────────────── */
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+.guide-card-mini {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 13px 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .2s, box-shadow .2s;
+}
+.guide-card-mini:hover { border-color: var(--border-hi); box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.guide-icon-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+}
+.guide-meta-sm { flex: 1; min-width: 0; }
+.guide-num-sm {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 2px;
+}
+.guide-title-sm {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* ── INFO BOXES ──────────────────────────────────────── */
+.info {
+  border-radius: var(--r-sm);
+  padding: 14px 16px;
+  margin: 14px 0;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.info .ico { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+.tip-box  { background: var(--teal-bg);   border: 1px solid var(--teal-border); color: var(--teal); }
+.warn-box { background: var(--gold-bg);   border: 1px solid var(--gold-border); color: var(--gold); }
+.note-box { background: var(--lime-bg);   border: 1px solid var(--lime-border); color: var(--lime-tag-tx); }
+
+/* ── TABLES ──────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; display: block; overflow-x: auto; }
+.tbl th { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--lime-border); }
+.tbl td { padding: 9px 10px; color: var(--text-muted); border-bottom: 1px solid var(--border); line-height: 1.55; vertical-align: top; }
+.tbl td:first-child { color: var(--text-primary); font-weight: 500; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--surface2); }
+.good { color: var(--lime); font-weight: 600; }
+.warn-c { color: var(--gold); font-weight: 500; }
+
+/* ── WEEK PLANNER ────────────────────────────────────── */
+.week-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.week-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 10px;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 12px 14px;
+}
+.week-day {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+.week-task { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+.week-task strong { color: var(--text-primary); }
+
+/* ── CHECKLIST ───────────────────────────────────────── */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+.checklist li::before {
+  content: '□';
+  font-size: 14px;
+  color: var(--lime-border);
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-family: 'JetBrains Mono', monospace;
+}
+.checklist li strong { color: var(--text-primary); }
+
+/* ── TIMELINE ────────────────────────────────────────── */
+.timeline { display: flex; flex-direction: column; gap: 0; position: relative; margin: 14px 0; }
+.timeline::before { content: ''; position: absolute; left: 19px; top: 24px; bottom: 24px; width: 2px; background: linear-gradient(to bottom, var(--lime-border), var(--gold-border)); }
+.tl-item { display: flex; gap: 16px; margin-bottom: 18px; }
+.tl-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--lime-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--lime-tag-tx);
+  flex-shrink: 0;
+  z-index: 1;
+}
+.tl-content { flex: 1; padding-top: 8px; }
+.tl-label { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--lime); margin-bottom: 3px; }
+.tl-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+.tl-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+/* ── FOOTER ──────────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 28px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9.5px;
+  color: var(--text-faint);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+@media (max-width: 480px) {
+  .guide-grid { grid-template-columns: 1fr; }
+  .week-row   { grid-template-columns: 80px 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="topbar-badge">⚡ Quick Start</span>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-label">The Scratch Project · Standard Edition · Getting Started</p>
+  <h1>Your First<br><em>Seven Days</em></h1>
+  <p class="hero-sub">37 guides, 15 tools, one 24-month plan. This page tells you exactly where to start, what to do first, and how to build a weekly routine that works — without feeling overwhelmed.</p>
+  <div class="hero-tags">
+    <span class="htag">📅 Day-by-Day Plan</span>
+    <span class="htag">🎯 Right Guides First</span>
+    <span class="htag">⚙️ Tool Setup</span>
+    <span class="htag">📅 Week 1 Routine</span>
+    <span class="htag">📊 First Data</span>
+  </div>
+</div>
+
+<!-- STEP NAV -->
+<div class="step-nav">
+  <button class="snav-btn active" onclick="show('start',this)">Start Here</button>
+  <button class="snav-btn" onclick="show('day1',this)">Day 1</button>
+  <button class="snav-btn" onclick="show('day2',this)">Day 2–3</button>
+  <button class="snav-btn" onclick="show('day4',this)">Day 4–5</button>
+  <button class="snav-btn" onclick="show('week1',this)">Week 1 Routine</button>
+  <button class="snav-btn" onclick="show('guides',this)">Guide Order</button>
+  <button class="snav-btn" onclick="show('tools',this)">Tools Setup</button>
+  <button class="snav-btn" onclick="show('faq',this)">Common Questions</button>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     START HERE
+══════════════════════════════════════════ -->
+<div class="section active" id="start">
+  <h2 class="section-title">Start Here</h2>
+  <p class="section-desc">You have 37 guides. Do not open all of them. The first 48 hours are about three things only — understanding what the system is, knowing where you are right now, and setting up the tracking that makes everything else work.</p>
+
+  <div class="card card-lime">
+    <span class="card-tag">The Core Idea</span>
+    <h3>What This System Actually Is</h3>
+    <p>Most golf instruction tells you what's wrong with your swing and how to fix it. This system takes the opposite approach: it uses your actual on-course shot data to identify which part of your game costs the most strokes, then gives you the specific playbooks to close that gap.</p>
+    <p>The framework is called Strokes Gained — the same method used by every PGA Tour player's analytics team. It means every decision you make about where to practise is based on real evidence from your real rounds, not guesswork.</p>
+    <div class="info tip-box" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <div><strong style="color:var(--teal);">The single most important first step</strong> is getting Arccos tracking running on your phone. Everything else — the practice guides, the phase plan, the data tools — is more powerful when your on-course data is feeding it. If you haven't done this yet, Day 1 is solely about that.</div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Three Things That Matter in Your First Week</span>
+    <h3>What Not to Do and What to Do Instead</h3>
+    <table class="tbl">
+      <tr><th>Don't</th><th>Do Instead</th></tr>
+      <tr><td>Open every guide and read them all</td><td>Follow the sequence in this guide — 4 specific guides in a specific order</td></tr>
+      <tr><td>Start changing your swing based on what you read</td><td>Get your tracking data running first; let the data identify the priority before you act</td></tr>
+      <tr><td>Try to set up all the tools at once</td><td>Set up Arccos first, everything else in week 2 and beyond</td></tr>
+      <tr><td>Start the 24-month plan on Day 1</td><td>Read the plan (Guide 10) on Day 3 — you need to understand the system first</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Where You're Starting From</span>
+    <h3>A Quick Self-Assessment</h3>
+    <p>Before starting, note down three numbers that will become your baseline — the reference point against which everything improves:</p>
+    <ul class="checklist">
+      <li><strong>Current handicap index</strong> — your official WHS index from England Golf / GOLF GENIUS</li>
+      <li><strong>Last 5 rounds scoring average</strong> — gross score average, not net. Add them up and divide by 5.</li>
+      <li><strong>Your weakest part of the game</strong> — the one area you already know costs you the most shots. You'll confirm or disprove this with data, but note your instinct now.</li>
+    </ul>
+    <p style="margin-top:10px;font-size:13px;">Write these in the Progress Journal (Guide 17) on Day 3. They become your Month 1 baseline. In 6 months you'll look back at these numbers and see exactly how far you've come.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     DAY 1
+══════════════════════════════════════════ -->
+<div class="section" id="day1">
+  <h2 class="section-title">Day 1 — The Foundation</h2>
+  <p class="section-desc">One task, done properly. Set up Arccos tracking so your next competitive round produces real data you can act on. This is not optional — every guide in this system that references "your SG data" is referring to data that Arccos collects. No setup means no data means guesswork.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Download Arccos Golf and set up your account</div>
+        <div class="step-desc">Download the Arccos Golf app (iOS or Android). Create a free account. If you already have a Link Pro device from a previous setup, great — just update to the latest firmware. If not, purchase the Link Pro from arccosgolf.com (the device clips to your belt; no club sensors needed for Air tracking).</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Add your full bag — all 14 clubs</div>
+        <div class="step-desc">In the app, go to Settings → Clubs. Add every club you carry, including the putter. Include all hybrids, fairway woods, and wedges with their correct lofts. A missing club forces attribution errors that corrupt your SG data. Take 5 minutes to do this completely.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Set your handicap index accurately</div>
+        <div class="step-desc">In Settings → Profile, enter your current WHS handicap index precisely. Arccos uses this to calibrate your SG benchmarks — an inaccurate index makes every SG comparison meaningless. Update this every time your official index changes.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Enable Smart Club Distances and let it learn</div>
+        <div class="step-desc">In Settings → Smart Club Distances, enable the feature. It will update your average carry per club over your next 15–20 tracked rounds using real on-course data. Do not override these distances with your range session estimates — Smart Club Distances is more accurate because it measures real-ball, real-course, real-pressure carries.</div>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Test the setup with a casual 9 holes</div>
+        <div class="step-desc">Before your next qualifying round, play 9 casual holes with Arccos running. After the round, open the app and review the shot list — check that shots are being attributed to the right clubs and that no phantom shots appear. Correct any errors before they compound over multiple rounds. This test round is your calibration.</div>
+        <a href="26_stats_interpretation.html" class="step-link">→ Guide 26: Stats & SG Interpretation</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="info warn-box" style="margin-top:16px;">
+    <span class="ico">⚠️</span>
+    <div><strong>Competition mode:</strong> Before any official club competition, check with your club whether GPS tracking devices are permitted under local rules. If the competition uses the standard condition of competition banning artificial intelligence advice, enable Competition Mode in the app (this disables AI Caddie recommendations). When in doubt, ask the competition secretary — not using competition mode when required is a rules violation.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     DAY 2-3
+══════════════════════════════════════════ -->
+<div class="section" id="day2">
+  <h2 class="section-title">Day 2–3 — The Framework</h2>
+  <p class="section-desc">Two guides, read in order. Guide 10 gives you the 24-month destination and the phase structure. Guide 26 gives you the measurement system that tells you how you're progressing toward it. Everything else builds on these two.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Read Guide 10 — 10 to Scratch: The 24-Month Plan</div>
+        <div class="step-desc">This is the master document of the whole system. Read it fully — don't skim. It explains the 5 phases, the SG targets at each milestone, how the monthly guides (27–30) connect to the annual plan, and what "scratch" actually requires. You'll understand every other guide better after reading this one.</div>
+        <a href="10_scratch_plan.html" class="step-link">→ Open Guide 10</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Read Guide 26 — Stats & SG Interpretation</div>
+        <div class="step-desc">This guide explains what strokes gained means in practice, how to read your Arccos dashboard, and how to identify your priority improvement category. The tabs that matter most on Day 3: Overview, SG Deep-Dive, and Arccos & Shot Scope. Skip the synthesis tab for now — come back to it in week 4 when you have data.</div>
+        <a href="26_stats_interpretation.html" class="step-link">→ Open Guide 26</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Open the Progress Journal and record your baseline</div>
+        <div class="step-desc">Open Guide 17 (Progress Journal). Record today's date, your current handicap, your last 5-round scoring average, and your instinctive weakest area from Day 0. This is your Month 1 entry. You'll add to this after every 5 rounds and refer back to it throughout the programme.</div>
+        <a href="17_progress_journal.html" class="step-link teal">→ Open Guide 17: Progress Journal</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Read Guide 27 — Your Months 1–6 Plan</div>
+        <div class="step-desc">Guide 27 is your phase 1 roadmap — the specific practice priorities, monthly SG targets, and fitness milestones for your first six months. Don't be put off by its length. Read the overview and then identify which month you're currently in (the plan started June 2026 — work out your current position). This is your working document for the next 6 months.</div>
+        <a href="27_six_month_plan.html" class="step-link gold">→ Open Guide 27: Months 1–6</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="info note-box" style="margin-top:8px;">
+    <span class="ico">📌</span>
+    <div><strong>After Day 3:</strong> You should know what the five SG categories are, why the best-8-of-20 handicap calculation works the way it does, and what your Phase 1 priorities are. You don't need to have done anything with your swing yet. The system runs on data — and the data collection only just started. Let it accumulate.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     DAY 4-5
+══════════════════════════════════════════ -->
+<div class="section" id="day4">
+  <h2 class="section-title">Day 4–5 — Your First Practice Session</h2>
+  <p class="section-desc">Your first structured practice session. Not a technical session — a diagnostic one. The goal is to build the baseline data you'll use for the rest of Phase 1, and to get your first feel for how the programme structures practice differently from what you may have been doing.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Read Guide 05 — Pre-Shot Routine & Practice Structure</div>
+        <div class="step-desc">Before you hit your first practice shot in this programme, read Guide 05 — specifically the Practice Structure Science tab. It explains why how you practise matters as much as what you practise. The core concept: blocked practice (same shot repeatedly) feels productive but doesn't transfer to the course. This guide shows you what does. Read the Practice Structure tab only on Day 4; come back for the rest of Guide 05 in week 2.</div>
+        <a href="05_pre_shot_routine.html" class="step-link">→ Guide 05: Practice Structure tab</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Build your wedge distance matrix (45 min range session)</div>
+        <div class="step-desc">Go to the range with your four wedges (or however many you carry) and a launch monitor if you have one. Hit 10 shots with each wedge at full swing, three-quarter swing, and half swing — noting or measuring the carry for each. This is your wedge matrix baseline. You'll use it on every approach shot from inside 130 yards for the rest of the programme. Guide 22 has the exact protocol.</div>
+        <a href="22_wedge_distances.html" class="step-link gold">→ Guide 22: Wedge Distances</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Play your first tracked competitive round</div>
+        <div class="step-desc">Enter your next club competition with Arccos running. After the round, spend 3 minutes reviewing the shot list in the app and correcting any misattributed shots. Don't try to analyse the data yet — you need at least 5 qualifying rounds before the SG numbers are meaningful. Just submit the round and let it accumulate.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-violet">
+    <span class="card-tag">What to Expect in Your First Tracked Rounds</span>
+    <h3>Don't Overreact to Early Data</h3>
+    <p>Your first 3–5 Arccos rounds will produce SG numbers that feel wrong — either much better or much worse than you expected in specific categories. This is normal. The sample size is too small for the numbers to be meaningful. SG: Putting in particular swings wildly in small samples.</p>
+    <p style="margin-top:8px;">The rule: don't change your practice priorities based on fewer than 8 qualifying rounds of Arccos data. Use the first 8 rounds to collect data, not to act on it. The action phase starts when you have enough signal to distinguish from noise.</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     WEEK 1 ROUTINE
+══════════════════════════════════════════ -->
+<div class="section" id="week1">
+  <h2 class="section-title">Your Week 1 Routine</h2>
+  <p class="section-desc">A sustainable weekly structure for Phase 1 — designed for a working golfer who can commit 4–6 hours per week to improvement. Adjust to your available time, but maintain the ratio: more practice than competition, and quality over volume.</p>
+
+  <div class="card card-lime">
+    <span class="card-tag">The Week 1 Template — 5-Hour Version</span>
+    <h3>A Realistic Schedule for a Working Golfer</h3>
+    <div class="week-grid">
+      <div class="week-row">
+        <div class="week-day">Monday</div>
+        <div class="week-task"><strong>Rest or short game only.</strong> If you played at the weekend, recover. Light putting practice (30 min max) — working on stroke mechanics from Guide 01. No pressure, no targets.</div>
+      </div>
+      <div class="week-row">
+        <div class="week-day">Tuesday</div>
+        <div class="week-task"><strong>Range — 45 min structured session.</strong> Not free hitting. Read the Practice Structure tab in Guide 05 first. Hit in blocks of varied clubs (3-club interleaving: driver, 7-iron, wedge). Track how far each ball lands. Note the 2–3 shots that felt best and worst.</div>
+      </div>
+      <div class="week-row">
+        <div class="week-day">Wednesday</div>
+        <div class="week-task"><strong>Short game — 45 min.</strong> Split equally: chipping from tight lies (Guide 02 chipping tab), bunker shots (if your club has a practice bunker), and putting from 4–8 feet. Putting from short range is where most amateur shots are lost. Own this distance.</div>
+      </div>
+      <div class="week-row">
+        <div class="week-day">Thursday</div>
+        <div class="week-task"><strong>Fitness — 30–45 min.</strong> Start Guide 06 Phase 1 (Foundations). The mobility routine takes 15 minutes and can be done at home. Do this on days you don't play or range-practise. It is not optional — mobility and stability underpin every technical improvement.</div>
+      </div>
+      <div class="week-row">
+        <div class="week-day">Friday</div>
+        <div class="week-task"><strong>Review and plan.</strong> 20 minutes. Open the Progress Journal. Note what you worked on this week, what felt different, and what you want to focus on next week. A written review, even brief, dramatically improves retention of practice learning.</div>
+      </div>
+      <div class="week-row">
+        <div class="week-day">Weekend</div>
+        <div class="week-task"><strong>Competitive round (Saturday or Sunday) with Arccos running.</strong> Play your normal club competition or a casual round if no competition is available. The weekend round is your data collection — play it fully, correct any Arccos misattributions after, and let the data accumulate.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info tip-box" style="margin-top:8px;">
+    <span class="ico">💡</span>
+    <div><strong>The single most important habit to build in week 1:</strong> the post-round Arccos review. 3 minutes after every round — correct misattributions, verify shot count matches your scorecard. Players who do this consistently get dramatically better data than those who let rounds go unreviewed. Good data habits built now pay dividends for the next 24 months.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     GUIDE ORDER
+══════════════════════════════════════════ -->
+<div class="section" id="guides">
+  <h2 class="section-title">Which Guide to Read When</h2>
+  <p class="section-desc">You do not need to read all 37 guides immediately. This sequence is ordered by when you'll need each one — starting with the diagnostic and planning guides, then the technical and competitive guides as your game and data mature.</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-dot">W1</div>
+      <div class="tl-content">
+        <div class="tl-label">Week 1 — Foundation</div>
+        <div class="tl-title">The Four Guides That Set Everything Up</div>
+        <div class="tl-desc">Guide 10 (24-month plan), Guide 26 (SG interpretation), Guide 27 (Months 1–6), Guide 05 (Practice structure). These give you the framework, measurement system, and practice approach. Read these before anything else.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot">W2</div>
+      <div class="tl-content">
+        <div class="tl-label">Week 2 — Technical Foundations</div>
+        <div class="tl-title">Your Biggest Technical Gap</div>
+        <div class="tl-desc">Open Guide 11 (Shot Dispersion) to map your real miss patterns. Then go to the pillar guide that matches your weakest area: Guide 01 (Putting), Guide 02 (Short Game), or Guide 03 (Long Game). Work through the full guide tab by tab — these are your primary technical references for Phase 1.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--gold-border);color:var(--gold);">M1</div>
+      <div class="tl-content">
+        <div class="tl-label">Month 1 — Course Management &amp; Fitness</div>
+        <div class="tl-title">The Two Guides That Improve Every Round Immediately</div>
+        <div class="tl-desc">Guide 20 (Course Management) and Guide 06 (Golf Fitness). Course management typically saves 2–3 shots per round with no technical change. Fitness builds the physical foundation for every technical improvement. Both should be running by end of month 1.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--gold-border);color:var(--gold);">M2</div>
+      <div class="tl-content">
+        <div class="tl-label">Month 2 — Data and Competition</div>
+        <div class="tl-title">Using Your First Month of Data</div>
+        <div class="tl-desc">By month 2, you should have 5–8 qualifying Arccos rounds. Now revisit Guide 26 (especially the Prioritising tab) to identify your actual biggest SG gap — it may surprise you. Read Guide 21 (Mental Game) and Guide 24 (Competitive Strategy). Guide 33 (Competitive Pathway) is worth reading if you're competing in club or county events.</div>
+      </div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot" style="border-color:var(--teal-border);color:var(--teal);">M3+</div>
+      <div class="tl-content">
+        <div class="tl-label">Month 3 and Beyond — As You Need Them</div>
+        <div class="tl-title">The Remaining Guides — Open When Relevant</div>
+        <div class="tl-desc">The remaining guides are designed to be opened when relevant rather than all at once. Guide 32 (Green Reading) when your putting data shows green reading as a gap. Guide 25 (Speed Training) when Guide 27's Phase 2 begins. Guide 08 (Round Preparation) before a significant competition. Guide 34 (Coaching Relationship) before your next lesson.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-gold" style="margin-top:8px;">
+    <span class="card-tag">The Guides Not to Open Yet</span>
+    <h3>Save These for Later — They Work Better With Data</h3>
+    <div class="guide-grid">
+      <a href="37_approach_zone.html" class="guide-card-mini">
+        <div class="guide-icon-sm" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🎯</div>
+        <div class="guide-meta-sm"><div class="guide-num-sm">Guide 37 · Month 3+</div><div class="guide-title-sm">Approach Zone</div></div>
+      </a>
+      <a href="25_speed_training.html" class="guide-card-mini">
+        <div class="guide-icon-sm" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">⚡</div>
+        <div class="guide-meta-sm"><div class="guide-num-sm">Guide 25 · Phase 2</div><div class="guide-title-sm">Speed Training</div></div>
+      </a>
+      <a href="16_solo_pressure_round.html" class="guide-card-mini">
+        <div class="guide-icon-sm" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🎯</div>
+        <div class="guide-meta-sm"><div class="guide-num-sm">Guide 16 · Month 2+</div><div class="guide-title-sm">Pressure Rounds</div></div>
+      </a>
+      <a href="14_video_analysis.html" class="guide-card-mini">
+        <div class="guide-icon-sm" style="background:var(--violet-tag-bg);border-color:var(--violet-border);">🎥</div>
+        <div class="guide-meta-sm"><div class="guide-num-sm">Guide 14 · Month 2+</div><div class="guide-title-sm">Video Analysis</div></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     TOOLS SETUP
+══════════════════════════════════════════ -->
+<div class="section" id="tools">
+  <h2 class="section-title">Tools Setup Priority</h2>
+  <p class="section-desc">This system uses up to six data tools. You do not need all of them immediately. Set them up in this order — each one builds on what the previous one produces.</p>
+
+  <div class="step-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Arccos Air — Set up this week (required)</div>
+        <div class="step-desc">On-course shot tracking. The data layer that drives the entire system. Setup covered in Day 1 of this guide. Every SG-based decision in the programme depends on this being running correctly.</div>
+        <a href="26_stats_interpretation.html" class="step-link">→ Guide 26: Arccos setup</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Performance Tracker — Use from Day 1</div>
+        <div class="step-desc">The built-in tracking app (Performance Tracker tool). Log every practice session, round, and HRV reading here. Takes 2 minutes per session. After 3 months, the patterns in your practice log will show you exactly which types of practice precede your best rounds.</div>
+        <a href="tracking_app_v2.html" class="step-link teal">→ Open Performance Tracker</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Mevo Gen2 Launch Monitor — Set up in month 1–2 (recommended)</div>
+        <div class="step-desc">Ball flight and club data from the range. Used for your wedge matrix, club speed tracking, and diagnosing ball flight issues that Arccos surface. Not required on Day 1, but valuable by Month 2 when you start understanding your specific ball-striking patterns. The Mevo Playbook guide covers setup fully.</div>
+        <a href="mevo_gen2_playbook.html" class="step-link gold">→ Mevo Gen2 Playbook</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">HackMotion Wrist Sensor — Month 2+ (optional but high-value)</div>
+        <div class="step-desc">Measures lead wrist position throughout the swing. Used to diagnose contact inconsistency and face control issues. The HackMotion Playbook shows you exactly how to interpret the data. This is an optional tool — but for players who struggle with consistency, it identifies the root cause faster than any other tool.</div>
+        <a href="hackmotion_playbook.html" class="step-link">→ HackMotion Playbook</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Golf Coach AI — Use from Month 1</div>
+        <div class="step-desc">The AI-powered round analyser built into the system. Import your Mevo CSV or enter your data manually. It analyses your numbers and produces specific coaching recommendations. Use it after any Mevo session where the data raises questions you can't answer from the guides alone.</div>
+        <a href="09_golf_coach_ai.html" class="step-link teal">→ Golf Coach AI</a>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Caddie Card — Print or save before your first competition</div>
+        <div class="step-desc">A pocket-sized reference card covering key course management decisions, your wedge matrix, and your pre-shot routine. Laminate it or save it to your phone's photos. Pull it out on the course when you need a course management reminder. Takes 10 minutes to set up.</div>
+        <a href="caddie_card.html" class="step-link gold">→ Set Up Caddie Card</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════ -->
+<div class="section" id="faq">
+  <h2 class="section-title">Common Questions</h2>
+  <p class="section-desc">The questions most new buyers have in their first week — answered directly.</p>
+
+  <div class="card card-lime">
+    <span class="card-tag">Q: Do I need all the equipment (Mevo, HackMotion, Arccos)?</span>
+    <h3>No — Arccos is the only essential tool</h3>
+    <p>The whole system is built around on-course SG data. Arccos Air is the minimum — the Link Pro device costs around £80 and the app subscription covers ongoing use. Everything else (Mevo, HackMotion, Sportsbox AI) is valuable but optional. The guides that reference these tools have "how to proceed without this tool" guidance in them. Start with Arccos and add tools only when the data identifies a gap they specifically address.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Q: My handicap is 18 — is this system too advanced for me?</span>
+    <h3>No — the target is 5–18 handicap</h3>
+    <p>The programme is designed for players between 5 and 18 handicap. If you're at 18, Phase 1 (Months 1–6) is your starting point — it focuses on eliminating the big mistakes (double bogeys, penalty areas, short-sided chips) that cost higher-handicap players the most strokes. The SG framework is just as useful at 18 as at 5 — it's technology-neutral, applying equally to all levels. The scratch target is 24 months away for most players; what matters is that you're moving in the right direction.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Q: I don't have a coach — can I still use this?</span>
+    <h3>Yes — the system is designed to work with or without a coach</h3>
+    <p>All 37 guides are self-contained and self-coaching-enabled. The Video Analysis guide (Guide 14) and the coaching relationship guide (Guide 34) give you structured approaches to self-coaching and to finding and working with a coach if you want one. The data-first approach actually makes self-coaching more effective — you're acting on evidence from your own game rather than generic advice from a stranger.</p>
+  </div>
+
+  <div class="card card-violet">
+    <span class="card-tag">Q: I've already read a lot of golf books and tried other systems. How is this different?</span>
+    <h3>The difference is data-first, not advice-first</h3>
+    <p>Most golf books tell you what to work on based on what's commonly wrong with amateur swings. This system identifies what to work on based on what's actually wrong with your specific game, measured in strokes on the course. The practice structure science is also different from most instruction — it's based on motor learning research that shows most golfers practise in the least effective way possible (blocked repetition of the same shot). Guides 05 and 38 cover this in detail and will probably change how you think about range sessions.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Q: The phase plan says it started June 2026 — what if I'm starting later?</span>
+    <h3>Work out which month of the plan you're in and start there</h3>
+    <p>The plan is anchored to a June 2026 start, but every monthly guide (27–30) is structured so you can enter at any point. If you're starting in September 2026, you're in Month 4 of Guide 27. Read the overview section of Guide 27 to understand what Months 1–3 covered, then work from Month 4 forward. The SG targets and practice priorities are still the same — only the calendar dates differ.</p>
+  </div>
+
+  <div class="card card-lime" style="margin-top:20px;">
+    <span class="card-tag">After Week 1 — What's Next</span>
+    <h3>Three Things to Do Once You Have 5 Rounds of Arccos Data</h3>
+    <ul class="checklist" style="margin-top:8px;">
+      <li><strong>Identify your biggest SG gap</strong> using Guide 26's Prioritising tab — this is your primary practice focus for the next 4–6 weeks</li>
+      <li><strong>Open the full guide for your weakest pillar</strong> — Guide 01 (Putting), 02 (Short Game), or 03 (Long Game) — and work through it systematically</li>
+      <li><strong>Book a coaching session</strong> with your SG data in hand — a coach who can see your actual gap data will design a better lesson than one who starts blind</li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="footer">
+  THE SCRATCH PROJECT · QUICK START GUIDE · STANDARD EDITION · 2026
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.snav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  const nav = document.querySelector('.step-nav');
+  window.scrollTo({ top: nav ? nav.offsetTop - 48 : 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

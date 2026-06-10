@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep1_season_decision_architecture.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Season-LevelDecision Architecture — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}
+.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}
+.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style>
+<script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span>
+</div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP1 · Future Release</p>
+  <h1>Season-Level<br><em>Decision Architecture</em></h1>
+  <p class="hero-sub">The strategic layer above Guide 40 — how to make EV-positive decisions about which events to enter, how to design a competition calendar, managing decision fatigue across 72 holes, and the post-round decision quality audit.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🗓️ Season EV</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📅 Competition Calendar</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🧠 Decision Fatigue</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">⚡ In-Round Adaptation</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📋 Post-Round Audit</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('seasonev',this)">Season EV</button>
+  <button class="tab" onclick="show('calendar',this)">Competition Calendar</button>
+  <button class="tab" onclick="show('fatigue',this)">Decision Fatigue</button>
+  <button class="tab" onclick="show('adapt',this)">In-Round Adaptation</button>
+  <button class="tab" onclick="show('postround',this)">Post-Round Audit</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Beyond the Hole — Season-Level Strategy</h2>
+  <p class="sec-desc">Guide 40 covers how to make the highest-EV decision on each shot. This guide covers the layer above that — how to make the highest-EV decisions about which rounds to play, which events to enter, how to allocate competitive exposure across a season, and how to maintain decision quality across 72 holes when cognitive load accumulates.</p>
+
+  <span class="badge badge-elite">🗓️ The Two Levels of Golf Decision-Making</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Where Guide 40 Ends and This Guide Begins</span>
+    <h3>Shot-Level vs. Season-Level Architecture</h3>
+    <table class="tbl">
+      <tr><th>Level</th><th>Decisions</th><th>Covered In</th></tr>
+      <tr><td>Shot level</td><td>Aim point, club selection, lay-up zone, risk/reward on this hole</td><td>Guide 40 — Decision Architecture &amp; EV Mastery</td></tr>
+      <tr><td>Round level</td><td>Tournament strategy, format adjustments, competitive mindset</td><td>Guide 40 (Format tab) + Guide 47 (Elite Performance Psychology)</td></tr>
+      <tr><td>Season level</td><td>Which events to enter, how many competitive rounds to play, how to sequence competition against development, when to prioritise results vs. learning</td><td class="good">This guide — not covered elsewhere in the system</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">Why season-level strategy matters:</strong> A player who makes perfect shot-level decisions but enters the wrong events in the wrong sequence will develop more slowly than one who makes slightly suboptimal shot decisions but competes in an intelligently designed programme. The season is the unit of improvement, not the round.</p>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Research Basis</span>
+    <h3>What Sports Science Says About Competitive Exposure</h3>
+    <p>Research on elite athlete development (Côté, Baker &amp; Abernethy's DMSP model; Ericsson's deliberate practice framework) consistently shows that the optimal ratio of competition to practice varies significantly by developmental stage — and that most amateur golfers compete too much relative to their deliberate practice volume at the improvement phase, then too little at the consolidation phase.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Phase</th><th>Optimal Competition:Practice Ratio</th><th>Common Amateur Error</th></tr>
+      <tr><td>Active improvement (10 → 5 HCP)</td><td>1:4 — one competitive round per 4 practice sessions</td><td class="bad">1:2 or worse — too much competition, not enough deliberate work</td></tr>
+      <tr><td>Consolidation (5 → 2 HCP)</td><td>1:2 — more competitive exposure needed to test new patterns</td><td class="warn">Often similar to improvement phase — not enough competition</td></tr>
+      <tr><td>Competition phase (scratch → +)</td><td>1:1 or 2:1 — competition IS the primary learning environment</td><td class="good">Elite players usually get this right because county selection drives it</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SEASON EV -->
+<div class="sec" id="seasonev">
+  <h2 class="sec-title">Season-Level Expected Value</h2>
+  <p class="sec-desc">Just as individual shots have an expected value, events and seasons have an expected value — the probability-weighted outcome in terms of handicap reduction, competitive development, and confidence. Season EV thinking prevents common errors like entering too many stressful events or avoiding competitive pressure when development needs it.</p>
+
+  <span class="badge badge-elite">📊 Event EV Categories</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Classifying Events by Their Development Value</span>
+    <h3>Not All Competitive Rounds Are Equal</h3>
+    <table class="tbl">
+      <tr><th>Event Type</th><th>Primary Value</th><th>Risk</th><th>Phase Fit</th></tr>
+      <tr><td>Club medal / weekly comp</td><td>Low-stakes data collection; pattern testing</td><td>Very low — no ego threat</td><td class="good">Every phase — high frequency, low cost</td></tr>
+      <tr><td>Club championship / scratch comp</td><td>Performance under meaningful pressure; identity as a competitive golfer</td><td>Medium — result matters to peers</td><td class="warn">Consolidation and competition phases — monthly</td></tr>
+      <tr><td>Open amateur events (regional)</td><td>Benchmarking against unknown competition; revealing true level</td><td>Medium-high — unfamiliar fields and courses</td><td class="warn">Consolidation phase onward — 4–6 per year</td></tr>
+      <tr><td>National qualifying events</td><td>Extreme pressure experience; highest-quality field benchmarking</td><td>High — very exposed failure is possible</td><td class="good">Competition phase — 2–4 per year maximum</td></tr>
+      <tr><td>County team matches</td><td>Team pressure, matchplay psychology, real stakes</td><td>Shared — team result affects others</td><td class="good">Competition phase — as available per season</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Development vs. Results Tension</span>
+    <h3>When to Prioritise Learning Over Performance</h3>
+    <p>The most common season-level strategic error is refusing to enter events where the player knows they will be exposed. The logic is: "I'm not ready yet." The sports science says the opposite — exposure to events slightly above your current comfort level is one of the most reliable accelerators of development, provided the frequency is calibrated correctly (not every week, not once a year).</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>The 70% rule:</strong> Enter an event if you believe you have at least a 70% chance of performing at your current handicap standard under those conditions. Below 70% = not ready yet; above 70% = comfort zone, limited development value. The 65–75% zone is optimal.</div></li>
+      <li><span class="step-n">2</span><div><strong>Post-event EV audit:</strong> After any significant event, assess the development value vs. the result. A round that produced a 4-over score but revealed a specific weakness under pressure has higher development EV than a round that produced a personal best on a friendly course with no pressure. The learning is the return on investment.</div></li>
+      <li><span class="step-n">3</span><div><strong>Protect the confidence base.</strong> Development EV must be balanced against confidence. Entering too many high-exposure events in a short period — particularly when the player is going through a technical change — can damage the confidence base that underpins performance. Maximum 2 high-pressure events per month; minimum 4 weeks between national-level entries when in a technical change period.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Season EV Calculation</span>
+    <h3>A Structured Framework for Evaluating Your Annual Programme</h3>
+    <p>Rate each event in your planned calendar on three dimensions (1–5 scale) and sum them to get a season EV score per event. Use this to identify over-loaded months and under-loaded development windows.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Dimension</th><th>1 (Low)</th><th>3 (Medium)</th><th>5 (High)</th></tr>
+      <tr><td>Pressure exposure</td><td>Club weekly — no ego threat</td><td>Club championship — known peers</td><td>County / national — unfamiliar field, real stakes</td></tr>
+      <tr><td>Skill challenge</td><td>Home course, known conditions</td><td>Away course, normal conditions</td><td>Unfamiliar course, difficult conditions</td></tr>
+      <tr><td>Data quality</td><td>Casual round — Arccos only</td><td>Full strokeplay — Arccos + post-round review</td><td>72-hole event — multi-round pattern data</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">Events scoring 3–6 are development-optimal. Events scoring 7–15 are high-development-value but should not exceed 4–6 per year. Events scoring 1–2 have maintenance value only — useful in the week before a high-stakes event to maintain rhythm without taxing confidence.</p>
+  </div>
+</div>
+
+<!-- COMPETITION CALENDAR -->
+<div class="sec" id="calendar">
+  <h2 class="sec-title">Designing the Competition Calendar</h2>
+  <p class="sec-desc">A well-designed annual competition calendar is itself a strategic tool — sequencing events so that technical development, competitive exposure, and peak performance windows align. Most amateur golfers assemble a calendar reactively; elite amateur players design it proactively.</p>
+
+  <span class="badge badge-elite">📅 The Annual Calendar Architecture</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Four-Phase Season Structure</span>
+    <h3>How to Sequence the Year</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>Months</th><th>Competition Focus</th><th>Practice Focus</th></tr>
+      <tr><td>Development</td><td>Oct–Feb</td><td>Minimal — 2–3 low-stakes events only. Preserve bandwidth for technical work.</td><td>High volume, deliberate, technical. This is the period for major swing changes.</td></tr>
+      <tr><td>Sharpening</td><td>Mar–Apr</td><td>Increasing — 1–2 per month. Club events + one open event to test development.</td><td>Mixed — maintenance of new patterns + competition simulation sessions.</td></tr>
+      <tr><td>Peak season</td><td>May–Sep</td><td>High — 3–5 per month. Club championships, county events, open amateurs. Target events planned months in advance.</td><td>Maintenance only. No technical changes. Competition simulation before target events.</td></tr>
+      <tr><td>Transition</td><td>Late Sep–Oct</td><td>Wind down — 1–2 events max. Season debrief and data review.</td><td>Low volume. Annual game construction review (Guide 49). Planning next season's development priorities.</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Target Event Selection</span>
+    <h3>Identifying the Two or Three Events That Define Your Season</h3>
+    <p>A season without defined target events is a season without a performance arc. Elite amateur players identify 2–3 "A events" — events where peak performance is specifically prepared for — and design the surrounding competition calendar to support peaking at those moments.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Select A events by March.</strong> Your county championship, the Brabazon qualifier, a specific open event you have been preparing for. These are known 4–6 months in advance and form the backbone of your preparation schedule.</div></li>
+      <li><span class="step-n">2</span><div><strong>Design approach events (B events).</strong> 2–3 events in the 4 weeks before each A event. Similar format, ideally similar course type. Confidence-building, pattern-confirming. Not pressure-maximising — the A event provides that.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use C events for data collection.</strong> Weekly and monthly club events throughout the season are data collection exercises, not performance events. Review Arccos data from these dispassionately — they are your tracking mechanism, not your performance measurement.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Peaking Protocol</span>
+    <h3>Timing Your Best Performance for Target Events</h3>
+    <table class="tbl">
+      <tr><th>Timeline</th><th>Action</th><th>Purpose</th></tr>
+      <tr><td>8 weeks before A event</td><td>Identify any technical work that still needs embedding — this is the last window for new patterns</td><td>Anything introduced after this will not be consolidated by competition day</td></tr>
+      <tr><td>4 weeks before</td><td>Switch from development to maintenance. Competition simulation sessions replace technical sessions.</td><td>Build competitive sharpness; avoid introducing new variables</td></tr>
+      <tr><td>2 weeks before</td><td>B event — competition simulation at similar standard to A event</td><td>Final calibration of nerves, routine, and strategy</td></tr>
+      <tr><td>1 week before</td><td>Reduce volume by 30%. Short sessions only. No range work in final 48 hours.</td><td>Physical and cognitive freshness; arrive with reserve</td></tr>
+      <tr><td>Event week</td><td>Follow Guide 46 county match week protocol</td><td>Maximum consistency and readiness</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DECISION FATIGUE -->
+<div class="sec" id="fatigue">
+  <h2 class="sec-title">Decision Fatigue Across 72 Holes</h2>
+  <p class="sec-desc">A well-studied phenomenon in cognitive science: the quality of decisions degrades systematically as the number of decisions made increases. In 72-hole golf, this manifests as strategic drift in rounds 3 and 4 — more aggressive aim points, more go-for-broke plays, more departures from pre-committed plans. Understanding and managing this effect is worth 1–2 strokes over a 72-hole field.</p>
+
+  <span class="badge badge-elite">🧠 The Science of Ego Depletion</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Why Round 3 Decisions Are Worse Than Round 1</span>
+    <h3>Baumeister's Ego Depletion Research — Applied to Golf</h3>
+    <p>Baumeister et al.'s ego depletion model (though contested in some domains) has consistent evidence in high-demand, emotionally charged decision environments — which 72-hole amateur competition clearly is. Each strategic decision under pressure uses a finite cognitive resource. By round 3, decision-making resources are measurably reduced — players default to intuitive (System 1) thinking rather than deliberate (System 2) strategic processing.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Round</th><th>Typical Decision Quality</th><th>Common Pattern</th></tr>
+      <tr><td>Round 1</td><td class="good">High — fresh, following plan</td><td>Strategy mostly adhered to; aim points correct; conservative appropriate plays honoured</td></tr>
+      <tr><td>Round 2</td><td class="warn">Medium — first signs of drift</td><td>Minor aim point compromises; slight increase in aggressive play on pressure holes</td></tr>
+      <tr><td>Round 3</td><td class="warn">Declining — significant drift</td><td>Scorecard awareness begins affecting decisions; hero shots appear; pre-committed plans abandoned</td></tr>
+      <tr><td>Round 4</td><td class="bad">Low without countermeasures</td><td>Outcome focus dominates; aim points ignored; fatigue-driven aggression or paralysis</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Six Countermeasures</span>
+    <h3>Protecting Decision Quality in Rounds 3 and 4</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pre-committed strategy cards.</strong> Written hole-by-hole plans created the night before each round. When cognitive resources are depleted, the card becomes the decision-maker — not the degraded in-the-moment System 1. Review the card on every tee. This single countermeasure is worth the most strokes.</div></li>
+      <li><span class="step-n">2</span><div><strong>Decision rules, not decisions.</strong> Replace in-round decisions with pre-committed rules. "I always hit 3-wood on holes with OOB left" removes the decision under pressure entirely — the rule is applied, not a new decision made. Build a library of 5–10 personal decision rules for the situations that most commonly cause drift.</div></li>
+      <li><span class="step-n">3</span><div><strong>Glucose management.</strong> Cognitive decision-making is glucose-dependent. The round 3 decision quality decline is partly physical — the fuel is running low. The on-course nutrition protocol from Guide 48 directly counteracts this mechanism.</div></li>
+      <li><span class="step-n">4</span><div><strong>Scorecard blackout until the final hole.</strong> Knowing your score relative to the field or to your target activates outcome-focused thinking that degrades process-focused decision-making. Many elite amateurs deliberately avoid doing mental arithmetic on their score until the final few holes.</div></li>
+      <li><span class="step-n">5</span><div><strong>The anchor phrase.</strong> A short, personally meaningful phrase (not technically golf-related) that resets the decision-making state when drift is detected. "One shot, one process" or similar. Functions as a System 2 reactivation cue — pulling thinking from intuitive back to deliberate without requiring significant cognitive effort to execute.</div></li>
+      <li><span class="step-n">6</span><div><strong>Post-bogey protocol.</strong> The highest-risk decision point for strategic drift is immediately after a bogey in round 3–4. A specific 60-second post-bogey reset protocol (deep breath, review strategy card, confirm next hole's plan, execute full pre-shot routine) prevents the most common form of decision cascade — where one error triggers increasingly poor decisions in the subsequent holes.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- IN-ROUND ADAPTATION -->
+<div class="sec" id="adapt">
+  <h2 class="sec-title">In-Round Strategic Adaptation</h2>
+  <p class="sec-desc">Pre-committed strategy is the foundation, but the highest-performing players also know when to deviate from it. The skill is distinguishing legitimate strategic adaptation from decision fatigue — two things that feel identical from the inside but have completely different consequences for scoring.</p>
+
+  <span class="badge badge-elite">⚡ Legitimate Adaptation vs. Drift</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Diagnostic Question</span>
+    <h3>How to Tell the Difference During a Round</h3>
+    <table class="tbl">
+      <tr><th>Trigger</th><th>Legitimate Adaptation</th><th>Decision Fatigue Drift</th></tr>
+      <tr><td>Conditions change (wind shifts, rain)</td><td>Yes — adjust club, trajectory, aim point based on new conditions. This is information-driven.</td><td>No — "it's windy so I'll just go for it" is not a response to wind; it's an excuse for aggression</td></tr>
+      <tr><td>You are playing better than expected</td><td>Cautious expansion of birdie-seeking on reachable par 5s — maintain the EV discipline, accept more go-for-two situations</td><td>Abandoning conservative aim points because "I'm on" — the form doesn't change the EV calculation</td></tr>
+      <tr><td>You are playing worse than expected</td><td>Tighten to conservative strategies; reduce risk exposure; manage double bogeys</td><td>Going for hero shots to "get it back quickly" — the most expensive form of drift</td></tr>
+      <tr><td>You need a specific result</td><td>In match play: opponent in trouble means play conservatively. Opponent in great shape and you're 1 down on 17: increase calculated risk.</td><td>Strokeplay: "I need birdie on 18 so I'll aim at the flag" — the need doesn't change the optimal aim point</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Adaptation Permission Framework</span>
+    <h3>When You Are Allowed to Deviate From the Plan</h3>
+    <p>Create a personal adaptation permission framework — a set of specific, pre-defined conditions under which you are allowed to deviate from a pre-committed strategy. Anything outside these conditions is drift, not adaptation.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Permitted: Condition-driven changes.</strong> Wind direction change greater than 30°. Rain making a firm green receptive. Unexpected soft conditions changing carry distances by more than 5 yards. These are factual inputs that change the EV calculation — adaptation is required.</div></li>
+      <li><span class="step-n">2</span><div><strong>Permitted: Format-driven changes.</strong> Moving from strokeplay to matchplay thinking when a specific match situation demands it — as covered in Guide 40's Format tab. These are pre-defined, not improvised.</div></li>
+      <li><span class="step-n">3</span><div><strong>Not permitted: Emotion-driven changes.</strong> Anger, excitement, or anxiety are not inputs to the EV calculation. If the trigger for deviating from the plan is an emotional state rather than a factual condition, the deviation is drift by definition. Recognise the trigger, apply the anchor phrase, return to the plan.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- POST-ROUND AUDIT -->
+<div class="sec" id="postround">
+  <h2 class="sec-title">The Decision Quality Audit</h2>
+  <p class="sec-desc">A structured post-round review specifically focused on decision quality — not just ball-striking quality. The Arccos SG data tells you what happened; this audit tells you why, and whether the cause was a decision error or an execution error. Only decision errors are actionable through strategic practice.</p>
+
+  <span class="badge badge-elite">📋 The 15-Minute Post-Round Review</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Separating Decision Errors from Execution Errors</span>
+    <h3>The Four-Question Audit</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>"Was the aim point correct?"</strong> For each hole where you lost a stroke relative to the field, review the aim point you chose. If you aimed at the optimal zone and the shot went there but the outcome was bad — execution error (not actionable via strategy). If you aimed at the wrong zone — decision error (actionable via pre-round planning).</div></li>
+      <li><span class="step-n">2</span><div><strong>"Did I follow the plan?"</strong> Compare what you actually did on each hole against your strategy card. Every departure from the plan — whether it helped or hurt — is noted. Departures that helped build overconfidence in improvisation. Departures that hurt are the clearest learning opportunities.</div></li>
+      <li><span class="step-n">3</span><div><strong>"Where did I drift?"</strong> Identify the specific hole(s) where decision fatigue or emotional drift caused a departure from optimal strategy. Note the trigger — bogey on the previous hole, score anxiety, a specific pressure situation. These patterns, tracked across multiple rounds, reveal your personal decision vulnerability points.</div></li>
+      <li><span class="step-n">4</span><div><strong>"What is one rule I should add to next round's strategy card?"</strong> The audit should produce one specific, actionable addition to your personal decision rules for the next competitive round. Over time, this library of personal decision rules is the accumulated wisdom of your competitive experience — more valuable than any generic course management guide.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Decision Error Tracking</span>
+    <h3>Building a Personal Decision Error Database</h3>
+    <p>Track decision errors separately from execution errors across your competitive rounds. After 20 competitive rounds, patterns emerge that are invisible from individual round reviews. Common patterns include:</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Pattern</th><th>What the Data Shows</th><th>Strategic Fix</th></tr>
+      <tr><td>Post-bogey aggression</td><td>Bogey followed by double bogey rate significantly above baseline</td><td>Post-bogey protocol (Decision Fatigue tab); specific conservative aim point rule for the hole immediately after a bogey</td></tr>
+      <tr><td>Par 5 go-for-two miscalibration</td><td>Negative EV on go-for-two attempts when carrying a specific water carry or OOB</td><td>Hard rule: lay up when carry exceeds X yards for specific hole types</td></tr>
+      <tr><td>Flag-hunting in round 3–4</td><td>Aim points significantly more aggressive in rounds 3–4 than rounds 1–2</td><td>Strategy card review at the turn in every round 3 and 4; explicit aim point written for each hole</td></tr>
+      <tr><td>First-hole ultra-conservatism</td><td>Conservative aim points on hole 1 cost strokes because they leave too long approaches</td><td>Reassess your default hole-1 strategy — ultra-conservative is not the same as optimal</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">SEASON-LEVEL DECISION ARCHITECTURE · GUIDE EP1 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="40_decision_architecture.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">♟️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Decision Architecture & EV</span></a>
+    <a href="47_elite_performance_psychology.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏆</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Elite Performance Psychology</span></a>
+    <a href="41_plus_hcp_sg_targets.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Plus-HCP SG Targets</span></a>
+    <a href="46_county_team_golf.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏅</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">County Team Golf</span></a>
+    <a href="49_advanced_game_construction.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Advanced Game Construction</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
+</body>
+</html>

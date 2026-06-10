@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep7_complete_wedge_system.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>The CompleteWedge System — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}
+.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}
+.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style>
+<script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span>
+</div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP7 · Future Release</p>
+  <h1>The Complete<br><em>Wedge System</em></h1>
+  <p class="hero-sub">An integrated wedge guide consolidating Guides 02, 22, and 37 — the four-club matrix, clock-system partial shots, two-trajectory mastery, spin control, eight lie-type adjustments, the wind wedge framework, and a monthly practice programme that builds and maintains elite wedge reliability.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📐 Wedge Matrix</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🎯 Partial Shots</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🏹 Trajectory</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🌀 Spin Control</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">⛳ Lie Variations</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🌬️ Wind Game</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📋 Practice System</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('gapping',this)">The Wedge Matrix</button>
+  <button class="tab" onclick="show('partial',this)">Partial Shots</button>
+  <button class="tab" onclick="show('trajectory',this)">Trajectory Control</button>
+  <button class="tab" onclick="show('spin',this)">Spin Control</button>
+  <button class="tab" onclick="show('lies',this)">Lie Variations</button>
+  <button class="tab" onclick="show('wind',this)">Wind Wedge Game</button>
+  <button class="tab" onclick="show('practice',this)">Practice System</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The Integrated Wedge System</h2>
+  <p class="sec-desc">Wedge play is spread across three existing guides — Guide 22 (distances), Guide 02 (short game), and Guide 37 (approach zone). This guide consolidates everything into a single, integrated wedge system covering gapping, partial shots, trajectory, spin, lie variations, wind wedge play, and the practice structure that builds elite wedge reliability.</p>
+
+  <span class="badge badge-elite">🎯 Why Wedges Are Disproportionately Important</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The SG Evidence for Wedge Priority</span>
+    <h3>Wedges as the Highest-Leverage Category in Most Amateur Games</h3>
+    <table class="tbl">
+      <tr><th>Distance Zone</th><th>Expected Proximity (Scratch)</th><th>Expected Proximity (10 HCP)</th><th>SG Gap per Shot</th></tr>
+      <tr><td>80–100 yards</td><td>18–22 ft</td><td>28–35 ft</td><td>~0.15 strokes</td></tr>
+      <tr><td>100–125 yards</td><td>22–28 ft</td><td>35–44 ft</td><td>~0.20 strokes</td></tr>
+      <tr><td>125–150 yards</td><td>26–32 ft</td><td>40–52 ft</td><td>~0.25 strokes</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">The SG gap at wedge distances (80–125 yards) is among the most addressable in the amateur game — it is primarily a skill gap, not a physical one. A player who improves their average proximity from 34 feet to 24 feet at 100 yards will gain approximately 0.15 strokes per approach from that distance, which compounds across 3–4 wedge approaches per round to produce 0.5–0.6 strokes per round improvement from this zone alone.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Elite Wedge System Framework</span>
+    <h3>Five Building Blocks</h3>
+    <ul class="steps">
+      <li><span class="sn">1</span><div><strong>Wedge matrix:</strong> Your full carry distances for each wedge at full, three-quarter, half, and quarter swing. The foundation of everything else — must be built at the range with Mevo, not estimated.</div></li>
+      <li><span class="sn">2</span><div><strong>Partial shot system:</strong> A structured approach to partial distances that replaces guesswork with consistent technique and known carry. The most common cause of wedge unreliability is inconsistent partial swings.</div></li>
+      <li><span class="sn">3</span><div><strong>Trajectory and spin control:</strong> Two trajectories per wedge (standard and knockdown) and spin manipulation for firm vs. soft greens. The minimum for county-level wedge play.</div></li>
+      <li><span class="sn">4</span><div><strong>Lie variation protocol:</strong> A systematic approach to non-ideal lies — tight, rough, downslope, upslope — that produces predictable outcomes rather than guesses.</div></li>
+      <li><span class="sn">5</span><div><strong>Pressure consistency:</strong> The practice structure that ensures wedge quality holds under competitive pressure — the most commonly ignored component of wedge development.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- WEDGE MATRIX -->
+<div class="sec" id="gapping">
+  <h2 class="sec-title">The Complete Wedge Matrix</h2>
+  <p class="sec-desc">A four-club, four-swing-length matrix that covers every distance from 40 to 130+ yards with a full swing or known partial. Built using Mevo — not estimates, not range perception. This matrix is the only reliable foundation for the rest of the wedge system.</p>
+
+  <span class="badge badge-elite">📐 Building the Matrix</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Mevo Session Protocol for Wedge Matrix Construction</span>
+    <h3>How to Build a Reliable Carry Distance Matrix</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Session setup:</strong> Range balls only. Mevo in carry distance mode. 15 shots per club per swing length (60 shots per club; 240 total for a 4-wedge system). Use the same ball type for the entire session — ball type affects wedge spin significantly.</div></li>
+      <li><span class="step-n">2</span><div><strong>The four swing lengths:</strong> Full (100%), three-quarter (hands to shoulder on backswing), half (hands to hip on backswing), quarter (wrist hinge only). Each length should feel distinctly different and produce a consistent, reliable carry at practice ball specification.</div></li>
+      <li><span class="step-n">3</span><div><strong>Record the middle 10 of 15:</strong> Discard the top 2 and bottom 3 shots per set. The middle 10 median carry is your reliable matrix distance — not the average of all 15, which is inflated by your best shots.</div></li>
+      <li><span class="step-n">4</span><div><strong>Apply the range-ball correction factor:</strong> Range balls carry 10–15% shorter than premium balls on most launch monitors. Multiply your Mevo carries by 1.12 (conservative) for on-course estimates. Verify the correction factor with 10 premium ball shots once per month.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Target Matrix Structure</span>
+    <h3>What a Complete Elite Wedge Matrix Looks Like</h3>
+    <table class="tbl">
+      <tr><th>Swing Length</th><th>LW (58°)</th><th>SW (54°)</th><th>GW (50°)</th><th>PW (46°)</th></tr>
+      <tr><td>Full (100%)</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td></tr>
+      <tr><td>¾ swing</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td></tr>
+      <tr><td>½ swing</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td></tr>
+      <tr><td>¼ swing</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td><td>[your carry]</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">The matrix should have no more than 8-yard gaps between any two adjacent cells. If gaps exceed 10 yards at any point, an additional swing length or club needs to be developed to fill the gap — this is where wedge distances are most commonly lost during competitive rounds.</p>
+  </div>
+</div>
+
+<!-- PARTIAL SHOTS -->
+<div class="sec" id="partial">
+  <h2 class="sec-title">The Partial Shot System</h2>
+  <p class="sec-desc">Partial shots — anything between half and three-quarter swing — are the source of the most wedge inconsistency for most amateurs. The problem is not ability; it is the absence of a systematic approach. A structured partial shot system converts inconsistent partials into reliable distance-controlled shots.</p>
+
+  <span class="badge badge-elite">🎯 The Clock System</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Most Reliable Partial Shot Framework</span>
+    <h3>Using Lead Arm Position as the Swing Length Reference</h3>
+    <p>The clock system uses lead arm position at the top of the backswing as the swing length reference. Most players can reliably reproduce a specific arm position — unlike specific "percentage" swings, which are too abstract to be reproducible under pressure.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Clock Position</th><th>Lead Arm at Top</th><th>Description</th><th>Typical Distance (PW)</th></tr>
+      <tr><td>12 o'clock</td><td>Vertical (full swing)</td><td>Hands at the full swing position — standard full swing</td><td>Full carry</td></tr>
+      <tr><td>10–11 o'clock</td><td>Slightly short of vertical</td><td>Three-quarter swing — most reliable partial; highest consistency</td><td>Full carry −15 to −20%</td></tr>
+      <tr><td>9 o'clock</td><td>Parallel to ground</td><td>Half swing — hands at shoulder height at the top</td><td>Full carry −30 to −35%</td></tr>
+      <tr><td>7–8 o'clock</td><td>Below parallel</td><td>Quarter swing — wrist hinge with minimal arm lift</td><td>Full carry −50 to −55%</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Pressure-Proofing Your Partials</span>
+    <h3>The Most Common Failure Mode Under Pressure</h3>
+    <p>Under competitive pressure, most players revert to a more intuitive approach to partial shots — guessing the distance and swinging with some vague intention of hitting it a certain yardage. The result is the most inconsistent shot type in their game appearing in the most consequential moments.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Pre-commit to clock position, not distance.</strong> Before a partial shot, decide "this is a 9 o'clock with the gap wedge" — not "this is an 85-yard shot." The clock position is the motor programme cue; the distance is the consequence. Think in swing lengths, not in yardages.</div></li>
+      <li><span class="step-n">2</span><div><strong>Build through-swing symmetry.</strong> A half-swing backswing should be matched by a half-swing follow-through. The most common partial shot error is an abbreviated follow-through that produces a deceleration through impact — causing fat, thin, and direction errors. Full commitment to the follow-through position is as important as the backswing length.</div></li>
+      <li><span class="step-n">3</span><div><strong>Temperature adjustment for partials.</strong> Partial shots are more sensitive to temperature changes than full shots — the reduced swing speed means the ball compression effect of cold temperature is amplified. In cold conditions, add half a club to partial distances more aggressively than to full carries.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- TRAJECTORY CONTROL -->
+<div class="sec" id="trajectory">
+  <h2 class="sec-title">Trajectory Control</h2>
+  <p class="sec-desc">Two trajectory variants per wedge — standard and knockdown — double the conditions under which you can execute the shot effectively. The knockdown wedge is not an advanced shot; it is a fundamental for any player competing on firm or windy UK courses.</p>
+
+  <span class="badge badge-elite">🏹 Standard and Knockdown</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Two-Trajectory Wedge System</span>
+    <h3>When and How to Use Each</h3>
+    <table class="tbl">
+      <tr><th>Trajectory</th><th>Setup</th><th>Feel</th><th>Use When</th></tr>
+      <tr><td>Standard</td><td>Ball in normal position; hands neutral; standard follow-through</td><td>Normal swing feel; ball launches at normal height</td><td>Normal conditions; receptive greens; no significant wind</td></tr>
+      <tr><td>Knockdown</td><td>Ball 1 inch further back; hands 1 inch further forward at address; follow-through to hip height only</td><td>"Punchy" feel — more forward lean at impact; lower, more boring flight</td><td>Into wind (10+ mph); firm greens needing a running approach; links conditions</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">Carry adjustment for knockdown:</strong> The knockdown version of any wedge shot carries 8–12% shorter than the standard version with the same clock position. When switching to knockdown, take one more club or one longer clock position to achieve the same carry. Verify in a Mevo session — this varies by player.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SPIN CONTROL -->
+<div class="sec" id="spin">
+  <h2 class="sec-title">Spin Control</h2>
+  <p class="sec-desc">Spin is the most commonly misunderstood variable in wedge play. Most amateurs chase maximum spin without understanding when high spin is beneficial and when it is counterproductive. Elite wedge play requires deliberate spin management — not maximum spin production.</p>
+
+  <span class="badge badge-elite">🌀 The Spin Decision Framework</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">When to Maximise Spin and When to Reduce It</span>
+    <h3>Spin as a Tool, Not a Default</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Target Spin Level</th><th>Shot Type</th></tr>
+      <tr><td>Soft, receptive green, back pin</td><td>High spin (8,000–10,000 RPM)</td><td>Standard trajectory, premium ball, clean contact — spin is your asset</td></tr>
+      <tr><td>Firm green, back pin</td><td>Medium spin (6,000–8,000 RPM)</td><td>Slightly less aggressive swing; land short of flag and allow run</td></tr>
+      <tr><td>Very firm / links conditions, any pin</td><td>Low spin (4,000–6,000 RPM)</td><td>Knockdown trajectory; the ball must run to the flag rather than stop</td></tr>
+      <tr><td>Into strong headwind</td><td>Low spin (reduces ballooning)</td><td>Knockdown — lower spin profile maintains ball flight against wind</td></tr>
+      <tr><td>Helping wind</td><td>Standard spin</td><td>Normal shot — spin still provides control; the wind does the distance work</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Groove Maintenance and Spin Consistency</span>
+    <h3>The Equipment Variable in Your Spin Profile</h3>
+    <p>Grooves wear down faster than most players realise — significantly worn grooves can reduce spin by 15–20% on approach shots from rough and semi-rough lies. Players who use premium balls and swing at high speed accelerate groove wear fastest.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Clean grooves before every round.</strong> A groove cleaning brush used before the round removes compacted debris that reduces contact surface area and spin generation. Takes 2 minutes; the spin benefit on pitch shots from rough is measurable.</div></li>
+      <li><span class="step-n">2</span><div><strong>Replace wedges after 75–100 rounds.</strong> Premium steel grooves lose measurable spin-generating capacity after approximately 75–100 rounds of active use. Track your wedge age — if your highest-use wedges (typically 52° and 58°) are more than 2 seasons old and you are playing 50+ rounds per year, they need replacing.</div></li>
+      <li><span class="step-n">3</span><div><strong>Test spin with a Mevo session.</strong> Periodically run a 15-shot spin check with your most-used wedge at full distance — specifically from light rough. Compare to your established baseline. A reduction of &gt;1,000 RPM signals groove wear that may be affecting your course performance.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- LIE VARIATIONS -->
+<div class="sec" id="lies">
+  <h2 class="sec-title">Lie Variations</h2>
+  <p class="sec-desc">The most common source of unexpected wedge outcomes in competitive rounds is an unfamiliar lie. A systematic approach to lie variations — with specific technical adjustments and carry expectations for each — converts the unpredictable into the manageable.</p>
+
+  <span class="badge badge-elite">⛳ The Lie Adjustment Reference</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Technical Adjustments by Lie Type</span>
+    <h3>Eight Common Lie Variations — Setup and Expectation</h3>
+    <table class="tbl">
+      <tr><th>Lie Type</th><th>Setup Change</th><th>Swing Change</th><th>Ball Behaviour</th></tr>
+      <tr><td>Tight fairway</td><td>Ball slightly back; hands slightly forward</td><td>Steeper attack angle; ball-first contact</td><td>Lower trajectory; reduced spin; runs more</td></tr>
+      <tr><td>Light rough (sitting up)</td><td>Normal setup; ball slightly higher in grass</td><td>Slightly shallower to sweep rather than dig</td><td>Flyer risk — ball travels further than expected; low spin</td></tr>
+      <tr><td>Heavy rough (sitting down)</td><td>Open face; steepen angle; grip down</td><td>Steep, aggressive cut across ball</td><td>High trajectory; unpredictable distance; limited spin</td></tr>
+      <tr><td>Hard pan (bare ground)</td><td>Ball back; hands well forward; lead wrist firm</td><td>Steep attack; almost no follow-through</td><td>Lower than expected; bounces aggressively; aim short</td></tr>
+      <tr><td>Uphill lie</td><td>Shoulders align with slope; ball forward</td><td>Normal swing relative to slope</td><td>Higher trajectory; shorter carry; more stopping power</td></tr>
+      <tr><td>Downhill lie</td><td>Shoulders align with slope; ball back</td><td>Aggressive swing through the hill</td><td>Lower trajectory; more carry; less stopping power</td></tr>
+      <tr><td>Ball above feet</td><td>Stand taller; grip down; aim right</td><td>More upright swing plane; shorter swing</td><td>Pulls left; slightly shorter; plan for it</td></tr>
+      <tr><td>Ball below feet</td><td>Flex knees more; grip long; aim left</td><td>Maintain posture throughout</td><td>Pushes right; sometimes shorter; plan for it</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- WIND WEDGE GAME -->
+<div class="sec" id="wind">
+  <h2 class="sec-title">The Wind Wedge Game</h2>
+  <p class="sec-desc">Wind has a disproportionate effect on wedge shots compared to longer clubs — the slower ball speed and higher ball flight make wedges the most wind-sensitive club type in the bag. A systematic wind wedge framework prevents the most common scoring disasters in windy conditions.</p>
+
+  <span class="badge badge-elite">🌬️ Wind Adjustment by Direction and Speed</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Wind Wedge Adjustment Matrix</span>
+    <h3>Club and Trajectory Selection by Wind Condition</h3>
+    <table class="tbl">
+      <tr><th>Wind Direction</th><th>Speed</th><th>Club Adjustment</th><th>Trajectory</th><th>Target Adjustment</th></tr>
+      <tr><td>Headwind</td><td>10–15 mph</td><td>One club more</td><td>Standard or slight knockdown</td><td>Aim 5 feet short of flag — ball will check harder</td></tr>
+      <tr><td>Headwind</td><td>15–25 mph</td><td>Two clubs more; use knockdown</td><td>Full knockdown</td><td>Aim for centre of green — accuracy is the priority, not proximity</td></tr>
+      <tr><td>Helping wind</td><td>10–15 mph</td><td>One club less</td><td>Standard</td><td>Aim for flag — ball has less stopping power so you need to go past it</td></tr>
+      <tr><td>Crosswind (left-to-right)</td><td>10–15 mph</td><td>Half club more</td><td>Standard; allow for drift</td><td>Aim 8–12 feet left of flag; ball will drift right</td></tr>
+      <tr><td>Crosswind (right-to-left)</td><td>10–15 mph</td><td>Half club more</td><td>Standard; allow for drift</td><td>Aim 8–12 feet right of flag; ball will drift left</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">Links wind principle:</strong> On links and coastal courses, the wind is rarely steady — it gusts and shifts throughout a round. Pre-plan your wind adjustments at the start of each hole rather than mid-approach when judgement is under time pressure. Check the flag direction at the green from the fairway; note any change from the tee shot wind direction.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRACTICE SYSTEM -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">The Elite Wedge Practice System</h2>
+  <p class="sec-desc">A structured three-session monthly wedge practice programme that maintains matrix accuracy, builds partial shot consistency, and ensures competition transfer through deliberate pressure simulation.</p>
+
+  <span class="badge badge-elite">📋 Three Sessions per Month</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Monthly Wedge Maintenance Programme</span>
+    <h3>What to Do and When</h3>
+    <table class="tbl">
+      <tr><th>Session</th><th>Timing</th><th>Focus</th><th>Structure</th></tr>
+      <tr><td>Matrix calibration</td><td>First week of month</td><td>Verify carry distances haven't drifted; catch groove wear early</td><td>10 shots per clock position per wedge; record medians; compare to baseline matrix</td></tr>
+      <tr><td>Skills development</td><td>Mid-month</td><td>Improve the weakest element of the wedge system (partial shots, lie variations, or trajectory control)</td><td>40 blocked repetitions of the target skill; contextual variations (rough lies, uphill); Mevo tracking</td></tr>
+      <tr><td>Competition simulation</td><td>Final week (before next competition)</td><td>Ensure matrix knowledge converts under pressure</td><td>18-shot scrambling game: from specific distances, one shot to each of 18 target zones. Score: proximity to target. Compare to previous simulation scores.</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The One-Number Rule</span>
+    <h3>The Simplest Way to Improve Wedge Decision-Making on the Course</h3>
+    <p>Before every wedge approach shot in competition, determine one number: the carry distance required to land the ball on the front edge of the green — ignoring the flag position entirely. Carry the ball to the front edge as a minimum. Then decide how much more you want to add based on the pin position and your confidence in the specific distance.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">This rule prevents the most common wedge error in competition: coming up short of the green. Short misses on wedge shots produce the worst outcomes (chip from rough, bunker, collection area) relative to the same distance long (on the green, runoff area). The one-number rule biases your wedge approach toward missing in the better direction.</p>
+  </div>
+</div>
+
+<div class="footer">THE COMPLETE WEDGE SYSTEM · GUIDE EP7 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📐</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Wedge Distances</span></a>
+    <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏌️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Short Game Pro</span></a>
+    <a href="37_approach_zone.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Approach Zone</span></a>
+    <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📡</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Playbook</span></a>
+    <a href="ep4_proximity_approach_mastery.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Proximity & Approach Mastery</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
+</body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep3_identity_mental_game.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Identity &amp; Self-Conceptin Golf — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}
+.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}
+.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style>
+<script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span>
+</div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP3 · Future Release</p>
+  <h1>Identity &amp; Self-Concept<br><em>in Golf</em></h1>
+  <p class="hero-sub">The foundational layer beneath Guide 21 — athletic self-concept, growth vs. fixed mindset in competitive performance, the science of choking and its prevention, deliberate identity construction, and how identity work amplifies every other component of the programme.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🧠 Self-Concept</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🌱 Growth Mindset</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔬 Choking Science</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🏗️ Identity Construction</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔗 System Integration</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('selfconcept',this)">Self-Concept</button>
+  <button class="tab" onclick="show('mindset',this)">Growth Mindset</button>
+  <button class="tab" onclick="show('choking',this)">Choking Science</button>
+  <button class="tab" onclick="show('construct',this)">Identity Construction</button>
+  <button class="tab" onclick="show('integration',this)">Integration Protocol</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Identity — The Foundation Under the Mental Game</h2>
+  <p class="sec-desc">Guide 21 covers the mental game tools — routine, pressure management, momentum control, sleep. This guide addresses the layer beneath those tools: the self-concept and identity structures that determine how effectively those tools can be applied under pressure. A strong pre-shot routine cannot overcome an identity that says "I always miss the important putts."</p>
+
+  <span class="badge badge-elite">🧠 Why Identity Precedes Technique</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Research That Changes How You Think About Mental Work</span>
+    <h3>Self-Concept as a Performance Ceiling</h3>
+    <p>Sports psychology research (notably Beilock's choking work, Dweck's mindset research, and Hays et al.'s work on athlete self-concept) consistently shows that technical mental skills — routines, focus protocols, pressure management strategies — produce different outcomes depending on the underlying self-concept of the player deploying them.</p>
+    <p style="margin-top:10px;">A player who genuinely believes they are a good putter applies their putting routine differently under pressure than a player who secretly believes they are a poor putter executing a routine they've been told to use. The routine is identical; the outcome differs because the self-concept creates a different attentional and physiological state during execution.</p>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">The practical consequence:</strong> If your mental game work is producing inconsistent results — tools that work in practice but fail under pressure — the problem may not be the tools. It may be the identity that is filtering how those tools are applied. Addressing the identity layer unlocks the full value of the technique layer.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SELF-CONCEPT -->
+<div class="sec" id="selfconcept">
+  <h2 class="sec-title">The Athletic Self-Concept</h2>
+  <p class="sec-desc">The athletic self-concept is the set of beliefs you hold about yourself as a golfer — your capabilities, your identity in relation to the game, and how you interpret performance feedback. It is partly inherited from formative experiences and partly constructed through deliberate work.</p>
+
+  <span class="badge badge-elite">🔍 Mapping Your Self-Concept</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Four Self-Concept Dimensions in Golf</span>
+    <h3>Understanding Your Identity Profile</h3>
+    <table class="tbl">
+      <tr><th>Dimension</th><th>High Self-Concept</th><th>Low Self-Concept</th><th>How It Manifests Under Pressure</th></tr>
+      <tr><td>Technical competence</td><td>"I have a reliable swing that holds under pressure"</td><td>"My swing breaks down when it matters"</td><td>Low: explicit conscious monitoring begins at impact, disrupting automatic execution</td></tr>
+      <tr><td>Competitive identity</td><td>"I perform my best when the stakes are highest"</td><td>"I'm better in practice than competition"</td><td>Low: arousal is interpreted as anxiety rather than activation; performance degrades</td></tr>
+      <tr><td>Resilience identity</td><td>"Setbacks make me sharper"</td><td>"A bad start destroys my round"</td><td>Low: a bogey triggers rumination that occupies working memory and degrades subsequent decisions</td></tr>
+      <tr><td>Strategic confidence</td><td>"I know how to manage a course and trust my decisions"</td><td>"I second-guess my club and aim choices"</td><td>Low: decision hesitation extends pre-shot routine, increases muscle tension, disrupts timing</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Self-Concept Audit</span>
+    <h3>Identifying Where Your Identity Is Working Against You</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The narrative test.</strong> Write three sentences that complete: "When I am playing under significant pressure, I am a golfer who..." The language reveals your self-concept — specifically, whether you describe yourself in terms of your capabilities or your limitations.</div></li>
+      <li><span class="step-n">2</span><div><strong>The pattern analysis.</strong> From your Arccos data, identify the situations where your performance most consistently falls below your baseline. Not courses or conditions — situations (specific shot types, specific pressure levels, specific formats). These situations are the fingerprint of your self-concept gaps.</div></li>
+      <li><span class="step-n">3</span><div><strong>The origin question.</strong> For each self-concept gap, trace its origin. Most limiting golf self-concepts come from one of three sources: a specific formative failure (a missed putt in a final, a lost match), external labelling (a coach or parent who called you a poor bunker player at a formative age), or comparative evaluation (comparing your weaknesses to others' strengths). Identifying the origin is not necessary for change — but it helps de-personalise the belief, making it easier to update.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- GROWTH MINDSET -->
+<div class="sec" id="mindset">
+  <h2 class="sec-title">Growth Mindset — The Research Basis</h2>
+  <p class="sec-desc">Dweck's growth mindset research is frequently cited but rarely understood at a level that produces meaningful change. This tab covers what the research actually shows — specifically in athletic performance contexts — and the precise mechanism by which fixed vs. growth mindset affects performance under challenge.</p>
+
+  <span class="badge badge-elite">🌱 What the Research Actually Shows</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Beyond the Pop-Science Version</span>
+    <h3>Fixed vs. Growth Mindset — The Specific Mechanism</h3>
+    <p>Dweck's core finding: individuals who hold a fixed mindset (believing their abilities are innate and stable) interpret challenges and failures as evidence of limited ability. This interpretation triggers ego-protective behaviour — avoiding challenge, attributing failure to external factors, and withdrawing effort when success is not guaranteed.</p>
+    <p style="margin-top:10px;">Individuals with growth mindset (believing abilities are developable through effort) interpret the same challenges and failures as information — signals about where more effort and different strategies are needed. Crucially, this is not optimism — it is an accuracy about the malleability of skill that produces superior long-term outcomes under adversity.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Situation</th><th>Fixed Mindset Response</th><th>Growth Mindset Response</th></tr>
+      <tr><td>Triple bogey on hole 5</td><td>"This is going to be a bad round" — a threat to identity</td><td>"That's 3 strokes of data — what caused it?" — information only</td></tr>
+      <tr><td>Lost county match 4&3</td><td>"I'm not good enough for county level" — identity threat</td><td>"My matchplay strategy needs work, specifically holes 9–12" — skill gap</td></tr>
+      <tr><td>Technical change isn't working after 4 weeks</td><td>"This technique isn't for me" — give up</td><td>"4 weeks isn't enough for autonomous stage — how am I practising it?" — strategy question</td></tr>
+      <tr><td>Peer shoots 5-under in county championship</td><td>"They're just more talented" — comparison/threat</td><td>"What's their practice structure? What can I learn?" — information</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Developing Growth Mindset Specifically for Golf</span>
+    <h3>Evidence-Based Interventions</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Process attribution training.</strong> After every below-par performance, identify one specific process variable that contributed — not "I played badly" but "My pre-shot routine shortened under pressure on holes 14–16 and I rushed the last 3 club selections." Process attributions are actionable; ability attributions are not.</div></li>
+      <li><span class="step-n">2</span><div><strong>Challenge reframing.</strong> Deliberately enter events that expose you — not to punish yourself, but to collect data. Before each challenging event, write: "The most valuable thing I can learn from this event is..." The act of identifying potential learning in advance shifts the event from a threat (to identity) to an experiment (information-gathering).</div></li>
+      <li><span class="step-n">3</span><div><strong>Yet language.</strong> Convert fixed-mindset statements to growth-mindset statements with "yet." "I can't hold my swing under extreme pressure" becomes "I can't hold my swing under extreme pressure yet — what practice will develop that?" The "yet" is not optimistic spin — it is an accurate statement about skill malleability that activates a different neural and motivational response.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CHOKING SCIENCE -->
+<div class="sec" id="choking">
+  <h2 class="sec-title">The Science of Choking — and Its Prevention</h2>
+  <p class="sec-desc">Choking — performance degradation under pressure — is one of the most studied phenomena in sports psychology. The mechanisms are well-understood. The interventions that prevent it are evidence-based. This tab covers both in detail, extending the pressure management content in Guide 21.</p>
+
+  <span class="badge badge-elite">🔬 Two Mechanisms, Two Interventions</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Distraction Theory vs. Explicit Monitoring Theory</span>
+    <h3>Why the Same Pressure Causes Different Failures</h3>
+    <p>Research identifies two distinct mechanisms by which pressure degrades performance — and crucially, they require different interventions.</p>
+    <div class="grid-2" style="margin-top:12px;">
+      <div class="mini">
+        <span class="mini-tag">Mechanism 1: Distraction</span>
+        <h4>Worry Occupies Working Memory</h4>
+        <p>Pressure-induced worry (about consequences, about judgement) occupies working memory that would otherwise support performance. The result: reduced attention to task-relevant cues, poor decision-making, delayed reaction. Most prevalent in high-expertise players under moderate pressure.</p>
+      </div>
+      <div class="mini">
+        <span class="mini-tag">Mechanism 2: Explicit Monitoring</span>
+        <h4>Conscious Control Disrupts Automation</h4>
+        <p>Pressure triggers conscious attention to the mechanics of a well-learned skill, disrupting the automatic execution that produces expert performance. The result: jerky, over-controlled movement. Exactly what is described as "paralysis by analysis." Most prevalent in highly skilled players under extreme pressure.</p>
+      </div>
+    </div>
+    <table class="tbl" style="margin-top:14px;">
+      <tr><th>Mechanism</th><th>Symptom</th><th>Intervention</th></tr>
+      <tr><td>Distraction</td><td>Decision errors, club selection hesitation, poor target selection, post-bogey cascade</td><td>Pre-shot routine, thought-stopping, process focus cues, pre-committed strategy card</td></tr>
+      <tr><td>Explicit monitoring</td><td>Short, jabby putting stroke; chicken-winging the follow-through; casting from the top under pressure</td><td>Analogy cues (Guide 38 Elite tab), external focus ("land it on the front edge"), non-analysable performance cues ("tempo")</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Diagnosing Your Choking Mechanism</span>
+    <h3>Identifying Which Mechanism Is Most Relevant for You</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Distraction indicator:</strong> Do your strategic decisions deteriorate before your ball-striking does? Do you find yourself aiming at flags you would normally avoid, or selecting the wrong club because you're focused on consequences rather than the shot? If yes — distraction is your primary mechanism.</div></li>
+      <li><span class="step-n">2</span><div><strong>Explicit monitoring indicator:</strong> Does your ball-striking (specifically your swing rhythm, your putting stroke feel, your short game touch) change before your decisions do? Do you become aware of specific body parts during the swing that you are normally unaware of? If yes — explicit monitoring is your primary mechanism.</div></li>
+      <li><span class="step-n">3</span><div><strong>The intervention selection:</strong> Distraction choking → pre-committed process protocols. Explicit monitoring choking → analogy cues and external focus. Using the wrong intervention for the wrong mechanism does not help and may make the problem worse.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- IDENTITY CONSTRUCTION -->
+<div class="sec" id="construct">
+  <h2 class="sec-title">Deliberate Identity Construction</h2>
+  <p class="sec-desc">Athletic identity can be deliberately shaped. This is not positive thinking or affirmation — it is the practical application of identity psychology to produce measurable changes in how self-concept affects performance. The evidence for this comes from both elite athlete research and clinical psychology.</p>
+
+  <span class="badge badge-elite">🏗️ The Construction Process</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Three Evidence-Based Methods</span>
+    <h3>How to Actually Change Your Self-Concept</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Behavioural evidence accumulation.</strong> Self-concept changes through accumulated behavioural evidence — not through repeated affirmation. The most direct way to build the identity "I perform well under pressure" is to perform well under pressure repeatedly in progressively higher-stakes environments. This is why the pressure inoculation protocol in Guide 49 (Pressure Shot Library) is psychologically as well as technically important — it creates the evidence base that identity needs.</div></li>
+      <li><span class="step-n">2</span><div><strong>Identity-consistent behaviour first, feelings second.</strong> Research on behaviour-attitude relationships consistently shows that acting in accordance with a desired identity precedes feeling that identity. A player who wants to become "someone who performs better in competition than practice" should act as if this is true before they feel it. This means: full pre-shot routine in every practice shot, competition simulation pressure in every range session, treating practice round results as if they count. The identity follows the behaviour, not the reverse.</div></li>
+      <li><span class="step-n">3</span><div><strong>Competitive role models at the right level.</strong> Comparison with peers who are slightly better — not with tour professionals — provides an accurate reference point for what is achievable. Identifying 2–3 county-level players whose game construction you admire and whose identity as a competitor you want to develop gives a concrete, attainable model. Distance from the model is critical — too far and it triggers fixed-mindset threat; appropriately close and it activates growth-mindset aspiration.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Identity Statement</span>
+    <h3>A Practical Tool for Competition Preparation</h3>
+    <p>Develop a personal identity statement — a concise, behavioural description of yourself as a competitive golfer that reflects your target self-concept, written in the present tense. It should be specific, behaviour-focused, and achievable enough that you can recall a moment when you embodied it.</p>
+    <div class="info-box" style="background:rgba(224,184,64,0.07);border:1px solid rgba(224,184,64,0.2);margin-top:12px;">
+      <span class="ico">💡</span>
+      <p style="color:var(--gold-hi);"><strong style="color:var(--white);">Example identity statements:</strong><br>
+      Too vague: "I am a good golfer" — not actionable, not behaviour-specific<br>
+      Too aspirational: "I win county championships" — not yet true, activates fixed-mindset threat<br>
+      Effective: "I am a golfer who executes my full pre-shot routine on every shot, chooses the safe aim point on pressure holes, and recovers from setbacks by refocusing on the next shot" — behaviour-specific, achievable, true on your best days</p>
+    </div>
+    <p style="margin-top:12px;font-size:13px;color:var(--muted);">Review and revise the identity statement at the start of each season. As your game develops, the statement should evolve — it should always be slightly aspirational but not so distant from current reality that it functions as a threat.</p>
+  </div>
+</div>
+
+<!-- INTEGRATION PROTOCOL -->
+<div class="sec" id="integration">
+  <h2 class="sec-title">Integration with the Rest of the System</h2>
+  <p class="sec-desc">Identity work is not separate from technical and strategic work — it is the foundation that determines how effectively the rest of the system is applied. This tab shows the specific integration points between identity work and the other components of the programme.</p>
+
+  <span class="badge badge-elite">🔗 Connecting Identity to the System</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Where Identity Work Amplifies Everything Else</span>
+    <h3>Integration Map</h3>
+    <table class="tbl">
+      <tr><th>System Component</th><th>Identity Work Connection</th><th>Amplification Effect</th></tr>
+      <tr><td>Guide 38 — Practice Structure (implicit learning)</td><td>Growth mindset enables embracing the difficulty of random/interleaved practice without interpreting session performance as identity-relevant</td><td>Players with fixed mindset abandon desirable difficulties after poor session performance — growth mindset sustains the method</td></tr>
+      <tr><td>Guide 40 — Decision Architecture</td><td>Strategic confidence (self-concept dimension 4) determines whether pre-committed strategies are followed or abandoned under pressure</td><td>Identity work that builds strategic confidence is essential for EV discipline to function under extreme pressure</td></tr>
+      <tr><td>Guide 47 — Elite Performance Psychology</td><td>The Elite competition psychology content assumes a baseline of functional athletic self-concept — this guide provides the foundation</td><td>Elite psychology tools work most effectively when identity is stable; unstable identity makes elite-level psychological work less effective</td></tr>
+      <tr><td>Guide 49 — Pressure Shot Library</td><td>Behavioural evidence accumulation (Identity Construction tab) is served by the pressure inoculation protocol</td><td>Each competition-confirmed pressure shot adds to the identity evidence base — the library and the identity co-develop</td></tr>
+      <tr><td>Arccos SG data</td><td>Growth mindset determines whether poor SG data triggers ego-protective responses (avoiding looking at it, explaining it away) or information-seeking responses</td><td>Players with growth mindset use SG data more accurately and act on it more consistently</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">A Monthly Identity Practice Protocol</span>
+    <h3>10 Minutes Per Month That Change the Foundation</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Monthly identity audit (5 minutes):</strong> Review the narrative test responses from the start of the month. Did your self-concept statements reflect a player who performs under pressure, manages setbacks well, and trusts their strategy? If not — note the specific self-concept that needs work this month.</div></li>
+      <li><span class="step-n">2</span><div><strong>Evidence collection (ongoing):</strong> After every competitive round, note one specific moment where you embodied your target identity — where you executed the full routine under pressure, chose the correct safe aim point despite temptation, or recovered well from a setback. These moments are the raw material of identity construction.</div></li>
+      <li><span class="step-n">3</span><div><strong>Quarterly identity review (10 minutes):</strong> Update the identity statement to reflect genuine development. Remove elements that are now automatic (they no longer need to be in the aspirational statement). Add elements that represent the next layer of identity development. This keeps the statement calibrated — always slightly aspirational, never threatening.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">IDENTITY & SELF-CONCEPT IN GOLF · GUIDE EP3 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🧘</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span></a>
+    <a href="47_elite_performance_psychology.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🧠</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Elite Performance Psychology</span></a>
+    <a href="49_advanced_game_construction.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Advanced Game Construction</span></a>
+    <a href="38_practice_structure.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔬</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Practice Structure Science</span></a>
+    <a href="40_decision_architecture.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">♟️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Decision Architecture & EV</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
+</body>
+</html>

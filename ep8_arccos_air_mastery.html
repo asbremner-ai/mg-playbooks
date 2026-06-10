@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep8_arccos_air_mastery.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Arccos AirMastery — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style><script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script></head><body>
+<div class="home-nav"><a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+<span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span></div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP8 · Future Release</p>
+  <h1>Arccos Air<br><em>Mastery</em></h1><p class="hero-sub">Everything Guide 26 doesn't cover — getting reliable data from Arccos Air, correcting misattributed shots, calibrating the AI Caddie, extracting the specific analytics that drive practice decisions, and integrating Arccos data with every other tool in your system.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📡 Setup & Calibration</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔧 Shot Attribution</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🤖 AI Caddie</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📊 Analytics Deep-Dive</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔗 System Integration</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📅 Monthly Protocol</span></div>
+</div>
+<div class="nav">  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('setup',this)">Setup & Calibration</button>
+  <button class="tab" onclick="show('attribution',this)">Shot Attribution</button>
+  <button class="tab" onclick="show('caddie',this)">AI Caddie</button>
+  <button class="tab" onclick="show('analytics',this)">Analytics Deep-Dive</button>
+  <button class="tab" onclick="show('integration',this)">System Integration</button>
+  <button class="tab" onclick="show('protocol',this)">Monthly Protocol</button></div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Beyond the Dashboard</h2>
+  <p class="sec-desc">Guide 26 covers how to read Arccos SG data and act on it. This guide covers the layer beneath that — how to get data you can actually trust. Arccos Air (sensorless tracking) is the recommended setup for most players in this programme, but it requires deliberate configuration and regular correction to produce reliable SG data. Unreliable input data produces unreliable practice decisions.</p>
+
+  <span class="badge badge-elite">📡 What This Guide Adds to Guide 26</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Coverage Boundary</span>
+    <h3>Guide 26 vs. This Guide</h3>
+    <table class="tbl">
+      <tr><th>Topic</th><th>Guide 26</th><th>This Guide (EP8)</th></tr>
+      <tr><td>What SG categories mean</td><td class="good">Covered in depth</td><td>Not repeated</td></tr>
+      <tr><td>How to read the dashboard</td><td class="good">Covered</td><td>Not repeated</td></tr>
+      <tr><td>Getting reliable data from Air tracking</td><td class="bad">Not covered</td><td class="good">Full treatment</td></tr>
+      <tr><td>Correcting misattributed shots mid-round</td><td class="bad">Not covered</td><td class="good">Full protocol</td></tr>
+      <tr><td>AI Caddie — what it's based on and when to override it</td><td class="bad">Not covered</td><td class="good">Full analysis</td></tr>
+      <tr><td>Exporting data for external analysis</td><td class="bad">Not covered</td><td class="good">Step-by-step</td></tr>
+      <tr><td>Integrating Arccos with Mevo, HackMotion, and Golfmetrics</td><td class="bad">Not covered</td><td class="good">Full integration map</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Why Data Quality Matters More Than Data Volume</span>
+    <h3>The Garbage-In Problem</h3>
+    <p>A player who plays 60 rounds per year with Arccos tracking but has consistent misattribution errors — shots attributed to the wrong club, chips registered as putts, chip-and-runs counted as approach shots — will accumulate 60 rounds of misleading SG data. Their SG: Putting will appear worse than reality because chip-and-runs are classified as putts; their SG: ARG will appear better than reality for the same reason.</p>
+    <p style="margin-top:10px;">The effort required to correct these attribution errors is small — 2–3 minutes per round immediately post-round. The improvement in data reliability is substantial. One year of clean data is worth more than three years of dirty data.</p>
+  </div>
+</div>
+
+<div class="sec" id="setup">
+  <h2 class="sec-title">Setup &amp; Calibration</h2>
+  <p class="sec-desc">The one-time and periodic configuration steps that determine the accuracy of all Arccos Air data going forward. Most players set up Arccos once and never revisit it. This is a mistake — calibration degrades as your distances change and as new features are released.</p>
+
+  <span class="badge badge-elite">⚙️ Initial Configuration</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Getting Arccos Air Right from the Start</span>
+    <h3>The 6-Step Setup Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Club configuration — add every club you carry.</strong> Include all 14 clubs plus the putter. Common error: omitting hybrid or fairway wood because "I don't use it much." Arccos uses your full bag for shot classification — a missing club forces incorrect attribution to adjacent clubs in every round you carry it.</div></li>
+      <li><span class="step-n">2</span><div><strong>Disable "Automatic Club Detection" initially.</strong> For your first 5 rounds with Arccos Air, manually confirm each shot attribution immediately after the round. This builds an understanding of where Air tracking makes systematic errors — specific shot types and distances where automatic detection is least reliable for your game.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set your handicap accurately before the first round.</strong> Arccos uses your handicap to calibrate expected performance benchmarks. An inaccurate handicap skews every SG calculation for your profile. Update it immediately after any index change — do not wait for the app to sync automatically.</div></li>
+      <li><span class="step-n">4</span><div><strong>Enable Smart Club Distances and let it run for 20 rounds.</strong> Smart Club Distances updates your average carry per club based on tracked rounds. The distances after 20 rounds are your actual carries in real-course conditions — more reliable than any Mevo range session for on-course decision-making. Do not override them with your range session distances.</div></li>
+      <li><span class="step-n">5</span><div><strong>Competition mode — understand when to use it.</strong> Competition mode disables the AI Caddie recommendations (required under USGA/R&A rules for club-level competition in the UK unless the club explicitly permits it). Confirm your club's local rule before each competition round — failure to use competition mode where required is a Rules violation.</div></li>
+      <li><span class="step-n">6</span><div><strong>Enable automatic round detection and test it.</strong> Walk the first three holes of a practice round with Arccos running in the background without manually starting. Confirm detection is triggering. If it consistently fails to auto-detect, switch to manual round start — the data from a missed detection round is unrecoverable.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Periodic Recalibration</span>
+    <h3>When to Revisit Your Setup</h3>
+    <table class="tbl">
+      <tr><th>Trigger</th><th>Calibration Action</th></tr>
+      <tr><td>Equipment change (new club in bag)</td><td>Add new club immediately; re-verify bag configuration; Smart Club Distances will update over next 10 rounds</td></tr>
+      <tr><td>Significant speed/distance improvement (+5+ mph)</td><td>Smart Club Distances will update automatically; verify after 10 rounds that new distances have registered correctly</td></tr>
+      <tr><td>New course type (switching from parkland to links season)</td><td>Note that Smart Club Distances are derived from all courses — links conditions may produce different carries. Apply manual adjustments from Guide 23 on top of Arccos distances.</td></tr>
+      <tr><td>App major update</td><td>Re-verify club configuration and competition mode settings — major updates occasionally reset preferences</td></tr>
+      <tr><td>After a break of 4+ weeks</td><td>Check that your handicap index has been updated in the app; Smart Club Distances may have degraded slightly from the break — verify after 5 rounds back</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="attribution">
+  <h2 class="sec-title">Shot Attribution &amp; Correction</h2>
+  <p class="sec-desc">The single most important data quality practice. Arccos Air misattributes shots in predictable, correctable ways. Understanding where errors occur and fixing them immediately post-round is the difference between reliable and unreliable SG data.</p>
+
+  <span class="badge badge-elite">🔧 The Attribution Error Map</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Where Arccos Air Makes Systematic Errors</span>
+    <h3>Seven Common Misattribution Patterns</h3>
+    <table class="tbl">
+      <tr><th>Error Type</th><th>How It Manifests</th><th>SG Impact</th><th>Frequency</th></tr>
+      <tr><td>Chip-and-run registered as approach shot</td><td>A chip from 15 yards off green classified as a 7-iron approach from 15 yards</td><td>Inflates SG: APP; deflates SG: ARG</td><td>Common on links / firm courses</td></tr>
+      <tr><td>Long putt from fringe classified as chip</td><td>A 40-foot putt from just off the green registered as a chip</td><td>Deflates SG: Putting; inflates SG: ARG</td><td>Common — fringe shots are ambiguous to GPS</td></tr>
+      <tr><td>Short chip added as extra shot</td><td>A short tap-in chip generates a phantom "approach" shot at 2 yards</td><td>Adds a ghost shot — distorts all SG by 0.04–0.08 per occurrence</td><td>Occasional</td></tr>
+      <tr><td>Penalty drop position error</td><td>After a penalty, the new shot position is GPS-located incorrectly</td><td>Distance to hole on all subsequent shots on that hole is wrong</td><td>Occasional</td></tr>
+      <tr><td>Club attribution wrong (correct distance, wrong club)</td><td>9-iron carry registered as PW carry (similar distances)</td><td>Distorts Smart Club Distances over time</td><td>Common at transition distances</td></tr>
+      <tr><td>Missed shot detection</td><td>A full swing not detected — typically when phone was pocketed mid-swing</td><td>Fewer shots counted — artificially good SG data</td><td>Rare if phone carried correctly</td></tr>
+      <tr><td>Extra shot from GPS glitch</td><td>A phantom shot added where you walked past a GPS point</td><td>Inflates shot count by 1 — all SG affected for that hole</td><td>Rare</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Post-Round Correction Protocol</span>
+    <h3>2–3 Minutes That Protect Your Data Quality</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Review the round in the Arccos app within 1 hour of finishing.</strong> Memory of specific shots degrades quickly. Hole by hole, review the shot list. Any shot with an implausible distance (e.g. a 3-yard approach) or wrong club attribution is flagged for correction.</div></li>
+      <li><span class="step-n">2</span><div><strong>Correct club attributions first.</strong> Tap any shot to edit the club. For shots where you used a club different from what Arccos detected, update it. Pay particular attention to transition distances and chips.</div></li>
+      <li><span class="step-n">3</span><div><strong>Delete phantom shots.</strong> Any shot that appears in the round that you didn't play — GPS glitches, accidental detection — delete it. A round with one phantom shot has corrupted SG data for every category; deletion restores it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Verify the shot count against your actual scorecard.</strong> Compare the total number of Arccos-recorded shots to your scorecard total. If they differ by more than 2, there is a systematic error in the round data that requires detailed review.</div></li>
+      <li><span class="step-n">5</span><div><strong>Add notes for unusual lies or conditions.</strong> Arccos doesn't know if your approach was from a divot or a heavy rough lie. Add a note for any hole where conditions explain a below-standard shot outcome — this context is valuable in the monthly data review.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="caddie">
+  <h2 class="sec-title">The AI Caddie — What It's Based On</h2>
+  <p class="sec-desc">The Arccos AI Caddie makes club recommendations based on a combination of your Smart Club Distances, course GPS data, and population data from millions of tracked shots. Understanding what it is — and what it isn't — allows you to use it intelligently rather than blindly.</p>
+
+  <span class="badge badge-elite">🤖 How the AI Caddie Works</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Recommendation Engine — Under the Hood</span>
+    <h3>What the AI Caddie Is Actually Calculating</h3>
+    <p>The AI Caddie combines three data sources for each recommendation: your personal Smart Club Distances (personalised), GPS-mapped course data for the specific hole (course-specific), and aggregated data from how players with similar handicaps have played that shot type on similar holes (population data).</p>
+    <p style="margin-top:10px;">The output is a club recommendation that maximises expected proximity to the hole across the population of players who have played similar shots. It is not personalised to your miss pattern, your trajectory preferences, or your specific lie. It is a good-faith population-average recommendation, not a bespoke caddie decision.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>What AI Caddie Accounts For</th><th>What It Doesn't Account For</th></tr>
+      <tr><td class="good">Your personal carry distances (Smart Club Distances)</td><td class="bad">Your dominant miss direction</td></tr>
+      <tr><td class="good">Distance to the flag</td><td class="bad">Today's wind conditions (unless you input wind)</td></tr>
+      <tr><td class="good">Hazards on the carry line</td><td class="bad">Green firmness and run-out</td></tr>
+      <tr><td class="good">Uphill/downhill adjustments (partially)</td><td class="bad">Your current form or fatigue level</td></tr>
+      <tr><td class="good">Safe side of the green vs flag</td><td class="bad">Specific lie type (rough, tight, slope)</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">When to Follow and When to Override</span>
+    <h3>A Decision Framework for AI Caddie Recommendations</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>AI Caddie Reliability</th><th>Recommendation</th></tr>
+      <tr><td>Standard approach, flat lie, calm conditions</td><td class="good">High — population data is reliable here</td><td>Follow it unless you have specific miss-pattern knowledge that contradicts it</td></tr>
+      <tr><td>Into strong headwind (&gt;15 mph)</td><td class="warn">Medium — wind adjustment is approximate</td><td>Add one club to the AI recommendation; it systematically under-clubs into wind</td></tr>
+      <tr><td>Significant rough lie</td><td class="bad">Low — lie is not modelled</td><td>Override; a rough lie requires less club (flyer risk) or more club (heavy rough) depending on lie type</td></tr>
+      <tr><td>Forced carry over water with your dominant miss direction toward the water</td><td class="bad">Low — miss direction is not modelled</td><td>Override; apply your personal dispersion data and take more club if your miss threatens the penalty area</td></tr>
+      <tr><td>Tee shot club selection</td><td class="warn">Medium — course management is partially modelled</td><td>Compare AI recommendation to your pre-committed strategy card (Guide 40). The strategy card takes precedence on holes you have pre-planned; use AI on unfamiliar holes.</td></tr>
+      <tr><td>Unfamiliar course (first time playing)</td><td class="good">High — course data is reliable</td><td>Follow it more closely; it has course-specific hazard data you don't have</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">Competition mode compliance:</strong> In all club strokeplay competitions, Stableford events, and county qualifying events in the UK, the AI Caddie constitutes an artificial intelligence device providing advice. It must be disabled unless the Committee has specifically permitted it. When in doubt, disable it and rely on your own pre-committed strategy cards.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="analytics">
+  <h2 class="sec-title">Analytics Deep-Dive</h2>
+  <p class="sec-desc">The specific Arccos analytics screens that produce the highest-value practice decisions — beyond the headline SG dashboard that Guide 26 covers. These are the second and third level of the analytics hierarchy that most players never reach.</p>
+
+  <span class="badge badge-elite">📊 The Analytics Hierarchy</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Three Levels of Arccos Analytics</span>
+    <h3>From Dashboard to Decision</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Level 1 — SG Dashboard (covered in Guide 26):</strong> Five-category SG overview, 10-round rolling average, trend lines. The starting point for practice prioritisation. Most players stop here.</div></li>
+      <li><span class="step-n">2</span><div><strong>Level 2 — Category Deep-Dives (this guide):</strong> Within each SG category, Arccos provides sub-category analytics that reveal where within the category the losses are occurring. For SG: APP, this means proximity by distance band. For SG: Putting, this means make percentage by distance bracket. For SG: OTT, this means fairway hit rate vs. distance profile. These sub-category analytics are where practice decisions become specific rather than general.</div></li>
+      <li><span class="step-n">3</span><div><strong>Level 3 — Situational Analytics:</strong> Specific situations — approaches from rough vs. fairway, putts after chip vs. approach, par 5 scoring relative to field. These require sufficient sample size (40+ rounds) but reveal the game construction insights that sub-category analytics cannot.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Five Category Deep-Dives</span>
+    <h3>What to Look for Beyond the SG Number</h3>
+    <table class="tbl">
+      <tr><th>Category</th><th>Key Sub-Analytics</th><th>Navigation Path</th><th>Practice Decision Output</th></tr>
+      <tr><td>SG: Approach</td><td>Proximity by distance band (10-yard brackets); proximity from fairway vs rough; proximity by club</td><td>Analytics → Approach → Proximity</td><td>Identifies the specific distance bracket and lie type driving approach losses</td></tr>
+      <tr><td>SG: Putting</td><td>Make% by distance (3, 4, 5, 6, 8, 10, 15, 20, 30+ feet); 3-putt rate; first putt distance after approach</td><td>Analytics → Putting → Distance</td><td>Identifies whether losses are in make% (technique) or in first-putt distance (approach play or green reading)</td></tr>
+      <tr><td>SG: Around Green</td><td>Scrambling % from each lie type; proximity by shot type (chip, pitch, bunker)</td><td>Analytics → Short Game</td><td>Identifies whether ARG losses are in specific lie types (rough chips) or shot types (bunkers)</td></tr>
+      <tr><td>SG: Off the Tee</td><td>Fairway hit % by club; driving distance vs fairway rate trade-off; OB/penalty rate</td><td>Analytics → Driving → Accuracy</td><td>Identifies whether OTT losses are from accuracy (aim points/dispersion) or penalty events</td></tr>
+      <tr><td>SG: Total by hole</td><td>Scoring average vs par by hole number; front 9 vs back 9 split; par type differential</td><td>Analytics → Scorecard</td><td>Identifies systematic course management or physical fatigue patterns — see Guide EP6</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Exporting Data for External Analysis</span>
+    <h3>Getting Your Data Out of Arccos</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>CSV export (web dashboard):</strong> Log in to arccosgolf.com on desktop. Navigate to Game Tracker → Export. Select date range (full season). Download CSV. This file contains every tracked shot with club, distance, and hole data — the raw material for Golfmetrics and the multi-season analysis in Guide EP2.</div></li>
+      <li><span class="step-n">2</span><div><strong>What the CSV contains:</strong> Shot ID, date, hole number, shot number, club, distance to pin (start), distance to pin (end), lie type (if available), and GPS coordinates. The distance-to-pin data is the primary input for proximity analysis in Guide EP4.</div></li>
+      <li><span class="step-n">3</span><div><strong>Golfmetrics import:</strong> Golfmetrics accepts Arccos CSV exports directly. Navigate to Golfmetrics → Import Data → Arccos. Follow the field mapping guide. The SG calculations in Golfmetrics are derived from the same Broadie dataset as Arccos but with additional filtering options and multi-season visualisation capabilities not available in the Arccos app itself.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="integration">
+  <h2 class="sec-title">System Integration</h2>
+  <p class="sec-desc">Arccos is the on-course data layer of a five-tool measurement system. This tab maps how Arccos data connects to and informs every other tool in the programme — and specifically, which Arccos metrics to bring to each tool interaction.</p>
+
+  <span class="badge badge-elite">🔗 The Five-Tool Integration Map</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Arccos as the Hub of Your Measurement System</span>
+    <h3>What Each Tool Needs from Arccos</h3>
+    <table class="tbl">
+      <tr><th>Tool</th><th>Arccos Input Required</th><th>What It Produces</th></tr>
+      <tr><td>Mevo (range)</td><td>Your SG: APP data by distance bracket → identifies the specific distance bracket to test in range sessions</td><td>Ball flight data for the specific weakness identified by Arccos</td></tr>
+      <tr><td>HackMotion</td><td>SG: APP and SG: ARG miss pattern → identifies whether contact problems are causing the miss</td><td>Wrist mechanics data that explains the ball flight causing the Arccos miss pattern</td></tr>
+      <tr><td>Sportsbox AI</td><td>SG: OTT and SG: APP miss direction → identifies the swing pattern causing directional losses</td><td>3D movement data explaining the root cause of the pattern Arccos identifies</td></tr>
+      <tr><td>Golfmetrics</td><td>CSV export → all Arccos shot data over multiple seasons</td><td>Multi-season trend analysis, category correlation, improvement rate modelling</td></tr>
+      <tr><td>Coach sessions</td><td>SG summary + category deep-dive + miss pattern map → the pre-lesson data brief</td><td>Diagnosis-targeted coaching session focused on what Arccos shows is costing most strokes</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Diagnostic Chain</span>
+    <h3>Arccos → Mevo → HackMotion → Sportsbox — in Sequence</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Arccos identifies the category and distance band</strong> where strokes are being lost. Example: SG: APP at 130–150 yards is the largest gap, with a dominant right miss in that bracket.</div></li>
+      <li><span class="step-n">2</span><div><strong>Mevo diagnoses ball flight.</strong> Hit 20 shots at 140 yards on the range. Mevo data shows: spin axis consistently positive (+4° to +6°) — the ball is fading right consistently, not randomly. The problem is directional, not distance.</div></li>
+      <li><span class="step-n">3</span><div><strong>HackMotion diagnoses wrist mechanics.</strong> HackMotion shows lead wrist is cupping (extending) through impact — opening the face. This is the clubface cause of the positive spin axis Mevo identified.</div></li>
+      <li><span class="step-n">4</span><div><strong>Sportsbox AI (if available) diagnoses body pattern.</strong> Sportsbox shows early extension — hips thrusting toward the ball in the downswing — which is causing the wrist to cup as a compensation. The root cause is the body pattern, not the wrist.</div></li>
+      <li><span class="step-n">5</span><div><strong>Coach session addresses root cause.</strong> Armed with the full diagnostic chain, the coaching session targets the hip extension pattern — the root cause — rather than the wrist position (a symptom) or the fade (the visible outcome).</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="protocol">
+  <h2 class="sec-title">Monthly Arccos Protocol</h2>
+  <p class="sec-desc">A structured monthly Arccos review that extracts maximum value from your tracked rounds in 30 minutes — the specific screens to visit, the questions to ask, and the single practice priority to derive from each monthly review.</p>
+
+  <span class="badge badge-elite">📅 The 30-Minute Monthly Review</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Step-by-Step Monthly Protocol</span>
+    <h3>From Data to Practice Priority in 30 Minutes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Data quality check (5 min):</strong> Review the shot count from the most recent 5 rounds vs. your scorecard totals. Verify no phantom rounds or uncorrected attribution errors. If data quality issues exist, correct them before any analysis.</div></li>
+      <li><span class="step-n">2</span><div><strong>Rolling average check (5 min):</strong> Check your 10-round rolling SG average for all five categories. Apply the variance filter from Guide EP2 — only act on changes that have persisted for 3+ months. Note any category that has been below its trend for 3 consecutive months.</div></li>
+      <li><span class="step-n">3</span><div><strong>Category deep-dive on the priority category (10 min):</strong> Navigate to the analytics for your current practice priority category. For approach play: proximity by distance band. For putting: make% by distance. Identify the specific sub-category driving the SG gap.</div></li>
+      <li><span class="step-n">4</span><div><strong>Smart Club Distances verification (5 min):</strong> Check that Smart Club Distances have updated correctly for the season. Compare to your Mevo session baseline. Any club where the two systems diverge by more than 5 yards requires a diagnostic range session to determine which is correct.</div></li>
+      <li><span class="step-n">5</span><div><strong>Single practice priority output (5 min):</strong> Derive one specific, actionable practice priority from the monthly review. Not "improve my putting" but "increase my make% from 5–6 feet — currently 38%, target 45% — through the specific left-lip miss pattern that appears in 60% of misses in that bracket." Write it in the Progress Journal (Guide 17). Act on it for the next 4 weeks before reviewing again.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Annual Arccos Archive</span>
+    <h3>Building a Multi-Season Record</h3>
+    <p>At the end of each season (October), export the full year's Arccos CSV and store it alongside the previous years' exports. This archive is the raw material for the multi-season analysis in Guide EP2 — the improvement trajectory modelling, regression analysis, and category correlation work that requires 2+ years of data. Without the annual archive, that analysis is unavailable.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">Label each file clearly: <code>arccos_export_2026_season.csv</code>. Store in cloud storage (Google Drive, iCloud) not only on the phone — phone loss deletes your entire historical Arccos archive if you haven't backed up the exports.</p>
+  </div>
+</div>
+
+<div class="footer">ARCCOS AIR MASTERY · GUIDE EP8 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔢</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span></a>
+    <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📡</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Playbook</span></a>
+    <a href="hackmotion_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">⌚</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">HackMotion Playbook</span></a>
+    <a href="44_golfmetrics_deepdive.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔬</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golfmetrics Deep-Dive</span></a>
+    <a href="ep2_multiseason_sg_analytics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Multi-Season SG Analytics</span></a></div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script></body></html>

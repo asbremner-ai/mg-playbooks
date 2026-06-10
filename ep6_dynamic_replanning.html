@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep6_dynamic_replanning.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>Dynamic Replanningin the Monthly Phases — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}
+.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}
+.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style>
+<script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script>
+</head>
+<body>
+<div class="home-nav">
+  <a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span>
+</div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP6 · Future Release</p>
+  <h1>Dynamic Replanning<br><em>in the Monthly Phases</em></h1>
+  <p class="hero-sub">The systematic framework for when the 24-month plan meets reality — reading genuine divergence from variance, managing SG category regression, navigating coaching changes, injury return protocols, plateau diagnosis, and the structured 5-step replan process.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🗺️ Reading Divergence</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📉 SG Regression</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🤝 Coaching Change</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🩹 Injury Return</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📊 Plateau Management</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📋 Replan Protocol</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('divergence',this)">Reading Divergence</button>
+  <button class="tab" onclick="show('sgregress',this)">SG Regression</button>
+  <button class="tab" onclick="show('coaching',this)">Coaching Change</button>
+  <button class="tab" onclick="show('injury',this)">Injury Disruption</button>
+  <button class="tab" onclick="show('plateau',this)">Plateau Management</button>
+  <button class="tab" onclick="show('replan',this)">The Replan Protocol</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">When Reality Diverges from the Plan</h2>
+  <p class="sec-desc">Guides 27–30 provide a four-phase, 24-month plan structured around monthly milestones and SG targets. This guide addresses what none of those guides covers: what to do when reality diverges from the plan — when a category regresses instead of improving, when a coaching change disrupts the phase sequence, when injury sidelines you for 6 weeks, or when you plateau and the planned next step no longer makes sense.</p>
+
+  <span class="badge badge-elite">🗺️ Why Divergence Is Normal, Not Failure</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Plan is a Framework, Not a Script</span>
+    <h3>Every Long-Term Development Plan Diverges from Reality</h3>
+    <p>A 24-month improvement plan written at the start of the journey cannot account for the full range of things that will happen over that period — injuries, coaching changes, life schedule changes, breakthrough months, regression months, and unexpected performance ceilings. The plan's value is not its accuracy as a prediction — it is the framework it provides for making decisions when reality diverges.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Divergence Type</th><th>Common Trigger</th><th>Managed In</th></tr>
+      <tr><td>SG category regression</td><td>Technical change, injury recovery, or natural variance at a phase transition</td><td>SG Regression tab</td></tr>
+      <tr><td>Coaching change disruption</td><td>New coach introduces different technique framework; short-term performance drop</td><td>Coaching Change tab</td></tr>
+      <tr><td>Injury-related disruption</td><td>Forced break of 2–8 weeks; asymmetric fitness and skill deconditioning</td><td>Injury Disruption tab</td></tr>
+      <tr><td>Plateau at a phase transition</td><td>Expected improvement at a specific stage has not materialised after 3+ months</td><td>Plateau Management tab</td></tr>
+    </table>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">The key principle:</strong> When reality diverges from the plan, the response is not to abandon the plan — it is to update it systematically. Systematic plan updates, based on data, maintain the structure that produces improvement. Abandoning the plan in favour of reactive week-to-week practice decisions is the most common reason good development intentions produce mediocre outcomes.</p>
+    </div>
+  </div>
+</div>
+
+<!-- READING DIVERGENCE -->
+<div class="sec" id="divergence">
+  <h2 class="sec-title">Reading Divergence — Is This a Problem?</h2>
+  <p class="sec-desc">Before responding to perceived divergence from the plan, determine whether it is genuine divergence or normal variance. The most common error is responding to variance as if it were structural divergence — making major programme changes based on a bad month that is simply the SG mean reasserting itself.</p>
+
+  <span class="badge badge-elite">📊 Distinguishing Signal from Noise</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Three-Month Rule Applied to Plan Divergence</span>
+    <h3>When to Act and When to Wait</h3>
+    <table class="tbl">
+      <tr><th>Duration of Divergence</th><th>Interpretation</th><th>Response</th></tr>
+      <tr><td>1 month below plan target</td><td class="warn">Almost certainly variance — do not act</td><td>Continue the plan unchanged. Note it. Review in 4 weeks.</td></tr>
+      <tr><td>2 consecutive months below target</td><td class="warn">Possibly signal — observe carefully</td><td>Review the specific cause. Is there a plausible explanation (new technique, life stress, course difficulty)? If yes, continue. If no, move to the diagnostic process.</td></tr>
+      <tr><td>3 consecutive months below target</td><td class="bad">Likely genuine divergence — act</td><td>Trigger the Replan Protocol (final tab). The divergence is structural, not noise.</td></tr>
+      <tr><td>Sudden single-round dramatic change</td><td class="good">Almost certainly variance — do not act</td><td>A career best or worst round is not structural. Apply the RTM principles from Guide EP2.</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Divergence Diagnosis Matrix</span>
+    <h3>Identifying the Type of Divergence Before Responding</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Is the divergence category-specific or total SG?</strong> A single SG category regressing while others improve normally is different from total SG declining. Category-specific divergence usually has a specific cause (technical change, new weakness exposed). Total SG decline is more systemic.</div></li>
+      <li><span class="step-n">2</span><div><strong>Is there a plausible external explanation?</strong> Life stress, schedule reduction, illness, equipment change, new course — all can produce temporary SG divergence that will self-correct. If yes, monitor for one more month before deciding whether to act.</div></li>
+      <li><span class="step-n">3</span><div><strong>Is the divergence consistent across conditions?</strong> A player who performs below plan in cold, windy conditions but at plan level in good conditions has a condition-specific issue (likely trajectory or wind game). A player who diverges consistently regardless of conditions has a structural issue.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- SG REGRESSION -->
+<div class="sec" id="sgregress">
+  <h2 class="sec-title">Managing SG Category Regression</h2>
+  <p class="sec-desc">An SG category that was improving and then regresses is one of the most psychologically challenging experiences in structured improvement — the feeling that hard work has been undone. In most cases, the regression has a specific, identifiable, and addressable cause.</p>
+
+  <span class="badge badge-elite">📉 Regression Causes and Responses</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Four Structural Causes of SG Regression</span>
+    <h3>Why Categories Regress and What to Do</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Technical change disruption.</strong> The most common cause. A coaching intervention introduces a new movement pattern that improves one aspect of the game but temporarily disrupts an established strength. Example: a new hip rotation pattern improves GRF and swing speed but temporarily disrupts the reliable impact position that was producing good SG: APP. Response: accept the temporary regression as the cost of the technical change; continue for 3–4 months before reassessing.</div></li>
+      <li><span class="step-n">2</span><div><strong>Attention shift.</strong> Intensive focus on one SG category produces a "robbing Peter to pay Paul" effect — improvement in the focused category comes partly at the expense of attention to another. Response: implement a minimum maintenance standard for all categories (one session per week on each) even when one category is the development priority.</div></li>
+      <li><span class="step-n">3</span><div><strong>Increased competition level.</strong> Moving into more competitive events exposes weaknesses that club-level competition did not. This looks like regression on the scoreboard but is actually the same skill level being benchmarked against a higher standard. Response: distinguish between absolute SG decline (skill has reduced) and relative performance decline (field is tougher). Arccos measures the former; do not confuse it with the latter.</div></li>
+      <li><span class="step-n">4</span><div><strong>Genuine deconditioning.</strong> A reduction in practice frequency — common at busy life periods — produces genuine skill deconditioning in the most recently acquired skills. Motor learning research shows that recently acquired patterns are more fragile than deeply established ones. Response: prioritise maintenance sessions for the most recently developed skills during busy periods rather than the most established ones.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- COACHING CHANGE -->
+<div class="sec" id="coaching">
+  <h2 class="sec-title">Navigating a Coaching Change</h2>
+  <p class="sec-desc">A change of coach — or a major change in technical philosophy within an existing coaching relationship — is one of the most disruptive events in an improvement programme. It is also sometimes necessary. Managing the transition correctly minimises the performance cost and maximises the development benefit.</p>
+
+  <span class="badge badge-elite">🤝 The Transition Protocol</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Making the Most of a Coaching Transition</span>
+    <h3>Four Principles for Coaching Change Management</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Brief the new coach comprehensively.</strong> Before the first lesson, provide your new coach with: your current SG profile (all five categories, rolling 20-round averages), the technical changes made by the previous coach, your current HackMotion and Mevo baselines, and your phase plan targets. A coach who understands your complete picture from the start avoids undoing previous work inadvertently.</div></li>
+      <li><span class="step-n">2</span><div><strong>Expect a 6–12 week performance dip.</strong> Any significant technical change takes 6–12 weeks to reach autonomous stage (see Guide 38). A new coach who introduces multiple changes simultaneously extends this period. Accept the dip as a known cost; do not switch coaches again in response to it.</div></li>
+      <li><span class="step-n">3</span><div><strong>Protect your structural advantage.</strong> Identify the SG category that is your structural advantage (the area where you consistently outperform your overall handicap) and explicitly ask your new coach to protect it. A new coach who inadvertently disrupts a structural advantage can do more harm than good even if they are technically excellent.</div></li>
+      <li><span class="step-n">4</span><div><strong>Set a 3-month review milestone.</strong> Agree with the new coach on a specific outcome — not a subjective feeling, but a measurable SG target — to be achieved within 3 months. If the target is not met, a structured conversation about the approach is warranted. This creates accountability without short-term pressure.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- INJURY DISRUPTION -->
+<div class="sec" id="injury">
+  <h2 class="sec-title">Managing Injury Disruption</h2>
+  <p class="sec-desc">A forced break from golf — whether 2 weeks or 8 weeks — disrupts the plan in predictable ways that can be managed systematically. The return-to-golf process matters as much as the break itself.</p>
+
+  <span class="badge badge-elite">🩹 The Return Protocol</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What Deconditioning Looks Like After Different Break Lengths</span>
+    <h3>Calibrating the Return Expectations</h3>
+    <table class="tbl">
+      <tr><th>Break Length</th><th>Primary Deconditioning</th><th>Recovery Timeline</th></tr>
+      <tr><td>1–2 weeks</td><td>Minimal — motor skills largely retained; physical conditioning slightly reduced</td><td>1–2 weeks back to baseline with normal practice</td></tr>
+      <tr><td>3–4 weeks</td><td>Recently acquired skills (most fragile) may need re-acquisition; GRF strength reduction</td><td>3–4 weeks — prioritise recently-developed skills first</td></tr>
+      <tr><td>6–8 weeks</td><td>Significant skill deconditioning especially for recently acquired patterns; measurable fitness reduction; competitive sharpness lost</td><td>6–10 weeks — structured return protocol required</td></tr>
+      <tr><td>3+ months</td><td>Major reset — treat as a return-to-golf programme, not a continuation of the previous plan</td><td>2–4 months — full plan revision required</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The 3-Phase Return Protocol (for 6–8 week break)</span>
+    <h3>Getting Back on Track Without Rushing</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Phase 1 — Reactivation (weeks 1–2):</strong> Short game and putting only. No full swings. Focus on feel, touch, and the sensory feedback from club contact that atrophies fastest during a break. 3–4 sessions of 30–45 minutes. Assess: how has short game SG been affected relative to pre-injury baseline?</div></li>
+      <li><span class="step-n">2</span><div><strong>Phase 2 — Pattern Re-establishment (weeks 3–4):</strong> Reintroduce full swings at 70% effort. Blocked practice on the most recently acquired technical patterns — these are the most fragile and most likely to need re-acquisition. 4–5 sessions of 45–60 minutes. Mevo session to confirm club speed and contact quality are returning to baseline.</div></li>
+      <li><span class="step-n">3</span><div><strong>Phase 3 — Competition Readiness (weeks 5–6):</strong> Return to normal practice volume and mix. First competitive round in week 5 — at club level, not a major event. Review Arccos data from return competition against pre-injury baseline. Revise the phase plan timeline: add the injury break duration plus recovery period to all subsequent phase milestones.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PLATEAU MANAGEMENT -->
+<div class="sec" id="plateau">
+  <h2 class="sec-title">Plateau Management</h2>
+  <p class="sec-desc">A plateau — where improvement has stalled despite continued effort — is not a sign that the ceiling has been reached. In most cases, it signals that the current approach has reached its limit and a different approach is needed. Distinguishing between these two interpretations determines the correct response.</p>
+
+  <span class="badge badge-elite">📊 Diagnosing Your Plateau</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Three Plateau Types and Their Responses</span>
+    <h3>Not All Plateaus Are the Same</h3>
+    <table class="tbl">
+      <tr><th>Plateau Type</th><th>Characteristics</th><th>Response</th></tr>
+      <tr><td>Practice structure plateau</td><td>Improvement was happening with blocked practice; stalled when practice volume reduced or became less specific</td><td>Restructure sessions using the random/interleaved protocols from Guide 38. The plateau is a sign that practice has reverted to less effective formats.</td></tr>
+      <tr><td>Physical ceiling plateau</td><td>Technical understanding is clear; the physical range of motion or strength capacity is the constraint</td><td>Movement screen (Guide EP5) to identify physical limitations. The plateau is a physical problem, not a technical one.</td></tr>
+      <tr><td>Technical model plateau</td><td>The current technical approach has been maximised; further improvement requires a different technique</td><td>The rarest type. Requires a coaching conversation with data to support it — not a reactive change after a bad week.</td></tr>
+      <tr><td>Mental/pressure ceiling</td><td>Skills are present in practice but not transferring to competition at the rate expected</td><td>Increase pressure exposure in practice (Guide 49 pressure protocols); address identity issues (Guide EP3).</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- REPLAN PROTOCOL -->
+<div class="sec" id="replan">
+  <h2 class="sec-title">The Replan Protocol</h2>
+  <p class="sec-desc">The structured process for updating the phase plan when genuine divergence has been confirmed. A systematic replan — rather than a reactive abandonment of the plan — maintains the development framework while adapting it to current reality.</p>
+
+  <span class="badge badge-elite">📋 The 5-Step Replan</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">When to Trigger and How to Execute</span>
+    <h3>Systematic Plan Revision in 90 Minutes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Data pull (20 min):</strong> Export the most recent 20 rounds from Arccos. Calculate rolling SG average for each category. Compare to the planned target in the current phase guide. Identify which specific targets are not being met and by how much.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cause diagnosis (20 min):</strong> For each missed target, identify the most likely cause from the four divergence types in the previous tab. Write one sentence per missed target: "SG: APP is below target because [cause] and the appropriate response is [intervention]."</div></li>
+      <li><span class="step-n">3</span><div><strong>Timeline revision (20 min):</strong> Based on the cause diagnosis, revise the phase timeline realistically. If a coaching change has caused a 6-week disruption, add 6 weeks to the remaining phase milestones. Revised targets should still be achievable — if they require an improvement rate that is significantly above your historical rate, they will not be motivating; they will be demoralising.</div></li>
+      <li><span class="step-n">4</span><div><strong>Priority revision (15 min):</strong> Update your primary practice priority based on the revised data picture. The highest-leverage improvement opportunity may have changed since the original priority was set. The category most below its revised benchmark is the new priority.</div></li>
+      <li><span class="step-n">5</span><div><strong>Document and commit (15 min):</strong> Write the revised plan in the Progress Journal (Guide 17). Include the date of the replan, the data that triggered it, the cause diagnosis, and the revised targets and timeline. A documented replan is an act of systematic adaptation — the opposite of the chaotic week-to-week practice changes that characterise plateau-stuck players.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">How Often Should You Replan?</span>
+    <h3>Frequency Guidelines</h3>
+    <table class="tbl">
+      <tr><th>Trigger</th><th>Replan?</th><th>Frequency Guideline</th></tr>
+      <tr><td>Three consecutive months below plan target in any category</td><td class="good">Yes — trigger the full replan protocol</td><td>As needed — should not happen more than once per quarter if the plan is well-calibrated</td></tr>
+      <tr><td>Significant injury (&gt;4 weeks off golf)</td><td class="good">Yes — revise timeline to account for recovery</td><td>Immediately on return to full practice</td></tr>
+      <tr><td>Coaching change</td><td class="good">Yes — revise to account for transition period</td><td>Immediately after first lesson with new coach</td></tr>
+      <tr><td>One bad month</td><td class="bad">No — this is variance</td><td>Wait for the 3-month rule to determine if action is needed</td></tr>
+      <tr><td>Annual review (October)</td><td class="good">Yes — scheduled annual replan for next season</td><td>Every October regardless of current performance</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="footer">DYNAMIC REPLANNING IN THE MONTHLY PHASES · GUIDE EP6 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="27_six_month_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📅</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Months 1–6 Plan</span></a>
+    <a href="28_months_7_12_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📅</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Months 7–12 Plan</span></a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📓</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span></a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🔢</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span></a>
+    <a href="ep2_multiseason_sg_analytics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Multi-Season SG Analytics</span></a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script>
+</body>
+</html>

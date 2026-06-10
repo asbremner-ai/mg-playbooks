@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-09 · ep10_world_handicap_system.html · ELITE+ FUTURE CONTENT — not yet integrated -->
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>The World Handicap System —Strategic Understanding — Elite+</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --pro:#c8922a;--pro-hi:#e8b050;--pro-dim:rgba(200,146,42,0.12);--pro-border:rgba(200,146,42,0.35);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#70c870;--warn:#e0b840;--bad:#e07060;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(200,146,42,0.06) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+
+.home-nav{background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;}
+.home-nav a{font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.pro-nav-badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:0.18em;text-transform:uppercase;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);padding:3px 8px;border-radius:3px;}
+
+.hero{position:relative;z-index:2;padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--pro),var(--pro-hi),var(--pro),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:14px;opacity:.9;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--pro-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--pro-hi);}
+.tab.active{color:var(--pro-hi);border-bottom-color:var(--pro);}
+
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--pro);font-weight:300;}
+
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-pro{background:var(--pro-dim);border:1px solid var(--pro-border);color:var(--pro-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-lime{background:var(--lime-dim);border:1px solid rgba(160,200,80,.2);color:var(--lime-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-pro{border-color:var(--pro-border);}
+.card-pro::before{background:linear-gradient(90deg,transparent,var(--pro-border),transparent);}
+.card-gold{border-color:rgba(224,184,64,.2);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:6px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--pro-hi);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--pro-hi);background:var(--pro-dim);border:1px solid var(--pro-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}
+.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}
+.tip p,.tip strong{color:var(--teal-hi);}
+.pro-box{background:var(--pro-dim);border:1px solid var(--pro-border);}
+.pro-box p{color:var(--pro-hi);}.pro-box strong{color:var(--white);}
+.gold-box{background:var(--gold-dim);border:1px solid rgba(224,184,64,.22);}
+.gold-box p{color:var(--gold-hi);}.gold-box strong{color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+
+.formula{background:var(--surface2);border:1px solid rgba(72,176,168,.22);border-radius:var(--r-sm);padding:14px 16px;margin:12px 0;font-family:'JetBrains Mono',monospace;}
+.formula.gold{border-color:rgba(224,184,64,.22);}
+.formula-lbl{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:8px;}
+.formula.gold .formula-lbl{color:var(--gold-hi);}
+.formula-main{font-size:12px;color:var(--white);line-height:1.85;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.6;font-family:'Inter',sans-serif;}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 14px;}
+.mini-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--pro-hi);margin-bottom:5px;display:block;}
+.mini-card h4{font-size:13px;font-weight:600;color:var(--white);margin-bottom:5px;line-height:1.3;}
+.mini-card p{font-size:12px;color:var(--muted);line-height:1.6;}
+
+.checklist{list-style:none;display:flex;flex-direction:column;gap:7px;margin:12px 0;}
+.checklist li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);line-height:1.65;}
+.checklist li::before{content:'✓';color:var(--pro-hi);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:2px;}
+
+.pull-quote{border-left:3px solid var(--pro);padding:14px 16px;margin:18px 0;background:var(--pro-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:var(--pro-hi);line-height:1.7;}
+.pull-quote span{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;letter-spacing:.06em;}
+
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
+@media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
+.hero{background:linear-gradient(170deg,#060c04 0%,#0e1e0c 60%,var(--surface) 100%);}
+.hero::after{background:linear-gradient(90deg,transparent,var(--gold),var(--pro-hi),var(--gold),transparent);}
+.hero h1 em{color:var(--gold-hi);}
+.tab.active{color:var(--gold-hi);border-bottom-color:var(--gold);}
+.tab:hover{color:var(--gold-hi);}
+.sec-desc{border-left-color:var(--gold);}
+.badge-pro{background:var(--gold-dim);border-color:rgba(224,184,64,.3);color:var(--gold-hi);}
+.card-pro{border-color:rgba(224,184,64,.22);}
+.card-pro::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-pro .card-tag{color:var(--gold);}
+.step-n{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.3);}
+.pull-quote{border-left-color:var(--gold);background:var(--gold-dim);}
+.pull-quote p{color:var(--gold-hi);}
+.checklist li::before{color:var(--gold-hi);}
+
+.tab.active{color:#c8d8e8;border-bottom-color:#c8d8e8;}.tab:hover{color:#c8d8e8;}
+.hero{background:linear-gradient(160deg,#060c06 0%,#0b1a17 55%,#0a120a 100%);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c8d8e8,rgba(200,240,220,0.4),#c8d8e8,transparent);}
+.sec-desc{border-left-color:#c8d8e8;}.badge-elite{background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;}
+</style><script>const TIER='elite';(function(){document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-tier]').forEach(function(el){var t=el.getAttribute('data-tier');if(t==='pro'&&TIER==='standard'){el.remove();}else if(t==='elite'&&TIER!=='elite'){el.remove();}else{el.setAttribute('data-tier-active',t);}});});})();</script></head><body>
+<div class="home-nav"><a href="index_elite.html"><span style="font-size:14px;">&#8962;</span> All Playbooks</a>
+<span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#c8d8e8;background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);padding:3px 8px;border-radius:3px;">⭐ Elite+</span></div>
+<div class="hero">
+  <p class="hero-label" style="color:#c8d8e8;">Elite+ Content · Guide EP10 · Future Release</p>
+  <h1>The World Handicap System —<br><em>Strategic Understanding</em></h1><p class="hero-sub">Guide 33 covers WHS basics. This guide goes further — how the best-8-of-20 calculation creates specific strategic implications, the buffer zones that affect how fast your index moves, how to use WHS to track genuine improvement vs noise, and the ethical and practical boundaries of handicap management.</p>
+  <div class="hero-tags"><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📊 Calculation Deep-Dive</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📈 Buffer Zones</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🎯 Competition Strategy</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">⚖️ Handicap Ethics</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">🔢 Tracking Progress</span><span class="htag" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);color:#c8d8e8;">📅 Annual Cycle</span></div>
+</div>
+<div class="nav">  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('calculation',this)">Calculation Deep-Dive</button>
+  <button class="tab" onclick="show('movement',this)">How Handicaps Move</button>
+  <button class="tab" onclick="show('strategy',this)">Competition Strategy</button>
+  <button class="tab" onclick="show('tracking',this)">Tracking Real Improvement</button>
+  <button class="tab" onclick="show('ethics',this)">Ethics & Fair Play</button>
+  <button class="tab" onclick="show('annual',this)">The Annual WHS Cycle</button></div>
+
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Beyond Basic WHS Knowledge</h2>
+  <p class="sec-desc">Guide 33 (Competitive Pathway) covers WHS fundamentals — score differential calculation, best-8-of-20, daily updates. This guide covers the strategic layer: how the calculation creates specific implications for when and how your handicap moves, what the 0.96 adjustment factor means in practice, how to interpret your index movement as a measure of genuine improvement, and where the ethical boundaries of handicap management lie.</p>
+
+  <span class="badge badge-elite">📊 Who Needs This Guide</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">The Strategic WHS User</span>
+    <h3>This Guide Is For Players Who Want to Understand the System, Not Game It</h3>
+    <p>The target reader of this guide is a serious competitive amateur who wants to understand WHS well enough to: interpret their handicap movement correctly (is my index improving because I'm genuinely better or because of a specific calculation quirk?), understand the competition strategy implications (which events contribute most to index movement?), and identify when their handicap is a reliable measure of their actual playing level versus when it lags or leads their real ability.</p>
+    <div class="info-box" style="background:rgba(200,216,232,0.06);border:1px solid rgba(200,216,232,0.2);margin-top:12px;">
+      <span class="ico">⭐</span>
+      <p style="color:#c8d8e8;"><strong style="color:#e8f0d8;">The honest position:</strong> Understanding WHS strategy is legitimate — every serious competitive golfer should understand the system that measures them. Gaming it (deliberately playing badly in qualifying rounds, manipulating which events you submit) is not — it harms other competitors and ultimately undermines your own development feedback. This guide addresses the former, not the latter.</p>
+    </div>
+  </div>
+</div>
+
+<div class="sec" id="calculation">
+  <h2 class="sec-title">Calculation Deep-Dive</h2>
+  <p class="sec-desc">The WHS calculation has five components that interact in ways that produce surprising results if you don't understand them. This tab explains each component and its practical implications.</p>
+
+  <span class="badge badge-elite">🧮 The Five Components</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">How WHS Actually Calculates Your Index</span>
+    <h3>Component by Component</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Score Differential formula:</strong> Score Differential = (Adjusted Gross Score − Course Rating) × (113 ÷ Slope Rating). This normalises your score for course difficulty. A 78 at a hard course (Rating 74.0, Slope 135) = (78−74) × (113/135) = 4 × 0.837 = 3.35. A 78 at an easy course (Rating 70.0, Slope 110) = (78−70) × (113/110) = 8 × 1.027 = 8.22. The same gross score produces radically different differentials depending on course difficulty.</div></li>
+      <li><span class="step-n">2</span><div><strong>Best 8 of most recent 20:</strong> Only your 8 best differentials from your 20 most recent qualifying rounds contribute to your index. The 12 worst rounds are entirely excluded. This means your handicap reflects your best 40% of recent performance — not your average. Practical implication: if you've had 4 exceptional rounds in your last 20 and 16 average ones, your handicap reflects those 4 exceptional rounds.</div></li>
+      <li><span class="step-n">3</span><div><strong>The 0.96 adjustment:</strong> The average of your best 8 differentials is multiplied by 0.96 before becoming your index. This "playing condition" adjustment assumes a player performs at their best approximately 50% of the time — a small downward adjustment to prevent handicaps from perfectly reflecting peak performance. For a player averaging 3.0 on their best 8, the index becomes 2.88, not 3.00.</div></li>
+      <li><span class="step-n">4</span><div><strong>Net Double Bogey maximum:</strong> Under WHS, any hole score above net double bogey (par + 2 + handicap strokes for that hole) is adjusted down to net double bogey for handicap purposes. This prevents blow-up holes from catastrophically inflating your differential — but it also means that genuinely terrible holes do not hurt your handicap as much as they hurt your scorecard.</div></li>
+      <li><span class="step-n">5</span><div><strong>Playing Handicap conversion:</strong> Your Handicap Index is converted to a Playing Handicap for each specific course and format. Playing Handicap = (Handicap Index × Slope / 113) + (Course Rating − Par). On a difficult course (Slope 135), a 5.0 index becomes 5.0 × 135/113 + (72.5 − 72) = 5.97 + 0.5 = 6.47, rounded to 6. On an easy course (Slope 108), the same 5.0 index becomes 5.0 × 108/113 − 0.5 = 4.78 − 0.5 = 4.28, rounded to 4.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">What the Calculation Means Practically</span>
+    <h3>Five Implications for Competitive Players</h3>
+    <table class="tbl">
+      <tr><th>Implication</th><th>Practical Consequence</th></tr>
+      <tr><td>Best-8-of-20 means handicap trails improvement</td><td>After a genuine improvement breakthrough, it takes approximately 5–8 qualifying rounds to reflect the new level, as old (worse) differentials gradually leave the 20-round window</td></tr>
+      <tr><td>Best-8-of-20 means handicap leads deterioration</td><td>After injury or loss of form, your index stays low for longer than your current playing ability would suggest — because your old best rounds haven't yet left the window</td></tr>
+      <tr><td>The 0.96 factor means you play closer to your index than you might think</td><td>Your Playing Handicap is slightly better than your average performance — you need to play close to your best to match it</td></tr>
+      <tr><td>Net Double Bogey protection affects differential on bad days</td><td>A round with two blow-up holes (triple bogeys) is less harmful to your index than the scorecard suggests — the adjusted differentials for those holes are capped at net double bogey</td></tr>
+      <tr><td>Playing Handicap varies by course difficulty</td><td>You receive more strokes on difficult courses and fewer on easy ones — the same index plays differently at different venues</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="movement">
+  <h2 class="sec-title">How Handicaps Move</h2>
+  <p class="sec-desc">Understanding the rate and mechanism of handicap movement helps you set realistic improvement expectations and interpret your index correctly as a measure of genuine skill change.</p>
+
+  <span class="badge badge-elite">📈 Handicap Movement Mechanics</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What Drives Your Index Up and Down</span>
+    <h3>The Three Scenarios</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Rapid downward movement (improving quickly):</strong> If you produce 3–4 qualifying rounds in the next 20 that are significantly better than your current best 8, those rounds enter your best-8 calculation and push old, worse rounds out. The more rounds you play, the faster improvement registers. A player who plays 4 qualifying rounds per month can register genuine improvement in 6–8 weeks. A player who plays 1 per month takes 3–4 months for the same improvement to register.</div></li>
+      <li><span class="step-n">2</span><div><strong>Slow upward movement (losing form):</strong> WHS includes "soft cap" and "hard cap" protections that slow upward handicap movement. If your index rises more than 3.0 above the Low Handicap Index (your lowest-ever index in the past 12 months), the upward movement is slowed. Above 5.0 higher than the Low HI, movement is capped entirely. This prevents a temporary loss of form from catastrophically inflating a player's index.</div></li>
+      <li><span class="step-n">3</span><div><strong>Stagnation (playing consistently at index level):</strong> If your rounds consistently produce differentials close to your current index, the index barely moves. This is mathematically correct — you are playing at your current level. Stagnation is a signal that genuine improvement is not occurring, which connects directly to the plateau management work in Guide EP6.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Qualifying Round Frequency Effect</span>
+    <h3>Why Playing More Qualifying Rounds Accelerates Improvement Registration</h3>
+    <table class="tbl">
+      <tr><th>Qualifying Rounds per Month</th><th>New Rounds per Year</th><th>Time for Genuine Improvement to Register</th></tr>
+      <tr><td>1</td><td>12</td><td>4–6 months (old rounds leave the 20-round window slowly)</td></tr>
+      <tr><td>2</td><td>24</td><td>2–3 months</td></tr>
+      <tr><td>4</td><td>48</td><td>6–8 weeks</td></tr>
+      <tr><td>6+</td><td>72+</td><td>3–5 weeks (maximum sensitivity to genuine improvement)</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">Players who play few qualifying rounds have "sticky" handicaps that take a long time to reflect genuine improvement. Players who play many qualifying rounds have responsive handicaps that quickly reflect both improvements and deteriorations. For a player using their index as a development measure, playing more qualifying rounds improves the measurement quality.</p>
+  </div>
+</div>
+
+<div class="sec" id="strategy">
+  <h2 class="sec-title">Competition Strategy and WHS</h2>
+  <p class="sec-desc">Specific strategic implications of WHS for the competitive amateur — which competitions contribute most to index movement, how playing conditions calculations work, and how to interpret competition results against your index.</p>
+
+  <span class="badge badge-elite">🎯 Competition EV and Your Handicap</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Which Competitions Matter Most for Your Index</span>
+    <h3>Qualifying vs Non-Qualifying Events</h3>
+    <table class="tbl">
+      <tr><th>Event Type</th><th>Qualifies for WHS?</th><th>Index Impact</th></tr>
+      <tr><td>EGU/county affiliated club competitions</td><td class="good">Yes</td><td>Full impact; every round counts in the 20-round window</td></tr>
+      <tr><td>Stableford competitions</td><td class="good">Yes — converted to stroke equivalent</td><td>Full impact; the Stableford score is converted to an adjusted gross score equivalent</td></tr>
+      <tr><td>Open amateur events (England Golf designated)</td><td class="good">Yes — if affiliated to EG</td><td>Full impact; often more representative fields → more meaningful differentials</td></tr>
+      <tr><td>County team matches</td><td class="warn">Depends — individual matchplay only if full card submitted</td><td>Check with county — some matches are qualifying, some are not</td></tr>
+      <tr><td>Casual rounds with handicap card</td><td class="warn">Only if posted correctly in GOLF GENIUS</td><td>Full impact only if submitted — unsubmitted casual rounds are wasted qualifying opportunities</td></tr>
+      <tr><td>Practice rounds</td><td class="bad">No</td><td>Zero impact on index</td></tr>
+      <tr><td>International events outside EG affiliation</td><td class="warn">Depends on local affiliation</td><td>May update if submitted — check before travelling</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Playing Conditions Calculation</span>
+    <h3>When PCC Applies and What It Means</h3>
+    <p>The Playing Conditions Calculation (PCC) is a daily adjustment applied when the field's scoring is significantly better or worse than expected — adjusting differentials up or down by up to 3 points. PCC prevents temporary external conditions (extreme weather, unusually fast or slow greens, course damage) from incorrectly moving player indices.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>When PCC helps you:</strong> On a day when the field scores significantly worse than expected (e.g. extreme wind), PCC adjusts all differentials downward — meaning your bad round in terrible conditions hurts your index less than the raw scorecard would suggest. This is the correct outcome.</div></li>
+      <li><span class="step-n">2</span><div><strong>When PCC works against you:</strong> On a day when the field scores significantly better than expected (e.g. unusually receptive, soft course), PCC adjusts differentials upward — meaning your great round in perfect conditions improves your index less than the raw scorecard would suggest. This is also correct — the conditions, not your ability, produced the score.</div></li>
+      <li><span class="step-n">3</span><div><strong>PCC requires a minimum field size.</strong> PCC is only calculated when sufficient qualifying scores are submitted on a given day. A small club competition with 8 players may not trigger PCC even in exceptional conditions — your differential is calculated without the adjustment.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="tracking">
+  <h2 class="sec-title">Using WHS to Track Real Improvement</h2>
+  <p class="sec-desc">Your Handicap Index is a lagging, smoothed indicator of playing ability — not a perfect measure of current skill. Understanding its limitations as a progress measure allows you to use it correctly alongside the more precise SG-based tracking in the rest of this programme.</p>
+
+  <span class="badge badge-elite">🔢 Handicap as a Progress Measure</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">What Your Index Does and Doesn't Tell You</span>
+    <h3>Three Uses and Three Limitations</h3>
+    <div class="grid-2">
+      <div class="mini">
+        <span class="mini-tag" style="color:#70c870;">Useful For</span>
+        <h4>Long-term progress tracking</h4>
+        <p>Year-on-year handicap improvement is a reliable indicator of genuine long-term development — the smoothing effect removes noise that monthly SG reviews cannot.</p>
+      </div>
+      <div class="mini">
+        <span class="mini-tag" style="color:#e07060;">Not Useful For</span>
+        <h4>Short-term progress tracking</h4>
+        <p>Month-to-month handicap movement contains significant noise from the best-8-of-20 calculation. A 0.2 index improvement in one month tells you very little.</p>
+      </div>
+      <div class="mini">
+        <span class="mini-tag" style="color:#70c870;">Useful For</span>
+        <h4>Competition calibration</h4>
+        <p>Your Playing Handicap for a specific course and format is the most accurate available estimate of your expected performance in that context.</p>
+      </div>
+      <div class="mini">
+        <span class="mini-tag" style="color:#e07060;">Not Useful For</span>
+        <h4>Identifying improvement categories</h4>
+        <p>Your index tells you you're improving; it doesn't tell you why. SG category data (Arccos) is required for that — the index is the outcome, SG is the cause.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Low Handicap Index — Your Permanent Benchmark</span>
+    <h3>How to Use Your Lowest-Ever Index</h3>
+    <p>WHS records your Low Handicap Index — your lowest index achieved in the previous 12 months. This is the anchor for the soft cap and hard cap calculations, but it also serves as your personal performance benchmark. The gap between your current index and your Low HI tells you how far below your best you are currently playing.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Gap from Low HI</th><th>Interpretation</th><th>Response</th></tr>
+      <tr><td>0.0 to +1.0</td><td>Playing at or near your established level</td><td>Normal — index is representative of current ability</td></tr>
+      <tr><td>+1.0 to +2.0</td><td>Mild regression — below best but within normal variance</td><td>Review practice structure; check for fatigue or schedule disruption</td></tr>
+      <tr><td>+2.0 to +3.0</td><td>Significant regression — soft cap activating</td><td>Diagnostic review of SG data; coaching conversation; potential technical issue</td></tr>
+      <tr><td>+3.0 to +5.0</td><td>Major regression — hard cap approaching</td><td>Full programme review (Guide EP6 replan protocol); medical assessment if physical cause suspected</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="sec" id="ethics">
+  <h2 class="sec-title">Ethics &amp; Fair Play</h2>
+  <p class="sec-desc">Handicap ethics is not a peripheral topic — it is central to the competitive integrity that makes county and national amateur golf meaningful. This tab covers the ethical boundaries clearly, including the practices that are legitimate strategic understanding vs. those that constitute manipulation.</p>
+
+  <span class="badge badge-elite">⚖️ The Ethical Framework</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">Clear Lines — Legitimate vs. Manipulation</span>
+    <h3>What Is and Isn't Acceptable</h3>
+    <table class="tbl">
+      <tr><th>Practice</th><th>Status</th><th>Why</th></tr>
+      <tr><td>Playing more qualifying rounds to accelerate improvement registration</td><td class="good">Legitimate</td><td>Playing golf competitively more frequently is the intended use of the system</td></tr>
+      <tr><td>Understanding which courses produce lower differentials due to slope/rating</td><td class="good">Legitimate</td><td>Course difficulty information is public; making informed choices about competition venue is not manipulation</td></tr>
+      <tr><td>Deliberately not submitting a good qualifying round</td><td class="bad">Manipulation / Breach of rules</td><td>WHS rules require all qualifying scores to be submitted — non-submission of a qualifying round is a rules violation and a form of sandbagging</td></tr>
+      <tr><td>Deliberately playing poorly in a qualifying round to prevent index improvement</td><td class="bad">Manipulation</td><td>This is sandbagging — maintaining a higher handicap than your ability to gain competitive advantage. It is contrary to the spirit of the game and grounds for handicap committee review.</td></tr>
+      <tr><td>Playing casual rounds without submitting as qualifying</td><td class="warn">Context-dependent</td><td>Not all casual rounds need to be qualifying — but if you are playing alone or in non-competition conditions where WHS qualifying is not applicable, not submitting is correct. Selectively not submitting competition rounds is a violation.</td></tr>
+      <tr><td>Understanding the best-8-of-20 system to know when your index is about to move</td><td class="good">Legitimate</td><td>Understanding how the system works is knowledge; using that knowledge to deliberately manipulate outcomes is not</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Competitive Integrity Principle</span>
+    <h3>Why Handicap Ethics Matters at County Level</h3>
+    <p>At club level, handicap manipulation primarily harms fellow club members. At county level, it harms the county's competitive integrity and can affect selection decisions — a player with a manipulated index may displace a player with a genuine index from a county team position or a national qualifying spot. The stakes are higher, and the scrutiny is greater.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--muted);">England Golf's handicap committees have the authority to adjust indices when consistent under-performance relative to a player's known ability is identified. A player who consistently wins club competitions by large margins will draw scrutiny regardless of their official qualifying round submissions. The system is not perfectly gameable, and attempting to game it at county level is likely to be counterproductive.</p>
+  </div>
+</div>
+
+<div class="sec" id="annual">
+  <h2 class="sec-title">The Annual WHS Cycle</h2>
+  <p class="sec-desc">How your handicap behaves across the UK golf year — the predictable patterns of index movement that most players experience, and how to interpret them correctly.</p>
+
+  <span class="badge badge-elite">📅 The Seasonal Pattern</span>
+  <div class="card" style="border-color:rgba(200,216,232,0.22);">
+    <span class="card-tag" style="color:#c8d8e8;">A Typical Year's Handicap Movement for a Serious Amateur</span>
+    <h3>What to Expect Month by Month</h3>
+    <table class="tbl">
+      <tr><th>Period</th><th>Typical Index Movement</th><th>Cause</th></tr>
+      <tr><td>October–November</td><td>Slight upward drift or stable</td><td>End of season; reduced qualifying round frequency; off-season transition period</td></tr>
+      <tr><td>December–January</td><td>Stable or very slight movement</td><td>Very few qualifying rounds; index largely frozen on summer's best rounds</td></tr>
+      <tr><td>February–March</td><td>Possible slight upward drift</td><td>Winter rounds in difficult conditions; playing below summer form is expected</td></tr>
+      <tr><td>April–May</td><td>Downward (improving) for players who did structured off-season work</td><td>Off-season technical and fitness work registering in spring rounds</td></tr>
+      <tr><td>June–August</td><td>Most volatile; potential for fastest movement in either direction</td><td>Peak qualifying round frequency; good courses; best conditions</td></tr>
+      <tr><td>September</td><td>Often lowest index of the year (for improving players)</td><td>Peak competitive season; best physical condition; most competition experience</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Reading Your Annual Index Chart</span>
+    <h3>What Your 12-Month Index History Tells You</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Year-on-year low comparison:</strong> Compare your September (or best-month) index to the same month in the previous year. This is the most reliable annual improvement measure — it controls for the seasonal patterns described above and gives a genuine year-on-year development reading.</div></li>
+      <li><span class="step-n">2</span><div><strong>Trend line:</strong> Plot your monthly index for 2–3 years. A downward trend (improving) is the goal. If the trend is flat or rising over multiple years despite consistent effort, the programme needs a structural change — not more of the same.</div></li>
+      <li><span class="step-n">3</span><div><strong>Volatility analysis:</strong> High month-to-month volatility in your index (swinging ±0.5+ per month) suggests inconsistent competitive performance — the pressure performance gap identified in Guide EP4. Low volatility with a gradual downward trend is the signature of genuine, consistent improvement.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">WORLD HANDICAP SYSTEM STRATEGIC UNDERSTANDING · GUIDE EP10 · ELITE+ · THE SCRATCH PROJECT</div>
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">    <a href="33_competitive_pathway.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏆</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">UK Competitive Pathway</span></a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span></a>
+    <a href="46_county_team_golf.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏅</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">County Team Golf</span></a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📓</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span></a>
+    <a href="ep2_multiseason_sg_analytics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">📊</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Multi-Season SG Analytics</span></a></div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index_elite.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks — Home</a>
+  </div>
+</div>
+<script>function show(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});
+}</script></body></html>
