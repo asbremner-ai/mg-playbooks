@@ -111,7 +111,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <p class="hero-sub">Nine Elite guides plus upgrades to every core pillar. The complete architecture for a plus-handicap game — analytics, psychology, physical performance, and national-level competition.</p>
   <div class="stat-row">
     <span class="stat">⭐ 9 Elite Guides</span>
-    <span class="stat">📚 49 Total Guides</span>
+    <span class="stat">✨ 11 Elite+ Guides</span>
+    <span class="stat">📚 65 Total Guides</span>
     <span class="stat">🔧 7 Upgraded Guides</span>
     <span class="stat">🏆 Scratch → +3</span>
   </div>
@@ -120,6 +121,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- PILLAR NAV -->
 <div class="pillar-nav">
   <button class="pillar-btn active" onclick="showPillar('elite',this)"><span class="pillar-icon">⭐</span>Elite</button>
+  <button class="pillar-btn" onclick="showPillar('eliteplus',this)"><span class="pillar-icon">✨</span>Elite+</button>
   <button class="pillar-btn" onclick="showPillar('plan',this)"><span class="pillar-icon">📅</span>Plan</button>
   <button class="pillar-btn" onclick="showPillar('score',this)"><span class="pillar-icon">🎯</span>Score</button>
   <button class="pillar-btn" onclick="showPillar('strike',this)"><span class="pillar-icon">🏌️</span>Strike</button>
@@ -195,6 +197,78 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <div class="upgrade-banner">
     <span class="upgrade-ico">🔧</span>
     <p><strong>7 Upgraded Core Guides</strong> — Guides 01, 03, 08, 15, 21, 26, and 33 each contain an additional Elite tab covering depth content unavailable in Standard and Pro. Look for the ⭐ tab in the guide navigation.</p>
+  </div>
+</div>
+
+<!-- ═══ ELITE+ PILLAR ═══ -->
+<div class="pillar-sec" id="sec-eliteplus">
+  <div class="sec-hd">
+    <h2>Elite+ Guides</h2>
+    <p>Eleven specialist deep-dive guides that extend the Elite system into advanced territory — multi-season analytics, movement diagnostics, complete wedge architecture, off-season training, and the strategic disciplines that separate club champions from representative players.</p>
+  </div>
+
+  <div class="sec-divider">Analytics & Strategy</div>
+  <div class="guide-grid">
+    <a href="ep2_multiseason_sg_analytics.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">📈</span><div><div class="gc-num">Guide EP2</div><div class="gc-name">Multi-Season SG Analytics</div></div></div>
+      <div class="gc-desc">Separating skill from variance across multiple seasons — personal SG fingerprint, regression-to-mean modelling, and multi-year trend analysis beyond Guide 26.</div>
+    </a>
+    <a href="ep1_season_decision_architecture.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🗓️</span><div><div class="gc-num">Guide EP1</div><div class="gc-name">Season Decision Architecture</div></div></div>
+      <div class="gc-desc">The strategic layer above Guide 40 — EV-positive competition calendar design, decision fatigue management across 72 holes, and post-round decision quality auditing.</div>
+    </a>
+    <a href="ep8_arccos_air_mastery.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">📡</span><div><div class="gc-num">Guide EP8</div><div class="gc-name">Arccos Air Mastery</div></div></div>
+      <div class="gc-desc">Everything Guide 26 doesn't cover — correcting misattributed shots, reliable Air data protocols, and extracting elite-level insight from GPS-based tracking.</div>
+    </a>
+    <a href="ep10_world_handicap_system.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">📊</span><div><div class="gc-num">Guide EP10</div><div class="gc-name">WHS Strategic Understanding</div></div></div>
+      <div class="gc-desc">Advanced WHS mechanics — how best-8-of-20 creates specific strategy opportunities, handicap movement prediction, and managing your index as a competitive tool.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Technical Game</div>
+  <div class="guide-grid">
+    <a href="ep4_proximity_approach_mastery.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎯</span><div><div class="gc-num">Guide EP4</div><div class="gc-name">Proximity & Approach Mastery</div></div></div>
+      <div class="gc-desc">The complete proximity model for 80–200 yards — personal proximity curve, contextual pressure performance, trajectory management, and club-gapping protocol.</div>
+    </a>
+    <a href="ep7_complete_wedge_system.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🏌️</span><div><div class="gc-num">Guide EP7</div><div class="gc-name">Complete Wedge System</div></div></div>
+      <div class="gc-desc">Integrates Guides 02, 22, and 37 into one system — four-club gapping matrix, clock-system partial swings, trajectory and spin control, lie management, and wind calibration.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Mental Game & Identity</div>
+  <div class="guide-grid">
+    <a href="ep3_identity_mental_game.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🧠</span><div><div class="gc-num">Guide EP3</div><div class="gc-name">Identity & Mental Game</div></div></div>
+      <div class="gc-desc">The foundational layer beneath Guide 21 — athletic self-concept, growth vs. fixed mindset in competitive golf, choking as an identity threat, and construct integration for elite performance.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Physical & Movement</div>
+  <div class="guide-grid">
+    <a href="ep5_movement_screening_fitness.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">💪</span><div><div class="gc-num">Guide EP5</div><div class="gc-name">Movement Screening & Fitness Diagnosis</div></div></div>
+      <div class="gc-desc">Six-test golf movement screen, hip and pelvis mobility assessment, thoracic and shoulder diagnostics, and individualised corrective protocols above Guide 06.</div>
+    </a>
+    <a href="ep9_winter_training_offseason.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">❄️</span><div><div class="gc-num">Guide EP9</div><div class="gc-name">Winter Training & Off-Season Architecture</div></div></div>
+      <div class="gc-desc">How to structure October–March when competition stops — technical rebuilds, indoor practice systems, speed development phases, and pre-season readiness protocols.</div>
+    </a>
+  </div>
+
+  <div class="sec-divider">Programme Management & Coaching</div>
+  <div class="guide-grid">
+    <a href="ep6_dynamic_replanning.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🔄</span><div><div class="gc-num">Guide EP6</div><div class="gc-name">Dynamic Replanning</div></div></div>
+      <div class="gc-desc">When the 24-month plan meets reality — reading genuine divergence from expected SG trajectory, SG regression response protocols, injury replanning, and plateau-breaking frameworks.</div>
+    </a>
+    <a href="ep11_advanced_coaching_relationship.html" class="guide-card elite">
+      <div class="gc-top"><span class="gc-emoji">🎓</span><div><div class="gc-num">Guide EP11</div><div class="gc-name">Advanced Coaching Relationship</div></div></div>
+      <div class="gc-desc">Strategic management of a coaching relationship at scratch and plus level — pre-lesson data briefs, handling technical disagreement, coaching calendar design, and elite coach selection.</div>
+    </a>
   </div>
 </div>
 
@@ -459,6 +533,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 33</div><div class="gc-name">UK Competitive Pathway</div></div></div>
       <div class="gc-desc">The full ladder from club competition to county. ⭐ Elite tab: county team selection detail.</div>
     </a>
+    <a href="56_us_competitive_pathway.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🇺🇸</span><div><div class="gc-num">Guide 56</div><div class="gc-name">US Competitive Pathway</div></div></div>
+      <div class="gc-desc">GHIN, USGA structure, state associations, US Amateur and US Open qualifying for plus-handicap players.</div>
+    </a>
+    <a href="57_european_competitive_pathway.html" class="guide-card">
+      <div class="gc-top"><span class="gc-emoji">🇪🇺</span><div><div class="gc-num">Guide 57</div><div class="gc-name">European Competitive Pathway</div></div></div>
+      <div class="gc-desc">EGA Amateur, European Team Championship, national federations, and Open Championship qualifying.</div>
+    </a>
     <a href="24_competitive_strategy.html" class="guide-card">
       <div class="gc-top"><span class="gc-emoji">🏆</span><div><div class="gc-num">Guide 24</div><div class="gc-name">Competitive Strategy</div></div></div>
       <div class="gc-desc">Strokeplay vs. matchplay strategy frameworks and in-round adjustment protocols.</div>
@@ -517,7 +599,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <div class="footer">
-  THE SCRATCH PROJECT · ELITE EDITION · 49 GUIDES · SCRATCH → PLUS
+  THE SCRATCH PROJECT · ELITE EDITION · 60 GUIDES · SCRATCH → PLUS
   <br>
   <a href="10_scratch_plan.html">Start Here</a>
   <a href="41_plus_hcp_sg_targets.html">Elite Hub</a>

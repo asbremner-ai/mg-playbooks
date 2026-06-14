@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>On-Course Notes & Course Knowledge — The Scratch Project</title>
+  <meta name="description" content="Build a permanent course intelligence system. Pre-round reconnaissance, green mapping, seasonal adjustments, and the compounding knowledge base that gives you a strategic edge on every course you play.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
@@ -90,6 +92,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.hole-fields{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -102,7 +119,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </div>
 
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 31</p>
+  <p class="hero-label">Score Playbook · Guide 31</p>
   <h1>On-Course Notes &<br><em>Course Knowledge</em></h1>
   <p class="hero-sub">Building a permanent, compounding course intelligence system — recon methodology, hole-by-hole note structure, landing zone mapping, seasonal adjustments, and converting raw notes into a touring-caddie-standard yardage book.</p>
   <div class="hero-tags">
@@ -286,7 +303,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <ul class="steps">
       <li><span class="step-n">1</span><div><strong>Primary slope direction:</strong> Every green has a dominant slope — the direction water would run if poured on the surface. This is your macro read. Note the primary slope direction for each quadrant of the green (front-left, front-right, back-left, back-right). Most greens slope from back to front (toward the fairway) and from one side — often toward a nearby water feature or natural drainage point.</div></li>
       <li><span class="step-n">2</span><div><strong>Gradient estimate:</strong> How steeply does the green slope? Greens are typically graded in three levels: gentle (less than 1%), moderate (1–2%), and steep (over 2%). A gentle slope requires a small break read. A steep slope on a fast green can require 4–5 feet of break on a 20-footer. Categorising each quadrant by gradient avoids the systematic under-reading of subtle slopes and over-reading of flat areas that costs most amateurs strokes.</div></li>
-      <li><span class="step-n">3</span><div><strong>Grain direction:</strong> Relevant primarily on UK links courses and bent/bermuda grass greens common in warmer climates. Grain runs in a consistent direction — typically toward the prevailing wind, toward the setting sun, or toward nearby water. Putting with the grain: ball rolls faster and breaks less. Against grain: slower, breaks more. On bent grass UK parkland greens, grain effect is usually minimal — note if it is significant on specific greens.</div></li>
+      <li><span class="step-n">3</span><div><strong>Grain direction:</strong> Relevant primarily on UK links courses and bent/bermuda grass greens common in warmer climates. Grain runs in a consistent direction — typically toward the prevailing wind, toward the setting sun, or toward nearby water. Putting with the grain: ball rolls faster and breaks less. Against grain: slower, breaks more. On bentgrass parkland greens, grain effect is usually minimal — note if it is significant on specific greens.</div></li>
       <li><span class="step-n">4</span><div><strong>Speed variation across the green:</strong> Some greens are significantly faster in the back half than the front (common on elevated greens where the back falls away sharply). Others are fast on the perimeter and slower in the centre (hollow areas). If you have consistent 3-putt patterns from specific areas, a speed variation in that zone is likely the cause.</div></li>
     </ul>
   </div>
@@ -320,10 +337,10 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- SEASONAL ADJUSTMENTS -->
 <div class="sec" id="seasonal">
   <h2 class="sec-title">Seasonal Adjustments</h2>
-  <p class="sec-desc">UK golf spans dramatic condition changes across a season. A course knowledge system that works for June is significantly wrong for November. Documenting seasonal baselines allows you to adjust automatically rather than re-learning the same lessons every winter.</p>
-  <span class="badge badge-teal">🌦️ UK Seasonal Framework</span>
+  <p class="sec-desc">Golf conditions change dramatically across a season in any temperate climate. A course knowledge system calibrated to summer is significantly wrong for winter. Documenting seasonal baselines allows you to adjust automatically rather than re-learning the same lessons every winter.</p>
+  <span class="badge badge-teal">🌦️ Seasonal Adjustment Framework</span>
   <div class="card card-teal">
-    <span class="card-tag">The Four UK Playing Seasons</span>
+    <span class="card-tag">The Four Playing Seasons — Temperate Climate</span>
     <h3>What Changes and When</h3>
     <table class="tbl">
       <tr><th>Season</th><th>Months</th><th>Ground Condition</th><th>Key Adjustment</th></tr>

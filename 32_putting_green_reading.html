@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Green Reading — Pro Edition · The Scratch Project</title>
+<title>Green Reading Deep Dive — The Scratch Project</title>
+  <meta name="description" content="Complete green reading system — AimPoint Express, slope tables for all distances and speeds, grain identification on bentgrass, fescue and Bermuda, and wet vs. dry adjustments.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
@@ -89,6 +91,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.break-row{grid-template-columns:1fr 1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 
@@ -101,7 +118,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 32</p>
+  <p class="hero-label">Score Playbook · Guide 32</p>
   <h1>Green Reading<br><em>Deep Dive</em></h1>
   <p class="hero-sub">The complete system for reading greens with precision — AimPoint Express methodology, slope percentage tables, grain identification, plumb-bobbing, wet vs. dry speed adjustments, and reading from off the green.</p>
   <div class="hero-tags">
@@ -228,7 +245,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="card">
     <span class="card-tag">Slow Greens — Stimpmeter 8–9</span>
-    <h3>Typical UK Winter / Soft Parkland Conditions</h3>
+    <h3>Winter / Soft Parkland Conditions</h3>
     <div class="break-table">
       <div class="break-table-header">Aim Point in Finger Widths — Slow Green (Stimp 8–9)</div>
       <div class="break-row">
@@ -250,7 +267,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
   <div class="card card-teal">
     <span class="card-tag">Medium Greens — Stimpmeter 10–11</span>
-    <h3>Typical UK Summer Parkland / Good Links Conditions</h3>
+    <h3>Summer Parkland / Good Links Conditions</h3>
     <div class="break-table">
       <div class="break-table-header">Aim Point in Finger Widths — Medium Green (Stimp 10–11)</div>
       <div class="break-row">
@@ -314,8 +331,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- GRAIN -->
 <div class="sec" id="grain">
   <h2 class="sec-title">Grain Identification</h2>
-  <p class="sec-desc">Grain — the directional growth of grass blades on the putting surface — affects both speed and break. On UK bentgrass parkland greens, grain effect is typically minor (5–10% modification). On links courses with fescue greens, and on any course during dry periods when grass growth is more pronounced, grain becomes a meaningful variable that must be factored into every read.</p>
-  <span class="badge badge-lime">🌾 UK & Links Grain Reading</span>
+  <p class="sec-desc">Grain — the directional growth of grass blades on the putting surface — affects both speed and break. On bentgrass parkland greens, grain effect is typically minor (5–10% modification). On links courses with fescue greens, and on any course during dry periods when grass growth is more pronounced, grain becomes a meaningful variable that must be factored into every read.</p>
+  <span class="badge badge-lime">🌾 Grain Reading — Bentgrass, Fescue & Bermuda</span>
   <div class="card card-teal">
     <span class="card-tag">Identifying Grain Direction</span>
     <h3>Four Methods That Actually Work</h3>
@@ -323,7 +340,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <li><span class="step-n">1</span><div><strong>Sheen vs. dull appearance:</strong> Look at the green surface from above. The side of the hole where the grass looks shiny/lighter is downgrain (you are looking in the direction the grass is growing). The side that looks darker/duller is into the grain. This is the fastest and most reliable method for identifying grain direction from the ball position.</div></li>
       <li><span class="step-n">2</span><div><strong>The hole edge test:</strong> Examine the inside edge of the cup. The downgrain side will have a rough, shaggy appearance where grass tips overhang into the hole. The into-grain side will be tight and clean. This method is definitive but requires you to walk to the hole — use it for important putts.</div></li>
       <li><span class="step-n">3</span><div><strong>Prevailing wind direction:</strong> On links courses, grain strongly follows the prevailing wind — grass grows in the direction of the dominant wind. If you know the prevailing wind direction for the course (it's always worth asking the starter or a member), you have a reliable baseline grain direction for every green before you read a single putt.</div></li>
-      <li><span class="step-n">4</span><div><strong>Toward the setting sun:</strong> On bentgrass greens specifically (very common in the south of England and links-adjacent courses), grain tends to grow toward the setting sun — roughly westward. This is not universal but provides a useful starting hypothesis when other methods are unclear.</div></li>
+      <li><span class="step-n">4</span><div><strong>Toward the setting sun:</strong> On bentgrass greens specifically (very common in the south of England and links-adjacent courses), grain tends to grow toward the setting sun. This is not universal but provides a useful starting hypothesis when other methods are unclear.</div></li>
     </ul>
   </div>
   <div class="card">
@@ -338,7 +355,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     </table>
     <div class="info-box tip" style="margin-top:10px;">
       <span class="ico">💡</span>
-      <p><strong>UK parkland greens:</strong> On most UK parkland courses with well-maintained bentgrass putting surfaces, grain effect is subtle enough that many professionals play these greens without specific grain adjustments. Learn to identify grain first — then decide whether it is strong enough to warrant adjustment. Overcorrecting for minimal grain is as costly as ignoring significant grain.</p>
+      <p><strong>Bentgrass parkland greens:</strong> On most parkland courses with well-maintained bentgrass putting surfaces, grain effect is subtle enough that many professionals play these greens without specific grain adjustments. Learn to identify grain first — then decide whether it is strong enough to warrant adjustment. Overcorrecting for minimal grain is as costly as ignoring significant grain.</p>
     </div>
   </div>
   <div class="card card-gold">
@@ -386,7 +403,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 <!-- CONDITIONS -->
 <div class="sec" id="conditions">
   <h2 class="sec-title">Wet vs. Dry Conditions</h2>
-  <p class="sec-desc">Green conditions change the speed-break relationship significantly. A read calibrated to dry summer conditions will systematically miss on a wet morning and vice versa. Understanding how specific conditions modify your baseline read is essential for UK golf, where conditions vary dramatically within a single round.</p>
+  <p class="sec-desc">Green conditions change the speed-break relationship significantly. A read calibrated to dry summer conditions will systematically miss on a wet morning and vice versa. Understanding how specific conditions modify your baseline read is essential wherever you play.</p>
   <span class="badge badge-teal">💧 Condition-Specific Adjustments</span>
   <div class="card card-teal">
     <span class="card-tag">The Speed-Break Relationship</span>

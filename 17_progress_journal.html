@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Progress Journal System — Pro Edition</title>
+<title>Progress Journal System — The Scratch Project</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -107,6 +107,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -118,7 +133,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <div class="hero">
-  <p class="hero-label">Progress Journal · Guide 17</p>
+  <p class="hero-label">Compete Playbook · Guide 17</p>
   <h1>Record the<br><em>Journey</em></h1>
   <p class="hero-sub">A structured journalling system that captures the qualitative intelligence your SG data cannot — decision quality, mental game patterns, physical readiness, and lessons learned — and turns it into a compound improvement asset over 24 months.</p>
   <div class="hero-tags">

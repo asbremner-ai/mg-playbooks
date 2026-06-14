@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-13 · 57_european_competitive_pathway.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>European Competitive Pathway — The Scratch Project</title>
+<meta name="description" content="The complete European amateur golf competitive pathway — EGA structure, national federations, EGA Amateur Championship, European Team Championship, links travel golf competition, and how WHS connects the global amateur game for players across Ireland, Scotland, continental Europe, and beyond.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.warn-box{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.warn-box p{color:rgba(240,208,112,.9);}.warn-box strong{color:var(--gold-hi);}
+.pull-quote{border-left:3px solid var(--lime);padding:12px 18px;margin:20px 0;background:var(--lime-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--white);margin-bottom:4px;}
+.pull-quote span{font-size:11px;color:var(--muted);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+const TIER = 'standard';
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro' && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite') { el.remove(); return; }
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">&#8962; Home</a>
+
+<div class="hero">
+  <p class="hero-label">Compete Playbook · Guide 57</p>
+  <h1>European Competitive<br><em>Pathway</em></h1>
+  <p class="hero-sub">The complete European amateur golf competitive structure — the EGA, national federations across Ireland, Scotland, France, Spain, Germany, Sweden and beyond, the EGA Amateur Championship, European Team events, Open Championship qualifying, and how WHS connects the global amateur game for players at every level.</p>
+  <div class="hero-tags">
+    <span class="htag">🇪🇺 EGA Structure</span>
+    <span class="htag">🍀 GUI / Golf Ireland</span>
+    <span class="htag">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scottish Golf</span>
+    <span class="htag">🌍 Pan-European Events</span>
+    <span class="htag">🏆 EGA Amateur</span>
+    <span class="htag">⛳ Open Qualifying</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('whs_europe',this)">WHS in Europe</button>
+  <button class="tab" onclick="show('nations',this)">National Bodies</button>
+  <button class="tab" onclick="show('ega_events',this)">EGA Events</button>
+  <button class="tab" onclick="show('ireland',this)">Ireland & Scotland</button>
+  <button class="tab" onclick="show('open_qualifying',this)">Open Qualifying</button>
+  <button class="tab" onclick="show('travel',this)">Competitive Travel</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">European Amateur Golf — A Diverse Ecosystem</h2>
+  <p class="sec-desc">European amateur golf is administered by a network of national federations under the European Golf Association (EGA), which in turn operates under the International Golf Federation (IGF). The result is a rich competitive ecosystem — 47 member nations, a pan-European event calendar, and national structures ranging from the deep traditions of Golf Ireland and Scottish Golf to rapidly growing programmes in Spain, Sweden, France, and Germany.</p>
+
+  <div class="pull-quote">
+    <p>"European amateur golf punches above its weight internationally. The combination of links tradition in the British Isles and the expanding club culture across the continent produces more Walker Cup and Eisenhower Trophy players per capita than any other region except the US."</p>
+    <span>— European Golf Association</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The European Golf Structure</span>
+    <h3>How Amateur Golf Is Organised Across Europe</h3>
+    <table class="tbl">
+      <tr><th>Level</th><th>Body</th><th>Scope</th></tr>
+      <tr><td>International</td><td>IGF (International Golf Federation)</td><td>Olympic golf, World Amateur Golf Ranking (WAGR), Eisenhower / Espirito Santo Trophies</td></tr>
+      <tr><td>Continental</td><td>EGA (European Golf Association)</td><td>47 member nations; EGA Amateur Championship; European Team Championship; Boys, Girls, Seniors championships</td></tr>
+      <tr><td>National</td><td>Golf Ireland, Scottish Golf, Fédération Française de Golf, RFEGOLF (Spain), DGV (Germany), SGF (Sweden), etc.</td><td>National amateur championships, national order of merit, team selection, WHS administration</td></tr>
+      <tr><td>County / Regional</td><td>County unions, regional golf associations</td><td>County championships, inter-county matches (as in England, Ireland, Scotland)</td></tr>
+      <tr><td>Club</td><td>Individual affiliated golf clubs</td><td>Club championships, open competitions, WHS score posting</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">WHS — The Unifying Thread</span>
+    <h3>One Handicap Index Across All 47 EGA Nations</h3>
+    <p>Every EGA member nation uses the WHS. A German golfer's handicap index is directly portable to Ireland, Scotland, France, Spain, Portugal, or any of the 45 other EGA nations — and to the US, Australia, Canada, and South Africa. For competitive travel within Europe (see the Competitive Travel tab), this portability means your home handicap is your entry credential in any WHS-affiliated country.</p>
+  </div>
+</div>
+
+<!-- WHS IN EUROPE -->
+<div class="sec" id="whs_europe">
+  <h2 class="sec-title">WHS Across European Nations</h2>
+  <p class="sec-desc">While all EGA nations use the WHS algorithm, each national federation administers it through their own platform and has their own specific qualifying round rules, posting procedures, and seasonal adjustments. Understanding the differences when playing in other European countries prevents posting errors.</p>
+
+  <span class="badge badge-teal">🌍 Country-by-Country WHS</span>
+  <div class="card card-teal">
+    <span class="card-tag">Handicap Administration by Major Nation</span>
+    <h3>How WHS Is Managed in Key European Countries</h3>
+    <table class="tbl">
+      <tr><th>Nation</th><th>Administering Body</th><th>Handicap Platform</th><th>Key Notes</th></tr>
+      <tr><td>England</td><td>England Golf</td><td>Golf Genius / iGolf</td><td>See Guide 33 (UK Competitive Pathway) for full detail</td></tr>
+      <tr><td>Scotland</td><td>Scottish Golf</td><td>Golf Genius</td><td>Identical system to England; scores post to UK WHS network</td></tr>
+      <tr><td>Wales</td><td>Wales Golf</td><td>Golf Genius</td><td>Same as England; Welsh Golf national events separate from EG</td></tr>
+      <tr><td>Ireland (all-island)</td><td>Golf Ireland (GUI + ILGU merged 2020)</td><td>Golf Ireland App / Howdidido</td><td>All-island body covers Republic and Northern Ireland; major open events in summer</td></tr>
+      <tr><td>France</td><td>Fédération Française de Golf (FFG)</td><td>MyGolf (FFG platform)</td><td>Index de Handicap = WHS index; course ratings by FFG; strong national amateur calendar</td></tr>
+      <tr><td>Spain</td><td>RFEGOLF</td><td>RFEGOLF app</td><td>Hándicap WHS; excellent year-round competitive calendar; strong national amateur scene</td></tr>
+      <tr><td>Germany</td><td>Deutscher Golf Verband (DGV)</td><td>DGV app</td><td>DGV Handicap = WHS; German Amateur Championship (Deutsches Amateur-Golf-Meisterschaft) prestigious</td></tr>
+      <tr><td>Sweden</td><td>Svenska Golfförbundet (SGF)</td><td>Min Golf</td><td>Sweden has among the highest per-capita golfer participation in Europe; strong junior pipeline</td></tr>
+      <tr><td>Netherlands</td><td>NGF (Nederlandse Golf Federatie)</td><td>NGF app</td><td>Strong amateur calendar; good access to WHS-rated courses across the country</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Posting Scores When Playing Abroad in Europe</span>
+    <h3>Cross-Border Score Posting — What You Need to Know</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>All WHS scores are portable:</strong> If you play a qualifying round at a WHS-rated course in France, Ireland, Spain, or any other EGA nation, that score produces a valid score differential that can be submitted to your home handicap record. Use the host nation's handicap app or your home app — check which platform accepts cross-border submission.</div></li>
+      <li><span class="step-n">2</span><div><strong>England Golf / Golf Genius abroad:</strong> The GOLF GENIUS app (used in England) allows posting from international WHS courses. Search for the course by name or Golf Course ID, verify the Course Rating and Slope Rating, and post your adjusted gross score normally.</div></li>
+      <li><span class="step-n">3</span><div><strong>Course Rating verification:</strong> Not every course in every European country is WHS-rated. Before assuming a round is postable, verify the course has a Course Rating and Slope Rating issued by its national federation. Most courses at established clubs are rated; new or unusual facilities may not be.</div></li>
+      <li><span class="step-n">4</span><div><strong>Playing conditions calculation:</strong> When playing abroad, the Conditions Scratch Score (CSS) or equivalent is set by the local competition committee, not your home federation. If you play a casual round (not a formal competition), your score is posted without CSS adjustment — your differential is calculated from the standard Course Rating.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- NATIONAL BODIES -->
+<div class="sec" id="nations">
+  <h2 class="sec-title">European National Golf Bodies</h2>
+  <p class="sec-desc">Each European nation runs its own national amateur championship, national order of merit, and team selection programme. The depth and structure vary significantly — from the sophisticated county system in England (covered in Guide 33) to the federation-direct model in most continental European countries.</p>
+
+  <span class="badge badge-gold">🏛️ Key National Bodies and Their Events</span>
+  <div class="card card-gold">
+    <span class="card-tag">Continental European National Structures</span>
+    <h3>The Major National Amateur Championships</h3>
+    <table class="tbl">
+      <tr><th>Nation</th><th>Flagship Amateur Event</th><th>HCP Entry</th><th>Notes</th></tr>
+      <tr><td>France</td><td>Championnat de France Amateur</td><td class="warn">2.0 or below</td><td>Strokeplay qualifying → matchplay; held at leading French courses including Le Golf National</td></tr>
+      <tr><td>Spain</td><td>Campeonato de España Amateur</td><td class="warn">2.0 or below</td><td>Strong field; Spain produces top-ranked European amateurs consistently; year-round sunshine extends competitive season</td></tr>
+      <tr><td>Germany</td><td>Deutsches Amateur-Golf-Meisterschaft</td><td class="warn">2.0 or below</td><td>One of the strongest continental fields; Bavaria and the Rhine valley have excellent course infrastructure</td></tr>
+      <tr><td>Sweden</td><td>SM i Golf (Swedish Amateur)</td><td class="warn">4.0 or below (men)</td><td>Sweden's junior pipeline produces consistently high-ranking EGA players; summer-only season (May–September)</td></tr>
+      <tr><td>Netherlands</td><td>Nederlands Amateur Kampioenschap</td><td class="warn">2.0 or below</td><td>Small but competitive field; Dutch players often compete in Belgian and German events for volume</td></tr>
+      <tr><td>Belgium</td><td>Belgian Amateur Championship</td><td class="warn">3.0 or below</td><td>Strong club culture; cross-border play with Netherlands and France common</td></tr>
+      <tr><td>Portugal</td><td>Campeonato Nacional Amateur</td><td class="warn">3.0 or below</td><td>Algarve and Lisbon regions have excellent course quality; year-round competitive season possible</td></tr>
+      <tr><td>Italy</td><td>Campionato Italiano Assoluto</td><td class="warn">2.0 or below</td><td>Growing golf infrastructure; northern Italian clubs (near Milan) are the competitive hub</td></tr>
+      <tr><td>Denmark</td><td>Danish Amateur Championship (DM)</td><td class="warn">4.0 or below</td><td>Scandinavia's second-largest golf nation; summer-focused season; strong junior development</td></tr>
+      <tr><td>Norway / Finland</td><td>National Amateur Championships</td><td class="good">Open to national members</td><td>Short summer seasons (June–August); committed competitive golfer base</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">How to Enter a Continental National Championship</span>
+    <h3>The Process for Foreign Nationals</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Amateur status verification:</strong> All EGA national championships require current amateur status under R&A rules. Your home national federation (England Golf, Golf Ireland, etc.) can provide amateur status confirmation if required by a foreign federation.</div></li>
+      <li><span class="step-n">2</span><div><strong>WHS Handicap Index requirement:</strong> Your home WHS index is the entry credential — no conversion needed. Bring a printed or digital copy of your current Handicap Index certificate from your home federation's platform.</div></li>
+      <li><span class="step-n">3</span><div><strong>Entry through the host federation:</strong> Most continental national championships accept foreign nationals via direct entry on the host federation's website. Some require sponsorship by a member club of the host federation — check the specific event's conditions of entry.</div></li>
+      <li><span class="step-n">4</span><div><strong>Language:</strong> All major EGA nations publish their championship entry forms in English alongside their national language. The EGA website (ega-golf.ch) lists all member federation contacts and links to national championship calendars.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- EGA EVENTS -->
+<div class="sec" id="ega_events">
+  <h2 class="sec-title">EGA Events — Pan-European Championships</h2>
+  <p class="sec-desc">The European Golf Association runs a comprehensive calendar of championships that sit above national events. EGA events attract the best amateur players from all 47 member nations and carry significant WAGR ranking points. They are the pathway to Walker Cup, Eisenhower Trophy, and European team golf.</p>
+
+  <span class="badge badge-lime">🏆 EGA Championship Calendar</span>
+  <div class="card">
+    <span class="card-tag">EGA Individual Championships</span>
+    <h3>The Full EGA Individual Event Calendar</h3>
+    <table class="tbl">
+      <tr><th>Championship</th><th>Age / Category</th><th>HCP Limit</th><th>Format</th><th>WAGR Points</th></tr>
+      <tr><td>EGA Amateur Championship</td><td>All men, 18+</td><td class="bad">2.0 or below</td><td>36-hole stroke qualifying → matchplay</td><td class="good">Significant</td></tr>
+      <tr><td>EGA Senior Amateur (55+)</td><td>Men 55+</td><td class="warn">5.0 or below</td><td>54-hole strokeplay</td><td class="warn">Moderate</td></tr>
+      <tr><td>EGA Boys' Championship (U18)</td><td>Boys under 18</td><td class="warn">5.0 or below</td><td>Stroke qualifying → matchplay</td><td class="warn">Moderate</td></tr>
+      <tr><td>EGA Girls' Championship</td><td>Girls under 18</td><td class="warn">8.0 or below</td><td>Stroke qualifying → matchplay</td><td class="warn">Moderate</td></tr>
+      <tr><td>EGA Mid-Amateur (35+)</td><td>Men 35+</td><td class="warn">3.4 or below</td><td>54-hole strokeplay</td><td class="good">Moderate</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The EGA Amateur Championship</strong> is the flagship event. Held at a rotating venue across EGA member nations (recent hosts include Spain, Ireland, France, and Sweden), it typically draws 100–150 players. For a UK scratch player, qualifying for the EGA Amateur is the equivalent stepping stone to the R&A Amateur — a realistic elite amateur ambition for a plus-handicap or scratch player with national event experience.</p>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">EGA Team Championships</span>
+    <h3>Nations Competing Against Nations</h3>
+    <table class="tbl">
+      <tr><th>Championship</th><th>Teams</th><th>Format</th><th>Significance</th></tr>
+      <tr><td>European Team Championship (Men)</td><td>National teams of 6</td><td>Foursomes + singles matchplay</td><td class="good">Primary qualifier for Eisenhower Trophy; WAGR exposure</td></tr>
+      <tr><td>European Team Championship (Women)</td><td>National teams of 6</td><td>Foursomes + singles matchplay</td><td class="good">Primary qualifier for Espirito Santo Trophy</td></tr>
+      <tr><td>European Boys' Team Championship</td><td>National youth teams</td><td>Foursomes + singles matchplay</td><td class="warn">Feeds into adult national team pathways</td></tr>
+      <tr><td>Bonallack Trophy</td><td>GB&I vs Continent of Europe</td><td>Matchplay (Ryder Cup format)</td><td class="good">Prestigious biennial event; stepping stone to full international matches</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">How to Qualify for EGA Events</span>
+    <h3>The Pathway from Club Level to Pan-European Competition</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Via national federation nomination:</strong> For EGA team events, players are selected and nominated by their national federation. There is no direct entry. For England Golf players, the pathway is county golf → England Golf national squad consideration → EGA team nomination. For Golf Ireland players, the GUI/ILGU selects the Irish team.</div></li>
+      <li><span class="step-n">2</span><div><strong>Direct entry for individual EGA events:</strong> The EGA Amateur Championship, EGA Mid-Amateur, and EGA Senior Amateur accept direct entries from amateurs meeting the handicap and age criteria, submitted through your national federation. Contact your national federation (England Golf, Golf Ireland, etc.) who register your entry on your behalf.</div></li>
+      <li><span class="step-n">3</span><div><strong>WAGR ranking and selection:</strong> For team events, WAGR ranking is the primary selection criterion. Sustained performance in national events (state amateurs in the UK, major amateur championships in Ireland) builds WAGR ranking. EGA individual events also carry WAGR points for match play round wins.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- IRELAND & SCOTLAND -->
+<div class="sec" id="ireland">
+  <h2 class="sec-title">Ireland & Scotland — The Links Heartland</h2>
+  <p class="sec-desc">Ireland and Scotland are the ancestral homes of links golf and maintain two of the richest amateur competitive traditions in the world. For any serious amateur golfer — whether Irish, Scottish, or a visitor — understanding these traditions opens access to some of the most meaningful competitive golf available.</p>
+
+  <span class="badge badge-teal">🍀 Golf Ireland — All-Island Structure</span>
+  <div class="card card-teal">
+    <span class="card-tag">Golf Ireland (GUI + ILGU)</span>
+    <h3>The Unified All-Island Golf Body</h3>
+    <p style="margin-bottom:12px;">In 2020, the Golfing Union of Ireland (GUI — men) and the Irish Ladies Golf Union (ILGU) merged into a single body: Golf Ireland. This unified all-island body covers the Republic of Ireland and Northern Ireland, administering WHS, national championships, and international team selection on a cross-border basis.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Handicap administration:</strong> Golf Ireland uses the Golf Ireland App (iOS/Android) for WHS handicap posting. Scores from any affiliated course in Ireland (North or South) post to your Golf Ireland handicap record. If you are a UK-registered player visiting Ireland, you can post scores via your Golf Genius app — Irish WHS-rated courses are in the system.</div></li>
+      <li><span class="step-n">2</span><div><strong>The Irish Amateur Open Championship:</strong> One of the most prestigious open amateur events in Europe, held annually (typically at a leading links course). Open to international entry. The Irish Amateur has a tradition dating to 1892 and attracts elite international fields. Entry via Golf Ireland (golfireland.ie) — entry windows open in February for summer events.</div></li>
+      <li><span class="step-n">3</span><div><strong>Provincial unions:</strong> Ireland's golf is organised provincially — Leinster Golf, Munster Golf, Connacht Golf, and Ulster Golf. Each runs its own provincial championship and county structures, mirroring the county system in England. Provincial results feed into Irish national team consideration.</div></li>
+      <li><span class="step-n">4</span><div><strong>Open competitions in Ireland:</strong> Irish golf clubs host a rich calendar of open competitions — open weeks where visiting amateurs can enter daily competitions at some of the world's finest links courses (Ballybunion, Lahinch, Royal County Down, Portrush, Portmarnock). These are genuine WHS-postable competitive rounds at bucket-list venues. See the Competitive Travel tab.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Scottish Golf</span>
+    <h3>The Home of Golf — A Rich Amateur Tradition</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Scottish Golf structure:</strong> Scottish Golf (formerly Scottish Golf Union) administers WHS, national championships, and county golf in Scotland. Structure mirrors England Golf — county unions, club affiliations, and a national competition ladder. The Scottish Amateur, Scottish Open Amateur, and Scottish Stroke Play Championship are the flagship events.</div></li>
+      <li><span class="step-n">2</span><div><strong>The Scottish Amateur Championship:</strong> Held annually, typically at a prominent Scottish links. Open to international amateurs with a WHS index of 2.4 or below. One of the most distinctive amateur events in golf — the history of Scottish links golf is inseparable from the history of the amateur game.</div></li>
+      <li><span class="step-n">3</span><div><strong>Links open competitions:</strong> Scottish clubs — particularly those on the Old Course St Andrews ballot system, Turnberry, Cruden Bay, Royal Dornoch, and Machrihanish — host open competitions accessible to visiting amateurs throughout summer. Entering a competition at a historic Scottish links is both a competitive experience and an incomparable golf experience.</div></li>
+      <li><span class="step-n">4</span><div><strong>R&A links:</strong> The R&A (which co-administers the Rules of Golf with the USGA and organises The Open Championship) is based in St Andrews and has close links to Scottish Golf. The R&A's Quadrangular event is one of the most prestigious annual amateur team events and is connected to the Scottish Golf pathway at elite level.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- OPEN QUALIFYING -->
+<div class="sec" id="open_qualifying">
+  <h2 class="sec-title">The Open Championship — Amateur Qualifying</h2>
+  <p class="sec-desc">The Open Championship (The Open) has a genuine open qualifying structure — every amateur with a WHS Handicap Index of 0.4 or below can enter regional qualifying. For European amateurs targeting the summit of the game, this is the pathway.</p>
+
+  <span class="badge badge-rust">⛳ The Open Qualifying Structure</span>
+  <div class="card card-rust">
+    <span class="card-tag">How Any Eligible Amateur Can Enter The Open</span>
+    <h3>Regional → Final Qualifying — The Two-Stage Process</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Eligibility:</strong> WHS Handicap Index of 0.4 or below as of the entry deadline. Entry opens at randa.org in January/February. Entry fee approximately £100. Any amateur meeting the handicap requirement can enter — nationality is irrelevant.</div></li>
+      <li><span class="step-n">2</span><div><strong>Regional qualifying (May):</strong> Held at qualifying venues across the UK and Ireland, with additional sites in Europe, North America, and internationally. Typically 18 holes — the top 1–3 players per site advance to final qualifying. Fields at most regional sites are 60–100 players. A links course, a scratch field, tournament conditions — a genuinely demanding competitive experience regardless of whether you advance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Final qualifying (July, week before The Open):</strong> 36 holes at four designated final qualifying sites (typically the week before The Open). 4–6 players per site advance to the championship. Final qualifying is elite professional and amateur competition — advancing from final qualifying places you among the top 0.1% of amateur golfers in the world.</div></li>
+      <li><span class="step-n">4</span><div><strong>The realistic target:</strong> For a scratch player in Europe, entering regional qualifying annually from scratch onwards is appropriate. Expect to shoot 2–4 under par to advance from regional qualifying (field-dependent, course-dependent). Final qualifying requires Tour-standard golf over 36 holes. Regional qualifying is the achievable annual benchmark; final qualifying is a career-pinnacle performance.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Other Major Open Qualifying — European Perspective</span>
+    <h3>Additional Routes for European Amateurs</h3>
+    <table class="tbl">
+      <tr><th>Event</th><th>Qualification</th><th>Amateur Access</th><th>HCP Required</th></tr>
+      <tr><td>The Open Championship</td><td>Regional + Final qualifying</td><td class="good">Full open qualifying</td><td>0.4 or below</td></tr>
+      <tr><td>US Open</td><td>Local + Sectional qualifying</td><td class="good">Full open qualifying (US sites + international sites)</td><td>1.4 or below</td></tr>
+      <tr><td>AIG Women's Open</td><td>Regional qualifying</td><td class="good">Open to amateurs</td><td>2.4 or below</td></tr>
+      <tr><td>The Masters</td><td>No qualifying — invitation only</td><td class="bad">Top-ranked amateurs invited; no open route</td><td>WAGR top 50</td></tr>
+      <tr><td>PGA Championship (US)</td><td>Closed — no amateur qualifying</td><td class="bad">No amateur route</td><td>—</td></tr>
+      <tr><td>DP World Tour (Challenge Tour)</td><td>Qualifying school — professional</td><td class="bad">Requires professional status</td><td>—</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- COMPETITIVE TRAVEL -->
+<div class="sec" id="travel">
+  <h2 class="sec-title">Competitive Travel in Europe</h2>
+  <p class="sec-desc">One of the great advantages of European amateur golf is accessibility. Within a 3-hour flight of most UK and Irish airports, you can compete on some of the finest courses in the world — from Spanish coastal courses to Scandinavian parkland to Portuguese links. Competitive travel adds breadth to your game and exposure to different conditions that pure home competition cannot replicate.</p>
+
+  <span class="badge badge-lime">✈️ The European Competitive Travel Opportunity</span>
+  <div class="card">
+    <span class="card-tag">Open Competition Calendar — Key European Destinations</span>
+    <h3>Where to Compete When Travelling</h3>
+    <table class="tbl">
+      <tr><th>Destination</th><th>Best Time</th><th>Competition Access</th><th>Golf Character</th></tr>
+      <tr><td>Ireland (South & West)</td><td>May–September</td><td class="good">Open weeks at Ballybunion, Lahinch, Waterville, Tralee</td><td>Coastal links; often windy; matchplay and stroke play available</td></tr>
+      <tr><td>Ireland (North)</td><td>May–September</td><td class="good">Royal Portrush open competitions; North of Ireland Championship</td><td>Championship links; world-class facilities</td></tr>
+      <tr><td>Scotland</td><td>May–August</td><td class="good">Open competitions at Dornoch, Cruden Bay, Machrihanish, Brora</td><td>Remote links; unique golfing character; WHS-postable</td></tr>
+      <tr><td>Spain (mainland)</td><td>March–May; Sept–Nov</td><td class="good">RFEGOLF open events; club open competitions</td><td>Parkland and coastal; year-round; growing competitive scene</td></tr>
+      <tr><td>Portugal (Algarve)</td><td>March–May; Sept–Nov</td><td class="warn">Club open competitions; fewer formal open events</td><td>Clifftop and parkland; excellent course quality; tourist-friendly</td></tr>
+      <tr><td>France (Brittany / Loire)</td><td>May–September</td><td class="warn">FFG regional events; club open competitions</td><td>Parkland and heathland; excellent infrastructure; quiet</td></tr>
+      <tr><td>Sweden / Denmark</td><td>June–August only</td><td class="warn">National federation events; limited to summer window</td><td>Parkland and coastal links; excellent hospitality; light evenings</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Irish Open Weeks — The Best-Kept Secret in Amateur Golf</span>
+    <h3>Competing at World-Class Irish Links for Less Than a Holiday</h3>
+    <p style="margin-bottom:12px;">Irish golf clubs hosting "open weeks" — typically in June and July — run daily competitions open to visiting amateurs of any nationality. Entry fees are typically €20–€40. You can enter the morning competition, play a world-class links course in a genuine competitive format, receive a score, post it to your WHS handicap, and experience Irish links golf at its finest — all in one day.</p>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Ballybunion Golf Club (Kerry):</strong> Open week in July. One of the finest links courses in the world. The competition is taken seriously by the local field — bring your game. Check ballybunioungolfclub.ie for the open week schedule.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Lahinch Golf Club (Clare):</strong> Open week in August. Consistently rated in the world top-100. The community atmosphere makes it one of the most enjoyable competitive experiences in Irish golf.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Waterville Golf Links (Kerry):</strong> Open week in July. Remote, spectacular, and genuinely competitive. Often attracts strong international fields.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Portstewart Golf Club (Antrim):</strong> Open competitions throughout summer. Championship links that has hosted the Irish Open. Northern Ireland hospitality.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Practical Competitive Travel Checklist</span>
+    <h3>Before You Travel to Compete in Europe</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Bring proof of WHS Handicap Index:</strong> A screenshot or printout of your current Handicap Index from your home platform. Some competitions require this for entry verification. Your phone is usually sufficient — screenshot your Golf Genius or Golf Ireland app showing your current index and date.</div></li>
+      <li><span class="step-n">2</span><div><strong>Check entry requirements in advance:</strong> Most Irish open week competitions require pre-booking. Do not arrive expecting to enter on the day — popular competitions fill weeks in advance. Email the club secretary or use the club's online booking system.</div></li>
+      <li><span class="step-n">3</span><div><strong>Know the local rules:</strong> Every course has local rules. Read the local rules card before the round. Ground Under Repair, out-of-bounds definitions, and stroke-and-distance alternatives may differ from your home club.</div></li>
+      <li><span class="step-n">4</span><div><strong>Post your score:</strong> After every qualifying round, post your score through your home platform. Don't forget — a WHS round played abroad is only valuable for your handicap if you post it.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">EUROPEAN COMPETITIVE PATHWAY · GUIDE 57 · THE SCRATCH PROJECT · COMPETE · EGA · WHS COMPATIBLE · GLOBAL GOLF</div>
+</body>
+</html>

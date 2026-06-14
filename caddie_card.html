@@ -143,6 +143,21 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 /* ─── FOOTER ─── */
 .card-footer{text-align:center;padding:20px 16px 8px;font-family:'Courier Prime',monospace;font-size:8px;color:rgba(232,240,216,0.2);letter-spacing:0.16em;text-transform:uppercase;}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -171,6 +186,18 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 
 <!-- ═══ WEDGE MATRIX ═══ -->
 <div class="panel active" id="wedge">
+
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+    <p style="font-family:'Courier Prime',monospace;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--lime);margin:0 0 6px;">📋 How to Personalise This Card — 10 Minutes, Once</p>
+    <p style="font-size:11px;color:var(--muted);line-height:1.7;margin:0;">
+      This card is yours to fill in. Tap any number field and type your own values — they save automatically on this device.
+      <strong style="color:var(--white);">Wedges tab:</strong> run the Mevo Gen2 calibration session in Guide 51 (Gap Zone Mastery) or Guide 22 (Wedge Distances) and enter your real carry numbers for each clock position.
+      <strong style="color:var(--white);">Wind tab:</strong> no input needed — the calculator works from your wedge numbers automatically.
+      <strong style="color:var(--white);">Dispersion tab:</strong> enter your lateral spread from Guide 11 (Shot Dispersion) once you've logged 20+ rounds on Arccos.
+      <strong style="color:var(--white);">SG Targets tab:</strong> enter your current SG numbers from Guide 26 (Stats Interpretation) to track progress against your phase targets.
+      Update every 6 months, after any equipment change, or after a launch monitor fitting (Guide 55).
+    </p>
+  </div>
 
   <p class="sec-head">Your Personal Wedge Matrix (carry yards)</p>
   <div class="matrix-note">

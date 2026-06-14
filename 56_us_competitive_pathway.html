@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-13 · 56_us_competitive_pathway.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>US Competitive Pathway — The Scratch Project</title>
+<meta name="description" content="The complete US amateur golf competitive pathway — GHIN handicap, USGA structure, state golf associations, AJGA, Mid-Amateur, US Amateur qualifying, US Open local qualifying, and how to build a year-round US competition calendar from any handicap level.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.warn-box{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.warn-box p{color:rgba(240,208,112,.9);}.warn-box strong{color:var(--gold-hi);}
+.pull-quote{border-left:3px solid var(--lime);padding:12px 18px;margin:20px 0;background:var(--lime-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--white);margin-bottom:4px;}
+.pull-quote span{font-size:11px;color:var(--muted);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+const TIER = 'standard';
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro' && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite') { el.remove(); return; }
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">&#8962; Home</a>
+
+<div class="hero">
+  <p class="hero-label">Compete Playbook · Guide 56</p>
+  <h1>US Competitive<br><em>Pathway</em></h1>
+  <p class="hero-sub">The complete American amateur golf competitive ladder — GHIN handicap mechanics, USGA event structure, state golf association competitions, Mid-Amateur, US Amateur qualifying, US Open local qualifying, and how to build a year-round US competition calendar at every handicap level.</p>
+  <div class="hero-tags">
+    <span class="htag">🇺🇸 GHIN / USGA</span>
+    <span class="htag">🏛️ State Associations</span>
+    <span class="htag">🏆 US Amateur</span>
+    <span class="htag">⛳ Mid-Amateur</span>
+    <span class="htag">🔓 US Open Qualifying</span>
+    <span class="htag">📅 Season Calendar</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('ghin',this)">GHIN & WHS</button>
+  <button class="tab" onclick="show('club',this)">Club Competitions</button>
+  <button class="tab" onclick="show('state',this)">State Associations</button>
+  <button class="tab" onclick="show('usga',this)">USGA Events</button>
+  <button class="tab" onclick="show('qualifying',this)">Open Qualifying</button>
+  <button class="tab" onclick="show('calendar',this)">Season Calendar</button>
+  <button class="tab" onclick="show('college',this)">College & Junior</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">The US Amateur Competitive Structure</h2>
+  <p class="sec-desc">American amateur golf operates through a three-tier structure: club competitions form the base, state golf associations run regional events in the middle, and the USGA administers national championships at the top. Understanding this structure — and which level to target at which handicap — turns a scattered competition schedule into a deliberate development programme.</p>
+
+  <div class="pull-quote">
+    <p>"The depth of American amateur golf is extraordinary. A scratch player in the US has access to more high-quality competition than almost anywhere else in the world — through 59 state golf associations and a USGA calendar of more than a dozen national championships."</p>
+    <span>— USGA Amateur Development</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The Three-Tier Structure</span>
+    <h3>How US Amateur Golf Is Organised</h3>
+    <table class="tbl">
+      <tr><th>Tier</th><th>Administrator</th><th>Events</th><th>HCP Range</th></tr>
+      <tr><td>Club level</td><td>Individual golf clubs</td><td>Club championships, member-guests, interclub</td><td class="good">All handicaps</td></tr>
+      <tr><td>State / regional</td><td>State Golf Associations (59 total)</td><td>State amateur, state open, mid-am, senior am</td><td class="warn">Typically 0–5 for championship events</td></tr>
+      <tr><td>National</td><td>USGA</td><td>US Amateur, Mid-Amateur, Public Links, Senior, Women's events</td><td class="bad">Scratch or near-scratch required</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">WHS in the US — The Key Fact</span>
+    <h3>All US WHS Handicaps Are Fully Portable</h3>
+    <p>The United States fully adopted the World Handicap System in 2020. A GHIN (Golf Handicap and Information Network) handicap index is a WHS handicap — the same system used in the UK, Ireland, Australia, Europe, and 100+ other countries. Your GHIN index is valid worldwide. A UK player visiting the US with a Golf England WHS index can enter any open USGA-affiliated event without conversion. A US GHIN player visiting the UK can post scores to GHIN from any WHS-affiliated course globally.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The US Competitive Ladder — A Clear Progression</span>
+    <h3>Where to Focus at Each Handicap Level</h3>
+    <table class="tbl">
+      <tr><th>Handicap Range</th><th>Primary Competition Focus</th><th>Key Events</th></tr>
+      <tr><td>18–10</td><td class="good">Club competitions; local open amateurs</td><td>Club championship, club invitationals, charity pro-ams</td></tr>
+      <tr><td>10–5</td><td class="good">State association events; interclub</td><td>State mid-am, state four-ball, regional opens</td></tr>
+      <tr><td>5–2</td><td class="warn">State amateur; USGA qualifying</td><td>State amateur, state open, USGA Mid-Amateur qualifying</td></tr>
+      <tr><td>2–scratch</td><td class="warn">USGA events; US Amateur qualifying</td><td>US Amateur sectional qualifying, state open, USGA Mid-Am</td></tr>
+      <tr><td>Scratch and below</td><td class="bad">USGA national championships; Walker Cup pathway</td><td>US Amateur, Walker Cup trials, USGA team events</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- GHIN & WHS -->
+<div class="sec" id="ghin">
+  <h2 class="sec-title">GHIN & the WHS in the United States</h2>
+  <p class="sec-desc">GHIN (Golf Handicap and Information Network) is the USGA's official handicap administration platform and the largest golf handicap database in the world, used by over 3 million golfers. Since January 2020, GHIN has operated under the WHS algorithm.</p>
+
+  <span class="badge badge-teal">📊 GHIN Mechanics</span>
+  <div class="card card-teal">
+    <span class="card-tag">How GHIN Calculates Your Handicap Index</span>
+    <h3>Best 8 of Most Recent 20 — Identical to WHS Worldwide</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Score Differential:</strong> Identical WHS formula — (Adjusted Gross Score − Course Rating) × (113 ÷ Slope Rating). Every USGA-rated course has a published Course Rating and Slope Rating. Slope ratings in the US typically range from 55 to 155; most courses fall between 110 and 140. A Slope of 113 is "standard" — the average across all courses.</div></li>
+      <li><span class="step-n">2</span><div><strong>Best 8 of 20:</strong> Same as WHS globally. Average of best 8 score differentials from most recent 20 qualifying rounds, multiplied by 0.96. Handicap Index updates daily. High scores (outliers) are protected by the Soft Cap (+5.0 above low) and Hard Cap (+7.0 above low).</div></li>
+      <li><span class="step-n">3</span><div><strong>The GHIN App (free):</strong> Available on iOS and Android. Post scores directly from the course, view your current Handicap Index, see your scoring history and differentials, look up course ratings for any USGA-affiliated course, and access score posting for general play rounds. The GHIN app is the primary score posting tool for most American golfers — equivalent to Golf Genius in the UK.</div></li>
+      <li><span class="step-n">4</span><div><strong>Score posting in the US:</strong> You can post scores from any USGA-rated course in the US and worldwide via the GHIN app. You must post from a minimum of 7 holes (counts as a 9-hole round). 9-hole scores are combined in pairs to create 18-hole differentials. There is no requirement to have a playing companion witness your score for general play rounds, though many state associations require a witness for competitive entries.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Getting a GHIN Handicap</span>
+    <h3>Establishment and Membership</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Join a USGA-affiliated club or association:</strong> A GHIN handicap requires membership in a golf club or association that is affiliated with its state golf association and the USGA. Most private and semi-private clubs offer GHIN as part of membership. Many state associations offer associate memberships specifically for access to a GHIN handicap without full club membership — typically $20–$50/year.</div></li>
+      <li><span class="step-n">2</span><div><strong>Establishment:</strong> An initial Handicap Index can be established from as few as 3 18-hole scores (or 6 9-hole scores). The initial index uses a modified calculation that is slightly more conservative than the full 8-of-20 system. After 20 rounds are posted, the full system applies.</div></li>
+      <li><span class="step-n">3</span><div><strong>Course Handicap vs Handicap Index:</strong> Your Handicap Index (the portable number) is not the same as your Course Handicap (the strokes you receive at a specific course). Course Handicap = Handicap Index × (Slope Rating ÷ 113) ± (Course Rating − Par). The GHIN app calculates this automatically for any course.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>US vs UK posting difference:</strong> In the US, players are expected to post every hole score (adjusted for maximum hole score = net double bogey) whenever they play a rated course, even informally. "Selective posting" — only posting good rounds — is a violation of GHIN policy and can result in handicap revision or committee review. The system is designed around complete data.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Slope Rating — The US-Originated Innovation</span>
+    <h3>Why Slope Makes the WHS Work Internationally</h3>
+    <p>Slope Rating was developed by the USGA in the 1980s to measure course difficulty for bogey golfers relative to scratch golfers. A Slope of 113 means the course is of average difficulty for bogey golfers. A Slope of 145 means bogey golfers find it significantly harder than scratch players do. When you travel internationally, the Slope ensures your Course Handicap correctly reflects the relative difficulty of the new course — which is why a GHIN index works seamlessly on a UK links and an Irish parkland course.</p>
+  </div>
+</div>
+
+<!-- CLUB COMPETITIONS -->
+<div class="sec" id="club">
+  <h2 class="sec-title">Club Competitions</h2>
+  <p class="sec-desc">The American club competition calendar is the starting point for every serious amateur golfer. Formats, timing, and emphasis differ from UK clubs in several important ways — understanding the differences helps you build the most effective competitive schedule from your home club.</p>
+
+  <span class="badge badge-lime">🏌️ The US Club Calendar</span>
+  <div class="card">
+    <span class="card-tag">Standard US Club Competition Formats</span>
+    <h3>What American Clubs Typically Offer</h3>
+    <table class="tbl">
+      <tr><th>Competition</th><th>Typical Timing</th><th>Format</th><th>Notes</th></tr>
+      <tr><td>Club Championship</td><td>July–September</td><td>Strokeplay qualifying → matchplay bracket</td><td class="good">The most prestigious club event; matchplay final a tradition at many clubs</td></tr>
+      <tr><td>Net Championship</td><td>Alongside Club Champ</td><td>Strokeplay, full handicap</td><td class="good">Often run simultaneously with scratch championship</td></tr>
+      <tr><td>Member-Guest</td><td>Spring/Summer</td><td>Various — best ball, scramble, stroke</td><td class="warn">Social but competitive; handicap usually applied</td></tr>
+      <tr><td>Club Invitational</td><td>Summer</td><td>Strokeplay or best ball</td><td class="good">Often open to members of other clubs; good competitive exposure</td></tr>
+      <tr><td>Weekend Stroke Play</td><td>Year-round (climate-dependent)</td><td>Strokeplay, handicap or scratch</td><td class="good">Primary GHIN score posting opportunity</td></tr>
+      <tr><td>Interclub / League</td><td>Spring–Fall</td><td>Team matchplay (9-hole or 18-hole)</td><td class="warn">Format varies significantly by region and club</td></tr>
+      <tr><td>Twilight / 9-hole events</td><td>Weekday evenings</td><td>9-hole, various formats</td><td class="good">Postable for GHIN; useful during high-volume training phases</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Key Differences from UK Club Golf</span>
+    <h3>What American Golfers Need to Know</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Matchplay is more prominent at club level in the US:</strong> The Club Championship typically concludes with a matchplay bracket after strokeplay qualifying — a tradition at most private clubs. UK club golf is predominantly strokeplay. Understanding matchplay strategy (Guide 52) is directly relevant to US club golf.</div></li>
+      <li><span class="step-n">2</span><div><strong>Pace of play expectations differ:</strong> US private clubs generally expect 4 hours for 18 holes. Many clubs enforce pace with marshals. Slow play is treated more seriously at competitive events than in much of UK club golf.</div></li>
+      <li><span class="step-n">3</span><div><strong>Cart vs walking:</strong> Many US clubs require carts (especially in hot/humid climates). Walking with a caddie is less common than in the UK at club level, though it is returning at higher-end private clubs. Arccos Air tracking is unaffected by cart use.</div></li>
+      <li><span class="step-n">4</span><div><strong>Scramble and team formats dominate social golf:</strong> The scramble (best ball on every shot, all play from that position) is the most common format for charity events and member-guests. It is excellent for fundraising but does not produce GHIN-postable scores. Recognise it for what it is: social golf, not competitive training.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- STATE ASSOCIATIONS -->
+<div class="sec" id="state">
+  <h2 class="sec-title">State Golf Associations</h2>
+  <p class="sec-desc">There are 59 state and regional golf associations in the US, each running their own calendar of events. State association competitions are the primary stepping stone between club golf and USGA national events — and the level where serious amateur development happens for most players.</p>
+
+  <span class="badge badge-gold">🏛️ Finding Your State Association</span>
+  <div class="card card-gold">
+    <span class="card-tag">The 59 US State and Regional Golf Associations</span>
+    <h3>How to Access Their Events</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Find your association:</strong> Visit <strong>usga.org</strong> → Golf Handicapping → Find a Golf Association, or search "[your state] Golf Association." Major associations: CSGA (Connecticut), NCGA (Northern California), SCGA (Southern California), NYSGA (New York), FSGA (Florida), TGA (Texas), CIGA (Chicago), PNGA (Pacific Northwest). Each has its own website and event calendar.</div></li>
+      <li><span class="step-n">2</span><div><strong>Associate membership:</strong> Most state associations offer an associate membership tier ($30–$80/year) that provides access to their event calendar, a GHIN handicap, and the ability to enter state-level competitions. If your club doesn't offer competitive events, joining your state association directly is the route to competition.</div></li>
+      <li><span class="step-n">3</span><div><strong>Handicap requirements:</strong> State amateur championships typically require a GHIN Handicap Index of 2.4 or below. State mid-amateur events (for players 25 and over) typically require 3.4 or below. State senior events often have less stringent requirements. Check your specific state association's entry criteria.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Typical State Association Event Calendar</span>
+    <h3>What's Available and When</h3>
+    <table class="tbl">
+      <tr><th>Event Type</th><th>HCP Limit (Typical)</th><th>Timing</th><th>Format</th></tr>
+      <tr><td>State Amateur Championship</td><td class="warn">0–2.4</td><td>June–August</td><td>72-hole strokeplay (qualifying + championship rounds)</td></tr>
+      <tr><td>State Mid-Amateur (25+)</td><td class="warn">0–3.4</td><td>Spring or Fall</td><td>54 or 72-hole strokeplay</td></tr>
+      <tr><td>State Open</td><td class="good">Usually open to all amateurs</td><td>Summer</td><td>54-72 hole strokeplay — played alongside club professionals</td></tr>
+      <tr><td>State Senior Amateur (50+)</td><td class="warn">0–5.4</td><td>Fall</td><td>54-hole strokeplay</td></tr>
+      <tr><td>State Four-Ball</td><td class="good">Varies — often 5–8 HCP limit</td><td>Spring</td><td>Best-ball matchplay or strokeplay</td></tr>
+      <tr><td>State Match Play</td><td class="warn">0–3.4</td><td>Various</td><td>Single elimination matchplay bracket</td></tr>
+      <tr><td>Regional Opens / Invitationals</td><td class="good">Often open field</td><td>Year-round</td><td>Various — good for reps at competitive level</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">The State Open — The Most Accessible Top-Level Event</span>
+    <h3>Why Every Serious Amateur Should Enter Their State Open</h3>
+    <p style="margin-bottom:12px;">Most state opens are open to all amateurs with a GHIN index, regardless of handicap. They are typically 54 or 72 holes of strokeplay played alongside club professionals, making them the most direct exposure to professional-standard playing conditions available to club amateurs. The field is not as elite as the USGA Amateur — but the format, pace, and concentration are completely different from club competition.</p>
+    <p>For a player developing from 10 HCP to scratch, entering the state open is valuable from 5 HCP onwards — not to make the cut, but to experience elite competitive pace, multi-round endurance, and the mental load of extended strokeplay competition. One state open every year from 5 HCP downward is a significant pressure inoculation tool.</p>
+  </div>
+</div>
+
+<!-- USGA EVENTS -->
+<div class="sec" id="usga">
+  <h2 class="sec-title">USGA National Championships</h2>
+  <p class="sec-desc">The USGA administers thirteen national amateur championships annually. At the top is the US Amateur — the most prestigious amateur event in American golf. Below it sits a structured system of age-grouped and format-specific events that provide a competitive home for serious amateurs at every stage of development.</p>
+
+  <span class="badge badge-lime">🏆 The USGA Amateur Calendar</span>
+  <div class="card">
+    <span class="card-tag">USGA Amateur Championships — Full Calendar</span>
+    <h3>All Thirteen Events and Their Eligibility</h3>
+    <table class="tbl">
+      <tr><th>Championship</th><th>Age</th><th>HCP Limit</th><th>Typical Date</th><th>Format</th></tr>
+      <tr><td>US Amateur</td><td>Any</td><td class="bad">2.4 or below</td><td>Mid-August</td><td>36-hole stroke qualifying → 64-player matchplay</td></tr>
+      <tr><td>US Mid-Amateur</td><td class="warn">25+</td><td class="bad">3.4 or below</td><td>Late September</td><td>36-hole stroke qualifying → matchplay</td></tr>
+      <tr><td>US Senior Amateur</td><td class="warn">55+</td><td class="warn">7.4 or below</td><td>August</td><td>Stroke qualifying → matchplay</td></tr>
+      <tr><td>US Super Senior Amateur</td><td class="warn">65+</td><td class="warn">10.4 or below</td><td>July</td><td>Stroke qualifying → matchplay</td></tr>
+      <tr><td>US Amateur Four-Ball</td><td>Any</td><td class="bad">5.4 combined avg</td><td>May</td><td>Stroke qualifying → matchplay pairs</td></tr>
+      <tr><td>US Junior Amateur</td><td class="good">Under 18</td><td>None</td><td>July</td><td>Stroke qualifying → matchplay</td></tr>
+      <tr><td>USGA Women's Amateur</td><td>Any</td><td class="bad">2.4 or below</td><td>August</td><td>Stroke qualifying → matchplay</td></tr>
+      <tr><td>US Women's Mid-Amateur</td><td class="warn">25+</td><td class="warn">5.4 or below</td><td>October</td><td>Stroke qualifying → matchplay</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The US Amateur — What to Understand</span>
+    <h3>The Most Prestigious Title in American Amateur Golf</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Qualifying structure:</strong> The US Amateur uses a two-stage qualifying process. Local qualifying is held at clubs nationwide in May–June — typically one 18-hole round, with a small number of players advancing per site. Sectional qualifying follows — a 36-hole event with a larger field, producing the 312 players who compete in the championship proper. Entry through usga.org opens in April.</div></li>
+      <li><span class="step-n">2</span><div><strong>Championship format:</strong> 36 holes of stroke play at the host course determines the bracket. The low 64 and ties advance to matchplay. The matchplay bracket is single-elimination, 18-hole rounds through the quarterfinals, then 36-hole semis and final. The champion wins the most sought-after amateur trophy in America.</div></li>
+      <li><span class="step-n">3</span><div><strong>WAGR points:</strong> The US Amateur carries significant WAGR (World Amateur Golf Ranking) points. Reaching the match play stages, and particularly the final rounds, generates ranking points that feed into Walker Cup and USGA team selection. For players with national ambitions, WAGR visibility starts here.</div></li>
+      <li><span class="step-n">4</span><div><strong>Amateur status:</strong> Competing in USGA events requires current amateur status under R&A/USGA Rules. Players who have played for cash prizes, accepted appearance money, or been compensated for instructional activities may have compromised their amateur status. Check usga.org/rules/amateur-status before entering.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The US Mid-Amateur — The Overlooked Championship</span>
+    <h3>The Most Realistic USGA Target for Most Serious Amateurs</h3>
+    <p style="margin-bottom:12px;">The US Mid-Amateur (for players 25 and over) is the most achievable USGA championship for club-level serious amateurs. The field is elite but typically less deep than the US Amateur — many players who competed collegiately return to competitive golf in their 30s and 40s and find the Mid-Am their natural competitive home.</p>
+    <p>For a scratch player at 30+, the US Mid-Amateur should be an annual entry target. Local qualifying is a realistic aspiration from scratch; sectional qualifying represents genuine top-level amateur performance; competing in the championship itself is the equivalent of county team golf at the national level.</p>
+  </div>
+</div>
+
+<!-- OPEN QUALIFYING -->
+<div class="sec" id="qualifying">
+  <h2 class="sec-title">US Open & Major Qualifying</h2>
+  <p class="sec-desc">The US Open is one of the few major championships with a genuine open qualifying structure — any professional or amateur golfer with a valid GHIN index of 1.4 or below can enter. For scratch players with serious competitive ambitions, understanding this pathway is part of knowing how high the ceiling goes.</p>
+
+  <span class="badge badge-rust">⛳ The US Open Local Qualifying Pathway</span>
+  <div class="card card-rust">
+    <span class="card-tag">US Open Local Qualifying — The Process</span>
+    <h3>How Any Eligible Amateur Can Enter</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Eligibility:</strong> Any amateur with a GHIN Handicap Index of 1.4 or below (as of the entry deadline) can enter US Open local qualifying. Entry opens at usga.org in February/March for the June championship. Entry fee is approximately $150.</div></li>
+      <li><span class="step-n">2</span><div><strong>Local qualifying:</strong> Held at qualifying sites across the US in May. Typically one 18-hole round at a strong club-level course, with 2–4 players per site advancing to sectional qualifying. Fields are competitive — expect a field of 80–120 players at each site, with the majority being club professionals and mini-tour players.</div></li>
+      <li><span class="step-n">3</span><div><strong>Sectional qualifying:</strong> 36 holes in one day at designated sectional sites, held approximately 10 days before the championship. Sectional qualifiers are among the most brutal days in golf — a field of professionals and elite amateurs competing over 36 holes, with 3–10 spots per site. Advancing to the US Open from a sectional is one of the great achievements in amateur golf.</div></li>
+      <li><span class="step-n">4</span><div><strong>The realistic perspective:</strong> Local qualifying is an achievable aspiration for a scratch player who shoots in the low 70s consistently. Advancing from local qualifying requires shooting 1–3 under par. For most scratch amateurs, entering local qualifying is the right ambition — it exposes you to the quality of field, course setup, and competitive intensity that separates good club golf from elite amateur golf.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Other USGA Open Qualifiers</span>
+    <h3>Additional Open Championship Pathways</h3>
+    <table class="tbl">
+      <tr><th>Championship</th><th>Amateur Eligibility</th><th>HCP Requirement</th><th>Entry Period</th></tr>
+      <tr><td>US Senior Open (50+)</td><td class="good">Yes — amateurs welcome</td><td>2.4 or below</td><td>February–March</td></tr>
+      <tr><td>US Women's Open</td><td class="good">Yes — local qualifying available</td><td>2.4 or below</td><td>January–February</td></tr>
+      <tr><td>US Senior Women's Open (50+)</td><td class="good">Yes — amateurs welcome</td><td>7.4 or below</td><td>February–March</td></tr>
+      <tr><td>The Open Championship (R&A)</td><td class="warn">Via Regional qualifying only</td><td>0.4 or below</td><td>March–April</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The Open Championship for US amateurs:</strong> US golfers can enter The Open Championship qualifying via regional qualifying held at US sites each spring. Entry is through randa.org. The handicap requirement (0.4 or below) means this is realistically a plus-handicap ambition — but for elite amateurs, regional qualifying sites in the US do exist and are genuinely accessible.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SEASON CALENDAR -->
+<div class="sec" id="calendar">
+  <h2 class="sec-title">Building Your US Competition Calendar</h2>
+  <p class="sec-desc">The US golf season runs approximately March through October in most states (year-round in Florida, California, Texas, Arizona, and Hawaii). A structured annual competition plan maximises competitive development while leaving sufficient time for practice and physical preparation.</p>
+
+  <span class="badge badge-gold">📅 The Annual Framework</span>
+  <div class="card card-gold">
+    <span class="card-tag">Recommended Competition Calendar by Phase</span>
+    <h3>What to Enter and When — by Handicap Level</h3>
+    <table class="tbl">
+      <tr><th>Month</th><th>10–5 HCP Focus</th><th>5–Scratch Focus</th><th>Key Events</th></tr>
+      <tr><td>January–February</td><td>Winter range work; simulator golf (northern states)</td><td>Winter training; Enter USGA/State events</td><td>USGA entry deadlines open</td></tr>
+      <tr><td>March–April</td><td>Club competitions resume; state four-ball</td><td>State four-ball; enter state amateur</td><td>State association calendars live</td></tr>
+      <tr><td>May</td><td>Club invitational; local open amateurs</td><td>US Open local qualifying; state events</td><td>US Open local qualifying</td></tr>
+      <tr><td>June–July</td><td>State open entry; club championship qualifying</td><td>State open; US Amateur local qualifying</td><td>US Junior Amateur; State opens</td></tr>
+      <tr><td>August</td><td>Club championship; regional invitationals</td><td>US Amateur championship (scratch); state am</td><td>US Amateur (mid-August)</td></tr>
+      <tr><td>September</td><td>Fall state events; interclub league</td><td>State amateur; US Mid-Amateur</td><td>US Mid-Amateur (late September)</td></tr>
+      <tr><td>October–November</td><td>Season review; GHIN handicap review</td><td>Fall stroke play events; season debrief</td><td>State senior events</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Volume Guidelines — How Much Competition</span>
+    <h3>Minimum Competitive Rounds by Development Phase</h3>
+    <table class="tbl">
+      <tr><th>Phase</th><th>HCP Range</th><th>Minimum Competitive Rounds</th><th>Target Volume</th></tr>
+      <tr><td>Foundation</td><td>15–10</td><td>8 rounds/year</td><td>12–15 rounds/year</td></tr>
+      <tr><td>Development</td><td>10–5</td><td>12 rounds/year</td><td>18–24 rounds/year</td></tr>
+      <tr><td>Competitive</td><td>5–scratch</td><td>18 rounds/year</td><td>24–35 rounds/year</td></tr>
+      <tr><td>Elite</td><td>Scratch and below</td><td>25 rounds/year</td><td>35–50 rounds/year</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Quality over quantity:</strong> For most developing amateurs, 20 well-selected competitive rounds per year — across club competitions, state events, and one or two open amateurs — delivers more development than 40 casual rounds. Each competitive round should be reviewed using SG data (Guide 26) within 48 hours.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Finding US Open Amateur Events</span>
+    <h3>Key Resources for the US Competition Calendar</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>usga.org/championships:</strong> All USGA national championship schedules, entry criteria, and entry portals. Updated annually in January for the upcoming season.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Your state golf association website:</strong> The primary source for all state-level events. Subscribe to their email list — entry windows close quickly and popular events fill within days of opening.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Golfweek Amateur Tour (golfweek.com/amateur-tour):</strong> A national network of regional amateur stroke play events with handicap divisions from 0–36. Entry-level competitive golf available in most major metro areas. Postable for GHIN. Excellent for building competitive volume without the handicap restrictions of state events.</div></li>
+      <li><span class="step-n">▸</span><div><strong>TGA (The Golf Association) regional opens:</strong> Many regional golf associations run open stroke play events with fields of 50–120 players. Less prestigious than state events but competitively rigorous and excellent practice for state qualifying.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- COLLEGE & JUNIOR -->
+<div class="sec" id="college">
+  <h2 class="sec-title">College Golf & Junior Pathways</h2>
+  <p class="sec-desc">The US has the world's most developed college and junior golf pathway. For junior golfers developing toward scratch and for adults returning to competitive golf after college careers, understanding this ecosystem provides important context for the competitive environment.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The NCAA College Golf Pathway</span>
+    <h3>How College Golf Works in the US</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Division I, II, and III:</strong> NCAA golf operates at three competitive levels. Division I is the highest — 295 men's programs, 330 women's programs. Top D-I programs (Georgia, Stanford, Oklahoma State, Texas, Pepperdine) are feeder programs to the PGA Tour and LPGA Tour. D-II and D-III provide college golf without D-I scholarship intensity.</div></li>
+      <li><span class="step-n">2</span><div><strong>NCAA Amateur Status:</strong> College golfers compete under NCAA amateur rules, which differ slightly from USGA amateur status in some respects (particularly regarding instruction and sponsorship). NCAA eligibility is separate from USGA amateur status — a player can be USGA-eligible but NCAA-ineligible.</div></li>
+      <li><span class="step-n">3</span><div><strong>AJGA (American Junior Golf Association):</strong> The premier junior golf organisation in the US, running over 100 events annually with handicap-based entry and a national ranking system. AJGA performance is a key factor in D-I recruiting and feeds directly into US Junior Amateur qualifying. For players under 18, AJGA membership and events are the primary competitive development pathway.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">The Walker Cup — US Amateur's International Summit</span>
+    <h3>The US-GB&I Biennial Team Event</h3>
+    <p style="margin-bottom:12px;">The Walker Cup (played biennially, alternating US and GB&I venues) is the international amateur team event equivalent to the Ryder Cup. The US team of 10 is selected by the USGA based on WAGR ranking and US Amateur performance. For American amateurs, Walker Cup selection is the pinnacle of the amateur game — the primary route is sustained excellence in USGA championships and strong WAGR ranking from US and international events.</p>
+    <p>For US players targeting Walker Cup: the trajectory is AJGA → NCAA D-I → US Amateur match play stages → consistent WAGR top-50 ranking → USGA team consideration. It is a long-term programme, not a single-season push.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Amateur Status After College</span>
+    <h3>Returning to Amateur Competition Post-NCAA</h3>
+    <p>Many collegiate golfers who do not pursue professional careers return to serious amateur competition in their late 20s and early 30s. The US Mid-Amateur was specifically created for this population. USGA amateur status must be actively maintained — any period of professional playing activity (even mini-tour play) requires a reinstatement process. Check usga.org/rules/amateur-status before entering any USGA event if there is any question about your status history.</p>
+  </div>
+</div>
+
+<div class="footer">US COMPETITIVE PATHWAY · GUIDE 56 · THE SCRATCH PROJECT · COMPETE · GHIN · USGA · WHS COMPATIBLE</div>
+</body>
+</html>

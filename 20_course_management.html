@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Course Management — Pro Edition</title>
+<title>Course Management & Decision-Making — The Scratch Project</title>
+  <meta name="description" content="Expected value decision framework for golf. Tee strategy, approach targets, recovery decisions, and the Decade methodology for eliminating unnecessary bogeys and doubles.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -148,6 +150,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -158,7 +175,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 20</p>
+  <p class="hero-label">Score Playbook · Guide 20</p>
   <h1>Course <em>Management</em></h1>
   <p class="hero-sub">Strategic decision-making on every hole — tee shot planning, miss direction, layup vs. attack, scoring zone management, and playing to your dispersion data.</p>
   <div class="hero-tags">
@@ -182,7 +199,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- OVERVIEW -->
 <div class="sec active" id="overview">
   <h2 class="sec-title">The Management Framework</h2>
-  <p class="sec-desc">Course management is the application of probability and expected value to every shot decision. At the 10 HCP level, poor decision-making costs an estimated 3–5 strokes per round — more than most technical deficiencies. You cannot out-swing bad decisions.</p>
+  <p class="sec-desc">Course management is the application of probability and expected value to every shot decision. At club handicap level, poor decision-making costs an estimated 3–5 strokes per round — more than most technical deficiencies. You cannot out-swing bad decisions.</p>
   <span class="badge badge-gold">📊 Expected Value Thinking</span>
   <div class="card card-gold">
     <span class="card-tag">The Core Principle</span>
@@ -201,8 +218,8 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
   <div class="card">
     <span class="card-tag">Double Bogey Elimination Rule</span>
-    <h3>The Single Biggest Score Saver at 10 HCP</h3>
-    <div class="bar-group"><div class="bar-title">Score Distribution — 10 HCP Typical Round</div>
+    <h3>The Single Biggest Score Saver at Club Level</h3>
+    <div class="bar-group"><div class="bar-title">Score Distribution — Typical Club Handicap Round</div>
     <div class="bar-row"><div class="bar-lbl">Eagles</div><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><div class="bar-val">~0.05/rnd</div></div>
     <div class="bar-row"><div class="bar-lbl">Birdies</div><div class="bar-track"><div class="bar-fill gold" style="width:8%"></div></div><div class="bar-val">~1.2/rnd</div></div>
     <div class="bar-row"><div class="bar-lbl">Pars</div><div class="bar-track"><div class="bar-fill teal" style="width:55%"></div></div><div class="bar-val">~8–9/rnd</div></div>
@@ -213,7 +230,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="card card-gold">
     <span class="card-tag">Your Dispersion Cone — Know It, Use It</span>
     <h3>The Foundation of Every Target Decision</h3>
-    <table class="tbl"><tr><th>Club</th><th>10 HCP Dispersion (L/R)</th><th>Tour Dispersion</th><th>Practical Implication</th></tr>
+    <table class="tbl"><tr><th>Club</th><th>Club HCP Dispersion (L/R)</th><th>Tour Dispersion</th><th>Practical Implication</th></tr>
     <tr><td>Driver</td><td class="bad">±35–50 yds</td><td class="good">±15–20 yds</td><td>Need 70–100 yds of fairway to aim centre</td></tr>
     <tr><td>5-iron / hybrid</td><td class="warn">±25–35 yds</td><td class="good">±12 yds</td><td>Centre green minimum from 180+ yds</td></tr>
     <tr><td>8-iron</td><td class="warn">±18–25 yds</td><td class="good">±8 yds</td><td>Can attack accessible pins from 140 yds</td></tr>
@@ -267,7 +284,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="card card-gold">
     <span class="card-tag">The Four Pin Categories</span>
     <h3>Not All Pins Are Equal — Target Selection by Risk</h3>
-    <table class="tbl"><tr><th>Pin Category</th><th>Definition</th><th>10 HCP Target</th><th>Tour Target</th></tr>
+    <table class="tbl"><tr><th>Pin Category</th><th>Definition</th><th>Club HCP Target</th><th>Tour Target</th></tr>
     <tr><td class="good">Open</td><td>15+ ft from all edges, no short-side danger</td><td>Attack flag</td><td>Attack flag</td></tr>
     <tr><td class="warn">Neutral</td><td>10–15 ft from edge, mild short-side</td><td>Fat side of flag</td><td>Attack flag</td></tr>
     <tr><td class="bad">Tucked</td><td>5–10 ft from edge, hazard or rough short-side</td><td>Centre green</td><td>Fat side of flag</td></tr>
@@ -320,7 +337,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="card card-gold">
     <span class="card-tag">Scoring Zone Proximity Targets</span>
     <h3>What You Need to Hit to Achieve Scratch</h3>
-    <table class="tbl"><tr><th>Distance</th><th>Tour Avg</th><th>Scratch Target</th><th>10 HCP Typical</th></tr>
+    <table class="tbl"><tr><th>Distance</th><th>Tour Avg</th><th>Scratch Target</th><th>Club HCP Typical</th></tr>
     <tr><td>30 yards</td><td>5 ft</td><td class="good">&lt;8 ft</td><td class="bad">12–16 ft</td></tr>
     <tr><td>50 yards</td><td>8 ft</td><td class="good">&lt;12 ft</td><td class="bad">18–24 ft</td></tr>
     <tr><td>75 yards</td><td>11 ft</td><td class="warn">&lt;16 ft</td><td class="bad">26–32 ft</td></tr>
@@ -355,7 +372,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">The Decade Framework — Applied</span>
     <h3>Calculating Your Optimal Aim Point in 4 Steps</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Step 1 — Know your total dispersion at this distance:</strong> From your Guide 11 dispersion mapping and Arccos Air SG: Approach data, identify your total lateral dispersion (in yards) at the distance of the shot. At 150 yards, a 10 HCP player has approximately 55–65 yards total lateral dispersion (±27–32 yards). This is your cone width.</div></li>
+      <li><span class="step-n">1</span><div><strong>Step 1 — Know your total dispersion at this distance:</strong> From your Guide 11 dispersion mapping and Arccos Air SG: Approach data, identify your total lateral dispersion (in yards) at the distance of the shot. At 150 yards, a typical club player has approximately 55–65 yards total lateral dispersion (±27–32 yards). This is your cone width.</div></li>
       <li><span class="step-n">2</span><div><strong>Step 2 — Identify the consequences of each miss direction:</strong> For this specific flag position, what happens if you miss left vs. right vs. short vs. long? Assign a rough expected score to each miss quadrant: green fringe (best), rough but open (moderate), bunker or rough with obstacle (worse), water or OB (worst). You are building a consequence map, not just a green map.</div></li>
       <li><span class="step-n">3</span><div><strong>Step 3 — Shift the aim point toward the lower-consequence side:</strong> If missing right puts you in a bunker (−0.6 strokes vs fringe) but missing left leaves a short pitch from thin rough (+0.1 strokes vs fringe), your optimal aim point shifts left of your natural instinct — even if that means a slightly longer putt on a well-struck shot. You are optimising the distribution, not the perfect outcome.</div></li>
       <li><span class="step-n">4</span><div><strong>Step 4 — Club up by default:</strong> In all but the most specific circumstances (firm greens running away, water long), the shot that lands short of the green produces a worse expected score than the shot that lands long. Club up until you have a reason not to, not down until you have a reason to go more. This single habit, applied consistently over 18 holes, is typically worth 0.5–0.8 SG: Approach per round.</div></li>
@@ -416,7 +433,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Par 3 Strategy</span>
     <h3>Club to the Fat Part of the Green</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Never attack a tucked par-3 pin:</strong> The expected score from a par-3 approach to the fat side of the green is better than attacking a tucked flag for a 10 HCP. Short-siding on a par 3 is the most common double-bogey trigger.</div></li>
+      <li><span class="step-n">1</span><div><strong>Never attack a tucked par-3 pin:</strong> The expected score from a par-3 approach to the fat side of the green is better than attacking a tucked flag for most club handicap players. Short-siding on a par 3 is the most common double-bogey trigger.</div></li>
       <li><span class="step-n">2</span><div><strong>Always take enough club:</strong> Par 3s play long because of nerves, cold, and wind. Add one club minimum as a default. A ball short of a par-3 green is a near-certain bogey; a ball over is recoverable.</div></li>
       <li><span class="step-n">3</span><div><strong>Identify the bail-out area before hitting:</strong> Every par 3 has a best miss direction — the area from which the par save is easiest. Aim slightly toward that area from the flag.</div></li>
     </ul>
@@ -449,7 +466,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Why Miss Direction Matters More Than Miss Distance</span>
     <h3>The Short-Side Penalty — Quantified</h3>
     <p style="margin-bottom:8px;">Research on amateur scoring patterns shows that a short-side miss (within 5 feet of the edge of the green, on the pin side) costs an average of 0.4–0.7 more strokes per hole than a miss to the fat side — from the same approach distance. The short-side chip or pitch requires maximum precision (tight lie, flag close, often over a bunker) while the fat-side miss leaves a simpler, longer chip with more green to work with.</p>
-    <table class="tbl"><tr><th>Miss Type</th><th>Average Recovery Proximity</th><th>Up-and-Down Rate (10 HCP)</th><th>Expected Score Impact</th></tr>
+    <table class="tbl"><tr><th>Miss Type</th><th>Average Recovery Proximity</th><th>Up-and-Down Rate (Club Level)</th><th>Expected Score Impact</th></tr>
     <tr><td class="good">Fat side miss (15–25 ft chip)</td><td>12–18 ft</td><td>32%</td><td>−0.1 vs. GIR from same distance</td></tr>
     <tr><td class="warn">Long (over green, open)</td><td>15–22 ft</td><td>26%</td><td>−0.2 vs. GIR</td></tr>
     <tr><td class="bad">Short-side miss (tight chip)</td><td>22–35 ft</td><td>14%</td><td>−0.5 to −0.7 vs. GIR</td></tr>
@@ -491,7 +508,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
       <li><span class="step-n">3</span><div><strong>Select aim point (5 seconds):</strong> Using the Green Zone System table, identify your aim point and set your intermediate target accordingly. This may be 10–15 feet away from the flag.</div></li>
       <li><span class="step-n">4</span><div><strong>Commit and execute (10 seconds):</strong> Once the aim point is selected, do not second-guess. The whole value of pre-selecting a miss direction is that you execute with full commitment — no in-swing target changes. A committed shot to the right aim point is always better than a hesitant shot toward the flag.</div></li>
     </ul>
-    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The mental shift:</strong> Implementing miss direction thinking requires accepting that you will sometimes aim 15 feet from the flag and hit it close — at which point the aim point feels conservative in hindsight. This is normal and correct. The system is calibrated to your long-run performance, not to individual shots. Over 18 holes and 100 approach shots, playing to the right aim point consistently outperforms "always aim at the flag" by 1.5–2.5 strokes per round at the 10 HCP level.</p></div>
+    <div class="info-box elite"><span class="ico">⭐</span><p><strong>The mental shift:</strong> Implementing miss direction thinking requires accepting that you will sometimes aim 15 feet from the flag and hit it close — at which point the aim point feels conservative in hindsight. This is normal and correct. The system is calibrated to your long-run performance, not to individual shots. Over 18 holes and 100 approach shots, playing to the right aim point consistently outperforms "always aim at the flag" by 1.5–2.5 strokes per round at this handicap level.</p></div>
   </div>
   <div class="card card-teal">
     <span class="card-tag">Tracking Your Miss Patterns — Using Shot Scope and Arccos</span>
@@ -505,7 +522,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
 </div>
 
-<div class="footer">COURSE MANAGEMENT PLAYBOOK · PRO EDITION · SG DECISION FRAMEWORK · 10 HCP → SCRATCH</div>
+<div class="footer">COURSE MANAGEMENT PLAYBOOK · PRO EDITION · SG DECISION FRAMEWORK · ANY HCP → YOUR GOAL</div>
 <script>
 function show(id,btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));

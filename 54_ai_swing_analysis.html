@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-13 · 54_ai_swing_analysis.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AI Swing Analysis Tools — The Scratch Project</title>
+<meta name="description" content="Complete guide to AI-powered swing analysis — Sportsbox AI 3D, V1 Sports, Swing AI, CoachNow, GolfTec AI, and how to integrate video AI with HackMotion and launch monitor data for a complete technical feedback loop.">
+<meta name="keywords" content="AI swing analysis, Sportsbox AI, V1 Sports, golf technology, swing coaching, The Scratch Project">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.warn-box{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.warn-box p{color:rgba(240,208,112,.9);}.warn-box strong{color:var(--gold-hi);}
+.tool-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.tool-icon{font-size:2rem;flex-shrink:0;}
+.tool-meta{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.tool-name{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+const TIER = 'standard';
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">&#8962; Home</a>
+
+<div class="hero">
+  <p class="hero-label">Strike Playbook · Guide 54</p>
+  <h1>AI Swing<br><em>Analysis</em></h1>
+  <p class="hero-sub">The landscape of AI-powered swing analysis has expanded rapidly. From 3D body tracking on a phone to AI-generated drill recommendations from video, this guide maps every current tool, how they compare, and how to build them into a feedback loop alongside your launch monitor and wrist sensor data.</p>
+  <div class="hero-tags">
+    <span class="htag">📱 Sportsbox AI 3D</span>
+    <span class="htag">🎥 V1 Sports</span>
+    <span class="htag">🤖 Swing AI</span>
+    <span class="htag">💻 CoachNow</span>
+    <span class="htag">🔗 Data Integration</span>
+    <span class="htag">⚙️ Self-Coaching</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('sportsbox',this)">Sportsbox AI</button>
+  <button class="tab" onclick="show('v1',this)">V1 Sports</button>
+  <button class="tab" onclick="show('swingai',this)">Swing AI</button>
+  <button class="tab" onclick="show('coachnow',this)">CoachNow</button>
+  <button class="tab" onclick="show('comparison',this)">Comparison</button>
+  <button class="tab" onclick="show('integration',this)">Integration</button>
+  <button class="tab" onclick="show('protocol',this)">Protocol</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">AI Swing Analysis — The Current Landscape</h2>
+  <p class="sec-desc">AI-powered swing analysis has moved from novelty to genuine coaching tool in the past three years. The leading apps can now track 3D body positions from a single smartphone camera, generate feedback without a coach present, compare your swing to tour players, and deliver drill recommendations based on detected faults. Understanding what each tool does — and more importantly, what it cannot do — is the difference between useful feedback and digital noise.</p>
+
+  <div class="card">
+    <span class="card-tag">The Three Categories of AI Swing Analysis</span>
+    <h3>What's Actually Available in 2026</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>3D pose estimation from video (Sportsbox AI, Swing AI):</strong> Uses machine learning to estimate 3D body positions from 2D smartphone video. Generates body segment angles (hip rotation, shoulder tilt, spine angle, wrist positions) without any wearable sensor. The most technically advanced category — accuracy varies by camera angle and lighting but has improved dramatically since 2023.</div></li>
+      <li><span class="step-n">2</span><div><strong>Video annotation and coach communication (V1 Sports, CoachNow, OnForm):</strong> Frame-by-frame video tools with overlay drawings, position markers, and voice/text commentary. These are not AI analysis in the machine-learning sense — they are professional video tools that a human coach uses to deliver remote instruction. The AI component is largely in the organisation and delivery rather than the analysis itself.</div></li>
+      <li><span class="step-n">3</span><div><strong>AI-generated feedback and drill prescription (Swing AI, Sportsbox AI self-coaching):</strong> Automated detection of swing faults from video with AI-generated textual feedback and drill recommendations — no coach required. The newest and most rapidly evolving category. Useful for between-lesson feedback; not a replacement for qualified coaching.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">The Critical Limitation</span>
+    <h3>What AI Video Analysis Cannot Do</h3>
+    <p style="margin-bottom:10px;">AI swing analysis tools all share the same fundamental limitation: they analyse body positions, not ball striking outcomes. A "technically correct" position at impact means nothing if it does not produce the desired ball flight. The tools are most valuable when combined with launch monitor data — the video tells you what position produced what outcome, and the launch monitor tells you the outcome. Without the outcome data, AI swing analysis risks producing golfers who look like tour players on video but still miss fairways.</p>
+    <div class="info-box warn-box">
+      <span class="ico">⚠️</span>
+      <p><strong>The AI analysis trap:</strong> Players who use AI analysis in isolation often over-fixate on positional metrics that have marginal impact on ball-striking, while genuine impact factors (dynamic loft, attack angle, face-to-path relationship) are not visible in the analysis. Always cross-reference AI video feedback with launch monitor outcome data before changing anything.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SPORTSBOX AI -->
+<div class="sec" id="sportsbox">
+  <h2 class="sec-title">Sportsbox AI 3D Golf</h2>
+  <p class="sec-desc">Sportsbox AI is the most technically advanced AI swing analysis app available to amateur golfers. Its 3D pose estimation from a single camera angle was a genuine technological breakthrough when first launched and has continued to improve. It is the primary video analysis tool recommended in The Scratch Project system.</p>
+
+  <div class="card card-gold">
+    <div class="tool-header">
+      <div class="tool-icon">📐</div>
+      <div>
+        <div class="tool-name">Sportsbox AI 3D Golf</div>
+        <div class="tool-meta">Platform: iOS / Android · Cost: Subscription (~$20/month or $120/year) · Level: Intermediate–Elite</div>
+      </div>
+    </div>
+    <span class="card-tag">Core Capabilities</span>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>3D body tracking from phone camera:</strong> Estimates 3D positions of 17+ body landmarks from your regular smartphone. Generates actual 3D measurements — hip rotation degrees, shoulder tilt, spine angle, arm plane, wrist angle — not just visual overlays. These are real biomechanical numbers, not approximations.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Key metrics dashboard:</strong> Sportsbox measures hip/shoulder separation at the top (the X-factor), pelvis sway and thrust, hip rotation at impact, shoulder tilt through impact, and hand position. Each metric is compared to a peer-group benchmark (by skill level) or a specific tour player comparison.</div></li>
+      <li><span class="step-n">▸</span><div><strong>AI coaching feedback:</strong> The "AI Coach" feature generates a prioritised fault analysis from your swing video with textual explanations and drill recommendations. Accuracy is best for clearly visible faults (early extension, over-the-top, reverse pivot). More subtle positional issues are less reliably detected.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Integration with human coaching:</strong> Sportsbox is used by a growing number of PGA and LPGA Tour coaches. If your coach is Sportsbox-certified, you can share recordings directly and they can annotate 3D data — a uniquely powerful combination of AI measurement and human interpretation.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Best Use Cases</span>
+    <h3>Where Sportsbox Adds Most Value</h3>
+    <table class="tbl">
+      <tr><th>Use Case</th><th>Value</th><th>Notes</th></tr>
+      <tr><td>Tracking a known fault over time</td><td class="good">Very High</td><td>Quantified measurement of e.g. early extension removes subjectivity — you can see the number improving</td></tr>
+      <tr><td>Remote coaching with a Sportsbox-enabled coach</td><td class="good">Very High</td><td>Coach sees your 3D data, not just video — significantly more diagnostic than standard video coaching</td></tr>
+      <tr><td>Identifying a new fault from a ball flight problem</td><td class="warn">Medium</td><td>AI fault detection is good but not perfect; cross-reference with your coach or HackMotion data</td></tr>
+      <tr><td>Comparing yourself to a tour player model</td><td class="warn">Medium</td><td>Useful for awareness; positional matching does not guarantee outcome matching</td></tr>
+      <tr><td>Replacing a coach entirely</td><td class="bad">Low</td><td>Not recommended — AI feedback lacks the interpretive context a coach provides</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Recording Setup for Best Results</span>
+    <h3>Getting Accurate 3D Data from Sportsbox</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Camera position:</strong> Face-on (directly in front) and down-the-line (directly behind, targeting line) are the two primary angles. Sportsbox works with one angle but accuracy improves with both. Place phone at hip height, approximately 10–12 feet from the golfer. Not closer — the distortion worsens.</div></li>
+      <li><span class="step-n">2</span><div><strong>Lighting:</strong> Good, even lighting significantly improves pose estimation accuracy. Avoid harsh backlighting (golfer silhouetted against bright sky — this is the most common error). Front-lit or overcast conditions give the most accurate tracking.</div></li>
+      <li><span class="step-n">3</span><div><strong>Clothing:</strong> Avoid very baggy or loose clothing — it obscures body landmark detection. Form-fitting clothing gives the most accurate joint position estimates. Dark clothing against a light background works well.</div></li>
+      <li><span class="step-n">4</span><div><strong>Record at 60fps or higher:</strong> The Sportsbox app can use higher frame rate footage for more accurate position capture through impact. Modern iPhones and Android flagships support 120fps or higher. Use it.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- V1 SPORTS -->
+<div class="sec" id="v1">
+  <h2 class="sec-title">V1 Sports</h2>
+  <p class="sec-desc">V1 Sports is the industry-standard video coaching platform used by PGA Tour coaches, European Tour coaches, and teaching professionals worldwide. It is not primarily an AI analysis tool — it is a professional video annotation and coach-communication platform. Understanding this distinction is important before subscribing.</p>
+
+  <div class="card">
+    <div class="tool-header">
+      <div class="tool-icon">🎥</div>
+      <div>
+        <div class="tool-name">V1 Sports</div>
+        <div class="tool-meta">Platform: iOS / Android / Desktop · Cost: Free basic / Pro ~$9.99/month · Level: All</div>
+      </div>
+    </div>
+    <span class="card-tag">What V1 Sports Actually Does</span>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Frame-by-frame video review:</strong> The core feature — slow motion video playback with frame-by-frame scrubbing. This is genuinely valuable for self-coaching; you can pause your swing at P1–P10 positions and assess body positions against known checkpoints.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Drawing tools:</strong> Angle lines, protractors, circles, freehand drawing over freeze-frames. A coach can annotate your swing with these tools and share the annotated image or video clip back to you.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Side-by-side comparison:</strong> Compare your swing to a stored reference — either a previous version of your own swing, or a tour player model from V1's library. This is the most used feature for amateur self-analysis.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Coach connectivity:</strong> V1 Pro allows you to connect with any V1-registered instructor worldwide. Your coach receives your video, annotates it with draw tools and voice commentary, and sends it back. This is asynchronous remote coaching at its most refined.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">V1 AI Features (2025–2026)</span>
+    <h3>What the "AI" Actually Means in V1</h3>
+    <p style="margin-bottom:12px;">V1 Sports added AI-powered features in their 2025 app update. These include automatic frame detection (the app identifies key positions — address, top of backswing, impact, follow-through — without manual scrubbing), body landmark overlay, and an AI swing score. These are useful additions but are less sophisticated than Sportsbox's 3D tracking. V1's AI is better understood as smart video organisation rather than deep biomechanical analysis.</p>
+    <p>Where V1 remains the professional standard is coach communication and video quality tools. If you have a remote coach relationship, V1 is likely their platform of choice. Use it for coach communication; use Sportsbox for self-analysis between coaching sessions.</p>
+  </div>
+</div>
+
+<!-- SWING AI -->
+<div class="sec" id="swingai">
+  <h2 class="sec-title">Swing AI</h2>
+  <p class="sec-desc">Swing AI is a dedicated AI-powered swing analysis app that generates automated fault diagnosis and drill recommendations from video without requiring a human coach. It occupies the space between basic video review and full professional coaching — useful, with clear limitations.</p>
+
+  <div class="card card-teal">
+    <div class="tool-header">
+      <div class="tool-icon">🤖</div>
+      <div>
+        <div class="tool-name">Swing AI</div>
+        <div class="tool-meta">Platform: iOS / Android · Cost: Free tier / Premium ~$15/month · Level: Beginner–Intermediate</div>
+      </div>
+    </div>
+    <span class="card-tag">Core Features</span>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Automatic fault detection:</strong> Upload or record a video, and Swing AI returns a prioritised list of detected swing faults with explanations. Common fault detection is reliable — over-the-top, early extension, sway, slide, casting, poor posture are all detectable. Subtler faults and impact-specific issues are less reliably flagged.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Drill library:</strong> Each detected fault links to a drill library with video demonstrations. The drill relevance is generally good for common faults. For less common issues or player-specific compensations, the generic drill prescription may not address the root cause.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Progress tracking:</strong> Records your fault scores over time. Useful for tracking whether a specific fault is improving, worsening, or staying stable. Best used as a directional indicator rather than a precise biomechanical measurement.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Best use for self-coached players:</strong> Swing AI is the most accessible AI analysis tool for golfers without an active coaching relationship. Use it for a monthly swing audit — record 5 swings, review the fault detection, cross-reference one or two identified issues with your launch monitor data, and work on one thing at a time. Do not chase every fault simultaneously.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COACHNOW -->
+<div class="sec" id="coachnow">
+  <h2 class="sec-title">CoachNow</h2>
+  <p class="sec-desc">CoachNow is a remote coaching and athlete-coach communication platform, not an AI analysis tool. It is mentioned here because it is widely used by UK golf coaches for remote lesson delivery — if your coach uses CoachNow, this section explains what to expect.</p>
+
+  <div class="card">
+    <div class="tool-header">
+      <div class="tool-icon">💬</div>
+      <div>
+        <div class="tool-name">CoachNow</div>
+        <div class="tool-meta">Platform: iOS / Android · Cost: Free for athletes / Coaches pay subscription · Level: All</div>
+      </div>
+    </div>
+    <span class="card-tag">What CoachNow Is</span>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Private space per athlete-coach pair:</strong> CoachNow creates a private feed between you and your coach. You post videos, notes, questions, and stats. Your coach responds with annotated videos, voice memos, written feedback, and drill assignments.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Asynchronous workflow:</strong> Post a video Monday morning; receive coach feedback Monday evening. This makes professional coaching accessible without requiring a simultaneous session — ideal for busy schedules and for documenting swing changes over weeks and months.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Progress documentation:</strong> The feed becomes a timeline of your swing development. Scrolling back through months of posts shows the arc of your technical improvement in a way no other tool captures.</div></li>
+      <li><span class="step-n">▸</span><div><strong>No AI analysis:</strong> CoachNow does not generate automated analysis. All feedback comes from your coach. It is a communication platform, not an analysis platform. If your coach is not active on it, CoachNow has no value for you.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- COMPARISON -->
+<div class="sec" id="comparison">
+  <h2 class="sec-title">Tool Comparison — Choosing What's Right for You</h2>
+  <p class="sec-desc">The right tool depends on whether you have an active coaching relationship, your technical self-coaching ability, and what specific feedback you are trying to generate.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">Head-to-Head Comparison</span>
+    <h3>All Tools at a Glance</h3>
+    <table class="tbl">
+      <tr><th>Tool</th><th>AI Analysis</th><th>3D Tracking</th><th>Coach Platform</th><th>Best For</th><th>Cost</th></tr>
+      <tr><td>Sportsbox AI</td><td class="good">Advanced</td><td class="good">Yes (from phone)</td><td class="good">Yes (if coach uses it)</td><td>Self-analysis + coached use</td><td>~$20/mo</td></tr>
+      <tr><td>V1 Sports</td><td class="warn">Basic</td><td class="warn">Partial</td><td class="good">Yes (industry standard)</td><td>Remote coaching comm.</td><td>Free / ~$10/mo</td></tr>
+      <tr><td>Swing AI</td><td class="good">Good (common faults)</td><td class="warn">No</td><td class="bad">No</td><td>Self-coaching, no coach</td><td>Free / ~$15/mo</td></tr>
+      <tr><td>CoachNow</td><td class="bad">None</td><td class="bad">No</td><td class="good">Yes</td><td>Coach communication only</td><td>Free for athletes</td></tr>
+      <tr><td>OnForm</td><td class="warn">Basic</td><td class="bad">No</td><td class="good">Yes</td><td>Coach communication</td><td>Free / ~$10/mo</td></tr>
+    </table>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Recommended Stack by Player Situation</span>
+    <h3>What to Use Based on Your Setup</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Primary Tool</th><th>Secondary Tool</th></tr>
+      <tr><td>Active coaching relationship</td><td class="good">Whatever your coach uses (V1 or CoachNow)</td><td>Sportsbox AI for between-session self-monitoring</td></tr>
+      <tr><td>Self-coached, data-focused</td><td class="good">Sportsbox AI</td><td>Swing AI for monthly fault audit</td></tr>
+      <tr><td>Self-coached, beginner AI user</td><td class="good">Swing AI</td><td>V1 Sports free for video review</td></tr>
+      <tr><td>Building a Scratch Project system</td><td class="good">Sportsbox AI (Guide 45)</td><td>HackMotion + Mevo for data cross-reference</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- INTEGRATION -->
+<div class="sec" id="integration">
+  <h2 class="sec-title">Integrating AI Video with Your Full Data Stack</h2>
+  <p class="sec-desc">AI swing analysis is most powerful when it is one layer in a multi-data feedback system — not a standalone tool. The combination of video analysis, wrist sensor data, and launch monitor ball-striking data gives you the complete picture: body position, club delivery, and ball outcome — all correlated.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Complete Feedback Loop</span>
+    <h3>Sportsbox + HackMotion + Mevo Gen2</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Layer 1 — Body position (Sportsbox AI):</strong> What is your body doing? Hip rotation at impact, shoulder tilt, early extension, spine angle. These are inputs to the swing — they drive what the club does, which drives what the ball does. Sportsbox measures layer 1.</div></li>
+      <li><span class="step-n">2</span><div><strong>Layer 2 — Wrist and club delivery (HackMotion):</strong> What is your lead wrist doing at the top, through transition, and at impact? Wrist position directly controls dynamic loft and face angle at impact. HackMotion measures layer 2. Cross-reference with Sportsbox body data — a Sportsbox-detected "casting" fault will appear in HackMotion as extension through impact.</div></li>
+      <li><span class="step-n">3</span><div><strong>Layer 3 — Ball outcome (Mevo Gen2):</strong> What did the ball actually do? Carry distance, ball speed, smash factor, face angle, club path, launch angle, spin rate. This is the only layer that matters for scoring — layers 1 and 2 exist to serve layer 3. Always anchor technical changes in layer 3 data.</div></li>
+      <li><span class="step-n">4</span><div><strong>The diagnostic chain:</strong> Bad ball flight (Mevo) → identify the ball flight miss → trace to impact data (face angle, path) → trace to delivery (HackMotion wrist) → trace to body position (Sportsbox). This chain prevents "fixing" body positions that are not causing the actual ball flight problem.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Avoiding Data Overwhelm</span>
+    <h3>One Metric at a Time</h3>
+    <p style="margin-bottom:12px;">The greatest risk with multiple AI analysis tools is paralysis — too many data points, too many "faults," too many numbers to track. The protocol is simple: one primary metric per four-week block, tracked across all three layers.</p>
+    <div class="info-box tip">
+      <span class="ico">💡</span>
+      <p><strong>Example block:</strong> Working on attack angle for the next 4 weeks. Sportsbox: monitor hip thrust through impact (body driver of attack angle). HackMotion: monitor shaft lean at P7 (delivery correlate). Mevo: monitor attack angle and dynamic loft numbers directly. Everything else is background noise for this block. Review all three at the end of the block together.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROTOCOL -->
+<div class="sec" id="protocol">
+  <h2 class="sec-title">Monthly AI Analysis Protocol</h2>
+  <p class="sec-desc">A structured monthly review process using AI swing analysis tools. This protocol produces actionable technical direction from your video data without creating analysis paralysis or disrupting your current practice focus.</p>
+
+  <div class="card">
+    <span class="card-tag">The Monthly Swing Audit</span>
+    <h3>30-Minute Process, Once Per Month</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Record 10 swings (10 min):</strong> Driver (3), 7-iron (4), pitching wedge (3). Down-the-line angle for all. Face-on if you have a tripod or playing partner available. Use your normal practice conditions — don't clean up for the camera.</div></li>
+      <li><span class="step-n">2</span><div><strong>Sportsbox AI fault check (5 min):</strong> Upload to Sportsbox and review the AI Coach output. Note the top 2 flagged faults. Do not act on them yet.</div></li>
+      <li><span class="step-n">3</span><div><strong>Cross-reference with Mevo and HackMotion data (10 min):</strong> Pull up this month's Mevo session data. Is the ball flight consistent with the Sportsbox fault detection? If Sportsbox flags early extension and your Mevo shows high dynamic loft with a low smash factor — consistent. If Sportsbox flags a fault that does not appear in any ball data — lower priority.</div></li>
+      <li><span class="step-n">4</span><div><strong>Choose one thing (5 min):</strong> Select one fault that is (a) confirmed by ball data and (b) within your current coaching focus. That is the only thing you work on in the next four weeks. Archive the rest — you can come back to them.</div></li>
+      <li><span class="step-n">5</span><div><strong>Send to coach if applicable:</strong> If you have a coaching relationship, share the Sportsbox session or record a V1/CoachNow video with commentary on what you found. A 60-second voice memo explaining what the data showed is more useful than sending raw video without context.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">AI SWING ANALYSIS · GUIDE 54 · THE SCRATCH PROJECT · SCORE · STRIKE · MEASURE · PREPARE · COMPETE</div>
+</body>
+</html>

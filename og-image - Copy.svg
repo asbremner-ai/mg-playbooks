@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#040a04"/>
+      <stop offset="50%" style="stop-color:#0d1a0d"/>
+      <stop offset="100%" style="stop-color:#0a1a0a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c49a08"/>
+      <stop offset="25%" style="stop-color:#3aaa22"/>
+      <stop offset="50%" style="stop-color:#12a89e"/>
+      <stop offset="75%" style="stop-color:#7040d8"/>
+      <stop offset="100%" style="stop-color:#d85a28"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5d050;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#3aaa22;stop-opacity:0.04"/>
+    </linearGradient>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="60"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle radial glow -->
+  <ellipse cx="300" cy="200" rx="400" ry="300" fill="url(#glow)" filter="url(#blur)" opacity="0.6"/>
+  <ellipse cx="900" cy="450" rx="350" ry="250" fill="#12a89e" filter="url(#blur)" opacity="0.03"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Left vertical rule -->
+  <rect x="80" y="80" width="2" height="470" fill="#3aaa22" opacity="0.4"/>
+
+  <!-- Stat blocks — top right -->
+  <g transform="translate(840, 80)">
+    <!-- Block 1 -->
+    <rect x="0" y="0" width="110" height="72" rx="6" fill="#111e11" stroke="#a0c850" stroke-width="1" stroke-opacity="0.2"/>
+    <text x="55" y="38" font-family="Georgia, serif" font-size="28" font-weight="900" fill="#f5d050" text-anchor="middle">37</text>
+    <text x="55" y="58" font-family="Courier New, monospace" font-size="9" fill="#a0c850" text-anchor="middle" letter-spacing="2" opacity="0.7">GUIDES</text>
+    <!-- Block 2 -->
+    <rect x="126" y="0" width="110" height="72" rx="6" fill="#111e11" stroke="#a0c850" stroke-width="1" stroke-opacity="0.2"/>
+    <text x="181" y="38" font-family="Georgia, serif" font-size="28" font-weight="900" fill="#f5d050" text-anchor="middle">200+</text>
+    <text x="181" y="58" font-family="Courier New, monospace" font-size="9" fill="#a0c850" text-anchor="middle" letter-spacing="2" opacity="0.7">TOPICS</text>
+    <!-- Block 3 -->
+    <rect x="0" y="88" width="236" height="72" rx="6" fill="#111e11" stroke="#3aaa22" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="118" y="126" font-family="Georgia, serif" font-size="26" font-weight="900" fill="#3aaa22" text-anchor="middle">5 Pillars</text>
+    <text x="118" y="148" font-family="Courier New, monospace" font-size="9" fill="#a0c850" text-anchor="middle" letter-spacing="2" opacity="0.7">SCORE · STRIKE · MEASURE · PREPARE · COMPETE</text>
+  </g>
+
+  <!-- Main headline -->
+  <text x="108" y="168" font-family="Georgia, serif" font-size="22" font-weight="400" fill="#a0c850" letter-spacing="4" opacity="0.75">THE SCRATCH PROJECT</text>
+
+  <text x="105" y="270" font-family="Georgia, serif" font-size="82" font-weight="900" fill="#ffffff" letter-spacing="-2">Golf</text>
+  <text x="105" y="365" font-family="Georgia, serif" font-size="82" font-weight="900" fill="#f5d050" font-style="italic" letter-spacing="-1">Playbooks</text>
+
+  <!-- Sub-copy -->
+  <text x="108" y="420" font-family="Arial, sans-serif" font-size="22" font-weight="300" fill="#e8f0d8" opacity="0.65">Stop guessing where you're losing shots.</text>
+  <text x="108" y="452" font-family="Arial, sans-serif" font-size="22" font-weight="300" fill="#e8f0d8" opacity="0.65">Find your biggest scoring leak. Fix it with a plan.</text>
+
+  <!-- Pill tags -->
+  <g transform="translate(108, 488)">
+    <rect x="0" y="0" width="148" height="28" rx="14" fill="#a0c850" fill-opacity="0.12" stroke="#a0c850" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="74" y="19" font-family="Courier New, monospace" font-size="10" fill="#a0c850" text-anchor="middle" letter-spacing="1.5">STROKES GAINED</text>
+
+    <rect x="164" y="0" width="132" height="28" rx="14" fill="#12a89e" fill-opacity="0.12" stroke="#12a89e" stroke-width="1" stroke-opacity="0.4"/>
+    <text x="230" y="19" font-family="Courier New, monospace" font-size="10" fill="#70ccc4" text-anchor="middle" letter-spacing="1.5">WHS COMPATIBLE</text>
+
+    <rect x="312" y="0" width="158" height="28" rx="14" fill="#f5d050" fill-opacity="0.08" stroke="#f5d050" stroke-width="1" stroke-opacity="0.3"/>
+    <text x="391" y="19" font-family="Courier New, monospace" font-size="10" fill="#f5d050" text-anchor="middle" letter-spacing="1.5">ANY HANDICAP LEVEL</text>
+  </g>
+
+  <!-- URL / brand footer -->
+  <text x="108" y="590" font-family="Courier New, monospace" font-size="14" fill="#e8f0d8" opacity="0.3" letter-spacing="2">asbremner-ai.github.io/mg-playbooks</text>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="626" width="1200" height="4" fill="url(#accent)"/>
+</svg>

@@ -39,7 +39,7 @@ Tier gating in HTML source files
 Safe to re-run — existing tier markers are detected and replaced cleanly.
 """
 
-# <!-- version:v3.2 · 2026-06-08 · patch_playbooks.py — Elite guides 47-49 + expanded 41/45 added -->
+# <!-- version:v3.7 · 2026-06-13 · patch_playbooks.py — guides 56–57 added (US & European Competitive Pathway); 45 Standard guides total -->
 
 import os, re, shutil, argparse
 
@@ -56,7 +56,7 @@ GUIDES = {
     '07_golf_nutrition.html':           ('Golf Nutrition Plan',           '🍎', '#5ecb3e'),
     '08_pro_round_prep.html':           ('Pro Round Prep',                '🗺️', '#e8b800'),
     '09_golf_coach_ai.html':            ('Golf Coach AI',                 '🤖', '#5ecb3e'),
-    '10_scratch_plan.html':             ('24-Month Scratch Plan',         '🏆', '#e8b800'),
+    '10_scratch_plan.html':             ('Your Milestone Plan',           '🏆', '#e8b800'),
     '11_shot_dispersion.html':          ('Shot Dispersion Mapping',       '📊', '#5ecb3e'),
     '12_rules_of_golf.html':            ('Rules of Golf',                 '📜', '#e8b800'),
     '13_injury_prevention.html':        ('Injury Prevention',             '🩺', '#ff6b35'),
@@ -89,9 +89,9 @@ GUIDES = {
     'tracking_app_v2.html':             ('Performance Tracker',           '📊', '#5ecb3e'),
     '31_on_course_notes.html':          ('On-Course Notes',               '🗺️', '#5ecb3e'),
     '32_putting_green_reading.html':    ('Green Reading Deep Dive',       '📐', '#5ecb3e'),
-    '33_competitive_pathway.html':      ('UK Competitive Pathway',        '🏆', '#5ecb3e'),
+    '33_competitive_pathway.html':      ('Competitive Pathway',           '🏆', '#5ecb3e'),
     '34_coaching_relationship.html':    ('The Coaching Relationship',     '🎓', '#2ec4b6'),
-    '35_links_travel_golf.html':        ('Links & Travel Golf',           '🌊', '#5ecb3e'),
+    '35_links_travel_golf.html':        ('Course Types & Travel Golf',    '🌊', '#5ecb3e'),
     '36_playing_partners.html':         ('Playing Partners',              '🤝', '#2ec4b6'),
     '37_approach_zone.html':            ('The 100–175 Yard Zone',         '🎯', '#e8b800'),
     # ── Pro-only guides (Pro + Elite) ────────────────────────────────────
@@ -108,6 +108,27 @@ GUIDES = {
     '47_elite_performance_psychology.html': ('Elite Performance Psychology', '🧠', '#c8d8e8'),
     '48_elite_physical_performance.html':   ('Elite Physical Performance',   '💪', '#c8d8e8'),
     '49_advanced_game_construction.html':   ('Advanced Game Construction',   '🎯', '#c8d8e8'),
+    # ── New global expansion guides (added v3.4) ──────────────────────────
+    '50_links_golf_strategy.html':          ('Links Golf Strategy',           '🌬️', '#2ec4b6'),
+    '51_gap_zone_mastery.html':             ('Gap Zone Mastery',              '📏', '#e8b800'),
+    '52_matchplay_formats.html':            ('Matchplay Format Strategies',   '🤝', '#a0c850'),
+    '53_aimpoint_express.html':             ('AimPoint Express',               '☝️', '#48b0a8'),
+    '54_ai_swing_analysis.html':            ('AI Swing Analysis Tools',        '🤖', '#e0b840'),
+    '55_launch_monitor_fitting.html':       ('Launch Monitor Fitting',         '📊', '#c0e060'),
+    '56_us_competitive_pathway.html':       ('US Competitive Pathway',         '🇺🇸', '#48b0a8'),
+    '57_european_competitive_pathway.html': ('European Competitive Pathway',   '🇪🇺', '#a0c850'),
+    # ── Elite+ guides (EP series) ─────────────────────────────────────────
+    'ep1_season_decision_architecture.html':    ('Season Decision Architecture',  '🗓️', '#c8d8e8'),
+    'ep2_multiseason_sg_analytics.html':        ('Multi-Season SG Analytics',     '📈', '#c8d8e8'),
+    'ep3_identity_mental_game.html':            ('Identity & Mental Game',        '🧠', '#c8d8e8'),
+    'ep4_proximity_approach_mastery.html':      ('Proximity & Approach Mastery',  '🎯', '#c8d8e8'),
+    'ep5_movement_screening_fitness.html':      ('Movement Screening & Fitness',  '💪', '#c8d8e8'),
+    'ep6_dynamic_replanning.html':              ('Dynamic Replanning',            '🔄', '#c8d8e8'),
+    'ep7_complete_wedge_system.html':           ('Complete Wedge System',         '🏌️', '#c8d8e8'),
+    'ep8_arccos_air_mastery.html':              ('Arccos Air Mastery',            '📡', '#c8d8e8'),
+    'ep9_winter_training_offseason.html':       ('Winter Training & Off-Season',  '❄️', '#c8d8e8'),
+    'ep10_world_handicap_system.html':          ('WHS Strategic Understanding',   '📊', '#c8d8e8'),
+    'ep11_advanced_coaching_relationship.html': ('Advanced Coaching Relationship','🎓', '#c8d8e8'),
 }
 
 # ── Related guides map ────────────────────────────────────────────────────
@@ -126,8 +147,8 @@ RELATED = {
     '11_shot_dispersion.html':          ['03_longgame_pro.html','mevo_gen2_playbook.html','20_course_management.html','09_golf_coach_ai.html'],
     '12_rules_of_golf.html':            ['08_pro_round_prep.html','24_competitive_strategy.html','16_solo_pressure_round.html'],
     '13_injury_prevention.html':        ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html'],
-    '14_video_analysis.html':           ['swing_mechanics.html','03_longgame_pro.html','hackmotion_playbook.html','09_golf_coach_ai.html'],
-    '15_equipment_fitting.html':        ['01_putting_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html','45_sportsbox_ai.html'],
+    '14_video_analysis.html':           ['54_ai_swing_analysis.html','swing_mechanics.html','03_longgame_pro.html','hackmotion_playbook.html','09_golf_coach_ai.html'],
+    '15_equipment_fitting.html':        ['55_launch_monitor_fitting.html','01_putting_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html','45_sportsbox_ai.html'],
     '16_solo_pressure_round.html':      ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','17_progress_journal.html'],
     '17_progress_journal.html':         ['26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html','16_solo_pressure_round.html'],
     '18_training_aids_2.html':          ['mevo_gen2_playbook.html','hackmotion_playbook.html','01_putting_pro.html','02_shortgame_pro.html','38_practice_structure.html'],
@@ -135,7 +156,7 @@ RELATED = {
     '21_mental_game.html':              ['05_pre_shot_routine.html','16_solo_pressure_round.html','08_pro_round_prep.html','24_competitive_strategy.html','42_national_amateur_circuit.html'],
     '22_wedge_distances.html':          ['02_shortgame_pro.html','mevo_gen2_playbook.html','11_shot_dispersion.html'],
     '23_weather_conditions.html':       ['20_course_management.html','08_pro_round_prep.html','03_longgame_pro.html'],
-    '24_competitive_strategy.html':     ['21_mental_game.html','12_rules_of_golf.html','16_solo_pressure_round.html','40_decision_architecture.html'],
+    '24_competitive_strategy.html':     ['52_matchplay_formats.html','21_mental_game.html','12_rules_of_golf.html','16_solo_pressure_round.html','40_decision_architecture.html'],
     '25_speed_training.html':           ['06_golf_fitness.html','03_longgame_pro.html','mevo_gen2_playbook.html','13_injury_prevention.html'],
     '26_stats_interpretation.html':     ['09_golf_coach_ai.html','mevo_gen2_playbook.html','17_progress_journal.html','41_plus_hcp_sg_targets.html','44_golfmetrics_deepdive.html'],
     '27_six_month_plan.html':           ['10_scratch_plan.html','28_months_7_12_plan.html','29_months_13_18_plan.html','30_months_19_24_plan.html'],
@@ -154,19 +175,28 @@ RELATED = {
     'tracking_app.html':                ['tracking_app_v2.html','17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html'],
     'tracking_app_v2.html':             ['17_progress_journal.html','26_stats_interpretation.html','09_golf_coach_ai.html','10_scratch_plan.html'],
     '31_on_course_notes.html':          ['20_course_management.html','08_pro_round_prep.html','caddie_card.html','17_progress_journal.html','26_stats_interpretation.html'],
-    '32_putting_green_reading.html':    ['01_putting_pro.html','31_on_course_notes.html','23_weather_conditions.html','20_course_management.html','caddie_card.html'],
-    '33_competitive_pathway.html':      ['24_competitive_strategy.html','10_scratch_plan.html','16_solo_pressure_round.html','21_mental_game.html','42_national_amateur_circuit.html'],
+    '32_putting_green_reading.html':    ['53_aimpoint_express.html','01_putting_pro.html','31_on_course_notes.html','23_weather_conditions.html','caddie_card.html'],
+    '33_competitive_pathway.html':      ['56_us_competitive_pathway.html','57_european_competitive_pathway.html','24_competitive_strategy.html','21_mental_game.html','42_national_amateur_circuit.html'],
     '34_coaching_relationship.html':    ['09_golf_coach_ai.html','14_video_analysis.html','mevo_gen2_playbook.html','17_progress_journal.html','hackmotion_playbook.html'],
-    '35_links_travel_golf.html':        ['23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','21_mental_game.html','caddie_card.html'],
+    '35_links_travel_golf.html':        ['50_links_golf_strategy.html','23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','caddie_card.html'],
     '36_playing_partners.html':         ['21_mental_game.html','05_pre_shot_routine.html','24_competitive_strategy.html','33_competitive_pathway.html'],
-    '37_approach_zone.html':            ['03_longgame_pro.html','22_wedge_distances.html','20_course_management.html','26_stats_interpretation.html','mevo_gen2_playbook.html'],
+    '37_approach_zone.html':            ['51_gap_zone_mastery.html','03_longgame_pro.html','22_wedge_distances.html','20_course_management.html','mevo_gen2_playbook.html'],
+    # ── New Standard guides (50–55) ─────────────────────────────────────
+    '50_links_golf_strategy.html':      ['35_links_travel_golf.html','23_weather_conditions.html','20_course_management.html','02_shortgame_pro.html','caddie_card.html'],
+    '51_gap_zone_mastery.html':         ['37_approach_zone.html','22_wedge_distances.html','mevo_gen2_playbook.html','55_launch_monitor_fitting.html','38_practice_structure.html'],
+    '52_matchplay_formats.html':        ['24_competitive_strategy.html','33_competitive_pathway.html','21_mental_game.html','16_solo_pressure_round.html','46_county_team_golf.html'],
+    '53_aimpoint_express.html':         ['01_putting_pro.html','32_putting_green_reading.html','05_pre_shot_routine.html','18_training_aids_2.html'],
+    '54_ai_swing_analysis.html':        ['14_video_analysis.html','hackmotion_playbook.html','45_sportsbox_ai.html','swing_mechanics.html','mevo_gen2_playbook.html'],
+    '55_launch_monitor_fitting.html':   ['15_equipment_fitting.html','mevo_gen2_playbook.html','11_shot_dispersion.html','51_gap_zone_mastery.html','37_approach_zone.html'],
+    '56_us_competitive_pathway.html':   ['33_competitive_pathway.html','57_european_competitive_pathway.html','24_competitive_strategy.html','42_national_amateur_circuit.html','12_rules_of_golf.html'],
+    '57_european_competitive_pathway.html': ['33_competitive_pathway.html','56_us_competitive_pathway.html','50_links_golf_strategy.html','35_links_travel_golf.html','42_national_amateur_circuit.html'],
     # ── Pro-only guides ───────────────────────────────────────────────────
     '38_practice_structure.html':       ['05_pre_shot_routine.html','26_stats_interpretation.html','18_training_aids_2.html','17_progress_journal.html'],
     '39_ground_reaction_force.html':    ['03_longgame_pro.html','06_golf_fitness.html','25_speed_training.html','mevo_gen2_playbook.html'],
     '40_decision_architecture.html':    ['20_course_management.html','11_shot_dispersion.html','26_stats_interpretation.html','24_competitive_strategy.html'],
     # ── Elite-only guides ────────────────────────────────────────────────
     '41_plus_hcp_sg_targets.html':      ['26_stats_interpretation.html','44_golfmetrics_deepdive.html','42_national_amateur_circuit.html','17_progress_journal.html','09_golf_coach_ai.html'],
-    '42_national_amateur_circuit.html': ['33_competitive_pathway.html','43_caddie_preparation.html','21_mental_game.html','24_competitive_strategy.html','41_plus_hcp_sg_targets.html'],
+    '42_national_amateur_circuit.html': ['33_competitive_pathway.html','57_european_competitive_pathway.html','43_caddie_preparation.html','21_mental_game.html','41_plus_hcp_sg_targets.html'],
     '43_caddie_preparation.html':       ['08_pro_round_prep.html','42_national_amateur_circuit.html','22_wedge_distances.html','23_weather_conditions.html','20_course_management.html'],
     '44_golfmetrics_deepdive.html':     ['26_stats_interpretation.html','41_plus_hcp_sg_targets.html','17_progress_journal.html','09_golf_coach_ai.html','mevo_gen2_playbook.html'],
     '45_sportsbox_ai.html':             ['hackmotion_playbook.html','14_video_analysis.html','34_coaching_relationship.html','mevo_gen2_playbook.html','38_practice_structure.html'],
@@ -174,6 +204,18 @@ RELATED = {
     '47_elite_performance_psychology.html': ['21_mental_game.html','16_solo_pressure_round.html','05_pre_shot_routine.html','42_national_amateur_circuit.html','48_elite_physical_performance.html'],
     '48_elite_physical_performance.html':   ['06_golf_fitness.html','25_speed_training.html','07_golf_nutrition.html','47_elite_performance_psychology.html','13_injury_prevention.html'],
     '49_advanced_game_construction.html':   ['20_course_management.html','40_decision_architecture.html','41_plus_hcp_sg_targets.html','43_caddie_preparation.html','22_wedge_distances.html'],
+    # ── Elite+ RELATED ────────────────────────────────────────────────────
+    'ep1_season_decision_architecture.html':    ['40_decision_architecture.html','33_competitive_pathway.html','42_national_amateur_circuit.html','24_competitive_strategy.html','ep6_dynamic_replanning.html'],
+    'ep2_multiseason_sg_analytics.html':        ['26_stats_interpretation.html','41_plus_hcp_sg_targets.html','44_golfmetrics_deepdive.html','17_progress_journal.html','ep6_dynamic_replanning.html'],
+    'ep3_identity_mental_game.html':            ['47_elite_performance_psychology.html','21_mental_game.html','16_solo_pressure_round.html','05_pre_shot_routine.html','ep1_season_decision_architecture.html'],
+    'ep4_proximity_approach_mastery.html':      ['37_approach_zone.html','41_plus_hcp_sg_targets.html','26_stats_interpretation.html','mevo_gen2_playbook.html','ep2_multiseason_sg_analytics.html'],
+    'ep5_movement_screening_fitness.html':      ['48_elite_physical_performance.html','06_golf_fitness.html','13_injury_prevention.html','25_speed_training.html','ep9_winter_training_offseason.html'],
+    'ep6_dynamic_replanning.html':              ['10_scratch_plan.html','26_stats_interpretation.html','34_coaching_relationship.html','ep2_multiseason_sg_analytics.html','ep11_advanced_coaching_relationship.html'],
+    'ep7_complete_wedge_system.html':           ['02_shortgame_pro.html','22_wedge_distances.html','37_approach_zone.html','mevo_gen2_playbook.html','ep4_proximity_approach_mastery.html'],
+    'ep8_arccos_air_mastery.html':              ['26_stats_interpretation.html','44_golfmetrics_deepdive.html','ep2_multiseason_sg_analytics.html','41_plus_hcp_sg_targets.html','17_progress_journal.html'],
+    'ep9_winter_training_offseason.html':       ['06_golf_fitness.html','25_speed_training.html','ep5_movement_screening_fitness.html','48_elite_physical_performance.html','10_scratch_plan.html'],
+    'ep10_world_handicap_system.html':          ['33_competitive_pathway.html','42_national_amateur_circuit.html','17_progress_journal.html','ep1_season_decision_architecture.html','ep6_dynamic_replanning.html'],
+    'ep11_advanced_coaching_relationship.html': ['34_coaching_relationship.html','45_sportsbox_ai.html','ep6_dynamic_replanning.html','14_video_analysis.html','ep2_multiseason_sg_analytics.html'],
 }
 
 # ── Tier membership sets ──────────────────────────────────────────────────
@@ -198,6 +240,18 @@ ELITE_ONLY_FILES = {
     '48_elite_physical_performance.html',
     '49_advanced_game_construction.html',
     'index_elite.html',
+    # Elite+ series
+    'ep1_season_decision_architecture.html',
+    'ep2_multiseason_sg_analytics.html',
+    'ep3_identity_mental_game.html',
+    'ep4_proximity_approach_mastery.html',
+    'ep5_movement_screening_fitness.html',
+    'ep6_dynamic_replanning.html',
+    'ep7_complete_wedge_system.html',
+    'ep8_arccos_air_mastery.html',
+    'ep9_winter_training_offseason.html',
+    'ep10_world_handicap_system.html',
+    'ep11_advanced_coaching_relationship.html',
 }
 
 # Files that use the paper/ink design (not the dark green theme)
@@ -209,8 +263,18 @@ PAPER_THEME = {
     '30_months_19_24_plan.html',
 }
 
-# Files to skip entirely in all builds
-SKIP = {'index.html', 'index_pro.html', 'index_elite.html'}
+# Files to skip entirely in all builds (internal tools, legal, marketing assets)
+SKIP = {
+    'index.html', 'index_pro.html', 'index_elite.html',
+    # Internal / marketing files — not part of any tier product
+    'commercialisation_plan.html',
+    'commercialisation_master.html',
+    'elite_tier_brief.html',
+    'landing.html',
+    'privacy.html',
+    'terms.html',
+    'motivation.html',
+}
 
 # Non-HTML assets to copy into every dist folder
 ASSET_FILES = {'sw.js', 'manifest.json'}
@@ -521,7 +585,9 @@ if __name__ == '__main__':
 
         if fname not in GUIDES and fname not in PAPER_THEME:
             unknown.append(fname)
-            shutil.copy2(src_path, dst_path)
+            # Guard: skip copy if src and dst resolve to the same file (in-place run)
+            if os.path.abspath(src_path) != os.path.abspath(dst_path):
+                shutil.copy2(src_path, dst_path)
             continue
 
         result = patch_file(src_path, dst_path, tier)

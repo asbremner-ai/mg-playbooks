@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Months 19–24 Practice Plan — December 2027 to May 2028</title>
+<title>Months 19–24 Practice Plan — Month 19 to Month 24</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -196,6 +196,21 @@
     .week-grid{grid-template-columns:repeat(4,1fr);}
   }
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -210,10 +225,10 @@
 <div class="hero">
   <div class="hero-lines"></div>
   <p class="hero-overline">The Scratch Project</p>
-  <h1>PHASE 5<span class="ruled">Months 19–24 · December 2027 – May 2028 · Defend the Standard</span></h1>
+  <h1>PHASE 5<span class="ruled">Months 19–24 · Months 19–24 · Defend the Standard</span></h1>
   <p class="hero-deck">You arrive here with a confirmed scratch index. Phase 5 is not improvement — it is consolidation, defence, and the pursuit of consistency across every condition, format, and competitive environment the game provides.</p>
   <div class="hero-topics">
-    <span class="hero-topic">📅 Dec 2027–May 2028</span>
+    <span class="hero-topic">📅 Months 19–24</span>
     <span class="hero-topic">🏆 Defend Scratch</span>
     <span class="hero-topic">🎯 Plus Handicap Option</span>
     <span class="hero-topic">⛳ 3× Monthly Comps</span>
@@ -234,7 +249,7 @@
 
 <!-- ═══ TAB 1 — PHASE 5 LAUNCH ═══ -->
 <div class="section active" id="phase5start">
-  <span class="section-label">1 December 2027</span>
+  <span class="section-label">1 Month 19</span>
   <h2 class="section-title">PHASE 5 LAUNCH</h2>
   <p class="section-desc">Phase 5 opens with one question: is your scratch handicap confirmed across multiple competitive rounds, or was it a temporary peak? The answer determines whether this phase is consolidation or a final push. Either is valid — the response is different.</p>
 
@@ -246,12 +261,12 @@
   <div class="card">
     <span class="card-kicker">Week 1 — December 1–7 · The 18-Month Reckoning</span>
     <h3>The Phase 4 Audit</h3>
-    <p>Before setting Phase 5's direction, pull the full 18-month picture. SG averages across all four categories from June 2026 to November 2027. This is the complete record of where you started, where you are, and what remains between you and a fully defended scratch standard.</p>
+    <p>Before setting Phase 5's direction, pull the full 18-month picture. SG averages across all four categories from Month 1 to Month 18. This is the complete record of where you started, where you are, and what remains between you and a fully defended scratch standard.</p>
     <ul class="steps" style="margin-top:14px;">
       <li><span class="sn">1</span><strong>Pull the 18-month SG trend.</strong> Month-by-month improvement in each category. Which category improved most? Which has the narrowest remaining gap to scratch benchmark? Which is still below the required standard? The answer to the last question is Phase 5's first priority.</li>
       <li><span class="sn">2</span><strong>Review your competition vs. practice SG differential from Phase 4.</strong> If any category shows a gap wider than 0.5 strokes between competition and practice, that is Phase 5's primary target — not technical improvement, but pressure execution in that specific skill.</li>
       <li><span class="sn">3</span><strong>Coach audit — write the Phase 5 brief.</strong> Your coach should review your 18-month SG data and set specific targets for months 19–24. This brief is your governing document. If any element of your technique has drifted under high competition volume, this audit identifies and resets it.</li>
-      <li><span class="sn">4</span><strong>Establish your 24-month final targets.</strong> From this month forward, you are building the data set that will define your programme's outcome. Set the specific handicap, GIR%, proximity, and SG targets that you will measure at Month 24 (May 2028).</li>
+      <li><span class="sn">4</span><strong>Establish your 24-month final targets.</strong> From this month forward, you are building the data set that will define your programme's outcome. Set the specific handicap, GIR%, proximity, and SG targets that you will measure at Month 24 (Month 24).</li>
       <li><span class="sn">5</span><strong>Decide: consolidation or plus?</strong> If all Phase 4 targets were met and your index is stable at scratch, Phase 5 can target a plus handicap. If any category is below benchmark, Phase 5 remains focused on closing that gap first. Do not pursue plus until scratch is fully defended.</li>
     </ul>
   </div>
@@ -299,7 +314,7 @@
 
   <div class="card">
     <span class="card-kicker">Phase 5 — Weekly Template</span>
-    <h3>December 2027 – May 2028</h3>
+    <h3>Months 19–24</h3>
     <div class="week-grid" style="margin-top:16px;">
       <div class="day-cell review">
         <span class="day-name">Mon</span>
@@ -354,15 +369,15 @@
 
 <!-- ═══ TAB 3 — MONTH-BY-MONTH ═══ -->
 <div class="section" id="calendar">
-  <span class="section-label">December 2027 – May 2028</span>
+  <span class="section-label">Months 19–24</span>
   <h2 class="section-title">MONTH-BY-MONTH PLAN</h2>
   <p class="section-desc">Phase 5 months each carry a theme that responds to the season, the competition calendar, and the specific remaining gap identified in the Phase 4 audit. The final month is a celebration and a full programme review.</p>
 
   <!-- DECEMBER -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Dec</span>19</div>
+    <div class="month-num"><span class="ph-label">M19</span>19</div>
     <p class="month-title">Phase 4 Audit &amp; Winter Foundation</p>
-    <span class="month-sub">1–31 December 2027 · Week 79–82 · HCP Target: Confirmed Scratch</span>
+    <span class="month-sub">1–31 Month 19 · Week 79–82 · HCP Target: Confirmed Scratch</span>
     <ul class="checklist">
       <li><span class="check lime">□</span><strong>18-month audit complete by December 7.</strong> Full SG trend reviewed, Phase 5 brief written with coach, final 6-month priorities set. This document governs the rest of the programme.</li>
       <li><span class="check lime">□</span><strong>Winter maintenance protocol active.</strong> December conditions in the UK mean reduced carry distances, wet lies, and compact practice windows. Adjust carry distances for current conditions. Do not use summer Mevo data in December competition.</li>
@@ -373,9 +388,9 @@
 
   <!-- JANUARY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Jan</span>20</div>
+    <div class="month-num"><span class="ph-label">M20</span>20</div>
     <p class="month-title">Closing the Final Gap</p>
-    <span class="month-sub">1–31 January 2028 · Week 83–86 · HCP Target: Scratch + Stable</span>
+    <span class="month-sub">1–31 Month 20 · Week 83–86 · HCP Target: Scratch + Stable</span>
     <ul class="checklist">
       <li><span class="check lime">□</span><strong>Execute the Phase 5 brief's primary gap target.</strong> Whatever the Phase 4 audit identified as the narrowest remaining margin to scratch benchmark — this month is its dedicated focus. No other technical theme competes for Tuesday session time.</li>
       <li><span class="check lime">□</span><strong>Maintain fitness protocol.</strong> January is the month fitness discipline most commonly slips. Two gym sessions per week, daily mobility, 7–9 hours sleep. At scratch level, a 4-week fitness lapse will appear in your SG data by February.</li>
@@ -386,9 +401,9 @@
 
   <!-- FEBRUARY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Feb</span>21</div>
+    <div class="month-num"><span class="ph-label">M21</span>21</div>
     <p class="month-title">Spring Sharpening</p>
-    <span class="month-sub">1–29 February 2028 · Week 87–90 · HCP Target: Scratch — Ready for Peak Season</span>
+    <span class="month-sub">1–29 Month 21 · Week 87–90 · HCP Target: Scratch — Ready for Peak Season</span>
     <ul class="checklist">
       <li><span class="check gold">□</span><strong>Full LM re-verification as winter conditions ease.</strong> February typically marks the transition from winter to spring distances. Re-verify all irons and wedges on the launch monitor. Update your yardage card for current conditions before March competition season begins.</li>
       <li><span class="check gold">□</span><strong>Rebuild competition readiness.</strong> February is preparation month for spring peak season. Increase practice session intensity — sharpen consequence games, raise the pass standards on all drills, and treat every Thursday course play round as a competitive rehearsal.</li>
@@ -399,9 +414,9 @@
 
   <!-- MARCH -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Mar</span>22</div>
+    <div class="month-num"><span class="ph-label">M22</span>22</div>
     <p class="month-title">Spring Competition Season Opens</p>
-    <span class="month-sub">1–31 March 2028 · Week 91–94 · HCP Target: Scratch — Competing at Standard</span>
+    <span class="month-sub">1–31 Month 22 · Week 91–94 · HCP Target: Scratch — Competing at Standard</span>
     <ul class="checklist">
       <li><span class="check lime">□</span><strong>Full 3× competition month resumes.</strong> Spring competition season opens in March. Minimum 3 competitive rounds. At least one away or open event — unfamiliar course execution is a final scratch-level skill to confirm.</li>
       <li><span class="check lime">□</span><strong>Apply the wind system on every approach above 10 mph.</strong> Spring weather in England means variable and strong winds. The wind percentage system must be automatic — any lapse in its application is an unnecessary bogey at scratch level.</li>
@@ -412,9 +427,9 @@
 
   <!-- APRIL -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Apr</span>23</div>
+    <div class="month-num"><span class="ph-label">M23</span>23</div>
     <p class="month-title">Peak Season — Maximum Competitive Exposure</p>
-    <span class="month-sub">1–30 April 2028 · Week 95–98 · HCP Target: Scratch — Performing Consistently</span>
+    <span class="month-sub">1–30 Month 23 · Week 95–98 · HCP Target: Scratch — Performing Consistently</span>
     <ul class="checklist">
       <li><span class="check lime">□</span><strong>4+ competitive rounds if the calendar allows.</strong> April is peak UK golf season. Enter every available event. Competitive volume at this stage converts maintained technique into deeply reliable execution. No event is too small — the pressure exposure is the variable.</li>
       <li><span class="check lime">□</span><strong>Spring scoring benchmark session.</strong> On a high-HRV day in April, run the same benchmark session used throughout the programme: 50 6-ft putts, 10 bunker saves, 10-shot iron proximity game. Compare to your best results from Phase 3 and 4. This is the 23-month performance check.</li>
@@ -425,9 +440,9 @@
 
   <!-- MAY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">May</span>24</div>
+    <div class="month-num"><span class="ph-label">M24</span>24</div>
     <p class="month-title">The Finish Line — 24-Month Review</p>
-    <span class="month-sub">1–31 May 2028 · Week 99–104 · Programme Complete</span>
+    <span class="month-sub">1–31 Month 24 · Week 99–104 · Programme Complete</span>
     <ul class="checklist">
       <li><span class="check lime">□</span><strong>Complete the 24-month SG review.</strong> Pull the full programme data. Calculate the total SG improvement in each category from Month 1 to Month 24. Write the final entry in your Progress Journal. This is the permanent record of the work you did.</li>
       <li><span class="check lime">□</span><strong>Final benchmark session.</strong> One high-HRV session: all four benchmark drills run in sequence. Record the numbers. These are your permanent programme-end benchmarks.</li>
@@ -497,7 +512,7 @@
 
   <div class="card">
     <span class="card-kicker">Monthly Competition Requirements</span>
-    <h3>December 2027 – May 2028</h3>
+    <h3>Months 19–24</h3>
     <div class="comp-row">
       <span class="comp-month">December</span>
       <div class="comp-detail">
@@ -554,10 +569,10 @@
   <h2 class="section-title">24-MONTH FINAL BENCHMARKS</h2>
   <p class="section-desc">These are the definitive standards that confirm the programme has delivered. Fill in your actual numbers at Month 24. This is the permanent record of what the 24-month commitment produced.</p>
 
-  <span class="badge b-lime">🏆 24-Month Programme End — May 2028</span>
+  <span class="badge b-lime">🏆 24-Month Programme End — Month 24</span>
 
   <div class="card">
-    <span class="card-kicker">Month 21 Checkpoint — February 2028</span>
+    <span class="card-kicker">Month 21 Checkpoint — Month 21</span>
     <h3>Winter Maintenance Confirmed</h3>
     <table class="dtable">
       <tr><th>Metric</th><th>Scratch Benchmark</th><th>Month 21 Target</th><th>My Number</th></tr>
@@ -571,7 +586,7 @@
   </div>
 
   <div class="card lime-card">
-    <span class="card-kicker">Month 24 — May 2028 · Programme End</span>
+    <span class="card-kicker">Month 24 — Month 24 · Programme End</span>
     <h3>The Complete 24-Month Record</h3>
     <table class="dtable">
       <tr><th>Metric</th><th>Month 1 Start</th><th>Scratch Benchmark</th><th>Month 24 Result</th></tr>
@@ -602,9 +617,9 @@
 <div class="section" id="tracker">
   <span class="section-label">Live Data</span>
   <h2 class="section-title">PROGRESS TRACKER</h2>
-  <p class="section-desc">The final 6 months of data. Fill in after every round. The 24-month record is complete when May 2028 is filled in — and the comparison to Month 1 tells the story of the entire programme.</p>
+  <p class="section-desc">The final 6 months of data. Fill in after every round. The 24-month record is complete when Month 24 is filled in — and the comparison to Month 1 tells the story of the entire programme.</p>
 
-  <span class="badge b-lime">🗓️ Phase 5 Log — December 2027 to May 2028</span>
+  <span class="badge b-lime">🗓️ Phase 5 Log — Month 19 to Month 24</span>
 
   <div class="card">
     <span class="card-kicker">Round Log — Fill After Every Round</span>
@@ -653,7 +668,7 @@
 <div class="section" id="beyond">
   <span class="section-label">What Comes Next</span>
   <h2 class="section-title">BEYOND SCRATCH</h2>
-  <p class="section-desc">The 24-month programme ends in May 2028. Scratch is not a destination — it is a platform. What you build from here depends on your ambitions. This tab sets out the options clearly.</p>
+  <p class="section-desc">The 24-month programme ends in Month 24. Scratch is not a destination — it is a platform. What you build from here depends on your ambitions. This tab sets out the options clearly.</p>
 
   <div class="card gold-card">
     <span class="card-kicker">Option 1 — The Plus Handicap</span>
@@ -661,7 +676,7 @@
     <p>A plus handicap requires consistent scores below par across qualifying rounds. The SG benchmarks tighten: approach proximity target moves to &lt;20 ft from 150 yards, GIR% target rises to 60–65%, and 3-putt rate must reach &lt;3%. Speed training typically resumes — plus-handicappers generally carry 110+ mph driver speed. This requires a further 12–18 months of structured work beyond Month 24.</p>
     <ul class="steps" style="margin-top:14px;">
       <li><span class="sn gd">1</span><strong>Book a TPI-certified coach audit immediately after Month 24.</strong> Set the plus programme brief. The approach from scratch to plus is nearly identical in structure to the scratch programme — just with tighter benchmarks and higher competition volume.</li>
-      <li><span class="sn gd">2</span><strong>Enter county-level competition.</strong> County golf provides the competitive standard against which plus handicaps are built. Enter your county's qualifying events from June 2028.</li>
+      <li><span class="sn gd">2</span><strong>Enter county-level competition.</strong> County golf provides the competitive standard against which plus handicaps are built. Enter your county's qualifying events from Month 24.</li>
       <li><span class="sn gd">3</span><strong>Resume Rypstick speed training.</strong> Speed is a primary plus-handicap differentiator. An additional 3–5 mph of driver speed, built over 6 months of structured overspeed training, adds approach advantage that translates directly into scoring.</li>
     </ul>
   </div>
@@ -681,7 +696,7 @@
     <h3>Club, County, and Amateur Competition</h3>
     <p>Scratch opens doors that handicap golf closes. Club championship contention, county team selection, and open amateur events all become realistic objectives. If competitive golf beyond the club level is the ambition, the programme structure continues — higher competition volume, retained coaching relationship, and the disciplines of Phase 4 maintained permanently.</p>
     <ul class="steps" style="margin-top:14px;">
-      <li><span class="sn rs">1</span><strong>Apply for county card.</strong> Most counties offer a handicap-based entry point. Scratch or better typically qualifies for county competition entry. Contact your county golf union in June 2028.</li>
+      <li><span class="sn rs">1</span><strong>Apply for county card.</strong> Most counties offer a handicap-based entry point. Scratch or better typically qualifies for county competition entry. Contact your county golf union in Month 24.</li>
       <li><span class="sn rs">2</span><strong>Enter national open amateur events.</strong> The EG Order of Merit, regional amateur opens, and national qualifying events are available to scratch golfers. These events provide the highest-standard competitive environment available outside professional golf.</li>
       <li><span class="sn rs">3</span><strong>Continue the programme structure.</strong> Competitive amateur golf at county or national level is essentially a perpetual Phase 4/5 — the programme never formally ends. The structure you have built is the structure that competitive amateurs use for their entire playing careers.</li>
     </ul>
@@ -696,7 +711,7 @@
 
 <div class="footer">
   THE SCRATCH PROJECT · PHASE 5 · DECEMBER 2027 – MAY 2028 · DEFEND THE STANDARD<br>
-  <span style="display:block;margin-top:6px;opacity:0.5;">The 24-month programme ends in May 2028 · What you do next is your choice · The foundation is built</span>
+  <span style="display:block;margin-top:6px;opacity:0.5;">The 24-month programme ends in Month 24 · What you do next is your choice · The foundation is built</span>
 </div>
 
 <script>

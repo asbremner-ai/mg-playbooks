@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6-Month Practice Plan — 1 June 2026</title>
+<title>6-Month Plan — Months 1–6</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -206,6 +206,21 @@
     .week-grid{grid-template-columns:repeat(4,1fr);}
   }
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -215,16 +230,16 @@
   </a>
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
-<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-lines"></div>
   <p class="hero-overline">The Scratch Project</p>
-  <h1>PHASE 1 &amp; 2<span class="ruled">Six-month practice plan · 1 June – 30 November 2026</span></h1>
+  <h1>PHASE 1 &amp; 2<span class="ruled">Six-month practice plan · Month 1 – end of Month 6 2026</span></h1>
   <p class="hero-deck">Your first 26 weeks, anchored to real calendar dates. Every session, every drill, every competition slot — mapped from Day 1.</p>
   <div class="hero-topics">
-    <span class="hero-topic">📅 June–Nov 2026</span>
+    <span class="hero-topic">📅 Months 1–6</span>
     <span class="hero-topic">🗓️ Week-by-Week</span>
     <span class="hero-topic">🎯 Session Templates</span>
     <span class="hero-topic">🏆 Competition Dates</span>
@@ -245,9 +260,9 @@
 
 <!-- ═══ TAB 1 — DAY ONE ═══ -->
 <div class="section active" id="day1">
-  <span class="section-label">Monday 1 June 2026</span>
+  <span class="section-label">Monday Month 1 of Your Programme</span>
   <h2 class="section-title">DAY ONE PROTOCOL</h2>
-  <p class="section-desc">Everything you do on 1 June sets the standard for the 26 weeks that follow. This is not a practice session — it is a setup day. Get the infrastructure in place so every subsequent session is tracked, purposeful, and measurable.</p>
+  <p class="section-desc">Everything you do on Month 1 sets the standard for the 26 weeks that follow. This is not a practice session — it is a setup day. Get the infrastructure in place so every subsequent session is tracked, purposeful, and measurable.</p>
 
   <div class="callout" style="margin-bottom:16px;">
     <span class="cicon">📖</span>
@@ -270,7 +285,7 @@
     <ul class="steps">
       <li><span class="sn gd">1</span><strong>Install Arccos or Shot Scope today.</strong> Attach sensors or charge device. Play a full 18 without worrying about the numbers — just capture them. You cannot improve what you do not measure. This is non-negotiable from round 1.</li>
       <li><span class="sn gd">2</span><strong>Book a putter fitting this week.</strong> Phone your local fitter or Titleist/Ping fitting centre. Target: booked within 7 days. Highest ROI fitting available (+0.3–0.8 SG). Do not wait until Month 3.</li>
-      <li><span class="sn gd">3</span><strong>Open Guide 17 (Progress Journal).</strong> Create your first entry today: current handicap, honest self-assessment of biggest weakness, commitment statement. Date it 1 June 2026.</li>
+      <li><span class="sn gd">3</span><strong>Open Guide 17 (Progress Journal).</strong> Create your first entry today: current handicap, honest self-assessment of biggest weakness, commitment statement. Date it Month 1 of Your Programme.</li>
       <li><span class="sn gd">4</span><strong>Set up your practice log.</strong> Spreadsheet, notes app, or paper journal — your choice. Every session from today gets: date, focus area, drills completed, pass/fail result, and one observation.</li>
       <li><span class="sn gd">5</span><strong>Confirm your weekly tee times.</strong> Block your Thursday round and Saturday round in your calendar for the next 12 weeks. Treat them as unmoveable appointments.</li>
     </ul>
@@ -382,7 +397,7 @@
   </div>
 
   <div class="card">
-    <span class="card-kicker">Thursday &amp; Saturday Rounds</span>
+    <span class="card-kicker">Your Playing Days</span>
     <h3>Playing Rules — Non-Negotiable</h3>
     <ul class="steps">
       <li><span class="sn">▸</span><strong>Full pre-shot routine on every shot.</strong> If you skip it, you are training to skip it under pressure. No exceptions, no shortcuts.</li>
@@ -400,15 +415,15 @@
 
 <!-- ═══ TAB 3 — MONTH-BY-MONTH ═══ -->
 <div class="section" id="calendar">
-  <span class="section-label">June – November 2026</span>
+  <span class="section-label">Months 1–6</span>
   <h2 class="section-title">MONTH-BY-MONTH PLAN</h2>
   <p class="section-desc">Each month has a named skill theme, a specific drill focus, a fitness phase, and a measurable checkpoint. Follow the themes in order — each builds on the last.</p>
 
   <!-- JUNE -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Jun</span>1</div>
+    <div class="month-num"><span class="ph-label">M1</span>1</div>
     <p class="month-title">Foundation Install</p>
-    <span class="month-sub">1–30 June 2026 · Weeks 1–4 · HCP Target: ~9</span>
+    <span class="month-sub">Weeks 1–4 · Month 1 · HCP Target: ~9</span>
     <ul class="checklist">
       <li><span class="check rust">□</span><strong>Pre-shot routine:</strong> Install and use on every shot in every session and round from Day 1. Measure compliance: aim for 100%.</li>
       <li><span class="check rust">□</span><strong>Stat tracking live:</strong> Arccos or Shot Scope active from first round. Review SG every Monday without fail.</li>
@@ -422,9 +437,9 @@
 
   <!-- JULY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Jul</span>2</div>
+    <div class="month-num"><span class="ph-label">M2</span>2</div>
     <p class="month-title">Short Game Build</p>
-    <span class="month-sub">1–31 July 2026 · Weeks 5–8 · HCP Target: ~8</span>
+    <span class="month-sub">Weeks 5–8 · Month 2 · HCP Target: ~8</span>
     <ul class="checklist">
       <li><span class="check rust">□</span><strong>Wedge matrix:</strong> Build your full 4×4 matrix (4 wedges × 4 clock positions) using launch monitor or measured range. Guide 22. Completed by end of July.</li>
       <li><span class="check rust">□</span><strong>Chipping proximity:</strong> Track chip proximity every session. Target by end of July: 60%+ of chips inside 8-ft circle from standard lies.</li>
@@ -439,7 +454,7 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--teal);"><span class="ph-label" style="color:rgba(245,239,228,0.6);">Aug</span>3</div>
     <p class="month-title">Putting Precision</p>
-    <span class="month-sub">1–31 August 2026 · Weeks 9–13 · HCP Target: ~7</span>
+    <span class="month-sub">1–31 Month 3 · Weeks 9–13 · HCP Target: ~7</span>
     <ul class="checklist">
       <li><span class="check teal">□</span><strong>AimPoint Express:</strong> Learn and apply the technique from Guide 01. Use on every putt in rounds from Week 9 onwards. Allocate 20 min per Tuesday session to green reading.</li>
       <li><span class="check teal">□</span><strong>Lag putting:</strong> 30% of every putting block on lag putts 25 ft+. Pass/fail: inside 3-ft radius. Track 3-putt rate in every round — target below 10% by end of August.</li>
@@ -454,7 +469,7 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--teal);"><span class="ph-label" style="color:rgba(245,239,228,0.6);">Sep</span>4</div>
     <p class="month-title">Iron Play Attack</p>
-    <span class="month-sub">1–30 September 2026 · Weeks 14–17 · HCP Target: ~6</span>
+    <span class="month-sub">1–30 Month 4 · Weeks 14–17 · HCP Target: ~6</span>
     <ul class="checklist">
       <li><span class="check teal">□</span><strong>Launch monitor session:</strong> Book a dedicated LM session (not a fitting — a data session). Verify carry distances for every club. End under-clubbing permanently. Guide 26 for how to read the data.</li>
       <li><span class="check teal">□</span><strong>Low Point Drill:</strong> Alignment stick flat on ground, strike irons without touching it. 20 minutes every Tuesday session throughout September. Target: consistent ball-first contact, divot forward of ball.</li>
@@ -468,7 +483,7 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Oct</span>5</div>
     <p class="month-title">Scoring Zone Precision</p>
-    <span class="month-sub">1–31 October 2026 · Weeks 18–22 · HCP Target: ~5–6</span>
+    <span class="month-sub">1–31 Month 5 · Weeks 18–22 · HCP Target: ~5–6</span>
     <ul class="checklist">
       <li><span class="check gold">□</span><strong>Wedge matrix verification:</strong> Re-test all wedge distances — they will have shifted with improved technique and fitness. Rebuild matrix with current numbers. No guessing in the scoring zone.</li>
       <li><span class="check gold">□</span><strong>Course management audit:</strong> Apply Guide 20 framework to every hole on your home course. Create a written strategy card for each hole. Review after each round: did you follow it?</li>
@@ -482,14 +497,14 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Nov</span>6</div>
     <p class="month-title">Consolidation &amp; Review</p>
-    <span class="month-sub">1–30 November 2026 · Weeks 23–26 · HCP Target: ~5</span>
+    <span class="month-sub">1–end of Month 6 2026 · Weeks 23–26 · HCP Target: ~5</span>
     <ul class="checklist">
       <li><span class="check gold">□</span><strong>6-month review:</strong> Pull all SG data from June–November. Compare to Day 1 baselines. Every category should show measurable improvement. If any category is flat, it becomes Phase 3's priority.</li>
       <li><span class="check gold">□</span><strong>Coach audit:</strong> Book a lesson with a TPI-certified coach or your regular coach. Bring your SG data and video. Ask them to identify the single biggest remaining physical limiter. This is the work for Phase 3 (December–May).</li>
       <li><span class="check gold">□</span><strong>Full wedge matrix + dispersion cards:</strong> Both should be complete, verified, and laminated on your bag by end of November.</li>
-      <li><span class="check gold">□</span><strong>Set Phase 3 targets:</strong> Using November's SG data, identify which of the four categories needs the most work in Phase 3. Write it down. This becomes the January theme.</li>
+      <li><span class="check gold">□</span><strong>Set Phase 3 targets:</strong> Using Month 6 SG data, identify which of the four categories needs the most work in Phase 3. Write it down. This becomes the January theme.</li>
     </ul>
-    <div class="success"><span class="cicon">✅</span><p><strong>6-Month Checkpoint:</strong> If all targets in the Progress Tracker tab are met by 30 November, you are on track for scratch by May/June 2028. Phase 3 (December 2026 – May 2027) builds the attack that takes you from 5 to 1–2.</p></div>
+    <div class="success"><span class="cicon">✅</span><p><strong>6-Month Checkpoint:</strong> If all targets in the Progress Tracker tab are met by end of Month 6, you are on track for scratch within your 24-month timeline. Phase 3 (Months 7–12) builds the attack that takes you from 5 to 1–2.</p></div>
   </div>
 </div>
 
@@ -500,7 +515,7 @@
   <p class="section-desc">These are your exact practice blueprints for each month's theme. Every drill has a pass/fail standard. If you do not record the result, the session does not count.</p>
 
   <div class="card">
-    <span class="card-kicker">June / July — Short Game Dominant (75 min)</span>
+    <span class="card-kicker">Months 1–2 — Short Game Dominant (75 min)</span>
     <h3>Foundation Install Sessions</h3>
     <div class="session-block">
       <p class="session-title">Session Allocation</p>
@@ -534,7 +549,7 @@
   </div>
 
   <div class="card teal-card">
-    <span class="card-kicker">August / September — Putting &amp; Iron Dominant (80 min)</span>
+    <span class="card-kicker">Months 3–4 — Putting &amp; Iron Dominant (80 min)</span>
     <h3>Precision Build Sessions</h3>
     <div class="session-block">
       <p class="session-title">Session Allocation</p>
@@ -614,7 +629,7 @@
   <p class="section-desc">Competitive pressure is a skill that must be trained. Every counted competition this plan targets should be treated as a training opportunity — not a test. You are building the pressure infrastructure now that will support scratch-level performance later.</p>
 
   <div class="card">
-    <span class="card-kicker">June – November 2026 · Target: 8–10 Competitive Rounds</span>
+    <span class="card-kicker">Months 1–6 · Target: 8–10 Competitive Rounds</span>
     <h3>Planned Competition Calendar</h3>
     <div class="comp-row">
       <span class="comp-month">June</span>
@@ -691,7 +706,7 @@
   <h2 class="section-title">SIX-MONTH TARGETS</h2>
   <p class="section-desc">These are the measurable standards that confirm Phase 1 and 2 are complete. Every target has a start date, a checkpoint date, and a measurable number. Track in Arccos, Shot Scope, or your practice log.</p>
 
-  <span class="badge b-rust">📊 Milestone Schedule — June to November 2026</span>
+  <span class="badge b-rust">📊 Milestone Schedule — June to Month 6</span>
 
   <div class="card">
     <span class="card-kicker">End of June — Month 1 Checkpoint</span>
@@ -752,7 +767,7 @@
   <h2 class="section-title">PROGRESS TRACKER</h2>
   <p class="section-desc">Fill in your numbers after every round and every weekly Monday review. These are the honest numbers that drive the plan. If a number is not improving, the plan changes — not the target.</p>
 
-  <span class="badge b-teal">🗓️ Weekly Log — June to November 2026</span>
+  <span class="badge b-teal">🗓️ Weekly Log — June to Month 6</span>
 
   <div class="card teal-card">
     <span class="card-kicker">Round Log — Fill After Every Round</span>

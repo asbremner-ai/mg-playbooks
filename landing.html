@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>The Scratch Project — Data-Driven Golf Improvement</title>
+<meta name="description" content="45 expert golf playbooks built on strokes gained analytics. Find exactly where your handicap is leaking and fix it with a prioritised practice plan. Works with any tracking tool. WHS-compatible worldwide.">
+<meta property="og:title" content="The Scratch Project — Find Your Biggest Scoring Leak">
+<meta property="og:description" content="45 expert playbooks. Strokes gained analytics. A prioritised plan to reach your handicap goal. Works with Arccos, Shot Scope, Garmin, or any tracking tool.">
+<meta property="og:image" content="ogimage.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060c06; --surface:#0d1a0d; --surface2:#111e11;
+  --border:rgba(160,200,80,0.15); --border-hi:rgba(160,200,80,0.35);
+  --lime:#a0c850; --lime-hi:#c0e060; --lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840; --gold-hi:#f5d050;
+  --teal:#48b0a8; --teal-hi:#70ccc4;
+  --white:#e8f0d8; --muted:rgba(232,240,216,0.5); --faint:rgba(232,240,216,0.12);
+  --pro:#c8921a; --elite:#c8d8e8;
+  --r:12px; --r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+
+/* ── NAV ── */
+.topnav{background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;backdrop-filter:blur(8px);}
+.topnav-logo{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);text-decoration:none;}
+.topnav-cta{background:var(--gold-hi);color:#0a0e02;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:8px 18px;border-radius:4px;text-decoration:none;font-weight:700;transition:opacity .2s;}
+.topnav-cta:hover{opacity:.88;}
+
+/* ── HERO ── */
+.hero{position:relative;background:linear-gradient(160deg,#020602 0%,#0a1a0a 50%,#060e06 100%);padding:80px 24px 72px;text-align:center;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(245,196,53,0.08) 0%,transparent 55%),radial-gradient(ellipse at 70% 20%,rgba(94,203,62,0.05) 0%,transparent 45%);pointer-events:none;}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#c49a08,#3aaa22,#12a89e,#7040d8,#d85a28);}
+.hero-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:rgba(245,210,80,.8);margin-bottom:18px;position:relative;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,7vw,4.4rem);font-weight:900;line-height:1.02;color:#fff;margin-bottom:12px;position:relative;}
+.hero h1 em{color:var(--gold-hi);font-style:italic;}
+.hero-sub{font-size:clamp(15px,2.2vw,19px);color:rgba(220,235,210,.72);max-width:580px;margin:0 auto 32px;font-weight:300;line-height:1.75;position:relative;}
+.hero-sub strong{color:var(--white);font-weight:500;}
+.hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;margin-bottom:44px;}
+.btn-primary{background:var(--gold-hi);color:#0a0e02;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:16px 32px;border-radius:6px;text-decoration:none;font-weight:700;transition:all .2s;border:none;cursor:pointer;}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px);}
+.btn-secondary{background:transparent;color:var(--lime-hi);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;padding:15px 28px;border-radius:6px;text-decoration:none;font-weight:500;border:1px solid rgba(160,200,80,.4);transition:all .2s;}
+.btn-secondary:hover{border-color:rgba(160,200,80,.7);background:rgba(160,200,80,.05);}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;position:relative;}
+.hstat{text-align:center;}
+.hstat-n{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:900;color:var(--lime);display:block;line-height:1;}
+.hstat-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:block;margin-top:4px;}
+.hstat-div{width:1px;background:var(--border);align-self:stretch;}
+
+/* ── SECTIONS ── */
+.section{max-width:800px;margin:0 auto;padding:72px 24px;}
+.section-eyebrow{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);opacity:.75;margin-bottom:12px;}
+.section h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:900;line-height:1.1;color:var(--white);margin-bottom:16px;}
+.section h2 em{color:var(--gold-hi);font-style:italic;}
+.section-lead{font-size:17px;color:var(--muted);line-height:1.85;margin-bottom:32px;font-weight:300;}
+.divider{height:1px;background:var(--border);margin:0;}
+
+/* ── PROBLEM SECTION ── */
+.problem-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;}
+.problem-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;}
+.problem-card .icon{font-size:1.6rem;margin-bottom:12px;}
+.problem-card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3;}
+.problem-card p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+/* ── SOLUTION / PILLARS ── */
+.pillars{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:28px 0;}
+.pillar{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 10px;text-align:center;}
+.pillar-icon{font-size:1.4rem;display:block;margin-bottom:8px;}
+.pillar-name{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);}
+
+/* ── DATA PROOF ── */
+.data-proof{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 24px;margin:28px 0;}
+.data-proof-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;}
+.data-proof h3{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--white);margin-bottom:16px;}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.bar-label{font-size:12px;color:var(--muted);min-width:210px;}
+.bar-track{flex:1;height:6px;background:var(--faint);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;}
+.bar-val{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);min-width:60px;text-align:right;}
+.data-note{font-size:12.5px;color:var(--muted);line-height:1.7;margin-top:14px;font-style:italic;border-left:2px solid var(--lime);padding-left:12px;}
+
+/* ── PRICING ── */
+.pricing-bg{background:linear-gradient(180deg,var(--bg) 0%,#0a1a0a 100%);}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;}
+.price-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:28px 22px;position:relative;}
+.price-card.featured{border-color:rgba(224,184,64,.4);background:linear-gradient(145deg,rgba(224,184,64,.06) 0%,var(--surface) 100%);}
+.price-card.elite-card{border-color:rgba(200,216,232,.25);}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:4px 12px;border-radius:10px;white-space:nowrap;}
+.badge-popular{background:var(--gold-hi);color:#0a0e02;font-weight:700;}
+.price-tier-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.price-amount{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:4px;}
+.price-amount span{font-size:1rem;font-weight:400;color:var(--muted);font-family:'Inter',sans-serif;}
+.price-desc{font-size:12.5px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:22px;}
+.price-features li{font-size:12.5px;color:var(--muted);display:flex;gap:8px;align-items:flex-start;line-height:1.5;}
+.price-features li::before{content:'✓';color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:11px;flex-shrink:0;margin-top:1px;}
+.price-features li.elite-feat::before{color:var(--elite);}
+.price-cta{display:block;text-align:center;padding:12px 20px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;font-weight:700;transition:all .2s;}
+.price-cta.primary{background:var(--gold-hi);color:#0a0e02;}
+.price-cta.primary:hover{opacity:.9;}
+.price-cta.secondary{border:1px solid var(--border);color:var(--muted);}
+.price-cta.secondary:hover{border-color:var(--border-hi);color:var(--white);}
+
+/* ── TESTIMONIALS ── */
+.testimonials{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.testimonial{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 20px;}
+.testimonial blockquote{font-family:'Playfair Display',serif;font-style:italic;font-size:14px;color:rgba(232,240,216,.8);line-height:1.75;margin-bottom:14px;}
+.testimonial cite{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);font-style:normal;}
+.testimonial-placeholder{background:var(--surface);border:1px dashed rgba(160,200,80,.2);border-radius:var(--r);padding:22px 20px;display:flex;align-items:center;justify-content:center;min-height:120px;}
+.testimonial-placeholder p{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);text-align:center;}
+
+/* ── FAQ ── */
+.faq{display:flex;flex-direction:column;gap:0;margin:24px 0;}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0;}
+.faq-item:first-child{border-top:1px solid var(--border);}
+.faq-q{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:8px;}
+.faq-a{font-size:14px;color:var(--muted);line-height:1.8;}
+
+/* ── FINAL CTA ── */
+.final-cta{text-align:center;padding:80px 24px;background:linear-gradient(160deg,#020602 0%,#0a1a0a 100%);position:relative;overflow:hidden;}
+.final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(245,196,53,0.06) 0%,transparent 60%);pointer-events:none;}
+.final-cta h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:var(--white);margin-bottom:14px;position:relative;}
+.final-cta h2 em{color:var(--gold-hi);font-style:italic;}
+.final-cta p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto 32px;font-weight:300;line-height:1.75;position:relative;}
+.guarantee{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:20px;opacity:.6;}
+
+/* ── FOOTER ── */
+footer{text-align:center;padding:24px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.18em;border-top:1px solid var(--border);}
+
+@media(max-width:600px){
+  .problem-cards,.testimonials{grid-template-columns:1fr;}
+  .pillars{grid-template-columns:repeat(3,1fr);}
+  .pricing-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:20px;}
+  .hstat-div{display:none;}
+  .bar-label{min-width:140px;font-size:11px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="topnav">
+  <a href="#" class="topnav-logo">The Scratch Project</a>
+  <a href="#pricing" class="topnav-cta">Get Started →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">The Scratch Project · Data-Driven Golf Improvement</p>
+  <h1>Stop Guessing<br>Where You're Losing <em>Shots</em></h1>
+  <p class="hero-sub">
+    Most golfers practise what feels comfortable. The data shows you where the strokes are actually going.<br>
+    <strong>45 expert playbooks</strong> built on strokes gained analytics — find your biggest scoring leak and fix it with a prioritised plan.
+  </p>
+  <div class="hero-ctas">
+    <a href="#pricing" class="btn-primary">View the Plans →</a>
+    <a href="index.html" class="btn-secondary">Browse Free Content</a>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">45</span><span class="hstat-l">Playbooks</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="hstat-n">200+</span><span class="hstat-l">Topics</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="hstat-n">5</span><span class="hstat-l">Pillars</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="hstat-n">WHS</span><span class="hstat-l">Compatible</span></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROBLEM -->
+<section class="section">
+  <p class="section-eyebrow">The Problem</p>
+  <h2>You're Probably Practising<br>the <em>Wrong</em> Thing</h2>
+  <p class="section-lead">Strokes gained data from 200,000+ tracked rounds shows a consistent pattern: golfers' intuitions about where they're losing shots are almost always wrong. And practice built on wrong intuitions produces frustrating plateaus.</p>
+  <div class="problem-cards">
+    <div class="problem-card">
+      <div class="icon">🎯</div>
+      <h3>SG: Approach is the biggest lever — almost always</h3>
+      <p>For most 5–18 handicappers, iron approach shots from 100–175 yards account for 40% of the scoring gap to scratch. Yet most golfers spend more time on the putting green.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">🏌️</div>
+      <h3>Double bogeys cost more than three-putts</h3>
+      <p>One double bogey per round typically costs more strokes than two three-putts. Eliminating high-risk decisions is worth more than any technical improvement.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">📊</div>
+      <h3>Blocked practice doesn't transfer to the course</h3>
+      <p>Hitting 100 balls at the same target builds range confidence. Research is clear that interleaved, contextual practice is what actually improves performance under pressure.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon">🔄</div>
+      <h3>Without data, the same weaknesses persist</h3>
+      <p>Without tracking, there's no way to know if practice is working. The improvement loop — lesson, range, round, repeat — has no feedback mechanism to prioritise correctly.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOLUTION -->
+<section class="section">
+  <p class="section-eyebrow">The System</p>
+  <h2>A Structured System Built on<br><em>Your</em> Data</h2>
+  <p class="section-lead">The Scratch Project is a 45-guide improvement system built on strokes gained analytics. Each guide is built around the question: what does the data say, what does it mean, and what specific action closes the gap?</p>
+
+  <div class="pillars">
+    <div class="pillar"><span class="pillar-icon">⛳</span><span class="pillar-name">Score</span></div>
+    <div class="pillar"><span class="pillar-icon">🏌️</span><span class="pillar-name">Strike</span></div>
+    <div class="pillar"><span class="pillar-icon">📡</span><span class="pillar-name">Measure</span></div>
+    <div class="pillar"><span class="pillar-icon">💪</span><span class="pillar-name">Prepare</span></div>
+    <div class="pillar"><span class="pillar-icon">🧠</span><span class="pillar-name">Compete</span></div>
+  </div>
+
+  <div class="data-proof">
+    <div class="data-proof-label">The Data Behind the System</div>
+    <h3>Where Strokes Are Lost — 10 HCP vs Scratch</h3>
+    <div class="bar-row"><span class="bar-label">SG: Approach (iron accuracy)</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:linear-gradient(90deg,#e0b840,#f5d050);"></div></div><span class="bar-val">−1.4/rnd</span></div>
+    <div class="bar-row"><span class="bar-label">SG: Around Green (chipping)</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#a0c850,#c0e060);"></div></div><span class="bar-val">−0.8/rnd</span></div>
+    <div class="bar-row"><span class="bar-label">SG: Off the Tee (driving)</span><div class="bar-track"><div class="bar-fill" style="width:48%;background:linear-gradient(90deg,#48b0a8,#70ccc4);"></div></div><span class="bar-val">−0.7/rnd</span></div>
+    <div class="bar-row"><span class="bar-label">SG: Putting</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:linear-gradient(90deg,#a0c850,#c0e060);"></div></div><span class="bar-val">−0.4/rnd</span></div>
+    <p class="data-note">Most golfers instinctively practise putting. The data consistently shows approach irons should come first. The Scratch Project is built around this prioritisation.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICING -->
+<section class="section pricing-bg" id="pricing">
+  <p class="section-eyebrow">Pricing</p>
+  <h2>Three Tiers,<br>One <em>Framework</em></h2>
+  <p class="section-lead">Start free with the Standard tier — openly accessible on GitHub Pages. Upgrade when the depth matters.</p>
+
+  <div class="pricing-grid">
+    <!-- Standard -->
+    <div class="price-card">
+      <div class="price-tier-label">Standard</div>
+      <div class="price-amount">Free<span></span></div>
+      <p class="price-desc">The complete foundation. Everything a 5–18 handicapper needs to run a data-driven improvement programme.</p>
+      <ul class="price-features">
+        <li>45 core playbooks</li>
+        <li>Strokes gained framework</li>
+        <li>24-month milestone plan</li>
+        <li>Course management system</li>
+        <li>Mental game & pressure protocols</li>
+        <li>WHS-compatible worldwide</li>
+      </ul>
+      <a href="index.html" class="price-cta secondary">Browse Free →</a>
+    </div>
+
+    <!-- Pro -->
+    <div class="price-card featured">
+      <div class="price-badge badge-popular">Most Popular</div>
+      <div class="price-tier-label">Pro</div>
+      <div class="price-amount">£47<span> one-time</span></div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,240,216,0.35);margin:0 0 10px;text-align:center;">approx. $60 usd · $90 aud · $80 cad</p>
+      <p class="price-desc">Every Standard guide plus 27 Pro additions and 3 exclusive guides covering the science behind improvement.</p>
+      <ul class="price-features">
+        <li>Everything in Standard</li>
+        <li>27 advanced Pro additions</li>
+        <li>Practice Structure Science (Guide 38)</li>
+        <li>Ground Reaction Force training (Guide 39)</li>
+        <li>Decision Architecture & EV (Guide 40)</li>
+        <li>Full Decade EV framework</li>
+      </ul>
+      <a href="https://gumroad.com" class="price-cta primary" id="pro-cta">Get Pro →</a>
+    </div>
+
+    <!-- Elite -->
+    <div class="price-card elite-card">
+      <div class="price-tier-label" style="color:var(--elite);">Elite</div>
+      <div class="price-amount" style="color:var(--elite);">£55<span> one-time</span></div>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(200,216,232,0.3);margin:0 0 10px;text-align:center;">approx. $70 usd · $105 aud · $95 cad</p>
+      <p class="price-desc">For scratch and near-scratch players. 9 specialist guides for the post-scratch journey.</p>
+      <ul class="price-features">
+        <li class="elite-feat">Everything in Pro</li>
+        <li class="elite-feat">Plus-handicap SG targets</li>
+        <li class="elite-feat">National amateur circuit guide</li>
+        <li class="elite-feat">Elite performance psychology</li>
+        <li class="elite-feat">Caddie prep & yardage books</li>
+        <li class="elite-feat">Elite physical performance</li>
+      </ul>
+      <a href="https://gumroad.com" class="price-cta secondary" id="elite-cta" style="border-color:rgba(200,216,232,.3);color:var(--elite);">Get Elite →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOCIAL PROOF -->
+<section class="section">
+  <p class="section-eyebrow">What Golfers Say</p>
+  <h2>Built by a Golfer,<br><em>For</em> Golfers</h2>
+  <p class="section-lead">The Scratch Project grew from one golfer's Arccos data and 18 months of structured improvement. Real feedback from early users.</p>
+
+  <div class="testimonials">
+    <div class="testimonial-placeholder"><p>Testimonials added after soft launch</p></div>
+    <div class="testimonial-placeholder"><p>Testimonials added after soft launch</p></div>
+    <div class="testimonial-placeholder"><p>Testimonials added after soft launch</p></div>
+    <div class="testimonial-placeholder"><p>Testimonials added after soft launch</p></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<section class="section">
+  <p class="section-eyebrow">Questions</p>
+  <h2>Common <em>Questions</em></h2>
+
+  <div class="faq">
+    <div class="faq-item">
+      <p class="faq-q">Do I need Arccos to use this?</p>
+      <p class="faq-a">No. The system works with any tracking method — Arccos, Shot Scope, Garmin (Approach R10/S series), Golfmetrics, Hole19, or even manual scorecard tracking. Guide 26 (Reading Your Data) has a decision tree for every setup, and the strokes gained methodology applies regardless of how you collect your data.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What handicap level is this for?</p>
+      <p class="faq-a">Standard is built for 5–25 handicap golfers with an improvement goal. The framework scales — the same SG prioritisation logic that tells a 20-handicapper to fix their short game tells a 5-handicapper to fix their approach irons. Pro adds depth for single-figure players; Elite is specifically for scratch and near-scratch.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Does this work outside the UK?</p>
+      <p class="faq-a">Yes — built on the World Handicap System (WHS), the global standard used in over 100 countries. Whether you play via GHIN (USA), Golf Australia (MiScore), Golf Canada, Golf South Africa, or any WHS affiliate, the strokes gained methodology and programme structure apply directly. The competitive pathway guides are UK-specific, but all technical content — swing mechanics, stats interpretation, practice structure, mental game, fitness — is universal. Pricing is in GBP; approximate conversions are shown on each paid tier above.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What format is the content delivered in?</p>
+      <p class="faq-a">HTML files — mobile-optimised, offline-capable (PWA), and designed to be added to your phone's home screen for one-tap access on the course. Standard is hosted online; Pro and Elite are delivered as a zip download to open locally. No app required, no subscription, no login.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">Is there a refund policy?</p>
+      <p class="faq-a">30-day satisfaction guarantee on all paid tiers. If you've worked through the content and don't feel it was worth what you paid, request a full refund — no questions asked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <h2>Start Finding Your<br><em>Biggest Leak</em> Today</h2>
+  <p>The Standard tier is free and available right now. No email required. No login. Just open Guide 04 and Guide 26 and run your first SG diagnostic.</p>
+  <div class="hero-ctas">
+    <a href="index.html" class="btn-primary">Browse Free Guides →</a>
+    <a href="#pricing" class="btn-secondary">View Paid Plans</a>
+  </div>
+  <p class="guarantee">30-day money-back guarantee on all paid tiers · WHS compatible worldwide · No subscription</p>
+</section>
+
+<footer>THE SCRATCH PROJECT · GOLF PLAYBOOKS · STROKES GAINED · WHS COMPATIBLE · ANY HANDICAP → YOUR GOAL</footer>
+
+</body>
+</html>

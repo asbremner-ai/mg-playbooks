@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Golf Nutrition Plan</title>
+  <meta name="description" content="Golf performance nutrition — calorie cycling, on-course fuelling, strength-day protocols, and body composition strategies that protect power and endurance while improving fitness.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -149,6 +151,21 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -159,9 +176,9 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <span style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.22);">The Scratch Project</span>
 </div>
 <div class="hero">
-  <p class="hero-label">Golf Performance Nutrition</p>
+  <p class="hero-label">Prepare Playbook · Guide 07</p>
   <h1>Golf Nutrition<br><em>Playbook</em></h1>
-  <p class="hero-sub">Fat loss + strength maintenance — structured around your training schedule and golf calendar. Lose 14 lbs without sacrificing power, endurance, or on-course decision quality.</p>
+  <p class="hero-sub">Fat loss and strength maintenance — structured around your training schedule and golf calendar. Achieve your body composition target without sacrificing power, endurance, or on-course decision quality.</p>
   <div class="hero-tags">
     <span class="htag">📊 Calorie Blueprint</span><span class="htag">⛳ Golf Day</span>
     <span class="htag">💪 Strength Day</span><span class="htag">⚡ Speed Day</span>
@@ -186,7 +203,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="card">
     <span class="card-tag">Calorie Targets by Day Type</span>
     <h3>The Cycling Framework</h3>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Based on a 10 HCP male golfer, moderate activity (adjust ±200 kcal if notably lighter/heavier than ~185 lbs). Track for 3 weeks and adjust if fat loss stalls or strength declines.</p>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Based on a moderately active male golfer (~185 lbs / 84 kg, adjust ±200 kcal proportionally for your bodyweight). Track for 3 weeks and adjust if fat loss stalls or strength declines.</p>
     <div class="bar-group">
       <div class="bar-title">Daily Calorie Targets by Activity Type</div>
       <div class="bar-row"><span class="bar-lbl">Golf Day</span><div class="bar-track"><div class="bar-fill gold" style="width:88%"></div></div><span class="bar-val">~2,400 kcal</span></div>

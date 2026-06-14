@@ -179,6 +179,21 @@ hr{border:none;border-top:1px solid var(--faint);margin:22px 0;}
   .phase-table{font-size:11px;}
 }
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -190,7 +205,7 @@ hr{border:none;border-top:1px solid var(--faint);margin:22px 0;}
 </div>
 
 <div class="hero">
-  <p class="hero-label">Guide 11 · Training Arsenal</p>
+  <p class="hero-label">Strike Playbook · Guide 18</p>
   <h1>Your Training<br><em>Arsenal</em></h1>
   <p class="hero-sub">Ten premium training aids — how each one works, exactly how to use it, when to use it, and how to integrate all of them intelligently into your road to scratch.</p>
   <div class="hero-tags">

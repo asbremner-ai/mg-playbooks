@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-13 · 51_gap_zone_mastery.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Gap Zone Mastery: 100–120 Yards — The Scratch Project</title>
+  <meta name="description" content="Eliminate the 100–120 yard scoring gap. Clock system partial shots, PW to GW loft gap management, firm-soft lie adjustment, and a dedicated practice protocol for the distance band where most handicap reduction is won or lost.">
+  <meta name="keywords" content="gap wedge, approach shots, 100 yards, golf improvement, partial shots, The Scratch Project">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.warn-box{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.warn-box p{color:rgba(240,208,112,.9);}.warn-box strong{color:var(--gold-hi);}
+.formula{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 18px;margin:14px 0;}
+.formula-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;}
+.formula-main{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--white);line-height:1.8;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.6;}
+.drill{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;margin-bottom:10px;}
+.drill-hdr{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.drill-icon{font-size:1.4rem;flex-shrink:0;}
+.drill h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin:0 0 2px;}
+.drill-meta{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.drill p{font-size:12.5px;color:var(--muted);line-height:1.7;}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard';
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">&#8962; Home</a>
+
+<div class="hero">
+  <p class="hero-label">Score Playbook · Guide 51</p>
+  <h1>Gap Zone<br><em>Mastery</em></h1>
+  <p class="hero-sub">The 100–120 yard distance band is where most club-level handicap reductions are won or lost. It sits between PW full carry and GW full carry — an in-between distance that most amateurs handle inconsistently. This guide closes that gap permanently.</p>
+  <div class="hero-tags">
+    <span class="htag">📏 100–120 Yards</span>
+    <span class="htag">🕐 Clock System</span>
+    <span class="htag">⚙️ Loft Gap Fix</span>
+    <span class="htag">🎯 Partial Shots</span>
+    <span class="htag">📊 Mevo Calibration</span>
+    <span class="htag">🔧 Practice Protocol</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('diagnosis',this)">Diagnosis</button>
+  <button class="tab" onclick="show('loft_gap',this)">Loft Gap Setup</button>
+  <button class="tab" onclick="show('clock',this)">Clock System</button>
+  <button class="tab" onclick="show('lies',this)">Lie Adjustments</button>
+  <button class="tab" onclick="show('calibration',this)">Calibration</button>
+  <button class="tab" onclick="show('practice',this)">Practice Protocol</button>
+  <button class="tab" onclick="show('on_course',this)">On-Course Use</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Why 100–120 Yards Costs You the Most</h2>
+  <p class="sec-desc">Strokes gained data from thousands of club-level rounds consistently identifies 100–120 yards as the highest-variance distance band for players between 7 and 15 handicap. It is the gap between your pitching wedge full carry and your gap wedge full carry — a distance most players reach for on most par 4s after a solid drive. Inconsistency here compounds across 18 holes.</p>
+
+  <div class="card card-rust">
+    <span class="card-tag">The Gap Problem — Why This Distance Is Hard</span>
+    <h3>Three Reasons the Gap Zone Costs Strokes</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The in-between trap:</strong> 110 yards is too far for a comfortable full gap wedge for most club players (GW full = 95–105 yards) and requires a forced, muscled pitching wedge swing (PW full = 120–130 yards). Neither club is in its optimal window. The result is indecision at address and a hesitant, decelerated swing — the worst combination for contact quality.</div></li>
+      <li><span class="step-n">2</span><div><strong>No established clock position:</strong> Most players know their full PW and full GW. Very few have calibrated specific 9 o'clock, 10 o'clock, and 11 o'clock swing positions for this band. Without calibrated partial shots, every distance in this zone is a guess.</div></li>
+      <li><span class="step-n">3</span><div><strong>Approach zone SG amplifier:</strong> Unlike longer iron approaches where any miss is far from the hole, gap zone misses from 110 yards should be on or near the green. When they aren't — when a 110-yard shot leaves you in a bunker or 30 feet from the flag — the SG cost is disproportionately high for a shot that should be a manageable one.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Opportunity</span>
+    <h3>What Closing the Gap Is Worth in Strokes</h3>
+    <p>A player who has calibrated partial shots in the 100–120 yard window and executes them with consistent contact will outperform an otherwise identical player by 2–3 strokes per 18 holes in this band alone. Over a season of 50 rounds, this single improvement zone accounts for 100–150 strokes — equivalent to a 2–3 handicap reduction from one technical fix. No other approach distance offers this leverage for players in the 7–15 range.</p>
+  </div>
+</div>
+
+<!-- DIAGNOSIS -->
+<div class="sec" id="diagnosis">
+  <h2 class="sec-title">Diagnosing Your Gap</h2>
+  <p class="sec-desc">Before fixing the gap, you need to know exactly where your distances fall. Most players have a larger gap than they think between their PW and GW — or between any two adjacent wedges. The diagnosis step takes 30 minutes on a range or launch monitor and informs everything that follows.</p>
+
+  <span class="badge badge-gold">📊 The Diagnosis Session</span>
+  <div class="card card-gold">
+    <span class="card-tag">Step 1 — Map Your Current Carry Distances</span>
+    <h3>Full Swing Baseline (10 balls per club, real-ball if possible)</h3>
+    <table class="tbl">
+      <tr><th>Club</th><th>Your Full Carry (yards)</th><th>Record Here</th></tr>
+      <tr><td>Pitching Wedge (PW)</td><td>___</td><td>Average of best 7 of 10</td></tr>
+      <tr><td>Gap / Approach Wedge (AW/GW)</td><td>___</td><td>Average of best 7 of 10</td></tr>
+      <tr><td>Sand Wedge (SW)</td><td>___</td><td>Average of best 7 of 10</td></tr>
+      <tr><td>Lob Wedge (LW) if carried</td><td>___</td><td>Average of best 7 of 10</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--muted);">The "gap" is the difference between PW carry and GW carry. A well-configured setup has a 10–12 yard gap between each wedge. If your PW–GW gap is 20+ yards, you have an equipment setup problem as much as a technique problem.</p>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Step 2 — Identify the Dead Zone</span>
+    <h3>Finding Exactly Where You Have No Shot</h3>
+    <div class="formula">
+      <div class="formula-lbl">Your Gap Zone Calculation</div>
+      <div class="formula-main">
+        GW full carry: ___ yards<br>
+        PW full carry: ___ yards<br><br>
+        Gap Zone = distances between these two numbers<br>
+        Example: GW = 100 yds, PW = 125 yds → Gap Zone = 100–125 yards
+      </div>
+      <div class="formula-note">This zone is where you currently have no reliable, calibrated shot. A forced full GW comes up short; a forced full PW goes long. Both result in poor contact because neither swing is in its natural rhythm.</div>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Step 3 — Arccos Confirmation</span>
+    <h3>Checking SG Data for This Band</h3>
+    <p>If you use Arccos or Shot Scope, navigate to Approach → Proximity → filter by distance band (set to your specific gap zone, e.g. 100–120 yards). Compare your average proximity from this band to your proximity from 80–100 yards and 120–140 yards. In almost every case for single-figure and low-double-figure handicappers, the 100–120 yard proximity will be significantly worse than adjacent bands. This confirms the gap is costing strokes on course, not just on the range.</p>
+  </div>
+</div>
+
+<!-- LOFT GAP -->
+<div class="sec" id="loft_gap">
+  <h2 class="sec-title">Loft Gap Equipment Setup</h2>
+  <p class="sec-desc">The most common cause of a large gap zone is incorrect loft spacing between wedges — specifically, a gap wedge (AW) that is too close in loft to either the PW or SW, leaving a 20+ yard hole in the bag. This is an equipment problem with an equipment fix.</p>
+
+  <span class="badge badge-lime">⚙️ The Four-Wedge System</span>
+  <div class="card">
+    <span class="card-tag">Ideal Wedge Loft Configuration</span>
+    <h3>Target 10–12 Yards Between Every Wedge</h3>
+    <table class="tbl">
+      <tr><th>Wedge</th><th>Target Loft</th><th>Target Full Carry</th><th>Gap to Next</th></tr>
+      <tr><td>Pitching Wedge (PW)</td><td>44–46°</td><td>120–135 yards (by player speed)</td><td>10–12 yards</td></tr>
+      <tr><td>Gap / Approach Wedge (GW/AW)</td><td>50–52°</td><td>108–123 yards</td><td>10–12 yards</td></tr>
+      <tr><td>Sand Wedge (SW)</td><td>54–56°</td><td>96–111 yards</td><td>10–12 yards</td></tr>
+      <tr><td>Lob Wedge (LW)</td><td>58–60°</td><td>84–99 yards</td><td>10–12 yards</td></tr>
+    </table>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Modern iron strong-lofting:</strong> Many modern game-improvement irons have PW lofts of 42–44°, effectively making the PW a 9-iron in old money. If your PW loft is below 45°, your "gap wedge" should be 48–50° — not the standard 52°. Get your PW loft checked with a lie board or ask a club fitter.</p>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">When Equipment Is the Fix</span>
+    <h3>Signs Your Gap Is a Bag Problem</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>PW–GW gap over 20 yards:</strong> This is an equipment issue. A 52° gap wedge with a 45° PW means 7° of loft difference — that's too much. Add a 48° or 50° wedge to fill the gap before working on technique.</div></li>
+      <li><span class="step-n">▸</span><div><strong>All four wedges bought as a set:</strong> Set wedges typically have pre-defined lofts that may not match your PW. Have the lofts checked by a fitter — adjustments (bending the lofts) are a 15-minute job and cost less than a sleeve of balls.</div></li>
+      <li><span class="step-n">▸</span><div><strong>No GW in bag at all:</strong> Players who carry PW and SW with a 25+ yard gap and no GW are giving away strokes on every par 4. A gap wedge is not optional for single-figure or low double-figure players.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- CLOCK SYSTEM -->
+<div class="sec" id="clock">
+  <h2 class="sec-title">The Clock System for Gap Zone Shots</h2>
+  <p class="sec-desc">The clock system — swing length defined by lead arm position at the top of the backswing — is the only reliable method for calibrating partial shots. It gives you a repeatable reference point that produces consistent carry distances regardless of how you feel on the day.</p>
+
+  <span class="badge badge-teal">🕐 Clock Positions</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Four Clock Positions — Reference Guide</span>
+    <h3>Lead Arm at the Top of Backswing</h3>
+    <table class="tbl">
+      <tr><th>Position</th><th>Lead Arm Angle</th><th>Approximate % Full Swing</th><th>Feel</th></tr>
+      <tr><td>7:30 (half-back)</td><td>Arm parallel to ground, shaft points down</td><td class="good">~60%</td><td>Short chip — wrists barely hinge</td></tr>
+      <tr><td>9:00 (three-quarter back)</td><td>Arm horizontal — parallel to ground</td><td class="good">~75%</td><td>Most common partial swing — natural feel</td></tr>
+      <tr><td>10:00 (long back)</td><td>Arm at 10 o'clock — just past parallel</td><td class="good">~85–90%</td><td>Full-feeling but with controlled finish</td></tr>
+      <tr><td>11:00 (full)</td><td>Arm near vertical — maximum backswing</td><td class="good">100%</td><td>Maximum swing — full carry distance</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Critical rule:</strong> Match the follow-through to the backswing. A 9 o'clock backswing requires a 9 o'clock follow-through — lead arm horizontal at finish. Amateurs instinctively accelerate through the ball after a short backswing, ruining distance control. The symmetric swing is the key to clock system consistency.</p>
+    </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Building Your Personal Gap Zone Matrix</span>
+    <h3>The 2 × 4 Shot Library for 100–120 Yards</h3>
+    <p style="margin-bottom:12px;">You need four shots in the 100–120 yard window. Two clubs (PW and GW), two clock positions each. This gives you a shot for every 5-yard increment in the gap zone.</p>
+    <div class="formula">
+      <div class="formula-lbl">Target Matrix — Fill In Your Numbers</div>
+      <div class="formula-main">
+        GW · 11 o'clock (full GW):         ___ yards  ← bottom of gap zone<br>
+        GW · 10 o'clock (long-back GW):    ___ yards<br>
+        PW · 9 o'clock (three-quarter PW): ___ yards<br>
+        PW · 10 o'clock (long-back PW):    ___ yards  ← top of gap zone<br>
+        PW · 11 o'clock (full PW):         ___ yards  ← above the gap zone
+      </div>
+      <div class="formula-note">Calibrate on a launch monitor (Mevo Gen2 recommended) with real balls. Range ball numbers inflate by 5–10%. These distances go on your caddie card and Arccos manual distance overrides.</div>
+    </div>
+  </div>
+</div>
+
+<!-- LIE ADJUSTMENTS -->
+<div class="sec" id="lies">
+  <h2 class="sec-title">Lie Adjustments in the Gap Zone</h2>
+  <p class="sec-desc">Distance control in the gap zone is further complicated by lie variation. The same 10 o'clock GW swing produces different distances from fairway, light rough, tight lie, and divot lie. Calibrating these adjustments prevents the common error of using range-only distances on-course.</p>
+
+  <span class="badge badge-rust">⛳ Lie Adjustment Table</span>
+  <div class="card">
+    <span class="card-tag">How Lie Affects Gap Zone Carry</span>
+    <h3>Typical Adjustments from Baseline Fairway Distance</h3>
+    <table class="tbl">
+      <tr><th>Lie Type</th><th>Typical Carry Effect</th><th>Why</th><th>Club Adjustment</th></tr>
+      <tr><td>Tight fairway</td><td class="good">Baseline (0 yards)</td><td>Clean contact, normal spin</td><td>None — use standard matrix</td></tr>
+      <tr><td>Light rough (fluffy)</td><td class="warn">+5–8 yards (flyer)</td><td>Grass between face and ball reduces spin; ball runs hot</td><td class="good">Take one less clock position</td></tr>
+      <tr><td>Light rough (tight)</td><td class="good">−3–5 yards</td><td>Slightly hampered contact</td><td class="warn">Standard or minor adjustment</td></tr>
+      <tr><td>Medium rough</td><td class="bad">−8–12 yards, less spin</td><td>Significant face-grass-ball sandwich</td><td class="good">Add one clock position or take more club</td></tr>
+      <tr><td>Divot / bare lie</td><td class="warn">Inconsistent — low, thin risk</td><td>Ball below turf level; contact point uncertain</td><td class="good">Ball back 1 inch; steeper attack; expect lower flight</td></tr>
+      <tr><td>Uphill slope</td><td class="good">+5–10 yards effective carry</td><td>Dynamic loft increases; ball launches higher</td><td class="good">Take one less club</td></tr>
+      <tr><td>Downhill slope</td><td class="bad">−5–10 yards effective carry; harder to control</td><td>Dynamic loft decreases; lower, harder launch</td><td class="good">Take one more club; aim for centre of green</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CALIBRATION -->
+<div class="sec" id="calibration">
+  <h2 class="sec-title">Launch Monitor Calibration Protocol</h2>
+  <p class="sec-desc">The gap zone matrix is only as accurate as the data it's built on. A 30-minute Mevo Gen2 session with real balls (or a launch monitor bay at a fitting centre) is the definitive calibration method. This is not optional for serious players — range estimation is not sufficient for competition-level gap zone control.</p>
+
+  <span class="badge badge-gold">📊 The Calibration Session</span>
+  <div class="card card-gold">
+    <span class="card-tag">Mevo Gen2 Gap Zone Protocol</span>
+    <h3>30-Minute Calibration Session Structure</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Setup:</strong> Mevo in carry distance mode, 10+ feet behind the ball, real golf balls, flat lie on turf mat or fairway. Each shot recorded — aim for 8 balls per combination minimum.</div></li>
+      <li><span class="step-n">2</span><div><strong>Session order:</strong> GW full (11 o'clock) → GW 10 o'clock → GW 9 o'clock → PW 10 o'clock → PW 9 o'clock → PW full (11 o'clock). 8 balls per combination = 48 shots total. Discard outliers (top/thin/shank) — use the median of the 6 best.</div></li>
+      <li><span class="step-n">3</span><div><strong>Record carry, not total:</strong> Carry distance is the only number that matters for course management. Total distance includes roll — useless for approach shots. Set Mevo to carry mode, not total distance.</div></li>
+      <li><span class="step-n">4</span><div><strong>Check smash factor:</strong> Smash factor (ball speed ÷ club speed) should be 1.18–1.22 for clean wedge contact. Consistently below 1.16 indicates thin or fat contact compromising the session — identify the miss before trusting the distances.</div></li>
+      <li><span class="step-n">5</span><div><strong>Transfer to caddie card:</strong> Once calibrated, these distances go on your caddie card (Guide: Caddie Card) and into your Arccos manual distance overrides for GW at each clock position. Update quarterly or after any equipment change.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- PRACTICE PROTOCOL -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">Gap Zone Practice Protocol</h2>
+  <p class="sec-desc">Closing the gap zone requires dedicated, structured practice — not random wedge sessions. The protocol below is the minimum effective dose to build reliable gap zone shot-making. It is specifically designed to transfer to on-course performance, not just range performance.</p>
+
+  <div class="drill">
+    <div class="drill-hdr">
+      <div class="drill-icon">🎯</div>
+      <div><h4>The Gap Zone Ladder Drill</h4>
+      <div class="drill-meta">20 min · Distance Control · GW + PW · Weekly</div></div>
+    </div>
+    <p>Set targets at 100, 105, 110, 115, and 120 yards (use a rangefinder or count range markers). Hit 3 balls to each target, using the appropriate clock position from your matrix for each distance. Score 1 point per ball within 10 yards of target. Tour target: 12/15. Building target: 8/15. Track weekly — any upward trend is measurable progress. The key variable is commitment to the clock position, not guessing. Every shot must have a pre-committed clock position before you address the ball.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr">
+      <div class="drill-icon">🔄</div>
+      <div><h4>Random Gap Zone — Course Simulation</h4>
+      <div class="drill-meta">15 min · Decision Making · All Gap Zone Clubs</div></div>
+    </div>
+    <p>Have a practice partner or use a random number app to call out distances between 98 and 122 yards. You have 10 seconds to select club and clock position before hitting. No pre-planning. This simulates on-course conditions where you must identify the distance and select the right combination under mild time pressure. This drill is more valuable for transferability than the ladder drill — it trains the decision, not just the execution.</p>
+  </div>
+
+  <div class="drill">
+    <div class="drill-hdr">
+      <div class="drill-icon">📊</div>
+      <div><h4>Pressure Gap Zone — Consequence Scoring</h4>
+      <div class="drill-meta">10 min · Competition Prep · GW + PW</div></div>
+    </div>
+    <p>Pick a target at 110 yards. Hit 5 balls. A ball within 15 yards of the flag is "in" — counts as a "save." You need 4 saves from 5 to pass. If you don't pass, hit 5 more and try again. Track how many attempts it takes to pass. This builds the consequence-based practice that transfers to competition. The goal is to need 1 attempt consistently — meaning your process holds under consequence, not just in free practice.</p>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>HackMotion integration:</strong> If you use HackMotion, wear it during gap zone sessions to monitor lead wrist at the top. Consistent extension (bowing) at the 10 o'clock position is a common miss pattern in partial wedge shots — it reduces dynamic loft unpredictably. A flat-to-slightly-flexed wrist at partial swing positions is the performance target.</p>
+  </div>
+</div>
+
+<!-- ON-COURSE USE -->
+<div class="sec" id="on_course">
+  <h2 class="sec-title">On-Course Gap Zone Decision Protocol</h2>
+  <p class="sec-desc">Having calibrated distances is only half the battle. The decision framework that gets you to the right shot at the right moment is what closes the gap between range performance and course performance.</p>
+
+  <div class="card card-gold">
+    <span class="card-tag">The On-Course Gap Zone Routine</span>
+    <h3>From Yardage to Shot Selection — 30 Seconds</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Get precise yardage:</strong> Arccos, rangefinder, or GPS — to the front, middle, and back of the green. Identify which pin position you're playing to (front, middle, or back) and calculate the carry required to the front of the green.</div></li>
+      <li><span class="step-n">2</span><div><strong>Check your matrix:</strong> Match the carry required to the front of the green to the nearest matrix entry. Err toward the longer option — missing long in the gap zone is rarely worse than being short in a bunker.</div></li>
+      <li><span class="step-n">3</span><div><strong>Apply lie and conditions:</strong> Is the lie fluffy (flyer risk — take shorter clock position)? Is there wind (adjust carry)? Uphill or downhill? Apply the appropriate adjustment from your lie table.</div></li>
+      <li><span class="step-n">4</span><div><strong>Commit to the clock position:</strong> Pick your clock position before you address the ball. During the swing, think only about the feel of the clock position — not the target, not the result. Trust the calibration.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">When to Override the Matrix</span>
+    <h3>Decision Situations That Require Adjustment</h3>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Standard Response</th></tr>
+      <tr><td>Exact distance falls between matrix entries</td><td class="good">Use the lower carry option and slightly longer clock position rather than two separate adjustments</td></tr>
+      <tr><td>Wind directly into face (&gt;15 mph)</td><td class="good">Add 5–8 yards to required carry; take one clock position up</td></tr>
+      <tr><td>Downhill lie at 110 yards</td><td class="good">Dynamic loft decreases — play as if it's 118 yards; aim for middle of green</td></tr>
+      <tr><td>Extreme pressure (final holes of competition)</td><td class="good">Revert to GW full swing rather than partial PW — the simpler technique is more reliable under pressure</td></tr>
+    </table>
+  </div>
+
+  <div class="info-box tip">
+    <span class="ico">💡</span>
+    <p><strong>Caddie card integration:</strong> Your gap zone matrix should be printed on or added to your caddie card (Guide: Caddie Card) — every distance, every clock position. On the course, you should never be guessing. You should be reading your matrix. The card removes one source of pressure-induced hesitation from every gap zone shot.</p>
+  </div>
+</div>
+
+<div class="footer">GAP ZONE MASTERY · GUIDE 51 · THE SCRATCH PROJECT · SCORE · STRIKE · MEASURE · PREPARE · COMPETE</div>
+</body>
+</html>

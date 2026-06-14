@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Coaching Relationship — The Scratch Project</title>
+  <meta name="description" content="How to maximise a coaching relationship using data. What to bring to lessons, how to evaluate a coach, the lesson structure that accelerates improvement, and how to self-coach between sessions.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
@@ -59,6 +61,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
@@ -66,7 +83,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 34</p>
+  <p class="hero-label">Measure Playbook · Guide 34</p>
   <h1>The Coaching<br><em>Relationship</em></h1>
   <p class="hero-sub">How to select a coach, structure a lesson series, practise effectively between lessons, know when a change isn't working, and manage the relationship across a 24-month improvement programme.</p>
   <div class="hero-tags">
@@ -100,7 +117,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   </div>
   <div class="card">
     <span class="card-tag">Qualifications — What They Mean</span>
-    <h3>UK Coaching Credentials Decoded</h3>
+    <h3>Golf Coaching Credentials Decoded</h3>
     <table class="tbl">
       <tr><th>Credential</th><th>What It Means</th><th>Relevance</th></tr>
       <tr><td>PGA Professional</td><td>Full PGA membership — 3-year training programme</td><td class="good">Baseline standard — always a PGA Pro or above</td></tr>
@@ -108,7 +125,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <tr><td>TrackMan University</td><td>Certified in TrackMan data interpretation</td><td class="good">Strong indicator of technology-integrated coaching</td></tr>
       <tr><td>TPI Certified</td><td>Titleist Performance Institute — body-swing connection</td><td class="warn">Valuable if fitness-integrated coaching is wanted</td></tr>
       <tr><td>SAM PuttLab</td><td>Certified in putting stroke analysis</td><td class="warn">Useful for putting-specific coaching</td></tr>
-      <tr><td>Self-described "coach"</td><td>No formal qualification required in the UK</td><td class="bad">Check credentials — anyone can call themselves a coach</td></tr>
+      <tr><td>Self-described "coach"</td><td>No formal qualification required in most countries</td><td class="bad">Check credentials — anyone can call themselves a coach</td></tr>
     </table>
   </div>
 </div>
@@ -237,7 +254,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 <div class="sec" id="phases">
   <h2 class="sec-title">Coaching Across the 24-Month Programme</h2>
-  <p class="sec-desc">The coaching relationship should evolve as your handicap reduces. What you need from a coach at 10 HCP is different from what you need at 3 HCP. Expecting the same type of coaching throughout the programme leads to either over-dependence in the later phases or under-utilisation in the early phases.</p>
+  <p class="sec-desc">The coaching relationship should evolve as your handicap reduces. What you need from a coach at 15 HCP is different from what you need at 3 HCP. Expecting the same type of coaching throughout the programme leads to either over-dependence in the later phases or under-utilisation in the early phases.</p>
   <span class="badge badge-gold">📅 Phase-by-Phase Coaching</span>
   <div class="card">
     <span class="card-tag">Phase 1–2 (10–5 HCP) — Structural Coach</span>

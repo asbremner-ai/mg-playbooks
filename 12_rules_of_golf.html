@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Rules of Golf — Competitive Readiness Guide</title>
+  <meta name="description" content="Rules of golf quick reference — penalty procedures, relief options, common competitive situations decoded. Every rule that affects your score with practical scenario-based applications.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -120,6 +122,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -131,7 +148,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 </div>
 
 <div class="hero">
-  <p class="hero-label">Rules of Golf · Guide 12</p>
+  <p class="hero-label">Compete Playbook · Guide 12</p>
   <h1>Know the<br><em>Rules</em></h1>
   <p class="hero-sub">Rules knowledge is competitive advantage. Every correctly invoked rule is a stroke saved or protected. Every mistake is a stroke gifted to the field. Master the rules before you compete.</p>
   <div class="hero-tags">
@@ -634,6 +651,17 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
     <ul class="steps">
       <li><span class="step-n">✓</span><div><strong>Courses as short as 1,500 yards (18-hole) are now eligible for Course Rating and Slope, meaning rounds there count toward your WHS handicap index.</strong> Par-3 courses and executive courses that meet this minimum can now be registered. If you practise on a short course, check whether it is rated — those rounds may qualify.</div></li>
       <li><span class="step-n">→</span><div><strong>Practical benefit:</strong> More qualifying round opportunities available, especially for winter practice when full courses may be closed or waterlogged. Submit every qualifying round, including from approved short courses.</div></li>
+    </ul>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">Driver Length Limit — January 2024</span>
+    <h3>Maximum 46 Inches in Competition</h3>
+    <p style="margin-bottom:12px;">From 1 January 2024, the R&A and USGA introduced a Model Local Rule (MLR) limiting the maximum driver shaft length to <strong style="color:var(--white);">46 inches</strong> (measured from end of grip cap to sole of club). Previously the limit was 48 inches. This MLR is now adopted by the majority of UK county unions, national championships, and major club stroke play competitions. Always verify before competing.</p>
+    <ul class="steps">
+      <li><span class="step-n">⚠️</span><div><strong>Check your driver:</strong> Most standard off-the-shelf drivers are manufactured at 45–45.5 inches and are unaffected. Custom-built or older "long driver" models may exceed 46 inches. Measure from the end of the grip cap to the sole. If over 46 inches, the club is non-conforming under this MLR and must not be used in competitions where the rule applies.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Where it applies:</strong> All R&A national championships; England Golf county championships and team events; EGU, SGU, GU and GUI national competitions; most UK open amateur events from 2024 onwards. Club medal and Stableford competitions may or may not have adopted it — check your club's local rules notice board each season.</div></li>
+      <li><span class="step-n">✓</span><div><strong>Penalty for breach:</strong> Two strokes (stroke play) or loss of hole (match play) for each hole on which the non-conforming club was used, up to a maximum of four strokes per round in stroke play.</div></li>
+      <li><span class="step-n">→</span><div><strong>Fitting implication:</strong> Any driver fitting from 2024 onwards should default to a finished club length of 46 inches or under. Confirm this explicitly with your fitter before ordering. See also Guide 15 (Equipment Fitting) and Guide 55 (Launch Monitor Fitting Sessions).</div></li>
     </ul>
   </div>
   <div class="info-box tip">

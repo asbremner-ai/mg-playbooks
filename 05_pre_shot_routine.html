@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pre-Shot Routine & Practice Plan</title>
+  <meta name="description" content="Build a consistent pre-shot routine grounded in tour neuroscience. Full-swing, putting, and short game routines plus structured practice plans with pass/fail criteria.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics, golf practice">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -149,6 +151,21 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -159,7 +176,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 <div class="hero">
-  <p class="hero-label">Advanced Player Edition</p>
+  <p class="hero-label">Prepare Playbook · Guide 05</p>
   <h1>Pre-Shot Routine<br><em>&amp; Practice Plan</em></h1>
   <p class="hero-sub">Trust the Process — One Shot at a Time. Full-swing, putting, and short game routines plus structured practice plans.</p>
   <div class="hero-tags">

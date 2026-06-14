@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Weather & Conditions Play — Pro Edition</title>
+<title>Weather & Conditions Play — The Scratch Project</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
@@ -68,6 +68,21 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 .footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
 @media(max-width:480px){.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -77,15 +92,16 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </a>
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
-<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 23</p>
+  <p class="hero-label">Score Playbook · Guide 23</p>
   <h1>Weather &<br><em>Conditions Play</em></h1>
   <p class="hero-sub">Complete adjustments for wind, rain, cold, heat, firm and soft ground, altitude, and links conditions — precise numbers for every variable that affects distance, trajectory, and strategy.</p>
   <div class="hero-tags">
     <span class="htag">🌬️ Wind Maths</span><span class="htag">🌧️ Rain</span>
     <span class="htag">❄️ Cold & Heat</span><span class="htag">⛰️ Altitude</span>
     <span class="htag">🏖️ Firm & Fast</span><span class="htag">🌿 Links Play</span>
+    <span class="htag">🌍 All Climates</span>
   </div>
 </div>
 <div class="nav">
@@ -102,7 +118,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- OVERVIEW -->
 <div class="sec active" id="overview">
   <h2 class="sec-title">Conditions Framework</h2>
-  <p class="sec-desc">Conditions are the great equaliser. A 10 HCP player who understands and applies precise conditions adjustments will outperform a 7 HCP player who ignores them. Every environmental variable has a quantifiable effect — know the numbers and apply them automatically.</p>
+  <p class="sec-desc">Conditions are the great equaliser. The player who understands and applies precise conditions adjustments will consistently outperform those of the same ability who ignore them. Every environmental variable has a quantifiable effect — know the numbers and apply them automatically.</p>
   <span class="badge badge-teal">🌍 The Conditions Advantage</span>
   <div class="card">
     <span class="card-tag">Why Conditions Matter More Than Most Players Realise</span>
@@ -246,7 +262,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- RAIN EQUIPMENT -->
 <div class="sec" id="raingear">
   <h2 class="sec-title">Rain Equipment & Grip Management</h2>
-  <p class="sec-desc">Wet conditions in UK golf are not occasional inconveniences — they are a regular competitive environment. The players who score well in rain don't just adjust their shot-making; they have a specific equipment protocol that eliminates grip and club-handling as variables. Most of this is preparation, not technique.</p>
+  <p class="sec-desc">In temperate-climate golf — the UK, Ireland, northern Europe, the Pacific Northwest, and coastal Australia — wet conditions are not occasional inconveniences but a regular competitive environment. The players who score well in rain don't just adjust their shot-making; they have a specific equipment protocol that eliminates grip and club-handling as variables. Most of this is preparation, not technique.</p>
   <span class="badge badge-teal">☔ Equipment Protocol</span>
   <div class="card card-gold">
     <span class="card-tag">Glove Rotation — The Core System</span>
@@ -264,7 +280,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <h3>The Gear Variable Most Players Ignore</h3>
     <ul class="steps">
       <li><span class="step-n">1</span><div><strong>Grip condition matters far more in wet conditions than dry:</strong> A grip that feels adequate in dry conditions will feel slippery within 3 holes in rain. Test your grips wet before competition — wet them under a tap and grip the club normally. If there is any slippage, regrip before the competition.</div></li>
-      <li><span class="step-n">2</span><div><strong>Cord grips are the best choice for wet UK play:</strong> Cord (mixed rubber/thread) grips, such as the Golf Pride Tour Velvet Cord or MCC, maintain significantly better wet grip than pure rubber. If you play regularly in UK rain, cord grips should be your default from April–October. The firmer feel takes adjustment in dry conditions but the wet-condition advantage is substantial.</div></li>
+      <li><span class="step-n">2</span><div><strong>Cord grips are the best choice for wet-climate play:</strong> Cord (mixed rubber/thread) grips, such as the Golf Pride Tour Velvet Cord or MCC, maintain significantly better wet grip than pure rubber. If you play regularly in wet conditions, cord grips should be your default through your rainy season. The firmer feel takes adjustment in dry conditions but the wet-condition advantage is substantial.</div></li>
       <li><span class="step-n">3</span><div><strong>Dry the grip AND the glove hand before every shot:</strong> Keep a dry towel inside your jacket or under the umbrella — not on your bag where it gets soaked within 2 holes. A damp towel used on a wet grip makes it worse. You need a dry surface for the 10 seconds of address and setup. This discipline, consistently applied, is worth at least one shot per wet round.</div></li>
       <li><span class="step-n">4</span><div><strong>The club-in-umbrella technique:</strong> When standing over the ball preparing to swing, your club is often exposed to rain. Walk to the shot under the umbrella with the clubhead inside the umbrella canopy, removing it only at address. In heavy rain, the face can accumulate water in 30 seconds of exposure — wet-face impact dramatically reduces spin and creates unpredictable contact.</div></li>
     </ul>
@@ -428,8 +444,8 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 <!-- DEW & DAWN -->
 <div class="sec" id="dew">
   <h2 class="sec-title">Dew & Dawn Conditions</h2>
-  <p class="sec-desc">Morning dew is one of the most underestimated scoring variables in UK golf. An early tee time on a dewy morning produces measurably different outcomes from the same course at midday — and the adjustments required are specific, counterintuitive, and almost never discussed. Understanding dew management is a genuine competitive advantage in Saturday morning medal and Stableford competitions.</p>
-  <span class="badge badge-teal">🌅 Early Morning Golf — UK Specific</span>
+  <p class="sec-desc">Morning dew is one of the most underestimated scoring variables in golf. An early tee time on a dewy morning produces measurably different outcomes from the same course at midday — and the adjustments required are specific, counterintuitive, and almost never discussed. Understanding dew management is a genuine competitive advantage in any early morning competition.</p>
+  <span class="badge badge-teal">🌅 Early Morning Golf — Dew Management</span>
   <div class="card card-teal">
     <span class="card-tag">How Dew Affects Ball Flight</span>
     <h3>The Physics of a Wet Ball on a Wet Face</h3>
@@ -466,7 +482,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     </ul>
     <div class="info-box tip" style="margin-top:10px;">
       <span class="ico">💡</span>
-      <p><strong>The dew tells you the conditions:</strong> If dew lines are clearly visible in your footprints on the fairway, treat it as a full dew round. If it has partially cleared, reduce adjustments by 50%. By 10am on a sunny day in the UK, dew is typically non-factor — but by then you've already played 3–4 holes. The early holes are where the management pays off.</p>
+      <p><strong>The dew tells you the conditions:</strong> If dew lines are clearly visible in your footprints on the fairway, treat it as a full dew round. If it has partially cleared, reduce adjustments by 50%. By 10am on a sunny day in most climates, dew is typically non-factor — but by then you've already played 3–4 holes. The early holes are where the management pays off.</p>
     </div>
   </div>
 
@@ -485,7 +501,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">The Twilight Round — Late Evening Adjustments</span>
     <h3>Evening Dew, Cooling Air & Reduced Light</h3>
     <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Secondary dew formation:</strong> Dew forms again in the late evening as temperature drops below the dew point (typically after 6–7pm in UK summer). Twilight rounds — starting 4–6pm — will encounter secondary dew developing through the back nine. The same adjustments apply as morning dew, with increasing intensity through the round.</div></li>
+      <li><span class="step-n">1</span><div><strong>Secondary dew formation:</strong> Dew forms again in the late evening as temperature drops below the dew point (typically after 6–7pm in temperate climates). Twilight rounds — starting 4–6pm — will encounter secondary dew developing through the back nine. The same adjustments apply as morning dew, with increasing intensity through the round.</div></li>
       <li><span class="step-n">2</span><div><strong>Cooling air = distance loss:</strong> Air temperature drops 3–5°C between the first and last holes of a summer evening twilight round. Combined with the ball cooling (which reduces compression efficiency), expect 3–5 yards of distance loss per club by the final holes versus the first. Club up progressively through the back nine.</div></li>
       <li><span class="step-n">3</span><div><strong>Reduced light and depth perception:</strong> In lower light conditions, depth perception decreases — distances to flags and hazards appear shorter than they are. This produces systematic under-clubbing. Trust your yardage data entirely (GPS, Arccos, Shot Scope) and ignore visual distance estimation in the final hour of light.</div></li>
     </ul>

@@ -4,7 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Speed Training — Pro Edition</title>
+<title>Speed Training — The Scratch Project</title>
+  <meta name="description" content="Overspeed training with Rypstick — science-based protocols for adding clubhead speed. Periodisation, session templates, and tracking real progress over 12–24 months.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -148,6 +150,21 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -158,7 +175,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 <div class="hero">
-  <p class="hero-label">Pro Playbook · Guide 25</p>
+  <p class="hero-label">Strike Playbook · Guide 25</p>
   <h1>Speed <em>Training</em></h1>
   <p class="hero-sub">A structured overspeed protocol for adding 10–25+ mph of club speed over 12–24 months — Rypstick & overspeed mechanics, sequencing with technique work, when not to train, and measuring real progress.</p>
   <div class="hero-tags">
@@ -352,7 +369,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
     <span class="card-tag">Three Taper Levels — Matched to Competition Priority</span>
     <h3>Not Every Round Warrants a Full 14-Day Taper</h3>
     <table class="tbl"><tr><th>Taper Level</th><th>Competition Type</th><th>Duration</th><th>Speed Training</th><th>Fitness</th></tr>
-    <tr><td class="good">Full Taper</td><td>Club championship, scratch qualifier, county event</td><td>10–14 days</td><td>Last session 7 days out</td><td>Last session 10 days out</td></tr>
+    <tr><td class="good">Full Taper</td><td>Club championship, scratch qualifier, club championship or regional qualifier</td><td>10–14 days</td><td>Last session 7 days out</td><td>Last session 10 days out</td></tr>
     <tr><td class="warn">Moderate Taper</td><td>Monthly medal, important club competition</td><td>5–7 days</td><td>Last session 5 days out</td><td>Reduce 50% for final week</td></tr>
     <tr><td class="bad">Mini Taper</td><td>Regular stroke play, casual competition</td><td>3 days</td><td>Normal training, pause 3 days out</td><td>Normal training to 3 days out</td></tr></table>
     <div class="info-box tip" style="margin-top:12px;"><span class="ico">💡</span><p><strong>Important:</strong> The speed disruption effect peaks 24–48 hours after a speed training session. If your last session is 7 days out, the timing disruption will have fully resolved by competition day. Sessions within 72 hours of competition reliably impair putting feel and short game touch — the most sensitive fine-motor skills.</p></div>
@@ -373,7 +390,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <div class="card card-gold">
     <span class="card-tag">Structuring Your Year Around Competition Peaks</span>
     <h3>The Three-Peak Annual Model</h3>
-    <p style="margin-bottom:8px;">For a player competing in a full UK golf season (April–October) with a winter training block, the annual programme can be structured around three competition peaks — each separated by a training block that rebuilds fitness and speed before the next peak.</p>
+    <p style="margin-bottom:8px;">For a player competing in a full golf season with a winter training block, the annual programme can be structured around three competition peaks — each separated by a training block that rebuilds fitness and speed before the next peak.</p>
     <table class="tbl"><tr><th>Period</th><th>Phase</th><th>Focus</th><th>Speed Training</th></tr>
     <tr><td>Nov–Jan (off-season)</td><td>Base Building</td><td>Strength, GRF, mobility, technique acquisition</td><td>Full protocol 3×/week</td></tr>
     <tr><td>Feb–Mar (pre-season)</td><td>Speed Development</td><td>Maximum overspeed gains, technique consolidation</td><td>Full protocol 3×/week — push hard</td></tr>

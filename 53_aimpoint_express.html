@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-13 · 53_aimpoint_express.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>AimPoint Express Green Reading — The Scratch Project</title>
+<meta name="description" content="Complete AimPoint Express guide — finger method, stimp-to-fingers tables, certification pathway, on-course routine, and adjustments for slope, grain, and wind. Competition-legal and widely taught at UK club level.">
+<meta name="keywords" content="AimPoint Express, green reading, putting, golf improvement, The Scratch Project">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#70c870;--warn:#e0b840;--bad:#e07060;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--lime-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--lime-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);}.warn{color:var(--warn);}.bad{color:var(--bad);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;}
+.steps li strong{color:var(--white);}
+.info-box{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box p{font-size:12.5px;line-height:1.7;}.info-box strong{display:block;margin-bottom:2px;}
+.tip{background:rgba(72,176,168,.08);border:1px solid rgba(72,176,168,.22);}.tip p{color:rgba(112,204,196,.9);}.tip strong{color:var(--teal-hi);}
+.warn-box{background:rgba(224,184,64,.07);border:1px solid rgba(224,184,64,.22);}.warn-box p{color:rgba(240,208,112,.9);}.warn-box strong{color:var(--gold-hi);}
+.pull-quote{border-left:3px solid var(--lime);padding:12px 18px;margin:20px 0;background:var(--lime-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-size:1rem;font-style:italic;color:var(--white);margin-bottom:4px;}
+.pull-quote span{font-size:11px;color:var(--muted);}
+.formula{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:16px 18px;margin:14px 0;}
+.formula-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;}
+.formula-main{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--white);line-height:1.8;}
+.formula-note{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.6;}
+.finger-diagram{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin:14px 0;text-align:center;}
+.finger-diagram p{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);margin-top:10px;line-height:1.6;}
+.finger-visual{font-size:2.5rem;letter-spacing:0.15em;line-height:1.2;color:var(--white);}
+.ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.footer{text-align:center;padding:24px 16px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.2em;border-top:1px solid var(--border);position:relative;z-index:1;}
+</style>
+<script>
+const TIER = 'standard';
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</head>
+<body>
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">&#8962; Home</a>
+
+<div class="hero">
+  <p class="hero-label">Score Playbook · Guide 53</p>
+  <h1>AimPoint<br><em>Express</em></h1>
+  <p class="hero-sub">The most reliable green-reading method taught at UK club level — competition-legal, scientifically grounded, and learnable in one session. Finger method, stimp-to-fingers tables, on-course routine, and adjustments for grain and wind.</p>
+  <div class="hero-tags">
+    <span class="htag">☝️ Finger Method</span>
+    <span class="htag">📐 Slope Tables</span>
+    <span class="htag">✅ R&amp;A Legal</span>
+    <span class="htag">🌍 Global Standard</span>
+    <span class="htag">🟢 Any Green Speed</span>
+    <span class="htag">🏆 Tour Proven</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('method',this)">The Method</button>
+  <button class="tab" onclick="show('tables',this)">Stimp Tables</button>
+  <button class="tab" onclick="show('routine',this)">On-Course Routine</button>
+  <button class="tab" onclick="show('adjustments',this)">Adjustments</button>
+  <button class="tab" onclick="show('learning',this)">Learning Path</button>
+  <button class="tab" onclick="show('faq',this)">FAQ</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Why AimPoint Express Outperforms Visual Reading</h2>
+  <p class="sec-desc">Traditional visual green reading relies on your eyes to estimate slope — an unreliable instrument, especially under pressure. AimPoint Express replaces visual estimation with a physical slope-sensing process that is consistent, repeatable, and pressure-resistant. It is not magic; it is calibrated physics.</p>
+
+  <div class="pull-quote">
+    <p>"AimPoint takes the guesswork out of reading greens. You're feeling the slope, not guessing at it — and the body doesn't lie under pressure the way the eyes do."</p>
+    <span>— Mark Sweeney, creator of AimPoint Golf</span>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">What AimPoint Express Is</span>
+    <h3>Physical Slope Sensing + a Calibrated Aim System</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Feel the slope, don't see it:</strong> You stand on the putting line midway between ball and hole, feel the slope with your feet, and classify it as 1%, 2%, 3%, or 4%+. Your feet are significantly more accurate slope detectors than your eyes — this is the core insight of the entire method.</div></li>
+      <li><span class="step-n">2</span><div><strong>Convert slope to fingers:</strong> Using the stimpmeter reading for the day (green speed), you hold up 1, 2, or 3 fingers in front of your face and aim to the outside edge of your outermost finger. That is your start line. The conversion tables on the Stimp Tables tab tell you exactly how many fingers for every slope/speed combination.</div></li>
+      <li><span class="step-n">3</span><div><strong>Set up and commit:</strong> Align your putter face to the edge of your outermost finger, take your normal stance, and putt along your start line. You are done reading — all that remains is execution.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Why It Works Under Pressure</span>
+    <h3>The Pressure Advantage Over Visual Reading</h3>
+    <p style="margin-bottom:12px;">Visual green reading degrades under pressure. When adrenaline is elevated, your visual perception narrows and your brain interprets slopes differently than it does in practice. The "it looks straight but it breaks" experience is real — pressure literally changes how you perceive slope.</p>
+    <p>AimPoint Express is pressure-resistant because the foot-feel process is largely sub-cortical — your feet sense slope through proprioceptive feedback that is not significantly affected by stress hormones. The fingers-to-aim-line process is mechanical. Players who trust it under pressure report a consistent, reliable read even when everything else in their game feels different.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Rules Compliance</span>
+    <h3>100% Legal Under R&amp;A and USGA Rules</h3>
+    <p>AimPoint Express is fully legal under the Rules of Golf (R&A/USGA) in all competition formats — strokeplay, matchplay, Stableford, club events, county competitions, and national amateur championships. It does not use any device or external aid; it is a physical method using your own body. The R&A explicitly allows it. It is used by Tour players, county players, and club golfers at all levels worldwide without restriction.</p>
+  </div>
+</div>
+
+<!-- THE METHOD -->
+<div class="sec" id="method">
+  <h2 class="sec-title">The AimPoint Express Method — Step by Step</h2>
+  <p class="sec-desc">The complete method takes approximately 20–25 seconds per putt once learned. The first few times will take longer as you calibrate your foot-feel. After 4–6 rounds, the method becomes second nature and fits naturally within your pre-putt routine.</p>
+
+  <span class="badge badge-lime">☝️ The Four Steps</span>
+
+  <div class="card">
+    <span class="card-tag">Step 1 — Find the Low Point</span>
+    <h3>Identify the Fall Line</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The fall line:</strong> Every putt breaks toward the lowest point of the green. Before using AimPoint, walk around the hole to establish where the low side is. All putts break away from the high side, toward the low side. On a simple tilted green, this is straightforward. On complex, multi-tier greens, identify the dominant slope first.</div></li>
+      <li><span class="step-n">2</span><div><strong>The apex (breaking point):</strong> For putts with significant break, the apex is the highest point the ball reaches before falling toward the hole. AimPoint Express does not require you to identify the apex explicitly — but knowing roughly where the ball will start to fall helps you commit to the aim point.</div></li>
+      <li><span class="step-n">3</span><div><strong>Straight putts:</strong> If you're directly above or below the hole on the fall line, the putt is straight. AimPoint confirms this — zero slope detected = zero fingers = aim straight at the hole. Trust it even when your eyes suggest break.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Step 2 — Sense the Slope with Your Feet</span>
+    <h3>Standing on the Line — The Critical Step</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Where to stand:</strong> Stand on the putting line approximately halfway between ball and hole (or slightly closer to the hole for longer putts). Stand with feet together or very close, weight balanced equally, arms hanging naturally. Close your eyes briefly and feel which way the ground pulls you — that is your slope direction and magnitude.</div></li>
+      <li><span class="step-n">2</span><div><strong>Classify the slope:</strong> Use a 1–4% scale. 1% is subtle — you can barely feel it. 2% is clearly perceptible but gentle. 3% is significant — you notice it immediately. 4% is severe — the green is obviously tilted. Most club-level greens on a typical hole present 1–2%; 3% occurs on aggressive pin placements or dramatic green designs. 4% is rare in normal play but common on championship courses with extreme slope positions.</div></li>
+      <li><span class="step-n">3</span><div><strong>The common mistake:</strong> Reading slope from off the green or from a standing position with feet apart. Both significantly reduce accuracy. You must feel the slope with feet on the putting surface, close together, weight balanced. This is the non-negotiable step of the entire method.</div></li>
+    </ul>
+
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>Calibration drill:</strong> Before your round, find a known slope on the practice putting green — ideally one you can verify with a slope metre or plumb-bob. Stand on it with feet together. Feel 1% as a reference. Build from there. Most players who struggle with AimPoint are using the wrong slope reference, not failing the aim system.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Step 3 — Raise Your Fingers</span>
+    <h3>Converting Slope + Speed to an Aim Point</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Extend your arm:</strong> Stand behind your ball, arm extended fully toward the hole, hand held up with fingers horizontal (palm facing you). Your arm should be roughly parallel to the ground — at eye level.</div></li>
+      <li><span class="step-n">2</span><div><strong>How many fingers:</strong> Using the stimp-to-fingers table (see the Stimp Tables tab), determine how many fingers to raise for your slope reading and today's green speed. For a 1% slope on stimp 10 greens: 1 finger. For a 2% slope on stimp 10 greens: 2 fingers. See the full tables for all combinations.</div></li>
+      <li><span class="step-n">3</span><div><strong>Align the fingers:</strong> Hold up the correct number of fingers with the inside of your index finger centred on the hole (for right-to-left breaking putts) or the outside of your index finger on the hole (for left-to-right). The outside edge of your outermost finger is your start line.</div></li>
+      <li><span class="step-n">4</span><div><strong>Full arm extension matters:</strong> The finger-width visual angle assumes a fully extended arm. If your arm is bent, the apparent width changes and your aim point moves. Extend fully every time.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Step 4 — Aim and Putt</span>
+    <h3>Setting Up to the Aim Point</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pick a spot on the green:</strong> Identify a blade of grass, discolouration, or specific point on the putting surface at the edge of your outermost finger. This is your intermediate target — exactly like picking a spot on the fairway in your drive routine.</div></li>
+      <li><span class="step-n">2</span><div><strong>Align to the spot, not the hole:</strong> Set your putter face to start the ball at your intermediate spot. Trust the process — the ball will break from there to the hole. The most common mistake is looking at the hole at address and subconsciously realigning toward it. Look at your intermediate target.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putt with normal pace:</strong> AimPoint Express is calibrated for a "dying speed" putt — one that reaches the hole with just enough pace to fall in if it catches the edge. A "firm" putt will reduce break and require fewer fingers. A "defensive" putt at dying speed matches the tables.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- STIMP TABLES -->
+<div class="sec" id="tables">
+  <h2 class="sec-title">Stimp-to-Fingers Conversion Tables</h2>
+  <p class="sec-desc">The number of fingers you raise is determined by two variables: the slope percentage you felt with your feet, and the green speed (stimpmeter reading) for the day. Faster greens need more fingers for the same slope — the ball rolls further before it can break, so it needs to start further outside the hole.</p>
+
+  <div class="info-box warn-box">
+    <span class="ico">⚠️</span>
+    <p><strong>Know your green speed before the round:</strong> Ask the pro or starter for today's stimp reading, or use the putting green to estimate it. Stimp 9–10 is a normal UK club day. Stimp 11–12 is fast (medal/competition conditions). Stimp 12+ is championship pace. The stimp affects the whole table — using stimp 10 numbers on stimp 12 greens will leave you consistently short of the hole with insufficient break.</p>
+  </div>
+
+  <span class="badge badge-teal">📐 Full Conversion Table</span>
+  <div class="card card-teal">
+    <span class="card-tag">Fingers Required — Standard Distance (15–25 feet)</span>
+    <h3>The Core Reference Table</h3>
+    <table class="tbl">
+      <tr><th>Slope %</th><th>Stimp 8 (Slow)</th><th>Stimp 9</th><th>Stimp 10 (Club)</th><th>Stimp 11</th><th>Stimp 12 (Fast)</th><th>Stimp 13+</th></tr>
+      <tr><td>1% (subtle)</td><td class="good">½ finger</td><td class="good">1</td><td class="good">1</td><td class="warn">1–1½</td><td class="warn">1½</td><td class="bad">2</td></tr>
+      <tr><td>2% (clear)</td><td class="good">1</td><td class="good">1–2</td><td class="good">2</td><td class="warn">2–2½</td><td class="warn">3</td><td class="bad">3–4</td></tr>
+      <tr><td>3% (significant)</td><td class="good">1½–2</td><td class="warn">2–3</td><td class="warn">3</td><td class="warn">3–4</td><td class="bad">4</td><td class="bad">4+</td></tr>
+      <tr><td>4% (severe)</td><td class="warn">2–3</td><td class="warn">3–4</td><td class="bad">4</td><td class="bad">4–5</td><td class="bad">5</td><td class="bad">6+</td></tr>
+    </table>
+    <p style="font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.6;">Half fingers: extend your index finger and hold remaining fingers at half-height. The aim point is the midpoint of your index finger rather than the outside edge.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Distance Adjustments</span>
+    <h3>How Putt Length Changes the Table</h3>
+    <table class="tbl">
+      <tr><th>Putt Length</th><th>Fingers Adjustment</th><th>Why</th></tr>
+      <tr><td>5–10 feet (short)</td><td class="good">Subtract ½ finger</td><td>Ball has less time to respond to break — needs less aim outside</td></tr>
+      <tr><td>10–25 feet (standard)</td><td class="good">Use table as-is</td><td>Standard calibration range</td></tr>
+      <tr><td>25–40 feet (long)</td><td class="warn">Add ½ finger</td><td>Ball travels further and has more time to respond to slope</td></tr>
+      <tr><td>40+ feet (very long)</td><td class="bad">Add 1 finger</td><td>Significant break amplification over long distance</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">Uphill vs Downhill Adjustments</span>
+    <h3>Slope Direction Affects Effective Green Speed</h3>
+    <table class="tbl">
+      <tr><th>Putt Type</th><th>Effective Speed</th><th>Fingers Adjustment</th></tr>
+      <tr><td>Uphill putt</td><td class="good">Slower (ball decelerates)</td><td class="good">Subtract ½ finger — less break than flat</td></tr>
+      <tr><td>Flat / slightly uphill</td><td class="good">Standard</td><td class="good">Use table as-is</td></tr>
+      <tr><td>Slightly downhill</td><td class="warn">Faster (ball accelerates)</td><td class="warn">Add ½ finger — more break than flat</td></tr>
+      <tr><td>Steeply downhill</td><td class="bad">Much faster</td><td class="bad">Add 1 full finger; consider lag pace and dying approach</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ON-COURSE ROUTINE -->
+<div class="sec" id="routine">
+  <h2 class="sec-title">On-Course AimPoint Routine</h2>
+  <p class="sec-desc">The AimPoint routine must integrate seamlessly with your existing pre-putt process without slowing play. The entire process — from stepping onto the line to picking your intermediate target — takes 20–25 seconds once learned. Practise it at speed in practice rounds before using it in competition.</p>
+
+  <span class="badge badge-lime">⏱️ The Full Sequence</span>
+  <div class="card">
+    <span class="card-tag">The Complete Pre-Putt Routine</span>
+    <h3>From Approaching the Green to Pulling the Trigger</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Approach assessment (walking to green):</strong> As you walk to the green, identify the low side. Where does the water drain? Which way does the green tilt? This broad orientation takes 5–10 seconds and primes your AimPoint read before you're on the surface.</div></li>
+      <li><span class="step-n">2</span><div><strong>Step onto the line (8–10 seconds):</strong> Mark your ball if needed. Walk to the midpoint of your putting line. Stand with feet together on the line. Close eyes briefly. Feel the slope. Classify: 1%, 2%, 3%, or 4%. Open eyes. Done.</div></li>
+      <li><span class="step-n">3</span><div><strong>Fingers (5 seconds):</strong> Stand behind ball. Extend arm toward hole. Raise fingers using your slope + stimp reading. Outside edge of outermost finger = aim point. Pick intermediate target on putting surface at that point.</div></li>
+      <li><span class="step-n">4</span><div><strong>Setup (5–8 seconds):</strong> Align putter face to intermediate target. Normal stance. Two practice swings matching pace. Look at target once. Putt.</div></li>
+      <li><span class="step-n">5</span><div><strong>The one rule:</strong> Once you have committed to your finger aim point, do not second-guess it. Read once, commit completely. AimPoint players who look at the hole at address and adjust their aim are no longer using AimPoint — they are visual reading. The method requires full commitment to the aim point.</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Pace of Play</span>
+    <h3>Keeping AimPoint Within Reasonable Time</h3>
+    <p style="margin-bottom:12px;">The most common complaint about AimPoint at club level is that it slows play. Done correctly, it does not. The key is practising the sequence until each step is automatic — the foot-feel classification in particular must be instant, not deliberated.</p>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Do not re-read:</strong> One classification. One finger count. One intermediate target. No going back to re-check. If you re-read, you are adding 30 seconds and usually confusing yourself.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Walk the line while others putt:</strong> You can assess the low side and step onto the line (briefly) while your partners are putting — as long as you are not in anyone's line or distracting them. By the time it is your turn, the read is complete.</div></li>
+      <li><span class="step-n">▸</span><div><strong>The full routine takes &lt;25 seconds:</strong> Foot-feel (8 sec) + fingers (5 sec) + setup (10 sec) = 23 seconds. That is within normal putting time and faster than most players' visual read-and-second-guess routine.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ADJUSTMENTS -->
+<div class="sec" id="adjustments">
+  <h2 class="sec-title">Adjustments — Grain, Wind, and Wet Greens</h2>
+  <p class="sec-desc">The core AimPoint table is calibrated for neutral conditions — no grain, no wind, normal moisture. In practice, UK bentgrass greens have minimal grain but fescue links greens in wind can require significant adjustments. Here is how to apply them.</p>
+
+  <div class="card">
+    <span class="card-tag">Grain Adjustment</span>
+    <h3>How Grass Grain Affects AimPoint</h3>
+    <p style="margin-bottom:12px;">Grain is the direction grass grows. In the UK, bentgrass (the most common putting surface) has relatively little grain effect — a maximum of ½ finger adjustment in most conditions. Bermuda grass (rare in UK, common in US, Asia, and warmer climates) has strong grain that can override slope on short putts.</p>
+    <table class="tbl">
+      <tr><th>Grain Condition</th><th>Effect on Putt</th><th>AimPoint Adjustment</th></tr>
+      <tr><td>Into grain (dull surface)</td><td class="bad">Ball slows, breaks less</td><td class="good">Subtract ½ finger</td></tr>
+      <tr><td>With grain (shiny surface)</td><td class="good">Ball speeds, breaks more</td><td class="warn">Add ½ finger</td></tr>
+      <tr><td>Cross-grain (putt travels across growth direction)</td><td class="warn">Subtle pull in grain direction</td><td class="good">Adjust ¼ finger toward grain</td></tr>
+      <tr><td>UK bentgrass (typical)</td><td class="good">Minimal grain — &lt;¼ finger</td><td class="good">Effectively ignore</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px;"><strong style="color:var(--white);">Identifying grain:</strong> Look at the surface from a low angle behind the ball. Shiny = putting with grain (grass bending away from you). Dull = putting into grain (grass bending toward you).</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Wind Adjustment on Exposed Greens</span>
+    <h3>Links and Heathland Putting in Wind</h3>
+    <table class="tbl">
+      <tr><th>Wind Speed</th><th>Effect</th><th>AimPoint Adjustment</th></tr>
+      <tr><td>Under 10 mph</td><td>Negligible — ignore</td><td class="good">None</td></tr>
+      <tr><td>10–20 mph crosswind</td><td class="warn">Subtle drift on very slow-rolling putts at end of roll</td><td class="warn">¼ finger into the wind</td></tr>
+      <tr><td>20–30 mph crosswind</td><td class="bad">Measurable drift — can move ball 2–4 inches on long putts</td><td class="bad">½ finger into the wind; focus on pace first</td></tr>
+      <tr><td>30+ mph</td><td class="bad">Significant — treat as additional slope</td><td class="bad">1 full finger into wind; prioritise getting ball to hole</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Wind on downhill putts:</strong> The most dangerous combination is a downhill putt with a following wind — the ball rolls further and faster, amplifying the break. Add your wind adjustment and add ½–1 finger for the downhill component. Err conservatively on pace.</p>
+    </div>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">Wet Greens</span>
+    <h3>Moisture Changes Effective Speed</h3>
+    <p style="margin-bottom:12px;">Wet greens play significantly slower — a stimp 10 green after heavy rain may play like stimp 8. Water in the grass slows the ball and reduces break. The adjustment is simple: drop one stimp column in your table.</p>
+    <table class="tbl">
+      <tr><th>Condition</th><th>Effective Speed Adjustment</th><th>Fingers Adjustment</th></tr>
+      <tr><td>Light dew (morning)</td><td class="good">−0.5 stimp</td><td class="good">Subtract ¼ finger</td></tr>
+      <tr><td>Recent rain (greens still wet)</td><td class="warn">−1.0 stimp</td><td class="warn">Subtract ½ finger</td></tr>
+      <tr><td>Heavy rain or saturated greens</td><td class="bad">−2.0 stimp</td><td class="bad">Subtract 1 full finger; putts break much less</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- LEARNING PATH -->
+<div class="sec" id="learning">
+  <h2 class="sec-title">Learning AimPoint Express</h2>
+  <p class="sec-desc">AimPoint Express has a well-defined learning curve. The foot-feel calibration is the hardest part — most golfers have it working reliably within 4–6 practice rounds. The aim conversion is mechanical and much faster to learn.</p>
+
+  <span class="badge badge-gold">📚 The Learning Pathway</span>
+
+  <div class="card card-gold">
+    <span class="card-tag">Official Certification</span>
+    <h3>AimPoint Golf Certification — What to Expect</h3>
+    <p style="margin-bottom:12px;">Mark Sweeney's AimPoint Golf organisation offers official certification clinics taught by certified instructors. In the UK, certified AimPoint instructors are available at a growing number of clubs and through England Golf training programmes. A certified clinic is strongly recommended for players who want to learn the method correctly from the start — it eliminates the most common self-teaching errors (particularly slope classification).</p>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Find a clinic:</strong> Search for certified instructors at <strong>aimpoint.golf</strong>. Many UK instructors offer half-day group clinics (£40–£80 typically). Individual lessons are available at higher cost. England Golf occasionally includes AimPoint in county coaching programmes.</div></li>
+      <li><span class="step-n">▸</span><div><strong>What a clinic covers:</strong> Slope classification on a practice green with known gradients (1%, 2%, 3%, 4% sections), finger conversion practice, full on-course routine, and Q&A. Most players leave with a working method after one 3-hour clinic.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Self-teaching:</strong> Possible but slower. The main risk is calibrating your slope feel incorrectly from the start — if you call 2% slopes "1%", every putt will be underread. Use a slope metre app (many are free) to verify your practice green classifications before trusting your foot-feel.</div></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-tag">4-Week Introduction Protocol</span>
+    <h3>From First Read to Competition Ready</h3>
+    <table class="tbl">
+      <tr><th>Week</th><th>Focus</th><th>Target</th></tr>
+      <tr><td>Week 1</td><td>Foot-feel only — classify every putt in practice round, do not use fingers yet</td><td>Consistent 1/2/3% classifications on known slopes</td></tr>
+      <tr><td>Week 2</td><td>Add fingers — combine slope read with finger aim on all putts in practice</td><td>Routine taking under 30 seconds per putt</td></tr>
+      <tr><td>Week 3</td><td>Full method in medal/club competition — accept results without judgment</td><td>Trust the read on every putt; no visual override</td></tr>
+      <tr><td>Week 4</td><td>Refinement — identify patterns where your read was wrong and adjust classification</td><td>Routine under 25 seconds; starting line accuracy improving</td></tr>
+    </table>
+
+    <div class="info-box tip" style="margin-top:12px;">
+      <span class="ico">💡</span>
+      <p><strong>The most important week is Week 3.</strong> Most players want to revert to visual reading the first time they miss a putt using AimPoint. Resist completely. The method requires 20–30 rounds of data before you can meaningfully evaluate it. Missing one putt using AimPoint is not evidence the method is wrong — it is evidence you need more repetitions to calibrate your slope feel.</p>
+    </div>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Practice Drills</span>
+    <h3>Accelerating the Calibration</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Slope station drill:</strong> On the practice putting green, find four different slopes and verify their percentage with a slope metre or by comparison (most practice greens have known gradients). Practise standing on each with eyes closed until your foot-feel classification matches the real slope reliably. 15 minutes, twice a week for two weeks.</div></li>
+      <li><span class="step-n">2</span><div><strong>Three-ball AimPoint drill:</strong> Hit three balls from the same spot using AimPoint. All three should start on the same line — if they diverge, your intermediate target selection is inconsistent. Focus on the same spot each time.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pace + AimPoint integration:</strong> The read is only as good as your pace. Hit 10 putts from 20 feet using AimPoint aim, focused entirely on dying the ball at the hole. AimPoint eliminates the line variable — what remains is purely pace. This drill shows you how much of your putting variance is pace rather than read.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="sec" id="faq">
+  <h2 class="sec-title">AimPoint Express — Frequently Asked Questions</h2>
+  <p class="sec-desc">The most common questions from players learning AimPoint for the first time.</p>
+
+  <div class="card">
+    <span class="card-tag">Does AimPoint work on every putt?</span>
+    <h3>Coverage and Limitations</h3>
+    <p>AimPoint Express works best on putts of 6–40 feet on greens with clear, readable slope. On very short putts (under 5 feet), a slightly simplified version works — stand behind the ball, raise 1 finger for a 2% slope on stimp 10, and that is your start line. On severely undulating greens with multiple breaks, AimPoint gives you the dominant slope but cannot fully account for secondary breaks mid-putt — use it for the primary slope and trust that it gives you a better starting line than a visual guess. On greens with no perceptible slope (flat greens), AimPoint confirms what you'd expect: zero fingers, aim at the hole.</p>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">How long before I see results?</span>
+    <h3>Realistic Expectations</h3>
+    <p>Most players see statistically meaningful improvement in putts made (particularly in the 10–25 foot range) within 8–10 rounds of consistent use. The method works fastest for players who previously had inconsistent line reads — AimPoint replaces chaotic visual estimation with a systematic process. Players whose main putting weakness is pace rather than line will see smaller initial gains from AimPoint alone; combining it with pace calibration drills (Guide 01) gives the best overall result.</p>
+  </div>
+
+  <div class="card card-teal">
+    <span class="card-tag">Can I use it in any competition?</span>
+    <h3>Competition Legality</h3>
+    <p>Yes, without restriction. AimPoint Express uses no external device and is explicitly legal under Rule 4.3 of the Rules of Golf. You may use it in club medals, county competitions, national amateur championships, and any R&A or USGA-governed event. The finger method is considered equivalent to looking at a reference point with your hands — entirely legal. Some players have reported that playing partners or committees have questioned it; the response is straightforward: check R&A Decision on Rule 4.3, which explicitly allows physical reference methods of this type.</p>
+  </div>
+
+  <div class="card card-rust">
+    <span class="card-tag">What if my reads are consistently wrong?</span>
+    <h3>Troubleshooting the Method</h3>
+    <ul class="steps">
+      <li><span class="step-n">▸</span><div><strong>Consistently under-reading:</strong> You are classifying 2% slopes as 1%. Use a slope metre to recalibrate your foot-feel reference. Find a 2% slope and stand on it until you can identify it reliably before reading anything else.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Consistently over-reading:</strong> Opposite problem — or you may be using the table for faster greens than you're actually playing. Confirm the stimp reading and drop a column if in doubt.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Good line but wrong pace:</strong> AimPoint is giving you an accurate start line but the ball isn't reaching the hole. This is a pace issue, not an AimPoint issue. Work the dying-ball pace drill and resist the temptation to blame the method.</div></li>
+      <li><span class="step-n">▸</span><div><strong>Inconsistent arm extension:</strong> Bent arm changes the apparent finger width. Ensure full arm extension every time — all the way out, every time, same distance from your eye to your hand.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">AIMPOINT EXPRESS · GUIDE 53 · THE SCRATCH PROJECT · SCORE · STRIKE · MEASURE · PREPARE · COMPETE</div>
+</body>
+</html>

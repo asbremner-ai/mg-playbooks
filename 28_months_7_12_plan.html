@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Months 7–12 Practice Plan — December 2026 to May 2027</title>
+<title>Months 7–12 Practice Plan — Month 7 to Month 12</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Archivo:wght@300;400;500;600;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -183,6 +183,21 @@
     .week-grid{grid-template-columns:repeat(4,1fr);}
   }
 </style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -192,15 +207,15 @@
   </a>
   <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
-<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a><a href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
 
 <div class="hero">
   <div class="hero-lines"></div>
   <p class="hero-overline">The Scratch Project</p>
-  <h1>PHASE 3<span class="ruled">Months 7–12 · December 2026 – May 2027 · Build the Attack</span></h1>
+  <h1>PHASE 3<span class="ruled">Months 7–12 · Months 7–12 · Build the Attack</span></h1>
   <p class="hero-deck">You arrive here at ~5 HCP with your foundations solid. Phase 3 is where the handicap gets genuinely difficult — approach precision, GIR%, and competitive consistency are what separate 5 from 1.</p>
   <div class="hero-topics">
-    <span class="hero-topic">📅 Dec 2026–May 2027</span>
+    <span class="hero-topic">📅 Months 7–12</span>
     <span class="hero-topic">🎯 ~5 → ~1 HCP</span>
     <span class="hero-topic">⛳ Approach Focus</span>
     <span class="hero-topic">🏆 2× Monthly Comps</span>
@@ -220,7 +235,7 @@
 
 <!-- ═══ TAB 1 — PHASE 3 LAUNCH ═══ -->
 <div class="section active" id="phase3start">
-  <span class="section-label">1 December 2026</span>
+  <span class="section-label">1 Month 7</span>
   <h2 class="section-title">PHASE 3 LAUNCH</h2>
   <p class="section-desc">Phase 3 begins with a full review of where you actually are — not where you expected to be. The data from June–November drives every decision in the next six months. Resist the urge to push forward before you have read the numbers honestly.</p>
 
@@ -285,7 +300,7 @@
 
   <div class="card">
     <span class="card-kicker">Phase 3 — Weekly Template</span>
-    <h3>December 2026 – May 2027</h3>
+    <h3>Months 7–12</h3>
     <div class="week-grid" style="margin-top:16px;">
       <div class="day-cell review">
         <span class="day-name">Mon</span>
@@ -373,15 +388,15 @@
 
 <!-- ═══ TAB 3 — MONTH-BY-MONTH ═══ -->
 <div class="section" id="calendar">
-  <span class="section-label">December 2026 – May 2027</span>
+  <span class="section-label">Months 7–12</span>
   <h2 class="section-title">MONTH-BY-MONTH PLAN</h2>
   <p class="section-desc">Each month has a defined attack theme, a primary tracked metric, and a competitive requirement. The themes sequence from data reset through precision building to full competitive integration. Do not skip steps.</p>
 
   <!-- DECEMBER -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Dec</span>7</div>
+    <div class="month-num"><span class="ph-label">M7</span>7</div>
     <p class="month-title">Data Reset &amp; Distance Verification</p>
-    <span class="month-sub">1–31 December 2026 · Week 27–30 · HCP Target: ~5 (hold)</span>
+    <span class="month-sub">1–31 Month 7 · Week 27–30 · HCP Target: ~5 (hold)</span>
     <ul class="checklist">
       <li><span class="check teal">□</span><strong>Phase 2 audit complete:</strong> All SG data reviewed, biggest gap identified, Phase 3 priority set. Written down in your journal. Done by 7 December.</li>
       <li><span class="check teal">□</span><strong>Coach audit:</strong> One session with SG data in hand. Single physical/technical limiter identified. Drill assigned. Implement from the day after the lesson.</li>
@@ -394,9 +409,9 @@
 
   <!-- JANUARY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Jan</span>8</div>
+    <div class="month-num"><span class="ph-label">M8</span>8</div>
     <p class="month-title">Approach Play Precision</p>
-    <span class="month-sub">1–31 January 2027 · Weeks 31–34 · HCP Target: ~4</span>
+    <span class="month-sub">1–31 Month 8 · Weeks 31–34 · HCP Target: ~4</span>
     <ul class="checklist">
       <li><span class="check teal">□</span><strong>Primary metric: approach proximity by distance band.</strong> Track separately: 100–125, 125–150, 150–175, 175+ yards. Record in Arccos and your journal after every round. The weakest band is Tuesday's target.</li>
       <li><span class="check teal">□</span><strong>One-ball practice discipline:</strong> All iron practice in January — one ball per shot, full pre-shot routine, different target each shot. No block practice. No hitting the same shot twice in a row. This is non-negotiable.</li>
@@ -408,9 +423,9 @@
 
   <!-- FEBRUARY -->
   <div class="month-block">
-    <div class="month-num"><span class="ph-label">Feb</span>9</div>
+    <div class="month-num"><span class="ph-label">M9</span>9</div>
     <p class="month-title">Scoring Zone Mastery</p>
-    <span class="month-sub">1–28 February 2027 · Weeks 35–38 · HCP Target: ~3–4</span>
+    <span class="month-sub">1–28 Month 9 · Weeks 35–38 · HCP Target: ~3–4</span>
     <ul class="checklist">
       <li><span class="check teal">□</span><strong>Wedge matrix re-verified in cold/winter conditions.</strong> February air is cold and dense — distances will be shorter than summer matrix numbers. Know your winter adjustments. Use them on the course without hesitation.</li>
       <li><span class="check teal">□</span><strong>U&amp;D% target: 38%+.</strong> This is the Phase 3 standard. If below, add a dedicated 20-minute short game block to Wednesday's gym day — before training, not after. Proximity from chips and pitches tracked every session.</li>
@@ -424,7 +439,7 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Mar</span>10</div>
     <p class="month-title">Speed &amp; Distance Consolidation</p>
-    <span class="month-sub">1–31 March 2027 · Weeks 39–43 · HCP Target: ~2–3</span>
+    <span class="month-sub">1–31 Month 10 · Weeks 39–43 · HCP Target: ~2–3</span>
     <ul class="checklist">
       <li><span class="check gold">□</span><strong>Rypstick speed review.</strong> Measure current driver speed vs. December baseline. By Month 10, a committed Rypstick programme should have added 5–10 mph. If speed gains have plateaued, check smash factor — improving contact quality from 1.42 to 1.48 adds equivalent distance without additional swing speed.</li>
       <li><span class="check gold">□</span><strong>Spring LM session:</strong> As temperatures rise, distances increase. Re-verify key clubs (6-iron, PW, driver) in spring conditions. Update your yardage card. Golfers who play winter distances through spring consistently under-attack.</li>
@@ -438,7 +453,7 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--gold);color:var(--ink);"><span class="ph-label" style="color:var(--ink-mid);">Apr</span>11</div>
     <p class="month-title">Competitive Integration</p>
-    <span class="month-sub">1–30 April 2027 · Weeks 44–47 · HCP Target: ~1–2</span>
+    <span class="month-sub">1–30 Month 11 · Weeks 44–47 · HCP Target: ~1–2</span>
     <ul class="checklist">
       <li><span class="check gold">□</span><strong>Three competitive rounds this month.</strong> Monthly medal, open stableford, and a matchplay or team event if available. This is the month your competitive infrastructure should be working at full capacity.</li>
       <li><span class="check gold">□</span><strong>Pressure practice at maximum intensity.</strong> Every Sunday session: 30 minutes of consequence-based putting and chipping. Real stakes — score-based, financial consequence, or tournament simulation. The pressure gap that separates a 2 HCP from scratch is closed here, in practice, not on the course.</li>
@@ -452,9 +467,9 @@
   <div class="month-block">
     <div class="month-num" style="background:var(--rust);"><span class="ph-label" style="color:rgba(245,239,228,0.6);">May</span>12</div>
     <p class="month-title">12-Month Review &amp; Phase 4 Setup</p>
-    <span class="month-sub">1–31 May 2027 · Weeks 48–52 · HCP Target: ~1</span>
+    <span class="month-sub">1–31 Month 12 · Weeks 48–52 · HCP Target: ~1</span>
     <ul class="checklist">
-      <li><span class="check rust">□</span><strong>Full 12-month SG data review:</strong> Compare June 2026 baselines to May 2027 averages in all four categories. Calculate total SG improvement per category. Identify the one remaining category furthest from scratch standard — this is Phase 4's primary target.</li>
+      <li><span class="check rust">□</span><strong>Full 12-month SG data review:</strong> Compare Month 1 baselines to Month 12 averages in all four categories. Calculate total SG improvement per category. Identify the one remaining category furthest from scratch standard — this is Phase 4's primary target.</li>
       <li><span class="check rust">□</span><strong>Third coach audit.</strong> Bring 12 months of data. Ask: "What is the single biggest remaining barrier between where I am and scratch?" The answer will almost certainly surprise you — it is rarely what you think it is.</li>
       <li><span class="check rust">□</span><strong>All equipment verified.</strong> Iron fitting review — after 12 months of improved technique and fitness, your shaft requirements may have changed. Ball fitting — are you still on the right compression? Wedge groove check — 100+ rounds means grooves may need replacing.</li>
       <li><span class="check rust">□</span><strong>Write your Phase 4 plan.</strong> Using the 12-month data and coach input, document specifically: which SG category needs the most work, what drill addresses it, how many competitive rounds per month you will target, and what the 6-month target is. This becomes your personal Phase 4 document.</li>
@@ -579,7 +594,7 @@
   <p class="section-desc">Phase 3 doubles the competition requirement. Two counted rounds per month is the minimum. The pressure gap between 5 HCP and scratch is not closed in practice — it is closed in competition. You need exposure, not just volume.</p>
 
   <div class="card">
-    <span class="card-kicker">December 2026 – May 2027 · Target: 12–14 Competitive Rounds</span>
+    <span class="card-kicker">Months 7–12 · Target: 12–14 Competitive Rounds</span>
     <h3>Planned Competition Calendar</h3>
     <div class="comp-row">
       <span class="comp-month">December</span>
@@ -619,8 +634,8 @@
     <div class="comp-row">
       <span class="comp-month">May</span>
       <div class="comp-detail">
-        <strong>Monthly Medal + Benchmark Round (same course as June 2026)</strong>
-        <span>Two rounds. The May medal is your 12-month competitive benchmark. If possible, play the same course you played in your June 2026 first competition. The direct score comparison — on identical conditions — tells you exactly how far you have come.</span>
+        <strong>Monthly Medal + Benchmark Round (same course as Month 1)</strong>
+        <span>Two rounds. The May medal is your 12-month competitive benchmark. If possible, play the same course you played in your Month 1 first competition. The direct score comparison — on identical conditions — tells you exactly how far you have come.</span>
       </div>
     </div>
   </div>
@@ -656,7 +671,7 @@
   <h2 class="section-title">12-MONTH TARGETS</h2>
   <p class="section-desc">These are the measurable standards that confirm Phase 3 is complete and Phase 4 (months 13–24) can begin. Every number has a Phase 3 target and a scratch benchmark alongside it — so you can see how close you are to the final standard.</p>
 
-  <span class="badge b-teal">📊 Phase 3 Checkpoints — December 2026 to May 2027</span>
+  <span class="badge b-teal">📊 Phase 3 Checkpoints — Month 7 to Month 12</span>
 
   <div class="card">
     <span class="card-kicker">End of February — Month 9 Checkpoint</span>
@@ -697,7 +712,7 @@
 
   <div class="insight">
     <span class="cicon">📌</span>
-    <p><strong>If Month 12 targets are met:</strong> Phase 4 (June 2027–May 2028) is precision consolidation and competitive exposure. The structural work is complete. Scratch requires executing the skills already built in competition, consistently, across all conditions. That is Phase 4's only job.</p>
+    <p><strong>If Month 12 targets are met:</strong> Phase 4 (Month 12–your target month) is precision consolidation and competitive exposure. The structural work is complete. Scratch requires executing the skills already built in competition, consistently, across all conditions. That is Phase 4's only job.</p>
   </div>
 
   <div class="callout">
@@ -712,7 +727,7 @@
   <h2 class="section-title">PROGRESS TRACKER</h2>
   <p class="section-desc">The same discipline as Phase 2 — fill in after every round and every Monday review. In Phase 3, also track approach proximity by distance band and monitor the trend week by week.</p>
 
-  <span class="badge b-teal">🗓️ Phase 3 Log — December 2026 to May 2027</span>
+  <span class="badge b-teal">🗓️ Phase 3 Log — Month 7 to Month 12</span>
 
   <div class="card">
     <span class="card-kicker">Round Log — Fill After Every Round</span>
@@ -771,7 +786,7 @@
 
 <div class="footer">
   THE SCRATCH PROJECT · PHASE 3 · DECEMBER 2026 – MAY 2027 · BUILD THE ATTACK<br>
-  <span style="display:block;margin-top:6px;opacity:0.5;">Review monthly · Approach proximity is the master metric · Phase 4 begins June 2027</span>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Review monthly · Approach proximity is the master metric · Phase 4 begins Month 12</span>
 </div>
 
 <script>

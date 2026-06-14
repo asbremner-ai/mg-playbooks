@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Complete Golfer — Beyond Technique</title>
+  <meta name="description" content="The research foundation for golf improvement — why technique is only 20% of handicap reduction. Six levers, R&A data, and cross-references to every improvement pillar.">
+  <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, The Scratch Project, golf analytics">
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
 :root{
@@ -149,6 +151,21 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 @media(max-width:480px){.grid-2{grid-template-columns:1fr;}.tbl{font-size:11px;}.tbl th,.tbl td{padding:6px 8px;}}
 </style>
 
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
 </head>
 <body>
 <!-- HOME NAV -->
@@ -199,7 +216,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
   <div class="grid-2">
     <div class="mini-card"><span class="mini-tag">Quick Win #1</span><h4>Track One Stat Per Round</h4><p>Golfers who track even a single stat improve 40% faster. Start with approach shot proximity — pace off after every approach.</p></div>
-    <div class="mini-card"><span class="mini-tag">Quick Win #2</span><h4>Get a Professional Fitting</h4><p>Equipment fitting is worth 2–4 shots per round for most 10 HCPs. Start with the putter and driver.</p></div>
+    <div class="mini-card"><span class="mini-tag">Quick Win #2</span><h4>Get a Professional Fitting</h4><p>Equipment fitting is worth 2–4 shots per round for most club golfers. Start with the putter and driver.</p></div>
     <div class="mini-card"><span class="mini-tag">Quick Win #3</span><h4>Build One Mental Routine</h4><p>A consistent pre-shot routine reduces double-bogeys by creating automatic commitment under pressure.</p></div>
     <div class="mini-card"><span class="mini-tag">Quick Win #4</span><h4>Add Deliberate Practice</h4><p>Replace 50% of range time with drills that have pass/fail criteria. Measured practice is 3× more effective.</p></div>
   </div>
@@ -343,7 +360,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   <span class="badge badge-rust">📊 Know Your Numbers</span>
   <div class="info-box warn-box">
     <span class="ico">💡</span>
-    <p><strong>The biggest misconception:</strong> Most 10 HCPs believe putting is their primary problem. SG data consistently reveals it is approach play and around-the-green performance. Tracking for 5 rounds will almost certainly reveal a similar surprise.</p>
+    <p><strong>The biggest misconception:</strong> Most club golfers believe putting is their primary problem. SG data consistently reveals it is approach play and around-the-green performance. Tracking for 5 rounds will almost certainly reveal a similar surprise.</p>
   </div>
   <div class="card">
     <span class="card-tag">The Five Numbers That Predict Everything</span>
@@ -409,7 +426,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
   </div>
   <div class="info-box warn-box">
     <span class="ico">⚠️</span>
-    <p><strong>Most common practice mistake:</strong> Spending 60–70% of time on the driving range (lowest SG-return area) and 10–15% on putting and short game (highest-return areas). Most 10 HCPs do exactly this. Flip the ratio and watch your handicap respond.</p>
+    <p><strong>Most common practice mistake:</strong> Spending 60–70% of time on the driving range (lowest SG-return area) and 10–15% on putting and short game (highest-return areas). Most club players do exactly this. Flip the ratio and watch your handicap respond.</p>
   </div>
 </div>
 
